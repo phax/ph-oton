@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import com.helger.html.EHTMLElement;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.EHTMLElement;
 
 /**
  * Abstract HTML list element that uses {@link HCLI} as the item.
@@ -29,13 +29,13 @@ import jakarta.annotation.Nonnull;
  */
 public abstract class AbstractHCListLI <IMPLTYPE extends AbstractHCList <IMPLTYPE, HCLI>> extends AbstractHCList <IMPLTYPE, HCLI>
 {
-  public AbstractHCListLI (@Nonnull final EHTMLElement eElement)
+  public AbstractHCListLI (@NonNull final EHTMLElement eElement)
   {
     super (eElement, HCLI.class);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected HCLI createEmptyItem ()
   {
     return new HCLI ();

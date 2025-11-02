@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.usergroup;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user group is created, modified, deleted or
@@ -38,7 +38,7 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined user group,
    *        <code>false</code> if it is a regular user group
    */
-  default void onUserGroupCreated (@Nonnull final IUserGroup aUserGroup, final boolean bPredefinedUserGroup)
+  default void onUserGroupCreated (@NonNull final IUserGroup aUserGroup, final boolean bPredefinedUserGroup)
   {}
 
   /**
@@ -47,7 +47,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sUserGroupID
    *        The modified user group ID. Never <code>null</code>.
    */
-  default void onUserGroupUpdated (@Nonnull @Nonempty final String sUserGroupID)
+  default void onUserGroupUpdated (@NonNull @Nonempty final String sUserGroupID)
   {}
 
   /**
@@ -56,7 +56,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sUserGroupID
    *        The modified user group ID. Never <code>null</code>.
    */
-  default void onUserGroupRenamed (@Nonnull @Nonempty final String sUserGroupID)
+  default void onUserGroupRenamed (@NonNull @Nonempty final String sUserGroupID)
   {}
 
   /**
@@ -65,7 +65,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sUserGroupID
    *        The deleted user group ID. Never <code>null</code>.
    */
-  default void onUserGroupDeleted (@Nonnull @Nonempty final String sUserGroupID)
+  default void onUserGroupDeleted (@NonNull @Nonempty final String sUserGroupID)
   {}
 
   /**
@@ -74,7 +74,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sUserGroupID
    *        The undeleted user group ID. Never <code>null</code>.
    */
-  default void onUserGroupUndeleted (@Nonnull @Nonempty final String sUserGroupID)
+  default void onUserGroupUndeleted (@NonNull @Nonempty final String sUserGroupID)
   {}
 
   /**
@@ -88,8 +88,8 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if the user was assigned, <code>false</code> if it
    *        was unassigned
    */
-  default void onUserGroupUserAssignment (@Nonnull @Nonempty final String sUserGroupID,
-                                          @Nonnull @Nonempty final String sUserID,
+  default void onUserGroupUserAssignment (@NonNull @Nonempty final String sUserGroupID,
+                                          @NonNull @Nonempty final String sUserID,
                                           final boolean bAssign)
   {}
 
@@ -104,8 +104,8 @@ public interface IUserGroupModificationCallback extends ICallback
    *        <code>true</code> if the role was assigned, <code>false</code> if it
    *        was unassigned
    */
-  default void onUserGroupRoleAssignment (@Nonnull @Nonempty final String sUserGroupID,
-                                          @Nonnull @Nonempty final String sRoleID,
+  default void onUserGroupRoleAssignment (@NonNull @Nonempty final String sUserGroupID,
+                                          @NonNull @Nonempty final String sRoleID,
                                           final boolean bAssign)
   {}
 }

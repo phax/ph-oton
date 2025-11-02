@@ -20,11 +20,11 @@ import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.charset.CharsetHelper;
 import com.helger.html.request.IHCRequestField;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Select box for character sets
@@ -33,14 +33,14 @@ import jakarta.annotation.Nullable;
  */
 public class HCCharsetSelect extends HCExtSelect
 {
-  public HCCharsetSelect (@Nonnull final IHCRequestField aRF, final boolean bOnlyRegistered, @Nonnull final Locale aDisplayLocale)
+  public HCCharsetSelect (@NonNull final IHCRequestField aRF, final boolean bOnlyRegistered, @NonNull final Locale aDisplayLocale)
   {
     this (aRF, x -> x.isRegistered () || !bOnlyRegistered, aDisplayLocale);
   }
 
-  public HCCharsetSelect (@Nonnull final IHCRequestField aRF,
+  public HCCharsetSelect (@NonNull final IHCRequestField aRF,
                           @Nullable final Predicate <? super Charset> aFilter,
-                          @Nonnull final Locale aDisplayLocale)
+                          @NonNull final Locale aDisplayLocale)
   {
     super (aRF);
 

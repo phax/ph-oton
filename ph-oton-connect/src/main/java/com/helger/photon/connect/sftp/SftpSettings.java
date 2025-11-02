@@ -16,13 +16,13 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.config.IConfig;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link ISftpSettings}.
@@ -35,7 +35,7 @@ public class SftpSettings extends SftpSettingsHost implements ISftpSettings
   private final String m_sServerDirUpload;
   private final String m_sServerDirDownload;
 
-  protected SftpSettings (@Nonnull final ISftpSettingsHost aHost,
+  protected SftpSettings (@NonNull final ISftpSettingsHost aHost,
                           @Nullable final String sServerDirUpload,
                           @Nullable final String sServerDirDownload)
   {
@@ -65,8 +65,8 @@ public class SftpSettings extends SftpSettingsHost implements ISftpSettings
   }
 
   @Nullable
-  public static SftpSettings createFromConfig (@Nonnull final IConfig aConfig,
-                                               @Nonnull @Nonempty final String sConfigPrefix)
+  public static SftpSettings createFromConfig (@NonNull final IConfig aConfig,
+                                               @NonNull @Nonempty final String sConfigPrefix)
   {
     ValueEnforcer.notNull (aConfig, "Config");
     ValueEnforcer.notEmpty (sConfigPrefix, "ConfigPrefix");

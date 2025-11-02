@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.compare.ESortOrder;
@@ -26,9 +29,6 @@ import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Encapsulates the sorting information for the columns that are affected in
@@ -72,19 +72,19 @@ public final class DTSSRequestDataOrderColumn
    * @return Direction to be sorted. If not specified, the default is used.
    *         Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ESortOrder getSortDirectionOrDefault ()
   {
     return m_eSortOrder == null ? ESortOrder.DEFAULT : m_eSortOrder;
   }
 
-  public void setOrderSpec (@Nonnull final DTOrderSpec aOrderSpec)
+  public void setOrderSpec (@NonNull final DTOrderSpec aOrderSpec)
   {
     ValueEnforcer.notNull (aOrderSpec, "OrderSpec");
     m_aOrderSpec = aOrderSpec;
   }
 
-  @Nonnull
+  @NonNull
   public Comparator <String> getOrderComparator ()
   {
     Comparator <String> ret;

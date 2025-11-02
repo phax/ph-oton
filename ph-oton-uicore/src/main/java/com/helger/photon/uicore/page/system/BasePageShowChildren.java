@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.page.system;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
@@ -36,9 +39,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPage <WPECTYPE>
 {
   public static final class ShowChildrenCallback <WPECTYPE extends IWebPageExecutionContext> extends
@@ -48,9 +48,9 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     private final NonBlockingStack <HCUL> m_aStack;
     private final BasePageShowChildrenRenderer m_aRenderer;
 
-    public ShowChildrenCallback (@Nonnull final WPECTYPE aWPEC,
-                                 @Nonnull final HCUL aUL,
-                                 @Nonnull final BasePageShowChildrenRenderer aRenderer)
+    public ShowChildrenCallback (@NonNull final WPECTYPE aWPEC,
+                                 @NonNull final HCUL aUL,
+                                 @NonNull final BasePageShowChildrenRenderer aRenderer)
     {
       ValueEnforcer.notNull (aWPEC, "WPEC");
       ValueEnforcer.notNull (aUL, "UL");
@@ -134,9 +134,9 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   private final IMenuTree m_aMenuTree;
   private BasePageShowChildrenRenderer m_aRenderer = new BasePageShowChildrenRenderer ();
 
-  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IMultilingualText aName,
-                               @Nonnull final IMenuTree aMenuTree)
+  public BasePageShowChildren (@NonNull @Nonempty final String sID,
+                               @NonNull final IMultilingualText aName,
+                               @NonNull final IMenuTree aMenuTree)
   {
     super (sID, aName, null);
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
@@ -144,33 +144,33 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
     // ready!
   }
 
-  public BasePageShowChildren (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nonnull final IMenuTree aMenuTree)
+  public BasePageShowChildren (@NonNull @Nonempty final String sID,
+                               @NonNull final String sName,
+                               @NonNull final IMenuTree aMenuTree)
   {
     this (sID, getAsMLT (sName), aMenuTree);
   }
 
-  @Nonnull
+  @NonNull
   protected final IMenuTree getMenuTree ()
   {
     return m_aMenuTree;
   }
 
-  @Nonnull
+  @NonNull
   protected final BasePageShowChildrenRenderer getRenderer ()
   {
     return m_aRenderer;
   }
 
-  @Nonnull
-  public final BasePageShowChildren <WPECTYPE> setRenderer (@Nonnull final BasePageShowChildrenRenderer aRenderer)
+  @NonNull
+  public final BasePageShowChildren <WPECTYPE> setRenderer (@NonNull final BasePageShowChildrenRenderer aRenderer)
   {
     m_aRenderer = ValueEnforcer.notNull (aRenderer, "Renderer");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   protected HCUL createRootUL ()
   {
@@ -178,7 +178,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   @Nullable
-  protected HCUL createChildItemTree (@Nonnull final WPECTYPE aWPEC)
+  protected HCUL createChildItemTree (@NonNull final WPECTYPE aWPEC)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aMenuTreeItem = m_aMenuTree.getItemWithID (getID ());
     if (aMenuTreeItem == null)
@@ -194,7 +194,7 @@ public class BasePageShowChildren <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   @Override
-  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void fillContent (@NonNull final WPECTYPE aWPEC)
   {
     aWPEC.getNodeList ().addChild (createChildItemTree (aWPEC));
   }

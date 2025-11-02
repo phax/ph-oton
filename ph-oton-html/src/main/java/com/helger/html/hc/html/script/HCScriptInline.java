@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents an HTML &lt;script&gt; element with inline JS content.
@@ -36,7 +36,7 @@ public class HCScriptInline extends AbstractHCScriptInline <HCScriptInline>
     super ();
   }
 
-  public HCScriptInline (@Nonnull final IHasJSCode aProvider)
+  public HCScriptInline (@NonNull final IHasJSCode aProvider)
   {
     super (aProvider);
   }

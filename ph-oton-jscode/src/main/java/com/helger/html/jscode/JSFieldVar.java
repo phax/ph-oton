@@ -16,14 +16,14 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A field of a class
@@ -49,13 +49,13 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
    * @param aInit
    *        Value to initialize this variable to
    */
-  public JSFieldVar (@Nonnull final JSDefinedClass aOwnerClass, @Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  public JSFieldVar (@NonNull final JSDefinedClass aOwnerClass, @NonNull @Nonempty final String sName, @Nullable final IJSExpression aInit)
   {
     super (sName, aInit);
     m_aOwnerClass = ValueEnforcer.notNull (aOwnerClass, "OwnerClass");
   }
 
-  @Nonnull
+  @NonNull
   public JSDefinedClass parentClass ()
   {
     return m_aOwnerClass;
@@ -70,9 +70,9 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
+  @NonNull
   @Override
-  public JSFieldVar name (@Nonnull @Nonempty final String sNewName)
+  public JSFieldVar name (@NonNull @Nonempty final String sNewName)
   {
     final String sOldName = name ();
     if (!sOldName.equals (sNewName))
@@ -93,7 +93,7 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
    *
    * @return {@link JSCommentMultiLine} containing JSDoc for this field
    */
-  @Nonnull
+  @NonNull
   public JSCommentMultiLine jsDoc ()
   {
     if (m_aJSDoc == null)
@@ -102,7 +102,7 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
   }
 
   @Override
-  public void declare (@Nonnull final JSFormatter aFormatter)
+  public void declare (@NonNull final JSFormatter aFormatter)
   {
     if (m_aJSDoc != null)
       aFormatter.generatable (m_aJSDoc);

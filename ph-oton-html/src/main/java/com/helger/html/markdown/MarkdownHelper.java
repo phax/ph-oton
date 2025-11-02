@@ -19,10 +19,10 @@ package com.helger.html.markdown;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.base.array.ArrayHelper;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Utilities.
@@ -429,7 +429,7 @@ final class MarkdownHelper
    *        Input String.
    * @return XML tag name
    */
-  @Nonnull
+  @NonNull
   public static String getXMLTag (final String in)
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -542,7 +542,7 @@ final class MarkdownHelper
    * @return Rest of the line after trimming and backtick removal
    * @since 0.7
    */
-  @Nonnull
+  @NonNull
   public static String getMetaFromFence (final String fenceLine)
   {
     for (int i = 0; i < fenceLine.length (); i++)

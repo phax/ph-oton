@@ -16,9 +16,9 @@
  */
 package com.helger.photon.security.login;
 
-import com.helger.base.callback.ICallback;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.base.callback.ICallback;
 
 /**
  * Callback interface when a user logs out.
@@ -34,6 +34,6 @@ public interface IUserLogoutCallback extends ICallback
    *        The login info of the user that just logged out. Never
    *        <code>null</code>.
    */
-  default void onUserLogout (@Nonnull final LoginInfo aInfo)
+  default void onUserLogout (@NonNull final LoginInfo aInfo)
   {}
 }

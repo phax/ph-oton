@@ -19,6 +19,9 @@ package com.helger.photon.jdbc.security;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.CollectionHelper;
@@ -37,9 +40,6 @@ import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonReader;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A special JDBC enabled manager with common methods for the security managers.
  *
@@ -47,12 +47,12 @@ import jakarta.annotation.Nullable;
  */
 public abstract class AbstractJDBCEnabledSecurityManager extends AbstractJDBCEnabledManager
 {
-  protected AbstractJDBCEnabledSecurityManager (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier)
+  protected AbstractJDBCEnabledSecurityManager (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier)
   {
     super (aDBExecSupplier);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public <T> ICommonsList <T> getNone ()
   {

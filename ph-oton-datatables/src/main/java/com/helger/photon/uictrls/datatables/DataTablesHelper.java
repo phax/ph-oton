@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -30,9 +33,6 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSOp;
 import com.helger.html.jscode.JSParam;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Some sanity functionality for {@link DataTables} objects.
@@ -50,13 +50,13 @@ public final class DataTablesHelper
    *
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static JSAnonymousFunction createFunctionIntVal ()
   {
     return createFunctionIntVal ((JSAnonymousFunction) null);
   }
 
-  @Nonnull
+  @NonNull
   public static JSAnonymousFunction createFunctionIntVal (@Nullable final JSAnonymousFunction aValueCleanupFunc)
   {
     final JSAnonymousFunction aFuncIntVal = new JSAnonymousFunction ();
@@ -94,7 +94,7 @@ public final class DataTablesHelper
    *        displayed. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static JSAnonymousFunction createFunctionPrintSum (@Nullable final String sPrefix,
                                                             @Nullable final String sSuffix,
                                                             @Nullable final String sBothPrefix,
@@ -138,8 +138,8 @@ public final class DataTablesHelper
    *        The columns to be added. May neither be <code>null</code> nor empty.
    * @return A JS function to be used as the dataTables footer callback.
    */
-  @Nonnull
-  public static JSAnonymousFunction createFooterCallbackColumnSum (@Nonnull final FooterCallbackSumColumn... aColumns)
+  @NonNull
+  public static JSAnonymousFunction createFooterCallbackColumnSum (@NonNull final FooterCallbackSumColumn... aColumns)
   {
     ValueEnforcer.notEmpty (aColumns, "Columns");
 
@@ -202,8 +202,8 @@ public final class DataTablesHelper
    *        JS expression that selects 1-n datatables
    * @return The invocation to clear the filter. Never <code>null</code>.
    */
-  @Nonnull
-  public static JSInvocation createClearFilterCode (@Nonnull final IJSExpression aDTSelect)
+  @NonNull
+  public static JSInvocation createClearFilterCode (@NonNull final IJSExpression aDTSelect)
   {
     return aDTSelect.invoke ("DataTable")
                     .invoke ("search")

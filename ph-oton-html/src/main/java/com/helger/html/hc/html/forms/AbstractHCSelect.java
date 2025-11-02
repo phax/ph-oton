@@ -18,6 +18,9 @@ package com.helger.html.hc.html.forms;
 
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsImmutableObject;
@@ -41,9 +44,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.request.IHCRequestField;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;select&gt; element
@@ -75,7 +75,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     super (EHTMLElement.SELECT);
   }
 
-  public AbstractHCSelect (@Nonnull final IHCRequestField aRF)
+  public AbstractHCSelect (@NonNull final IHCRequestField aRF)
   {
     this ();
     // Single request value only
@@ -83,7 +83,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     setName (aRF.getFieldName ());
   }
 
-  public AbstractHCSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
+  public AbstractHCSelect (@NonNull final IHCRequestFieldMultiValue aRF)
   {
     this ();
     // Multiple request values possible
@@ -99,7 +99,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -111,7 +111,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_bMultiple;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMultiple (final boolean bMultiple)
   {
     m_bMultiple = bMultiple;
@@ -123,14 +123,14 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_nSize;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSize (final int nSize)
   {
     m_nSize = nSize;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsSet <String> getAllPreselectedValues ()
   {
@@ -149,11 +149,11 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
    *        The added option. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onAddOption (@Nonnull final HCOption aOption)
+  protected void onAddOption (@NonNull final HCOption aOption)
   {}
 
-  @Nonnull
-  public final HCOption addOption (@Nonnull final HCOption aOption)
+  @NonNull
+  public final HCOption addOption (@NonNull final HCOption aOption)
   {
     ValueEnforcer.notNull (aOption, "Option");
 
@@ -166,8 +166,8 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return aOption;
   }
 
-  @Nonnull
-  public final HCOption addOptionAt (@Nonnegative final int nIndex, @Nonnull final HCOption aOption)
+  @NonNull
+  public final HCOption addOptionAt (@Nonnegative final int nIndex, @NonNull final HCOption aOption)
   {
     ValueEnforcer.notNull (aOption, "Option");
 
@@ -180,7 +180,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return aOption;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addOptionGroup (@Nullable final HCOptGroup aOptGroup)
   {
     if (aOptGroup != null)
@@ -188,7 +188,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllOptions ()
   {
     final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
@@ -199,7 +199,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllOptionGroups ()
   {
     final ICommonsList <IHCNode> aRest = new CommonsArrayList <> ();
@@ -210,7 +210,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeOptionAt (@Nonnegative final int nIndex)
   {
     int nMatch = 0;
@@ -228,7 +228,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeOptionGroupAt (@Nonnegative final int nIndex)
   {
     int nMatch = 0;
@@ -258,14 +258,14 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.getCount (HCOptGroup.class::isInstance);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <HCOption> getAllOptions ()
   {
     return m_aOptions.getAllInstanceOf (HCOption.class);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <HCOptGroup> getAllOptionGroups ()
   {
@@ -297,7 +297,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof HCOption &&
                                                                        ((HCOption) x).isSelected ();
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <HCOption> getAllSelectedOptions ()
   {
@@ -337,7 +337,7 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final ICommonsIterable <IHCNode> getChildren ()
   {

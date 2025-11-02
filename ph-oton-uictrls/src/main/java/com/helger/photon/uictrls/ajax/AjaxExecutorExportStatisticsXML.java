@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.ajax;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.util.statistics.StatisticsExporter;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A simple actions that exports the current statistics as XML
@@ -31,8 +31,8 @@ import jakarta.annotation.Nonnull;
  */
 public class AjaxExecutorExportStatisticsXML implements IAjaxExecutor
 {
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final IMicroDocument aDoc = StatisticsExporter.getAsXMLDocument ();
     aAjaxResponse.xml (aDoc);

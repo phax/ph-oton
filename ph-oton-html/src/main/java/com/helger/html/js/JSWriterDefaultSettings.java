@@ -16,12 +16,12 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.system.ENewLineMode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default settings for the textual representation of JSDOM objects
@@ -99,24 +99,24 @@ public final class JSWriterDefaultSettings
     setGenerateComments (!bMinimumCodeSize);
   }
 
-  public static void setIndent (@Nonnull @Nonempty final String sIndent)
+  public static void setIndent (@NonNull @Nonempty final String sIndent)
   {
     s_sIndent = ValueEnforcer.notEmpty (sIndent, "Indent");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getIndent ()
   {
     return s_sIndent;
   }
 
-  public static void setNewLineMode (@Nonnull final ENewLineMode eNewLineMode)
+  public static void setNewLineMode (@NonNull final ENewLineMode eNewLineMode)
   {
     s_eNewLineMode = ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
   }
 
-  @Nonnull
+  @NonNull
   public static ENewLineMode getNewLineMode ()
   {
     return s_eNewLineMode;

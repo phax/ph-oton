@@ -18,13 +18,13 @@ package com.helger.photon.app.html;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsIterable;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.resource.IHTMLResourceProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for CSS and JS resource sets.
@@ -42,8 +42,8 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    *        The item to add. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange addItem (@Nonnull T aItem);
+  @NonNull
+  EChange addItem (@NonNull T aItem);
 
   /**
    * Add an item at the specified index
@@ -55,8 +55,8 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    *        The item to add. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange addItem (int nIndex, @Nonnull T aItem);
+  @NonNull
+  EChange addItem (int nIndex, @NonNull T aItem);
 
   /**
    * Add all items from another list.
@@ -65,8 +65,8 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    *        The items to be added. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange addItems (@Nonnull IWebResourceSet <? extends T> aItems);
+  @NonNull
+  EChange addItems (@NonNull IWebResourceSet <? extends T> aItems);
 
   /**
    * Add all items from another list at the specified index.
@@ -78,8 +78,8 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    *        The items to be added. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange addItems (int nIndex, @Nonnull IWebResourceSet <? extends T> aItems);
+  @NonNull
+  EChange addItems (int nIndex, @NonNull IWebResourceSet <? extends T> aItems);
 
   /**
    * Unregister an existing item
@@ -88,21 +88,21 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    *        The item to be removed. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange removeItem (@Nonnull T aItem);
+  @NonNull
+  EChange removeItem (@NonNull T aItem);
 
   /**
    * Remove all items.
    *
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange removeAll ();
 
   /**
    * @return A non-<code>null</code> set with all items.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <T> getAllItems ();
 
@@ -112,7 +112,7 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    * @param aTarget
    *        The container to add the items to. May not be <code>null</code>.
    */
-  void getAllItems (@Nonnull Collection <? super T> aTarget);
+  void getAllItems (@NonNull Collection <? super T> aTarget);
 
   /**
    * Call this method to mark the resource set as "collected for further

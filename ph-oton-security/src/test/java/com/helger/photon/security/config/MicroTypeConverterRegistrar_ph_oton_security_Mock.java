@@ -16,14 +16,14 @@
  */
 package com.helger.photon.security.config;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
 import com.helger.photon.security.object.tenant.Tenant;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special micro type converter for this project.
@@ -33,7 +33,7 @@ import jakarta.annotation.Nonnull;
 @IsSPIImplementation
 public final class MicroTypeConverterRegistrar_ph_oton_security_Mock implements IMicroTypeConverterRegistrarSPI
 {
-  public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
+  public void registerMicroTypeConverter (@NonNull final IMicroTypeConverterRegistry aRegistry)
   {
     try
     {

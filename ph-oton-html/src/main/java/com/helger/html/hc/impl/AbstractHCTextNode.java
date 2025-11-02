@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCTextNode;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.MicroText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single text node as HC node.
@@ -42,20 +42,20 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   public AbstractHCTextNode ()
   {}
 
-  @Nonnull
+  @NonNull
   public final String getText ()
   {
     return m_sText;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setText (@Nullable final String sText)
   {
     m_sText = StringHelper.getNotNull (sText);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE prependText (@Nullable final String sText)
   {
     if (StringHelper.isNotEmpty (sText))
@@ -63,7 +63,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addText (@Nullable final String sText)
   {
     if (StringHelper.isNotEmpty (sText))
@@ -71,7 +71,7 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setEscape (final boolean bEscape)
   {
     m_bEscape = bEscape;
@@ -88,14 +88,14 @@ public abstract class AbstractHCTextNode <IMPLTYPE extends AbstractHCTextNode <I
   }
 
   @Override
-  @Nonnull
-  protected IMicroText internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroText internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return new MicroText (m_sText).setEscape (m_bEscape);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return getText ();

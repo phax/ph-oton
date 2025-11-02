@@ -16,6 +16,8 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +34,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A generated JS class.
@@ -69,7 +68,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    * @param sName
    *        Name of this class
    */
-  public JSDefinedClass (@Nonnull @Nonempty final String sName)
+  public JSDefinedClass (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
@@ -85,9 +84,9 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *        Superclass for this class
    * @return This class
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  public JSDefinedClass _extends (@Nonnull final AbstractJSClass aSuperClass)
+  public JSDefinedClass _extends (@NonNull final AbstractJSClass aSuperClass)
   {
     m_aSuperClass = ValueEnforcer.notNull (aSuperClass, "SuperClass");
     return this;
@@ -111,7 +110,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    * @return Name of this class
    */
   @Override
-  @Nonnull
+  @NonNull
   @Nonempty
   public String name ()
   {
@@ -125,8 +124,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *        Name of this field
    * @return Newly generated field
    */
-  @Nonnull
-  public JSFieldVar field (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSFieldVar field (@NonNull @Nonempty final String sName)
   {
     return field (sName, null);
   }
@@ -140,8 +139,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *        Initial value of this field.
    * @return Newly generated field
    */
-  @Nonnull
-  public JSFieldVar field (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  @NonNull
+  public JSFieldVar field (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInit)
   {
     final JSFieldVar aField = new JSFieldVar (this, sName, aInit);
     return addField (aField);
@@ -162,8 +161,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSFieldVar addField (@Nonnull final JSFieldVar aField)
+  @NonNull
+  public JSFieldVar addField (@NonNull final JSFieldVar aField)
   {
     ValueEnforcer.notNull (aField, "Field");
 
@@ -179,7 +178,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
   /**
    * @return A copy of all declared fields in this class
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, JSFieldVar> fields ()
   {
@@ -200,8 +199,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    * @throws IllegalArgumentException
    *         if the given field is not a field on this class.
    */
-  @Nonnull
-  public JSDefinedClass removeField (@Nonnull final JSFieldVar aField)
+  @NonNull
+  public JSDefinedClass removeField (@NonNull final JSFieldVar aField)
   {
     ValueEnforcer.notNull (aField, "Field");
 
@@ -210,7 +209,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSDefinedClass removeAllFields ()
   {
     m_aFields.clear ();
@@ -222,7 +221,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *
    * @return The constructor object to use. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public JSConstructor constructor ()
   {
     if (m_aConstructor == null)
@@ -237,8 +236,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *        Name of the method
    * @return Newly generated method
    */
-  @Nonnull
-  public JSMethod method (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSMethod method (@NonNull @Nonempty final String sName)
   {
     final JSMethod aMethod = new JSMethod (this, sName);
     m_aMethods.add (aMethod);
@@ -248,7 +247,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
   /**
    * @return the set of methods defined in this class.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <JSMethod> methods ()
   {
@@ -260,7 +259,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
    *
    * @return {@link JSCommentMultiLine} containing JSDoc for this class
    */
-  @Nonnull
+  @NonNull
   public JSCommentMultiLine jsDoc ()
   {
     if (m_aJSDoc == null)
@@ -268,13 +267,13 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     return m_aJSDoc;
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef prototype ()
   {
     return staticRef ("prototype");
   }
 
-  public void declare (@Nonnull final JSFormatter aFormatter)
+  public void declare (@NonNull final JSFormatter aFormatter)
   {
     if (m_aJSDoc != null)
       aFormatter.nl ().generatable (m_aJSDoc);

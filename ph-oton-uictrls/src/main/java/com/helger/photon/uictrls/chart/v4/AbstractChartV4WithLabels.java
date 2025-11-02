@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
@@ -28,9 +31,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base chart for charts with labels
@@ -49,7 +49,7 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
   private ICommonsList <String> m_aLabels;
   private final ICommonsList <DSTYPE> m_aDataSets = new CommonsArrayList <> ();
 
-  public AbstractChartV4WithLabels (@Nonnull @Nonempty final String sType)
+  public AbstractChartV4WithLabels (@NonNull @Nonempty final String sType)
   {
     super (sType);
   }
@@ -59,28 +59,28 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
     return CollectionHelper.isNotEmpty (m_aLabels);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllLabels ()
   {
     return new CommonsArrayList <> (m_aLabels);
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setLabels (@Nullable final String... aLabels)
   {
     m_aLabels = new CommonsArrayList <> (aLabels);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setLabels (@Nullable final Iterable <String> aLabels)
   {
     m_aLabels = new CommonsArrayList <> (aLabels);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public JSArray getDataLabelsAsArray ()
   {
     final JSArray ret = new JSArray ();
@@ -100,22 +100,22 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
     return m_aDataSets.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <DSTYPE> getAllDataSets ()
   {
     return m_aDataSets.getClone ();
   }
 
-  @Nonnull
-  public IMPLTYPE addDataSet (@Nonnull final DSTYPE aDataSet)
+  @NonNull
+  public IMPLTYPE addDataSet (@NonNull final DSTYPE aDataSet)
   {
     ValueEnforcer.notNull (aDataSet, "DataSet");
     m_aDataSets.add (aDataSet);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final JSArray getDataDatasetsAsArray ()
   {
@@ -125,14 +125,14 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
     return aJSDataSets;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final JSAssocArray getJSData ()
   {
     return getJSData (getDataDatasetsAsArray ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
   {
@@ -143,7 +143,7 @@ public abstract class AbstractChartV4WithLabels <IMPLTYPE extends AbstractChartV
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSOptions ()

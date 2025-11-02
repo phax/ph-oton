@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.prism;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.photon.core.configfile.EConfigurationFileSyntax;
-
-import jakarta.annotation.Nonnull;
 
 public enum EPrismLanguage implements ICSSClassProvider
 {
@@ -48,20 +48,20 @@ public enum EPrismLanguage implements ICSSClassProvider
 
   private final String m_sCSSClass;
 
-  EPrismLanguage (@Nonnull @Nonempty final String sCSSClass)
+  EPrismLanguage (@NonNull @Nonempty final String sCSSClass)
   {
     m_sCSSClass = sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSClass ()
   {
     return m_sCSSClass;
   }
 
-  @Nonnull
-  public static EPrismLanguage find (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
+  @NonNull
+  public static EPrismLanguage find (@NonNull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
   {
     switch (eSyntaxHighlightLanguage)
     {

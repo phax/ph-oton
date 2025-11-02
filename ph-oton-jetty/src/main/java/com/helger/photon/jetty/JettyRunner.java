@@ -21,13 +21,12 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.jetty.server.Server;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.exception.InitializationException;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A simple wrapper around Jetty. It synchronously starts and stops Jetty.
@@ -48,20 +47,20 @@ public class JettyRunner extends JettyStarter
     this ("JettyRunner");
   }
 
-  public JettyRunner (@Nonnull @Nonempty final String sAppName)
+  public JettyRunner (@NonNull @Nonempty final String sAppName)
   {
     super (sAppName);
   }
 
   @Override
-  protected void onServerStarted (@Nonnull final Server aServer)
+  protected void onServerStarted (@NonNull final Server aServer)
   {
     // Notify that server started
     m_aServerStartedSem.release ();
   }
 
   @Override
-  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t)
+  protected void onServerStartFailure (@NonNull final Server aServer, @NonNull final Throwable t)
   {
     // Server start failed - remember that
     m_aServerStartupSuccess.set (false);

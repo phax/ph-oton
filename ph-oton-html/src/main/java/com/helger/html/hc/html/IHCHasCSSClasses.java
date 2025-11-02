@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.trait.IGenericImplTrait;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.css.ICSSClassProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for objects having CSS classes
@@ -34,12 +34,12 @@ import jakarta.annotation.Nullable;
  */
 public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>> extends IGenericImplTrait <IMPLTYPE>
 {
-  @Nonnull
+  @NonNull
   IMPLTYPE addClass (@Nullable ICSSClassProvider aProvider);
 
   @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addClass instead!")
-  @Nonnull
+  @NonNull
   default IMPLTYPE addClasses (@Nullable final ICSSClassProvider aProvider)
   {
     return addClass (aProvider);
@@ -53,7 +53,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    *        The CSS classed to add. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addClasses (@Nullable final ICSSClassProvider... aCSSClassProviders)
   {
     if (aCSSClassProviders != null)
@@ -70,7 +70,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    *        The CSS classed to add. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addClasses (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
   {
     if (aCSSClassProviders != null)
@@ -86,7 +86,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    *        The CSS class provider to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeClass (@Nullable ICSSClassProvider aProvider);
 
   /**
@@ -94,7 +94,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllClasses ();
 
   /**
@@ -111,7 +111,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    * @return A sorted set with all registered CSS class providers. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <ICSSClassProvider> getAllClasses ();
 
@@ -119,7 +119,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    * @return A set with all CSS class names registered so far. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <String> getAllClassNames ();
 

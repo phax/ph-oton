@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uicore.page;
 
-import com.helger.html.hc.IHCNode;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.IHCNode;
 
 /**
  * A base interface for icons
@@ -31,6 +31,6 @@ public interface IWebPageIcon
    * @return The icon as self-contained node. The node must be visible by
    *         itself!
    */
-  @Nonnull
+  @NonNull
   IHCNode getAsNode ();
 }

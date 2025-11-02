@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.js;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.html.script.AbstractHCScriptInline;
 import com.helger.html.js.UnparsedJSCodeProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A Script to determine, if local storage is available.
@@ -40,7 +40,7 @@ public class JSLocalStorageDeterminator extends AbstractHCScriptInline <JSLocalS
     this (VARNAME);
   }
 
-  public JSLocalStorageDeterminator (@Nonnull @Nonempty final String sVarName)
+  public JSLocalStorageDeterminator (@NonNull @Nonempty final String sVarName)
   {
     super (new UnparsedJSCodeProvider ("var " +
                                        sVarName +
@@ -54,7 +54,7 @@ public class JSLocalStorageDeterminator extends AbstractHCScriptInline <JSLocalS
     m_sVarName = ValueEnforcer.notEmpty (sVarName, "VarName");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSVarName ()
   {

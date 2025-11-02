@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsImmutableObject;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;colgroup&gt; element
@@ -37,7 +37,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
     super (EHTMLElement.COLGROUP);
   }
 
-  @Nonnull
+  @NonNull
   public final HCColGroup addColumns (@Nullable final IHCCol <?>... aCols)
   {
     if (aCols != null)
@@ -46,7 +46,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCColGroup addColumns (@Nullable final Iterable <? extends IHCCol <?>> aCols)
   {
     if (aCols != null)
@@ -62,7 +62,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    *        the column to add
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCColGroup addColumn (@Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
@@ -79,7 +79,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    *        the column to add
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCColGroup addColumnAt (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
@@ -115,7 +115,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
   /**
    * @return A list of all contained columns. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final ICommonsList <IHCCol <?>> getAllColumns ()
   {
@@ -142,7 +142,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    *        The index of the column to be removed
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCColGroup removeColumnAt (final int nIndex)
   {
     removeChildAt (nIndex);
@@ -154,7 +154,7 @@ public class HCColGroup extends AbstractHCElementWithInternalChildren <HCColGrou
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCColGroup removeAllColumns ()
   {
     return removeAllChildren ();

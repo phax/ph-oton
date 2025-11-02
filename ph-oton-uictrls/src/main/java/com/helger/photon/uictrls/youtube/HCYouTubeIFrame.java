@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.youtube;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -26,8 +28,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.embedded.AbstractHCIFrame;
 import com.helger.url.ISimpleURL;
 import com.helger.url.URLBuilder;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Embeds YouTube videos as an IFrame<br>
@@ -41,47 +41,47 @@ public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
 
   private final URLBuilder m_aVideoURL;
 
-  public HCYouTubeIFrame (@Nonnull @Nonempty final String sVideoID)
+  public HCYouTubeIFrame (@NonNull @Nonempty final String sVideoID)
   {
     m_aVideoURL = URLBuilder.of (PREFIX + sVideoID);
   }
 
-  public HCYouTubeIFrame (final int nWidth, final int nHeight, @Nonnull @Nonempty final String sVideoID)
+  public HCYouTubeIFrame (final int nWidth, final int nHeight, @NonNull @Nonempty final String sVideoID)
   {
     this (sVideoID);
     setWidth (nWidth);
     setHeight (nHeight);
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getVideoURL ()
   {
     return m_aVideoURL.build ();
   }
 
-  @Nonnull
+  @NonNull
   public HCYouTubeIFrame setAutoPlay (final boolean bAutoplay)
   {
     m_aVideoURL.param ("autoplay", bAutoplay ? "1" : "0");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public HCYouTubeIFrame setAllowFullscreen (final boolean bAllowFullscreen)
   {
     m_aVideoURL.param ("fs", bAllowFullscreen ? "1" : "0");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public HCYouTubeIFrame setShowRelated (final boolean bShowRelated)
   {
     m_aVideoURL.param ("rel", bShowRelated ? "1" : "0");
     return this;
   }
 
-  @Nonnull
-  public HCYouTubeIFrame setLanguage (@Nonnull final Locale aLocale)
+  @NonNull
+  public HCYouTubeIFrame setLanguage (@NonNull final Locale aLocale)
   {
     ValueEnforcer.notNull (aLocale, "Locale");
     ValueEnforcer.notEmpty (aLocale.getLanguage (), "Locale.getLanguage");

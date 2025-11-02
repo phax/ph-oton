@@ -18,6 +18,9 @@ package com.helger.photon.core.execcontext;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
@@ -31,9 +34,6 @@ import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This object is instantiated per page view and contains the current request
@@ -49,24 +49,24 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   private final IMenuItemPage m_aSelectedMenuItem;
   private SimpleURL m_aSelfHref;
 
-  public LayoutExecutionContext (@Nonnull final ILayoutExecutionContext aLEC)
+  public LayoutExecutionContext (@NonNull final ILayoutExecutionContext aLEC)
   {
     this (aLEC, aLEC.getSelectedMenuItem ());
   }
 
-  public LayoutExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IMenuItemPage aSelectedMenuItem)
+  public LayoutExecutionContext (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final IMenuItemPage aSelectedMenuItem)
   {
     super (aSWEC);
     m_aSelectedMenuItem = ValueEnforcer.notNull (aSelectedMenuItem, "SelectedMenuItem");
   }
 
-  @Nonnull
+  @NonNull
   public final IMenuItemPage getSelectedMenuItem ()
   {
     return m_aSelectedMenuItem;
   }
 
-  @Nonnull
+  @NonNull
   @Override
   public final SimpleURL getSelfHref ()
   {
@@ -79,7 +79,7 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ret.getClone ();
   }
 
-  public final void postRedirectGet (@Nonnull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent) throws ForcedRedirectException
+  public final void postRedirectGet (@NonNull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);
@@ -91,8 +91,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ToStringGenerator.getDerived (super.toString ()).append ("selectedMenuItem", m_aSelectedMenuItem).getToString ();
   }
 
-  @Nonnull
-  public static LayoutExecutionContext createForAjaxOrAction (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static LayoutExecutionContext createForAjaxOrAction (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Get the locale from the session
     final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);

@@ -18,6 +18,9 @@ package com.helger.html.hc.html.metadata;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.enforce.ValueEnforcer;
@@ -44,9 +47,6 @@ import com.helger.mime.IMimeType;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNodeWithChildren;
 import com.helger.xml.microdom.MicroText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;style&gt; element
@@ -79,26 +79,26 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     setStyleContent (sContent);
   }
 
-  public HCStyle (@Nonnull final CascadingStyleSheet aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public HCStyle (@NonNull final CascadingStyleSheet aCSS, @NonNull final CSSWriterSettings aSettings)
   {
     this ();
     setStyleContent (aCSS, aSettings);
   }
 
-  public HCStyle (@Nonnull final CSSDeclarationList aCSS, @Nonnull final CSSWriterSettings aSettings)
+  public HCStyle (@NonNull final CSSDeclarationList aCSS, @NonNull final CSSWriterSettings aSettings)
   {
     this ();
     setStyleContent (aCSS, aSettings);
   }
 
-  @Nonnull
+  @NonNull
   public final IMimeType getType ()
   {
     return m_aType;
   }
 
-  @Nonnull
-  public final HCStyle setType (@Nonnull final IMimeType aType)
+  @NonNull
+  public final HCStyle setType (@NonNull final IMimeType aType)
   {
     m_aType = ValueEnforcer.notNull (aType, "Type");
     return this;
@@ -110,14 +110,14 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     return m_aMediaList;
   }
 
-  @Nonnull
+  @NonNull
   public final HCStyle setMedia (@Nullable final ICSSMediaList aMediaList)
   {
     m_aMediaList = aMediaList == null ? null : new CSSMediaList (aMediaList);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   private CSSMediaList _ensureMediaListPresent ()
   {
     if (m_aMediaList == null)
@@ -125,14 +125,14 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     return m_aMediaList;
   }
 
-  @Nonnull
-  public final HCStyle addMedium (@Nonnull final ECSSMedium eMedium)
+  @NonNull
+  public final HCStyle addMedium (@NonNull final ECSSMedium eMedium)
   {
     _ensureMediaListPresent ().addMedium (eMedium);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCStyle removeAllMedia ()
   {
     m_aMediaList = null;
@@ -176,23 +176,23 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     return hasNoMedia () || containsMedium (ECSSMedium.ALL);
   }
 
-  @Nonnull
+  @NonNull
   public final HCStyle setStyleContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
     return this;
   }
 
-  @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CascadingStyleSheet aCSS,
-                                        @Nonnull final CSSWriterSettings aSettings)
+  @NonNull
+  public final HCStyle setStyleContent (@NonNull final CascadingStyleSheet aCSS,
+                                        @NonNull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
 
-  @Nonnull
-  public final HCStyle setStyleContent (@Nonnull final CSSDeclarationList aCSS,
-                                        @Nonnull final CSSWriterSettings aSettings)
+  @NonNull
+  public final HCStyle setStyleContent (@NonNull final CSSDeclarationList aCSS,
+                                        @NonNull final CSSWriterSettings aSettings)
   {
     return setStyleContent (new CSSWriter (aSettings).getCSSAsString (aCSS));
   }
@@ -206,14 +206,14 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     return m_sContent;
   }
 
-  @Nonnull
+  @NonNull
   public final EHCStyleInlineMode getMode ()
   {
     return m_eMode;
   }
 
-  @Nonnull
-  public final HCStyle setMode (@Nonnull final EHCStyleInlineMode eMode)
+  @NonNull
+  public final HCStyle setMode (@NonNull final EHCStyleInlineMode eMode)
   {
     m_eMode = ValueEnforcer.notNull (eMode, "Mode");
     return this;
@@ -224,7 +224,7 @@ public class HCStyle extends AbstractHCElement <HCStyle>
     return m_bEmitAfterFiles;
   }
 
-  @Nonnull
+  @NonNull
   public final HCStyle setEmitAfterFiles (final boolean bEmitAfterFiles)
   {
     m_bEmitAfterFiles = bEmitAfterFiles;
@@ -232,15 +232,15 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Don't create style elements with empty content....
     return StringHelper.isNotEmpty (m_sContent);
   }
 
-  public static void setInlineStyle (@Nonnull final IMicroNodeWithChildren aElement,
+  public static void setInlineStyle (@NonNull final IMicroNodeWithChildren aElement,
                                      @Nullable final String sContent,
-                                     @Nonnull final EHCStyleInlineMode eMode)
+                                     @NonNull final EHCStyleInlineMode eMode)
   {
     if (StringHelper.isNotEmpty (sContent))
       switch (eMode)
@@ -260,8 +260,8 @@ public class HCStyle extends AbstractHCElement <HCStyle>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 

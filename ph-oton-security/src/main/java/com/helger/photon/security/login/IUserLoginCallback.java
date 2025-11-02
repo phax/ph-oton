@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.login;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user logs in.
@@ -35,7 +35,7 @@ public interface IUserLoginCallback extends ICallback
    *        The login info of the user that just logged in. Never
    *        <code>null</code>.
    */
-  default void onUserLogin (@Nonnull final LoginInfo aInfo)
+  default void onUserLogin (@NonNull final LoginInfo aInfo)
   {}
 
   /**
@@ -46,6 +46,6 @@ public interface IUserLoginCallback extends ICallback
    * @param eLoginResult
    *        The login result indicating the login error.
    */
-  default void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+  default void onUserLoginError (@NonNull @Nonempty final String sUserID, @NonNull final ELoginResult eLoginResult)
   {}
 }

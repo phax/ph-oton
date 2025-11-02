@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -27,9 +30,6 @@ import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.collection.hierarchy.visit.EHierarchyVisitorReturn;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Determine all menu items to show, depending on the currently selected menu
@@ -43,7 +43,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   private final String m_sSelectedItemID;
   private final DefaultTreeItemWithID <String, IMenuObject> m_aSelectedItem;
 
-  public MenuItemDeterminatorCallback (@Nonnull final IMenuTree aMenuTree, @Nullable final String sSelectedMenuItemID)
+  public MenuItemDeterminatorCallback (@NonNull final IMenuTree aMenuTree, @Nullable final String sSelectedMenuItemID)
   {
     super (aMenuTree);
     m_sSelectedItemID = sSelectedMenuItemID;
@@ -53,13 +53,13 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
 
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected boolean isMenuItemValidToBeDisplayed (@Nonnull final IMenuObject aMenuObj)
+  protected boolean isMenuItemValidToBeDisplayed (@NonNull final IMenuObject aMenuObj)
   {
     return aMenuObj.matchesDisplayFilter ();
   }
 
   @OverrideOnDemand
-  protected void rememberMenuItemForDisplay (@Nonnull @Nonempty final String sMenuItemID, final boolean bExpanded)
+  protected void rememberMenuItemForDisplay (@NonNull @Nonempty final String sMenuItemID, final boolean bExpanded)
   {
     final Boolean aExpanded = m_aItems.get (sMenuItemID);
     if (aExpanded == null || !aExpanded.booleanValue ())
@@ -67,7 +67,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   }
 
   @Override
-  public final EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+  public final EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     boolean bShow;
     boolean bAddAllChildrenOnThisLevel = false;
@@ -143,24 +143,24 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
    * @return A map with all items to be displayed, where the key is the menu
    *         item ID and the value is the expansion state of the item.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, Boolean> getAllItemIDs ()
   {
     return m_aItems.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuTree aMenuTree,
+  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@NonNull final IMenuTree aMenuTree,
                                                                         @Nullable final String sSelectedMenuItemID)
   {
     return getAllDisplayMenuItemIDs (new MenuItemDeterminatorCallback (aMenuTree, sSelectedMenuItemID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@Nonnull final IMenuItemDeterminatorCallback aDeterminator)
+  public static ICommonsMap <String, Boolean> getAllDisplayMenuItemIDs (@NonNull final IMenuItemDeterminatorCallback aDeterminator)
   {
     ValueEnforcer.notNull (aDeterminator, "Determinator");
 
@@ -177,9 +177,9 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
    * @return A non-<code>null</code> map with all menu item IDs as keys and the
    *         "expansion state" as the value.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsMap <String, Boolean> getAllMenuItemIDs (@Nonnull final IMenuTree aMenuTree)
+  public static ICommonsMap <String, Boolean> getAllMenuItemIDs (@NonNull final IMenuTree aMenuTree)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
@@ -187,7 +187,7 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     TreeVisitor.visitTree (aMenuTree, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
     {
       @Override
-      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+      public EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
       {
         ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
         return EHierarchyVisitorReturn.CONTINUE;

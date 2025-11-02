@@ -16,10 +16,10 @@
  */
 package com.helger.photon.io;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.io.id.factory.FileLongIDFactory;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A special {@link FileLongIDFactory} that uses {@link WebFileIO} to get the filename.
@@ -29,7 +29,7 @@ import jakarta.annotation.Nonnull;
 @ThreadSafe
 public class WebIOLongIDFactory extends FileLongIDFactory
 {
-  public WebIOLongIDFactory (@Nonnull final String sFilename)
+  public WebIOLongIDFactory (@NonNull final String sFilename)
   {
     super (WebFileIO.getDataIO ().getFile (sFilename));
   }

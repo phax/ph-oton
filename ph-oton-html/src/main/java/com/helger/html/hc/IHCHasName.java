@@ -16,8 +16,8 @@
  */
 package com.helger.html.hc;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base interface for a node having a name
@@ -41,6 +41,6 @@ public interface IHCHasName <IMPLTYPE extends IHCHasName <IMPLTYPE>>
    *        The new name. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setName (@Nullable String sName);
 }

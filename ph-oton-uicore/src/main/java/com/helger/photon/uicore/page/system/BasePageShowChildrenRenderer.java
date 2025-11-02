@@ -19,6 +19,9 @@ package com.helger.photon.uicore.page.system;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
@@ -30,9 +33,6 @@ import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuSeparator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The default renderer used for {@link BasePageShowChildren}.
@@ -55,8 +55,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    *        The previous element from the last call. May be <code>null</code>.
    */
   @OverrideOnDemand
-  public void beforeAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
-                                         @Nonnull final IMenuObject aMenuObj,
+  public void beforeAddRenderedMenuItem (@NonNull final IWebPageExecutionContext aWPEC,
+                                         @NonNull final IMenuObject aMenuObj,
                                          @Nullable final IHCElement <?> aPreviousLI)
   {
     if (aMenuObj.getMenuObjectType ().isSeparator () && aPreviousLI != null)
@@ -74,7 +74,7 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuSeparator (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IMenuSeparator aMenuSeparator)
+  public IHCNode renderMenuSeparator (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuSeparator aMenuSeparator)
   {
     return null;
   }
@@ -90,7 +90,7 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuItemPage (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IMenuItemPage aMenuItemPage)
+  public IHCNode renderMenuItemPage (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuItemPage aMenuItemPage)
   {
     if (!aMenuItemPage.matchesDisplayFilter ())
       return null;
@@ -115,7 +115,7 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuItemExternal (@Nonnull final IWebPageExecutionContext aWPEC, @Nonnull final IMenuItemExternal aMenuItemExternal)
+  public IHCNode renderMenuItemExternal (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuItemExternal aMenuItemExternal)
   {
     if (!aMenuItemExternal.matchesDisplayFilter ())
       return null;
@@ -138,8 +138,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    *        The created element for the passed object. May be <code>null</code>.
    */
   @OverrideOnDemand
-  public void afterAddRenderedMenuItem (@Nonnull final IWebPageExecutionContext aWPEC,
-                                        @Nonnull final IMenuObject aMenuObj,
+  public void afterAddRenderedMenuItem (@NonNull final IWebPageExecutionContext aWPEC,
+                                        @NonNull final IMenuObject aMenuObj,
                                         @Nullable final IHCElement <?> aLI)
   {}
 }

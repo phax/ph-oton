@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
@@ -24,9 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCMediaElementChild;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
 {
@@ -49,7 +49,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     return m_sKind;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTrack setKind (@Nullable final String sKind)
   {
     m_sKind = sKind;
@@ -62,7 +62,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTrack setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -75,7 +75,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     return m_sSrcLang;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTrack setSrcLang (@Nullable final String sSrcLang)
   {
     m_sSrcLang = sSrcLang;
@@ -88,7 +88,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     return m_sLabel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTrack setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
@@ -100,7 +100,7 @@ public class HCTrack extends AbstractHCMediaElementChild <HCTrack>
     return m_bDefault;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTrack setDefault (final boolean bDefault)
   {
     m_bDefault = bDefault;

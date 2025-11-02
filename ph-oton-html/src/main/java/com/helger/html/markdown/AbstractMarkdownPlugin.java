@@ -19,18 +19,18 @@ package com.helger.html.markdown;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 public abstract class AbstractMarkdownPlugin
 {
   protected String m_sPluginID;
 
-  public AbstractMarkdownPlugin (@Nonnull final String sPluginID)
+  public AbstractMarkdownPlugin (@NonNull final String sPluginID)
   {
     m_sPluginID = sPluginID;
   }
 
-  @Nonnull
+  @NonNull
   public String getPluginID ()
   {
     return m_sPluginID;

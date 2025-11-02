@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.prism;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for PrismJS plugins
@@ -51,5 +51,5 @@ public interface IPrismPlugin
    * @param aPreStyles
    *        The pre element styles
    */
-  void applyOnPre (@Nonnull IMicroElement aPreElement, @Nonnull HCHasCSSClasses aPreClasses, @Nonnull HCHasCSSStyles aPreStyles);
+  void applyOnPre (@NonNull IMicroElement aPreElement, @NonNull HCHasCSSClasses aPreClasses, @NonNull HCHasCSSStyles aPreStyles);
 }

@@ -18,6 +18,7 @@ package com.helger.html.hc.config;
 
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +34,6 @@ import com.helger.base.spi.ServiceLoaderHelper;
 import com.helger.base.system.ENewLineMode;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCConversionSettings;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Global HTML Control settings
@@ -158,7 +157,7 @@ public final class HCSettings
    * @param aConversionSettings
    *        The object to be used. May not be <code>null</code>.
    */
-  public static void setConversionSettings (@Nonnull final HCConversionSettings aConversionSettings)
+  public static void setConversionSettings (@NonNull final HCConversionSettings aConversionSettings)
   {
     ValueEnforcer.notNull (aConversionSettings, "ConversionSettings");
 
@@ -168,7 +167,7 @@ public final class HCSettings
   /**
    * @return The global mutable conversion settings. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static HCConversionSettings getMutableConversionSettings ()
   {
@@ -178,7 +177,7 @@ public final class HCSettings
   /**
    * @return The global read-only non-<code>null</code> conversion settings
    */
-  @Nonnull
+  @NonNull
   public static IHCConversionSettings getConversionSettings ()
   {
     return getMutableConversionSettings ();
@@ -188,7 +187,7 @@ public final class HCSettings
    * @return The global read-only non-<code>null</code> conversion settings with XML namespaces
    *         disabled
    */
-  @Nonnull
+  @NonNull
   public static HCConversionSettings getConversionSettingsWithoutNamespaces ()
   {
     // Create a copy!!
@@ -203,7 +202,7 @@ public final class HCSettings
    *
    * @return The non-<code>null</code> Charset object
    */
-  @Nonnull
+  @NonNull
   public static Charset getHTMLCharset ()
   {
     return getConversionSettings ().getXMLWriterSettings ().getCharset ();
@@ -216,7 +215,7 @@ public final class HCSettings
    * @param eHTMLVersion
    *        The HTML version to use. May not be <code>null</code>.
    */
-  public static void setDefaultHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
+  public static void setDefaultHTMLVersion (@NonNull final EHTMLVersion eHTMLVersion)
   {
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
 
@@ -266,13 +265,13 @@ public final class HCSettings
     CONDLOG.info ( () -> "Default <textarea> rows set to " + nTextAreaDefaultRows);
   }
 
-  @Nonnull
+  @NonNull
   public static IHCOnDocumentReadyProvider getOnDocumentReadyProvider ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aOnDocumentReadyProvider);
   }
 
-  public static void setOnDocumentReadyProvider (@Nonnull final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
+  public static void setOnDocumentReadyProvider (@NonNull final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
@@ -283,7 +282,7 @@ public final class HCSettings
   /**
    * @return The default masking mode to emit script content. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static EHCScriptInlineMode getScriptInlineMode ()
   {
     return RW_LOCK.readLockedGet ( () -> s_eScriptInlineMode);
@@ -296,7 +295,7 @@ public final class HCSettings
    * @param eMode
    *        The new masking mode to set. May not be <code>null</code>.
    */
-  public static void setScriptInlineMode (@Nonnull final EHCScriptInlineMode eMode)
+  public static void setScriptInlineMode (@NonNull final EHCScriptInlineMode eMode)
   {
     ValueEnforcer.notNull (eMode, "Mode");
 
@@ -309,7 +308,7 @@ public final class HCSettings
   /**
    * @return The default mode to emit style content. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static EHCStyleInlineMode getStyleInlineMode ()
   {
     return RW_LOCK.readLockedGet ( () -> s_eStyleInlineMode);
@@ -322,7 +321,7 @@ public final class HCSettings
    * @param eStyleInlineMode
    *        The new mode to set. May not be <code>null</code>.
    */
-  public static void setStyleInlineMode (@Nonnull final EHCStyleInlineMode eStyleInlineMode)
+  public static void setStyleInlineMode (@NonNull final EHCStyleInlineMode eStyleInlineMode)
   {
     ValueEnforcer.notNull (eStyleInlineMode, "mode");
 
@@ -332,13 +331,13 @@ public final class HCSettings
       CONDLOG.info ( () -> "Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
-  @Nonnull
+  @NonNull
   public static ENewLineMode getNewLineMode ()
   {
     return RW_LOCK.readLockedGet ( () -> s_eNewLineMode);
   }
 
-  public static void setNewLineMode (@Nonnull final ENewLineMode eNewLineMode)
+  public static void setNewLineMode (@NonNull final ENewLineMode eNewLineMode)
   {
     ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
 

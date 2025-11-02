@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.html.FakeJS;
 import com.helger.html.hc.html.forms.AbstractHCButton;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A special &lt;button&gt; that changes the location of the current page.
@@ -30,7 +30,7 @@ import jakarta.annotation.Nonnull;
  */
 public class HCLinkButton extends AbstractHCButton <HCLinkButton>
 {
-  public HCLinkButton (final String sLabel, @Nonnull final ISimpleURL aURL)
+  public HCLinkButton (final String sLabel, @NonNull final ISimpleURL aURL)
   {
     super (sLabel, FakeJS.windowLocationHref (aURL));
   }

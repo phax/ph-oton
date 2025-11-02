@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.impl;
 
-import com.helger.annotation.Nonnegative;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.Nonnegative;
 
 /**
  * Represents a single text node as HC node.
@@ -33,12 +33,12 @@ public class HCTextNode extends AbstractHCTextNode <HCTextNode>
     setText (sText);
   }
 
-  public HCTextNode (@Nonnull final char [] aChars)
+  public HCTextNode (@NonNull final char [] aChars)
   {
     setText (aChars);
   }
 
-  public HCTextNode (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  public HCTextNode (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     setText (aChars, nOfs, nLen);
   }

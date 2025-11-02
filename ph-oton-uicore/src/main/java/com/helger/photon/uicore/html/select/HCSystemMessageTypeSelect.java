@@ -18,14 +18,14 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.core.systemmsg.ESystemMessageType;
 
-import jakarta.annotation.Nonnull;
-
 public class HCSystemMessageTypeSelect extends HCExtSelect
 {
-  public HCSystemMessageTypeSelect (@Nonnull final RequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCSystemMessageTypeSelect (@NonNull final RequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     super (aRF);
     for (final ESystemMessageType e : ESystemMessageType.values ())

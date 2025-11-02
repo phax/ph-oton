@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper for Fine Uploader 5.x retry part
@@ -56,7 +56,7 @@ public class FineUploader5Retry implements IFineUploader5Part
    *        Number of seconds. Must be &ge; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Retry setAutoAttemptDelay (@Nonnegative final int nAutoAttemptDelay)
   {
     ValueEnforcer.isGE0 (nAutoAttemptDelay, "AutoAttemptDelay");
@@ -76,7 +76,7 @@ public class FineUploader5Retry implements IFineUploader5Part
    *        <code>true</code> or <code>false</code>
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Retry setEnableAuto (final boolean bEnableAuto)
   {
     m_bRetryEnableAuto = bEnableAuto;
@@ -96,7 +96,7 @@ public class FineUploader5Retry implements IFineUploader5Part
    *        The number of retry attempts. Must be &ge; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Retry setMaxAutoAttempts (@Nonnegative final int nMaxAutoAttempts)
   {
     ValueEnforcer.isGE0 (nMaxAutoAttempts, "MaxAutoAttempts");
@@ -104,7 +104,7 @@ public class FineUploader5Retry implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPreventRetryResponseProperty ()
   {
@@ -119,15 +119,15 @@ public class FineUploader5Retry implements IFineUploader5Part
    *        property name
    * @return this
    */
-  @Nonnull
-  public FineUploader5Retry setPreventRetryResponseProperty (@Nonnull @Nonempty final String sPreventRetryResponseProperty)
+  @NonNull
+  public FineUploader5Retry setPreventRetryResponseProperty (@NonNull @Nonempty final String sPreventRetryResponseProperty)
   {
     ValueEnforcer.notEmpty (sPreventRetryResponseProperty, "PreventRetryResponseProperty");
     m_sRetryPreventRetryResponseProperty = sPreventRetryResponseProperty;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

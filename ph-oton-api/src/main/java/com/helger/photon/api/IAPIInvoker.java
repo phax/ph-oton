@@ -18,10 +18,10 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an API invoker. It has a set of {@link IAPIExecutor}
@@ -44,7 +44,7 @@ public interface IAPIInvoker extends Serializable
    * @throws Exception
    *         In case something goes wrong
    */
-  void invoke (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-               @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
+  void invoke (@NonNull InvokableAPIDescriptor aInvokableDescriptor,
+               @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+               @NonNull UnifiedResponse aUnifiedResponse) throws Exception;
 }

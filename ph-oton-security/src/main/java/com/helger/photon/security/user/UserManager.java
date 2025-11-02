@@ -19,6 +19,8 @@ package com.helger.photon.security.user;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,6 @@ import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.PasswordSalt;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class manages the available users.
  *
@@ -56,12 +55,12 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
 
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public UserManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (User.class, sFilename);
   }
 
-  @Nonnull
+  @NonNull
   public static User createDefaultUserAdministrator ()
   {
     return User.createdPredefinedUser (CSecurity.USER_ADMINISTRATOR_ID,
@@ -77,7 +76,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                        false);
   }
 
-  @Nonnull
+  @NonNull
   public static User createDefaultUserUser ()
   {
     return User.createdPredefinedUser (CSecurity.USER_USER_ID,
@@ -93,7 +92,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                        false);
   }
 
-  @Nonnull
+  @NonNull
   public static User createDefaultUserGuest ()
   {
     return User.createdPredefinedUser (CSecurity.USER_GUEST_ID,
@@ -124,7 +123,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
       m_aRWLock.writeLocked ( () -> internalCreateItem (createDefaultUserGuest ()));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final CallbackList <IUserModificationCallback> userModificationCallbacks ()
   {
@@ -132,9 +131,9 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   }
 
   @Nullable
-  public IUser createNewUser (@Nonnull @Nonempty final String sLoginName,
+  public IUser createNewUser (@NonNull @Nonempty final String sLoginName,
                               @Nullable final String sEmailAddress,
-                              @Nonnull final String sPlainTextPassword,
+                              @NonNull final String sPlainTextPassword,
                               @Nullable final String sFirstName,
                               @Nullable final String sLastName,
                               @Nullable final String sDescription,
@@ -182,10 +181,10 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   }
 
   @Nullable
-  public IUser createPredefinedUser (@Nonnull @Nonempty final String sID,
-                                     @Nonnull @Nonempty final String sLoginName,
+  public IUser createPredefinedUser (@NonNull @Nonempty final String sID,
+                                     @NonNull @Nonempty final String sLoginName,
                                      @Nullable final String sEmailAddress,
-                                     @Nonnull final String sPlainTextPassword,
+                                     @NonNull final String sPlainTextPassword,
                                      @Nullable final String sFirstName,
                                      @Nullable final String sLastName,
                                      @Nullable final String sDescription,
@@ -268,7 +267,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return findFirst (x -> sEmailAddress.equalsIgnoreCase (x.getEmailAddress ()));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllActiveUsers ()
   {
@@ -286,30 +285,30 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return containsAny (x -> x.isNotDeleted () && x.isEnabled ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllDisabledUsers ()
   {
     return getAll (x -> x.isNotDeleted () && x.isDisabled ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllNotDeletedUsers ()
   {
     return getAll (IUser::isNotDeleted);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllDeletedUsers ()
   {
     return getAll (IUser::isDeleted);
   }
 
-  @Nonnull
+  @NonNull
   public EChange setUserData (@Nullable final String sUserID,
-                              @Nonnull @Nonempty final String sNewLoginName,
+                              @NonNull @Nonempty final String sNewLoginName,
                               @Nullable final String sNewEmailAddress,
                               @Nullable final String sNewFirstName,
                               @Nullable final String sNewLastName,
@@ -364,8 +363,8 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  public EChange setUserPassword (@Nullable final String sUserID, @Nonnull final String sNewPlainTextPassword)
+  @NonNull
+  public EChange setUserPassword (@Nullable final String sUserID, @NonNull final String sNewPlainTextPassword)
   {
     // Resolve user
     final User aUser = getOfID (sUserID);
@@ -401,7 +400,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserLastLogin (@Nullable final String sUserID)
   {
     // Resolve user
@@ -425,7 +424,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserLastFailedLogin (@Nullable final String sUserID)
   {
     // Resolve user
@@ -453,7 +452,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUser (@Nullable final String sUserID)
   {
     final User aUser = getOfID (sUserID);
@@ -484,7 +483,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange undeleteUser (@Nullable final String sUserID)
   {
     final User aUser = getOfID (sUserID);
@@ -515,7 +514,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange disableUser (@Nullable final String sUserID)
   {
     final User aUser = getOfID (sUserID);
@@ -545,7 +544,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange enableUser (@Nullable final String sUserID)
   {
     final User aUser = getOfID (sUserID);

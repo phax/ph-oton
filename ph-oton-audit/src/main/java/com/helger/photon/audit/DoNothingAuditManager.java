@@ -19,11 +19,11 @@ package com.helger.photon.audit;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.collection.commons.CommonsArrayList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A specific implementation of {@link IAuditManager} that does nothing.
@@ -46,13 +46,13 @@ public final class DoNothingAuditManager implements IAuditManager
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public IAuditor getAuditor ()
   {
     return m_aAuditor;
   }
 
-  @Nonnull
+  @NonNull
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
     return new CommonsArrayList <> ();

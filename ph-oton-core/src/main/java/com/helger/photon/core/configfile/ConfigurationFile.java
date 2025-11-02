@@ -19,6 +19,9 @@ package com.helger.photon.core.configfile;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
@@ -26,9 +29,6 @@ import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
 import com.helger.text.IHasDescription;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public class ConfigurationFile implements IHasID <String>, IHasDescription
@@ -39,8 +39,8 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   private Charset m_aDefaultCharset = StandardCharsets.UTF_8;
   private EConfigurationFileSyntax m_eSyntaxHighlightLanguage = EConfigurationFileSyntax.NONE;
 
-  @Nonnull
-  private static String _unify (@Nonnull final String s)
+  @NonNull
+  private static String _unify (@NonNull final String s)
   {
     final StringBuilder aSB = new StringBuilder (s.length ());
     for (final char c : s.toCharArray ())
@@ -57,19 +57,19 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
    * @param aRes
    *        The resource that points to the relevant configuration file.
    */
-  public ConfigurationFile (@Nonnull final IReadableResource aRes)
+  public ConfigurationFile (@NonNull final IReadableResource aRes)
   {
     m_aRes = ValueEnforcer.notNull (aRes, "Resource");
     m_sID = _unify (m_aRes.getPath ());
   }
 
-  @Nonnull
+  @NonNull
   public final String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public final IReadableResource getResource ()
   {
     return m_aRes;
@@ -87,7 +87,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   }
 
   @Nullable
-  public String getContentAsString (@Nonnull final Charset aCharset)
+  public String getContentAsString (@NonNull final Charset aCharset)
   {
     return StreamHelper.getAllBytesAsString (m_aRes, aCharset);
   }
@@ -110,34 +110,34 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
    *        <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final ConfigurationFile setDescription (@Nullable final String sDescription)
   {
     m_sDescription = sDescription;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final Charset getDefaultCharset ()
   {
     return m_aDefaultCharset;
   }
 
-  @Nonnull
-  public final ConfigurationFile setDefaultCharset (@Nonnull final Charset aDefaultCharset)
+  @NonNull
+  public final ConfigurationFile setDefaultCharset (@NonNull final Charset aDefaultCharset)
   {
     m_aDefaultCharset = ValueEnforcer.notNull (aDefaultCharset, "DefaultCharset");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final EConfigurationFileSyntax getSyntaxHighlightLanguage ()
   {
     return m_eSyntaxHighlightLanguage;
   }
 
-  @Nonnull
-  public final ConfigurationFile setSyntaxHighlightLanguage (@Nonnull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
+  @NonNull
+  public final ConfigurationFile setSyntaxHighlightLanguage (@NonNull final EConfigurationFileSyntax eSyntaxHighlightLanguage)
   {
     m_eSyntaxHighlightLanguage = ValueEnforcer.notNull (eSyntaxHighlightLanguage, "SyntaxHighlightLanguage");
     return this;

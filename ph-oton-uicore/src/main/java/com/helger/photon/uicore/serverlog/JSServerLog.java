@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.serverlog;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class JSServerLog
@@ -36,26 +36,26 @@ public final class JSServerLog
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.SERVERLOG);
   }
 
-  @Nonnull
-  public static JSInvocation serverLogInit (@Nonnull final ISimpleURL aURL, @Nonnull final String sKey, final boolean bDebugMode)
+  @NonNull
+  public static JSInvocation serverLogInit (@NonNull final ISimpleURL aURL, @NonNull final String sKey, final boolean bDebugMode)
   {
     return new JSInvocation ("serverLogInit").arg (aURL.getAsString ()).arg (sKey).arg (bDebugMode);
   }
 
-  @Nonnull
-  public static JSInvocation serverLog (@Nonnull final String sSeverity, @Nonnull final String sMessage)
+  @NonNull
+  public static JSInvocation serverLog (@NonNull final String sSeverity, @NonNull final String sMessage)
   {
     return new JSInvocation ("serverLog").arg (sSeverity).arg (sMessage);
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation setupServerLogForWindow ()
   {
     return new JSInvocation ("setupServerLogForWindow");
   }
 
-  @Nonnull
-  public static JSInvocation addExceptionHandlers (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation addExceptionHandlers (@NonNull final IJSExpression aExpr)
   {
     return new JSInvocation ("addExceptionHandlers").arg (aExpr);
   }

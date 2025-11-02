@@ -19,11 +19,11 @@ package com.helger.photon.core.systemmsg;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * System message data read-only interface.
@@ -43,13 +43,13 @@ public interface ISystemMessageData extends Serializable
   /**
    * @return The type of system message. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   ESystemMessageType getMessageType ();
 
   /**
    * @return The ID of the type of system message. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getMessageTypeID ()
   {

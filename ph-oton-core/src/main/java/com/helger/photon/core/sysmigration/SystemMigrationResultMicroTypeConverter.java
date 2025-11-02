@@ -19,6 +19,9 @@ package com.helger.photon.core.sysmigration;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.ContainsSoftMigration;
 import com.helger.base.string.StringParser;
@@ -27,9 +30,6 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class SystemMigrationResultMicroTypeConverter implements IMicroTypeConverter <SystemMigrationResult>
 {
   private static final String ATTR_MIGRATION_ID = "id";
@@ -37,10 +37,10 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
   private static final String ATTR_SUCCESS = "success";
   private static final String ELEMENT_ERROR_MSG = "errormsg";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final SystemMigrationResult aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final SystemMigrationResult aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_MIGRATION_ID, aValue.getID ());
@@ -51,9 +51,9 @@ public final class SystemMigrationResultMicroTypeConverter implements IMicroType
     return aElement;
   }
 
-  @Nonnull
+  @NonNull
   @ContainsSoftMigration
-  public SystemMigrationResult convertToNative (@Nonnull final IMicroElement aElement)
+  public SystemMigrationResult convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_MIGRATION_ID);
     LocalDateTime aExecLDT = aElement.getAttributeValueWithConversion (ATTR_EXECUTION_LDT, LocalDateTime.class);

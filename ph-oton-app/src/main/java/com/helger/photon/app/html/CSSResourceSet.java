@@ -19,6 +19,7 @@ package com.helger.photon.app.html;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +39,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.resource.css.ICSSPathProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class keeps track of all the CSS files that must be included for a single request, so that
@@ -68,40 +67,40 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
   public CSSResourceSet ()
   {}
 
-  public CSSResourceSet (@Nonnull final CSSResourceSet aOther)
+  public CSSResourceSet (@NonNull final CSSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     for (final ICSSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public CSSResourceSet (@Nonnull final Collection <? extends ICSSPathProvider> aOther)
+  public CSSResourceSet (@NonNull final Collection <? extends ICSSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final ICSSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public CSSResourceSet (@Nonnull final ICSSPathProvider... aOther)
+  public CSSResourceSet (@NonNull final ICSSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final ICSSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  private static void _collectWarn (@Nonnull final String sMsg)
+  private static void _collectWarn (@NonNull final String sMsg)
   {
     LOGGER.warn (sMsg);
   }
 
-  @Nonnull
-  public EChange addItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  @NonNull
+  public EChange addItem (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     return addItem (-1, aCSSPathProvider);
   }
 
-  @Nonnull
-  public EChange addItem (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
+  @NonNull
+  public EChange addItem (final int nIndex, @NonNull final ICSSPathProvider aCSSPathProvider)
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
@@ -122,8 +121,8 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     });
   }
 
-  @Nonnull
-  public EChange addItems (@Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
+  @NonNull
+  public EChange addItems (@NonNull final IWebResourceSet <? extends ICSSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
@@ -133,8 +132,8 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     return ret;
   }
 
-  @Nonnull
-  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends ICSSPathProvider> aItems)
+  @NonNull
+  public EChange addItems (final int nIndex, @NonNull final IWebResourceSet <? extends ICSSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
@@ -152,8 +151,8 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     return ret;
   }
 
-  @Nonnull
-  public EChange removeItem (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  @NonNull
+  public EChange removeItem (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     ValueEnforcer.notNull (aCSSPathProvider, "CSSPathProvider");
 
@@ -168,7 +167,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     });
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     return m_aRWLock.writeLockedGet ( () -> {
@@ -182,14 +181,14 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     });
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ICSSPathProvider> getAllItems ()
   {
     return m_aRWLock.readLockedGet ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
-  public void getAllItems (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
+  public void getAllItems (@NonNull final Collection <? super ICSSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
@@ -213,7 +212,7 @@ public class CSSResourceSet implements IWebResourceSet <ICSSPathProvider>
     return m_aRWLock.readLockedInt (m_aList::size);
   }
 
-  @Nonnull
+  @NonNull
   public Iterator <ICSSPathProvider> iterator ()
   {
     return m_aRWLock.readLockedGet (m_aList::iterator);

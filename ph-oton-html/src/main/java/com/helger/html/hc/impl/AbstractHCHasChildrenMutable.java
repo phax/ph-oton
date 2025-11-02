@@ -21,6 +21,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -44,9 +47,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.MicroContainer;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class is an abstract HC node that represents a list of nodes without creating an HTML
@@ -82,7 +82,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
    *        The child that was added
    */
   @OverrideOnDemand
-  protected void beforeAddChild (@Nonnull final CHILDTYPE aChild)
+  protected void beforeAddChild (@NonNull final CHILDTYPE aChild)
   {}
 
   /**
@@ -95,7 +95,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void afterAddChild (@Nonnegative final int nIndex, @Nonnull final CHILDTYPE aChild)
+  protected void afterAddChild (@Nonnegative final int nIndex, @NonNull final CHILDTYPE aChild)
   {}
 
   private void _internalAddChild (@CheckForSigned final int nIndex, @Nullable final CHILDTYPE aChild)
@@ -123,14 +123,14 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     }
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addChild (@Nullable final CHILDTYPE aChild)
   {
     _internalAddChild (CGlobal.ILLEGAL_UINT, aChild);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE aChild)
   {
     ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, getChildCount ());
@@ -149,10 +149,10 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void afterRemoveChild (@Nonnegative final int nIndex, @Nonnull final CHILDTYPE aChild)
+  protected void afterRemoveChild (@Nonnegative final int nIndex, @NonNull final CHILDTYPE aChild)
   {}
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeChild (@Nullable final CHILDTYPE aChild)
   {
     if (aChild != null && m_aChildren != null)
@@ -164,7 +164,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeChildAt (@Nonnegative final int nIndex)
   {
     final CHILDTYPE aRemovedChild = CollectionHelper.removeAndReturnElementAtIndex (m_aChildren, nIndex);
@@ -173,7 +173,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllChildren ()
   {
     if (m_aChildren != null)
@@ -201,7 +201,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <CHILDTYPE> getAllChildren ()
   {
@@ -216,15 +216,15 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Consumer <? super IHCNode> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.forEach (aConsumer);
   }
 
   @Override
-  @Nonnull
-  public final EContinue forAllChildrenBreakable (@Nonnull final Function <? super IHCNode, EContinue> aConsumer)
+  @NonNull
+  public final EContinue forAllChildrenBreakable (@NonNull final Function <? super IHCNode, EContinue> aConsumer)
   {
     if (m_aChildren != null)
       return m_aChildren.forEachBreakable (aConsumer);
@@ -232,17 +232,17 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                    @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter,
+                                    @NonNull final Consumer <? super IHCNode> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.findAll (aFilter, aConsumer);
   }
 
   @Override
-  public <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                              @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
-                                              @Nonnull final Consumer <? super DSTTYPE> aConsumer)
+  public <DSTTYPE> void forAllChildrenMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                              @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
+                                              @NonNull final Consumer <? super DSTTYPE> aConsumer)
   {
     if (m_aChildren != null)
       m_aChildren.findAllMapped (aFilter, aMapper, aConsumer);
@@ -264,15 +264,15 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
 
   @Override
   @Nullable
-  public final CHILDTYPE findFirstChild (@Nonnull final Predicate <? super IHCNode> aFilter)
+  public final CHILDTYPE findFirstChild (@NonNull final Predicate <? super IHCNode> aFilter)
   {
     return m_aChildren == null ? null : m_aChildren.findFirst (aFilter);
   }
 
   @Override
   @Nullable
-  public final <DSTTYPE> DSTTYPE findFirstChildMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                                       @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper)
+  public final <DSTTYPE> DSTTYPE findFirstChildMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                                       @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper)
   {
     return m_aChildren == null ? null : m_aChildren.findFirstMapped (aFilter, aMapper);
   }
@@ -284,8 +284,8 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     return CollectionFind.getLastElement (m_aChildren);
   }
 
-  @Nonnull
-  public final IMPLTYPE sortAllChildren (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
+  @NonNull
+  public final IMPLTYPE sortAllChildren (@NonNull final Comparator <? super CHILDTYPE> aComparator)
   {
     ValueEnforcer.notNull (aComparator, "Comparator");
     if (m_aChildren != null)
@@ -293,7 +293,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCNodeList getAllChildrenAsNodeList ()
   {
     return new HCNodeList ().addChildren (m_aChildren);
@@ -302,7 +302,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     if (hasChildren ())
     {
@@ -326,19 +326,19 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
    *        are stored. So handle with care!
    * @return The non-<code>null</code> list with all child elements to be emitted.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @OverrideOnDemand
-  protected ICommonsList <? extends CHILDTYPE> getChildrenFormEmitting (@Nonnull @Nonempty final ICommonsList <CHILDTYPE> aChildren)
+  protected ICommonsList <? extends CHILDTYPE> getChildrenFormEmitting (@NonNull @Nonempty final ICommonsList <CHILDTYPE> aChildren)
   {
     return aChildren;
   }
 
-  @Nonnull
+  @NonNull
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected IMicroContainer internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected IMicroContainer internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     final IMicroContainer ret = new MicroContainer ();
     if (hasChildren ())
@@ -348,7 +348,7 @@ public abstract class AbstractHCHasChildrenMutable <IMPLTYPE extends AbstractHCH
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     if (!hasChildren ())

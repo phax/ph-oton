@@ -16,14 +16,14 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Label that can be used for continue and break.
@@ -40,19 +40,19 @@ public class JSLabel extends AbstractJSStatement
    * @param sLabel
    *        break label or null.
    */
-  public JSLabel (@Nonnull @Nonempty final String sLabel)
+  public JSLabel (@NonNull @Nonempty final String sLabel)
   {
     m_sLabel = ValueEnforcer.notEmpty (sLabel, "Label");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String label ()
   {
     return m_sLabel;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sLabel).plain (':').nl ();
   }

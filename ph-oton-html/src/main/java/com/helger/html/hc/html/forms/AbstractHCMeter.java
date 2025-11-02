@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.CGlobal;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.html.CHTMLAttributes;
@@ -25,8 +27,6 @@ import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                       implements
@@ -49,7 +49,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
@@ -61,7 +61,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dMin;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMin (final double dMin)
   {
     m_dMin = dMin;
@@ -73,7 +73,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dMax;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
@@ -85,7 +85,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dLow;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLow (final double dLow)
   {
     m_dLow = dLow;
@@ -97,7 +97,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dHigh;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHigh (final double dHigh)
   {
     m_dHigh = dHigh;
@@ -109,7 +109,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
     return m_dOptimum;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setOptimum (final double dOptimum)
   {
     m_dOptimum = dOptimum;
@@ -117,7 +117,7 @@ public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYP
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.METER))

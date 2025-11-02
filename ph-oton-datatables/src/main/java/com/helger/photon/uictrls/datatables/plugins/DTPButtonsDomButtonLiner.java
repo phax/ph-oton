@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DTPButtonsDomButtonLiner
 {
@@ -39,35 +39,35 @@ public class DTPButtonsDomButtonLiner
    */
   private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDomButtonLiner setTag (@Nullable final EHTMLElement eTag)
   {
     m_eTag = eTag;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDomButtonLiner addClassName (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     m_aClassNames.addClass (aCSSClassProvider);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDomButtonLiner addClassName (@Nullable final ICSSClassProvider... aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDomButtonLiner addClassName (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();

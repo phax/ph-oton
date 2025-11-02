@@ -18,6 +18,8 @@ package com.helger.photon.ajax.callback;
 
 import java.io.IOException;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +29,6 @@ import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IAjaxExceptionCallback} logging to an SLF4J logger
@@ -42,9 +41,9 @@ public class LoggingAjaxExceptionCallback implements IAjaxExceptionCallback
 
   public void onAjaxExecutionException (@Nullable final IAjaxInvoker aAjaxInvoker,
                                         @Nullable final String sFunctionName,
-                                        @Nonnull final IAjaxExecutor aAjaxExecutor,
-                                        @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final Exception ex)
+                                        @NonNull final IAjaxExecutor aAjaxExecutor,
+                                        @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @NonNull final Exception ex)
   {
     if (ex instanceof IOException)
     {

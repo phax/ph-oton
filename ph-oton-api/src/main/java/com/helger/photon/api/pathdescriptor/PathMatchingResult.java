@@ -18,13 +18,13 @@ package com.helger.photon.api.pathdescriptor;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents the overall result of a path matching. Upon successful
@@ -55,7 +55,7 @@ public final class PathMatchingResult implements Serializable
    * @param aVariableValues
    *        Non-<code>null</code> but may empty matching variables.
    */
-  public PathMatchingResult (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
+  public PathMatchingResult (@NonNull final ICommonsOrderedMap <String, String> aVariableValues)
   {
     ValueEnforcer.notNull (aVariableValues, "VariableValues");
     m_bMatch = true;
@@ -71,7 +71,7 @@ public final class PathMatchingResult implements Serializable
     return m_bMatch;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllVariableValues ()
   {
@@ -84,8 +84,8 @@ public final class PathMatchingResult implements Serializable
     return new ToStringGenerator (null).append ("Match", m_bMatch).appendIfNotNull ("VariableValues", m_aVariableValues).getToString ();
   }
 
-  @Nonnull
-  public static PathMatchingResult createSuccess (@Nonnull final ICommonsOrderedMap <String, String> aVariableValues)
+  @NonNull
+  public static PathMatchingResult createSuccess (@NonNull final ICommonsOrderedMap <String, String> aVariableValues)
   {
     return new PathMatchingResult (aVariableValues);
   }

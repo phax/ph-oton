@@ -18,13 +18,13 @@ package com.helger.photon.uictrls.datatables;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.jscode.JSArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Read only interface of {@link DataTablesLengthMenu}.
@@ -50,7 +50,7 @@ public interface IDataTablesLengthMenu
    * @return A copy of all contained items. Never <code>null</code> but maybe
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <DataTablesLengthMenuItem> getAllItems ();
 
@@ -72,6 +72,6 @@ public interface IDataTablesLengthMenu
   @Nullable
   DataTablesLengthMenuItem getItemWithLeastItemCount ();
 
-  @Nonnull
-  JSArray getAsJSArray (@Nonnull Locale aDisplayLocale);
+  @NonNull
+  JSArray getAsJSArray (@NonNull Locale aDisplayLocale);
 }

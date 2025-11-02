@@ -16,13 +16,13 @@
  */
 package com.helger.photon.connect.connection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link IServerConnectionSettingsPassword}
@@ -35,11 +35,11 @@ public class ServerConnectionSettingsPassword extends AbstractServerConnectionSe
 {
   private final String m_sPassword;
 
-  public ServerConnectionSettingsPassword (@Nonnull @Nonempty final String sIP,
+  public ServerConnectionSettingsPassword (@NonNull @Nonempty final String sIP,
                                            @Nonnegative final int nPort,
                                            final int nConnectionTimeoutMillis,
-                                           @Nonnull @Nonempty final String sUserName,
-                                           @Nonnull final String sPassword)
+                                           @NonNull @Nonempty final String sUserName,
+                                           @NonNull final String sPassword)
   {
     super (sIP, nPort, nConnectionTimeoutMillis, sUserName);
 
@@ -47,7 +47,7 @@ public class ServerConnectionSettingsPassword extends AbstractServerConnectionSe
     m_sPassword = sPassword;
   }
 
-  @Nonnull
+  @NonNull
   public String getPassword ()
   {
     return m_sPassword;

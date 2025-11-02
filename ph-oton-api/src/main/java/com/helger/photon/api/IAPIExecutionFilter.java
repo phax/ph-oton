@@ -18,10 +18,10 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
-import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * Generic API execution filter.
@@ -40,9 +40,9 @@ public interface IAPIExecutionFilter extends Serializable
    * @return <code>true</code> if execution can continue, <code>false</code> if
    *         not.
    */
-  boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  boolean canExecute (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 
-  @Nonnull
+  @NonNull
   default IAPIExecutionFilter and (@Nullable final IAPIExecutionFilter aOther)
   {
     if (aOther == null)

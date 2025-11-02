@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -23,8 +25,6 @@ import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.IDataTablesPlugin;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of {@link IDataTablesPlugin}.
@@ -40,34 +40,34 @@ public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
    *        Name of the plugin. May neither be <code>null</code> empty. This
    *        name is only internally used to make sure that no such
    */
-  protected AbstractDataTablesPlugin (@Nonnull @Nonempty final String sName)
+  protected AbstractDataTablesPlugin (@NonNull @Nonempty final String sName)
   {
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getName ()
   {
     return m_sName;
   }
 
-  public boolean canBeApplied (@Nonnull final DataTables aDT)
+  public boolean canBeApplied (@NonNull final DataTables aDT)
   {
     return true;
   }
 
-  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
     // empty
   }
 
-  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSLet aJSTable)
+  public void addInitJS (@NonNull final DataTables aDT, @NonNull final JSPackage aJSCode, @NonNull final JSLet aJSTable)
   {
     // empty
   }
 
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // empty
   }

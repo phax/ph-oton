@@ -18,6 +18,9 @@ package com.helger.photon.api;
 
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.enforce.ValueEnforcer;
@@ -28,9 +31,6 @@ import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.photon.api.pathdescriptor.PathDescriptor;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IAPIDescriptor}.
@@ -59,7 +59,7 @@ public class APIDescriptor implements IAPIDescriptor
    *        The executor to be invoked for that API. May not be
    *        <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final IAPIExecutor aExecutor)
+  public APIDescriptor (@NonNull final APIPath aPath, @NonNull final IAPIExecutor aExecutor)
   {
     this (aPath, () -> aExecutor);
   }
@@ -73,7 +73,7 @@ public class APIDescriptor implements IAPIDescriptor
    *        The executor class to be instantiated for every API invocation. May
    *        not be <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final Class <? extends IAPIExecutor> aExecutorClass)
+  public APIDescriptor (@NonNull final APIPath aPath, @NonNull final Class <? extends IAPIExecutor> aExecutorClass)
   {
     this (aPath, FactoryNewInstance.create (aExecutorClass));
   }
@@ -87,26 +87,26 @@ public class APIDescriptor implements IAPIDescriptor
    *        The factory to be used to create executor instances for every API
    *        invocation. May not be <code>null</code>.
    */
-  public APIDescriptor (@Nonnull final APIPath aPath, @Nonnull final Supplier <? extends IAPIExecutor> aExecutorFactory)
+  public APIDescriptor (@NonNull final APIPath aPath, @NonNull final Supplier <? extends IAPIExecutor> aExecutorFactory)
   {
     m_aAPIPath = ValueEnforcer.notNull (aPath, "Path");
     m_aPathDescriptor = PathDescriptor.create (aPath.getPath ());
     m_aExecutorFactory = ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
   }
 
-  @Nonnull
+  @NonNull
   public final APIPath getAPIPath ()
   {
     return m_aAPIPath;
   }
 
-  @Nonnull
+  @NonNull
   public final PathDescriptor getPathDescriptor ()
   {
     return m_aPathDescriptor;
   }
 
-  @Nonnull
+  @NonNull
   public final Supplier <? extends IAPIExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
@@ -122,7 +122,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @return this for chaining
    * @see #addRequiredHeaders(String...)
    */
-  @Nonnull
+  @NonNull
   public final APIDescriptor addRequiredHeader (@Nullable final String sHeaderName)
   {
     if (StringHelper.isNotEmpty (sHeaderName))
@@ -140,7 +140,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @return this for chaining
    * @see #addRequiredHeader(String)
    */
-  @Nonnull
+  @NonNull
   public final APIDescriptor addRequiredHeaders (@Nullable final String... aHeaderNames)
   {
     if (aHeaderNames != null)
@@ -149,7 +149,7 @@ public class APIDescriptor implements IAPIDescriptor
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsOrderedSet <String> requiredHeaders ()
   {
@@ -166,7 +166,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @return this for chaining
    * @see #addRequiredParams(String...)
    */
-  @Nonnull
+  @NonNull
   public final APIDescriptor addRequiredParam (@Nullable final String sParamName)
   {
     if (StringHelper.isNotEmpty (sParamName))
@@ -184,7 +184,7 @@ public class APIDescriptor implements IAPIDescriptor
    * @return this for chaining
    * @see #addRequiredParam(String)
    */
-  @Nonnull
+  @NonNull
   public final APIDescriptor addRequiredParams (@Nullable final String... aParamNames)
   {
     if (aParamNames != null)
@@ -193,14 +193,14 @@ public class APIDescriptor implements IAPIDescriptor
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsOrderedSet <String> requiredParams ()
   {
     return m_aRequiredParams;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsOrderedSet <String> allowedMimeTypes ()
   {
@@ -213,7 +213,7 @@ public class APIDescriptor implements IAPIDescriptor
     return m_aExecutionFilter;
   }
 
-  @Nonnull
+  @NonNull
   public final APIDescriptor setExecutionFilter (@Nullable final IAPIExecutionFilter aExecutionFilter)
   {
     m_aExecutionFilter = aExecutionFilter;
@@ -226,7 +226,7 @@ public class APIDescriptor implements IAPIDescriptor
     return m_aExceptionMapper;
   }
 
-  @Nonnull
+  @NonNull
   public final APIDescriptor setExceptionMapper (@Nullable final IAPIExceptionMapper aExceptionMapper)
   {
     m_aExceptionMapper = aExceptionMapper;

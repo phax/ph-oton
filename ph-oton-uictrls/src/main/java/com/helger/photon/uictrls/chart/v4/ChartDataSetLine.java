@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Bar chart data set
@@ -38,101 +38,101 @@ public class ChartDataSetLine extends AbstractChartDataSet <ChartDataSetLine>
   private IJSExpression m_aFill;
   private IJSExpression m_aTension;
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBackgroundColor (@Nullable final String sBackgroundColor)
   {
     return setBackgroundColor (_toExpr (sBackgroundColor));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBackgroundColor (@Nullable final String... aBackgroundColors)
   {
     return setBackgroundColor (_toExpr (aBackgroundColors));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBackgroundColor (@Nullable final IJSExpression aBackgroundColor)
   {
     m_aBackgroundColor = aBackgroundColor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderColor (@Nullable final String sBorderColor)
   {
     return setBorderColor (_toExpr (sBorderColor));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderColor (@Nullable final String... aBorderColors)
   {
     return setBorderColor (_toExpr (aBorderColors));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderColor (@Nullable final IJSExpression aBorderColor)
   {
     m_aBorderColor = aBorderColor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderWidth (final int nBorderWidth)
   {
     return setBorderWidth (Integer.toString (nBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderWidth (@Nullable final String sBorderWidth)
   {
     return setBorderWidth (_toExpr (sBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setBorderWidth (@Nullable final IJSExpression aBorderWidth)
   {
     m_aBorderWidth = aBorderWidth;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setFill (final boolean bFill)
   {
     return setFill (JSExpr.lit (bFill));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setFill (final String sFill)
   {
     return setFill (_toExpr (sFill));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setFill (final IJSExpression aFill)
   {
     m_aFill = aFill;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setTension (final int nBorderWidth)
   {
     return setTension (Integer.toString (nBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setTension (final double dBorderWidth)
   {
     return setTension (Double.toString (dBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setTension (@Nullable final String sTension)
   {
     return setTension (_toExpr (sTension));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetLine setTension (@Nullable final IJSExpression aTension)
   {
     m_aTension = aTension;
@@ -140,7 +140,7 @@ public class ChartDataSetLine extends AbstractChartDataSet <ChartDataSetLine>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSData ()
   {
     final JSAssocArray ret = super.getJSData ();

@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * array component reference.
@@ -47,13 +47,13 @@ public class JSArrayCompRef extends AbstractJSAssignmentTarget
    * @param aIndex
    *        JExpression for index of component to access
    */
-  JSArrayCompRef (@Nonnull final IJSExpression aArray, @Nonnull final IJSExpression aIndex)
+  JSArrayCompRef (@NonNull final IJSExpression aArray, @NonNull final IJSExpression aIndex)
   {
     m_aArray = ValueEnforcer.notNull (aArray, "Array");
     m_aIndex = ValueEnforcer.notNull (aIndex, "Index");
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (m_aArray).plain ('[').generatable (m_aIndex).plain (']');
   }

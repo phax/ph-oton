@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -24,9 +27,6 @@ import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.IHCHasCSSClasses;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Stand alone implementation of {@link IHCHasCSSClasses}
@@ -43,7 +43,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     return aCSSClassProvider != null && m_aCSSClassProviders != null && m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
-  @Nonnull
+  @NonNull
   public HCHasCSSClasses addClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     if (aCSSClassProvider != null)
@@ -55,7 +55,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public HCHasCSSClasses removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     if (m_aCSSClassProviders != null && aCSSClassProvider != null)
@@ -63,7 +63,7 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public HCHasCSSClasses removeAllClasses ()
   {
     if (m_aCSSClassProviders != null)
@@ -71,14 +71,14 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ICSSClassProvider> getAllClasses ()
   {
     return m_aCSSClassProviders.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllClassNames ()
   {

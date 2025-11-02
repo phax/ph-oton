@@ -18,10 +18,10 @@ package com.helger.photon.uicore.page.external;
 
 import java.util.function.Consumer;
 
-import com.helger.xml.microdom.IMicroContainer;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.xml.microdom.IMicroContainer;
 
 /**
  * Base interface for external pages.
@@ -47,7 +47,7 @@ public interface IWebPageResourceContent
    *        constructor and re-used over and over.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IWebPageResourceContent setReadEveryTime (boolean bReadEveryTime);
 
   /**

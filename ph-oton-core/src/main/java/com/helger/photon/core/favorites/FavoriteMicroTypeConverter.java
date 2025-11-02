@@ -19,15 +19,15 @@ package com.helger.photon.core.favorites;
 import java.util.Comparator;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Convert {@link Favorite} objects to {@link IMicroElement} and vice versa.
@@ -46,10 +46,10 @@ public final class FavoriteMicroTypeConverter implements IMicroTypeConverter <Fa
   private static final String ATTR_NAME = "name";
   private static final String ATTR_VALUE = "value";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Favorite aFavourite,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final Favorite aFavourite,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement eFavourite = new MicroElement (sNamespaceURI, sTagName);
     eFavourite.setAttribute (ATTR_ID, aFavourite.getID ());
@@ -70,8 +70,8 @@ public final class FavoriteMicroTypeConverter implements IMicroTypeConverter <Fa
     return eFavourite;
   }
 
-  @Nonnull
-  public Favorite convertToNative (@Nonnull final IMicroElement eFavourite)
+  @NonNull
+  public Favorite convertToNative (@NonNull final IMicroElement eFavourite)
   {
     final String sID = eFavourite.getAttributeValue (ATTR_ID);
     final String sUserID = eFavourite.getAttributeValue (ATTR_USER_ID);

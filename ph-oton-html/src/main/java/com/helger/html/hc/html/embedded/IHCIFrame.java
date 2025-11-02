@@ -18,13 +18,13 @@ package com.helger.html.hc.html.embedded;
 
 import java.util.EnumSet;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.html.EHCScrolling;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for IFRAMEs
@@ -38,36 +38,36 @@ public interface IHCIFrame <IMPLTYPE extends IHCIFrame <IMPLTYPE>> extends IHCEl
   @Nullable
   ISimpleURL getSrc ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSrc (@Nullable ISimpleURL aSrc);
 
   @Nullable
   String getName ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setName (@Nullable String sName);
 
   @Nullable
   String getLongDesc ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setLongDesc (@Nullable String sLongDesc);
 
   @Nullable
   EHCScrolling getScrolling ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setScrolling (@Nullable EHCScrolling eScrolling);
 
   @Nullable
   EHCIFrameAlign getAlign ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAlign (@Nullable EHCIFrameAlign eAlign);
 
   boolean isFrameBorder ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFrameBorder (boolean bFrameBorder);
 
   @Nullable
@@ -80,37 +80,37 @@ public interface IHCIFrame <IMPLTYPE extends IHCIFrame <IMPLTYPE>> extends IHCEl
    *        the width in pixel
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidth (int nWidth);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidthPercentage (double dPercentage);
 
   @Nullable
   String getHeight ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHeight (int nHeight);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHeightPercentage (double dPercentage);
 
   int getMarginWidth ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMarginWidth (int nMarginWidth);
 
   int getMarginHeight ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMarginHeight (int nMarginHeight);
 
   boolean isSandbox ();
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   EnumSet <EHCSandboxAllow> getSandboxAllow ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSandbox (boolean bSandbox, @Nullable EHCSandboxAllow... aSandboxAllows);
 }

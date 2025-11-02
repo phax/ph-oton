@@ -18,6 +18,9 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -34,9 +37,6 @@ import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.accarea.IAccountingAreaResolver;
 import com.helger.tenancy.tenant.ITenant;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Manages all available accounting areas.
  *
@@ -44,28 +44,28 @@ import jakarta.annotation.Nullable;
  */
 public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea> implements IAccountingAreaResolver
 {
-  public AccountingAreaManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public AccountingAreaManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (AccountingArea.class, sFilename);
   }
 
-  @Nonnull
-  public IAccountingArea createAccountingArea (@Nonnull final ITenant aTenant,
-                                               @Nonnull @Nonempty final String sDisplayName,
+  @NonNull
+  public IAccountingArea createAccountingArea (@NonNull final ITenant aTenant,
+                                               @NonNull @Nonempty final String sDisplayName,
                                                @Nullable final String sCompanyType,
                                                @Nullable final String sCompanyVATIN,
                                                @Nullable final String sCompanyNumber,
                                                @Nullable final String sCustomerNumber,
-                                               @Nonnull final IPostalAddress aAddress,
-                                               @Nonnull final String sTelephone,
+                                               @NonNull final IPostalAddress aAddress,
+                                               @NonNull final String sTelephone,
                                                @Nullable final String sFax,
                                                @Nullable final String sEmailAddress,
                                                @Nullable final String sWebSite,
-                                               @Nonnull final ECurrency eDefaultCurrency,
+                                               @NonNull final ECurrency eDefaultCurrency,
                                                @Nullable final String sOfficeLocation,
                                                @Nullable final String sCommercialRegistrationNumber,
                                                @Nullable final String sCommercialCourt,
-                                               @Nonnull final Locale aDisplayLocale)
+                                               @NonNull final Locale aDisplayLocale)
   {
     final AccountingArea aAccountingArea = new AccountingArea (aTenant,
                                                                sDisplayName,
@@ -105,23 +105,23 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
     return aAccountingArea;
   }
 
-  @Nonnull
-  public EChange updateAccountingArea (@Nonnull @Nonempty final String sAccountingAreaID,
-                                       @Nonnull @Nonempty final String sDisplayName,
+  @NonNull
+  public EChange updateAccountingArea (@NonNull @Nonempty final String sAccountingAreaID,
+                                       @NonNull @Nonempty final String sDisplayName,
                                        @Nullable final String sCompanyType,
                                        @Nullable final String sCompanyVATIN,
                                        @Nullable final String sCompanyNumber,
                                        @Nullable final String sCustomerNumber,
-                                       @Nonnull final IPostalAddress aAddress,
-                                       @Nonnull final String sTelephone,
+                                       @NonNull final IPostalAddress aAddress,
+                                       @NonNull final String sTelephone,
                                        @Nullable final String sFax,
                                        @Nullable final String sEmailAddress,
                                        @Nullable final String sWebSite,
-                                       @Nonnull final ECurrency eDefaultCurrency,
+                                       @NonNull final ECurrency eDefaultCurrency,
                                        @Nullable final String sOfficeLocation,
                                        @Nullable final String sCommercialRegistrationNumber,
                                        @Nullable final String sCommercialCourt,
-                                       @Nonnull final Locale aDisplayLocale)
+                                       @NonNull final Locale aDisplayLocale)
   {
     final AccountingArea aAccountingArea = getOfID (sAccountingAreaID);
     if (aAccountingArea == null)
@@ -177,7 +177,7 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteAccountingArea (@Nullable final String sAccountingAreaID)
   {
     final AccountingArea aDeletedAccountingArea = getOfID (sAccountingAreaID);
@@ -206,14 +206,14 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAccountingArea> getAllAccountingAreasOfTenant (@Nullable final String sTenantID)
   {
     return getAll (x -> x.hasSameTenantID (sTenantID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAccountingArea> getAllAccountingAreasOfTenant (@Nullable final ITenant aTenant)
   {
@@ -226,14 +226,14 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
     return getCount (x -> x.hasSameTenant (aTenant));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAccountingAreaIDsOfTenant (@Nullable final String sTenantID)
   {
     return getAllMapped (x -> x.hasSameTenantID (sTenantID), IAccountingArea::getID);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllAccountingAreaIDsOfTenant (@Nullable final ITenant aTenant)
   {

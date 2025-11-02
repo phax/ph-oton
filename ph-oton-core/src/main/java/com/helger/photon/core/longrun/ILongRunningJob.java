@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.longrun;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.text.IMultilingualText;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This is a marker interface that identifies long running background jobs.
@@ -32,7 +32,7 @@ public interface ILongRunningJob
    * @return The internal ID of the long running job type. This should not be an
    *         instance ID.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getJobID ();
 
@@ -40,13 +40,13 @@ public interface ILongRunningJob
    * @return A description of this long running job. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IMultilingualText getJobDescription ();
 
   /**
    * @return The results of this job for asynchronous retrieval by the user.
    *         Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   LongRunningJobResult createLongRunningJobResult ();
 }

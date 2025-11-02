@@ -18,6 +18,9 @@ package com.helger.photon.uicore.page.external;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -36,9 +39,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.IMicroText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Perform a standard cleansing on externally parsed HTML content. This includes:
@@ -82,7 +82,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    *         empty.
    * @since 7.0.2
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getServerPrefixPath ()
   {
@@ -98,8 +98,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    * @return this for chaining
    * @since 7.0.2
    */
-  @Nonnull
-  public PageViewExternalHTMLCleanser setServerPrefixPath (@Nonnull @Nonempty final String sServerPrefixPath)
+  @NonNull
+  public PageViewExternalHTMLCleanser setServerPrefixPath (@NonNull @Nonempty final String sServerPrefixPath)
   {
     ValueEnforcer.notEmpty (sServerPrefixPath, "ServerPrefixPath");
     ValueEnforcer.isTrue (sServerPrefixPath.endsWith ("/"), "ServerPrefixPath must end with a slash");
@@ -143,7 +143,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    *        <code>true</code> to remove comments, <code>false</code> to leave them in.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PageViewExternalHTMLCleanser setRemoveComments (final boolean bRemoveComments)
   {
     m_bRemoveComments = bRemoveComments;
@@ -168,7 +168,7 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
    * @return this for chaining
    * @since 7.0.2
    */
-  @Nonnull
+  @NonNull
   public PageViewExternalHTMLCleanser setCleanTexts (final boolean bCleanTexts)
   {
     m_bCleanTexts = bCleanTexts;

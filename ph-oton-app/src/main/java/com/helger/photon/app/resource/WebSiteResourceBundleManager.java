@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +50,6 @@ import com.helger.photon.io.dao.AbstractPhotonSimpleDAO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements
                                                 IWebSiteResourceBundleProvider
@@ -83,8 +82,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   }
 
   @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  @NonNull
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     boolean bAnyResourceIsOutOfSync = false;
     for (final IMicroElement eResourceBundle : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_RESOURCE_BUNDLE))
@@ -217,7 +216,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
@@ -248,14 +247,14 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     return aDoc;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, WebSiteResourceBundleSerialized> getAllResourceBundles ()
   {
     return m_aRWLock.readLockedGet (m_aMapToBundle::getClone);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <WebSiteResourceBundleSerialized> getAllResourceBundlesSerialized ()
   {
@@ -293,9 +292,9 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     return m_aRWLock.readLockedBoolean ( () -> m_aMapToBundle.containsKey (sBundleID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty final ICommonsList <WebSiteResourceWithCondition> aList,
+  public ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@NonNull @Nonempty final ICommonsList <WebSiteResourceWithCondition> aList,
                                                                             final boolean bRegular)
   {
     ValueEnforcer.notEmptyNoNullValue (aList, "List");

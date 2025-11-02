@@ -18,11 +18,11 @@ package com.helger.photon.io.dao;
 
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.dao.wal.AbstractWALDAO;
 import com.helger.photon.io.WebFileIO;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractWALDAO} that uses the {@link WebFileIO#getDataIO()}
@@ -34,13 +34,13 @@ import jakarta.annotation.Nullable;
  */
 public abstract class AbstractPhotonWALDAO <DATATYPE> extends AbstractWALDAO <DATATYPE>
 {
-  protected AbstractPhotonWALDAO (@Nonnull final Class <DATATYPE> aDataTypeClass, @Nullable final String sFilename)
+  protected AbstractPhotonWALDAO (@NonNull final Class <DATATYPE> aDataTypeClass, @Nullable final String sFilename)
   {
     this (aDataTypeClass, () -> sFilename);
   }
 
-  protected AbstractPhotonWALDAO (@Nonnull final Class <DATATYPE> aDataTypeClass,
-                                  @Nonnull final Supplier <String> aFilenameProvider)
+  protected AbstractPhotonWALDAO (@NonNull final Class <DATATYPE> aDataTypeClass,
+                                  @NonNull final Supplier <String> aFilenameProvider)
   {
     super (aDataTypeClass, WebFileIO.getDataIO (), aFilenameProvider);
   }

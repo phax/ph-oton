@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.datatables;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -30,9 +33,6 @@ import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSArray;
 import com.helger.text.display.ConstantHasDisplayText;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public class DataTablesLengthMenu implements IDataTablesLengthMenu
@@ -56,35 +56,35 @@ public class DataTablesLengthMenu implements IDataTablesLengthMenu
   public DataTablesLengthMenu ()
   {}
 
-  @Nonnull
+  @NonNull
   public DataTablesLengthMenu addItemAll ()
   {
     return addItem (COUNT_ALL, EDataTablesText.ALL);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesLengthMenu addItem (final int nItemCount)
   {
     return addItem (nItemCount, new ConstantHasDisplayText (Integer.toString (nItemCount)));
   }
 
-  @Nonnull
-  public DataTablesLengthMenu addItem (final int nItemCount, @Nonnull final IHasDisplayText aText)
+  @NonNull
+  public DataTablesLengthMenu addItem (final int nItemCount, @NonNull final IHasDisplayText aText)
   {
     return addItem (new DataTablesLengthMenuItem (nItemCount, aText));
   }
 
-  @Nonnull
-  public DataTablesLengthMenu addItem (@Nonnull final DataTablesLengthMenuItem aItem)
+  @NonNull
+  public DataTablesLengthMenu addItem (@NonNull final DataTablesLengthMenuItem aItem)
   {
     ValueEnforcer.notNull (aItem, "Item");
     m_aList.add (aItem);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsOrderedMap <Integer, String> getAsMap (@Nonnull final Locale aDisplayLocale)
+  public ICommonsOrderedMap <Integer, String> getAsMap (@NonNull final Locale aDisplayLocale)
   {
     final ICommonsOrderedMap <Integer, String> ret = new CommonsLinkedHashMap <> ();
     for (final DataTablesLengthMenuItem aItem : m_aList)
@@ -103,7 +103,7 @@ public class DataTablesLengthMenu implements IDataTablesLengthMenu
     return m_aList.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <DataTablesLengthMenuItem> getAllItems ()
   {
@@ -127,8 +127,8 @@ public class DataTablesLengthMenu implements IDataTablesLengthMenu
     return ret;
   }
 
-  @Nonnull
-  public JSArray getAsJSArray (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public JSArray getAsJSArray (@NonNull final Locale aDisplayLocale)
   {
     final JSArray aArray1 = new JSArray ();
     final JSArray aArray2 = new JSArray ();

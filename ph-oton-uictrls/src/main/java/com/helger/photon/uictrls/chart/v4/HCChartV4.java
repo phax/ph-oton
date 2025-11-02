@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -39,9 +42,6 @@ import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Canvas element containing a ChartJS v4 data. This should be wrapped in a
  * respective "div" element to set max-width and max-height if needed.
@@ -55,12 +55,12 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   private final IChartV4 m_aChart;
   private final int m_nID;
 
-  public HCChartV4 (@Nonnull final IChartV4 aChart)
+  public HCChartV4 (@NonNull final IChartV4 aChart)
   {
     this (aChart, GlobalIDFactory.getNewIntID ());
   }
 
-  public HCChartV4 (@Nonnull final IChartV4 aChart, @Nonnegative final int nID)
+  public HCChartV4 (@NonNull final IChartV4 aChart, @Nonnegative final int nID)
   {
     ValueEnforcer.notNull (aChart, "Chart");
     m_aChart = aChart;
@@ -71,7 +71,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   /**
    * @return The chart passed in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IChartV4 getChart ()
   {
     return m_aChart;
@@ -88,7 +88,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   /**
    * @return The HTML ID of the canvas used.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getCanvasID ()
   {
@@ -98,7 +98,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   /**
    * @return The HTML ID of the legend used (if enabled).
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getLegendID ()
   {
@@ -108,7 +108,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   /**
    * @return The name of the global JS variable containing the data.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getJSDataVar ()
   {
@@ -118,27 +118,27 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   /**
    * @return The name of the global JS variable containing the main chart.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getJSChartVar ()
   {
     return "chart" + m_nID;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSData ()
   {
     // First take options from chart
     return m_aChart.getJSData ();
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)
   {
     return m_aChart.getJSData (aDatasetData);
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSOptions ()
   {
     // First take options from chart
@@ -154,12 +154,12 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
    *        The JS body where code should be appended to.
    */
   @OverrideOnDemand
-  protected void onAddInitializationCode (@Nonnull final JSPackage aJSBody)
+  protected void onAddInitializationCode (@NonNull final JSPackage aJSBody)
   {}
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -203,7 +203,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CHART_4);
@@ -216,8 +216,8 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
    *        The data parameter used to draw the graph.
    * @return The JS code needed to do so.
    */
-  @Nonnull
-  public IHasJSCode getJSUpdateCode (@Nonnull final IJSExpression aJSDataVar)
+  @NonNull
+  public IHasJSCode getJSUpdateCode (@NonNull final IJSExpression aJSDataVar)
   {
     final JSPackage ret = new JSPackage ();
     // Cleanup old chart

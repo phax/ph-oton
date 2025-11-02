@@ -18,15 +18,15 @@ package com.helger.photon.uicore.html.tabbox;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a tab box
@@ -45,40 +45,40 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
   @Nullable
   String getActiveTabID ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setActiveTabID (@Nullable String sID);
 
-  @Nonnull
+  @NonNull
   default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent)
   {
     return addTab (sID, new HCTextNode (sLabel), aContent, DEFAULT_ACTIVE);
   }
 
-  @Nonnull
+  @NonNull
   default Tab addTab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent)
   {
     return addTab (sID, aLabel, aContent, DEFAULT_ACTIVE);
   }
 
-  @Nonnull
+  @NonNull
   default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (sID, new HCTextNode (sLabel), aContent, bActive);
   }
 
-  @Nonnull
+  @NonNull
   default Tab addTab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bActive)
   {
     return addTab (sID, aLabel, aContent, bActive, DEFAULT_DISABLED);
   }
 
-  @Nonnull
+  @NonNull
   Tab addTab (@Nullable String sID, @Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive, boolean bDisabled);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addTab (Tab aTab, boolean bActive);
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <Tab> getAllTabs ();
 
@@ -105,8 +105,8 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
 
   int getTabCount ();
 
-  @Nonnull
+  @NonNull
   EChange removeTab (@Nullable String sTabID);
 
-  void sortTabs (@Nonnull Comparator <? super Tab> aComparator);
+  void sortTabs (@NonNull Comparator <? super Tab> aComparator);
 }

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.pdfobject;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents the options for embedding PDFObject. See
@@ -52,7 +52,7 @@ public class PDFObjectOptions
    *        Page number
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setPage (final int nPage)
   {
     m_aPage = JSExpr.lit (nPage);
@@ -68,7 +68,7 @@ public class PDFObjectOptions
    *        Page number
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setPage (@Nullable final String sPage)
   {
     m_aPage = sPage == null ? null : JSExpr.lit (sPage);
@@ -83,7 +83,7 @@ public class PDFObjectOptions
    *        ID to use
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setID (@Nullable final String sID)
   {
     m_sID = sID;
@@ -99,7 +99,7 @@ public class PDFObjectOptions
    *        Width to use
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
@@ -115,7 +115,7 @@ public class PDFObjectOptions
    *        Height to use
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setHeight (@Nullable final String sHeight)
   {
     m_sHeight = sHeight;
@@ -128,7 +128,7 @@ public class PDFObjectOptions
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setFallbackLinkDisabled ()
   {
     m_aFallbackLink = JSExpr.FALSE;
@@ -145,14 +145,14 @@ public class PDFObjectOptions
    *        Text to use
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PDFObjectOptions setFallbackLink (@Nullable final String sText)
   {
     m_aFallbackLink = sText == null ? null : JSExpr.lit (sText);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {

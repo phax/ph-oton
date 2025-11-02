@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapping type of a {@link com.helger.html.hc.html.forms.HCTextArea}
@@ -36,12 +36,12 @@ public enum EHCTextAreaWrap implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCTextAreaWrap (@Nonnull @Nonempty final String sAttrValue)
+  EHCTextAreaWrap (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

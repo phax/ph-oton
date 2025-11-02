@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x chunking part
@@ -66,7 +66,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        new value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Chunking setConcurrentEnabled (final boolean bConcurrentEnabled)
   {
     m_bChunkingConcurrentEnabled = bConcurrentEnabled;
@@ -86,7 +86,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        new value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Chunking setEnabled (final boolean bEnabled)
   {
     m_bChunkingEnabled = bEnabled;
@@ -107,7 +107,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        new value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Chunking setMandatory (final boolean bMandatory)
   {
     m_bChunkingMandatory = bMandatory;
@@ -126,7 +126,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. Must be &gt; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Chunking setPartSize (@Nonnegative final long nPartSize)
   {
     ValueEnforcer.isGT0 (nPartSize, "PartSize");
@@ -134,7 +134,7 @@ public class FineUploader5Chunking implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getParamNameChunkSize ()
   {
@@ -149,15 +149,15 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Chunking setParamNameChunkSize (@Nonnull @Nonempty final String sParamNameChunkSize)
+  @NonNull
+  public FineUploader5Chunking setParamNameChunkSize (@NonNull @Nonempty final String sParamNameChunkSize)
   {
     ValueEnforcer.notEmpty (sParamNameChunkSize, "ParamNameChunkSize");
     m_sChunkingParamNamesChunkSize = sParamNameChunkSize;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getParamNamePartByteOffset ()
   {
@@ -172,15 +172,15 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Chunking setParamNamePartByteOffset (@Nonnull @Nonempty final String sParamNamePartByteOffset)
+  @NonNull
+  public FineUploader5Chunking setParamNamePartByteOffset (@NonNull @Nonempty final String sParamNamePartByteOffset)
   {
     ValueEnforcer.notEmpty (sParamNamePartByteOffset, "ParamNamePartByteOffset");
     m_sChunkingParamNamesPartByteOffset = sParamNamePartByteOffset;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getParamNamePartIndex ()
   {
@@ -195,15 +195,15 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Chunking setParamNamePartIndex (@Nonnull @Nonempty final String sParamNamePartIndex)
+  @NonNull
+  public FineUploader5Chunking setParamNamePartIndex (@NonNull @Nonempty final String sParamNamePartIndex)
   {
     ValueEnforcer.notEmpty (sParamNamePartIndex, "ParamNamePartIndex");
     m_sChunkingParamNamesPartIndex = sParamNamePartIndex;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getParamNameTotalParts ()
   {
@@ -218,8 +218,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Chunking setParamNameTotalParts (@Nonnull @Nonempty final String sParamNameTotalParts)
+  @NonNull
+  public FineUploader5Chunking setParamNameTotalParts (@NonNull @Nonempty final String sParamNameTotalParts)
   {
     ValueEnforcer.notEmpty (sParamNameTotalParts, "ParamNameTotalParts");
     m_sChunkingParamNamesTotalParts = sParamNameTotalParts;
@@ -240,14 +240,14 @@ public class FineUploader5Chunking implements IFineUploader5Part
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Chunking setSuccessEndpoint (@Nullable final ISimpleURL aSuccessEndpoint)
   {
     m_aChunkingSuccessEndpoint = aSuccessEndpoint;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

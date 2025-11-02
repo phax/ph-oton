@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.role;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a role is created, modified, deleted or renamed.
@@ -37,7 +37,7 @@ public interface IRoleModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined role, <code>false</code> if
    *        it is a regular role
    */
-  default void onRoleCreated (@Nonnull final IRole aRole, final boolean bPredefinedRole)
+  default void onRoleCreated (@NonNull final IRole aRole, final boolean bPredefinedRole)
   {}
 
   /**
@@ -46,7 +46,7 @@ public interface IRoleModificationCallback extends ICallback
    * @param sRoleID
    *        The modified role ID. Never <code>null</code>.
    */
-  default void onRoleUpdated (@Nonnull @Nonempty final String sRoleID)
+  default void onRoleUpdated (@NonNull @Nonempty final String sRoleID)
   {}
 
   /**
@@ -55,7 +55,7 @@ public interface IRoleModificationCallback extends ICallback
    * @param sRoleID
    *        The modified role ID. Never <code>null</code>.
    */
-  default void onRoleRenamed (@Nonnull @Nonempty final String sRoleID)
+  default void onRoleRenamed (@NonNull @Nonempty final String sRoleID)
   {}
 
   /**
@@ -64,6 +64,6 @@ public interface IRoleModificationCallback extends ICallback
    * @param sRoleID
    *        The deleted role ID. Never <code>null</code>.
    */
-  default void onRoleDeleted (@Nonnull @Nonempty final String sRoleID)
+  default void onRoleDeleted (@NonNull @Nonempty final String sRoleID)
   {}
 }

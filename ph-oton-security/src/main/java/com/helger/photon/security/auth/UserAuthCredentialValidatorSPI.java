@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.auth;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.LoggedInUserManager;
@@ -23,8 +25,6 @@ import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.credentials.IUserPasswordCredentials;
 import com.helger.security.authentication.credentials.IAuthCredentialValidatorSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for
@@ -36,13 +36,13 @@ import jakarta.annotation.Nonnull;
 @IsSPIImplementation
 public final class UserAuthCredentialValidatorSPI implements IAuthCredentialValidatorSPI
 {
-  public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public boolean supportsCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     return aCredentials instanceof IUserPasswordCredentials;
   }
 
-  @Nonnull
-  public ELoginResult validateCredentials (@Nonnull final IAuthCredentials aCredentials)
+  @NonNull
+  public ELoginResult validateCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
     return LoggedInUserManager.getInstance ().loginUser (aUPC.getUser (), aUPC.getPassword (), aUPC.getAllRequiredRoles ());

@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,32 +36,29 @@ import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelSftp.LsEntry>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (SftpConnector.class);
   private final ISftpConnectionDestination m_aDestination;
   private ChannelSftp m_aChannel;
 
-  public SftpConnector (@Nonnull final String sHostname)
+  public SftpConnector (@NonNull final String sHostname)
   {
     this (new SftpConnectionDestination (sHostname));
   }
 
-  public SftpConnector (@Nonnull final String sHostname, final int nPort)
+  public SftpConnector (@NonNull final String sHostname, final int nPort)
   {
     this (new SftpConnectionDestination (sHostname, nPort));
   }
 
-  public SftpConnector (@Nonnull final ISftpConnectionDestination aDestination)
+  public SftpConnector (@NonNull final ISftpConnectionDestination aDestination)
   {
     ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
-  @Nonnull
+  @NonNull
   public ISftpConnectionDestination getDestination ()
   {
     return m_aDestination;
@@ -71,8 +70,8 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     return m_aChannel;
   }
 
-  @Nonnull
-  public EChange openConnection (@Nonnull final IAuthCredentials aCredentials)
+  @NonNull
+  public EChange openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     // already open?
     if (isConnectionOpen ())
@@ -83,7 +82,7 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     return EChange.valueOf (isConnectionOpen ());
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection ()
   {
     if (isConnectionOpen () && m_aDestination.closeConnection (m_aChannel).isChanged ())
@@ -100,8 +99,8 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     return m_aChannel != null;
   }
 
-  @Nonnull
-  public ESuccess getData (@Nonnull final String sFilename, @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess getData (@NonNull final String sFilename, @NonNull @WillClose final OutputStream aOS)
   {
     try
     {
@@ -124,8 +123,8 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     }
   }
 
-  @Nonnull
-  public ESuccess putData (@Nonnull final String sFilename, @Nonnull @WillClose final InputStream aIS)
+  @NonNull
+  public ESuccess putData (@NonNull final String sFilename, @NonNull @WillClose final InputStream aIS)
   {
     try
     {
@@ -148,8 +147,8 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     }
   }
 
-  @Nonnull
-  public ESuccess changeWorkingDirectory (@Nonnull final String sDirectory)
+  @NonNull
+  public ESuccess changeWorkingDirectory (@NonNull final String sDirectory)
   {
     if (m_aChannel != null)
       try
@@ -165,14 +164,14 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess changeToParentDirectory ()
   {
     return changeWorkingDirectory ("..");
   }
 
-  @Nonnull
-  public ESuccess deleteFile (@Nonnull final String sFilename)
+  @NonNull
+  public ESuccess deleteFile (@NonNull final String sFilename)
   {
     if (m_aChannel != null)
       try
@@ -188,8 +187,8 @@ public class SftpConnector implements IConnectorFileBased <ChannelSftp, ChannelS
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
-  public ESuccess listFiles (@Nullable final Predicate <ChannelSftp.LsEntry> aFilter, @Nonnull final List <ChannelSftp.LsEntry> aTargetList)
+  @NonNull
+  public ESuccess listFiles (@Nullable final Predicate <ChannelSftp.LsEntry> aFilter, @NonNull final List <ChannelSftp.LsEntry> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
 

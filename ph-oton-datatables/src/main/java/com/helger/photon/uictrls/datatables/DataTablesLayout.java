@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.clone.ICloneable;
@@ -25,9 +28,6 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Replacement of DT DOM element in v2. See
@@ -48,12 +48,12 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
 
     private final String m_sPlaceholder;
 
-    EPlace (@Nonnull @Nonempty final String sPlaceholder)
+    EPlace (@NonNull @Nonempty final String sPlaceholder)
     {
       m_sPlaceholder = sPlaceholder;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getKey (@Nonnegative final int nIndex)
     {
@@ -76,7 +76,7 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     m_aMap = new CommonsHashMap <> ();
   }
 
-  public DataTablesLayout (@Nonnull final DataTablesLayout rhs)
+  public DataTablesLayout (@NonNull final DataTablesLayout rhs)
   {
     ValueEnforcer.notNull (rhs, "rhs");
     m_aMap = rhs.m_aMap.getClone ();
@@ -90,15 +90,15 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     public Adder ()
     {}
 
-    @Nonnull
-    public Adder at (@Nonnull final EPlace ePlace)
+    @NonNull
+    public Adder at (@NonNull final EPlace ePlace)
     {
       ValueEnforcer.notNull (ePlace, "Place");
       m_ePlace = ePlace;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Adder at (@Nonnegative final int nIndex)
     {
       ValueEnforcer.isGE0 (nIndex, "Index");
@@ -117,13 +117,13 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     }
   }
 
-  @Nonnull
+  @NonNull
   public Adder adder ()
   {
     return new Adder ();
   }
 
-  public void set (@Nonnull final EPlace ePlace, @Nonnegative final int nIndex, @Nullable final IJSExpression aExpr)
+  public void set (@NonNull final EPlace ePlace, @Nonnegative final int nIndex, @Nullable final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (ePlace, "Place");
     ValueEnforcer.isGE0 (nIndex, "Index");
@@ -146,7 +146,7 @@ public class DataTablesLayout implements ICloneable <DataTablesLayout>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesLayout getClone ()
   {
     return new DataTablesLayout (this);

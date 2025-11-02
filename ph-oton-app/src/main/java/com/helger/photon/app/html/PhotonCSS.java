@@ -18,6 +18,8 @@ package com.helger.photon.app.html;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class keeps track of all the CSS files that must be included globally or for a single
  * request.
@@ -63,7 +62,7 @@ public final class PhotonCSS
   private PhotonCSS ()
   {}
 
-  public static void _readCSSIncludes (@Nonnull final IReadableResource aRes, @Nonnull final CSSResourceSet aTarget)
+  public static void _readCSSIncludes (@NonNull final IReadableResource aRes, @NonNull final CSSResourceSet aTarget)
   {
     ValueEnforcer.notNull (aRes, "Res");
     ValueEnforcer.notNull (aTarget, "Target");
@@ -120,7 +119,7 @@ public final class PhotonCSS
       }
   }
 
-  public static void readCSSIncludesForGlobal (@Nonnull final IReadableResource aRes)
+  public static void readCSSIncludesForGlobal (@NonNull final IReadableResource aRes)
   {
     _readCSSIncludes (aRes, GLOBAL);
   }
@@ -131,7 +130,7 @@ public final class PhotonCSS
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
-  public static void registerCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public static void registerCSSIncludeForGlobal (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     GLOBAL.addItem (aCSSPathProvider);
   }
@@ -144,7 +143,7 @@ public final class PhotonCSS
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
-  public static void registerCSSIncludeForGlobal (final int nIndex, @Nonnull final ICSSPathProvider aCSSPathProvider)
+  public static void registerCSSIncludeForGlobal (final int nIndex, @NonNull final ICSSPathProvider aCSSPathProvider)
   {
     GLOBAL.addItem (nIndex, aCSSPathProvider);
   }
@@ -155,7 +154,7 @@ public final class PhotonCSS
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
-  public static void unregisterCSSIncludeForGlobal (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public static void unregisterCSSIncludeForGlobal (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     GLOBAL.removeItem (aCSSPathProvider);
   }
@@ -171,14 +170,14 @@ public final class PhotonCSS
   /**
    * @return A non-<code>null</code> set with all CSS paths to be included globally.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ICSSPathProvider> getAllRegisteredCSSIncludesForGlobal ()
   {
     return GLOBAL.getAllItems ();
   }
 
-  public static void getAllRegisteredCSSIncludesForGlobal (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
+  public static void getAllRegisteredCSSIncludesForGlobal (@NonNull final Collection <? super ICSSPathProvider> aTarget)
   {
     GLOBAL.getAllItems (aTarget);
   }
@@ -213,7 +212,7 @@ public final class PhotonCSS
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
-  public static void registerCSSIncludeForThisRequest (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public static void registerCSSIncludeForThisRequest (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     _getPerRequestSet (true).addItem (aCSSPathProvider);
   }
@@ -224,7 +223,7 @@ public final class PhotonCSS
    * @param aCSSPathProvider
    *        The CSS path provider to use. May not be <code>null</code>.
    */
-  public static void unregisterCSSIncludeFromThisRequest (@Nonnull final ICSSPathProvider aCSSPathProvider)
+  public static void unregisterCSSIncludeFromThisRequest (@NonNull final ICSSPathProvider aCSSPathProvider)
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)
@@ -244,7 +243,7 @@ public final class PhotonCSS
   /**
    * @return A non-<code>null</code> set with all CSS paths to be included in this request.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ICSSPathProvider> getAllRegisteredCSSIncludesForThisRequest ()
   {
@@ -255,7 +254,7 @@ public final class PhotonCSS
     return aSet.getAllItems ();
   }
 
-  public static void getAllRegisteredCSSIncludesForThisRequest (@Nonnull final Collection <? super ICSSPathProvider> aTarget)
+  public static void getAllRegisteredCSSIncludesForThisRequest (@NonNull final Collection <? super ICSSPathProvider> aTarget)
   {
     final CSSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)

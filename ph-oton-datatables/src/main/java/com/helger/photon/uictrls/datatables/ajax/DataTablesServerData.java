@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +50,6 @@ import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class holds tables to be used by the DataTables server side handling. Each DataTable in each
  * session is represented as a single object of this class. SO if you have a lot of DataTables
@@ -73,10 +72,10 @@ public final class DataTablesServerData implements IHasUIState
   private DataTablesServerSortState m_aServerSortState;
   private final EDataTablesFilterType m_eFilterType;
 
-  public DataTablesServerData (@Nonnull final IHCTable <?> aTable,
-                               @Nonnull final List <DataTablesColumnDef> aColumns,
-                               @Nonnull final Locale aDisplayLocale,
-                               @Nonnull final EDataTablesFilterType eFilterType)
+  public DataTablesServerData (@NonNull final IHCTable <?> aTable,
+                               @NonNull final List <DataTablesColumnDef> aColumns,
+                               @NonNull final Locale aDisplayLocale,
+                               @NonNull final EDataTablesFilterType eFilterType)
   {
     ValueEnforcer.notNull (aTable, "Table");
     ValueEnforcer.notNull (aColumns, "Columns");
@@ -135,7 +134,7 @@ public final class DataTablesServerData implements IHasUIState
    *
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static IHCConversionSettings createConversionSettings ()
   {
     // Create HTML without namespaces
@@ -154,18 +153,18 @@ public final class DataTablesServerData implements IHasUIState
     return aRealCS;
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT_DATATABLES;
   }
 
-  public boolean hasServerSortState (@Nonnull final DataTablesServerSortState aOtherserverSortState)
+  public boolean hasServerSortState (@NonNull final DataTablesServerSortState aOtherserverSortState)
   {
     return m_aRWLock.readLockedBoolean ( () -> m_aServerSortState.equals (aOtherserverSortState));
   }
 
-  public void setServerSortStateAndSort (@Nonnull final DataTablesServerSortState aNewServerSortState)
+  public void setServerSortStateAndSort (@NonNull final DataTablesServerSortState aNewServerSortState)
   {
     ValueEnforcer.notNull (aNewServerSortState, "NewServerSortState");
 
@@ -194,7 +193,7 @@ public final class DataTablesServerData implements IHasUIState
     m_aRWLock.readLocked ( () -> m_aRows.forEach (aConsumer));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <DataTablesServerDataRow> getAllRows ()
   {
@@ -209,7 +208,7 @@ public final class DataTablesServerData implements IHasUIState
     return m_aRWLock.readLockedGet ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
   }
 
-  @Nonnull
+  @NonNull
   public Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
@@ -221,7 +220,7 @@ public final class DataTablesServerData implements IHasUIState
     return ArrayHelper.getSafeElement (m_aColumns, nColumnIndex);
   }
 
-  @Nonnull
+  @NonNull
   public EDataTablesFilterType getFilterType ()
   {
     return m_eFilterType;

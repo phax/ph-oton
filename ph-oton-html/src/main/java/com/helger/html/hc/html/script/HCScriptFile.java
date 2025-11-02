@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
@@ -24,9 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;script&gt; element that loads the code from a source URL.
@@ -58,7 +58,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCScriptFile setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -71,7 +71,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     return m_aJSPathProvider;
   }
 
-  @Nonnull
+  @NonNull
   public final HCScriptFile setPathProvider (@Nullable final IJSPathProvider aJSPathProvider)
   {
     m_aJSPathProvider = aJSPathProvider;
@@ -83,7 +83,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     return m_bDefer;
   }
 
-  @Nonnull
+  @NonNull
   public final HCScriptFile setDefer (final boolean bDefer)
   {
     m_bDefer = bDefer;
@@ -95,7 +95,7 @@ public class HCScriptFile extends AbstractHCScript <HCScriptFile>
     return m_bAsync;
   }
 
-  @Nonnull
+  @NonNull
   public final HCScriptFile setAsync (final boolean bAsync)
   {
     m_bAsync = bAsync;

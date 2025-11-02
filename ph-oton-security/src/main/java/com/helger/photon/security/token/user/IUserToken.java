@@ -16,12 +16,12 @@
  */
 package com.helger.photon.security.token.user;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.photon.security.token.object.IObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
 import com.helger.text.IHasDescription;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a user token. A user token is always subordinated to an
@@ -42,14 +42,14 @@ public interface IUserToken extends IObjectWithAccessToken, IHasDescription
   /**
    * @return The user to which this user token belongs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IUser getUser ();
 
   /**
    * @return The ID of the user to which this user token belongs. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getUserID ()
   {

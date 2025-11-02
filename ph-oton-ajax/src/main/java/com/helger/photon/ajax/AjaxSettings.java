@@ -16,6 +16,8 @@
  */
 package com.helger.photon.ajax;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -29,8 +31,6 @@ import com.helger.photon.ajax.callback.IAjaxExceptionCallback;
 import com.helger.photon.ajax.callback.IAjaxLongRunningExecutionCallback;
 import com.helger.photon.ajax.callback.LoggingAjaxExceptionCallback;
 import com.helger.photon.ajax.callback.LoggingAjaxLongRunningExecutionCallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A central helper class that centrally manages the AJAX callbacks.
@@ -63,21 +63,21 @@ public final class AjaxSettings
   private AjaxSettings ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAjaxExceptionCallback> exceptionCallbacks ()
   {
     return s_aExceptionCallbacks;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IAjaxBeforeExecutionCallback> beforeExecutionCallbacks ()
   {
     return s_aBeforeExecutionCallbacks;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IAjaxAfterExecutionCallback> afterExecutionCallbacks ()
   {
@@ -101,7 +101,7 @@ public final class AjaxSettings
     RW_LOCK.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IAjaxLongRunningExecutionCallback> longRunningExecutionCallbacks ()
   {

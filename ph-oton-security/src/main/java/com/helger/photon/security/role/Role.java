@@ -18,6 +18,9 @@ package com.helger.photon.security.role;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,9 +30,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.type.ObjectType;
 import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.AbstractBusinessObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IRole} interface.
@@ -54,7 +54,7 @@ public class Role extends AbstractBusinessObject implements IRole
    * @param aCustomAttrs
    *        Optional attributes. May be <code>null</code>.
    */
-  public Role (@Nonnull @Nonempty final String sName,
+  public Role (@NonNull @Nonempty final String sName,
                @Nullable final String sDescription,
                @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -71,8 +71,8 @@ public class Role extends AbstractBusinessObject implements IRole
    * @param sDescription
    *        Role description. May be <code>null</code>.
    */
-  public Role (@Nonnull final StubObject aStubObject,
-               @Nonnull @Nonempty final String sName,
+  public Role (@NonNull final StubObject aStubObject,
+               @NonNull @Nonempty final String sName,
                @Nullable final String sDescription)
   {
     super (aStubObject);
@@ -80,21 +80,21 @@ public class Role extends AbstractBusinessObject implements IRole
     setDescription (sDescription);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return Role.OT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
-  public EChange setName (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public EChange setName (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -110,7 +110,7 @@ public class Role extends AbstractBusinessObject implements IRole
     return m_sDescription;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))

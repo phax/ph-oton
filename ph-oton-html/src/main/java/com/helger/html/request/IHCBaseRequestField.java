@@ -16,9 +16,9 @@
  */
 package com.helger.html.request;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 /**
  * Defines an abstract request field for input controls. It encapsulates a name
@@ -33,7 +33,7 @@ public interface IHCBaseRequestField
    * @return The field name of this request field. Neither <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getFieldName ();
 }

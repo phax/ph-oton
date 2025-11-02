@@ -18,6 +18,8 @@ package com.helger.photon.uicore.page.handler;
 
 import java.util.function.BiFunction;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -30,8 +32,6 @@ import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-import jakarta.annotation.Nonnull;
-
 public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                         implements
                                                         IWebPageActionHandlerMulti <DATATYPE, WPECTYPE>
@@ -40,38 +40,38 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
   private final String m_sFieldName;
   private final BiFunction <WPECTYPE, String, DATATYPE> m_aResolver;
 
-  protected AbstractWebPageActionHandlerMulti (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
-                                               @Nonnull @Nonempty final String sFieldName,
-                                               @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
+  protected AbstractWebPageActionHandlerMulti (@NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
+                                               @NonNull @Nonempty final String sFieldName,
+                                               @NonNull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
   {
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
     m_sFieldName = ValueEnforcer.notEmpty (sFieldName, "FieldName");
     m_aResolver = ValueEnforcer.notNull (aResolver, "Resolver");
   }
 
-  @Nonnull
+  @NonNull
   protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   protected final String getFieldName ()
   {
     return m_sFieldName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   protected final BiFunction <WPECTYPE, String, DATATYPE> getResolver ()
   {
     return m_aResolver;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull final WPECTYPE aWPEC)
+  public ICommonsList <DATATYPE> getAllSelectedObjects (@NonNull final WPECTYPE aWPEC)
   {
     final ICommonsList <DATATYPE> ret = new CommonsArrayList <> ();
     final ICommonsList <String> aIDs = aWPEC.params ().getAsStringList (m_sFieldName);
@@ -86,8 +86,8 @@ public abstract class AbstractWebPageActionHandlerMulti <DATATYPE extends IHasID
     return false;
   }
 
-  @Nonnull
-  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
+  @NonNull
+  public EShowList handleAction (@NonNull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
     final ICommonsList <DATATYPE> aSelectedObjects = getAllSelectedObjects (aWPEC);
     return handleMultiAction (aWPEC, aSelectedObjects);

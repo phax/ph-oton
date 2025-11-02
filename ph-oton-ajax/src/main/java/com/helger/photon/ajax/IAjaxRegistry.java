@@ -18,13 +18,13 @@ package com.helger.photon.ajax;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an AJAX registry. It has a set of {@link IAjaxExecutor}
@@ -36,7 +36,7 @@ import jakarta.annotation.Nullable;
  */
 public interface IAjaxRegistry extends Serializable
 {
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ();
 
@@ -67,5 +67,5 @@ public interface IAjaxRegistry extends Serializable
    *        The AJAX function declaration to be invoked. May not be
    *        <code>null</code>.
    */
-  void registerFunction (@Nonnull IAjaxFunctionDeclaration aFunction);
+  void registerFunction (@NonNull IAjaxFunctionDeclaration aFunction);
 }

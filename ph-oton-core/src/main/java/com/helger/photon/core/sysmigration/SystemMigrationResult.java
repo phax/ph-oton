@@ -19,6 +19,9 @@ package com.helger.photon.core.sysmigration;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
@@ -29,9 +32,6 @@ import com.helger.base.state.ISuccessIndicator;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the result of a single system migration.
@@ -46,8 +46,8 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   private final boolean m_bSuccess;
   private final String m_sErrorMessage;
 
-  protected SystemMigrationResult (@Nonnull @Nonempty final String sMigrationID,
-                                   @Nonnull final LocalDateTime aExecutionDT,
+  protected SystemMigrationResult (@NonNull @Nonempty final String sMigrationID,
+                                   @NonNull final LocalDateTime aExecutionDT,
                                    final boolean bSuccess,
                                    @Nullable final String sErrorMessage)
   {
@@ -57,13 +57,13 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
     m_sErrorMessage = sErrorMessage;
   }
 
-  @Nonnull
+  @NonNull
   public String getID ()
   {
     return m_sMigrationID;
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getExecutionDateTime ()
   {
     return m_aExecutionDT;
@@ -125,14 +125,14 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
                                        .getToString ();
   }
 
-  @Nonnull
-  public static SystemMigrationResult createSuccess (@Nonnull @Nonempty final String sMigrationID)
+  @NonNull
+  public static SystemMigrationResult createSuccess (@NonNull @Nonempty final String sMigrationID)
   {
     return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), true, null);
   }
 
-  @Nonnull
-  public static SystemMigrationResult createFailure (@Nonnull @Nonempty final String sMigrationID, @Nonnull final String sErrorMsg)
+  @NonNull
+  public static SystemMigrationResult createFailure (@NonNull @Nonempty final String sMigrationID, @NonNull final String sErrorMsg)
   {
     return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
   }

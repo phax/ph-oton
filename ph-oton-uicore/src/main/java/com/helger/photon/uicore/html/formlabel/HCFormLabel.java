@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -29,9 +32,6 @@ import com.helger.html.hc.html.forms.AbstractHCLabel;
 import com.helger.html.hc.html.textlevel.HCSpan;
 import com.helger.html.hc.impl.HCTextNode;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormLabel
 {
   public static final ICSSClassProvider CSS_CLASS_FORM_LABEL = DefaultCSSClassProvider.create ("form-label");
@@ -40,7 +40,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   private final boolean m_bTextLabel;
   private final String m_sPlainText;
 
-  public static void assignFormLabelClasses (@Nonnull final IHCElement <?> aElement, @Nonnull final ELabelType eType)
+  public static void assignFormLabelClasses (@NonNull final IHCElement <?> aElement, @NonNull final ELabelType eType)
   {
     aElement.addClass (CSS_CLASS_FORM_LABEL).addClass (eType.getCSSClass ());
   }
@@ -60,7 +60,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     addChild (aNode);
   }
 
-  public HCFormLabel (@Nonnull final String sText, @Nonnull final ELabelType eType)
+  public HCFormLabel (@NonNull final String sText, @NonNull final ELabelType eType)
   {
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
@@ -75,7 +75,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     m_sPlainText = sPlainText;
   }
 
-  public HCFormLabel (@Nonnull final IHCNodeWithChildren <?> aNode, @Nonnull final ELabelType eType)
+  public HCFormLabel (@NonNull final IHCNodeWithChildren <?> aNode, @NonNull final ELabelType eType)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");
@@ -90,7 +90,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return m_sPlainText;
@@ -101,7 +101,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
     return m_bTextLabel;
   }
 
-  @Nonnull
+  @NonNull
   public ELabelType getType ()
   {
     return m_eType;
@@ -117,58 +117,58 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
                             .getToString ();
   }
 
-  @Nonnull
-  public static HCFormLabel createOptional (@Nonnull final String sText)
+  @NonNull
+  public static HCFormLabel createOptional (@NonNull final String sText)
   {
     return new HCFormLabel (sText, ELabelType.OPTIONAL);
   }
 
-  @Nonnull
-  public static HCFormLabel createOptional (@Nonnull final IHCElementWithChildren <?> aNode)
+  @NonNull
+  public static HCFormLabel createOptional (@NonNull final IHCElementWithChildren <?> aNode)
   {
     return new HCFormLabel (aNode, ELabelType.OPTIONAL);
   }
 
-  @Nonnull
-  public static HCFormLabel createMandatory (@Nonnull final String sText)
+  @NonNull
+  public static HCFormLabel createMandatory (@NonNull final String sText)
   {
     return new HCFormLabel (sText, ELabelType.MANDATORY);
   }
 
-  @Nonnull
-  public static HCFormLabel createMandatory (@Nonnull final IHCElementWithChildren <?> aNode)
+  @NonNull
+  public static HCFormLabel createMandatory (@NonNull final IHCElementWithChildren <?> aNode)
   {
     return new HCFormLabel (aNode, ELabelType.MANDATORY);
   }
 
-  @Nonnull
-  public static HCFormLabel createAlternative (@Nonnull final String sText)
+  @NonNull
+  public static HCFormLabel createAlternative (@NonNull final String sText)
   {
     return new HCFormLabel (sText, ELabelType.ALTERNATIVE);
   }
 
-  @Nonnull
-  public static HCFormLabel createAlternative (@Nonnull final IHCElementWithChildren <?> aNode)
+  @NonNull
+  public static HCFormLabel createAlternative (@NonNull final IHCElementWithChildren <?> aNode)
   {
     return new HCFormLabel (aNode, ELabelType.ALTERNATIVE);
   }
 
-  @Nonnull
-  public static HCFormLabel createPlain (@Nonnull final String sText)
+  @NonNull
+  public static HCFormLabel createPlain (@NonNull final String sText)
   {
     // Avoid adding ":" or "?" at the end
     return new HCFormLabel (sText, ELabelType.NONE);
   }
 
-  @Nonnull
-  public static HCFormLabel createPlain (@Nonnull final IHCElementWithChildren <?> aNode)
+  @NonNull
+  public static HCFormLabel createPlain (@NonNull final IHCElementWithChildren <?> aNode)
   {
     // Avoid adding ":" or "?" at the end
     return new HCFormLabel (aNode, ELabelType.NONE);
   }
 
-  @Nonnull
-  public static HCFormLabel createForCheckBox (@Nonnull final String sText)
+  @NonNull
+  public static HCFormLabel createForCheckBox (@NonNull final String sText)
   {
     // Avoid adding ":" or "?" at the end
     if (false)

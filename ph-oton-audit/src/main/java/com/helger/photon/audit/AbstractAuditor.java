@@ -16,15 +16,15 @@
  */
 package com.helger.photon.audit;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
 import com.helger.base.type.ObjectType;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for interface {@link IAuditor}.
@@ -37,36 +37,36 @@ public abstract class AbstractAuditor implements IAuditor
   private ICurrentUserIDProvider m_aCurrentUserIDProvider;
   private IAuditActionStringProvider m_aActionStringProvider;
 
-  public AbstractAuditor (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public AbstractAuditor (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     this (aCurrentUserIDProvider, IAuditActionStringProvider.JSON);
   }
 
-  protected AbstractAuditor (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider,
-                             @Nonnull final IAuditActionStringProvider aActionStringProvider)
+  protected AbstractAuditor (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider,
+                             @NonNull final IAuditActionStringProvider aActionStringProvider)
   {
     setCurrentUserIDProvider (aCurrentUserIDProvider);
     setActionStringProvider (aActionStringProvider);
   }
 
-  @Nonnull
+  @NonNull
   public final ICurrentUserIDProvider getCurrentUserIDProvider ()
   {
     return m_aCurrentUserIDProvider;
   }
 
-  public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public final void setCurrentUserIDProvider (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
   }
 
-  @Nonnull
+  @NonNull
   public final IAuditActionStringProvider getActionStringProvider ()
   {
     return m_aActionStringProvider;
   }
 
-  public final void setActionStringProvider (@Nonnull final IAuditActionStringProvider aActionStringProvider)
+  public final void setActionStringProvider (@NonNull final IAuditActionStringProvider aActionStringProvider)
   {
     m_aActionStringProvider = ValueEnforcer.notNull (aActionStringProvider, "ActionStringProvider");
   }
@@ -78,10 +78,10 @@ public abstract class AbstractAuditor implements IAuditor
    *        The audit item to handle. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void handleAuditItem (@Nonnull IAuditItem aAuditItem);
+  protected abstract void handleAuditItem (@NonNull IAuditItem aAuditItem);
 
-  public void createAuditItem (@Nonnull final EAuditActionType eActionType,
-                               @Nonnull final ESuccess eSuccess,
+  public void createAuditItem (@NonNull final EAuditActionType eActionType,
+                               @NonNull final ESuccess eSuccess,
                                @Nullable final ObjectType aActionObjectType,
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)

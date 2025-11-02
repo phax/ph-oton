@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
-import com.helger.html.hc.IHCNode;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.IHCNode;
 
 /**
  * Represents the base interface for a single label (text field)
@@ -30,7 +30,7 @@ public interface IFormLabel extends IHCNode
   /**
    * @return The non-<code>null</code> label type
    */
-  @Nonnull
+  @NonNull
   ELabelType getType ();
 
   /**
@@ -43,6 +43,6 @@ public interface IFormLabel extends IHCNode
    * @return The pure label text without any type specific suffix. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   String getPlainText ();
 }

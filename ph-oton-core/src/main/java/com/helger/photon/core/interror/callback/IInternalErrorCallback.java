@@ -18,13 +18,13 @@ package com.helger.photon.core.interror.callback;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
 import com.helger.photon.core.interror.InternalErrorHandler;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Callback interface for the {@link InternalErrorHandler}.
@@ -51,6 +51,6 @@ public interface IInternalErrorCallback extends ICallback
    */
   void onInternalError (@Nullable Throwable t,
                         @Nullable IRequestWebScopeWithoutResponse aRequestScope,
-                        @Nonnull @Nonempty String sErrorID,
-                        @Nonnull Locale aDisplayLocale);
+                        @NonNull @Nonempty String sErrorID,
+                        @NonNull Locale aDisplayLocale);
 }

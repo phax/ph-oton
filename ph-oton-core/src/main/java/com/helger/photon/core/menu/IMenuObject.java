@@ -18,12 +18,12 @@ package com.helger.photon.core.menu;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.id.IHasID;
 import com.helger.typeconvert.collection.IAttributeContainerAny;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for menu items and menu separators.
@@ -35,7 +35,7 @@ public interface IMenuObject extends IHasID <String>, Serializable
   /**
    * @return The menu object type. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EMenuObjectType getMenuObjectType ();
 
   /**
@@ -52,7 +52,7 @@ public interface IMenuObject extends IHasID <String>, Serializable
    *        that no filter is required.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMenuObject setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
@@ -68,7 +68,7 @@ public interface IMenuObject extends IHasID <String>, Serializable
   /**
    * @return Custom attributes.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   IAttributeContainerAny <String> attrs ();
 }

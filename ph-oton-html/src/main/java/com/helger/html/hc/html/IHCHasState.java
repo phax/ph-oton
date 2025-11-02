@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Base interface for HC objects that can be enabled and disabled.
@@ -40,6 +40,6 @@ public interface IHCHasState <IMPLTYPE extends IHCHasState <IMPLTYPE>>
    *        <code>true</code> to disable, <code>false</code> to enable
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setDisabled (boolean bDisabled);
 }

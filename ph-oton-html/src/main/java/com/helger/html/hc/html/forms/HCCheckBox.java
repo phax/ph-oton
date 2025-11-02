@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "checkbox"
@@ -40,7 +40,7 @@ public class HCCheckBox extends AbstractHCCheckBox <HCCheckBox>
    * @param aRF
    *        The request field
    */
-  public HCCheckBox (@Nonnull final IHCRequestFieldBoolean aRF)
+  public HCCheckBox (@NonNull final IHCRequestFieldBoolean aRF)
   {
     super (aRF);
   }
@@ -51,7 +51,7 @@ public class HCCheckBox extends AbstractHCCheckBox <HCCheckBox>
    * @param aRF
    *        The request field
    */
-  public HCCheckBox (@Nonnull final IHCRequestFieldBooleanMultiValue aRF)
+  public HCCheckBox (@NonNull final IHCRequestFieldBooleanMultiValue aRF)
   {
     super (aRF);
   }

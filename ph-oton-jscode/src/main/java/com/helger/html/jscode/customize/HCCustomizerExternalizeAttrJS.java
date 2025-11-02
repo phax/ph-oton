@@ -18,6 +18,8 @@ package com.helger.html.jscode.customize;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -34,17 +36,15 @@ import com.helger.html.jscode.JSConst;
 import com.helger.html.jscode.JSPackage;
 import com.helger.html.jscode.html.JSHtml;
 
-import jakarta.annotation.Nonnull;
-
 public class HCCustomizerExternalizeAttrJS extends AbstractHCCustomizer
 {
   public HCCustomizerExternalizeAttrJS ()
   {}
 
   @Override
-  public void customizeNode (@Nonnull final IHCNode aNode,
-                             @Nonnull final EHTMLVersion eHTMLVersion,
-                             @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  public void customizeNode (@NonNull final IHCNode aNode,
+                             @NonNull final EHTMLVersion eHTMLVersion,
+                             @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     if (aNode instanceof IHCElement && !(aNode instanceof IHCScript <?>))
     {

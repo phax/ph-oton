@@ -18,15 +18,15 @@ package com.helger.photon.security.token.revocation;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The default implementation of {@link IRevocationStatus}.
@@ -110,9 +110,9 @@ public class RevocationStatus implements IRevocationStatus
    * @throws IllegalStateException
    *         If this status already denotes a revoked object.
    */
-  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,
-                           @Nonnull final LocalDateTime aRevocationDT,
-                           @Nonnull @Nonempty final String sRevocationReason)
+  public void markRevoked (@NonNull @Nonempty final String sRevocationUserID,
+                           @NonNull final LocalDateTime aRevocationDT,
+                           @NonNull @Nonempty final String sRevocationReason)
   {
     ValueEnforcer.notEmpty (sRevocationUserID, "RevocationUserID");
     ValueEnforcer.notNull (aRevocationDT, "RevocationDT");
@@ -159,7 +159,7 @@ public class RevocationStatus implements IRevocationStatus
                                        .getToString ();
   }
 
-  @Nonnull
+  @NonNull
   public static RevocationStatus createUnrevoked ()
   {
     return new RevocationStatus (false, null, null, null);

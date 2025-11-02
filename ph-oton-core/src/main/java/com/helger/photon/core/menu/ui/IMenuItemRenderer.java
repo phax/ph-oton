@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.menu.ui;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
@@ -23,8 +25,6 @@ import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuSeparator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for rendering menu objects
@@ -42,8 +42,8 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    *        The separator to be rendered.
    * @return The rendered menu separator. May not be <code>null</code>.
    */
-  @Nonnull
-  IHCNode renderSeparator (@Nonnull ISimpleWebExecutionContext aSWEC, @Nonnull IMenuSeparator aSeparator);
+  @NonNull
+  IHCNode renderSeparator (@NonNull ISimpleWebExecutionContext aSWEC, @NonNull IMenuSeparator aSeparator);
 
   /**
    * Render a menu item on a page
@@ -60,9 +60,9 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    *        <code>true</code> if the menu item is expanded
    * @return The rendered menu item. May not be <code>null</code>.
    */
-  @Nonnull
-  IHCNode renderMenuItemPage (@Nonnull ISimpleWebExecutionContext aSWEC,
-                              @Nonnull IMenuItemPage aMenuItem,
+  @NonNull
+  IHCNode renderMenuItemPage (@NonNull ISimpleWebExecutionContext aSWEC,
+                              @NonNull IMenuItemPage aMenuItem,
                               boolean bHasChildren,
                               boolean bIsSelected,
                               boolean bIsExpanded);
@@ -82,9 +82,9 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    *        <code>true</code> if the menu item is expanded
    * @return The rendered menu item. May not be <code>null</code>.
    */
-  @Nonnull
-  IHCNode renderMenuItemExternal (@Nonnull ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull IMenuItemExternal aMenuItem,
+  @NonNull
+  IHCNode renderMenuItemExternal (@NonNull ISimpleWebExecutionContext aSWEC,
+                                  @NonNull IMenuItemExternal aMenuItem,
                                   boolean bHasChildren,
                                   boolean bIsSelected,
                                   boolean bIsExpanded);
@@ -95,7 +95,7 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    * @param aNewLevel
    *        The new UL to be modified
    */
-  void onLevelDown (@Nonnull T aNewLevel);
+  void onLevelDown (@NonNull T aNewLevel);
 
   /**
    * Called when a sub-level is left
@@ -103,7 +103,7 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    * @param aLastLevel
    *        The last UL that was used
    */
-  void onLevelUp (@Nonnull T aLastLevel);
+  void onLevelUp (@NonNull T aLastLevel);
 
   /**
    * Callback invoked on the created node.
@@ -113,7 +113,7 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    * @param aLI
    *        HCNode
    */
-  void onMenuSeparatorItem (@Nonnull ISimpleWebExecutionContext aSWEC, @Nonnull HCLI aLI);
+  void onMenuSeparatorItem (@NonNull ISimpleWebExecutionContext aSWEC, @NonNull HCLI aLI);
 
   /**
    * Callback invoked on the created node.
@@ -129,8 +129,8 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    * @param bIsExpanded
    *        <code>true</code> if the menu item is expanded
    */
-  void onMenuItemPageItem (@Nonnull ISimpleWebExecutionContext aSWEC,
-                           @Nonnull HCLI aLI,
+  void onMenuItemPageItem (@NonNull ISimpleWebExecutionContext aSWEC,
+                           @NonNull HCLI aLI,
                            boolean bHasChildren,
                            boolean bIsSelected,
                            boolean bIsExpanded);
@@ -149,8 +149,8 @@ public interface IMenuItemRenderer <T extends IHCList <?, HCLI>>
    * @param bIsExpanded
    *        <code>true</code> if the menu item is expanded
    */
-  void onMenuItemExternalItem (@Nonnull ISimpleWebExecutionContext aSWEC,
-                               @Nonnull HCLI aLI,
+  void onMenuItemExternalItem (@NonNull ISimpleWebExecutionContext aSWEC,
+                               @NonNull HCLI aLI,
                                boolean bHasChildren,
                                boolean bIsSelected,
                                boolean bIsExpanded);

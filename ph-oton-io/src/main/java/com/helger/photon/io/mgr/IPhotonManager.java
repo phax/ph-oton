@@ -16,12 +16,12 @@
  */
 package com.helger.photon.io.mgr;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.id.IHasID;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a manager with common data types.
@@ -38,7 +38,7 @@ public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
    *        Response type.
    * @return An empty collection of the suitable implementation type.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   <T> ICommonsList <T> getNone ();
 
@@ -46,7 +46,7 @@ public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
    * @return A non-<code>null</code> but maybe empty list of all contained
    *         objects.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <INTERFACETYPE> getAll ();
 

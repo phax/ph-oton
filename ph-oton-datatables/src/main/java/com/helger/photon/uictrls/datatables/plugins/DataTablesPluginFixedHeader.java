@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -26,9 +29,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
 {
@@ -48,58 +48,58 @@ public class DataTablesPluginFixedHeader extends AbstractDataTablesPlugin
     super (PLUGIN_NAME);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setFooter (final boolean bFooter)
 
   {
     return setFooter (ETriState.valueOf (bFooter));
   }
 
-  @Nonnull
-  public DataTablesPluginFixedHeader setFooter (@Nonnull final ETriState eFooter)
+  @NonNull
+  public DataTablesPluginFixedHeader setFooter (@NonNull final ETriState eFooter)
   {
     ValueEnforcer.notNull (eFooter, "Footer");
     m_eFooter = eFooter;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setFooterOffset (final int nFooterOffset)
 
   {
     return setFooterOffset (Integer.valueOf (nFooterOffset));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setFooterOffset (@Nullable final Integer aFooterOffset)
   {
     m_aFooterOffset = aFooterOffset;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setHeader (final boolean bHeader)
 
   {
     return setHeader (ETriState.valueOf (bHeader));
   }
 
-  @Nonnull
-  public DataTablesPluginFixedHeader setHeader (@Nonnull final ETriState eHeader)
+  @NonNull
+  public DataTablesPluginFixedHeader setHeader (@NonNull final ETriState eHeader)
   {
     ValueEnforcer.notNull (eHeader, "Header");
     m_eHeader = eHeader;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setHeaderOffset (final int nHeaderOffset)
 
   {
     return setHeaderOffset (Integer.valueOf (nHeaderOffset));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedHeader setHeaderOffset (@Nullable final Integer aHeaderOffset)
   {
     m_aHeaderOffset = aHeaderOffset;

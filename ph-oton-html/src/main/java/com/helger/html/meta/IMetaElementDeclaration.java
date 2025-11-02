@@ -18,10 +18,10 @@ package com.helger.html.meta;
 
 import java.io.Serializable;
 
-import com.helger.base.name.IHasName;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.base.name.IHasName;
 
 /**
  * Defines the properties for a meta tag declaration.
@@ -42,7 +42,7 @@ public interface IMetaElementDeclaration extends IHasName, Serializable
    * @return The meta element type. Never <code>null</code>.
    * @since 8.0.2
    */
-  @Nonnull
+  @NonNull
   EMetaElementType getType ();
 
   /**

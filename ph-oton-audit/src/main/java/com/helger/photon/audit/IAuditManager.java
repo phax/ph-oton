@@ -19,12 +19,12 @@ package com.helger.photon.audit;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.ReturnsMutableCopy;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for a manager that can handle audit items.
@@ -52,7 +52,7 @@ public interface IAuditManager
   /**
    * @return The underlying auditor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IAuditor getAuditor ();
 
   /**
@@ -60,7 +60,7 @@ public interface IAuditManager
    *        The maximum number of items. Must be &gt; 0.
    * @return The n latest audit items. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @CodingStyleguideUnaware
   List <IAuditItem> getLastAuditItems (@Nonnegative int nMaxItems);

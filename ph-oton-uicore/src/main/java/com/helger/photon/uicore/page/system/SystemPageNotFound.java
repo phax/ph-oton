@@ -18,6 +18,8 @@ package com.helger.photon.uicore.page.system;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +32,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default page showing a very rudimentary "page not found"
@@ -51,7 +50,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
 
     private final IMultilingualText m_aTP;
 
-    ETextBase (@Nonnull final String sDE, @Nonnull final String sEN)
+    ETextBase (@NonNull final String sDE, @NonNull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
@@ -72,7 +71,7 @@ public class SystemPageNotFound <WPECTYPE extends IWebPageExecutionContext> exte
   }
 
   @Override
-  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void fillContent (@NonNull final WPECTYPE aWPEC)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final HCNodeList aNodeList = aWPEC.getNodeList ();

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for OBJECTs
@@ -34,94 +34,94 @@ public interface IHCObject <IMPLTYPE extends IHCObject <IMPLTYPE>> extends IHCEl
 {
   int getWidth ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidth (int nWidth);
 
   int getHeight ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHeight (int nHeight);
 
   @Nullable
   String getHSpace ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHSpace (@Nullable String sHSpace);
 
   @Nullable
   String getVSpace ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setVSpace (@Nullable String sVSpace);
 
   @Nullable
   EHCObjectAlign getAlign ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAlign (@Nullable EHCObjectAlign eAlign);
 
   @Nullable
   String getArchive ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setArchive (@Nullable String sArchive);
 
   @Nullable
   String getBorder ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setBorder (@Nullable String sBorder);
 
   @Nullable
   String getClassID ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setClassID (@Nullable String sClassID);
 
   @Nullable
   ISimpleURL getCodeBase ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCodeBase (@Nullable ISimpleURL aCodeBase);
 
   @Nullable
   IMimeType getCodeType ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCodeType (@Nullable IMimeType aCodeType);
 
   @Nullable
   ISimpleURL getData ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setData (@Nullable ISimpleURL aData);
 
   boolean isDeclare ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setDeclare (boolean bDeclare);
 
   @Nullable
   String getName ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setName (@Nullable String sName);
 
   @Nullable
   String getStandBy ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setStandBy (@Nullable String sStandBy);
 
   @Nullable
   IMimeType getType ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setType (@Nullable IMimeType aType);
 
   @Nullable
   String getUseMap ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setUseMap (@Nullable String sUseMap);
 }

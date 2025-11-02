@@ -19,6 +19,8 @@ package com.helger.photon.icon.tools.supplementary;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.string.StringReplace;
 import com.helger.collection.commons.CommonsTreeSet;
 import com.helger.collection.commons.ICommonsList;
@@ -34,8 +36,6 @@ import com.helger.css.reader.CSSReaderSettings;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
-import jakarta.annotation.Nonnull;
-
 public class MainExtractFontAwesome4CSSClasses
 {
   public static void main (final String [] args)
@@ -47,7 +47,7 @@ public class MainExtractFontAwesome4CSSClasses
     CSSVisitor.visitCSS (aCSS, new DefaultCSSVisitor ()
     {
       @Override
-      public void onStyleRuleSelector (@Nonnull final CSSSelector aSelector)
+      public void onStyleRuleSelector (@NonNull final CSSSelector aSelector)
       {
         final ICommonsList <ICSSSelectorMember> aMembers = aSelector.getAllMembers ();
         for (final ICSSSelectorMember aMember : aMembers)

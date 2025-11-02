@@ -19,6 +19,7 @@ package com.helger.photon.core.ajax.atom;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +39,6 @@ import com.helger.statistics.impl.StatisticsManager;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Abstract news feed action.
  *
@@ -56,7 +55,7 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
   private final IHasDisplayText m_aDisplayText;
   private final String m_sFeedID;
 
-  public AbstractNewsfeedAjaxExecutor (@Nonnull final IHasDisplayText aDisplayText, @Nonnull @Nonempty final String sFeedID)
+  public AbstractNewsfeedAjaxExecutor (@NonNull final IHasDisplayText aDisplayText, @NonNull @Nonempty final String sFeedID)
   {
     ValueEnforcer.notNull (aDisplayText, "DisplayText");
     ValueEnforcer.notNull (sFeedID, "FeedID");
@@ -64,30 +63,30 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
     m_sFeedID = sFeedID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getID ()
   {
     return m_sFeedID;
   }
 
-  public final String getDisplayText (@Nonnull final Locale aContentLocale)
+  public final String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aDisplayText.getDisplayText (aContentLocale);
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   protected String getFeedDescription ()
   {
     return "ph-oton-core";
   }
 
-  protected abstract void fillNewsfeed (@Nonnull Feed aFeed);
+  protected abstract void fillNewsfeed (@NonNull Feed aFeed);
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Increment statistics counter
     final StopWatch aSW = StopWatch.createdStarted ();

@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Field Reference
@@ -36,19 +36,19 @@ public class JSFieldRef extends JSRef
    */
   private final IJSGeneratable m_aObject;
 
-  public JSFieldRef (@Nonnull final IJSGeneratable aObject, @Nonnull @Nonempty final String sName)
+  public JSFieldRef (@NonNull final IJSGeneratable aObject, @NonNull @Nonempty final String sName)
   {
     super (sName);
     m_aObject = ValueEnforcer.notNull (aObject, "Object");
   }
 
-  public JSFieldRef (@Nonnull final IJSGeneratable aObject, @Nonnull final AbstractJSVariable <?> aVar)
+  public JSFieldRef (@NonNull final IJSGeneratable aObject, @NonNull final AbstractJSVariable <?> aVar)
   {
     super (aVar);
     m_aObject = ValueEnforcer.notNull (aObject, "Object");
   }
 
-  @Nonnull
+  @NonNull
   public IJSGeneratable object ()
   {
     return m_aObject;
@@ -59,7 +59,7 @@ public class JSFieldRef extends JSRef
     return m_aObject instanceof AbstractJSClass || m_aObject instanceof IJSExpression;
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation invoke ()
   {
     if (m_aObject instanceof AbstractJSClass)
@@ -70,7 +70,7 @@ public class JSFieldRef extends JSRef
   }
 
   @Override
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (m_aObject).plain ('.').plain (name ());
   }

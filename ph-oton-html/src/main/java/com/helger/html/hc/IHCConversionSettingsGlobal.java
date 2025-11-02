@@ -18,6 +18,9 @@ package com.helger.html.hc;
 
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.css.ICSSWriterSettings;
 import com.helger.css.writer.CSSWriterSettings;
@@ -26,9 +29,6 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSWriterSettings;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Global settings interface that is used to convert HC* nodes to micro nodes.
@@ -41,7 +41,7 @@ public interface IHCConversionSettingsGlobal
    * @return The HTML version to be used to transform HC nodes into micro nodes.
    *         Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EHTMLVersion getHTMLVersion ();
 
   /**
@@ -54,42 +54,42 @@ public interface IHCConversionSettingsGlobal
   /**
    * @return The XML writer settings to be used. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IXMLWriterSettings getXMLWriterSettings ();
 
   /**
    * @return A mutable copy of the XML writer settings to be used. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   XMLWriterSettings getMutableXMLWriterSettings ();
 
   /**
    * @return The CSS writer settings to be used. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   ICSSWriterSettings getCSSWriterSettings ();
 
   /**
    * @return A mutable copy of the CSS writer settings to be used. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   CSSWriterSettings getMutableCSSWriterSettings ();
 
   /**
    * @return The JS formatter settings to be used. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IJSWriterSettings getJSWriterSettings ();
 
   /**
    * @return A mutable copy of the JS formatter settings to be used. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   JSWriterSettings getMutableJSWriterSettings ();
 
@@ -117,7 +117,7 @@ public interface IHCConversionSettingsGlobal
    * @return The charset to be used. This is a shortcut for
    *         <code>getXMLWriterSettings ().getCharset()</code>.
    */
-  @Nonnull
+  @NonNull
   default Charset getCharset ()
   {
     return getXMLWriterSettings ().getCharset ();

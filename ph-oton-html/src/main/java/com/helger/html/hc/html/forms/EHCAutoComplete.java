@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An enumeration that can be used in <code>setAutoComplete</code> methods of
@@ -304,12 +304,12 @@ public enum EHCAutoComplete implements IHCHasHTMLAttributeValue
 
   private final String m_sValue;
 
-  EHCAutoComplete (@Nonnull final String sValue)
+  EHCAutoComplete (@NonNull final String sValue)
   {
     m_sValue = sValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

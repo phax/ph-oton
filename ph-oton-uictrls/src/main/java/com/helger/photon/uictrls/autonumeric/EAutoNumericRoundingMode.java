@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.autonumeric;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Rounding modes to be used in {@link HCAutoNumeric}.
@@ -53,12 +53,12 @@ public enum EAutoNumericRoundingMode implements IHasID <String>
 
   private final String m_sID;
 
-  EAutoNumericRoundingMode (@Nonnull @Nonempty final String sID)
+  EAutoNumericRoundingMode (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

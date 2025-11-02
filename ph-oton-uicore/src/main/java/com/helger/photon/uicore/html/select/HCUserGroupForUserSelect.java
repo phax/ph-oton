@@ -18,15 +18,15 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.name.IHasName;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.usergroup.IUserGroup;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Select user groups a user should be assigned to
@@ -35,7 +35,7 @@ import jakarta.annotation.Nullable;
  */
 public class HCUserGroupForUserSelect extends HCExtSelect
 {
-  public HCUserGroupForUserSelect (@Nonnull final RequestField aRF, @Nullable final Collection <String> aSelectedUserGroups)
+  public HCUserGroupForUserSelect (@NonNull final RequestField aRF, @Nullable final Collection <String> aSelectedUserGroups)
   {
     super (aRF);
     setMultiple (true);

@@ -18,12 +18,12 @@ package com.helger.photon.core.form;
 
 import java.math.BigDecimal;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.RequestFieldData;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of a request field with a name and an optional default
@@ -40,7 +40,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The request field to copy the values from. May not be
    *        <code>null</code>.
    */
-  public RequestField (@Nonnull final RequestFieldData aRF)
+  public RequestField (@NonNull final RequestFieldData aRF)
   {
     super (aRF);
   }
@@ -51,7 +51,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName)
+  public RequestField (@NonNull @Nonempty final String sFieldName)
   {
     super (sFieldName);
   }
@@ -65,7 +65,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The default value to use, if no value is present in the request
    *        scope.
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
   {
     super (sFieldName, sDefaultValue);
   }
@@ -79,7 +79,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The default value to be used. Is converted to a String. May be
    *        <code>null</code>.
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final BigDecimal aDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final BigDecimal aDefaultValue)
   {
     super (sFieldName, aDefaultValue == null ? null : aDefaultValue.toString ());
   }
@@ -92,7 +92,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param nDefaultValue
    *        The default value to be used. Is converted to a String
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, final int nDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, final int nDefaultValue)
   {
     super (sFieldName, Integer.toString (nDefaultValue));
   }
@@ -106,7 +106,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The default value to be used. Is converted to a String. May be
    *        <code>null</code>.
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final Integer aDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final Integer aDefaultValue)
   {
     super (sFieldName, aDefaultValue == null ? null : aDefaultValue.toString ());
   }
@@ -119,7 +119,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param nDefaultValue
    *        The default value to be used. Is converted to a String
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, final long nDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, final long nDefaultValue)
   {
     super (sFieldName, Long.toString (nDefaultValue));
   }
@@ -133,7 +133,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    *        The default value to be used. Is converted to a String. May be
    *        <code>null</code>.
    */
-  public RequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final Long aDefaultValue)
+  public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final Long aDefaultValue)
   {
     super (sFieldName, aDefaultValue == null ? null : aDefaultValue.toString ());
   }

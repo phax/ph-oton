@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.google;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.enforce.ValueEnforcer;
@@ -32,8 +34,6 @@ import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Handle Google reCAPTCHA according to
  * https://developers.google.com/recaptcha/docs/invisible
@@ -49,7 +49,7 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
 {
   public static final ICSSClassProvider CSS_G_RECAPTCHA = DefaultCSSClassProvider.create ("g-recaptcha");
 
-  public HCReCaptchaInvisible (@Nonnull @Nonempty final String sSiteKey, @Nonnull final String sProgressCallbackFn)
+  public HCReCaptchaInvisible (@NonNull @Nonempty final String sSiteKey, @NonNull final String sProgressCallbackFn)
   {
     ValueEnforcer.notEmpty (sSiteKey, "SiteKey");
     ValueEnforcer.notEmpty (sProgressCallbackFn, "ProgressCallbackFn");
@@ -61,22 +61,22 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Render nodes only in production mode
     return GlobalDebug.isProductionMode ();
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path ("https://www.google.com/recaptcha/api.js").minifiedPath ("https://www.google.com/recaptcha/api.js").bundlable (false).build ());
   }
 
-  @Nonnull
-  public static HCReCaptchaInvisible createForFormSubmit (@Nonnull @Nonempty final String sSiteKey, @Nonnull final IHCForm <?> aForm)
+  @NonNull
+  public static HCReCaptchaInvisible createForFormSubmit (@NonNull @Nonempty final String sSiteKey, @NonNull final IHCForm <?> aForm)
   {
     final String sFuncName = "jsrc" + GlobalIDFactory.getNewIntID ();
     final HCReCaptchaInvisible ret = new HCReCaptchaInvisible (sSiteKey, sFuncName);

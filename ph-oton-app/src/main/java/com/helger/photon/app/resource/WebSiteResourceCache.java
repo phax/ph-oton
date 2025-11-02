@@ -19,6 +19,7 @@ package com.helger.photon.app.resource;
 import java.nio.charset.Charset;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A global cache for {@link WebSiteResource} objects, to avoid the hash calculation over and over
@@ -101,10 +100,10 @@ public final class WebSiteResourceCache
       LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
 
-  @Nonnull
-  public static WebSiteResource getOrCreateResource (@Nonnull final EWebSiteResourceType eResourceType,
-                                                     @Nonnull @Nonempty final String sPath,
-                                                     @Nonnull final Charset aCharset)
+  @NonNull
+  public static WebSiteResource getOrCreateResource (@NonNull final EWebSiteResourceType eResourceType,
+                                                     @NonNull @Nonempty final String sPath,
+                                                     @NonNull final Charset aCharset)
   {
     ValueEnforcer.notNull (eResourceType, "ResourceType");
     ValueEnforcer.notEmpty (sPath, "Path");
@@ -137,9 +136,9 @@ public final class WebSiteResourceCache
                                                                                             aCharset)));
   }
 
-  @Nonnull
-  public static EChange removeFromCache (@Nonnull final EWebSiteResourceType eType,
-                                         @Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static EChange removeFromCache (@NonNull final EWebSiteResourceType eType,
+                                         @NonNull @Nonempty final String sPath)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notEmpty (sPath, "Path");
@@ -154,7 +153,7 @@ public final class WebSiteResourceCache
    *
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   public static EChange clearCache ()
   {
     return RW_LOCK.writeLockedGet (s_aMap::removeAll);

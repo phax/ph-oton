@@ -18,15 +18,15 @@ package com.helger.html.hc.html.forms;
 
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Helper class for {@link IHCControl} stuff.
@@ -77,7 +77,7 @@ public final class HCCtrlHelper
    * @param aConsumer
    *        The consumer to be invoked. May not be <code>null</code>.
    */
-  public static void getAllHCControls (@Nullable final IHCNode aNode, @Nonnull final Consumer <? super IHCControl <?>> aConsumer)
+  public static void getAllHCControls (@Nullable final IHCNode aNode, @NonNull final Consumer <? super IHCControl <?>> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
@@ -100,7 +100,7 @@ public final class HCCtrlHelper
    * @return The filled list with all controls. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCControl <?>> getAllHCControls (@Nullable final IHCNode aNode)
   {
@@ -119,7 +119,7 @@ public final class HCCtrlHelper
    *        The consumer to be invoked. May not be <code>null</code>.
    */
   public static void getAllHCControls (@Nullable final Iterable <? extends IHCNode> aNodes,
-                                       @Nonnull final Consumer <? super IHCControl <?>> aConsumer)
+                                       @NonNull final Consumer <? super IHCControl <?>> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "TargetList");
 
@@ -137,7 +137,7 @@ public final class HCCtrlHelper
    * @return The filled list with all controls. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCControl <?>> getAllHCControls (@Nullable final Iterable <? extends IHCNode> aNodes)
   {

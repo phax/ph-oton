@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +41,6 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 import com.helger.xml.util.mime.MimeTypeInfoManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
@@ -76,13 +76,13 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
    *        The name of the file to be resolved.
    * @return The non-<code>null</code> resource provider.
    */
-  @Nonnull
-  protected abstract IReadableResource getResource (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull String sFilename);
+  @NonNull
+  protected abstract IReadableResource getResource (@NonNull IRequestWebScopeWithoutResponse aRequestScope, @NonNull String sFilename);
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull final UnifiedResponse aUnifiedResponse)
   {
     // Check for valid filenames, path traversal etc.
     if (super.initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
@@ -108,7 +108,7 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
 
   @Override
   @Nullable
-  public LocalDateTime getLastModificationDateTime (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public LocalDateTime getLastModificationDateTime (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // We have an existing resource
     final IReadableResource aRes = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE);
@@ -139,8 +139,8 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
    *         <code>false</code> if not
    */
   @OverrideOnDemand
-  protected boolean objectsAllowsForHTTPCaching (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                 @Nonnull final String sFilename)
+  protected boolean objectsAllowsForHTTPCaching (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @NonNull final String sFilename)
   {
     return true;
   }
@@ -156,15 +156,15 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
    */
   @OverrideOnDemand
   @Nullable
-  protected String determineMimeType (@Nonnull final String sFilename, @Nonnull final IReadableResource aResource)
+  protected String determineMimeType (@NonNull final String sFilename, @NonNull final IReadableResource aResource)
   {
     return MimeTypeInfoManager.getDefaultInstance ().getPrimaryMimeTypeStringForFilename (sFilename);
   }
 
   @Override
-  protected void onDeliverResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final UnifiedResponse aUnifiedResponse,
-                                    @Nonnull final String sFilename) throws IOException
+  protected void onDeliverResource (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @NonNull final UnifiedResponse aUnifiedResponse,
+                                    @NonNull final String sFilename) throws IOException
   {
     m_aStatsRequests.increment ();
 

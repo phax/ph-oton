@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * All possible values for the rateLimitBy parameter used in Bloodhound options
@@ -35,12 +35,12 @@ public enum EBloodhoundRemoteRateLimitBy
 
   private final String m_sValue;
 
-  EBloodhoundRemoteRateLimitBy (@Nonnull @Nonempty final String sValue)
+  EBloodhoundRemoteRateLimitBy (@NonNull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValue ()
   {

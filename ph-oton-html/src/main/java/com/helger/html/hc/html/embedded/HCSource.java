@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
@@ -25,9 +28,6 @@ import com.helger.html.hc.html.IHCHasMedia;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class HCSource extends AbstractHCMediaElementChild <HCSource> implements IHCHasMedia <HCSource>
 {
@@ -49,7 +49,7 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCSource setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -62,7 +62,7 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCSource setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
@@ -75,7 +75,7 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
     return m_sSrcSet;
   }
 
-  @Nonnull
+  @NonNull
   public final HCSource setSrcSet (@Nullable final String sSrcSet)
   {
     m_sSrcSet = sSrcSet;
@@ -88,7 +88,7 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
     return m_sSizes;
   }
 
-  @Nonnull
+  @NonNull
   public final HCSource setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
@@ -101,7 +101,7 @@ public class HCSource extends AbstractHCMediaElementChild <HCSource> implements 
     return m_sMediaQuery;
   }
 
-  @Nonnull
+  @NonNull
   public final HCSource setMedia (@Nullable final String sMediaQuery)
   {
     m_sMediaQuery = sMediaQuery;

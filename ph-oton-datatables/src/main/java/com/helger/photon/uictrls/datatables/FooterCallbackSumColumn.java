@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.jscode.JSAnonymousFunction;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Define how to sum up data tables columns.
@@ -49,8 +49,8 @@ public class FooterCallbackSumColumn
    *        The 0-based column index for which the sum should be calculated and
    *        where the sum should be printed.
    */
-  public FooterCallbackSumColumn (@Nonnull final JSAnonymousFunction aFuncIntVal,
-                                  @Nonnull final JSAnonymousFunction aFuncPrintSum,
+  public FooterCallbackSumColumn (@NonNull final JSAnonymousFunction aFuncIntVal,
+                                  @NonNull final JSAnonymousFunction aFuncPrintSum,
                                   @Nonnegative final int nColumn)
   {
     this (aFuncIntVal, aFuncPrintSum, nColumn, nColumn);
@@ -75,8 +75,8 @@ public class FooterCallbackSumColumn
    *        The 0-based column index where the sum should be printed. This
    *        should be a visible column.
    */
-  public FooterCallbackSumColumn (@Nonnull final JSAnonymousFunction aFuncIntVal,
-                                  @Nonnull final JSAnonymousFunction aFuncPrintSum,
+  public FooterCallbackSumColumn (@NonNull final JSAnonymousFunction aFuncIntVal,
+                                  @NonNull final JSAnonymousFunction aFuncPrintSum,
                                   @Nonnegative final int nCalcColumn,
                                   @Nonnegative final int nPrintColumn)
   {
@@ -86,13 +86,13 @@ public class FooterCallbackSumColumn
     m_nPrintColumn = nPrintColumn;
   }
 
-  @Nonnull
+  @NonNull
   public JSAnonymousFunction getJSFuncIntVal ()
   {
     return m_aFuncIntVal;
   }
 
-  @Nonnull
+  @NonNull
   public JSAnonymousFunction getJSFuncPrintSum ()
   {
     return m_aFuncPrintSum;

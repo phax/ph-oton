@@ -18,12 +18,12 @@ package com.helger.photon.uictrls.colorbox;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * jQuery colorbox plugin from
@@ -52,8 +52,8 @@ public class ColorBoxOptions
     return m_aDisplayLocale;
   }
 
-  @Nonnull
-  public ColorBoxOptions setDisplayLocale (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public ColorBoxOptions setDisplayLocale (@NonNull final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
     return this;
@@ -64,7 +64,7 @@ public class ColorBoxOptions
     return m_bPhoto;
   }
 
-  @Nonnull
+  @NonNull
   public ColorBoxOptions setPhoto (final boolean bPhoto)
   {
     m_bPhoto = bPhoto;
@@ -77,7 +77,7 @@ public class ColorBoxOptions
     return m_sMaxWidth;
   }
 
-  @Nonnull
+  @NonNull
   public ColorBoxOptions setMaxWidth (@Nullable final String sMaxWidth)
   {
     m_sMaxWidth = sMaxWidth;
@@ -90,14 +90,14 @@ public class ColorBoxOptions
     return m_sMaxHeight;
   }
 
-  @Nonnull
+  @NonNull
   public ColorBoxOptions setMaxHeight (@Nullable final String sMaxHeight)
   {
     m_sMaxHeight = sMaxHeight;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSOptions ()
   {

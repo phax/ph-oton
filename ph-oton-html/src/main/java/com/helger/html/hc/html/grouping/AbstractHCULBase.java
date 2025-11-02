@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import com.helger.html.EHTMLElement;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.EHTMLElement;
 
 /**
  * Represents an HTML &lt;ul&gt; element
@@ -34,7 +34,7 @@ public abstract class AbstractHCULBase <IMPLTYPE extends AbstractHCULBase <IMPLT
                                        AbstractHCList <IMPLTYPE, ITEMTYPE> implements
                                        IHCULBase <IMPLTYPE, ITEMTYPE>
 {
-  public AbstractHCULBase (@Nonnull final Class <ITEMTYPE> aItemClass)
+  public AbstractHCULBase (@NonNull final Class <ITEMTYPE> aItemClass)
   {
     super (EHTMLElement.UL, aItemClass);
   }

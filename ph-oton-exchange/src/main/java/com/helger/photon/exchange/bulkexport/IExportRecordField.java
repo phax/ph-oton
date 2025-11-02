@@ -16,8 +16,8 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a single field of an {@link IExportRecord} to be exported.
@@ -29,7 +29,7 @@ public interface IExportRecordField
   /**
    * @return The type of this field. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EExportDataType getFieldType ();
 
   /**

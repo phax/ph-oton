@@ -18,10 +18,10 @@ package com.helger.photon.uicore.page;
 
 import java.io.Serializable;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.Nonempty;
 
 /**
  * Callback interface for CSRF error handling.
@@ -41,5 +41,5 @@ public interface ICSRFErrorHandler extends Serializable
    * @param sExpectedNone
    *        The expected nonce. May neither be <code>null</code> nor empty.
    */
-  void onCSRFError (@Nonnull IWebPageExecutionContext aWPEC, @Nullable String sProvidedNonce, @Nonnull @Nonempty String sExpectedNone);
+  void onCSRFError (@NonNull IWebPageExecutionContext aWPEC, @Nullable String sProvidedNonce, @NonNull @Nonempty String sExpectedNone);
 }

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.fineupload5.ui;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.html.EHTMLElement;
@@ -40,15 +43,12 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
 import com.helger.web.scope.mgr.WebScopeManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Basic>
 {
   private final FineUploader5Core m_aUploader;
   private IHCElement <?> m_aButton;
 
-  public HCFineUploader5Basic (@Nonnull final FineUploader5Core aUploader)
+  public HCFineUploader5Basic (@NonNull final FineUploader5Core aUploader)
   {
     m_aUploader = ValueEnforcer.notNull (aUploader, "Uploader");
   }
@@ -61,7 +61,7 @@ public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Bas
    *        The button object to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCFineUploader5Basic setButtonToUse (@Nullable final IHCElement <?> aButton)
   {
     m_aButton = aButton;
@@ -69,8 +69,8 @@ public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Bas
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -144,7 +144,7 @@ public class HCFineUploader5Basic extends AbstractHCNodeList <HCFineUploader5Bas
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_5);

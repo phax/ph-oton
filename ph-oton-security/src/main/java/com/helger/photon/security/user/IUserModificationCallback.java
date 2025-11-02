@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.user;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user is created, modified, deleted, undeleted,
@@ -38,7 +38,7 @@ public interface IUserModificationCallback extends ICallback
    *        <code>true</code> if it is a predefined user, <code>false</code> if
    *        it is a regular user
    */
-  default void onUserCreated (@Nonnull final IUser aUser, final boolean bPredefinedUser)
+  default void onUserCreated (@NonNull final IUser aUser, final boolean bPredefinedUser)
   {}
 
   /**
@@ -47,7 +47,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserUpdated (@Nonnull @Nonempty final String sUserID)
+  default void onUserUpdated (@NonNull @Nonempty final String sUserID)
   {}
 
   /**
@@ -56,7 +56,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserLastFailedLoginUpdated (@Nonnull @Nonempty final String sUserID)
+  default void onUserLastFailedLoginUpdated (@NonNull @Nonempty final String sUserID)
   {}
 
   /**
@@ -65,7 +65,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserPasswordChanged (@Nonnull @Nonempty final String sUserID)
+  default void onUserPasswordChanged (@NonNull @Nonempty final String sUserID)
   {}
 
   /**
@@ -74,7 +74,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserDeleted (@Nonnull @Nonempty final String sUserID)
+  default void onUserDeleted (@NonNull @Nonempty final String sUserID)
   {}
 
   /**
@@ -83,7 +83,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The modified user ID. Never <code>null</code>.
    */
-  default void onUserUndeleted (@Nonnull @Nonempty final String sUserID)
+  default void onUserUndeleted (@NonNull @Nonempty final String sUserID)
   {}
 
   /**
@@ -95,6 +95,6 @@ public interface IUserModificationCallback extends ICallback
    *        <code>true</code> if the user was enabled, <code>false</code> if it
    *        was disabled
    */
-  default void onUserEnabled (@Nonnull @Nonempty final String sUserID, final boolean bEnabled)
+  default void onUserEnabled (@NonNull @Nonempty final String sUserID, final boolean bEnabled)
   {}
 }

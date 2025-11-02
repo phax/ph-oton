@@ -18,12 +18,12 @@ package com.helger.photon.api.pathdescriptor;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.io.file.FilenameHelper;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Utility class for API path handling.
@@ -43,9 +43,9 @@ public final class PathDescriptorHelper
    *        Source path. May not be <code>null</code>.
    * @return The list with all path parts. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static List <String> getCleanPathParts (@Nonnull final String sPath)
+  public static List <String> getCleanPathParts (@NonNull final String sPath)
   {
     // Remove leading and trailing whitespaces and slashes
     String sRealPath = StringHelper.trimStartAndEnd (sPath.trim (), "/", "/");

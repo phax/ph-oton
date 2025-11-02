@@ -18,6 +18,8 @@ package com.helger.photon.security.token.object;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,8 +27,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation if {@link IObjectWithAccessToken}.
@@ -37,15 +37,15 @@ public abstract class AbstractObjectWithAccessToken extends AbstractBusinessObje
 {
   private final AccessTokenList m_aAccessTokenList;
 
-  public AbstractObjectWithAccessToken (@Nonnull final IBusinessObject aStubObject,
-                                        @Nonnull @Nonempty final List <AccessToken> aAccessTokens)
+  public AbstractObjectWithAccessToken (@NonNull final IBusinessObject aStubObject,
+                                        @NonNull @Nonempty final List <AccessToken> aAccessTokens)
   {
     super (aStubObject);
     ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
     m_aAccessTokenList = new AccessTokenList (aAccessTokens);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public AccessTokenList getAccessTokenList ()
   {

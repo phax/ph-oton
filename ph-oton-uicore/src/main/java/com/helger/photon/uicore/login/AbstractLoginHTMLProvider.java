@@ -18,6 +18,9 @@ package com.helger.photon.uicore.login;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.photon.core.EPhotonCoreText;
@@ -25,9 +28,6 @@ import com.helger.photon.core.html.AbstractSWECHTMLProvider;
 import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.WebPageCSRFHandler;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for providing an HTML login screen.
@@ -40,7 +40,7 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
   private final ICredentialValidationResult m_aLoginResult;
   private IWebPageCSRFHandler m_aCSRFHandler = WebPageCSRFHandler.INSTANCE;
 
-  public AbstractLoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
+  public AbstractLoginHTMLProvider (final boolean bLoginError, @NonNull final ICredentialValidationResult aLoginResult)
   {
     m_bLoginError = bLoginError;
     m_aLoginResult = ValueEnforcer.notNull (aLoginResult, "LoginResult");
@@ -55,7 +55,7 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
     return m_bLoginError;
   }
 
-  @Nonnull
+  @NonNull
   public final ICredentialValidationResult getLoginResult ()
   {
     return m_aLoginResult;
@@ -75,42 +75,42 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
    * @param aCSRFHandler
    *        The new handler. May not be <code>null</code>.
    */
-  public final void setCSRFHandler (@Nonnull final IWebPageCSRFHandler aCSRFHandler)
+  public final void setCSRFHandler (@NonNull final IWebPageCSRFHandler aCSRFHandler)
   {
     m_aCSRFHandler = ValueEnforcer.notNull (aCSRFHandler, "CSRFHandler");
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextHeader (@Nonnull final Locale aDisplayLocale)
+  protected String getTextHeader (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.LOGIN_HEADER.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextErrorMessage (@Nonnull final Locale aDisplayLocale, @Nonnull final ICredentialValidationResult aLoginResult)
+  protected String getTextErrorMessage (@NonNull final Locale aDisplayLocale, @NonNull final ICredentialValidationResult aLoginResult)
   {
     return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) + " " + aLoginResult.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextFieldUserName (@Nonnull final Locale aDisplayLocale)
+  protected String getTextFieldUserName (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.LOGIN_FIELD_USERNAME.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextFieldPassword (@Nonnull final Locale aDisplayLocale)
+  protected String getTextFieldPassword (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.LOGIN_FIELD_PASSWORD.getDisplayText (aDisplayLocale);
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getLoginButtonText (@Nonnull final Locale aDisplayLocale)
+  protected String getLoginButtonText (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.LOGIN_BUTTON_SUBMIT.getDisplayText (aDisplayLocale);
   }

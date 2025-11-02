@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
@@ -25,9 +28,6 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single option within a select box.
@@ -59,7 +59,7 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOption setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -72,7 +72,7 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
     return m_sLabel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOption setLabel (final String sLabel)
   {
     m_sLabel = sLabel;
@@ -93,7 +93,7 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
     return m_bSelectionDefined;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOption setSelected (final boolean bSelected)
   {
     m_bSelected = bSelected;
@@ -107,7 +107,7 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOption setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;

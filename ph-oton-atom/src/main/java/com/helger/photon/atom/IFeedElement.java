@@ -18,10 +18,10 @@ package com.helger.photon.atom;
 
 import java.util.Locale;
 
-import com.helger.xml.microdom.IMicroElement;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.xml.microdom.IMicroElement;
 
 /**
  * Base interface for all ATOM feeds
@@ -68,7 +68,7 @@ public interface IFeedElement
    *        The element name to use. May neither be <code>null</code> nor empty.
    * @return The created {@link IMicroElement} and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IMicroElement getAsElement (String sElementName);
 
   /**

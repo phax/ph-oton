@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * DataTables Responsive plugin type
@@ -34,12 +34,12 @@ public enum EDTPFixedColumnsHeightMatch implements IHasName
 
   private final String m_sName;
 
-  EDTPFixedColumnsHeightMatch (@Nonnull @Nonempty final String sName)
+  EDTPFixedColumnsHeightMatch (@NonNull @Nonempty final String sName)
   {
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.app.csrf;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +29,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Per-session nonce manager.
@@ -54,14 +53,14 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
       LOGGER.debug ("Created CSRF session nonce '" + m_sNonce + "'");
   }
 
-  @Nonnull
+  @NonNull
   public static CSRFSessionManager getInstance ()
   {
     return getSessionSingleton (CSRFSessionManager.class);
   }
 
   @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction)
   {
     // Remove the nonce to avoid it is reused
     m_aRWLock.writeLocked ( () -> {
@@ -76,7 +75,7 @@ public final class CSRFSessionManager extends AbstractSessionWebSingleton
   /**
    * @return The nonce of this session (Base64 encoded). Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getNonce ()
   {

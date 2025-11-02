@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Program elements that can have JSDoc
@@ -28,6 +28,6 @@ public interface IJSDocCommentable
   /**
    * @return the JavaDoc of the Element
    */
-  @Nonnull
+  @NonNull
   JSCommentMultiLine jsDoc ();
 }

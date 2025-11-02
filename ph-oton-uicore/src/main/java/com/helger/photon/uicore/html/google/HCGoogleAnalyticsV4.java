@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.google;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -35,8 +37,6 @@ import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.url.SimpleURL;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Control for emitting Google Analytics V4 code.
  *
@@ -50,8 +50,8 @@ public class HCGoogleAnalyticsV4 extends AbstractHCScriptInline <HCGoogleAnalyti
 
   private final String m_sTagID;
 
-  @Nonnull
-  private static JSPackage _createJSCode (@Nonnull @Nonempty final String sTagID)
+  @NonNull
+  private static JSPackage _createJSCode (@NonNull @Nonempty final String sTagID)
   {
     final JSPackage aPkg = new JSPackage ();
     aPkg.assign (JSHtml.window ().ref ("dataLayer"), JSHtml.window ().ref ("dataLayer").cor (new JSArray ()));
@@ -65,13 +65,13 @@ public class HCGoogleAnalyticsV4 extends AbstractHCScriptInline <HCGoogleAnalyti
     return aPkg;
   }
 
-  public HCGoogleAnalyticsV4 (@Nonnull @Nonempty final String sTagID)
+  public HCGoogleAnalyticsV4 (@NonNull @Nonempty final String sTagID)
   {
     ValueEnforcer.notEmpty (sTagID, "TagID");
     m_sTagID = sTagID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getTagID ()
   {
@@ -81,15 +81,15 @@ public class HCGoogleAnalyticsV4 extends AbstractHCScriptInline <HCGoogleAnalyti
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     setJSCodeProvider (_createJSCode (m_sTagID));
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);

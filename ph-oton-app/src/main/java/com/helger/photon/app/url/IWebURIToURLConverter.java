@@ -16,13 +16,13 @@
  */
 package com.helger.photon.app.url;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.io.resource.IReadableResource;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A generic converted from String URI to {@link ISimpleURL}.
@@ -38,8 +38,8 @@ public interface IWebURIToURLConverter
    *        The URI to be converted. May neither be <code>null</code> nor empty.
    * @return The created resource and never null.
    */
-  @Nonnull
-  IReadableResource getAsResource (@Nonnull @Nonempty String sURI);
+  @NonNull
+  IReadableResource getAsResource (@NonNull @Nonempty String sURI);
 
   /**
    * Convert the passed URI to a URL.
@@ -48,8 +48,8 @@ public interface IWebURIToURLConverter
    *        The URI to be converted. May neither be <code>null</code> nor empty.
    * @return The created URL.
    */
-  @Nonnull
-  SimpleURL getAsURL (@Nonnull @Nonempty String sURI);
+  @NonNull
+  SimpleURL getAsURL (@NonNull @Nonempty String sURI);
 
   /**
    * Convert the passed URI to a URL.
@@ -61,6 +61,6 @@ public interface IWebURIToURLConverter
    *        The URI to be converted.
    * @return The created URL.
    */
-  @Nonnull
-  SimpleURL getAsURL (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty String sURI);
+  @NonNull
+  SimpleURL getAsURL (@NonNull IRequestWebScopeWithoutResponse aRequestScope, @NonNull @Nonempty String sURI);
 }

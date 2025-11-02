@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.css.ECSSUnit;
 import com.helger.html.CHTMLAttributeValues;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;col&gt; element
@@ -44,7 +44,7 @@ public class HCCol extends AbstractHCCol <HCCol>
    * @return A new "star" column (<code>&lt;col width="*" /&gt;</code>). Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static HCCol star ()
   {
     return new HCCol ().setWidth (CHTMLAttributeValues.STAR);
@@ -57,7 +57,7 @@ public class HCCol extends AbstractHCCol <HCCol>
    *        The percentage to be used. Should ideally be between 0 and 100.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static HCCol perc (@Nonnegative final int nPerc)
   {
     return new HCCol ().setWidth (ECSSUnit.perc (nPerc));
@@ -70,7 +70,7 @@ public class HCCol extends AbstractHCCol <HCCol>
    *        The width to be used. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static HCCol fromString (@Nullable final String sWidth)
   {
     return new HCCol ().setWidth (sWidth);

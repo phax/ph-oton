@@ -18,6 +18,9 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.system.SystemHelper;
 import com.helger.masterdata.address.PostalAddress;
@@ -30,9 +33,6 @@ import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <AccountingArea>
 {
@@ -54,15 +54,15 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
 
   private final ITenantResolver m_aTenantResolver;
 
-  public AccountingAreaMicroTypeConverter (@Nonnull final ITenantResolver aTenantResolver)
+  public AccountingAreaMicroTypeConverter (@NonNull final ITenantResolver aTenantResolver)
   {
     m_aTenantResolver = aTenantResolver;
   }
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final AccountingArea aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final AccountingArea aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_TENANT_ID, aValue.getTenantID ());
@@ -84,8 +84,8 @@ public final class AccountingAreaMicroTypeConverter extends AbstractBusinessObje
     return aElement;
   }
 
-  @Nonnull
-  public AccountingArea convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public AccountingArea convertToNative (@NonNull final IMicroElement aElement)
   {
     final Locale aLocale = SystemHelper.getSystemLocale ();
     final String sTenantID = aElement.getAttributeValue (ATTR_TENANT_ID);

@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -25,9 +28,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;fieldset&gt; element
@@ -59,7 +59,7 @@ public class HCFieldSet extends AbstractHCElementWithChildren <HCFieldSet>
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFieldSet setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -72,7 +72,7 @@ public class HCFieldSet extends AbstractHCElementWithChildren <HCFieldSet>
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFieldSet setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -85,7 +85,7 @@ public class HCFieldSet extends AbstractHCElementWithChildren <HCFieldSet>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFieldSet setName (@Nullable final String sName)
   {
     m_sName = sName;

@@ -22,6 +22,8 @@ import java.io.ObjectOutputStream;
 import java.util.BitSet;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +44,6 @@ import com.helger.xml.microdom.IMicroNodeWithChildren;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class holds table cells to be used by the DataTables server side
  * handling.
@@ -62,7 +61,7 @@ public final class DataTablesServerDataCell
   private String m_sLazyHTML;
   private String m_sLazyTextContent;
 
-  public DataTablesServerDataCell (@Nonnull final IHCCell <?> aCell)
+  public DataTablesServerDataCell (@NonNull final IHCCell <?> aCell)
   {
     if (aCell.hasAnyStyle ())
       LOGGER.warn ("Cell has styles assigned which will be lost: " + aCell.getAllStyles ());
@@ -75,19 +74,19 @@ public final class DataTablesServerDataCell
     setContent (aCellContent);
   }
 
-  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  private void writeObject (@NonNull final ObjectOutputStream out) throws IOException
   {
     out.writeObject (m_aContent);
     out.writeObject (m_aLazySpecialNodes);
   }
 
-  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  private void readObject (@NonNull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     m_aContent = (HCNodeList) in.readObject ();
     m_aLazySpecialNodes = (HCSpecialNodes) in.readObject ();
   }
 
-  public void setContent (@Nonnull final IHCNodeList <?> aCellChildren)
+  public void setContent (@NonNull final IHCNodeList <?> aCellChildren)
   {
     if (m_aLazySpecialNodes != null)
       m_aLazySpecialNodes.clear ();
@@ -118,7 +117,7 @@ public final class DataTablesServerDataCell
     m_sLazyTextContent = null;
   }
 
-  @Nonnull
+  @NonNull
   public IHCNodeList <?> getContent ()
   {
     return m_aContent;
@@ -172,7 +171,7 @@ public final class DataTablesServerDataCell
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public String getTextContent ()
   {
     String ret = m_sLazyTextContent;
@@ -220,7 +219,7 @@ public final class DataTablesServerDataCell
     return m_aLazySpecialNodes;
   }
 
-  public void matchRegEx (@Nonnull final String [] aSearchTexts, @Nonnull final BitSet aMatchingWords)
+  public void matchRegEx (@NonNull final String [] aSearchTexts, @NonNull final BitSet aMatchingWords)
   {
     // Ensure text is resolved
     final String sTextContent = getTextContent ();
@@ -232,7 +231,7 @@ public final class DataTablesServerDataCell
     }
   }
 
-  public void matchPlainTextCaseSensitive (@Nonnull final String [] aSearchTexts, @Nonnull final BitSet aMatchingWords)
+  public void matchPlainTextCaseSensitive (@NonNull final String [] aSearchTexts, @NonNull final BitSet aMatchingWords)
   {
     // Ensure text is resolved
     final String sTextContent = getTextContent ();
@@ -244,9 +243,9 @@ public final class DataTablesServerDataCell
     }
   }
 
-  public void matchPlainTextIgnoreCase (@Nonnull final String [] aSearchTexts,
-                                        @Nonnull final Locale aDisplayLocale,
-                                        @Nonnull final BitSet aMatchingWords)
+  public void matchPlainTextIgnoreCase (@NonNull final String [] aSearchTexts,
+                                        @NonNull final Locale aDisplayLocale,
+                                        @NonNull final BitSet aMatchingWords)
   {
     // Ensure text is resolved
     final String sTextContent = getTextContent ();
@@ -259,7 +258,7 @@ public final class DataTablesServerDataCell
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String toString ()
   {
     return new ToStringGenerator (this).append ("Content", m_aContent).getToString ();

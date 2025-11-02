@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
 import com.helger.cache.regex.RegExCache;
@@ -47,8 +49,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 import com.helger.xml.serialize.write.XMLEmitter;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Emitter class responsible for generating HTML output.
  *
@@ -73,7 +73,7 @@ final class Emitter
    * @param aConfig
    *        config to use
    */
-  public Emitter (@Nonnull final MarkdownConfiguration aConfig)
+  public Emitter (@NonNull final MarkdownConfiguration aConfig)
   {
     m_aConfig = aConfig;
     m_bUseExtensions = aConfig.isExtendedProfile ();
@@ -87,7 +87,7 @@ final class Emitter
     m_bUseExtensions = bUseExtensions;
   }
 
-  public void register (@Nonnull final AbstractMarkdownPlugin aPlugin)
+  public void register (@NonNull final AbstractMarkdownPlugin aPlugin)
   {
     m_aPlugins.put (aPlugin.getPluginID (), aPlugin);
   }
@@ -100,7 +100,7 @@ final class Emitter
    * @param aLinkRef
    *        The LinkRef.
    */
-  public void addLinkRef (@Nonnull final String sKey, final LinkRef aLinkRef)
+  public void addLinkRef (@NonNull final String sKey, final LinkRef aLinkRef)
   {
     m_aLinkRefs.put (sKey.toLowerCase (Locale.US), aLinkRef);
   }
@@ -856,7 +856,7 @@ final class Emitter
    *        Starting position.
    * @return The Token.
    */
-  @Nonnull
+  @NonNull
   private EMarkToken _getToken (final String sIn, final int nPos)
   {
     final char c0 = nPos > 0 ? _whitespaceToSpace (sIn.charAt (nPos - 1)) : ' ';
@@ -1098,7 +1098,7 @@ final class Emitter
    */
   private void _emitCodeLines (final MarkdownHCStack aOut,
                                final Line aLines,
-                               @Nonnull final String sMeta,
+                               @NonNull final String sMeta,
                                final boolean bRemoveIndent)
   {
     Line aLine = aLines;
@@ -1137,7 +1137,7 @@ final class Emitter
    * @param sMeta
    *        Meta information.
    */
-  void emitPluginLines (final MarkdownHCStack aOut, final Line aLines, @Nonnull final String sMeta)
+  void emitPluginLines (final MarkdownHCStack aOut, final Line aLines, @NonNull final String sMeta)
   {
     Line aLine = aLines;
 
@@ -1176,9 +1176,9 @@ final class Emitter
     }
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  static ICommonsMap <String, String> parsePluginParams (@Nonnull final String s)
+  static ICommonsMap <String, String> parsePluginParams (@NonNull final String s)
   {
     final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
     final Pattern aPattern = RegExCache.getPattern ("(\\w+)=\"*((?<=\")[^\"]+(?=\")|([^\\s]+))\"*");

@@ -19,6 +19,9 @@ package com.helger.photon.api;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
@@ -29,9 +32,6 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.http.EHttpMethod;
 import com.helger.photon.api.pathdescriptor.PathDescriptorHelper;
 import com.helger.photon.api.pathdescriptor.PathMatchingResult;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages a list of {@link APIDescriptor} objects.
@@ -50,7 +50,7 @@ public class APIDescriptorList implements Serializable
       m_aMap.put (e, new CommonsArrayList <> ());
   }
 
-  public void addDescriptor (@Nonnull final APIDescriptor aDescriptor)
+  public void addDescriptor (@NonNull final APIDescriptor aDescriptor)
   {
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
 
@@ -58,7 +58,7 @@ public class APIDescriptorList implements Serializable
     m_aMap.get (aDescriptor.getHttpMethod ()).add (aDescriptor);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAPIDescriptor> getAllDescriptors ()
   {
@@ -69,14 +69,14 @@ public class APIDescriptorList implements Serializable
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath)
+  public InvokableAPIDescriptor getMatching (@NonNull final APIPath aPath)
   {
     return getMatching (aPath, new LoggingAPIPathAmbiguityResolver ());
   }
 
   @Nullable
-  public InvokableAPIDescriptor getMatching (@Nonnull final APIPath aPath,
-                                             @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getMatching (@NonNull final APIPath aPath,
+                                             @NonNull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     ValueEnforcer.notNull (aPath, "Path");
     ValueEnforcer.notNull (aAmbiguityResolver, "AmbiguityResolver");

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * All TinyMCE4 supported skins.<br>
@@ -37,12 +37,12 @@ public enum ETinyMCE4Skin
 
   private final String m_sValue;
 
-  ETinyMCE4Skin (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4Skin (@NonNull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValue ()
   {

@@ -18,13 +18,13 @@ package com.helger.photon.api;
 
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.http.EHttpMethod;
 import com.helger.photon.api.pathdescriptor.PathDescriptor;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The read-only part of {@link APIDescriptor}.
@@ -36,13 +36,13 @@ public interface IAPIDescriptor
   /**
    * @return The API path used. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   APIPath getAPIPath ();
 
   /**
    * @return The HTTP method required to call this API.
    */
-  @Nonnull
+  @NonNull
   default EHttpMethod getHttpMethod ()
   {
     return getAPIPath ().getHttpMethod ();
@@ -51,20 +51,20 @@ public interface IAPIDescriptor
   /**
    * @return The path descriptor required to call this API.
    */
-  @Nonnull
+  @NonNull
   PathDescriptor getPathDescriptor ();
 
   /**
    * @return The non-<code>null</code> factory used to create the main invoker.
    */
-  @Nonnull
+  @NonNull
   Supplier <? extends IAPIExecutor> getExecutorFactory ();
 
   /**
    * @return The names of all required HTTP headers. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   ICommonsOrderedSet <String> requiredHeaders ();
 
@@ -72,7 +72,7 @@ public interface IAPIDescriptor
    * @return The names of all required request parameters. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   ICommonsOrderedSet <String> requiredParams ();
 
@@ -82,7 +82,7 @@ public interface IAPIDescriptor
    *         parameters (as in ";x=y") should be added here. Also unified casing
    *         should be considered.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   ICommonsOrderedSet <String> allowedMimeTypes ();
 

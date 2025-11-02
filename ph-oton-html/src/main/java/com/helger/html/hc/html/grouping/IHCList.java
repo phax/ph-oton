@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for OLs and ULs
@@ -35,26 +35,26 @@ import jakarta.annotation.Nullable;
 public interface IHCList <IMPLTYPE extends IHCList <IMPLTYPE, ITEMTYPE>, ITEMTYPE extends IHCLI <ITEMTYPE>> extends
                          IHCElementWithInternalChildren <IMPLTYPE, ITEMTYPE>
 {
-  @Nonnull
+  @NonNull
   ITEMTYPE addItem ();
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable String sChild);
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable String... aChildren);
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable IHCNode aChild);
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable IHCNode... aChildren);
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable Iterable <? extends IHCNode> aChildren);
 
@@ -62,22 +62,22 @@ public interface IHCList <IMPLTYPE extends IHCList <IMPLTYPE, ITEMTYPE>, ITEMTYP
   @CheckReturnValue
   ITEMTYPE addAndReturnItem (@Nullable ITEMTYPE aItem);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable String sChild);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable String... aChildren);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable IHCNode aChild);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable IHCNode... aChildren);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable Iterable <? extends IHCNode> aChildren);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addItem (@Nullable ITEMTYPE aItem);
 
   @Nullable

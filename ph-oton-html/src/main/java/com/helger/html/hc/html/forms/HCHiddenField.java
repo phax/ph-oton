@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.request.IHCRequestField;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "hidden"
@@ -59,7 +59,7 @@ public class HCHiddenField extends AbstractHCInput <HCHiddenField>
     this (sName, Boolean.toString (bValue));
   }
 
-  public HCHiddenField (@Nonnull final IHCRequestField aRF)
+  public HCHiddenField (@NonNull final IHCRequestField aRF)
   {
     this (aRF.getFieldName (), aRF.getRequestValue ());
   }

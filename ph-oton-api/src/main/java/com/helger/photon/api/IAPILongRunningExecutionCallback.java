@@ -16,11 +16,11 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to be used with the {@link IAPIInvoker} to get notified on
@@ -42,8 +42,8 @@ public interface IAPILongRunningExecutionCallback extends ICallback
    * @param nExecutionMillis
    *        The execution time in milliseconds
    */
-  void onLongRunningExecution (@Nonnull IAPIInvoker aInvoker,
-                               @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
+  void onLongRunningExecution (@NonNull IAPIInvoker aInvoker,
+                               @NonNull InvokableAPIDescriptor aInvokableDescriptor,
+                               @NonNull IRequestWebScopeWithoutResponse aRequestScope,
                                @Nonnegative long nExecutionMillis);
 }

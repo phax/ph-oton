@@ -19,7 +19,7 @@ package com.helger.photon.exchange.bulkexport;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * The main record provider. Major rewrite in 7.0.4
@@ -33,7 +33,7 @@ public interface IExportRecordProvider extends Serializable
    *        The consumer invoked for each header record. May not be
    *        <code>null</code>.
    */
-  default void forEachHeaderRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  default void forEachHeaderRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}
 
   /**
@@ -41,7 +41,7 @@ public interface IExportRecordProvider extends Serializable
    *        The consumer invoked for each body record. May not be
    *        <code>null</code>.
    */
-  default void forEachBodyRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  default void forEachBodyRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}
 
   /**
@@ -49,6 +49,6 @@ public interface IExportRecordProvider extends Serializable
    *        The consumer invoked for each footer record. May not be
    *        <code>null</code>.
    */
-  default void forEachFooterRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  default void forEachFooterRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}
 }

@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.html.hc.html.IHCElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;pre&gt; element with open semantics.
@@ -41,7 +41,7 @@ public abstract class AbstractHCPre <IMPLTYPE extends AbstractHCPre <IMPLTYPE>> 
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     final IHCElement <?> aChild = HCHTMLHelper.recursiveGetFirstChildWithTagName (this,

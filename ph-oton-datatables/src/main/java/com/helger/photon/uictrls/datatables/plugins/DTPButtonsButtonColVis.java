@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A button collection that provides column visibility control.
@@ -44,13 +44,13 @@ public class DTPButtonsButtonColVis extends DTPButtonsButton
     setExtend (EDTPButtonsButtonType.COL_VIS.getName ());
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVis setColumns (@Nullable final String sColumns)
   {
     return setColumns (sColumns == null ? null : JSExpr.lit (sColumns));
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVis setColumns (@Nullable final IJSExpression aColumns)
   {
     m_aColumns = aColumns;
@@ -58,14 +58,14 @@ public class DTPButtonsButtonColVis extends DTPButtonsButton
   }
 
   @Override
-  protected void onGetAsJS (@Nonnull final JSAssocArray ret)
+  protected void onGetAsJS (@NonNull final JSAssocArray ret)
   {
     if (m_aColumns != null)
       ret.add ("columns", m_aColumns);
   }
 
   @Override
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
     EDTPButtonsButtonType.COL_VIS.registerExternalResources ();

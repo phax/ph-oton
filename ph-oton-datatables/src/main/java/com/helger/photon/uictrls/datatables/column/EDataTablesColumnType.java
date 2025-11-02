@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.column;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * DataTables column type
@@ -59,12 +59,12 @@ public enum EDataTablesColumnType implements IHasName
 
   private final String m_sName;
 
-  EDataTablesColumnType (@Nonnull @Nonempty final String sName)
+  EDataTablesColumnType (@NonNull @Nonempty final String sName)
   {
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

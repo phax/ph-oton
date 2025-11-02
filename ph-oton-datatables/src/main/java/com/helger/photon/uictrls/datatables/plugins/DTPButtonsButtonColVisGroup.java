@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Show and hide multiple columns. Please note that unlike most other buttons,
@@ -44,26 +44,26 @@ public class DTPButtonsButtonColVisGroup extends DTPButtonsButton
     setExtend (EDTPButtonsButtonType.COL_VIS_GROUP.getName ());
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVisGroup setShow (@Nullable final String sShow)
   {
     return setShow (sShow == null ? null : JSExpr.lit (sShow));
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVisGroup setShow (@Nullable final IJSExpression aShow)
   {
     m_aShow = aShow;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVisGroup setHide (@Nullable final String sHide)
   {
     return setHide (sHide == null ? null : JSExpr.lit (sHide));
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColVisGroup setHide (@Nullable final IJSExpression aHide)
   {
     m_aHide = aHide;
@@ -71,7 +71,7 @@ public class DTPButtonsButtonColVisGroup extends DTPButtonsButton
   }
 
   @Override
-  protected void onGetAsJS (@Nonnull final JSAssocArray ret)
+  protected void onGetAsJS (@NonNull final JSAssocArray ret)
   {
     if (m_aShow != null)
       ret.add ("show", m_aShow);
@@ -80,7 +80,7 @@ public class DTPButtonsButtonColVisGroup extends DTPButtonsButton
   }
 
   @Override
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
     EDTPButtonsButtonType.COL_VIS_GROUP.registerExternalResources ();

@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.JSAnonymousFunction;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The default JS "DOMContentLoaded" event listener based "on document ready"
@@ -30,7 +30,7 @@ import jakarta.annotation.Nonnull;
  */
 public class JSDOMContentLoadedOnDocumentReadyProvider implements IHCOnDocumentReadyProvider
 {
-  @Nonnull
+  @NonNull
   public IHasJSCode createOnDocumentReady (final IHasJSCode aJSCodeProvider)
   {
     final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();

@@ -20,6 +20,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.builder.IBuilder;
@@ -31,9 +34,6 @@ import com.helger.photon.ajax.AjaxRegistry;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.ajax.servlet.PhotonAjaxServlet;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation of {@link IAjaxFunctionDeclaration}
@@ -48,10 +48,10 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   private final Predicate <? super IRequestWebScopeWithoutResponse> m_aExecutionFilter;
   private final String m_sServletPath;
 
-  public AjaxFunctionDeclaration (@Nonnull @Nonempty final String sFunctionName,
-                                  @Nonnull final Supplier <? extends IAjaxExecutor> aExecutorFactory,
+  public AjaxFunctionDeclaration (@NonNull @Nonempty final String sFunctionName,
+                                  @NonNull final Supplier <? extends IAjaxExecutor> aExecutorFactory,
                                   @Nullable final Predicate <? super IRequestWebScopeWithoutResponse> aExecutionFilter,
-                                  @Nonnull @Nonempty final String sServletPath)
+                                  @NonNull @Nonempty final String sServletPath)
   {
     ValueEnforcer.isTrue (AjaxRegistry.isValidFunctionName (sFunctionName), "Invalid Ajax functionName provided");
     ValueEnforcer.notNull (aExecutorFactory, "ExecutorFactory");
@@ -64,14 +64,14 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     m_sServletPath = sServletPath;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getName ()
   {
     return m_sFunctionName;
   }
 
-  @Nonnull
+  @NonNull
   public final Supplier <? extends IAjaxExecutor> getExecutorFactory ()
   {
     return m_aExecutorFactory;
@@ -83,7 +83,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return m_aExecutionFilter;
   }
 
-  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public boolean canExecute (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     if (m_aExecutionFilter == null)
       return true;
@@ -91,7 +91,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     return m_aExecutionFilter.test (aRequestScope);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAjaxServletPath ()
   {
@@ -120,7 +120,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
    * @return A new function declaration builder. Never <code>null</code>.
    * @see #builder(String)
    */
-  @Nonnull
+  @NonNull
   public static Builder builder ()
   {
     return builder (null);
@@ -139,7 +139,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
    *        The function name to use.
    * @return A new {@link Builder} and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static Builder builder (@Nullable final String sFunctionName)
   {
     // Create dynamic name on demand
@@ -160,43 +160,43 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     private Predicate <? super IRequestWebScopeWithoutResponse> m_aExecutionFilter;
     private String m_sServletPath = PhotonAjaxServlet.SERVLET_DEFAULT_PATH + '/';
 
-    public Builder (@Nonnull @Nonempty final String sFunctionName)
+    public Builder (@NonNull @Nonempty final String sFunctionName)
     {
       ValueEnforcer.notEmpty (sFunctionName, "FunctionName");
       m_sFunctionName = sFunctionName;
     }
 
-    @Nonnull
-    public final Builder executor (@Nonnull final IAjaxExecutor aAjaxExecutor)
+    @NonNull
+    public final Builder executor (@NonNull final IAjaxExecutor aAjaxExecutor)
     {
       ValueEnforcer.notNull (aAjaxExecutor, "AjaxExecutor");
       return executor ( () -> aAjaxExecutor);
     }
 
-    @Nonnull
-    public final Builder executor (@Nonnull final Class <? extends IAjaxExecutor> aAjaxExecutorClass)
+    @NonNull
+    public final Builder executor (@NonNull final Class <? extends IAjaxExecutor> aAjaxExecutorClass)
     {
       return executor (FactoryNewInstance.create (aAjaxExecutorClass));
     }
 
-    @Nonnull
-    public final Builder executor (@Nonnull final Supplier <? extends IAjaxExecutor> aSupplier)
+    @NonNull
+    public final Builder executor (@NonNull final Supplier <? extends IAjaxExecutor> aSupplier)
     {
       ValueEnforcer.notNull (aSupplier, "Supplier");
       m_aExecutorFactory = aSupplier;
       return this;
     }
 
-    @Nonnull
-    public final Builder filter (@Nonnull final Predicate <? super IRequestWebScopeWithoutResponse> aFilter)
+    @NonNull
+    public final Builder filter (@NonNull final Predicate <? super IRequestWebScopeWithoutResponse> aFilter)
     {
       ValueEnforcer.notNull (aFilter, "Filter");
       m_aExecutionFilter = aFilter;
       return this;
     }
 
-    @Nonnull
-    public final Builder servletPath (@Nonnull @Nonempty final String sServletPath)
+    @NonNull
+    public final Builder servletPath (@NonNull @Nonempty final String sServletPath)
     {
       ValueEnforcer.notEmpty (sServletPath, "ServletPath");
       ValueEnforcer.isTrue (sServletPath.startsWith ("/"), "Servlet path must start with /");
@@ -205,7 +205,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public AjaxFunctionDeclaration build ()
     {
       return new AjaxFunctionDeclaration (m_sFunctionName, m_aExecutorFactory, m_aExecutionFilter, m_sServletPath);

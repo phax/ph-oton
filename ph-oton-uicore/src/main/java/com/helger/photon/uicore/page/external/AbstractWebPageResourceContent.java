@@ -21,6 +21,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -38,9 +41,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.util.MicroVisitor;
 import com.helger.xml.serialize.read.SAXReaderSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base class for pages consisting of external HTML code that is provided from
@@ -88,8 +88,8 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     READ_EVERY_TIME.set (bReadEveryTime);
   }
 
-  @Nonnull
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
+  @NonNull
+  public static IMicroContainer readHTMLPageFragment (@NonNull final IReadableResource aResource,
                                                       final boolean bPeformStandardCleansing)
   {
     return readHTMLPageFragment (aResource,
@@ -99,10 +99,10 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
                                  bPeformStandardCleansing);
   }
 
-  @Nonnull
-  public static IMicroContainer readHTMLPageFragment (@Nonnull final IReadableResource aResource,
-                                                      @Nonnull final Charset aCharset,
-                                                      @Nonnull final EHTMLVersion eHTMLVersion,
+  @NonNull
+  public static IMicroContainer readHTMLPageFragment (@NonNull final IReadableResource aResource,
+                                                      @NonNull final Charset aCharset,
+                                                      @NonNull final EHTMLVersion eHTMLVersion,
                                                       @Nullable final SAXReaderSettings aAdditionalSaxReaderSettings,
                                                       final boolean bPeformStandardCleansing)
   {
@@ -132,8 +132,8 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     return ret;
   }
 
-  public AbstractWebPageResourceContent (@Nonnull @Nonempty final String sID,
-                                         @Nonnull final IMultilingualText aName,
+  public AbstractWebPageResourceContent (@NonNull @Nonempty final String sID,
+                                         @NonNull final IMultilingualText aName,
                                          @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, null);
@@ -156,7 +156,7 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
     return m_aRWLock.readLockedBoolean ( () -> m_bReadEveryTime);
   }
 
-  @Nonnull
+  @NonNull
   public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
     m_aRWLock.writeLocked ( () -> m_bReadEveryTime = bReadEveryTime);

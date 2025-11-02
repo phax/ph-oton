@@ -18,20 +18,20 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-import jakarta.annotation.Nonnull;
-
 public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedContent
 {
   private final String m_sType;
   private final String m_sSrc;
 
-  public FeedOutOfLineContent (@Nonnull @Nonempty final String sType, @Nonnull @Nonempty final String sSrc)
+  public FeedOutOfLineContent (@NonNull @Nonempty final String sType, @NonNull @Nonempty final String sSrc)
   {
     ValueEnforcer.notEmpty (sType, "Type");
     ValueEnforcer.notEmpty (sSrc, "Src");
@@ -39,14 +39,14 @@ public class FeedOutOfLineContent extends AbstractFeedElement implements IFeedCo
     m_sSrc = sSrc;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getType ()
   {
     return m_sType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getSrc ()
   {

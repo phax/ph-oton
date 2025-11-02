@@ -18,13 +18,13 @@ package com.helger.photon.uicore.page;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.photon.uicore.css.CUICoreCSS;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public interface IWebPageUIHandler extends Serializable
 {
@@ -42,7 +42,7 @@ public interface IWebPageUIHandler extends Serializable
     return createActionHeader ().addChild (sText);
   }
 
-  @Nonnull
+  @NonNull
   default IHCElementWithChildren <?> createDataGroupHeader ()
   {
     return new HCDiv ().addClass (CUICoreCSS.CSS_CLASS_DATAGROUP_HEADER);

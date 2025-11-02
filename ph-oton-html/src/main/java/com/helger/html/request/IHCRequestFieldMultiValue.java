@@ -16,9 +16,9 @@
  */
 package com.helger.html.request;
 
-import com.helger.collection.commons.ICommonsList;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.collection.commons.ICommonsList;
 
 /**
  * Defines an abstract request field for input controls. It encapsulates a name
@@ -35,7 +35,7 @@ public interface IHCRequestFieldMultiValue extends IHCBaseRequestField
    * @return The default value to be used as fallback. May not be
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   ICommonsList <String> getDefaultValues ();
 
   /**
@@ -46,6 +46,6 @@ public interface IHCRequestFieldMultiValue extends IHCBaseRequestField
    * @return A list of request values with the same field name or the default
    *         values if no such request values are present.
    */
-  @Nonnull
+  @NonNull
   ICommonsList <String> getRequestValues ();
 }

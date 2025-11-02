@@ -19,6 +19,8 @@ package com.helger.photon.api.pathdescriptor;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +32,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class keeps a single constraint that maybe used in a {@link PathDescriptorPart} object.
@@ -47,14 +46,14 @@ public final class PathDescriptorVariableConstraint implements Serializable
   private final EPathDescriptorVariableConstraintType m_eConstraintType;
   private final String m_sConstraintValue;
 
-  private PathDescriptorVariableConstraint (@Nonnull final EPathDescriptorVariableConstraintType eConstraintType,
+  private PathDescriptorVariableConstraint (@NonNull final EPathDescriptorVariableConstraintType eConstraintType,
                                             @Nullable final String sConstraintValue)
   {
     m_eConstraintType = ValueEnforcer.notNull (eConstraintType, "ConstraintType");
     m_sConstraintValue = sConstraintValue;
   }
 
-  @Nonnull
+  @NonNull
   public EPathDescriptorVariableConstraintType getConstraintType ()
   {
     return m_eConstraintType;
@@ -77,7 +76,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
     }
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAsURLString ()
   {
@@ -124,7 +123,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
    * @return <code>null</code> if the passed constraint string could not be parsed.
    */
   @Nullable
-  public static PathDescriptorVariableConstraint createOrNull (@Nonnull final String sConstraint)
+  public static PathDescriptorVariableConstraint createOrNull (@NonNull final String sConstraint)
   {
     final String sRealValue = StringHelper.trim (sConstraint);
     if (StringHelper.isEmpty (sRealValue))

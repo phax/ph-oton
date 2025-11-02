@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.PresentForCodeCoverage;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Class for generating expressions containing operators
@@ -51,8 +51,8 @@ public final class JSOp
 
   /* -- Unary operators -- */
 
-  @Nonnull
-  public static AbstractJSExpression minus (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression minus (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr instanceof AbstractJSAtomNumeric)
@@ -61,8 +61,8 @@ public final class JSOp
     return new JSOpUnaryWithParanthesis ("-", aExpr);
   }
 
-  @Nonnull
-  public static JSExprParanthesis inParantheses (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSExprParanthesis inParantheses (@NonNull final IJSExpression aExpr)
   {
     return new JSExprParanthesis (aExpr);
   }
@@ -74,8 +74,8 @@ public final class JSOp
    *        Expression to negate
    * @return ![this]
    */
-  @Nonnull
-  public static AbstractJSExpression not (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression not (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr == JSExpr.TRUE)
@@ -86,14 +86,14 @@ public final class JSOp
     return new JSOpUnaryWithParanthesis ("!", aExpr);
   }
 
-  @Nonnull
-  public static JSOpUnaryWithParanthesis complement (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSOpUnaryWithParanthesis complement (@NonNull final IJSExpression aExpr)
   {
     return new JSOpUnaryWithParanthesis ("~", aExpr);
   }
 
-  @Nonnull
-  public static AbstractJSExpression incrPostfix (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression incrPostfix (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr instanceof AbstractJSAtomNumeric)
@@ -102,8 +102,8 @@ public final class JSOp
     return new JSOpUnary (aExpr, "++");
   }
 
-  @Nonnull
-  public static AbstractJSExpression incrPrefix (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression incrPrefix (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr instanceof AbstractJSAtomNumeric)
@@ -112,8 +112,8 @@ public final class JSOp
     return new JSOpUnary ("++", aExpr);
   }
 
-  @Nonnull
-  public static AbstractJSExpression decrPostfix (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression decrPostfix (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr instanceof AbstractJSAtomNumeric)
@@ -122,8 +122,8 @@ public final class JSOp
     return new JSOpUnary (aExpr, "--");
   }
 
-  @Nonnull
-  public static AbstractJSExpression decrPrefix (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static AbstractJSExpression decrPrefix (@NonNull final IJSExpression aExpr)
   {
     // Some optimizations
     if (aExpr instanceof AbstractJSAtomNumeric)
@@ -132,16 +132,16 @@ public final class JSOp
     return new JSOpUnary ("--", aExpr);
   }
 
-  @Nonnull
-  public static JSOpUnary typeof (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSOpUnary typeof (@NonNull final IJSExpression aExpr)
   {
     return new JSOpUnary ("typeof ", aExpr);
   }
 
   /* -- Binary operators -- */
 
-  @Nonnull
-  public static AbstractJSExpression plus (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static AbstractJSExpression plus (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft instanceof JSStringLiteral && aRight instanceof JSStringLiteral)
@@ -152,8 +152,8 @@ public final class JSOp
     return new JSOpBinary (aLeft, "+", aRight);
   }
 
-  @Nonnull
-  public static AbstractJSExpression minus (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static AbstractJSExpression minus (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
@@ -162,8 +162,8 @@ public final class JSOp
     return new JSOpBinary (aLeft, "-", aRight);
   }
 
-  @Nonnull
-  public static AbstractJSExpression mul (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static AbstractJSExpression mul (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
@@ -172,8 +172,8 @@ public final class JSOp
     return new JSOpBinary (aLeft, "*", aRight);
   }
 
-  @Nonnull
-  public static AbstractJSExpression div (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static AbstractJSExpression div (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
@@ -182,8 +182,8 @@ public final class JSOp
     return new JSOpBinary (aLeft, "/", aRight);
   }
 
-  @Nonnull
-  public static AbstractJSExpression mod (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static AbstractJSExpression mod (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
@@ -192,20 +192,20 @@ public final class JSOp
     return new JSOpBinary (aLeft, "%", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary shl (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary shl (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "<<", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary shr (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary shr (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, ">>", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary shrz (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary shrz (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, ">>>", aRight);
   }
@@ -219,8 +219,8 @@ public final class JSOp
    *        rhs
    * @return operator
    */
-  @Nonnull
-  public static JSOpBinary band (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary band (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "&", aRight);
   }
@@ -234,8 +234,8 @@ public final class JSOp
    *        rhs
    * @return operator
    */
-  @Nonnull
-  public static JSOpBinary bor (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary bor (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "|", aRight);
   }
@@ -249,8 +249,8 @@ public final class JSOp
    *        rhs
    * @return operator
    */
-  @Nonnull
-  public static IJSExpression cand (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static IJSExpression cand (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft == JSExpr.TRUE)
@@ -272,8 +272,8 @@ public final class JSOp
    *        rhs
    * @return operator
    */
-  @Nonnull
-  public static IJSExpression cor (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static IJSExpression cor (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
     if (aLeft == JSExpr.TRUE || aRight == JSExpr.TRUE)
@@ -295,77 +295,77 @@ public final class JSOp
    *        rhs
    * @return operator
    */
-  @Nonnull
-  public static JSOpBinary xor (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary xor (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "^", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary lt (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary lt (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "<", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary lte (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary lte (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "<=", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary gt (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary gt (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, ">", aRight);
   }
 
-  @Nonnull
-  public static JSOpBinary gte (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary gte (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, ">=", aRight);
   }
 
   // equals
-  @Nonnull
-  public static JSOpBinary eq (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary eq (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "==", aRight);
   }
 
   // exactly equals
-  @Nonnull
-  public static JSOpBinary eeq (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary eeq (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "===", aRight);
   }
 
   // not equal
-  @Nonnull
-  public static JSOpBinary ne (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary ne (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "!=", aRight);
   }
 
   // exactly not equal
-  @Nonnull
-  public static JSOpBinary ene (@Nonnull final IJSExpression aLeft, @Nonnull final IJSExpression aRight)
+  @NonNull
+  public static JSOpBinary ene (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     return new JSOpBinary (aLeft, "!==", aRight);
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  public static JSOpBinary _instanceof (@Nonnull final IJSExpression aLeft, @Nonnull final AbstractJSType aRight)
+  public static JSOpBinary _instanceof (@NonNull final IJSExpression aLeft, @NonNull final AbstractJSType aRight)
   {
     return new JSOpBinary (aLeft, " instanceof ", aRight);
   }
 
   /* -- Ternary operators -- */
 
-  @Nonnull
-  public static JSOpTernary cond (@Nonnull final IJSExpression aCond,
-                                  @Nonnull final IJSExpression aIfTrue,
-                                  @Nonnull final IJSExpression aIfFalse)
+  @NonNull
+  public static JSOpTernary cond (@NonNull final IJSExpression aCond,
+                                  @NonNull final IJSExpression aIfTrue,
+                                  @NonNull final IJSExpression aIfFalse)
   {
     return new JSOpTernary (aCond, "?", aIfTrue, ":", aIfFalse);
   }

@@ -19,6 +19,9 @@ package com.helger.html.hc.html;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
@@ -31,9 +34,6 @@ import com.helger.typeconvert.collection.IAttributeContainer;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Special attribute container for HC elements
  *
@@ -41,8 +41,8 @@ import jakarta.annotation.Nullable;
  */
 public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, String>
 {
-  @Nonnull
-  default EChange putIn (@Nonnull final String sName, @Nullable final String sNewValue)
+  @NonNull
+  default EChange putIn (@NonNull final String sName, @Nullable final String sNewValue)
   {
     return putIn (new MicroQName (sName), sNewValue);
   }
@@ -85,7 +85,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   /**
    * @return All data attributes contained. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   default ICommonsOrderedMap <IMicroQName, String> getAllDataAttrs ()
   {
@@ -106,7 +106,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   default EChange setDataAttr (@Nullable final String sName, final int nValue)
   {
     return setDataAttr (sName, Integer.toString (nValue));
@@ -122,7 +122,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    *        The value of the attribute that is converted to a String.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   default EChange setDataAttr (@Nullable final String sName, final long nValue)
   {
     return setDataAttr (sName, Long.toString (nValue));
@@ -138,7 +138,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    *        The value of the attribute. If it is <code>null</code> nothing happens
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   default EChange setDataAttr (@Nullable final String sName, @Nullable final String sValue)
   {
     return putIn (CHTMLAttributes.makeDataAttrName (sName), sValue);
@@ -152,14 +152,14 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
    *        The name of the data attribute to be removed
    * @return this
    */
-  @Nonnull
+  @NonNull
   default EChange removeDataAttr (@Nullable final String sName)
   {
     return removeObject (CHTMLAttributes.makeDataAttrName (sName));
   }
 
-  @Nonnull
-  default EChange setAriaControls (@Nonnull final String sControls)
+  @NonNull
+  default EChange setAriaControls (@NonNull final String sControls)
   {
     return putIn (CHTMLAttributes.ARIA_CONTROLS, sControls);
   }
@@ -169,8 +169,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return containsKey (CHTMLAttributes.ARIA_DESCRIPTION);
   }
 
-  @Nonnull
-  default EChange setAriaDescription (@Nonnull final String sDescription)
+  @NonNull
+  default EChange setAriaDescription (@NonNull final String sDescription)
   {
     return putIn (CHTMLAttributes.ARIA_DESCRIPTION, sDescription);
   }
@@ -180,34 +180,34 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return containsKey (CHTMLAttributes.ARIA_DESCRIBEDBY);
   }
 
-  @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final String sDescribedBy)
+  @NonNull
+  default EChange setAriaDescribedBy (@NonNull final String sDescribedBy)
   {
     return putIn (CHTMLAttributes.ARIA_DESCRIBEDBY, sDescribedBy);
   }
 
-  @Nonnull
-  default EChange addToAriaDescribedBy (@Nonnull final String sDescribedBy)
+  @NonNull
+  default EChange addToAriaDescribedBy (@NonNull final String sDescribedBy)
   {
     final String sOldValue = getValue (CHTMLAttributes.ARIA_DESCRIBEDBY);
     final boolean bAppend = StringHelper.isNotEmpty (sOldValue) && !sOldValue.contains (sDescribedBy);
     return setAriaDescribedBy (bAppend ? sOldValue + ' ' + sDescribedBy : sDescribedBy);
   }
 
-  @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  @NonNull
+  default EChange setAriaDescribedBy (@NonNull final IHCElement <?> aDescribedBy)
   {
     return setAriaDescribedBy (aDescribedBy.ensureID ().getID ());
   }
 
-  @Nonnull
-  default EChange addToAriaDescribedBy (@Nonnull final IHCElement <?> aDescribedBy)
+  @NonNull
+  default EChange addToAriaDescribedBy (@NonNull final IHCElement <?> aDescribedBy)
   {
     return addToAriaDescribedBy (aDescribedBy.ensureID ().getID ());
   }
 
-  @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final List <? extends IHCElement <?>> aDescribedByMultiple)
+  @NonNull
+  default EChange setAriaDescribedBy (@NonNull final List <? extends IHCElement <?>> aDescribedByMultiple)
   {
     return setAriaDescribedBy (StringImplode.imploder ()
                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
@@ -215,8 +215,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
                                             .build ());
   }
 
-  @Nonnull
-  default EChange addToAriaDescribedBy (@Nonnull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
+  @NonNull
+  default EChange addToAriaDescribedBy (@NonNull final Iterable <? extends IHCElement <?>> aDescribedByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aDescribedByMultiple)
@@ -224,8 +224,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return eChange;
   }
 
-  @Nonnull
-  default EChange setAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
+  @NonNull
+  default EChange setAriaDescribedBy (@NonNull final IHCElement <?>... aDescribedByMultiple)
   {
     return setAriaDescribedBy (StringImplode.imploder ()
                                             .source (aDescribedByMultiple, x -> x.ensureID ().getID ())
@@ -233,8 +233,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
                                             .build ());
   }
 
-  @Nonnull
-  default EChange addToAriaDescribedBy (@Nonnull final IHCElement <?>... aDescribedByMultiple)
+  @NonNull
+  default EChange addToAriaDescribedBy (@NonNull final IHCElement <?>... aDescribedByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aDescribedByMultiple)
@@ -242,25 +242,25 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return eChange;
   }
 
-  @Nonnull
+  @NonNull
   default EChange setAriaExpanded (final boolean bIsExpanded)
   {
     return putIn (CHTMLAttributes.ARIA_EXPANDED, Boolean.toString (bIsExpanded));
   }
 
-  @Nonnull
+  @NonNull
   default EChange setAriaHasPopup (final boolean bHasPopup)
   {
     return putIn (CHTMLAttributes.ARIA_HASPOPUP, Boolean.toString (bHasPopup));
   }
 
-  @Nonnull
+  @NonNull
   default EChange setAriaHidden (final boolean bHidden)
   {
     return putIn (CHTMLAttributes.ARIA_HIDDEN, Boolean.toString (bHidden));
   }
 
-  @Nonnull
+  @NonNull
   default EChange setAriaInvalid (final boolean bInvalid)
   {
     return putIn (CHTMLAttributes.ARIA_INVALID, Boolean.toString (bInvalid));
@@ -271,8 +271,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return containsKey (CHTMLAttributes.ARIA_LABEL);
   }
 
-  @Nonnull
-  default EChange setAriaLabel (@Nonnull final String sLabel)
+  @NonNull
+  default EChange setAriaLabel (@NonNull final String sLabel)
   {
     return putIn (CHTMLAttributes.ARIA_LABEL, sLabel);
   }
@@ -282,34 +282,34 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return containsKey (CHTMLAttributes.ARIA_LABELLEDBY);
   }
 
-  @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final String sLabeledBy)
+  @NonNull
+  default EChange setAriaLabeledBy (@NonNull final String sLabeledBy)
   {
     return putIn (CHTMLAttributes.ARIA_LABELLEDBY, sLabeledBy);
   }
 
-  @Nonnull
-  default EChange addToAriaLabeledBy (@Nonnull final String sLabeledBy)
+  @NonNull
+  default EChange addToAriaLabeledBy (@NonNull final String sLabeledBy)
   {
     final String sOldValue = getValue (CHTMLAttributes.ARIA_LABELLEDBY);
     final boolean bAppend = StringHelper.isNotEmpty (sOldValue) && !sOldValue.contains (sLabeledBy);
     return setAriaLabeledBy (bAppend ? sOldValue + ' ' + sLabeledBy : sLabeledBy);
   }
 
-  @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
+  @NonNull
+  default EChange setAriaLabeledBy (@NonNull final IHCElement <?> aLabeledBy)
   {
     return setAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
-  @Nonnull
-  default EChange addToAriaLabeledBy (@Nonnull final IHCElement <?> aLabeledBy)
+  @NonNull
+  default EChange addToAriaLabeledBy (@NonNull final IHCElement <?> aLabeledBy)
   {
     return addToAriaLabeledBy (aLabeledBy.ensureID ().getID ());
   }
 
-  @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final List <? extends IHCElement <?>> aLabeledByMultiple)
+  @NonNull
+  default EChange setAriaLabeledBy (@NonNull final List <? extends IHCElement <?>> aLabeledByMultiple)
   {
     return setAriaLabeledBy (StringImplode.imploder ()
                                           .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
@@ -317,8 +317,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
                                           .build ());
   }
 
-  @Nonnull
-  default EChange addToAriaLabeledBy (@Nonnull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
+  @NonNull
+  default EChange addToAriaLabeledBy (@NonNull final Iterable <? extends IHCElement <?>> aLabeledByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aLabeledByMultiple)
@@ -326,8 +326,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return eChange;
   }
 
-  @Nonnull
-  default EChange setAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  @NonNull
+  default EChange setAriaLabeledBy (@NonNull final IHCElement <?>... aLabeledByMultiple)
   {
     return setAriaLabeledBy (StringImplode.imploder ()
                                           .source (aLabeledByMultiple, x -> x.ensureID ().getID ())
@@ -335,8 +335,8 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
                                           .build ());
   }
 
-  @Nonnull
-  default EChange addToAriaLabeledBy (@Nonnull final IHCElement <?>... aLabeledByMultiple)
+  @NonNull
+  default EChange addToAriaLabeledBy (@NonNull final IHCElement <?>... aLabeledByMultiple)
   {
     EChange eChange = EChange.UNCHANGED;
     for (final IHCElement <?> aItem : aLabeledByMultiple)
@@ -344,7 +344,7 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
     return eChange;
   }
 
-  @Nonnull
+  @NonNull
   default EChange setAriaRequired (final boolean bIsRequired)
   {
     return putIn (CHTMLAttributes.ARIA_REQUIRED, Boolean.toString (bIsRequired));

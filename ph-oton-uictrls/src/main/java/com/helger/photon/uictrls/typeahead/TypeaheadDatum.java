@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.typeahead;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -34,9 +37,6 @@ import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single typeahead datum (= data record) with the minimum data elements
@@ -61,7 +61,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue)
+  public TypeaheadDatum (@NonNull final String sValue)
   {
     this (sValue, getTokensFromValue (sValue));
   }
@@ -74,7 +74,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param aTokens
    *        All possible tokens. Must not be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue, @Nonnull final Collection <String> aTokens)
+  public TypeaheadDatum (@NonNull final String sValue, @NonNull final Collection <String> aTokens)
   {
     this (sValue, aTokens, (String) null);
   }
@@ -89,8 +89,8 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    * @param sID
    *        Optional ID of the element. May be <code>null</code>.
    */
-  public TypeaheadDatum (@Nonnull final String sValue,
-                         @Nonnull final Collection <String> aTokens,
+  public TypeaheadDatum (@NonNull final String sValue,
+                         @NonNull final Collection <String> aTokens,
                          @Nullable final String sID)
   {
     ValueEnforcer.notNull (sValue, "Value");
@@ -103,13 +103,13 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   /**
    * @return The value to display. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final String getValue ()
   {
     return m_sValue;
   }
 
-  public final void setValue (@Nonnull final String sValue)
+  public final void setValue (@NonNull final String sValue)
   {
     ValueEnforcer.notNull (sValue, "Value");
     m_sValue = sValue;
@@ -118,7 +118,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   /**
    * @return The list of all tokens. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <String> tokens ()
   {
@@ -128,7 +128,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   /**
    * @return A list of all tokens. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllTokens ()
   {
@@ -152,7 +152,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
   /**
    * @return This object as JSON object representation. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
@@ -163,7 +163,7 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
                             .addIfNotNull (JSON_ID, m_sID);
   }
 
-  public int compareTo (@Nonnull final TypeaheadDatum aOther)
+  public int compareTo (@NonNull final TypeaheadDatum aOther)
   {
     return m_sValue.compareTo (aOther.m_sValue);
   }
@@ -204,8 +204,8 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    *        Optional ID of the element. May be <code>null</code>.
    * @return New {@link TypeaheadDatum}.
    */
-  @Nonnull
-  public static TypeaheadDatum createWithID (@Nonnull final String sValue, @Nullable final String sID)
+  @NonNull
+  public static TypeaheadDatum createWithID (@NonNull final String sValue, @Nullable final String sID)
   {
     return new TypeaheadDatum (sValue, getTokensFromValue (sValue), sID);
   }
@@ -217,9 +217,9 @@ public class TypeaheadDatum implements IHasJson, Comparable <TypeaheadDatum>
    *        The value to use. May not be <code>null</code>.
    * @return An array of tokens to use. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <String> getTokensFromValue (@Nonnull final String sValue)
+  public static ICommonsList <String> getTokensFromValue (@NonNull final String sValue)
   {
     final String [] aParts = RegExHelper.getSplitToArray (StringHelper.trim (sValue), "\\W+");
     final ICommonsList <String> ret = new CommonsArrayList <> (aParts.length);

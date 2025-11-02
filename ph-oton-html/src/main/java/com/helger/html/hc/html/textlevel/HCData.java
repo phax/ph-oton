@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class HCData extends AbstractHCElementWithChildren <HCData>
 {
@@ -41,7 +41,7 @@ public class HCData extends AbstractHCElementWithChildren <HCData>
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final HCData setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;

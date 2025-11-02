@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
@@ -24,9 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML5 &lt;output&gt; element
@@ -58,7 +58,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    *        The HTML ID of the other object.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCOutput setFor (@Nullable final String sFor)
   {
     m_sFor = sFor;
@@ -73,7 +73,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    *        The HTML of the other object.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCOutput setFor (@Nullable final IHCHasID <?> aFor)
   {
     if (aFor == null)
@@ -96,7 +96,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
    *        The HTML ID of the form.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCOutput setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -109,7 +109,7 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOutput setName (@Nullable final String sName)
   {
     m_sName = sName;

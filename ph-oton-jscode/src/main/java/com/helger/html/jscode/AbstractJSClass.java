@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an abstract JS class.
@@ -58,7 +58,7 @@ public abstract class AbstractJSClass extends AbstractJSType
    *        class to check
    * @return <code>true</code> if this class is assignable from the passed class
    */
-  public final boolean isAssignableFrom (@Nonnull final AbstractJSClass aDerived)
+  public final boolean isAssignableFrom (@NonNull final AbstractJSClass aDerived)
   {
     ValueEnforcer.notNull (aDerived, "Derived");
 
@@ -80,8 +80,8 @@ public abstract class AbstractJSClass extends AbstractJSType
    *        Method to invoke
    * @return The created {@link JSInvocation}
    */
-  @Nonnull
-  public final JSInvocation staticInvoke (@Nonnull final JSMethod aMethod)
+  @NonNull
+  public final JSInvocation staticInvoke (@NonNull final JSMethod aMethod)
   {
     return new JSInvocation (this, aMethod);
   }
@@ -93,8 +93,8 @@ public abstract class AbstractJSClass extends AbstractJSType
    *        Method to invoke
    * @return The created {@link JSInvocation}
    */
-  @Nonnull
-  public final JSInvocation staticInvoke (@Nonnull @Nonempty final String sMethod)
+  @NonNull
+  public final JSInvocation staticInvoke (@NonNull @Nonempty final String sMethod)
   {
     return new JSInvocation (this, sMethod);
   }
@@ -106,8 +106,8 @@ public abstract class AbstractJSClass extends AbstractJSType
    *        Field to reference
    * @return The created {@link JSFieldRef}
    */
-  @Nonnull
-  public final JSFieldRef staticRef (@Nonnull @Nonempty final String sField)
+  @NonNull
+  public final JSFieldRef staticRef (@NonNull @Nonempty final String sField)
   {
     return new JSFieldRef (this, sField);
   }
@@ -119,13 +119,13 @@ public abstract class AbstractJSClass extends AbstractJSType
    *        Field to reference
    * @return The created {@link JSFieldRef}
    */
-  @Nonnull
-  public final JSFieldRef staticRef (@Nonnull final AbstractJSVariable <?> aField)
+  @NonNull
+  public final JSFieldRef staticRef (@NonNull final AbstractJSVariable <?> aField)
   {
     return new JSFieldRef (this, aField);
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.type (this);
   }
@@ -133,7 +133,7 @@ public abstract class AbstractJSClass extends AbstractJSType
   /**
    * Prints the class name in JSDoc @link format.
    */
-  void printLink (@Nonnull final JSFormatter aFormatter)
+  void printLink (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ("{@link ").generatable (this).plain ('}');
   }

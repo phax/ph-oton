@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -28,8 +30,6 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.servlet.response.ResponseHelperSettings;
 import com.helger.text.locale.LocaleCache;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Action executor for providing the DataTables translated texts
@@ -48,7 +48,7 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
     this (Locale.US);
   }
 
-  public AjaxExecutorDataTablesI18N (@Nonnull final Locale aDefaultLocale)
+  public AjaxExecutorDataTablesI18N (@NonNull final Locale aDefaultLocale)
   {
     ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
     if (StringHelper.isEmpty (aDefaultLocale.getLanguage ()))
@@ -57,13 +57,13 @@ public class AjaxExecutorDataTablesI18N implements IAjaxExecutor
   }
 
   @OverrideOnDemand
-  protected IJsonObject getText (@Nonnull final Locale aLanguage)
+  protected IJsonObject getText (@NonNull final Locale aLanguage)
   {
     return DataTables.createLanguageJson (aLanguage);
   }
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     // Resolve language
     final String sLanguage = aRequestScope.params ().getAsString (REQUEST_PARAM_LANGUAGE_ID);

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.userdata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single web accessible object, that was provided by the user.
@@ -34,14 +34,14 @@ import jakarta.annotation.Nullable;
 @Immutable
 public class UserDataObject extends AbstractUserDataObject
 {
-  public UserDataObject (@Nonnull @Nonempty final String sPath)
+  public UserDataObject (@NonNull @Nonempty final String sPath)
   {
     super (sPath, false);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public UserDataObject getCloneWithDifferentPath (@Nonnull @Nonempty final String sPath)
+  public UserDataObject getCloneWithDifferentPath (@NonNull @Nonempty final String sPath)
   {
     return new UserDataObject (sPath);
   }

@@ -19,6 +19,9 @@ package com.helger.photon.audit.v2.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -33,9 +36,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.domain.IHasCreationDateTime;
 import com.helger.photon.audit.EAuditActionType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A single audit event.
@@ -72,7 +72,7 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
    *        List of event fields. May be <code>null</code>.
    */
   public AuditEvent (final long nID,
-                     @Nonnull final LocalDateTime aCreationDT,
+                     @NonNull final LocalDateTime aCreationDT,
                      @Nullable final String sActor,
                      @Nullable final String sOrigin,
                      @Nullable final EAuditActionType eAction,
@@ -95,7 +95,7 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
     return m_nID;
   }
 
-  @Nonnull
+  @NonNull
   public final LocalDateTime getCreationDateTime ()
   {
     return m_aCreationDT;
@@ -151,14 +151,14 @@ public class AuditEvent implements Serializable, IHasLongID, IHasCreationDateTim
     return m_eSuccess != null;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <AuditField> getAllFields ()
   {
     return m_aFields.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <AuditField> fields ()
   {

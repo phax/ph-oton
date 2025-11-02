@@ -16,14 +16,14 @@
  */
 package com.helger.html.markdown;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.EHTMLElement;
 import com.helger.url.protocol.IURLProtocol;
 import com.helger.url.protocol.URLProtocolRegistry;
-
-import jakarta.annotation.Nullable;
 
 /**
  * HTML utility class.

@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -55,9 +58,6 @@ import com.helger.photon.security.usergroup.IUserGroupModificationCallback;
 import com.helger.photon.security.usergroup.UserGroup;
 import com.helger.photon.security.usergroup.UserGroupManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link IUserGroupManager} for JDBC backends.
  *
@@ -70,10 +70,10 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   private final IRoleManager m_aRoleMgr;
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserGroupManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                               @Nonnull final Function <String, String> aTableNameCustomizer,
-                               @Nonnull final IUserManager aUserMgr,
-                               @Nonnull final IRoleManager aRoleMgr)
+  public UserGroupManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                               @NonNull final Function <String, String> aTableNameCustomizer,
+                               @NonNull final IUserManager aUserMgr,
+                               @NonNull final IRoleManager aRoleMgr)
   {
     super (aDBExecSupplier);
     m_sTableName = aTableNameCustomizer.apply ("secusergroup");
@@ -85,26 +85,26 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
    * @return The name of the database table this class is operating on. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTableName ()
   {
     return m_sTableName;
   }
 
-  @Nonnull
+  @NonNull
   public final IUserManager getUserManager ()
   {
     return m_aUserMgr;
   }
 
-  @Nonnull
+  @NonNull
   public final IRoleManager getRoleManager ()
   {
     return m_aRoleMgr;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   private ICommonsList <IUserGroup> _getAllWhere (@Nullable final String sCondition,
                                                   @Nullable final ConstantPreparedStatementDataProvider aDataProvider)
@@ -149,7 +149,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAll ()
   {
@@ -236,15 +236,15 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     // no role for this user group
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserGroupModificationCallback> userGroupModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
-  private ESuccess _internalCreateItem (@Nonnull final UserGroup aUserGroup)
+  @NonNull
+  private ESuccess _internalCreateItem (@NonNull final UserGroup aUserGroup)
   {
     final DBExecutor aExecutor = newExecutor ();
     return aExecutor.performInTransaction ( () -> {
@@ -277,7 +277,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nullable
-  public UserGroup internalCreateNewUserGroup (@Nonnull final UserGroup aUserGroup,
+  public UserGroup internalCreateNewUserGroup (@NonNull final UserGroup aUserGroup,
                                                final boolean bPredefined,
                                                final boolean bRunCallback)
   {
@@ -311,7 +311,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nullable
-  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
+  public IUserGroup createNewUserGroup (@NonNull @Nonempty final String sName,
                                         @Nullable final String sDescription,
                                         @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -321,8 +321,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nullable
-  public IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty final String sID,
-                                               @Nonnull @Nonempty final String sName,
+  public IUserGroup createPredefinedUserGroup (@NonNull @Nonempty final String sID,
+                                               @NonNull @Nonempty final String sName,
                                                @Nullable final String sDescription,
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -333,7 +333,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return internalCreateNewUserGroup (aUserGroup, true, true);
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -376,7 +376,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange undeleteUserGroup (@Nullable final String sUserGroupID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -451,22 +451,22 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return aUserGroup;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllActiveUserGroups ()
   {
     return _getAllWhere ("deletedt IS NULL", null);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllDeletedUserGroups ()
   {
     return _getAllWhere ("deletedt IS NOT NULL", null);
   }
 
-  @Nonnull
-  public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
+  @NonNull
+  public EChange renameUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sNewName)
   {
     if (StringHelper.isEmpty (sUserGroupID))
       return EChange.UNCHANGED;
@@ -508,9 +508,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setUserGroupData (@Nullable final String sUserGroupID,
-                                   @Nonnull @Nonempty final String sNewName,
+                                   @NonNull @Nonempty final String sNewName,
                                    @Nullable final String sNewDescription,
                                    @Nullable final Map <String, String> aNewCustomAttrs)
   {
@@ -568,8 +568,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
+  @NonNull
+  public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
     if (StringHelper.isEmpty (sUserGroupID))
@@ -634,7 +634,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -700,7 +700,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -758,7 +758,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
@@ -770,7 +770,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                                     aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
@@ -780,8 +780,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return getAllUserGroupsWithAssignedUser (sUserID).getAllMapped (IUserGroup::getID);
   }
 
-  @Nonnull
-  public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
+  @NonNull
+  public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
     if (StringHelper.isEmpty (sUserGroupID))
@@ -846,7 +846,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -912,7 +912,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
     if (StringHelper.isEmpty (sRoleID))
@@ -970,7 +970,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
@@ -982,7 +982,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                                                                                     aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {

@@ -19,9 +19,9 @@ package com.helger.photon.audit.v2.config;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import com.helger.base.enforce.ValueEnforcer;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.base.enforce.ValueEnforcer;
 
 /**
  * Settings for auditing
@@ -39,28 +39,28 @@ public class AuditSettings implements IAuditSettings
   public AuditSettings ()
   {}
 
-  @Nonnull
+  @NonNull
   public ILongSupplier getAuditEventIDProvider ()
   {
     return m_aAuditEventIDProvider;
   }
 
-  @Nonnull
-  public AuditSettings setAuditEventIDProvider (@Nonnull final ILongSupplier aIDProvider)
+  @NonNull
+  public AuditSettings setAuditEventIDProvider (@NonNull final ILongSupplier aIDProvider)
   {
     ValueEnforcer.notNull (aIDProvider, "IDProvider");
     m_aAuditEventIDProvider = aIDProvider;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public Supplier <LocalDateTime> getAuditEventDateTimeProvider ()
   {
     return m_aAuditEventDateTimeProvider;
   }
 
-  @Nonnull
-  public AuditSettings setAuditEventDateTimeProvider (@Nonnull final Supplier <LocalDateTime> aDateTimeProvider)
+  @NonNull
+  public AuditSettings setAuditEventDateTimeProvider (@NonNull final Supplier <LocalDateTime> aDateTimeProvider)
   {
     ValueEnforcer.notNull (aDateTimeProvider, "DateTimeProvider");
     m_aAuditEventDateTimeProvider = aDateTimeProvider;

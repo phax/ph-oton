@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.sections;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;H6&gt; element
@@ -42,7 +42,7 @@ public abstract class AbstractHCH6 <IMPLTYPE extends AbstractHCH6 <IMPLTYPE>> ex
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (HCHTMLHelper.recursiveContainsChildWithTagName (this,

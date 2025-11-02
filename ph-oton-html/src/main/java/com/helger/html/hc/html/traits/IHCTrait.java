@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.traits;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.grouping.HCBlockQuote;
 import com.helger.html.hc.html.grouping.HCDiv;
@@ -38,9 +41,6 @@ import com.helger.html.hc.html.textlevel.HCSup;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Trait interface to add simpler UI codes.
  *
@@ -49,577 +49,577 @@ import jakarta.annotation.Nullable;
  */
 public interface IHCTrait
 {
-  @Nonnull
+  @NonNull
   default HCA a ()
   {
     return new HCA ();
   }
 
-  @Nonnull
+  @NonNull
   default HCA a (@Nullable final ISimpleURL aHref)
   {
     return new HCA (aHref);
   }
 
-  @Nonnull
+  @NonNull
   default HCA a (@Nullable final IHCNode aNode)
   {
     return new HCA ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCA a (@Nullable final String s)
   {
     return new HCA ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCA a (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCA ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCA a (@Nullable final String... aTexts)
   {
     return new HCA ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCBlockQuote blockquote ()
   {
     return new HCBlockQuote ();
   }
 
-  @Nonnull
+  @NonNull
   default HCBlockQuote blockquote (@Nullable final IHCNode aNode)
   {
     return new HCBlockQuote ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCBlockQuote blockquote (@Nullable final String s)
   {
     return new HCBlockQuote ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCBlockQuote blockquote (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCBlockQuote ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCBlockQuote blockquote (@Nullable final String... aTexts)
   {
     return new HCBlockQuote ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCCode code ()
   {
     return new HCCode ();
   }
 
-  @Nonnull
+  @NonNull
   default HCCode code (@Nullable final IHCNode aNode)
   {
     return new HCCode ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCCode code (@Nullable final String s)
   {
     return new HCCode ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCCode code (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCCode ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCCode code (@Nullable final String... aTexts)
   {
     return new HCCode ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCDiv div ()
   {
     return new HCDiv ();
   }
 
-  @Nonnull
+  @NonNull
   default HCDiv div (@Nullable final IHCNode aNode)
   {
     return new HCDiv ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCDiv div (@Nullable final String s)
   {
     return new HCDiv ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCDiv div (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCDiv ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCDiv div (@Nullable final String... aTexts)
   {
     return new HCDiv ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCEM em ()
   {
     return new HCEM ();
   }
 
-  @Nonnull
+  @NonNull
   default HCEM em (@Nullable final IHCNode aNode)
   {
     return new HCEM ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCEM em (@Nullable final String s)
   {
     return new HCEM ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCEM em (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCEM ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCEM em (@Nullable final String... aTexts)
   {
     return new HCEM ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH1 h1 ()
   {
     return new HCH1 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH1 h1 (@Nullable final IHCNode aNode)
   {
     return new HCH1 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH1 h1 (@Nullable final String s)
   {
     return new HCH1 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH1 h1 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH1 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH1 h1 (@Nullable final String... aTexts)
   {
     return new HCH1 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH2 h2 ()
   {
     return new HCH2 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH2 h2 (@Nullable final IHCNode aNode)
   {
     return new HCH2 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH2 h2 (@Nullable final String s)
   {
     return new HCH2 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH2 h2 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH2 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH2 h2 (@Nullable final String... aTexts)
   {
     return new HCH2 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH3 h3 ()
   {
     return new HCH3 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH3 h3 (@Nullable final IHCNode aNode)
   {
     return new HCH3 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH3 h3 (@Nullable final String s)
   {
     return new HCH3 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH3 h3 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH3 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH3 h3 (@Nullable final String... aTexts)
   {
     return new HCH3 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH4 h4 ()
   {
     return new HCH4 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH4 h4 (@Nullable final IHCNode aNode)
   {
     return new HCH4 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH4 h4 (@Nullable final String s)
   {
     return new HCH4 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH4 h4 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH4 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH4 h4 (@Nullable final String... aTexts)
   {
     return new HCH4 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH5 h5 ()
   {
     return new HCH5 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH5 h5 (@Nullable final IHCNode aNode)
   {
     return new HCH5 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH5 h5 (@Nullable final String s)
   {
     return new HCH5 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH5 h5 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH5 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH5 h5 (@Nullable final String... aTexts)
   {
     return new HCH5 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCH6 h6 ()
   {
     return new HCH6 ();
   }
 
-  @Nonnull
+  @NonNull
   default HCH6 h6 (@Nullable final IHCNode aNode)
   {
     return new HCH6 ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCH6 h6 (@Nullable final String s)
   {
     return new HCH6 ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCH6 h6 (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCH6 ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCH6 h6 (@Nullable final String... aTexts)
   {
     return new HCH6 ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCP p ()
   {
     return new HCP ();
   }
 
-  @Nonnull
+  @NonNull
   default HCP p (@Nullable final IHCNode aNode)
   {
     return new HCP ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCP p (@Nullable final String s)
   {
     return new HCP ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCP p (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCP ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCP p (@Nullable final String... aTexts)
   {
     return new HCP ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCPre pre ()
   {
     return new HCPre ();
   }
 
-  @Nonnull
+  @NonNull
   default HCPre pre (@Nullable final IHCNode aNode)
   {
     return new HCPre ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCPre pre (@Nullable final String s)
   {
     return new HCPre ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCPre pre (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCPre ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCPre pre (@Nullable final String... aTexts)
   {
     return new HCPre ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCSmall small ()
   {
     return new HCSmall ();
   }
 
-  @Nonnull
+  @NonNull
   default HCSmall small (@Nullable final IHCNode aNode)
   {
     return new HCSmall ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCSmall small (@Nullable final String s)
   {
     return new HCSmall ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCSmall small (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSmall ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCSmall small (@Nullable final String... aTexts)
   {
     return new HCSmall ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCSpan span ()
   {
     return new HCSpan ();
   }
 
-  @Nonnull
+  @NonNull
   default HCSpan span (@Nullable final IHCNode aNode)
   {
     return new HCSpan ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCSpan span (@Nullable final String s)
   {
     return new HCSpan ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCSpan span (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSpan ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCSpan span (@Nullable final String... aTexts)
   {
     return new HCSpan ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCStrong strong ()
   {
     return new HCStrong ();
   }
 
-  @Nonnull
+  @NonNull
   default HCStrong strong (@Nullable final IHCNode aNode)
   {
     return new HCStrong ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCStrong strong (@Nullable final String s)
   {
     return new HCStrong ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCStrong strong (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCStrong ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCStrong strong (@Nullable final String... aTexts)
   {
     return new HCStrong ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCSub sub ()
   {
     return new HCSub ();
   }
 
-  @Nonnull
+  @NonNull
   default HCSub sub (@Nullable final IHCNode aNode)
   {
     return new HCSub ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCSub sub (@Nullable final String s)
   {
     return new HCSub ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCSub sub (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSub ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCSub sub (@Nullable final String... aTexts)
   {
     return new HCSub ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCSup sup ()
   {
     return new HCSup ();
   }
 
-  @Nonnull
+  @NonNull
   default HCSup sup (@Nullable final IHCNode aNode)
   {
     return new HCSup ().addChild (aNode);
   }
 
-  @Nonnull
+  @NonNull
   default HCSup sup (@Nullable final String s)
   {
     return new HCSup ().addChild (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCSup sup (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
     return new HCSup ().addChildren (aNodes);
   }
 
-  @Nonnull
+  @NonNull
   default HCSup sup (@Nullable final String... aTexts)
   {
     return new HCSup ().addChildren (aTexts);
   }
 
-  @Nonnull
+  @NonNull
   default HCTextNode text (@Nullable final String s)
   {
     return HCTextNode.createOnDemand (s);
   }
 
-  @Nonnull
+  @NonNull
   default HCTextNode text (@Nullable final char [] a)
   {
     return HCTextNode.createOnDemand (a);
   }
 
-  @Nonnull
+  @NonNull
   default HCTextNode text (final char n)
   {
     return new HCTextNode (n);
   }
 
-  @Nonnull
+  @NonNull
   default HCTextNode text (final int n)
   {
     return new HCTextNode (n);
   }
 
-  @Nonnull
+  @NonNull
   default HCTextNode text (final long n)
   {
     return new HCTextNode (n);

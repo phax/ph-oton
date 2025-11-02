@@ -18,14 +18,14 @@ package com.helger.html.hc.special;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.resource.css.ICSSCodeProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This interface represents all special nodes that can occur in an HTML
@@ -50,7 +50,7 @@ public interface IHCSpecialNodes extends Serializable
    * @return All CSS files as a map from media list to the list of matching
    *         files. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> getAllExternalCSSs ();
 
@@ -64,7 +64,7 @@ public interface IHCSpecialNodes extends Serializable
    * @return The inline CSS to be included <b>before</b> the files as a map from
    *         media list to the CSS code. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <ICSSCodeProvider> getAllInlineCSSBeforeExternal ();
 
@@ -78,7 +78,7 @@ public interface IHCSpecialNodes extends Serializable
    * @return The inline CSS to be included <b>after</b> the files as a map from
    *         media list to the CSS code. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <ICSSCodeProvider> getAllInlineCSSAfterExternal ();
 
@@ -91,7 +91,7 @@ public interface IHCSpecialNodes extends Serializable
   /**
    * @return All JS files. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <String> getAllExternalJSs ();
 
@@ -104,7 +104,7 @@ public interface IHCSpecialNodes extends Serializable
   /**
    * @return The inline JS. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   IHasJSCode getInlineJSBeforeExternal ();
 
@@ -117,7 +117,7 @@ public interface IHCSpecialNodes extends Serializable
   /**
    * @return The inline JS. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   IHasJSCode getInlineJSAfterExternal ();
 }

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.jscode.IJSExpression;
@@ -26,9 +29,6 @@ import com.helger.html.jscode.JSParam;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Java JavaScript wrapper for uicore-jquery.js
@@ -60,7 +60,7 @@ public final class JSJQueryHelper
    *        an invokable! This handler is invoked AFTER the inclusions take place.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static JSAnonymousFunction jqueryAjaxSuccessHandler (@Nullable final IJSExpression aHandlerBeforeInclude,
                                                               @Nullable final IJSExpression aHandlerAfterInclude)
   {

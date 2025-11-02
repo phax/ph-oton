@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -24,18 +27,15 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @ThreadSafe
 public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <LongRunningJobData, LongRunningJobData>
 {
-  public LongRunningJobResultManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public LongRunningJobResultManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (LongRunningJobData.class, sFilename, new InitSettings <LongRunningJobData> ().setOrderedMapSupplier ());
   }
 
-  public void addResult (@Nonnull final LongRunningJobData aJobData)
+  public void addResult (@NonNull final LongRunningJobData aJobData)
   {
     ValueEnforcer.notNull (aJobData, "JobData");
     if (!aJobData.isEnded ())
@@ -44,7 +44,7 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
     m_aRWLock.writeLocked ( () -> internalCreateItem (aJobData));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <? extends LongRunningJobData> getAllJobResults ()
   {

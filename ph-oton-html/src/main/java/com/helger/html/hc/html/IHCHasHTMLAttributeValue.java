@@ -18,10 +18,10 @@ package com.helger.html.hc.html;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.equals.EqualsHelper;
 import com.helger.xml.microdom.IHasAttributeValue;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an HTML attribute value provider.

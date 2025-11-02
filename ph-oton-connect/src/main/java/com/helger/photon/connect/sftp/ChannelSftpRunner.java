@@ -16,6 +16,7 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +28,6 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
-
-import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class ChannelSftpRunner
@@ -53,10 +52,10 @@ public final class ChannelSftpRunner
    * @throws JSchException
    *         If some general connection handling stuff goes wrong.
    */
-  @Nonnull
-  public static ESuccess execute (@Nonnull final IJSchSessionProvider aSessionProvider,
+  @NonNull
+  public static ESuccess execute (@NonNull final IJSchSessionProvider aSessionProvider,
                                   final int nChannelConnectTimeoutMillis,
-                                  @Nonnull final IChannelSftpRunnable aRunnable) throws JSchException
+                                  @NonNull final IChannelSftpRunnable aRunnable) throws JSchException
   {
     ValueEnforcer.notNull (aSessionProvider, "SessionProvider");
     ValueEnforcer.notNull (aRunnable, "Runnable");

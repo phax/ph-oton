@@ -18,6 +18,8 @@ package com.helger.photon.core.smtp;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -28,8 +30,6 @@ import com.helger.base.type.ITypedObject;
 import com.helger.base.type.ObjectType;
 import com.helger.smtp.settings.ISMTPSettings;
 
-import jakarta.annotation.Nonnull;
-
 public class NamedSMTPSettings implements ITypedObject <String>, Serializable
 {
   public static final ObjectType OT = new ObjectType ("named-smtp-settings");
@@ -38,14 +38,14 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
   private String m_sName;
   private ISMTPSettings m_aSMTPSettings;
 
-  public NamedSMTPSettings (@Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSMTPSettings)
+  public NamedSMTPSettings (@NonNull @Nonempty final String sName, @NonNull final ISMTPSettings aSMTPSettings)
   {
     this (GlobalIDFactory.getNewPersistentStringID (), sName, aSMTPSettings);
   }
 
-  NamedSMTPSettings (@Nonnull @Nonempty final String sID,
-                     @Nonnull @Nonempty final String sName,
-                     @Nonnull final ISMTPSettings aSMTPSettings)
+  NamedSMTPSettings (@NonNull @Nonempty final String sID,
+                     @NonNull @Nonempty final String sName,
+                     @NonNull final ISMTPSettings aSMTPSettings)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     m_sID = sID;
@@ -53,28 +53,28 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     setSMTPSettings (aSMTPSettings);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
-  public EChange setName (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public EChange setName (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -84,14 +84,14 @@ public class NamedSMTPSettings implements ITypedObject <String>, Serializable
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public ISMTPSettings getSMTPSettings ()
   {
     return m_aSMTPSettings;
   }
 
-  @Nonnull
-  public EChange setSMTPSettings (@Nonnull final ISMTPSettings aSMTPSettings)
+  @NonNull
+  public EChange setSMTPSettings (@NonNull final ISMTPSettings aSMTPSettings)
   {
     ValueEnforcer.notNull (aSMTPSettings, "SMTPSettings");
 

@@ -16,7 +16,7 @@
  */
 package com.helger.photon.atom;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class FeedTextContent extends AbstractFeedText implements IFeedContent
 {

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.audit.v2.pipeline;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.callback.CallbackList;
@@ -24,8 +26,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.diagnostics.callback.exception.LoggingExceptionCallback;
 import com.helger.photon.audit.v2.domain.AuditEvent;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Pipeline of {@link IAuditEventConsumer} being itself an
@@ -50,7 +50,7 @@ public class AuditEventConsumerPipeline implements IAuditEventConsumer
   /**
    * @return The mutable list of all consumers. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <IAuditEventConsumer> consumers ()
   {
@@ -61,14 +61,14 @@ public class AuditEventConsumerPipeline implements IAuditEventConsumer
    * @return The mutable exception callback list. Each callback is invoked, if
    *         one of the consumers throws an Exception.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IExceptionCallback <? super Exception>> exceptionCallbacks ()
   {
     return m_aExCallbacks;
   }
 
-  public void consumeAuditEvent (@Nonnull final AuditEvent aAuditEvent)
+  public void consumeAuditEvent (@NonNull final AuditEvent aAuditEvent)
   {
     for (final IAuditEventConsumer aConsumer : m_aConsumers)
       try

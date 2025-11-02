@@ -20,6 +20,9 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringReplace;
@@ -36,9 +39,6 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.column.EDTColType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Add date/time based sorting for client side DataTables. This is based on moment.js
  *
@@ -49,7 +49,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   public static final String PLUGIN_NAME = "clientSortingDate";
   private final ICommonsSet <EDTColType> m_aDateTimeTypes;
 
-  public DataTablesPluginClientSortingDate (@Nonnull @Nonempty final Set <EDTColType> aDateTimeTypes)
+  public DataTablesPluginClientSortingDate (@NonNull @Nonempty final Set <EDTColType> aDateTimeTypes)
   {
     super (PLUGIN_NAME);
     ValueEnforcer.notEmptyNoNullValue (aDateTimeTypes, "DateTimeTypes");
@@ -57,13 +57,13 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   }
 
   @Override
-  public boolean canBeApplied (@Nonnull final DataTables aDT)
+  public boolean canBeApplied (@NonNull final DataTables aDT)
   {
     return aDT.isClientSide ();
   }
 
-  @Nonnull
-  private static String _fixFormatter (@Nonnull final String s)
+  @NonNull
+  private static String _fixFormatter (@NonNull final String s)
   {
     String ret = s;
     ret = StringReplace.replaceAll (ret, 'y', 'Y');
@@ -72,7 +72,7 @@ public class DataTablesPluginClientSortingDate extends AbstractDataTablesPlugin
   }
 
   @Override
-  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
     aDT.setJSBeforeModifier (p -> {
       final Locale aDisplayLocale = aDT.getDisplayLocale ();

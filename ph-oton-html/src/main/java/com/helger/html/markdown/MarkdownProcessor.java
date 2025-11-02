@@ -20,15 +20,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingStringReader;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.io.resource.IReadableResource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Markdown processor class.
@@ -63,7 +63,7 @@ public class MarkdownProcessor
    * @param aConfig
    *        The configuration to use. May not be <code>null</code>.
    */
-  public MarkdownProcessor (@Nonnull final MarkdownConfiguration aConfig)
+  public MarkdownProcessor (@NonNull final MarkdownConfiguration aConfig)
   {
     ValueEnforcer.notNull (aConfig, "Config");
 
@@ -82,8 +82,8 @@ public class MarkdownProcessor
    * @throws IOException
    *         If an IO error occurred.
    */
-  @Nonnull
-  private Block _readLines (@Nonnull final Reader aReader) throws IOException
+  @NonNull
+  private Block _readLines (@NonNull final Reader aReader) throws IOException
   {
     final Block aBlock = new Block ();
     final StringBuilder aSB = new StringBuilder (80);
@@ -245,7 +245,7 @@ public class MarkdownProcessor
    * @param aRoot
    *        The Block to process.
    */
-  private void _initListBlock (@Nonnull final Block aRoot)
+  private void _initListBlock (@NonNull final Block aRoot)
   {
     Line aLine = aRoot.m_aLines;
     aLine = aLine.m_aNext;
@@ -271,7 +271,7 @@ public class MarkdownProcessor
    * @param bListMode
    *        Flag indicating that we're in a list item block.
    */
-  private void _recurse (@Nonnull final Block aRoot, final boolean bListMode)
+  private void _recurse (@NonNull final Block aRoot, final boolean bListMode)
   {
     Block aBlock;
     Block aList;
@@ -471,23 +471,23 @@ public class MarkdownProcessor
     }
   }
 
-  @Nonnull
-  public MarkdownProcessingResult process (@Nonnull final IReadableResource aRes) throws IOException
+  @NonNull
+  public MarkdownProcessingResult process (@NonNull final IReadableResource aRes) throws IOException
   {
     ValueEnforcer.notNull (aRes, "Resource");
 
     return process (aRes.getReader (m_aConfig.getEncoding ()));
   }
 
-  @Nonnull
-  public MarkdownProcessingResult process (@Nonnull final InputStream aIS) throws IOException
+  @NonNull
+  public MarkdownProcessingResult process (@NonNull final InputStream aIS) throws IOException
   {
     ValueEnforcer.notNull (aIS, "InputStream");
 
     return process (StreamHelper.getBuffered (StreamHelper.createReader (aIS, m_aConfig.getEncoding ())));
   }
 
-  @Nonnull
+  @NonNull
   public MarkdownProcessingResult process (@Nullable final String sText) throws IOException
   {
     return process (new NonBlockingStringReader (StringHelper.getNotNull (sText)));
@@ -502,8 +502,8 @@ public class MarkdownProcessor
    * @throws IOException
    *         If an IO error occurred.
    */
-  @Nonnull
-  public MarkdownProcessingResult process (@Nonnull @WillClose final Reader aReader) throws IOException
+  @NonNull
+  public MarkdownProcessingResult process (@NonNull @WillClose final Reader aReader) throws IOException
   {
     try
     {

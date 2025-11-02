@@ -19,6 +19,8 @@ package com.helger.html.js.tostring;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.html.js.CJS;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSMarshaller;
 import com.helger.json.IJson;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class JSToString
 {
@@ -69,8 +68,8 @@ public final class JSToString
     return null;
   }
 
-  @Nonnull
-  private static JSType _getRealJSType (@Nullable final Object aObject, @Nonnull final JSType aSupposedType)
+  @NonNull
+  private static JSType _getRealJSType (@Nullable final Object aObject, @NonNull final JSType aSupposedType)
   {
     if (!aSupposedType.equals (JSType.AUTO_DETECT))
       return aSupposedType;
@@ -86,8 +85,8 @@ public final class JSToString
   }
 
   private static void _toJSString (@Nullable final Object aObject,
-                                   @Nonnull final JSType aType,
-                                   @Nonnull final StringBuilder aSB,
+                                   @NonNull final JSType aType,
+                                   @NonNull final StringBuilder aSB,
                                    @Nonnegative final int nLevel,
                                    final boolean bWithSurroundingVar)
   {
@@ -230,20 +229,20 @@ public final class JSToString
    *        for atomic types and arrays, but <b>not</b> for collection types!
    * @return The string representation of the passed object.
    */
-  @Nonnull
+  @NonNull
   public static String objectToJSString (@Nullable final Object aObject)
   {
     return objectToJSString (aObject, JSType.AUTO_DETECT, false);
   }
 
-  @Nonnull
-  public static String objectToJSString (@Nullable final Object aObject, @Nonnull final JSType aType)
+  @NonNull
+  public static String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType)
   {
     return objectToJSString (aObject, aType, false);
   }
 
-  @Nonnull
-  public static String objectToJSString (@Nullable final Object aObject, @Nonnull final JSType aType, final boolean bWithSurroundingVar)
+  @NonNull
+  public static String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType, final boolean bWithSurroundingVar)
   {
     ValueEnforcer.notNull (aType, "Type");
 

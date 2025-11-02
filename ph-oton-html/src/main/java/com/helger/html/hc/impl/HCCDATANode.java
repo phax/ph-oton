@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroCDATA;
 import com.helger.xml.microdom.MicroCDATA;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single CDATA node as HC node.
@@ -41,21 +41,21 @@ public class HCCDATANode extends AbstractHCNode
   /**
    * @return The unescaped CDATA content text.
    */
-  @Nonnull
+  @NonNull
   public String getText ()
   {
     return m_sText;
   }
 
   @Override
-  @Nonnull
-  protected IMicroCDATA internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroCDATA internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return new MicroCDATA (m_sText);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return getText ();

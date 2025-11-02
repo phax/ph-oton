@@ -19,6 +19,9 @@ package com.helger.photon.security.token.user;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -30,9 +33,6 @@ import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.object.AbstractObjectWithAccessToken;
 import com.helger.photon.security.user.IUser;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A single token for granting a machine user access to this application.
@@ -61,7 +61,7 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
    */
   public UserToken (@Nullable final String sTokenString,
                     @Nullable final Map <String, String> aCustomAttrs,
-                    @Nonnull final IUser aUser,
+                    @NonNull final IUser aUser,
                     @Nullable final String sDescription)
   {
     this (StubObject.createForCurrentUser (aCustomAttrs),
@@ -82,9 +82,9 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
    * @param sDescription
    *        Optional description of the User Token. May be <code>null</code>.
    */
-  public UserToken (@Nonnull final StubObject aStubObject,
-                    @Nonnull @Nonempty final List <AccessToken> aAccessTokens,
-                    @Nonnull final IUser aUser,
+  public UserToken (@NonNull final StubObject aStubObject,
+                    @NonNull @Nonempty final List <AccessToken> aAccessTokens,
+                    @NonNull final IUser aUser,
                     @Nullable final String sDescription)
   {
     super (aStubObject, aAccessTokens);
@@ -92,20 +92,20 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
     m_sDescription = sDescription;
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDisplayName ()
   {
     return m_aUser.getDisplayName ();
   }
 
-  @Nonnull
+  @NonNull
   public IUser getUser ()
   {
     return m_aUser;
@@ -117,7 +117,7 @@ public class UserToken extends AbstractObjectWithAccessToken implements IUserTok
     return m_sDescription;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))

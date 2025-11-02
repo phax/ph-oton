@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.serverlog;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +29,6 @@ import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class AjaxExecutorServerLog implements IAjaxExecutor
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorServerLog.class);
@@ -38,7 +37,7 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
   private static final String PARAM_MESSAGE = "message";
   private static final String PARAM_KEY = "key";
 
-  @Nonnull
+  @NonNull
   public static IErrorLevel getErrorLevelFromString (@Nullable final String sSeverity)
   {
     if (StringHelper.isNotEmpty (sSeverity))
@@ -57,8 +56,8 @@ public class AjaxExecutorServerLog implements IAjaxExecutor
     return DEFAULT_SEVERITY;
   }
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sSeverity = aRequestScope.params ().getAsString (PARAM_SEVERITY);
     final String sMessage = aRequestScope.params ().getAsString (PARAM_MESSAGE);

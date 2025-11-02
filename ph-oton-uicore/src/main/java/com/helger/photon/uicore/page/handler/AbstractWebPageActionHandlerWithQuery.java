@@ -18,6 +18,9 @@ package com.helger.photon.uicore.page.handler;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
@@ -33,9 +36,6 @@ import com.helger.photon.uicore.page.IWebPageCSRFHandler;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                             extends
                                                             AbstractWebPageActionHandler <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
@@ -44,9 +44,9 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   private final String m_sFormID;
 
   public AbstractWebPageActionHandlerWithQuery (final boolean bSelectedObjectRequired,
-                                                @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
-                                                @Nonnull @Nonempty final String sAction,
-                                                @Nonnull @Nonempty final String sFormID)
+                                                @NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
+                                                @NonNull @Nonempty final String sAction,
+                                                @NonNull @Nonempty final String sFormID)
   {
     super (bSelectedObjectRequired, aUIHandler);
     ValueEnforcer.notEmpty (sAction, "Action");
@@ -59,7 +59,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    * @return The action provided in the constructor. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getAction ()
   {
@@ -70,7 +70,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    * @return The form ID provided in the constructor. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getFormID ()
   {
@@ -88,7 +88,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The object to be handled. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showQuery (@Nonnull WPECTYPE aWPEC, @Nonnull FORM_TYPE aForm, @Nullable DATATYPE aSelectedObject);
+  protected abstract void showQuery (@NonNull WPECTYPE aWPEC, @NonNull FORM_TYPE aForm, @Nullable DATATYPE aSelectedObject);
 
   /**
    * Perform action
@@ -99,7 +99,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The object to be handled. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void performAction (@Nonnull WPECTYPE aWPEC, @Nullable DATATYPE aSelectedObject);
+  protected abstract void performAction (@NonNull WPECTYPE aWPEC, @Nullable DATATYPE aSelectedObject);
 
   /**
    * @param aWPEC
@@ -110,14 +110,14 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *         your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showToolbar (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
+  protected boolean showToolbar (@NonNull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
   {
     return true;
   }
 
   @Nullable
   @OverrideOnDemand
-  protected String getToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  protected String getToolbarSubmitButtonText (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.BUTTON_YES.getDisplayText (aDisplayLocale);
   }
@@ -138,7 +138,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   /**
@@ -152,10 +152,10 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        Selected object. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createToolbar (@Nonnull final WPECTYPE aWPEC,
-                                        @Nonnull final FORM_TYPE aForm,
+  protected TOOLBAR_TYPE createToolbar (@NonNull final WPECTYPE aWPEC,
+                                        @NonNull final FORM_TYPE aForm,
                                         @Nullable final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -176,13 +176,13 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   }
 
   @OverrideOnDemand
-  protected boolean isFormSubmitted (@Nonnull final WPECTYPE aWPEC)
+  protected boolean isFormSubmitted (@NonNull final WPECTYPE aWPEC)
   {
     return aWPEC.hasAction (m_sAction) && aWPEC.hasSubAction (CPageParam.ACTION_SAVE);
   }
 
-  @Nonnull
-  public EShowList handleAction (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
+  @NonNull
+  public EShowList handleAction (@NonNull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();

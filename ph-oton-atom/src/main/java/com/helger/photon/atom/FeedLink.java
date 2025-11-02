@@ -20,14 +20,14 @@ import java.util.Locale;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a link in the ATOM feed
@@ -46,12 +46,12 @@ public class FeedLink extends AbstractFeedElement
   private String m_sTitle;
   private int m_nLength = CGlobal.ILLEGAL_UINT;
 
-  public FeedLink (@Nonnull final ISimpleURL aHref)
+  public FeedLink (@NonNull final ISimpleURL aHref)
   {
     this (aHref.getAsString ());
   }
 
-  public FeedLink (@Nonnull final ISimpleURL aHref, @Nullable final String sRel)
+  public FeedLink (@NonNull final ISimpleURL aHref, @Nullable final String sRel)
   {
     this (aHref.getAsString (), sRel);
   }
@@ -215,8 +215,8 @@ public class FeedLink extends AbstractFeedElement
     return m_nLength;
   }
 
-  @Nonnull
-  public IMicroElement getAsElement (@Nonnull final String sElementName)
+  @NonNull
+  public IMicroElement getAsElement (@NonNull final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     if (StringHelper.isNotEmpty (m_sHref))

@@ -16,10 +16,10 @@
  */
 package com.helger.html;
 
-import com.helger.xml.microdom.IMicroDocumentType;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.xml.microdom.IMicroDocumentType;
 
 /**
  * Enum of supported HTML versions.
@@ -31,14 +31,14 @@ public enum EHTMLVersion
   XHTML10_STRICT (false)
   {
     @Override
-    @Nonnull
+    @NonNull
     public IMicroDocumentType getDocType ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML10_STRICT;
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public String getNamespaceURI ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
@@ -47,14 +47,14 @@ public enum EHTMLVersion
   XHTML10_TRANSITIONAL (false)
   {
     @Override
-    @Nonnull
+    @NonNull
     public IMicroDocumentType getDocType ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML10_TRANS;
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public String getNamespaceURI ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
@@ -63,14 +63,14 @@ public enum EHTMLVersion
   XHTML11 (false)
   {
     @Override
-    @Nonnull
+    @NonNull
     public IMicroDocumentType getDocType ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML11;
     }
 
     @Override
-    @Nonnull
+    @NonNull
     public String getNamespaceURI ()
     {
       return CHTMLDocTypes.DOCTYPE_XHTML_URI;
@@ -79,7 +79,7 @@ public enum EHTMLVersion
   HTML5 (true)
   {
     @Override
-    @Nonnull
+    @NonNull
     public IMicroDocumentType getDocType ()
     {
       return CHTMLDocTypes.DOCTYPE_HTML5;
@@ -95,7 +95,7 @@ public enum EHTMLVersion
   HTML51 (true)
   {
     @Override
-    @Nonnull
+    @NonNull
     public IMicroDocumentType getDocType ()
     {
       return CHTMLDocTypes.DOCTYPE_HTML5;
@@ -120,7 +120,7 @@ public enum EHTMLVersion
    * @return The document type matching this HTML version. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public abstract IMicroDocumentType getDocType ();
 
   /**

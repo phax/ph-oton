@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html;
 
-import com.helger.html.EHTMLElement;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.EHTMLElement;
 
 /**
  * Base class for &lt;source&gt; and &lt;track
@@ -31,7 +31,7 @@ public abstract class AbstractHCMediaElementChild <IMPLTYPE extends AbstractHCMe
                                                   AbstractHCElement <IMPLTYPE> implements
                                                   IHCMediaElementChild <IMPLTYPE>
 {
-  public AbstractHCMediaElementChild (@Nonnull final EHTMLElement eElement)
+  public AbstractHCMediaElementChild (@NonNull final EHTMLElement eElement)
   {
     super (eElement);
   }

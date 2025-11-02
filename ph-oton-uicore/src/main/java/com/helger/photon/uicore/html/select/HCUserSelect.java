@@ -20,14 +20,14 @@ import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.text.compare.ComparatorHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A select for {@link IUser} objects.
@@ -41,17 +41,17 @@ public class HCUserSelect extends HCExtSelect
                                                                                                 aUser.getLoginName () +
                                                                                                 ")";
 
-  public HCUserSelect (@Nonnull final IHCRequestField aRF,
-                       @Nonnull final Locale aDisplayLocale,
+  public HCUserSelect (@NonNull final IHCRequestField aRF,
+                       @NonNull final Locale aDisplayLocale,
                        @Nullable final Predicate <? super IUser> aFilter)
   {
     this (aRF, aDisplayLocale, aFilter, DEFAULT_DISPLAY_TEXT_PROVIDER);
   }
 
-  public HCUserSelect (@Nonnull final IHCRequestField aRF,
-                       @Nonnull final Locale aDisplayLocale,
+  public HCUserSelect (@NonNull final IHCRequestField aRF,
+                       @NonNull final Locale aDisplayLocale,
                        @Nullable final Predicate <? super IUser> aFilter,
-                       @Nonnull final Function <? super IUser, String> aDisplayTextProvider)
+                       @NonNull final Function <? super IUser, String> aDisplayTextProvider)
   {
     this (aRF,
           PhotonSecurityManager.getUserMgr ()
@@ -62,10 +62,10 @@ public class HCUserSelect extends HCExtSelect
           aDisplayTextProvider);
   }
 
-  public HCUserSelect (@Nonnull final IHCRequestField aRF,
-                       @Nonnull final ICommonsList <? extends IUser> aUsers,
+  public HCUserSelect (@NonNull final IHCRequestField aRF,
+                       @NonNull final ICommonsList <? extends IUser> aUsers,
                        @Nullable final Predicate <? super IUser> aFilter,
-                       @Nonnull final Function <? super IUser, String> aDisplayTextProvider)
+                       @NonNull final Function <? super IUser, String> aDisplayTextProvider)
   {
     super (aRF);
 

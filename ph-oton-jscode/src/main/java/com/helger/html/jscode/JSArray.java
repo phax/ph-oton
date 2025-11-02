@@ -19,6 +19,9 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -31,9 +34,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * array creation and initialization.
@@ -64,162 +64,162 @@ public class JSArray extends AbstractJSExpression implements IHasSize
     return m_aExprs != null && m_aExprs.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final boolean bValue)
   {
     return add (JSExpr.lit (bValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final char cValue)
   {
     return add (JSExpr.lit (cValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final double dValue)
   {
     return add (JSExpr.lit (dValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final float fValue)
   {
     return add (JSExpr.lit (fValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final int nValue)
   {
     return add (JSExpr.lit (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (final long nValue)
   {
     return add (JSExpr.lit (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (@Nullable final BigDecimal aValue)
   {
     return add (aValue == null ? JSExpr.NULL : JSExpr.lit (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (@Nullable final BigInteger aValue)
   {
     return add (aValue == null ? JSExpr.NULL : JSExpr.lit (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (@Nullable final String sValue)
   {
     return add (sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (@Nullable final IJson aValue)
   {
     return add (aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSArray add (@Nullable final IHCNode aValue)
   {
     return add (aValue == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aValue));
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final boolean... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final boolean... aCont)
   {
     for (final boolean bValue : aCont)
       add (bValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final char... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final char... aCont)
   {
     for (final char cValue : aCont)
       add (cValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final double... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final double... aCont)
   {
     for (final double dValue : aCont)
       add (dValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final float... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final float... aCont)
   {
     for (final float fValue : aCont)
       add (fValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final int... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final int... aCont)
   {
     for (final int nValue : aCont)
       add (nValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final long... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final long... aCont)
   {
     for (final long nValue : aCont)
       add (nValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final BigDecimal... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final BigDecimal... aCont)
   {
     for (final BigDecimal aValue : aCont)
       add (aValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final BigInteger... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final BigInteger... aCont)
   {
     for (final BigInteger aValue : aCont)
       add (aValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final String... aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final String... aCont)
   {
     for (final String sValue : aCont)
       add (sValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAll (@Nonnull final Iterable <String> aCont)
+  @NonNull
+  public JSArray addAll (@NonNull final Iterable <String> aCont)
   {
     for (final String sValue : aCont)
       add (sValue);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAllExpr (@Nonnull final IJSExpression... aCont)
+  @NonNull
+  public JSArray addAllExpr (@NonNull final IJSExpression... aCont)
   {
     for (final IJSExpression aExpr : aCont)
       add (aExpr);
     return this;
   }
 
-  @Nonnull
-  public JSArray addAllExpr (@Nonnull final Iterable <? extends IJSExpression> aCont)
+  @NonNull
+  public JSArray addAllExpr (@NonNull final Iterable <? extends IJSExpression> aCont)
   {
     for (final IJSExpression aExpr : aCont)
       add (aExpr);
@@ -233,8 +233,8 @@ public class JSArray extends AbstractJSExpression implements IHasSize
    *        Expression to add. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public JSArray add (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSArray add (@NonNull final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (aExpr, "Expr");
 
@@ -244,7 +244,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSArray remove (@Nonnegative final int nIndex)
   {
     if (m_aExprs != null)
@@ -252,14 +252,14 @@ public class JSArray extends AbstractJSExpression implements IHasSize
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IJSExpression> getAll ()
   {
     return new CommonsArrayList <> (m_aExprs);
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('[');
     if (m_aExprs != null)

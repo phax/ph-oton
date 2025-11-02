@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.appid;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +24,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * XServlet filter responsible for remembering the application ID in the current
@@ -39,7 +38,7 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
   public XServletFilterAppIDFromSessionID ()
   {}
 
-  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static void setStatePerApp (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Set all fields from session
     final PhotonSessionState aSessionState = PhotonSessionState.getInstanceIfInstantiated ();
@@ -75,12 +74,12 @@ public final class XServletFilterAppIDFromSessionID implements IXServletHighLeve
     }
   }
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public void beforeRequest (@NonNull final IRequestWebScope aRequestScope)
   {
     setStatePerApp (aRequestScope);
   }
 
-  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public void afterRequest (@NonNull final IRequestWebScope aRequestScope)
   {
     // empty
   }

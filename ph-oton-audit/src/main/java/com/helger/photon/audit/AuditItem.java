@@ -18,6 +18,9 @@ package com.helger.photon.audit;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -26,9 +29,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.security.authentication.subject.user.CUserID;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single change item
@@ -45,9 +45,9 @@ public final class AuditItem implements IAuditItem
   private final String m_sAction;
 
   public AuditItem (@Nullable final String sUserID,
-                    @Nonnull final EAuditActionType eType,
-                    @Nonnull final ESuccess eSuccess,
-                    @Nonnull final String sAction)
+                    @NonNull final EAuditActionType eType,
+                    @NonNull final ESuccess eSuccess,
+                    @NonNull final String sAction)
   {
     this (PDTFactory.getCurrentLocalDateTime (),
           StringHelper.isNotEmpty (sUserID) ? sUserID : CUserID.USER_ID_GUEST,
@@ -56,11 +56,11 @@ public final class AuditItem implements IAuditItem
           sAction);
   }
 
-  public AuditItem (@Nonnull final LocalDateTime aDateTime,
-                    @Nonnull final String sUserID,
-                    @Nonnull final EAuditActionType eType,
-                    @Nonnull final ESuccess eSuccess,
-                    @Nonnull final String sAction)
+  public AuditItem (@NonNull final LocalDateTime aDateTime,
+                    @NonNull final String sUserID,
+                    @NonNull final EAuditActionType eType,
+                    @NonNull final ESuccess eSuccess,
+                    @NonNull final String sAction)
   {
     m_aDateTime = ValueEnforcer.notNull (aDateTime, "LocalDateTime");
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");
@@ -69,31 +69,31 @@ public final class AuditItem implements IAuditItem
     m_sAction = ValueEnforcer.notNull (sAction, "Action");
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getDateTime ()
   {
     return m_aDateTime;
   }
 
-  @Nonnull
+  @NonNull
   public String getUserID ()
   {
     return m_sUserID;
   }
 
-  @Nonnull
+  @NonNull
   public EAuditActionType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess getSuccess ()
   {
     return m_eSuccess;
   }
 
-  @Nonnull
+  @NonNull
   public String getAction ()
   {
     return m_sAction;

@@ -19,7 +19,7 @@ package com.helger.photon.security.lock;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A single lock information object.
@@ -31,12 +31,12 @@ public interface ILockInfo extends Serializable
   /**
    * @return The ID of the user who locked the object.
    */
-  @Nonnull
+  @NonNull
   String getLockUserID ();
 
   /**
    * @return The date and time when the lock was created.
    */
-  @Nonnull
+  @NonNull
   LocalDateTime getLockDateTime ();
 }

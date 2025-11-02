@@ -19,6 +19,8 @@ package com.helger.photon.app.html;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,6 @@ import com.helger.io.resource.IReadableResource;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 import com.helger.xml.microdom.util.XMLMapHandler;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class keeps track of all the meta elements that must be included globally or for a single
@@ -60,7 +59,7 @@ public final class PhotonMetaElements
   private PhotonMetaElements ()
   {}
 
-  public static void _readMetaElements (@Nonnull final IReadableResource aRes, @Nonnull final MetaElementList aTarget)
+  public static void _readMetaElements (@NonNull final IReadableResource aRes, @NonNull final MetaElementList aTarget)
   {
     ValueEnforcer.notNull (aRes, "Res");
     ValueEnforcer.notNull (aTarget, "Target");
@@ -76,7 +75,7 @@ public final class PhotonMetaElements
     }
   }
 
-  public static void readMetaElementsForGlobal (@Nonnull final IReadableResource aRes)
+  public static void readMetaElementsForGlobal (@NonNull final IReadableResource aRes)
   {
     _readMetaElements (aRes, GLOBAL);
   }
@@ -87,7 +86,7 @@ public final class PhotonMetaElements
    * @param aMetaElement
    *        The meta element to use. May not be <code>null</code>.
    */
-  public static void registerMetaElementForGlobal (@Nonnull final IMetaElement aMetaElement)
+  public static void registerMetaElementForGlobal (@NonNull final IMetaElement aMetaElement)
   {
     GLOBAL.addMetaElement (aMetaElement);
   }
@@ -114,14 +113,14 @@ public final class PhotonMetaElements
   /**
    * @return A non-<code>null</code> set with all meta elements to be included globally.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForGlobal ()
   {
     return GLOBAL.getAllMetaElements ();
   }
 
-  public static void getAllRegisteredMetaElementsForGlobal (@Nonnull final Collection <? super IMetaElement> aTarget)
+  public static void getAllRegisteredMetaElementsForGlobal (@NonNull final Collection <? super IMetaElement> aTarget)
   {
     GLOBAL.getAllMetaElements (aTarget);
   }
@@ -156,7 +155,7 @@ public final class PhotonMetaElements
    * @param aMetaElement
    *        The meta element to use. May not be <code>null</code>.
    */
-  public static void registerMetaElementForThisRequest (@Nonnull final IMetaElement aMetaElement)
+  public static void registerMetaElementForThisRequest (@NonNull final IMetaElement aMetaElement)
   {
     _getPerRequestSet (true).addMetaElement (aMetaElement);
   }
@@ -187,7 +186,7 @@ public final class PhotonMetaElements
   /**
    * @return A non-<code>null</code> set with all meta elements to be included in this request.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IMetaElement> getAllRegisteredMetaElementsForThisRequest ()
   {
@@ -195,7 +194,7 @@ public final class PhotonMetaElements
     return aSet == null ? new CommonsArrayList <> () : aSet.getAllMetaElements ();
   }
 
-  public static void getAllRegisteredMetaElementsForThisRequest (@Nonnull final Collection <? super IMetaElement> aTarget)
+  public static void getAllRegisteredMetaElementsForThisRequest (@NonNull final Collection <? super IMetaElement> aTarget)
   {
     final MetaElementList aSet = _getPerRequestSet (false);
     if (aSet != null)

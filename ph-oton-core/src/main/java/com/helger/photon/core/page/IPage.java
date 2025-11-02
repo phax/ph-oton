@@ -18,13 +18,13 @@ package com.helger.photon.core.page;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.id.IHasID;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.typeconvert.collection.IAttributeContainerAny;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The base interface for a single page of content.
@@ -43,12 +43,12 @@ public interface IPage extends IHasID <String>, IHasDisplayText
    *         available.
    */
   @Nullable
-  String getDescription (@Nonnull Locale aContentLocale);
+  String getDescription (@NonNull Locale aContentLocale);
 
   /**
    * @return Custom attributes.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   IAttributeContainerAny <String> attrs ();
 }

@@ -18,6 +18,8 @@ package com.helger.photon.security.object.tenant;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,8 +29,6 @@ import com.helger.base.type.ObjectType;
 import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.tenant.ITenant;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link ITenant}
@@ -50,32 +50,32 @@ public class Tenant extends AbstractBusinessObject implements ITenant
    * @param sDisplayName
    *        display name
    */
-  public Tenant (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public Tenant (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sDisplayName)
   {
     this (StubObject.createForCurrentUserAndID (sID), sDisplayName);
   }
 
-  public Tenant (@Nonnull final StubObject aStubObject, @Nonnull @Nonempty final String sDisplayName)
+  public Tenant (@NonNull final StubObject aStubObject, @NonNull @Nonempty final String sDisplayName)
   {
     super (aStubObject);
     setDisplayName (sDisplayName);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
-  @Nonnull
-  public EChange setDisplayName (@Nonnull @Nonempty final String sDisplayName)
+  @NonNull
+  public EChange setDisplayName (@NonNull @Nonempty final String sDisplayName)
   {
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
 
@@ -85,7 +85,7 @@ public class Tenant extends AbstractBusinessObject implements ITenant
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAsUIText (final Locale aDisplayLocale)
   {

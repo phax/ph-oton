@@ -18,11 +18,11 @@ package com.helger.html.meta;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.state.EChange;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single meta element
@@ -39,8 +39,8 @@ public interface IMutableMetaElement extends IMetaElement
    *        The type to use. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange setType (@Nonnull EMetaElementType eType);
+  @NonNull
+  EChange setType (@NonNull EMetaElementType eType);
 
   /**
    * Set the name of the meta element. May usually neither be <code>null</code>
@@ -51,8 +51,8 @@ public interface IMutableMetaElement extends IMetaElement
    *        The name to use. May not be <code>null</code>.
    * @return {@link EChange}.
    */
-  @Nonnull
-  EChange setName (@Nonnull String sName);
+  @NonNull
+  EChange setName (@NonNull String sName);
 
   /**
    * Set the value of the meta element in an unspecified locale.
@@ -62,7 +62,7 @@ public interface IMutableMetaElement extends IMetaElement
    *        is removed.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   default EChange setContent (@Nullable final String sContent)
   {
     return setContent ((Locale) null, sContent);
@@ -78,7 +78,7 @@ public interface IMutableMetaElement extends IMetaElement
    *        is removed.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange setContent (@Nullable Locale aContentLocale, @Nullable String sContent);
 
   /**
@@ -86,7 +86,7 @@ public interface IMutableMetaElement extends IMetaElement
    *
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   default EChange removeContent ()
   {
     return removeContent ((Locale) null);
@@ -99,6 +99,6 @@ public interface IMutableMetaElement extends IMetaElement
    *        The locale to be removed. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange removeContent (Locale aContentLocale);
 }

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -25,8 +27,6 @@ import com.helger.base.callback.CallbackList;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.photon.api.callback.LoggingAPIExceptionCallback;
 import com.helger.photon.api.callback.LoggingAPILongRunningExecutionCallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A central helper class that centrally configures all API callbacks.
@@ -59,21 +59,21 @@ public final class APISettings
   private APISettings ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAPIExceptionCallback> exceptionCallbacks ()
   {
     return EXCEPTION_CALLBACKS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public static CallbackList <IAPIBeforeExecutionCallback> beforeExecutionCallbacks ()
   {
     return BEFORE_EXECUTION_CALLBACKS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IAPIAfterExecutionCallback> afterExecutionCallbacks ()
   {
@@ -97,7 +97,7 @@ public final class APISettings
     RW_LOCK.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IAPILongRunningExecutionCallback> longRunningExecutionCallbacks ()
   {

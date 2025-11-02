@@ -21,15 +21,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillCloseWhenClosed;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is a utility class for managing indentation and other basic formatting
@@ -58,7 +58,7 @@ public class JSFormatter implements Closeable
    * @param aWriter
    *        Writer to use
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final Writer aWriter)
+  public JSFormatter (@NonNull @WillCloseWhenClosed final Writer aWriter)
   {
     this (aWriter, (IJSWriterSettings) null);
   }
@@ -69,7 +69,7 @@ public class JSFormatter implements Closeable
    * @param aPrintWriter
    *        {@link PrintWriter} to be used
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter)
+  public JSFormatter (@NonNull @WillCloseWhenClosed final PrintWriter aPrintWriter)
   {
     this (aPrintWriter, (IJSWriterSettings) null);
   }
@@ -82,7 +82,7 @@ public class JSFormatter implements Closeable
    * @param aSettings
    *        The settings to be used.
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final Writer aWriter, @Nullable final IJSWriterSettings aSettings)
+  public JSFormatter (@NonNull @WillCloseWhenClosed final Writer aWriter, @Nullable final IJSWriterSettings aSettings)
   {
     this (aWriter instanceof PrintWriter ? (PrintWriter) aWriter : new PrintWriter (aWriter), aSettings);
   }
@@ -95,14 +95,14 @@ public class JSFormatter implements Closeable
    * @param aSettings
    *        The settings to be used.
    */
-  public JSFormatter (@Nonnull @WillCloseWhenClosed final PrintWriter aPrintWriter,
+  public JSFormatter (@NonNull @WillCloseWhenClosed final PrintWriter aPrintWriter,
                       @Nullable final IJSWriterSettings aSettings)
   {
     m_aPW = ValueEnforcer.notNull (aPrintWriter, "PrintWriter");
     m_aSettings = JSWriterSettings.createCloneOnDemand (aSettings);
   }
 
-  @Nonnull
+  @NonNull
   public IJSWriterSettings getSettings ()
   {
     return m_aSettings;
@@ -121,7 +121,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter outdent ()
   {
     if (m_aSettings.isIndentAndAlign ())
@@ -134,7 +134,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter outdentAlways ()
   {
     if (m_nIndentLevel == 0)
@@ -149,7 +149,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter indent ()
   {
     if (m_aSettings.isIndentAndAlign ())
@@ -162,7 +162,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter indentAlways ()
   {
     m_nIndentLevel++;
@@ -187,7 +187,7 @@ public class JSFormatter implements Closeable
    *        the char
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter plain (final char cChar)
   {
     _spaceIfNeeded ();
@@ -202,8 +202,8 @@ public class JSFormatter implements Closeable
    *        the {@link String}
    * @return this
    */
-  @Nonnull
-  public JSFormatter plain (@Nonnull final String sText)
+  @NonNull
+  public JSFormatter plain (@NonNull final String sText)
   {
     _spaceIfNeeded ();
     m_aPW.print (sText);
@@ -217,8 +217,8 @@ public class JSFormatter implements Closeable
    *        The type whose name is to be printed
    * @return this
    */
-  @Nonnull
-  public JSFormatter type (@Nonnull final AbstractJSType aType)
+  @NonNull
+  public JSFormatter type (@NonNull final AbstractJSType aType)
   {
     plain (aType.name ());
     return this;
@@ -229,7 +229,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter nl ()
   {
     if (m_aSettings.isIndentAndAlign ())
@@ -242,7 +242,7 @@ public class JSFormatter implements Closeable
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSFormatter nlFix ()
   {
     m_aPW.print (m_aSettings.getNewLineString ());
@@ -257,8 +257,8 @@ public class JSFormatter implements Closeable
    *        the {@link IJSGeneratable} object
    * @return this
    */
-  @Nonnull
-  public JSFormatter generatable (@Nonnull final IJSGeneratable aGeneratable)
+  @NonNull
+  public JSFormatter generatable (@NonNull final IJSGeneratable aGeneratable)
   {
     aGeneratable.generate (this);
     return this;
@@ -271,8 +271,8 @@ public class JSFormatter implements Closeable
    *        contained of {@link IJSGeneratable}
    * @return this
    */
-  @Nonnull
-  public JSFormatter generatable (@Nonnull final Iterable <? extends IJSGeneratable> aCont)
+  @NonNull
+  public JSFormatter generatable (@NonNull final Iterable <? extends IJSGeneratable> aCont)
   {
     boolean bFirst = true;
     for (final IJSGeneratable aItem : aCont)
@@ -293,8 +293,8 @@ public class JSFormatter implements Closeable
    *        the {@link IJSDeclaration} object
    * @return this
    */
-  @Nonnull
-  public JSFormatter decl (@Nonnull final IJSDeclaration aDeclaration)
+  @NonNull
+  public JSFormatter decl (@NonNull final IJSDeclaration aDeclaration)
   {
     aDeclaration.declare (this);
     return this;
@@ -307,8 +307,8 @@ public class JSFormatter implements Closeable
    *        the {@link IJSStatement} object
    * @return this
    */
-  @Nonnull
-  public JSFormatter stmt (@Nonnull final IJSStatement aStatement)
+  @NonNull
+  public JSFormatter stmt (@NonNull final IJSStatement aStatement)
   {
     aStatement.state (this);
     return this;
@@ -321,14 +321,14 @@ public class JSFormatter implements Closeable
    *        the {@link AbstractJSVariable} object
    * @return this
    */
-  @Nonnull
-  public JSFormatter variable (@Nonnull final AbstractJSVariable <?> aVar)
+  @NonNull
+  public JSFormatter variable (@NonNull final AbstractJSVariable <?> aVar)
   {
     aVar.bind (this);
     return this;
   }
 
-  public void pkg (@Nonnull final JSPackage aPackage)
+  public void pkg (@NonNull final JSPackage aPackage)
   {
     // for all declarations in the current package
     for (final IHasJSCode aObj : aPackage.directMembers ())

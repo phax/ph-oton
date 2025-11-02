@@ -18,10 +18,10 @@ package com.helger.photon.api;
 
 import java.util.function.BiFunction;
 
-import com.helger.collection.commons.ICommonsList;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.collection.commons.ICommonsList;
 
 /**
  * Shared interface to resolve API ambiguities. So if a single {@link APIPath}
@@ -44,5 +44,5 @@ public interface IAPIPathAmbiguityResolver extends
    *         not be determined.
    */
   @Nullable
-  InvokableAPIDescriptor apply (@Nonnull APIPath aPath, @Nonnull ICommonsList <InvokableAPIDescriptor> aDescriptors);
+  InvokableAPIDescriptor apply (@NonNull APIPath aPath, @NonNull ICommonsList <InvokableAPIDescriptor> aDescriptors);
 }

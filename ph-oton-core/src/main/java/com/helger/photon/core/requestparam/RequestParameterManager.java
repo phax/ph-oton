@@ -18,6 +18,8 @@ package com.helger.photon.core.requestparam;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
@@ -27,8 +29,6 @@ import com.helger.photon.core.appid.PhotonGlobalState;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class holds the per-request configuration settings.
@@ -50,29 +50,29 @@ public class RequestParameterManager extends AbstractGlobalWebSingleton implemen
   public RequestParameterManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static RequestParameterManager getInstance ()
   {
     return getGlobalSingleton (RequestParameterManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public final IRequestParameterHandler getParameterHandler ()
   {
     return m_aRequestParamHdl;
   }
 
-  public final void setParameterHandler (@Nonnull final IRequestParameterHandler aRequestParameterHdl)
+  public final void setParameterHandler (@NonNull final IRequestParameterHandler aRequestParameterHdl)
   {
     ValueEnforcer.notNull (aRequestParameterHdl, "RequestParameterHdl");
     m_aRequestParamHdl = aRequestParameterHdl;
   }
 
-  @Nonnull
-  public SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
-                                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nonnull final Locale aDisplayLocale,
-                                      @Nonnull final String sMenuItemID)
+  @NonNull
+  public SimpleURL getLinkToMenuItem (@NonNull @Nonempty final String sAppID,
+                                      @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @NonNull final Locale aDisplayLocale,
+                                      @NonNull final String sMenuItemID)
   {
     // Get the servlet path from the app ID
     final String sServletPath = PhotonGlobalState.state (sAppID).getServletPath ();

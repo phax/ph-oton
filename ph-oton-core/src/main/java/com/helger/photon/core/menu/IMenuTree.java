@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.tree.withid.unique.ITreeWithGlobalUniqueID;
-
-import jakarta.annotation.Nullable;
 
 /**
  * A combination of a tree and the menu operations

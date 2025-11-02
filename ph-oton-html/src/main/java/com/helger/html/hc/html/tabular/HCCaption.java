@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;caption&gt; element

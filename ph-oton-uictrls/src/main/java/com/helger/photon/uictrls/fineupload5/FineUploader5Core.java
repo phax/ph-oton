@@ -19,6 +19,9 @@ package com.helger.photon.uictrls.fineupload5;
 import java.util.Locale;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.CodingStyleguideUnaware;
@@ -32,9 +35,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x
@@ -132,7 +132,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        New value
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setAutoUpload (final boolean bAutoUpload)
   {
     m_bCoreAutoUpload = bAutoUpload;
@@ -153,7 +153,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        Element ID of the button
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setButtonElementID (@Nullable final String sButtonElementID)
   {
     m_sCoreButtonElementID = sButtonElementID;
@@ -173,7 +173,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        New value
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setDebug (final boolean bCoreDebug)
   {
     m_bCoreDebug = bCoreDebug;
@@ -193,7 +193,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        New value
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
   {
     m_bCoreDisableCancelForFormUploads = bDisableCancelForFormUploads;
@@ -216,7 +216,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        New value
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setFormatFileName (@Nullable final IJSExpression aCoreFormatFileName)
   {
     m_aCoreFormatFileName = aCoreFormatFileName;
@@ -236,7 +236,7 @@ public class FineUploader5Core implements IFineUploader5Part
    *        Maximum number. Must be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setMaxConnections (@Nonnegative final int nMaxConnections)
   {
     ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
@@ -257,91 +257,91 @@ public class FineUploader5Core implements IFineUploader5Part
    *        <code>true</code> for multiple, <code>false</code> for single
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Core setMultiple (final boolean bMultiple)
   {
     m_bCoreMultiple = bMultiple;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Blobs getBlobs ()
   {
     return m_aBlobs;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Chunking getChunking ()
   {
     return m_aChunking;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Cors getCors ()
   {
     return m_aCors;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5DeleteFile getDeleteFile ()
   {
     return m_aDeleteFile;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Form getForm ()
   {
     return m_aForm;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Paste getPaste ()
   {
     return m_aPaste;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Resume getResume ()
   {
     return m_aResume;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Retry getRetry ()
   {
     return m_aRetry;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Request getRequest ()
   {
     return m_aRequest;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Session getSession ()
   {
     return m_aSession;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Validation getValidation ()
   {
     return m_aValidation;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public FineUploader5Workarounds getWorkarounds ()
   {
@@ -359,8 +359,8 @@ public class FineUploader5Core implements IFineUploader5Part
    *        if none was provided in the constructor.
    */
   @OverrideOnDemand
-  protected void extendJSONPart (@Nonnull @Nonempty final String sKey,
-                                 @Nonnull final JSAssocArray aAssocArray,
+  protected void extendJSONPart (@NonNull @Nonempty final String sKey,
+                                 @NonNull final JSAssocArray aAssocArray,
                                  @Nullable final Locale aDisplayLocale)
   {}
 
@@ -372,18 +372,18 @@ public class FineUploader5Core implements IFineUploader5Part
    *        if none passed in the constructor.
    */
   @OverrideOnDemand
-  protected void extendJSON (@Nonnull final JSAssocArray aAssocArray, @Nullable final Locale aDisplayLocale)
+  protected void extendJSON (@NonNull final JSAssocArray aAssocArray, @Nullable final Locale aDisplayLocale)
   {}
 
-  private void _extendAndAdd (@Nonnull final JSAssocArray aTo,
-                              @Nonnull @Nonempty final String sKey,
-                              @Nonnull final JSAssocArray aAssocArray)
+  private void _extendAndAdd (@NonNull final JSAssocArray aTo,
+                              @NonNull @Nonempty final String sKey,
+                              @NonNull final JSAssocArray aAssocArray)
   {
     extendJSONPart (sKey, aAssocArray, m_aDisplayLocale);
     aTo.add (sKey, aAssocArray);
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray ret = new JSAssocArray ();

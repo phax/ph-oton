@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
@@ -24,9 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;label&gt; element
@@ -53,14 +53,14 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
     return m_sFor;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFor (@Nullable final String sFor)
   {
     m_sFor = sFor;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFor (@Nullable final IHCHasID <?> aFor)
   {
     return setFor (aFor == null ? null : aFor.ensureID ().getID ());
@@ -72,7 +72,7 @@ public abstract class AbstractHCLabel <IMPLTYPE extends AbstractHCLabel <IMPLTYP
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;

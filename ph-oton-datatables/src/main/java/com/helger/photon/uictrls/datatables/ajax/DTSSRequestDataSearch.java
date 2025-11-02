@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.array.ArrayHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Represents search settings, either for the global request or per-column.

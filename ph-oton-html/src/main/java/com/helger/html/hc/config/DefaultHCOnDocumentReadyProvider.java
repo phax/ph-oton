@@ -16,12 +16,11 @@
  */
 package com.helger.html.hc.config;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IHCOnDocumentReadyProvider} doing nothing!
@@ -32,8 +31,8 @@ public class DefaultHCOnDocumentReadyProvider implements IHCOnDocumentReadyProvi
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultHCOnDocumentReadyProvider.class);
 
-  @Nonnull
-  public IHasJSCode createOnDocumentReady (@Nonnull final IHasJSCode aJSCodeProvider)
+  @NonNull
+  public IHasJSCode createOnDocumentReady (@NonNull final IHasJSCode aJSCodeProvider)
   {
     LOGGER.warn ("No 'OnDocumentReadyProvider' defined. Please call 'HCSettings.setOnDocumentReadyProvider' on application startup!");
     return aJSCodeProvider;

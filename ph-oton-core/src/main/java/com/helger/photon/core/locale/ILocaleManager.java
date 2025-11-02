@@ -18,12 +18,12 @@ package com.helger.photon.core.locale;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an application Locale manager.
@@ -39,8 +39,8 @@ public interface ILocaleManager
    *        The locale to be added. May not be <code>null</code>.
    * @return {@link EChange}.
    */
-  @Nonnull
-  EChange registerLocale (@Nonnull Locale aLocale);
+  @NonNull
+  EChange registerLocale (@NonNull Locale aLocale);
 
   /**
    * Set the default locale. Must be one of the previously registered locales!
@@ -49,8 +49,8 @@ public interface ILocaleManager
    *        The locale to be used as the default. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange setDefaultLocale (@Nonnull Locale aDefaultLocale);
+  @NonNull
+  EChange setDefaultLocale (@NonNull Locale aDefaultLocale);
 
   /**
    * @return The application default locale. May be <code>null</code> if non is
@@ -62,7 +62,7 @@ public interface ILocaleManager
   /**
    * @return All available locales for the application.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <Locale> getAllAvailableLocales ();
 

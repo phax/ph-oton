@@ -18,18 +18,17 @@ package com.helger.photon.connect.ftp;
 
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class FTPFileFilterFileStartsWith implements FTPFileFilter
 {
   private final String m_sStart;
 
-  public FTPFileFilterFileStartsWith (@Nonnull @Nonempty final String sStart)
+  public FTPFileFilterFileStartsWith (@NonNull @Nonempty final String sStart)
   {
     m_sStart = ValueEnforcer.notEmpty (sStart, "start");
   }

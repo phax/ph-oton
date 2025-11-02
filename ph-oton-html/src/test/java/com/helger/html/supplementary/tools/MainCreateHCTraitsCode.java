@@ -67,23 +67,23 @@ public class MainCreateHCTraitsCode
         else
           sType = "HC" + _ucFirst (e.getElementName ());
       final String sMethod = e.getElementName ();
-      aSB.append ("@Nonnull default " + sType + " " + sMethod + " (){return new " + sType + " ();}\n");
-      aSB.append ("@Nonnull default " +
+      aSB.append ("@NonNull default " + sType + " " + sMethod + " (){return new " + sType + " ();}\n");
+      aSB.append ("@NonNull default " +
                   sType +
                   " " +
                   sMethod +
                   " (@Nullable final IHCNode aNode){return new " +
                   sType +
                   "().addChild (aNode);}\n");
-      aSB.append ("@Nonnull default " + sType + " " + sMethod + " (@Nullable final String s){return new " + sType + "().addChild (s);}\n");
-      aSB.append ("@Nonnull default " +
+      aSB.append ("@NonNull default " + sType + " " + sMethod + " (@Nullable final String s){return new " + sType + "().addChild (s);}\n");
+      aSB.append ("@NonNull default " +
                   sType +
                   " " +
                   sMethod +
                   " (@Nullable final Iterable <? extends IHCNode> aNodes){return new " +
                   sType +
                   " ().addChildren (aNodes);}\n");
-      aSB.append ("@Nonnull default " +
+      aSB.append ("@NonNull default " +
                   sType +
                   " " +
                   sMethod +

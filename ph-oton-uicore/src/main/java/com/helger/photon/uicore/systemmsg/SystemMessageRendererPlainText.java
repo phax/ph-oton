@@ -18,6 +18,9 @@ package com.helger.photon.uicore.systemmsg;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.Translatable;
 import com.helger.html.hc.ext.HCExtHelper;
@@ -27,9 +30,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link ISystemMessageRenderer} that renders the text as
@@ -47,7 +47,7 @@ public class SystemMessageRendererPlainText implements ISystemMessageRenderer
 
     private final IMultilingualText m_aTP;
 
-    EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@NonNull final String sDE, @NonNull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
@@ -64,13 +64,13 @@ public class SystemMessageRendererPlainText implements ISystemMessageRenderer
   protected SystemMessageRendererPlainText ()
   {}
 
-  @Nonnull
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  @NonNull
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return EText.DESCRIPTION.getDisplayText (aContentLocale);
   }
 
-  public void renderSystemMessage (@Nonnull @Nonempty final String sText, final IHCElementWithChildren <?> aTargetCtrl)
+  public void renderSystemMessage (@NonNull @Nonempty final String sText, final IHCElementWithChildren <?> aTargetCtrl)
   {
     aTargetCtrl.addChildren (HCExtHelper.nl2divList (sText));
   }

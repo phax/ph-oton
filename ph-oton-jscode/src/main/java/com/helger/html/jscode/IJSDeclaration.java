@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.js.IHasJSCodeWithSettings;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Common interface for code components that can generate declarations of
@@ -33,9 +33,9 @@ public interface IJSDeclaration extends IHasJSCodeWithSettings
    * @return The name of the declared object. Neither <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String name ();
 
-  void declare (@Nonnull JSFormatter aFormatter);
+  void declare (@NonNull JSFormatter aFormatter);
 }

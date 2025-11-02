@@ -16,6 +16,7 @@
  */
 package com.helger.photon.atom;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +28,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Main ATOM 1.0 Feed
@@ -44,15 +43,15 @@ public class Feed extends FeedSource
   public Feed ()
   {}
 
-  @Nonnull
-  public Feed addEntry (@Nonnull final FeedEntry aEntry)
+  @NonNull
+  public Feed addEntry (@NonNull final FeedEntry aEntry)
   {
     ValueEnforcer.notNull (aEntry, "Entry");
     m_aEntries.add (aEntry);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FeedEntry> getAllEntries ()
   {
@@ -65,7 +64,7 @@ public class Feed extends FeedSource
     return m_aEntries.size ();
   }
 
-  @Nonnull
+  @NonNull
   public IMicroDocument getAsDocument ()
   {
     final IMicroDocument aDocument = new MicroDocument ();

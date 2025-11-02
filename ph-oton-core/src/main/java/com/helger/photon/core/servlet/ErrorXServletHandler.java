@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.servlet;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -26,7 +28,6 @@ import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,7 +47,7 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
 
   private final String m_sServletPath;
 
-  public ErrorXServletHandler (@Nonnull @Nonempty final String sServletPath)
+  public ErrorXServletHandler (@NonNull @Nonempty final String sServletPath)
   {
     ValueEnforcer.notEmpty (sServletPath, "Path");
     ValueEnforcer.isTrue (sServletPath.startsWith ("/"), "Path must start with '/'!");
@@ -54,15 +55,15 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
     m_sServletPath = sServletPath;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getPath ()
   {
     return m_sServletPath;
   }
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final HttpServletRequest aRequest = aRequestScope.getRequest ();
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.annotation.OutOfBandNode;
@@ -30,9 +33,6 @@ import com.helger.photon.uicore.EUICoreCSSPathProvider;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @OutOfBandNode
 public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 {
@@ -45,12 +45,12 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 
     private final String m_sValue;
 
-    EPosition (@Nonnull @Nonempty final String sValue)
+    EPosition (@NonNull @Nonempty final String sValue)
     {
       m_sValue = sValue;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getValue ()
     {
@@ -66,20 +66,20 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
     private final String m_sValue;
     private final ICSSPathProvider m_aCSS;
 
-    ETheme (@Nonnull @Nonempty final String sValue, @Nonnull final ICSSPathProvider aCSS)
+    ETheme (@NonNull @Nonempty final String sValue, @NonNull final ICSSPathProvider aCSS)
     {
       m_sValue = sValue;
       m_aCSS = aCSS;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getValue ()
     {
       return m_sValue;
     }
 
-    @Nonnull
+    @NonNull
     public ICSSPathProvider getCSSPathProvider ()
     {
       return m_aCSS;
@@ -88,14 +88,14 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
 
   private final ETheme m_eTheme;
 
-  public HCCookieConsent (@Nonnull final JSAssocArray aInitOptions, @Nullable final ETheme eTheme)
+  public HCCookieConsent (@NonNull final JSAssocArray aInitOptions, @Nullable final ETheme eTheme)
   {
     setOnDocumentReadyCode (JSHtml.window ().ref ("cookieconsent").invoke ("initialise").arg (aInitOptions));
     m_eTheme = eTheme;
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
@@ -109,10 +109,10 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
       PhotonCSS.registerCSSIncludeForThisRequest (m_eTheme.getCSSPathProvider ());
   }
 
-  @Nonnull
-  public static HCCookieConsent createBottomDefault (@Nonnull final String sPopupBackgroundColor,
+  @NonNull
+  public static HCCookieConsent createBottomDefault (@NonNull final String sPopupBackgroundColor,
                                                      @Nullable final String sPopupTextColor,
-                                                     @Nonnull final String sButtonBackgroundColor,
+                                                     @NonNull final String sButtonBackgroundColor,
                                                      @Nullable final String sButtonTextColor)
   {
     return create ((EPosition) null,
@@ -125,11 +125,11 @@ public class HCCookieConsent extends HCScriptInlineOnDocumentReady
                    (ISimpleURL) null);
   }
 
-  @Nonnull
+  @NonNull
   public static HCCookieConsent create (@Nullable final EPosition ePos,
                                         final boolean bStatic,
                                         @Nullable final ETheme eTheme,
-                                        @Nonnull final String sPopupBackgroundColor,
+                                        @NonNull final String sPopupBackgroundColor,
                                         @Nullable final String sPopupTextColor,
                                         @Nullable final String sButtonBackgroundColor,
                                         @Nullable final String sButtonTextColor,

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public enum EHCScrolling implements IHCHasHTMLAttributeValue
 {
@@ -31,12 +31,12 @@ public enum EHCScrolling implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCScrolling (@Nonnull @Nonempty final String sAttrValue)
+  EHCScrolling (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

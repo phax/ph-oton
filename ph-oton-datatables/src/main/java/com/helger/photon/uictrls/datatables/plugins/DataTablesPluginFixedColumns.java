@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -24,9 +27,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DataTablesPluginFixedColumns extends AbstractDataTablesPlugin
 {
@@ -44,33 +44,33 @@ public class DataTablesPluginFixedColumns extends AbstractDataTablesPlugin
     super (PLUGIN_NAME);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedColumns setHeightMatch (@Nullable final EDTPFixedColumnsHeightMatch eHeightMatch)
   {
     m_eHeightMatch = eHeightMatch;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedColumns setLeftColumns (final int nLeftColumns)
   {
     return setLeftColumns (Integer.valueOf (nLeftColumns));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedColumns setLeftColumns (@Nullable final Integer aLeftColumns)
   {
     m_aLeftColumns = aLeftColumns;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedColumns setRightColumns (final int nRightColumns)
   {
     return setRightColumns (Integer.valueOf (nRightColumns));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginFixedColumns setRightColumns (@Nullable final Integer aRightColumns)
   {
     m_aRightColumns = aRightColumns;

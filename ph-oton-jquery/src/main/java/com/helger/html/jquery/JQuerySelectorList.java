@@ -16,6 +16,9 @@
  */
 package com.helger.html.jquery;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.jscode.IJSExpression;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A list of jQuery selectors that are chained with ' ' (space)
@@ -41,7 +41,7 @@ public class JQuerySelectorList implements IHasJSCodeWithSettings
   public JQuerySelectorList ()
   {}
 
-  public JQuerySelectorList (@Nonnull final IJQuerySelector aSelector)
+  public JQuerySelectorList (@NonNull final IJQuerySelector aSelector)
   {
     addSelector (aSelector);
   }
@@ -71,40 +71,40 @@ public class JQuerySelectorList implements IHasJSCodeWithSettings
     return m_aElements.size ();
   }
 
-  @Nonnull
-  public JQuerySelectorList addSelector (@Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public JQuerySelectorList addSelector (@NonNull final IJQuerySelector aSelector)
   {
     ValueEnforcer.notNull (aSelector, "Selector");
     m_aElements.add (aSelector);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeSelector (@Nonnegative final int nIndex)
   {
     return EChange.valueOf (m_aElements.remove (nIndex) != null);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeSelector (@Nonnegative final IJQuerySelector aSelector)
   {
     return EChange.valueOf (m_aElements.remove (aSelector));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IJQuerySelector> getAllSelectors ()
   {
     return m_aElements.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public EChange clear ()
   {
     return m_aElements.removeAll ();
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getAsExpression ()
   {
     final int nSize = m_aElements.size ();
@@ -124,13 +124,13 @@ public class JQuerySelectorList implements IHasJSCodeWithSettings
   /**
    * @return <code>$(selectorString)</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation invoke ()
   {
     return JQuery.jQuery (getAsExpression ());
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return getAsExpression ().getJSCode (aSettings);

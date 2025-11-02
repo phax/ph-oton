@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for media elements
@@ -35,45 +35,45 @@ public interface IHCMediaElement <IMPLTYPE extends IHCMediaElement <IMPLTYPE>> e
 {
   boolean isAutoPlay ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoPlay (final boolean bAutoPlay);
 
   @Nullable
   EHCPreload getPreload ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setPreload (@Nullable EHCPreload ePreload);
 
   boolean isControls ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setControls (final boolean bControls);
 
   boolean isLoop ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setLoop (final boolean bLoop);
 
   boolean isMuted ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMuted (final boolean bMuted);
 
   @Nullable
   ISimpleURL getSrc ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSrc (@Nullable ISimpleURL aSrc);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addSource (@Nullable HCSource aSource);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addTrack (@Nullable HCTrack aTrack);
 }

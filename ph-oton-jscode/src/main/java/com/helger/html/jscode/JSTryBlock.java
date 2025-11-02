@@ -16,15 +16,15 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Try statement with Catch and/or Finally clause
@@ -40,13 +40,13 @@ public class JSTryBlock extends AbstractJSStatement
   public JSTryBlock ()
   {}
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     return m_aBody;
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSCatchBlock _catch ()
   {
@@ -55,9 +55,9 @@ public class JSTryBlock extends AbstractJSStatement
     return m_aCatch;
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  public JSCatchBlock _catch (@Nonnull @Nonempty final String sName)
+  public JSCatchBlock _catch (@NonNull @Nonempty final String sName)
   {
     if (m_aCatch == null)
       m_aCatch = new JSCatchBlock (sName);
@@ -69,7 +69,7 @@ public class JSTryBlock extends AbstractJSStatement
     return m_aCatch != null;
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSBlock _finally ()
   {
@@ -83,7 +83,7 @@ public class JSTryBlock extends AbstractJSStatement
     return m_aFinally != null;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     if (m_aCatch == null && m_aFinally == null)
     {

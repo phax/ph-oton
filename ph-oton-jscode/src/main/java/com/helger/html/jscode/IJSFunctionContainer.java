@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.js.IHasJSCodeWithSettings;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The common aspect of a package and a function.
@@ -37,6 +37,6 @@ public interface IJSFunctionContainer extends IHasJSCodeWithSettings
    * @exception JSNameAlreadyExistsException
    *            When the specified function was already created.
    */
-  @Nonnull
-  JSFunction function (@Nonnull @Nonempty String sName);
+  @NonNull
+  JSFunction function (@NonNull @Nonempty String sName);
 }

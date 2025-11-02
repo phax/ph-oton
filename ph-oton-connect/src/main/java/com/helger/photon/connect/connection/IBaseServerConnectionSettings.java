@@ -16,11 +16,11 @@
  */
 package com.helger.photon.connect.connection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface having the basic fields required for connecting to a server via
@@ -33,7 +33,7 @@ public interface IBaseServerConnectionSettings extends IAuthCredentials
   /**
    * @return The IP address of the sever to connect to.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getServerAddress ();
 
@@ -46,7 +46,7 @@ public interface IBaseServerConnectionSettings extends IAuthCredentials
   /**
    * @return The user name for connecting to the server.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getUserName ();
 

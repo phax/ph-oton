@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.colorpicker;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Enumeration for the possible "alignment" values in the color picker.
@@ -35,12 +35,12 @@ public enum EColorPickerPosition implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EColorPickerPosition (@Nonnull @Nonempty final String sAttrValue)
+  EColorPickerPosition (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

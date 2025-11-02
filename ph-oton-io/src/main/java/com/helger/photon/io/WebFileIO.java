@@ -18,6 +18,7 @@ package com.helger.photon.io;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,6 @@ import com.helger.io.relative.FileRelativeIO;
 import com.helger.io.relative.IFileRelativeIO;
 import com.helger.io.relative.IPathRelativeIO;
 import com.helger.io.relative.PathRelativeIO;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract for accessing files inside the web application. It differentiates between the data path
@@ -70,8 +69,8 @@ public final class WebFileIO
     return RW_LOCK.readLockedBoolean ( () -> s_bSilentMode);
   }
 
-  public static void initPaths (@Nonnull final File aDataPath,
-                                @Nonnull @Nonempty final String sServletContextPath,
+  public static void initPaths (@NonNull final File aDataPath,
+                                @NonNull @Nonempty final String sServletContextPath,
                                 final boolean bCheckFileAccess)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
@@ -129,7 +128,7 @@ public final class WebFileIO
    * @throws IllegalStateException
    *         if no data path was provided. Call {@link #initPaths(File, String, boolean)} first.
    */
-  @Nonnull
+  @NonNull
   public static IFileRelativeIO getDataIO ()
   {
     final IFileRelativeIO ret = RW_LOCK.readLockedGet ( () -> s_aDataPath);
@@ -145,7 +144,7 @@ public final class WebFileIO
    *         if no servlet context path was provided. Call {@link #initPaths(File, String, boolean)}
    *         first.
    */
-  @Nonnull
+  @NonNull
   public static IPathRelativeIO getServletContextIO ()
   {
     final IPathRelativeIO ret = RW_LOCK.readLockedGet ( () -> s_aServletContextPath);

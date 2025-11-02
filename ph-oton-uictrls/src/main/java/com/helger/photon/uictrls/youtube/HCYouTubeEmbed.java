@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.youtube;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.embedded.AbstractHCObject;
 import com.helger.html.hc.html.embedded.HCEmbed;
@@ -23,8 +25,6 @@ import com.helger.html.hc.html.embedded.HCParam;
 import com.helger.mime.CMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Embeds YouTube videos!<br>
@@ -36,7 +36,7 @@ public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
 {
   private static final String PREFIX = "http://www.youtube.com/v/";
 
-  public HCYouTubeEmbed (final int nWidth, final int nHeight, @Nonnull @Nonempty final String sVideoID, final boolean bAllowFullScreen)
+  public HCYouTubeEmbed (final int nWidth, final int nHeight, @NonNull @Nonempty final String sVideoID, final boolean bAllowFullScreen)
   {
     final ISimpleURL aBaseURL = new SimpleURL (PREFIX + sVideoID);
     setWidth (nWidth);

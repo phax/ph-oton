@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -28,9 +31,6 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represent a remote object used in a dataset
@@ -78,14 +78,14 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        A URL to make requests to when when the data provided by local and
    *        prefetch is insufficient.
    */
-  public TypeaheadRemote (@Nonnull final ISimpleURL aURL)
+  public TypeaheadRemote (@NonNull final ISimpleURL aURL)
   {
     ValueEnforcer.notNull (aURL, "URL");
 
     m_aURL = new SimpleURL (aURL);
   }
 
-  public TypeaheadRemote (@Nonnull final TypeaheadRemote aOther)
+  public TypeaheadRemote (@NonNull final TypeaheadRemote aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
 
@@ -105,7 +105,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   /**
    * @return A URL to a JSON file containing an array of datums.
    */
-  @Nonnull
+  @NonNull
   public ISimpleURL getURL ()
   {
     return m_aURL;
@@ -119,8 +119,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        The data type to use. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public TypeaheadRemote setDataType (@Nonnull @Nonempty final String sDataType)
+  @NonNull
+  public TypeaheadRemote setDataType (@NonNull @Nonempty final String sDataType)
   {
     m_sDataType = ValueEnforcer.notEmpty (sDataType, "DataType");
     return this;
@@ -130,7 +130,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * @return The type of data you're expecting from the server. See the
    *         jQuery.ajax docs for more info. Defaults to <code>json</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDataType ()
   {
@@ -145,7 +145,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Use cache?
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setCache (final boolean bCache)
   {
     return setCache (ETriState.valueOf (bCache));
@@ -159,8 +159,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Use cache? May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public TypeaheadRemote setCache (@Nonnull final ETriState eCache)
+  @NonNull
+  public TypeaheadRemote setCache (@NonNull final ETriState eCache)
   {
     m_eCache = ValueEnforcer.notNull (eCache, "Cache");
     return this;
@@ -170,7 +170,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * @return Determines whether or not the browser will cache responses. See the
    *         jQuery.ajax docs for more info.
    */
-  @Nonnull
+  @NonNull
   public ETriState getCache ()
   {
     return m_eCache;
@@ -183,7 +183,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Timeout to use.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setTimeout (final int nTimeout)
   {
     m_nTimeout = nTimeout;
@@ -207,7 +207,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        The wild card to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setWildcard (@Nullable final String sWildcard)
   {
     m_sWildcard = sWildcard;
@@ -235,7 +235,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        The function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setReplace (@Nullable final JSAnonymousFunction aReplace)
   {
     m_aReplace = aReplace;
@@ -263,8 +263,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        function to use. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public TypeaheadRemote setRateLimitFn (@Nonnull final ETypeaheadRemoteRateLimitFunction eRateLimitFn)
+  @NonNull
+  public TypeaheadRemote setRateLimitFn (@NonNull final ETypeaheadRemoteRateLimitFunction eRateLimitFn)
   {
     m_eRateLimitFn = ValueEnforcer.notNull (eRateLimitFn, "RateLimitFunction");
     return this;
@@ -275,7 +275,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *         <code>debounce</code> or <code>throttle</code>. Defaults to
    *         <code>debounce</code>.
    */
-  @Nonnull
+  @NonNull
   public ETypeaheadRemoteRateLimitFunction getRateLimitFn ()
   {
     return m_eRateLimitFn;
@@ -289,7 +289,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Milliseconds to use. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setRateLimitWait (@Nonnegative final int nRateLimitWait)
   {
     m_nRateLimitWait = ValueEnforcer.isGT0 (nRateLimitWait, "RateLimitWait");
@@ -314,7 +314,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Maximum parallel requests. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setMaxParallelRequests (@Nonnegative final int nMaxParallelRequests)
   {
     m_nMaxParallelRequests = ValueEnforcer.isGT0 (nMaxParallelRequests, "MaxParallelRequests");
@@ -340,7 +340,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setBeforeSend (@Nullable final JSAnonymousFunction aBeforeSend)
   {
     m_aBeforeSend = aBeforeSend;
@@ -367,7 +367,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadRemote setFilter (@Nullable final JSAnonymousFunction aFilter)
   {
     m_aFilter = aFilter;
@@ -385,7 +385,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
     return m_aFilter;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {
@@ -414,7 +414,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public TypeaheadRemote getClone ()
   {
     return new TypeaheadRemote (this);

@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.config;
 
-import com.helger.html.js.IHasJSCode;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.js.IHasJSCode;
 
 /**
  * An interface to create the "on document ready" deferred code.
@@ -36,6 +36,6 @@ public interface IHCOnDocumentReadyProvider
    *        The code to be executed when the HTML document is ready.
    * @return The created code.
    */
-  @Nonnull
-  IHasJSCode createOnDocumentReady (@Nonnull final IHasJSCode aJSCodeProvider);
+  @NonNull
+  IHasJSCode createOnDocumentReady (@NonNull final IHasJSCode aJSCodeProvider);
 }

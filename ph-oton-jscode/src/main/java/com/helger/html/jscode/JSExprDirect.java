@@ -16,30 +16,30 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class JSExprDirect extends AbstractJSExpression
 {
   private final String m_sSource;
 
-  public JSExprDirect (@Nonnull final String sSource)
+  public JSExprDirect (@NonNull final String sSource)
   {
     m_sSource = ValueEnforcer.notNull (sSource, "Source");
   }
 
-  @Nonnull
+  @NonNull
   public String source ()
   {
     return m_sSource;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sSource);
   }

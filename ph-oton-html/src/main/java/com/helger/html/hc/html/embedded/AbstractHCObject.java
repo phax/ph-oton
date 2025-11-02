@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -28,9 +31,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;object&gt; element
@@ -73,7 +73,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_nWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidth (final int nWidth)
   {
     m_nWidth = nWidth;
@@ -85,7 +85,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_nHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHeight (final int nHeight)
   {
     m_nHeight = nHeight;
@@ -98,7 +98,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sHSpace;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHSpace (@Nullable final String sHSpace)
   {
     m_sHSpace = sHSpace;
@@ -111,7 +111,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sVSpace;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setVSpace (@Nullable final String sVSpace)
   {
     m_sVSpace = sVSpace;
@@ -124,7 +124,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_eAlign;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAlign (@Nullable final EHCObjectAlign eAlign)
   {
     m_eAlign = eAlign;
@@ -137,7 +137,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sArchive;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setArchive (@Nullable final String sArchive)
   {
     m_sArchive = sArchive;
@@ -150,7 +150,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sBorder;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setBorder (@Nullable final String sBorder)
   {
     m_sBorder = sBorder;
@@ -163,7 +163,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sClassID;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setClassID (@Nullable final String sClassID)
   {
     m_sClassID = sClassID;
@@ -176,7 +176,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_aCodeBase;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCodeBase (@Nullable final ISimpleURL aCodeBase)
   {
     m_aCodeBase = aCodeBase;
@@ -189,7 +189,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_aCodeType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCodeType (@Nullable final IMimeType aCodeType)
   {
     m_aCodeType = aCodeType;
@@ -202,7 +202,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_aData;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setData (@Nullable final ISimpleURL aData)
   {
     m_aData = aData;
@@ -214,7 +214,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_bDeclare;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDeclare (final boolean bDeclare)
   {
     m_bDeclare = bDeclare;
@@ -227,7 +227,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -240,7 +240,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sStandBy;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setStandBy (@Nullable final String sStandBy)
   {
     m_sStandBy = sStandBy;
@@ -253,7 +253,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
@@ -266,7 +266,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
     return m_sUseMap;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setUseMap (@Nullable final String sUseMap)
   {
     m_sUseMap = sUseMap;
@@ -274,7 +274,7 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (m_aData == null && m_aType == null)
@@ -282,8 +282,8 @@ public abstract class AbstractHCObject <IMPLTYPE extends AbstractHCObject <IMPLT
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (m_nWidth > 0)

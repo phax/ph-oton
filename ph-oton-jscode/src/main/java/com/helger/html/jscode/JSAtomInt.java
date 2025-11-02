@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An atomic integer number
@@ -51,29 +51,29 @@ public class JSAtomInt extends AbstractJSAtomNumeric
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public AbstractJSAtomNumeric numericMinus ()
   {
     return new JSAtomInt (-m_nValue);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public AbstractJSAtomNumeric numericIncr ()
   {
     return new JSAtomInt (m_nValue + 1);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public AbstractJSAtomNumeric numericDecr ()
   {
     return new JSAtomInt (m_nValue - 1);
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericPlus (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericPlus (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     if (aRhs.isDecimalValue ())
       return new JSAtomDecimal (m_nValue + aRhs.doubleValue ());
@@ -81,8 +81,8 @@ public class JSAtomInt extends AbstractJSAtomNumeric
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMinus (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMinus (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     if (aRhs.isDecimalValue ())
       return new JSAtomDecimal (m_nValue - aRhs.doubleValue ());
@@ -90,8 +90,8 @@ public class JSAtomInt extends AbstractJSAtomNumeric
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMul (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMul (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     if (aRhs.isDecimalValue ())
       return new JSAtomDecimal (m_nValue * aRhs.doubleValue ());
@@ -99,16 +99,16 @@ public class JSAtomInt extends AbstractJSAtomNumeric
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericDiv (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericDiv (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     // In JS there is by default no integer division: 5/2===2.5
     return new JSAtomDecimal (m_nValue / aRhs.doubleValue ());
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMod (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMod (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     if (aRhs.isDecimalValue ())
       return new JSAtomDecimal (m_nValue % aRhs.doubleValue ());
@@ -120,7 +120,7 @@ public class JSAtomInt extends AbstractJSAtomNumeric
     return m_nValue;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (Long.toString (m_nValue));
   }

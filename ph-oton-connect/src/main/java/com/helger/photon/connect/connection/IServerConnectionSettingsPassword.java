@@ -16,9 +16,9 @@
  */
 package com.helger.photon.connect.connection;
 
-import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
 
 /**
  * Interface having all required fields required for connecting to a server via
@@ -32,6 +32,6 @@ public interface IServerConnectionSettingsPassword extends IBaseServerConnection
    * @return The plain password used to connect to the server. May not be
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   String getPassword ();
 }

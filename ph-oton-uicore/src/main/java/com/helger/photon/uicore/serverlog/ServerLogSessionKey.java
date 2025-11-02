@@ -18,14 +18,14 @@ package com.helger.photon.uicore.serverlog;
 
 import java.util.Random;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.string.StringHex;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Session singleton to create unique keys for server logging. Each generated String has a length of
@@ -46,7 +46,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
     m_sGeneratedKey = StringHex.getHexEncoded (aKey);
   }
 
-  @Nonnull
+  @NonNull
   public static ServerLogSessionKey getInstance ()
   {
     return getSessionSingleton (ServerLogSessionKey.class);
@@ -55,7 +55,7 @@ public final class ServerLogSessionKey extends AbstractSessionWebSingleton
   /**
    * @return The generated session key and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public String getGeneratedKey ()
   {
     return m_sGeneratedKey;

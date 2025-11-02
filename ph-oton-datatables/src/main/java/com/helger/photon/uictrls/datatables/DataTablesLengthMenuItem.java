@@ -18,14 +18,14 @@ package com.helger.photon.uictrls.datatables;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @Immutable
 public class DataTablesLengthMenuItem implements IHasDisplayText
@@ -33,7 +33,7 @@ public class DataTablesLengthMenuItem implements IHasDisplayText
   private final int m_nItemCount;
   private final IHasDisplayText m_aText;
 
-  public DataTablesLengthMenuItem (final int nItemCount, @Nonnull final IHasDisplayText aText)
+  public DataTablesLengthMenuItem (final int nItemCount, @NonNull final IHasDisplayText aText)
   {
     m_nItemCount = nItemCount;
     m_aText = ValueEnforcer.notNull (aText, "Text");
@@ -50,20 +50,20 @@ public class DataTablesLengthMenuItem implements IHasDisplayText
     return m_nItemCount;
   }
 
-  @Nonnull
+  @NonNull
   public IHasDisplayText getText ()
   {
     return m_aText;
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aText.getDisplayText (aContentLocale);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String toString ()
   {
     return new ToStringGenerator (this).append ("itemCount", m_nItemCount).append ("text", m_aText).getToString ();

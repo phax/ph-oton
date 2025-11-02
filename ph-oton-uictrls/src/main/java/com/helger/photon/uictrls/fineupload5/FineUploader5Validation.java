@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.mime.IMimeType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x validation part
@@ -61,7 +61,7 @@ public class FineUploader5Validation implements IFineUploader5Part
   public FineUploader5Validation ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <IMimeType> getAllAcceptFiles ()
   {
@@ -77,7 +77,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The MIME types to be set.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setAcceptFiles (@Nullable final Collection <? extends IMimeType> aAcceptFiles)
   {
     m_aValidationAcceptFiles.setAll (aAcceptFiles);
@@ -93,7 +93,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The MIME types to be added.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation addAcceptFiles (@Nullable final Collection <? extends IMimeType> aAcceptFiles)
   {
     if (aAcceptFiles != null)
@@ -110,15 +110,15 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The MIME type to be added. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Validation addAcceptFile (@Nonnull final IMimeType aAcceptFile)
+  @NonNull
+  public FineUploader5Validation addAcceptFile (@NonNull final IMimeType aAcceptFile)
   {
     ValueEnforcer.notNull (aAcceptFile, "AcceptFile");
     m_aValidationAcceptFiles.add (aAcceptFile);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllAllowedExtensions ()
   {
@@ -133,7 +133,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The allowed extensions to be set.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setAllowedExtensions (@Nullable final Collection <String> aAllowedExtensions)
   {
     m_aValidationAllowedExtensions.setAll (aAllowedExtensions);
@@ -148,7 +148,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The allowed extensions to be added.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation addAllowedExtensions (@Nullable final Collection <String> aAllowedExtensions)
   {
     if (aAllowedExtensions != null)
@@ -164,8 +164,8 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        The allowed extension to be added. E.g. ("jpeg", "jpg", "gif")
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Validation addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
+  @NonNull
+  public FineUploader5Validation addAllowedExtension (@NonNull @Nonempty final String sAllowedExtension)
   {
     ValueEnforcer.notEmpty (sAllowedExtension, "AllowedExtension");
     m_aValidationAllowedExtensions.add (sAllowedExtension);
@@ -187,7 +187,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        Minimum size limit. 0 == unlimited
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setItemLimit (@Nonnegative final int nItemLimit)
   {
     ValueEnforcer.isGE0 (nItemLimit, "ItemLimit");
@@ -208,7 +208,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        Minimum size limit. 0 == unlimited
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
   {
     ValueEnforcer.isGE0 (nMinSizeLimit, "MinSizeLimit");
@@ -229,7 +229,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        Size limit. 0 == unlimited
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setSizeLimit (@Nonnegative final int nSizeLimit)
   {
     ValueEnforcer.isGE0 (nSizeLimit, "SizeLimit");
@@ -249,7 +249,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        <code>false</code> to not stop
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setStopOnFirstInvalidFile (final boolean bStopOnFirstInvalidFile)
   {
     m_bValidationStopOnFirstInvalidFile = bStopOnFirstInvalidFile;
@@ -269,7 +269,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        New value. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setImageMaxHeight (@Nonnegative final int nImageMaxHeight)
   {
     ValueEnforcer.isGE0 (nImageMaxHeight, "ImageMaxHeight");
@@ -290,7 +290,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        New value. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setImageMaxWidth (@Nonnegative final int nImageMaxWidth)
   {
     ValueEnforcer.isGE0 (nImageMaxWidth, "ImageMaxWidth");
@@ -311,7 +311,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        New value. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setImageMinHeight (@Nonnegative final int nImageMinHeight)
   {
     ValueEnforcer.isGE0 (nImageMinHeight, "ImageMinHeight");
@@ -332,7 +332,7 @@ public class FineUploader5Validation implements IFineUploader5Part
    *        New value. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Validation setImageMinWidth (@Nonnegative final int nImageMinWidth)
   {
     ValueEnforcer.isGE0 (nImageMinWidth, "ImageMinWidth");
@@ -340,7 +340,7 @@ public class FineUploader5Validation implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

@@ -21,6 +21,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -41,9 +44,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is the common base class for regular HC tables as well as for more
@@ -73,45 +73,45 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
    * @param aElement
    *        The HTML element to be used to create the table
    */
-  protected AbstractHCBaseTable (@Nonnull @Nonempty final EHTMLElement aElement)
+  protected AbstractHCBaseTable (@NonNull @Nonempty final EHTMLElement aElement)
   {
     super (aElement);
   }
 
-  @Nonnull
+  @NonNull
   public final HCTHead getHead ()
   {
     return m_aHead;
   }
 
-  @Nonnull
-  public final IMPLTYPE setHead (@Nonnull final HCTHead aHead)
+  @NonNull
+  public final IMPLTYPE setHead (@NonNull final HCTHead aHead)
   {
     m_aHead = ValueEnforcer.notNull (aHead, "Head");
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCTBody getBody ()
   {
     return m_aBody;
   }
 
-  @Nonnull
-  public final IMPLTYPE setBody (@Nonnull final HCTBody aBody)
+  @NonNull
+  public final IMPLTYPE setBody (@NonNull final HCTBody aBody)
   {
     m_aBody = ValueEnforcer.notNull (aBody, "Body");
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCTFoot getFoot ()
   {
     return m_aFoot;
   }
 
-  @Nonnull
-  public final IMPLTYPE setFoot (@Nonnull final HCTFoot aFoot)
+  @NonNull
+  public final IMPLTYPE setFoot (@NonNull final HCTFoot aFoot)
   {
     m_aFoot = ValueEnforcer.notNull (aFoot, "Foot");
     return thisAsT ();
@@ -145,7 +145,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IHCNode> getAllChildren ()
   {
@@ -159,7 +159,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public ICommonsIterable <? extends IHCNode> getChildren ()
   {
     return getAllChildren ();
@@ -188,7 +188,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return m_nCellSpacing;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCellSpacing (final int nCellSpacing)
   {
     m_nCellSpacing = nCellSpacing;
@@ -201,7 +201,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return m_nCellPadding;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCellPadding (final int nCellPadding)
   {
     m_nCellPadding = nCellPadding;
@@ -218,7 +218,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return m_aColGroup;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addColumn (@Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
@@ -230,7 +230,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addColumnAt (@Nonnegative final int nIndex, @Nullable final IHCCol <?> aCol)
   {
     if (aCol != null)
@@ -242,7 +242,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeColumnAt (@Nonnegative final int nColumnIndex)
   {
     if (m_aColGroup != null)
@@ -250,7 +250,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllColumns ()
   {
     m_aColGroup = null;
@@ -269,7 +269,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Avoid creating a table without header, body and footer
     return m_aBody.canConvertToMicroNode (aConversionSettings) ||
@@ -300,7 +300,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Nonnegative
-  private static int _getEffectiveCellCount (@Nonnull final HCRow aRow, @Nullable final List <int []> aRowSpans)
+  private static int _getEffectiveCellCount (@NonNull final HCRow aRow, @Nullable final List <int []> aRowSpans)
   {
     int nCellIndex = 0;
     for (final IHCCell <?> aCell : aRow.getAllChildren ())
@@ -310,8 +310,8 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return nCellIndex;
   }
 
-  private static void _checkConsistency (@Nonnull final String sContext,
-                                         @Nonnull final AbstractHCTablePart <?> aPart,
+  private static void _checkConsistency (@NonNull final String sContext,
+                                         @NonNull final AbstractHCTablePart <?> aPart,
                                          @Nonnegative final int nCols)
   {
     int nRowIndex = 0;
@@ -381,14 +381,14 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     checkInternalConsistency ();
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final String getPlainText ()
   {
     final StringBuilder ret = new StringBuilder ();
@@ -399,7 +399,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Consumer <? super IHCNode> aConsumer)
   {
     m_aHead.forAllChildren (aConsumer);
     m_aBody.forAllChildren (aConsumer);
@@ -407,8 +407,8 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  @Nonnull
-  public final EContinue forAllChildrenBreakable (@Nonnull final Function <? super IHCNode, EContinue> aConsumer)
+  @NonNull
+  public final EContinue forAllChildrenBreakable (@NonNull final Function <? super IHCNode, EContinue> aConsumer)
   {
     if (m_aHead.forAllChildrenBreakable (aConsumer).isBreak ())
       return EContinue.BREAK;
@@ -420,7 +420,7 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter, @NonNull final Consumer <? super IHCNode> aConsumer)
   {
     m_aHead.forAllChildren (aFilter, aConsumer);
     m_aBody.forAllChildren (aFilter, aConsumer);
@@ -428,9 +428,9 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  public <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                              @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
-                                              @Nonnull final Consumer <? super DSTTYPE> aConsumer)
+  public <DSTTYPE> void forAllChildrenMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                              @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
+                                              @NonNull final Consumer <? super DSTTYPE> aConsumer)
   {
     m_aHead.forAllChildrenMapped (aFilter, aMapper, aConsumer);
     m_aBody.forAllChildrenMapped (aFilter, aMapper, aConsumer);

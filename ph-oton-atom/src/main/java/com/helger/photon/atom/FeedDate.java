@@ -20,14 +20,14 @@ import java.time.LocalDateTime;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * ATOM date construct.
@@ -54,7 +54,7 @@ public class FeedDate extends AbstractFeedElement
     return m_aDT;
   }
 
-  @Nonnull
+  @NonNull
   public IMicroElement getAsElement (final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
@@ -69,7 +69,7 @@ public class FeedDate extends AbstractFeedElement
     return m_aDT != null;
   }
 
-  @Nonnull
+  @NonNull
   public static FeedDate createNow ()
   {
     return new FeedDate (PDTFactory.getCurrentLocalDateTime ());

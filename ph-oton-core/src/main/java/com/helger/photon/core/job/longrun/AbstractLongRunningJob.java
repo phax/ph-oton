@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.job.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,6 @@ import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.schedule.job.AbstractJob;
 import com.helger.scope.mgr.ScopeManager;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract long running job.
@@ -54,9 +53,9 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
    *         recommended to deliver "guest" or the like instead.
    */
   @Nullable
-  protected abstract String getCurrentUserID (@Nonnull JobDataMap aJobDataMap);
+  protected abstract String getCurrentUserID (@NonNull JobDataMap aJobDataMap);
 
-  @Nonnull
+  @NonNull
   protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
@@ -64,7 +63,7 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void beforeExecute (@Nonnull final JobDataMap aJobDataMap, @Nonnull final IJobExecutionContext aContext)
+  protected void beforeExecute (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
   {
     final String sUserID = getCurrentUserID (aJobDataMap);
 
@@ -79,9 +78,9 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void afterExecute (@Nonnull final JobDataMap aJobDataMap,
-                               @Nonnull final IJobExecutionContext aContext,
-                               @Nonnull final ESuccess eExecSuccess)
+  protected void afterExecute (@NonNull final JobDataMap aJobDataMap,
+                               @NonNull final IJobExecutionContext aContext,
+                               @NonNull final ESuccess eExecSuccess)
   {
     // Get long running job ID from JobDataMap
     final String sLongRunningJobID = aJobDataMap.getAsString (KEY_LONG_RUNNING_JOB_ID);

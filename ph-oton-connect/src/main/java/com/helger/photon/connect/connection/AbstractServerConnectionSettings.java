@@ -16,14 +16,14 @@
  */
 package com.helger.photon.connect.connection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.network.port.NetworkPortHelper;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default abstract implementation of the {@link IBaseServerConnectionSettings}
@@ -39,10 +39,10 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
   private final int m_nConnectionTimeoutMillis;
   private final String m_sUserName;
 
-  public AbstractServerConnectionSettings (@Nonnull @Nonempty final String sIP,
+  public AbstractServerConnectionSettings (@NonNull @Nonempty final String sIP,
                                            @Nonnegative final int nPort,
                                            final int nConnectionTimeoutMillis,
-                                           @Nonnull @Nonempty final String sUserName)
+                                           @NonNull @Nonempty final String sUserName)
   {
     ValueEnforcer.notEmpty (sIP, "Address");
     if (!NetworkPortHelper.isValidPort (nPort))
@@ -55,7 +55,7 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
     m_sUserName = sUserName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getServerAddress ()
   {
@@ -73,7 +73,7 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
     return m_nConnectionTimeoutMillis;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getUserName ()
   {

@@ -18,13 +18,13 @@ package com.helger.html;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains a list of all HTML element names.
@@ -172,15 +172,15 @@ public enum EHTMLElement
   private final boolean m_bMayBeSelfClosed;
   private final EHTMLContentModelType m_eType;
 
-  @Nonnull
-  public static String getUnifiedHTMLElementName (@Nonnull final String sElementName)
+  @NonNull
+  public static String getUnifiedHTMLElementName (@NonNull final String sElementName)
   {
     return sElementName.toLowerCase (Locale.US);
   }
 
-  EHTMLElement (@Nonnull @Nonempty final String sElementName,
+  EHTMLElement (@NonNull @Nonempty final String sElementName,
                 final boolean bMayBeSelfClosed,
-                @Nonnull final EHTMLContentModelType eType)
+                @NonNull final EHTMLContentModelType eType)
   {
     m_sElementNameLC = getUnifiedHTMLElementName (sElementName);
     m_sElementNameUC = sElementName.toUpperCase (Locale.US);
@@ -191,7 +191,7 @@ public enum EHTMLElement
   /**
    * @return The defined element name in any lower case. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getElementName ()
   {
@@ -201,7 +201,7 @@ public enum EHTMLElement
   /**
    * @return The defined element name in upper case characters. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getElementNameUpperCase ()
   {
@@ -242,7 +242,7 @@ public enum EHTMLElement
     return m_eType.isPhrasingElement ();
   }
 
-  @Nonnull
+  @NonNull
   private static ICommonsSet <String> _getSelfClosedSet ()
   {
     if (SELF_CLOSED_ELEMENTS_LC.isEmpty ())

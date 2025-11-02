@@ -18,6 +18,9 @@ package com.helger.photon.audit.v2;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
@@ -30,9 +33,6 @@ import com.helger.photon.audit.v2.config.IAuditSettings;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.domain.AuditField;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Builder for {@link AuditEvent} objects.
@@ -54,50 +54,50 @@ public class AuditEventBuilder
   public AuditEventBuilder ()
   {}
 
-  @Nonnull
-  public AuditEventBuilder setSettings (@Nonnull final IAuditSettings aSettings)
+  @NonNull
+  public AuditEventBuilder setSettings (@NonNull final IAuditSettings aSettings)
   {
     ValueEnforcer.notNull (aSettings, "Settings");
     m_aSettings = aSettings;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder setCurrentUserIDProvider (@Nullable final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     m_aCurrentUserIDProvider = aCurrentUserIDProvider;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder setActor (@Nullable final String sActor)
   {
     m_sActor = sActor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder setOrigin (@Nullable final String sOrigin)
   {
     m_sOrigin = sOrigin;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder setAction (@Nullable final EAuditActionType eAction)
   {
     m_eAction = eAction;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder setSucces (@Nullable final ESuccess eSuccess)
   {
     m_eSuccess = eSuccess;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder addField (@Nullable final AuditField aField)
   {
     if (aField != null)
@@ -105,7 +105,7 @@ public class AuditEventBuilder
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder addField (@Nullable final String sFieldName, @Nullable final String sFieldValue)
   {
     // Avoid adding an empty field
@@ -114,7 +114,7 @@ public class AuditEventBuilder
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public AuditEventBuilder addFieldHiddenValue (@Nullable final String sFieldName)
   {
     return addField (AuditField.createWithHiddenValue (sFieldName));
@@ -142,7 +142,7 @@ public class AuditEventBuilder
    *
    * @return The created {@link AuditEvent} and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public AuditEvent build ()
   {
     final long nID = m_aSettings.getAuditEventIDProvider ().getAsLong ();

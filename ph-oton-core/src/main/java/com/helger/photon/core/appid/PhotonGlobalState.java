@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.appid;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains all the objects that are hold "per application".
@@ -50,7 +49,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   public PhotonGlobalState ()
   {}
 
-  @Nonnull
+  @NonNull
   public static PhotonGlobalState getInstance ()
   {
     return getGlobalSingleton (PhotonGlobalState.class);
@@ -82,7 +81,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
    *        The last application ID to be set. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonGlobalState setDefaultApplicationID (@Nullable final String sDefaultApplicationID)
   {
     m_aRWLock.writeLocked ( () -> {
@@ -95,8 +94,8 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     return this;
   }
 
-  @Nonnull
-  public static PhotonGlobalStatePerApp state (@Nonnull @Nonempty final String sAppID)
+  @NonNull
+  public static PhotonGlobalStatePerApp state (@NonNull @Nonempty final String sAppID)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     final PhotonGlobalState aGlobalState = getInstance ();
@@ -130,7 +129,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
     return getInstance ().m_aStateMap.containsAnyValue (x -> x.internalGetServletPath () != null);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsMap <String, String> getAppIDToServletPathMap ()
   {

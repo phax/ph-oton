@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents an HTML &lt;button&gt; element with type "reset"

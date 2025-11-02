@@ -16,13 +16,13 @@
  */
 package com.helger.html.entity;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Contains an arbitrary entities.
@@ -35,21 +35,21 @@ public class HTMLEntity implements IHTMLEntity
   private final String m_sEntityName;
   private final String m_sEntityReference;
 
-  public HTMLEntity (@Nonnull @Nonempty final String sName)
+  public HTMLEntity (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
     m_sEntityName = sName;
     m_sEntityReference = '&' + sName + ';';
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getEntityName ()
   {
     return m_sEntityName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getEntityReference ()
   {

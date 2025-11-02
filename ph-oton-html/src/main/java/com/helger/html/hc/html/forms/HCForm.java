@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;form&gt; element
@@ -34,7 +34,7 @@ public class HCForm extends AbstractHCForm <HCForm>
     super ();
   }
 
-  public HCForm (@Nonnull final ISimpleURL aAction)
+  public HCForm (@NonNull final ISimpleURL aAction)
   {
     super (aAction);
   }

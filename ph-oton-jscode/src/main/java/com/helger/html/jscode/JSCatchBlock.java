@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Catch block for a try/catch/finally statement
@@ -39,7 +39,7 @@ public class JSCatchBlock implements IJSGeneratable
   public JSCatchBlock ()
   {}
 
-  public JSCatchBlock (@Nonnull @Nonempty final String sName)
+  public JSCatchBlock (@NonNull @Nonempty final String sName)
   {
     m_aVar = new JSParam (sName);
   }
@@ -50,8 +50,8 @@ public class JSCatchBlock implements IJSGeneratable
     return m_aVar;
   }
 
-  @Nonnull
-  public JSParam param (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSParam param (@NonNull @Nonempty final String sName)
   {
     if (m_aVar != null)
       throw new IllegalStateException ("Catch block already has a variable");
@@ -59,13 +59,13 @@ public class JSCatchBlock implements IJSGeneratable
     return m_aVar;
   }
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     return m_aBody;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     if (m_aVar == null)
       m_aVar = new JSParam (DEFAULT_VAR_NAME);
@@ -73,7 +73,7 @@ public class JSCatchBlock implements IJSGeneratable
     aFormatter.plain ("catch (").variable (m_aVar).plain (')').generatable (m_aBody);
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, this);

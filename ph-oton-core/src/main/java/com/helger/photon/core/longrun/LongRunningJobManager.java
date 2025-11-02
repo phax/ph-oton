@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +34,6 @@ import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsCollection;
 import com.helger.collection.commons.ICommonsMap;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @ThreadSafe
 public final class LongRunningJobManager
 {
@@ -45,7 +44,7 @@ public final class LongRunningJobManager
   private final ICommonsMap <String, LongRunningJobData> m_aRunningJobs = new CommonsHashMap <> ();
   private final LongRunningJobResultManager m_aResultMgr;
 
-  public LongRunningJobManager (@Nonnull final LongRunningJobResultManager aResultMgr)
+  public LongRunningJobManager (@NonNull final LongRunningJobResultManager aResultMgr)
   {
     m_aResultMgr = ValueEnforcer.notNull (aResultMgr, "ResultMgr");
   }
@@ -59,9 +58,9 @@ public final class LongRunningJobManager
    *        The ID of the user who started the job
    * @return The internal long running job ID
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  public String onStartJob (@Nonnull final ILongRunningJob aJob, @Nullable final String sStartingUserID)
+  public String onStartJob (@NonNull final ILongRunningJob aJob, @Nullable final String sStartingUserID)
   {
     ValueEnforcer.notNull (aJob, "Job");
 
@@ -86,8 +85,8 @@ public final class LongRunningJobManager
    *        The main job results.
    */
   public void onEndJob (@Nullable final String sJobID,
-                        @Nonnull final ESuccess eExecSuccess,
-                        @Nonnull final LongRunningJobResult aResult)
+                        @NonNull final ESuccess eExecSuccess,
+                        @NonNull final LongRunningJobResult aResult)
   {
     ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
@@ -113,7 +112,7 @@ public final class LongRunningJobManager
     return m_aRWLock.readLockedInt (m_aRunningJobs::size);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public ICommonsCollection <LongRunningJobData> getAllRunningJobs ()
   {

@@ -16,18 +16,18 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.compare.IComparator;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.ICommonsList;
 
-import jakarta.annotation.Nonnull;
-
 final class ComparatorDataTablesServerDataRow implements IComparator <DataTablesServerDataRow>
 {
   private final ICommonsList <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
-  ComparatorDataTablesServerDataRow (@Nonnull final DataTablesServerSortState aServerSortState)
+  ComparatorDataTablesServerDataRow (@NonNull final DataTablesServerSortState aServerSortState)
   {
     ValueEnforcer.notNull (aServerSortState, "ServerSortState");
 
@@ -35,7 +35,7 @@ final class ComparatorDataTablesServerDataRow implements IComparator <DataTables
   }
 
   @Override
-  public int compare (@Nonnull final DataTablesServerDataRow aRow1, @Nonnull final DataTablesServerDataRow aRow2)
+  public int compare (@NonNull final DataTablesServerDataRow aRow1, @NonNull final DataTablesServerDataRow aRow2)
   {
     int ret = 0;
     for (final DTSSRequestDataOrderColumn aOrderColumn : m_aOrderColumns)

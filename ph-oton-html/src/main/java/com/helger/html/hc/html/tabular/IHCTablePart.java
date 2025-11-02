@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for thead, tbody and tfoot. It encapsulates all table elements
@@ -37,7 +37,7 @@ public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>> extends
    */
   boolean isHeaderOrFooter ();
 
-  @Nonnull
+  @NonNull
   HCRow addRow ();
 
   /**
@@ -47,6 +47,6 @@ public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>> extends
    *        The index to add the row at. Must be &ge; 0.
    * @return The created row and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   HCRow addRowAt (@Nonnegative int nIndex);
 }

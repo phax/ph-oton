@@ -22,6 +22,8 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +48,6 @@ import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
 import com.helger.photon.exchange.bulkexport.IExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.IExporterFile;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for JSON files
@@ -75,41 +74,41 @@ public class ExporterJSON implements IExporterFile
   {}
 
   @Override
-  @Nonnull
+  @NonNull
   public final EExchangeFileType getFileType ()
   {
     return EExchangeFileType.XML;
   }
 
-  @Nonnull
+  @NonNull
   public final Charset getCharset ()
   {
     return m_aCharset;
   }
 
-  @Nonnull
-  public final ExporterJSON setCharset (@Nonnull final Charset aCharset)
+  @NonNull
+  public final ExporterJSON setCharset (@NonNull final Charset aCharset)
   {
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final JsonWriterSettings jsonWriterSettings ()
   {
     return m_aJWS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final IJsonWriterSettings getJsonWriterSettings ()
   {
     return m_aJWS;
   }
 
-  @Nonnull
-  public final ExporterJSON setJsonWriterSettings (@Nonnull final JsonWriterSettings aJWS)
+  @NonNull
+  public final ExporterJSON setJsonWriterSettings (@NonNull final JsonWriterSettings aJWS)
   {
     m_aJWS = ValueEnforcer.notNull (aJWS, "JsonWriterSettings");
     return this;
@@ -120,16 +119,16 @@ public class ExporterJSON implements IExporterFile
     return m_bEmitType;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterJSON setEmitType (final boolean bEmitType)
   {
     m_bEmitType = bEmitType;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  private IJsonArray _emitRecord (@Nonnull final IExportRecord aRecord)
+  private IJsonArray _emitRecord (@NonNull final IExportRecord aRecord)
   {
     final IJsonArray ret = new JsonArray ();
     for (final IExportRecordField aField : aRecord.getAllFields ())
@@ -154,7 +153,7 @@ public class ExporterJSON implements IExporterFile
   }
 
   @Nullable
-  public IJsonObject convertRecords (@Nonnull final IExportRecordProvider aProvider)
+  public IJsonObject convertRecords (@NonNull final IExportRecordProvider aProvider)
   {
     ValueEnforcer.notNull (aProvider, "Provider");
 
@@ -185,9 +184,9 @@ public class ExporterJSON implements IExporterFile
   }
 
   @Override
-  @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                 @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess exportRecords (@NonNull final IExportRecordProvider aProvider,
+                                 @NonNull @WillClose final OutputStream aOS)
   {
     try
     {

@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.script;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Simple way to define the script loading mode.
@@ -28,7 +28,7 @@ public enum EHCScriptLoadingMode
   DEFAULT
   {
     @Override
-    public void apply (@Nonnull final HCScriptFile aScript)
+    public void apply (@NonNull final HCScriptFile aScript)
     {
       aScript.setAsync (false);
       aScript.setDefer (false);
@@ -37,7 +37,7 @@ public enum EHCScriptLoadingMode
   ASYNC
   {
     @Override
-    public void apply (@Nonnull final HCScriptFile aScript)
+    public void apply (@NonNull final HCScriptFile aScript)
     {
       aScript.setAsync (true);
       aScript.setDefer (false);
@@ -46,12 +46,12 @@ public enum EHCScriptLoadingMode
   DEFER
   {
     @Override
-    public void apply (@Nonnull final HCScriptFile aScript)
+    public void apply (@NonNull final HCScriptFile aScript)
     {
       aScript.setAsync (false);
       aScript.setDefer (true);
     }
   };
 
-  public abstract void apply (@Nonnull HCScriptFile aScript);
+  public abstract void apply (@NonNull HCScriptFile aScript);
 }

@@ -18,12 +18,12 @@ package com.helger.photon.core.servlet;
 
 import java.util.EnumSet;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.http.EHttpMethod;
 import com.helger.photon.core.appid.XServletFilterAppIDExplicit;
 import com.helger.xservlet.AbstractXServlet;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The servlet to show the secure application
@@ -32,7 +32,7 @@ import jakarta.annotation.Nonnull;
  */
 public abstract class AbstractApplicationServlet extends AbstractXServlet
 {
-  protected AbstractApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler, @Nonnull @Nonempty final String sAppID)
+  protected AbstractApplicationServlet (@NonNull final AbstractApplicationXServletHandler aHandler, @NonNull @Nonempty final String sAppID)
   {
     handlerRegistry ().registerHandler (EHttpMethod.GET, aHandler);
     // Must support POST for form submits :)

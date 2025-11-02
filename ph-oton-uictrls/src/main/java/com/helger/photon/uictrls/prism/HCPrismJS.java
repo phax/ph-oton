@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.prism;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.CommonsArrayList;
@@ -36,9 +39,6 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * prism.js pre + code element.
  *
@@ -53,7 +53,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
   private final EPrismLanguage m_eLanguage;
   private final ICommonsList <IPrismPlugin> m_aPlugins = new CommonsArrayList <> ();
 
-  public HCPrismJS (@Nonnull final EPrismLanguage eLanguage)
+  public HCPrismJS (@NonNull final EPrismLanguage eLanguage)
   {
     m_eLanguage = ValueEnforcer.notNull (eLanguage, "Language");
   }
@@ -61,7 +61,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
   /**
    * @return The language as specified in the constructor
    */
-  @Nonnull
+  @NonNull
   public final EPrismLanguage getPrismLanguage ()
   {
     return m_eLanguage;
@@ -80,8 +80,8 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
     return this;
   }
 
-  @Nonnull
-  public final HCPrismJS addPlugin (@Nonnull final IPrismPlugin aPlugin)
+  @NonNull
+  public final HCPrismJS addPlugin (@NonNull final IPrismPlugin aPlugin)
   {
     ValueEnforcer.notNull (aPlugin, "Plugin");
     m_aPlugins.add (aPlugin);
@@ -90,8 +90,8 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aPreElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aPreElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Apply plugin on pre element
     {
@@ -135,7 +135,7 @@ public class HCPrismJS extends AbstractHCPre <HCPrismJS>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     registerExternalResources (m_aPlugins);

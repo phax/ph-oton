@@ -16,10 +16,10 @@
  */
 package com.helger.html.resource.css;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Provides a path to an external CSS object.
@@ -35,7 +35,7 @@ public interface ICSSPathProvider extends ICSSProvider
    *        retrieved, otherwise the minified version of the file.
    * @return The path to the external CSS item.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getCSSItemPath (boolean bRegular);
 }

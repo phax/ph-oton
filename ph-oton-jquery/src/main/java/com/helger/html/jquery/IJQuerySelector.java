@@ -16,11 +16,11 @@
  */
 package com.helger.html.jquery;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.jscode.IJSExpression;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A single jQuery selector
@@ -33,7 +33,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    * @return The contained expression that was used as the parameter to this selector. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IJSExpression getExpression ();
 
   /**
@@ -43,9 +43,9 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this<i>rhs</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector chain (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector chain (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Make a multiple selector
@@ -54,9 +54,9 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this, rhs</code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector multiple (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector multiple (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Make a child selector
@@ -65,9 +65,9 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this &gt; rhs</code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector child (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector child (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Make a descendant selector
@@ -76,9 +76,9 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this rhs</code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector descendant (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector descendant (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Make a next adjacent selector
@@ -87,9 +87,9 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this + rhs</code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector nextAdjacent (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector nextAdjacent (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Make a next siblings selector
@@ -98,16 +98,16 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *        Other selector
    * @return <code>this ~ rhs</code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  IJQuerySelector nextSiblings (@Nonnull IJQuerySelector aRhsSelector);
+  IJQuerySelector nextSiblings (@NonNull IJQuerySelector aRhsSelector);
 
   /**
    * Chain a animated selector
    *
    * @return <code>this<i>:animated</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector animated ();
 
@@ -116,7 +116,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:button</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector button ();
 
@@ -125,7 +125,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:checkbox</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector checkbox ();
 
@@ -134,7 +134,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:checked</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector checked ();
 
@@ -143,7 +143,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:disabled</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector disabled ();
 
@@ -152,7 +152,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:empty</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector empty ();
 
@@ -161,7 +161,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:enabled</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector enabled ();
 
@@ -170,7 +170,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:even</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector even ();
 
@@ -179,7 +179,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:file</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector file ();
 
@@ -188,7 +188,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:first</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector first ();
 
@@ -197,7 +197,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:first-child</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector first_child ();
 
@@ -206,7 +206,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:first-of-type</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector first_of_type ();
 
@@ -215,7 +215,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:focus</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector focus ();
 
@@ -224,7 +224,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:header</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector header ();
 
@@ -233,7 +233,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:hidden</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector hidden ();
 
@@ -242,7 +242,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:image</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector image ();
 
@@ -251,7 +251,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:input</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector input ();
 
@@ -260,7 +260,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:last</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector last ();
 
@@ -269,7 +269,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:last-child</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector last_child ();
 
@@ -278,7 +278,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:last-of-type</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector last_of_type ();
 
@@ -287,7 +287,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:odd</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector odd ();
 
@@ -296,7 +296,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:only-child</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector only_child ();
 
@@ -305,7 +305,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:only-of-type</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector only_of_type ();
 
@@ -314,7 +314,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:parent</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector parent ();
 
@@ -323,7 +323,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:password</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector password ();
 
@@ -332,7 +332,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:radio</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector radio ();
 
@@ -341,7 +341,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:reset</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector reset ();
 
@@ -350,7 +350,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:root</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector root ();
 
@@ -359,7 +359,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:selected</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector selected ();
 
@@ -368,7 +368,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:submit</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector submit ();
 
@@ -377,7 +377,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:target</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector target ();
 
@@ -386,7 +386,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:text</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector text ();
 
@@ -395,7 +395,7 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>this<i>:visible</i></code>
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   IJQuerySelector visible ();
 
@@ -404,6 +404,6 @@ public interface IJQuerySelector extends IHasJSCodeWithSettings
    *
    * @return <code>$(selectorString)</code>
    */
-  @Nonnull
+  @NonNull
   JQueryInvocation invoke ();
 }

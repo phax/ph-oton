@@ -16,12 +16,12 @@
  */
 package com.helger.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Enumeration with all HTML roles. Source: http://www.w3.org/TR/wai-aria/roles
@@ -188,21 +188,21 @@ public enum EHTMLRole implements IHasID <String>
   private final EHTMLRoleType m_eType;
   private final String m_sDescription;
 
-  EHTMLRole (@Nonnull @Nonempty final String sID, @Nonnull final EHTMLRoleType eType, @Nonnull @Nonempty final String sDescription)
+  EHTMLRole (@NonNull @Nonempty final String sID, @NonNull final EHTMLRoleType eType, @NonNull @Nonempty final String sDescription)
   {
     m_sID = sID;
     m_eType = eType;
     m_sDescription = sDescription;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public EHTMLRoleType getType ()
   {
     return m_eType;
@@ -213,7 +213,7 @@ public enum EHTMLRole implements IHasID <String>
     return m_eType == EHTMLRoleType.ABSTRACT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDescription ()
   {

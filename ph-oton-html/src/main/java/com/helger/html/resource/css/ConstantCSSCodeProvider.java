@@ -16,6 +16,9 @@
  */
 package com.helger.html.resource.css;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -23,9 +26,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link ICSSCodeProvider} with constant values.
@@ -39,7 +39,7 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
   private final CSSMediaList m_aCSSMediaList;
   private final boolean m_bIsBundlable;
 
-  public ConstantCSSCodeProvider (@Nonnull @Nonempty final String sCSSCode,
+  public ConstantCSSCodeProvider (@NonNull @Nonempty final String sCSSCode,
                                   @Nullable final String sConditionalComment,
                                   @Nullable final ICSSMediaList aMediaList,
                                   final boolean bIsBundlable)
@@ -51,7 +51,7 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
     m_bIsBundlable = bIsBundlable;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSCode ()
   {
@@ -64,7 +64,7 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
     return m_sConditionalComment;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICSSMediaList getMediaList ()
   {
@@ -103,35 +103,35 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
                                        .getToString ();
   }
 
-  @Nonnull
-  public static ConstantCSSCodeProvider create (@Nonnull @Nonempty final String sCSSCode)
+  @NonNull
+  public static ConstantCSSCodeProvider create (@NonNull @Nonempty final String sCSSCode)
   {
     return new ConstantCSSCodeProvider (sCSSCode, DEFAULT_CONDITIONAL_COMMENT, DEFAULT_CSS_MEDIA_LIST, DEFAULT_IS_BUNDLABLE);
   }
 
-  @Nonnull
-  public static ConstantCSSCodeProvider createWithConditionalComment (@Nonnull @Nonempty final String sCSSCode,
+  @NonNull
+  public static ConstantCSSCodeProvider createWithConditionalComment (@NonNull @Nonempty final String sCSSCode,
                                                                       @Nullable final String sConditionalComment)
   {
     return createWithConditionalComment (sCSSCode, sConditionalComment, DEFAULT_CSS_MEDIA_LIST);
   }
 
-  @Nonnull
-  public static ConstantCSSCodeProvider createWithConditionalComment (@Nonnull @Nonempty final String sCSSCode,
+  @NonNull
+  public static ConstantCSSCodeProvider createWithConditionalComment (@NonNull @Nonempty final String sCSSCode,
                                                                       @Nullable final String sConditionalComment,
                                                                       @Nullable final ICSSMediaList aMediaList)
   {
     return new ConstantCSSCodeProvider (sCSSCode, sConditionalComment, aMediaList, DEFAULT_IS_BUNDLABLE);
   }
 
-  @Nonnull
-  public static ConstantCSSCodeProvider createBundlable (@Nonnull @Nonempty final String sCSSCode, final boolean bBundlable)
+  @NonNull
+  public static ConstantCSSCodeProvider createBundlable (@NonNull @Nonempty final String sCSSCode, final boolean bBundlable)
   {
     return createBundlable (sCSSCode, DEFAULT_CSS_MEDIA_LIST, bBundlable);
   }
 
-  @Nonnull
-  public static ConstantCSSCodeProvider createBundlable (@Nonnull @Nonempty final String sCSSCode,
+  @NonNull
+  public static ConstantCSSCodeProvider createBundlable (@NonNull @Nonempty final String sCSSCode,
                                                          @Nullable final ICSSMediaList aMediaList,
                                                          final boolean bBundlable)
   {

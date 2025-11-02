@@ -19,13 +19,13 @@ package com.helger.photon.security.password.constraint;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.clone.ICloneable;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This interface defines a list of password constraints.
@@ -49,7 +49,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    * @return A list of all contained password constraints. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IPasswordConstraint> getAllPasswordConstraints ();
 
@@ -77,9 +77,9 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    *         password is valid). If the returned list is not empty than the
    *         password is invalid.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword, @Nonnull Locale aContentLocale);
+  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword, @NonNull Locale aContentLocale);
 
   /**
    * Get a list of all password constraint descriptions in the specified locale
@@ -90,7 +90,7 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
    * @return A non-<code>null</code> list with all constraint descriptions. If
    *         the returned list is empty, it means that no constraint is defined.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <String> getAllPasswordConstraintDescriptions (@Nonnull Locale aContentLocale);
+  ICommonsList <String> getAllPasswordConstraintDescriptions (@NonNull Locale aContentLocale);
 }

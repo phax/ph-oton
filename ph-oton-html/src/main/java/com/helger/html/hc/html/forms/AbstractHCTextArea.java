@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
@@ -29,9 +32,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.request.IHCRequestField;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;textarea&gt; element
@@ -79,7 +79,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     setValue (sValue);
   }
 
-  public AbstractHCTextArea (@Nonnull final IHCRequestField aRF)
+  public AbstractHCTextArea (@NonNull final IHCRequestField aRF)
   {
     this (aRF.getFieldName (), aRF.getRequestValue ());
   }
@@ -99,8 +99,8 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_eAutoComplete.isUndefined ();
   }
 
-  @Nonnull
-  public final IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  @NonNull
+  public final IMPLTYPE setAutoComplete (@NonNull final ETriState eAutoComplete)
   {
     m_eAutoComplete = ValueEnforcer.notNull (eAutoComplete, "AutoComplete");
     return thisAsT ();
@@ -111,7 +111,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_nCols;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCols (final int nCols)
   {
     m_nCols = nCols;
@@ -124,7 +124,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_sDirName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDirName (@Nullable final String sDirName)
   {
     m_sDirName = sDirName;
@@ -137,7 +137,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -149,7 +149,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_nMaxLength;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMaxLength (final int nMaxLength)
   {
     m_nMaxLength = nMaxLength;
@@ -161,7 +161,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_nMinLength;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMinLength (final int nMinLength)
   {
     m_nMinLength = nMinLength;
@@ -174,7 +174,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_sPlaceholder;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPlaceholder (@Nullable final String sPlaceholder)
   {
     m_sPlaceholder = sPlaceholder;
@@ -186,7 +186,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_nRows;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setRows (final int nRows)
   {
     m_nRows = nRows;
@@ -199,7 +199,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
@@ -212,7 +212,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
     return m_eWrap;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWrap (@Nullable final EHCTextAreaWrap eWrap)
   {
     m_eWrap = eWrap;
@@ -220,7 +220,7 @@ public abstract class AbstractHCTextArea <IMPLTYPE extends AbstractHCTextArea <I
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return StringHelper.getNotNull (m_sValue);

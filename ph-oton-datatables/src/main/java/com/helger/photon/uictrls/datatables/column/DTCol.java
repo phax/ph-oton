@@ -19,6 +19,9 @@ package com.helger.photon.uictrls.datatables.column;
 import java.util.Locale;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.array.ArrayHelper;
 import com.helger.base.compare.ESortOrder;
@@ -32,9 +35,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.masterdata.currency.ECurrency;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.photon.uictrls.datatables.DataTables;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Specialized column for DataTables to be used in IHCTable implementation constructors. Only when
@@ -78,15 +78,15 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_eColType;
   }
 
-  @Nonnull
-  public DTCol setDisplayType (@Nonnull final EDTColType eColType, @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public DTCol setDisplayType (@NonNull final EDTColType eColType, @NonNull final Locale aDisplayLocale)
   {
     return setDisplayType (eColType, aDisplayLocale, null);
   }
 
-  @Nonnull
-  public DTCol setDisplayType (@Nonnull final EDTColType eColType,
-                               @Nonnull final Locale aDisplayLocale,
+  @NonNull
+  public DTCol setDisplayType (@NonNull final EDTColType eColType,
+                               @NonNull final Locale aDisplayLocale,
                                @Nullable final Function <String, String> aFormatter)
   {
     ValueEnforcer.notNull (eColType, "BaseType");
@@ -153,8 +153,8 @@ public class DTCol extends AbstractHCCol <DTCol>
     return this;
   }
 
-  @Nonnull
-  public DTCol setDisplayTypeCurrency (@Nonnull final ECurrency eCurrency)
+  @NonNull
+  public DTCol setDisplayTypeCurrency (@NonNull final ECurrency eCurrency)
   {
     ValueEnforcer.notNull (eCurrency, "Currency");
 
@@ -163,26 +163,26 @@ public class DTCol extends AbstractHCCol <DTCol>
     return this;
   }
 
-  @Nonnull
-  public DTCol setDisplayTypePercentage (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public DTCol setDisplayTypePercentage (@NonNull final Locale aDisplayLocale)
   {
     return setDisplayType (EDTColType.DOUBLE, aDisplayLocale, x -> StringHelper.trimEnd (x, "%"));
   }
 
-  @Nonnull
+  @NonNull
   public IHCNode getHeaderNode ()
   {
     return m_aHeaderNode;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setHeaderNode (@Nullable final IHCNode aHeaderNode)
   {
     m_aHeaderNode = aHeaderNode;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ESortOrder getInitialSorting ()
   {
     return m_eInitialSorting;
@@ -193,7 +193,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_eInitialSorting != null;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setInitialSorting (@Nullable final ESortOrder eInitialSorting)
   {
     m_eInitialSorting = eInitialSorting;
@@ -205,7 +205,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_bSearchable;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setSearchable (final boolean bSearchable)
   {
     m_bSearchable = bSearchable;
@@ -217,7 +217,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_bOrderable;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setOrderable (final boolean bOrderable)
   {
     m_bOrderable = bOrderable;
@@ -229,7 +229,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_bVisible;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setVisible (final boolean bVisible)
   {
     m_bVisible = bVisible;
@@ -242,7 +242,7 @@ public class DTCol extends AbstractHCCol <DTCol>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -263,27 +263,27 @@ public class DTCol extends AbstractHCCol <DTCol>
    *        The sorting column (incl. this column!)
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DTCol setDataSort (@Nullable final int... aDataSort)
   {
     m_aDataSort = ArrayHelper.getCopy (aDataSort);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTOrderSpec getOrderSpec ()
   {
     return m_aOrderSpec;
   }
 
-  @Nonnull
+  @NonNull
   public DTCol setCollating (final boolean bCollating)
   {
     m_aOrderSpec.setCollating (bCollating);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public <T extends Comparable <? super T>> DTCol setComparableExtractor (@Nullable final Function <String, String> aFormatter,
                                                                           @Nullable final IComparableExtractor <T> aComparableExtractor)
   {

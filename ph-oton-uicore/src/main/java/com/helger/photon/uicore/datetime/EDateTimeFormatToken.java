@@ -31,9 +31,9 @@ import java.time.format.SignStyle;
 import java.time.temporal.ChronoField;
 import java.util.function.Consumer;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 public enum EDateTimeFormatToken
 {
@@ -72,28 +72,28 @@ public enum EDateTimeFormatToken
   private final String m_sJavaToken;
   private Consumer <DateTimeFormatterBuilder> m_aDTFBC;
 
-  EDateTimeFormatToken (@Nonnull @Nonempty final String sJSCalendarToken,
-                        @Nonnull @Nonempty final String sJavaToken,
-                        @Nonnull final Consumer <DateTimeFormatterBuilder> aDTFBC)
+  EDateTimeFormatToken (@NonNull @Nonempty final String sJSCalendarToken,
+                        @NonNull @Nonempty final String sJavaToken,
+                        @NonNull final Consumer <DateTimeFormatterBuilder> aDTFBC)
   {
     m_sJSCalendarToken = sJSCalendarToken;
     m_sJavaToken = sJavaToken;
     m_aDTFBC = aDTFBC;
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCalendarToken ()
   {
     return m_sJSCalendarToken;
   }
 
-  @Nonnull
+  @NonNull
   public String getJavaToken ()
   {
     return m_sJavaToken;
   }
 
-  public void addToFormatterBuilder (@Nonnull final DateTimeFormatterBuilder aDTFB)
+  public void addToFormatterBuilder (@NonNull final DateTimeFormatterBuilder aDTFB)
   {
     m_aDTFBC.accept (aDTFB);
   }

@@ -18,6 +18,8 @@ package com.helger.photon.connect.sftp;
 
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.string.StringHelper;
@@ -26,8 +28,6 @@ import com.helger.photon.connect.connection.ServerConnectionSettingsKeyPair;
 import com.helger.photon.connect.connection.ServerConnectionSettingsPassword;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special JSch session provider. It differentiates between username/password
@@ -40,13 +40,13 @@ public class JschSessionProvider implements IJSchSessionProvider
 {
   private final ISftpSettingsHost m_aSFTPSettings;
 
-  public JschSessionProvider (@Nonnull final ISftpSettingsHost aSFTPSettings)
+  public JschSessionProvider (@NonNull final ISftpSettingsHost aSFTPSettings)
   {
     ValueEnforcer.notNull (aSFTPSettings, "SFTPSettings");
     m_aSFTPSettings = aSFTPSettings;
   }
 
-  @Nonnull
+  @NonNull
   public Session createSession () throws JSchException
   {
     if (m_aSFTPSettings.hasServerPassword ())

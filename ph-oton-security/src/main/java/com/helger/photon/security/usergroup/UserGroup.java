@@ -18,6 +18,9 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -31,9 +34,6 @@ import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.AbstractBusinessObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IUserGroup} interface.
@@ -60,7 +60,7 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
    */
-  public UserGroup (@Nonnull @Nonempty final String sName,
+  public UserGroup (@NonNull @Nonempty final String sName,
                     @Nullable final String sDescription,
                     @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -77,8 +77,8 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
    * @param sDescription
    *        The optional description. May be <code>null</code>.
    */
-  public UserGroup (@Nonnull final StubObject aStubObject,
-                    @Nonnull @Nonempty final String sName,
+  public UserGroup (@NonNull final StubObject aStubObject,
+                    @NonNull @Nonempty final String sName,
                     @Nullable final String sDescription)
   {
     super (aStubObject);
@@ -86,21 +86,21 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     setDescription (sDescription);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return UserGroup.OT;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
-  public EChange setName (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public EChange setName (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
 
@@ -116,7 +116,7 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return m_sDescription;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
@@ -136,7 +136,7 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return m_aUserIDs.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllContainedUserIDs ()
   {
@@ -148,15 +148,15 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return m_aUserIDs.contains (sUserID);
   }
 
-  @Nonnull
-  public EChange assignUser (@Nonnull @Nonempty final String sUserID)
+  @NonNull
+  public EChange assignUser (@NonNull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
 
     return EChange.valueOf (m_aUserIDs.add (sUserID));
   }
 
-  @Nonnull
+  @NonNull
   public EChange assignUsers (@Nullable final Iterable <String> aUserIDs)
   {
     EChange ret = EChange.UNCHANGED;
@@ -166,8 +166,8 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return ret;
   }
 
-  @Nonnull
-  public EChange unassignUser (@Nonnull final String sUserID)
+  @NonNull
+  public EChange unassignUser (@NonNull final String sUserID)
   {
     return EChange.valueOf (m_aUserIDs.remove (sUserID));
   }
@@ -183,7 +183,7 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return m_aRoleIDs.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllContainedRoleIDs ()
   {
@@ -195,15 +195,15 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return m_aRoleIDs.contains (sRoleID);
   }
 
-  @Nonnull
-  public EChange assignRole (@Nonnull @Nonempty final String sRoleID)
+  @NonNull
+  public EChange assignRole (@NonNull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
 
     return EChange.valueOf (m_aRoleIDs.add (sRoleID));
   }
 
-  @Nonnull
+  @NonNull
   public EChange assignRoles (@Nullable final Iterable <String> aRoleIDs)
   {
     EChange ret = EChange.UNCHANGED;
@@ -213,8 +213,8 @@ public class UserGroup extends AbstractBusinessObject implements IUserGroup
     return ret;
   }
 
-  @Nonnull
-  public EChange unassignRole (@Nonnull final String sRoleID)
+  @NonNull
+  public EChange unassignRole (@NonNull final String sRoleID)
   {
     return EChange.valueOf (m_aRoleIDs.remove (sRoleID));
   }

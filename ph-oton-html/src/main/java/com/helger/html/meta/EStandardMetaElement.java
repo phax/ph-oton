@@ -18,12 +18,12 @@ package com.helger.html.meta;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.http.CHttpHeader;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A class with a set of predefined meta tag names.
@@ -83,7 +83,7 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
   private final String m_sName;
   private final EMetaElementType m_eType;
 
-  EStandardMetaElement (@Nonnull @Nonempty final String sName, final boolean bIsHttpEquiv)
+  EStandardMetaElement (@NonNull @Nonempty final String sName, final boolean bIsHttpEquiv)
   {
     m_sName = sName;
     m_eType = bIsHttpEquiv ? EMetaElementType.PRAGMA_DIRECTIVE : EMetaElementType.DOCUMENT_LEVEL;
@@ -94,7 +94,7 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
    *
    * @return the meta tag name
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
@@ -110,13 +110,13 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public EMetaElementType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public IMetaElement getAsMetaElement (@Nullable final String sContent)
   {
     return new MetaElement (getType (), m_sName, (String) null, (Locale) null, sContent);

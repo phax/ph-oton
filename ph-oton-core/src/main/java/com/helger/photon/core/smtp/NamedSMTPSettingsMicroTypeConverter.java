@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.smtp;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.smtp.settings.ISMTPSettings;
 import com.helger.smtp.settings.SMTPSettings;
 import com.helger.xml.microdom.IMicroElement;
@@ -24,19 +27,16 @@ import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConverter <NamedSMTPSettings>
 {
   private static final String ATTR_ID = "id";
   private static final String ELEMENT_NAME = "name";
   private static final String ELEMENT_SMTPSETTINGS = "smtpsettings";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final NamedSMTPSettings aNamedSMTPSettings,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final NamedSMTPSettings aNamedSMTPSettings,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement eSMTPSettings = new MicroElement (sNamespaceURI, sTagName);
     eSMTPSettings.setAttribute (ATTR_ID, aNamedSMTPSettings.getID ());
@@ -47,8 +47,8 @@ public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConv
     return eSMTPSettings;
   }
 
-  @Nonnull
-  public NamedSMTPSettings convertToNative (@Nonnull final IMicroElement eNamedSMTPSettings)
+  @NonNull
+  public NamedSMTPSettings convertToNative (@NonNull final IMicroElement eNamedSMTPSettings)
   {
     final String sID = eNamedSMTPSettings.getAttributeValue (ATTR_ID);
 

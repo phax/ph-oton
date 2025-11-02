@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.config;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -33,9 +36,6 @@ import com.helger.xml.serialize.write.EXMLIncorrectCharacterHandling;
 import com.helger.xml.serialize.write.EXMLSerializeIndent;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The default implementation of {@link IHCConversionSettings} containing the real settings for HTML
@@ -68,8 +68,8 @@ public class HCConversionSettings implements IHCConversionSettings
   private String m_sNonceScript;
   private String m_sNonceStyle;
 
-  @Nonnull
-  public static XMLWriterSettings createDefaultXMLWriterSettings (@Nonnull final EHTMLVersion eHTMLVersion)
+  @NonNull
+  public static XMLWriterSettings createDefaultXMLWriterSettings (@NonNull final EHTMLVersion eHTMLVersion)
   {
     final XMLWriterSettings ret = eHTMLVersion.isAtLeastHTML5 () ? XMLWriterSettings.createForHTML5 ()
                                                                  : XMLWriterSettings.createForXHTML ();
@@ -78,13 +78,13 @@ public class HCConversionSettings implements IHCConversionSettings
                                                         : EXMLSerializeIndent.NONE);
   }
 
-  @Nonnull
+  @NonNull
   public static CSSWriterSettings createDefaultCSSWriterSettings ()
   {
     return new CSSWriterSettings ().setOptimizedOutput (!DEFAULT_INDENT_AND_ALIGN_CSS);
   }
 
-  @Nonnull
+  @NonNull
   public static JSWriterSettings createDefaultJSWriterSettings ()
   {
     return new JSWriterSettings ().setIndentAndAlign (DEFAULT_INDENT_AND_ALIGN_JS);
@@ -120,7 +120,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @param eHTMLVersion
    *        The HTML version to use. May not be <code>null</code>.
    */
-  public HCConversionSettings (@Nonnull final EHTMLVersion eHTMLVersion)
+  public HCConversionSettings (@NonNull final EHTMLVersion eHTMLVersion)
   {
     setHTMLVersion (eHTMLVersion);
     setToDefault ();
@@ -133,7 +133,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @param aBase
    *        Object to copy the settings from. May not be <code>null</code>.
    */
-  public HCConversionSettings (@Nonnull final IHCConversionSettings aBase)
+  public HCConversionSettings (@NonNull final IHCConversionSettings aBase)
   {
     this (aBase, aBase.getHTMLVersion ());
   }
@@ -147,7 +147,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @param eHTMLVersion
    *        A different HTML version to use than the one from the base settings
    */
-  public HCConversionSettings (@Nonnull final IHCConversionSettings aBase, @Nonnull final EHTMLVersion eHTMLVersion)
+  public HCConversionSettings (@NonNull final IHCConversionSettings aBase, @NonNull final EHTMLVersion eHTMLVersion)
   {
     ValueEnforcer.notNull (aBase, "Base");
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
@@ -170,8 +170,8 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The HTML version to use.
    * @return this
    */
-  @Nonnull
-  public HCConversionSettings setHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
+  @NonNull
+  public HCConversionSettings setHTMLVersion (@NonNull final EHTMLVersion eHTMLVersion)
   {
     ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
     m_eHTMLVersion = eHTMLVersion;
@@ -179,7 +179,7 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EHTMLVersion getHTMLVersion ()
   {
     return m_eHTMLVersion;
@@ -191,7 +191,7 @@ public class HCConversionSettings implements IHCConversionSettings
     return m_sHTMLNamespaceURI;
   }
 
-  @Nonnull
+  @NonNull
   public HCConversionSettings setXMLWriterSettingsOptimized (final boolean bOptimized)
   {
     m_aXMLWriterSettings.setIndent (bOptimized ? EXMLSerializeIndent.NONE : DEFAULT_INDENT_AND_ALIGN_HTML
@@ -211,8 +211,8 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The XML writer settings to be used. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public HCConversionSettings setXMLWriterSettings (@Nonnull final IXMLWriterSettings aXMLWriterSettings)
+  @NonNull
+  public HCConversionSettings setXMLWriterSettings (@NonNull final IXMLWriterSettings aXMLWriterSettings)
   {
     ValueEnforcer.notNull (aXMLWriterSettings, "XMLWriterSettings");
 
@@ -221,21 +221,21 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("Design")
   public XMLWriterSettings getXMLWriterSettings ()
   {
     return m_aXMLWriterSettings;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public XMLWriterSettings getMutableXMLWriterSettings ()
   {
     return m_aXMLWriterSettings.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public HCConversionSettings setCSSWriterSettingsOptimized (final boolean bOptimized)
   {
     m_aCSSWriterSettings.setOptimizedOutput (bOptimized).setRemoveUnnecessaryCode (bOptimized);
@@ -249,8 +249,8 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The settings. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public HCConversionSettings setCSSWriterSettings (@Nonnull final ICSSWriterSettings aCSSWriterSettings)
+  @NonNull
+  public HCConversionSettings setCSSWriterSettings (@NonNull final ICSSWriterSettings aCSSWriterSettings)
   {
     ValueEnforcer.notNull (aCSSWriterSettings, "CSSWriterSettings");
 
@@ -258,21 +258,21 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("Design")
   public CSSWriterSettings getCSSWriterSettings ()
   {
     return m_aCSSWriterSettings;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public CSSWriterSettings getMutableCSSWriterSettings ()
   {
     return new CSSWriterSettings (m_aCSSWriterSettings);
   }
 
-  @Nonnull
+  @NonNull
   public HCConversionSettings setJSWriterSettingsOptimized (final boolean bOptimized)
   {
     m_aJSWriterSettings.setMinimumCodeSize (bOptimized);
@@ -286,8 +286,8 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The settings. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public HCConversionSettings setJSWriterSettings (@Nonnull final IJSWriterSettings aJSWriterSettings)
+  @NonNull
+  public HCConversionSettings setJSWriterSettings (@NonNull final IJSWriterSettings aJSWriterSettings)
   {
     ValueEnforcer.notNull (aJSWriterSettings, "JSWriterSettings");
 
@@ -295,14 +295,14 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("Design")
   public JSWriterSettings getJSWriterSettings ()
   {
     return m_aJSWriterSettings;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSWriterSettings getMutableJSWriterSettings ()
   {
@@ -322,7 +322,7 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The new value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCConversionSettings setConsistencyChecksEnabled (final boolean bConsistencyChecksEnabled)
   {
     m_bConsistencyChecksEnabled = bConsistencyChecksEnabled;
@@ -341,7 +341,7 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The new value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCConversionSettings setExtractOutOfBandNodes (final boolean bExtractOutOfBandNodes)
   {
     m_bExtractOutOfBandNodes = bExtractOutOfBandNodes;
@@ -361,7 +361,7 @@ public class HCConversionSettings implements IHCConversionSettings
    *        The customizer to be used. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCConversionSettings setCustomizer (@Nullable final IHCCustomizer aCustomizer)
   {
     m_aCustomizer = aCustomizer;
@@ -382,7 +382,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   public HCConversionSettings setNonceScript (@Nullable final String sNonceScript)
   {
     m_sNonceScript = sNonceScript;
@@ -403,7 +403,7 @@ public class HCConversionSettings implements IHCConversionSettings
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   public HCConversionSettings setNonceStyle (@Nullable final String sNonceStyle)
   {
     m_sNonceStyle = sNonceStyle;
@@ -411,7 +411,7 @@ public class HCConversionSettings implements IHCConversionSettings
   }
 
   @OverridingMethodsMustInvokeSuper
-  @Nonnull
+  @NonNull
   public HCConversionSettings setToDefault ()
   {
     // There is no such thing as a default HTML version
@@ -436,20 +436,20 @@ public class HCConversionSettings implements IHCConversionSettings
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public HCConversionSettings getClone ()
   {
     return new HCConversionSettings (this);
   }
 
-  @Nonnull
-  public HCConversionSettings getClone (@Nonnull final EHTMLVersion eHTMLVersion)
+  @NonNull
+  public HCConversionSettings getClone (@NonNull final EHTMLVersion eHTMLVersion)
   {
     return new HCConversionSettings (this, eHTMLVersion);
   }
 
-  @Nonnull
-  public HCConversionSettings getCloneIfNecessary (@Nonnull final EHTMLVersion eHTMLVersion)
+  @NonNull
+  public HCConversionSettings getCloneIfNecessary (@NonNull final EHTMLVersion eHTMLVersion)
   {
     return m_eHTMLVersion.equals (eHTMLVersion) ? this : getClone (eHTMLVersion);
   }

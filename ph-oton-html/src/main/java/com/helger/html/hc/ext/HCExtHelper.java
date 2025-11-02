@@ -19,6 +19,9 @@ package com.helger.html.hc.ext;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.numeric.mutable.MutableInt;
@@ -122,9 +125,6 @@ import com.helger.html.hc.html.tabular.HCTable;
 import com.helger.html.hc.html.textlevel.*;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @SuppressWarnings ("deprecation")
 @Immutable
@@ -400,10 +400,10 @@ public final class HCExtHelper
   @FunctionalInterface
   public interface ILineConsumer
   {
-    void accept (@Nonnull String sLine, boolean bIsLast);
+    void accept (@NonNull String sLine, boolean bIsLast);
   }
 
-  public static void forEachLine (@Nullable final String sText, @Nonnull final ILineConsumer aTarget)
+  public static void forEachLine (@Nullable final String sText, @NonNull final ILineConsumer aTarget)
   {
     if (StringHelper.isNotEmpty (sText))
     {
@@ -428,7 +428,7 @@ public final class HCExtHelper
     }
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> nl2brList (@Nullable final String sText)
   {
@@ -437,7 +437,7 @@ public final class HCExtHelper
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static HCNodeList nl2brNodeList (@Nullable final String sText)
   {
@@ -446,7 +446,7 @@ public final class HCExtHelper
     return ret;
   }
 
-  public static void nl2brList (@Nullable final String sText, @Nonnull final Consumer <? super IHCNode> aTarget)
+  public static void nl2brList (@Nullable final String sText, @NonNull final Consumer <? super IHCNode> aTarget)
   {
     final MutableInt aCount = new MutableInt (0);
     forEachLine (sText, (sLine, bLast) -> {
@@ -473,7 +473,7 @@ public final class HCExtHelper
    * @return A non-<code>null</code> but maybe empty list. The list is empty, if the string is
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <HCDiv> nl2divList (@Nullable final String sText)
   {
@@ -493,7 +493,7 @@ public final class HCExtHelper
    * @return A non-<code>null</code> but maybe empty list. The list is empty, if the string is
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static HCNodeList nl2divNodeList (@Nullable final String sText)
   {
@@ -513,22 +513,22 @@ public final class HCExtHelper
    * @param aTarget
    *        The consumer to be invoked with every {@link HCDiv}. May not be <code>null</code>.
    */
-  public static void nl2divList (@Nullable final String sText, @Nonnull final Consumer <? super HCDiv> aTarget)
+  public static void nl2divList (@Nullable final String sText, @NonNull final Consumer <? super HCDiv> aTarget)
   {
     forEachLine (sText, (sLine, bLast) -> aTarget.accept (new HCDiv ().addChild (sLine)));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> list2brList (@Nullable final Iterable <String> aCont)
   {
     return list2brList (aCont, Function.identity ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static <SRCTYPE> ICommonsList <IHCNode> list2brList (@Nullable final Iterable <? extends SRCTYPE> aCont,
-                                                              @Nonnull final Function <? super SRCTYPE, String> aMapper)
+                                                              @NonNull final Function <? super SRCTYPE, String> aMapper)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (aCont != null)
@@ -545,17 +545,17 @@ public final class HCExtHelper
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> list2divList (@Nullable final Iterable <String> aCont)
   {
     return list2divList (aCont, Function.identity ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static <SRCTYPE> ICommonsList <IHCNode> list2divList (@Nullable final Iterable <? extends SRCTYPE> aCont,
-                                                               @Nonnull final Function <? super SRCTYPE, String> aMapper)
+                                                               @NonNull final Function <? super SRCTYPE, String> aMapper)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     if (aCont != null)

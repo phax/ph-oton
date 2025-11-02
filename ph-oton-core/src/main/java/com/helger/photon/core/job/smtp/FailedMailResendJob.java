@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.job.smtp;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +37,6 @@ import com.helger.smtp.failed.FailedMailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * A Quartz job, that tries to re-send failed mails.
  *
@@ -55,8 +54,8 @@ public final class FailedMailResendJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
-                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap,
+                            @NonNull final IJobExecutionContext aContext) throws JobExecutionException
   {
     final ICommonsList <FailedMailData> aFailedMails = PhotonCoreManager.getFailedMailQueue ().removeAll ();
     if (!aFailedMails.isEmpty ())
@@ -74,8 +73,8 @@ public final class FailedMailResendJob extends AbstractScopeAwareJob
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
-  @Nonnull
-  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder)
+  @NonNull
+  public static TriggerKey schedule (@NonNull final SimpleScheduleBuilder aScheduleBuilder)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 

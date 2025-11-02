@@ -16,12 +16,12 @@
  */
 package com.helger.photon.api.pathdescriptor;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This enum contains all the variable constraint types that can be used in API
@@ -36,13 +36,13 @@ public enum EPathDescriptorVariableConstraintType implements IHasID <String>
   private final String m_sID;
   private final boolean m_bRequiresValue;
 
-  EPathDescriptorVariableConstraintType (@Nonnull @Nonempty final String sID, final boolean bRequiresValue)
+  EPathDescriptorVariableConstraintType (@NonNull @Nonempty final String sID, final boolean bRequiresValue)
   {
     m_sID = sID;
     m_bRequiresValue = bRequiresValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

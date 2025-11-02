@@ -18,6 +18,8 @@ package com.helger.photon.core.audit;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.tostring.ToStringGenerator;
@@ -26,8 +28,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.xservlet.requesttrack.IParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.TrackedRequest;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A simple implementation of {@link IParallelRunningRequestCallback} simply
@@ -43,7 +43,7 @@ public class AuditingParallelRunningRequestCallback implements IParallelRunningR
   public AuditingParallelRunningRequestCallback ()
   {}
 
-  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @Nonnull @Nonempty final List <TrackedRequest> aRequests)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @NonNull @Nonempty final List <TrackedRequest> aRequests)
   {
     final ICommonsList <String> aURLs = new CommonsArrayList <> ();
     for (final TrackedRequest aRequest : aRequests)

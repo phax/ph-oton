@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +51,6 @@ import com.helger.photon.audit.IAuditor;
 import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A special implementation of {@link IAuditor} writing data to a SQL table
  *
@@ -74,24 +73,24 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    */
-  public AuditorJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                      @Nonnull final Function <String, String> aTableNameCustomizer,
-                      @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public AuditorJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                      @NonNull final Function <String, String> aTableNameCustomizer,
+                      @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     super (aDBExecSupplier);
     m_sTableName = aTableNameCustomizer.apply ("audit");
     m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "UserIDProvider");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTableName ()
   {
     return m_sTableName;
   }
 
-  public void createAuditItem (@Nonnull final EAuditActionType eActionType,
-                               @Nonnull final ESuccess eSuccess,
+  public void createAuditItem (@NonNull final EAuditActionType eActionType,
+                               @NonNull final ESuccess eSuccess,
                                @Nullable final ObjectType aActionObjectType,
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
@@ -141,7 +140,7 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
       LOGGER.error ("Failed to write audit item to DB");
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {

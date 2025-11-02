@@ -16,7 +16,7 @@
  */
 package com.helger.html.markdown;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * An interface for emitting span elements. Currently only used for special
@@ -34,5 +34,5 @@ public interface IMarkdownSpanEmitter
    * @param content
    *        The span's content.
    */
-  void emitSpan (@Nonnull MarkdownHCStack out, @Nonnull MarkdownHCStack content);
+  void emitSpan (@NonNull MarkdownHCStack out, @NonNull MarkdownHCStack content);
 }

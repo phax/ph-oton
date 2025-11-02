@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -49,9 +52,6 @@ import com.helger.photon.security.role.IRoleModificationCallback;
 import com.helger.photon.security.role.Role;
 import com.helger.photon.security.role.RoleManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link IRoleManager} for JDBC backends.
  *
@@ -62,8 +62,8 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   private final String m_sTableName;
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public RoleManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                          @Nonnull final Function <String, String> aTableNameCustomizer)
+  public RoleManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                          @NonNull final Function <String, String> aTableNameCustomizer)
   {
     super (aDBExecSupplier);
     m_sTableName = aTableNameCustomizer.apply ("secrole");
@@ -73,14 +73,14 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
    * @return The name of the database table this class is operating on. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTableName ()
   {
     return m_sTableName;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IRole> getAll ()
   {
@@ -155,15 +155,15 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
       _internalCreateItem (RoleManager.createDefaultRoleUser ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IRoleModificationCallback> roleModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
-  private ESuccess _internalCreateItem (@Nonnull final Role aRole)
+  @NonNull
+  private ESuccess _internalCreateItem (@NonNull final Role aRole)
   {
     final DBExecutor aExecutor = newExecutor ();
     return aExecutor.performInTransaction ( () -> {
@@ -194,7 +194,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public Role internalCreateNewRole (@Nonnull final Role aRole, final boolean bPredefined, final boolean bRunCallback)
+  public Role internalCreateNewRole (@NonNull final Role aRole, final boolean bPredefined, final boolean bRunCallback)
   {
     // Store
     if (_internalCreateItem (aRole).isFailure ())
@@ -224,7 +224,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public IRole createNewRole (@Nonnull @Nonempty final String sName,
+  public IRole createNewRole (@NonNull @Nonempty final String sName,
                               @Nullable final String sDescription,
                               @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -234,8 +234,8 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public IRole createPredefinedRole (@Nonnull @Nonempty final String sID,
-                                     @Nonnull @Nonempty final String sName,
+  public IRole createPredefinedRole (@NonNull @Nonempty final String sID,
+                                     @NonNull @Nonempty final String sName,
                                      @Nullable final String sDescription,
                                      @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -244,7 +244,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return internalCreateNewRole (aRole, true, true);
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
     if (StringHelper.isEmpty (sRoleID))
@@ -317,8 +317,8 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return new Role (aStub, aRow.getAsString (7), aRow.getAsString (8));
   }
 
-  @Nonnull
-  public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
+  @NonNull
+  public EChange renameRole (@Nullable final String sRoleID, @NonNull @Nonempty final String sNewName)
   {
     if (StringHelper.isEmpty (sRoleID))
       return EChange.UNCHANGED;
@@ -361,9 +361,9 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setRoleData (@Nullable final String sRoleID,
-                              @Nonnull @Nonempty final String sNewName,
+                              @NonNull @Nonempty final String sNewName,
                               @Nullable final String sNewDescription,
                               @Nullable final Map <String, String> aNewCustomAttrs)
   {

@@ -18,12 +18,12 @@ package com.helger.photon.security.token.accesstoken;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents a single token. It uniquely belongs to a user token but
@@ -45,14 +45,14 @@ public interface IAccessToken
   /**
    * @return The hex-encoded string with the random data.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getTokenString ();
 
   /**
    * @return The date time before this token is not valid.
    */
-  @Nonnull
+  @NonNull
   LocalDateTime getNotBefore ();
 
   /**
@@ -84,13 +84,13 @@ public interface IAccessToken
    * @return <code>true</code> if the token was valid at that point in time,
    *         <code>false</code> otherwise.
    */
-  boolean isValidAt (@Nonnull LocalDateTime aDT);
+  boolean isValidAt (@NonNull LocalDateTime aDT);
 
   /**
    * @return The current revocation status of this token. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IRevocationStatus getRevocationStatus ();
 
   /**

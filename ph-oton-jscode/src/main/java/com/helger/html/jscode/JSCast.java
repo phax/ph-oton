@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A cast operation.
@@ -47,7 +47,7 @@ public class JSCast extends AbstractJSExpression
    * @param aObject
    *        JExpression for the object upon which the cast is applied
    */
-  public JSCast (@Nonnull final AbstractJSType aType, @Nonnull final IJSExpression aObject)
+  public JSCast (@NonNull final AbstractJSType aType, @NonNull final IJSExpression aObject)
   {
     ValueEnforcer.notNull (aType, "Type");
     ValueEnforcer.notNull (aObject, "Object");
@@ -55,19 +55,19 @@ public class JSCast extends AbstractJSExpression
     m_aExpr = aObject;
   }
 
-  @Nonnull
+  @NonNull
   public AbstractJSType type ()
   {
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr ()
   {
     return m_aExpr;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ("((").generatable (m_aType).plain (')').generatable (m_aExpr).plain (')');
   }

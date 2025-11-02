@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSEventMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for objects having JS event handlers
@@ -73,8 +73,8 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    *        <code>null</code> in which case nothing happens.
    * @return this.
    */
-  @Nonnull
-  IMPLTYPE addEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  @NonNull
+  IMPLTYPE addEventHandler (@NonNull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
 
   /**
    * Add a JS event handler at the front.
@@ -86,8 +86,8 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    *        <code>null</code> in which case nothing happens.
    * @return this.
    */
-  @Nonnull
-  IMPLTYPE prependEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  @NonNull
+  IMPLTYPE prependEventHandler (@NonNull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
 
   /**
    * Set a JS event handler. All eventually present event handlers are
@@ -101,8 +101,8 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    *        after the call.
    * @return this.
    */
-  @Nonnull
-  IMPLTYPE setEventHandler (@Nonnull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
+  @NonNull
+  IMPLTYPE setEventHandler (@NonNull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
 
   /**
    * Remove all event handler for the specified JS event.
@@ -111,6 +111,6 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    *        The JS event to remove the handler. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllEventHandler (@Nullable EJSEvent eJSEvent);
 }

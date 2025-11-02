@@ -16,9 +16,9 @@
  */
 package com.helger.photon.audit;
 
-import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
  * An implementation of {@link IAuditor} that does nothing
@@ -27,14 +27,14 @@ import jakarta.annotation.Nonnull;
  */
 public final class DoNothingAuditor extends AbstractAuditor
 {
-  public DoNothingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
+  public DoNothingAuditor (@NonNull final ICurrentUserIDProvider aUserIDProvider)
   {
     // Use the specific audit string provide that is quickest ;-)
     super (aUserIDProvider, (x, y) -> null);
   }
 
   @Override
-  protected void handleAuditItem (@Nonnull final IAuditItem aAuditItem)
+  protected void handleAuditItem (@NonNull final IAuditItem aAuditItem)
   {
     // do nothing
   }

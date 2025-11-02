@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -29,9 +32,6 @@ import com.helger.base.state.ETriState;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.text.IMultilingualText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains the data for a single long running job.
@@ -53,8 +53,8 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   private ETriState m_eExecSuccess;
   private LongRunningJobResult m_aResult;
 
-  public LongRunningJobData (@Nonnull @Nonempty final String sJobID,
-                             @Nonnull final IMultilingualText aJobDescription,
+  public LongRunningJobData (@NonNull @Nonempty final String sJobID,
+                             @NonNull final IMultilingualText aJobDescription,
                              @Nullable final String sStartingUserID)
   {
     m_sID = ValueEnforcer.notEmpty (sJobID, "JobID");
@@ -64,13 +64,13 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
     m_eExecSuccess = ETriState.UNDEFINED;
   }
 
-  LongRunningJobData (@Nonnull @Nonempty final String sID,
-                      @Nonnull final LocalDateTime aStartDateTime,
-                      @Nonnull final LocalDateTime aEndDateTime,
-                      @Nonnull final ETriState eExecSuccess,
+  LongRunningJobData (@NonNull @Nonempty final String sID,
+                      @NonNull final LocalDateTime aStartDateTime,
+                      @NonNull final LocalDateTime aEndDateTime,
+                      @NonNull final ETriState eExecSuccess,
                       @Nullable final String sStartingUserID,
-                      @Nonnull final IMultilingualText aJobDescription,
-                      @Nonnull final LongRunningJobResult aResult)
+                      @NonNull final IMultilingualText aJobDescription,
+                      @NonNull final LongRunningJobResult aResult)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_aStartDateTime = ValueEnforcer.notNull (aStartDateTime, "StartDateTime");
@@ -81,7 +81,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
     m_aResult = ValueEnforcer.notNull (aResult, "Result");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -91,7 +91,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   /**
    * @return The description of the underlying job. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IMultilingualText getJobDescription ()
   {
     return m_aJobDescription;
@@ -100,7 +100,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   /**
    * @return The date time when the job was started. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public LocalDateTime getStartDateTime ()
   {
     return m_aStartDateTime;
@@ -115,7 +115,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
     return m_sStartingUserID;
   }
 
-  void onJobEnd (@Nonnull final ESuccess eExecSuccess, @Nonnull final LongRunningJobResult aResult)
+  void onJobEnd (@NonNull final ESuccess eExecSuccess, @NonNull final LongRunningJobResult aResult)
   {
     ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
     ValueEnforcer.notNull (aResult, "Result");
@@ -151,7 +151,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   /**
    * @return The execution duration. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public Duration getDuration ()
   {
     if (!isEnded ())
@@ -164,7 +164,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
    *         without an exception. Is {@link ETriState#UNDEFINED} if the result
    *         is not yet known. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ETriState getExecutionSuccess ()
   {
     return m_eExecSuccess;

@@ -18,6 +18,8 @@ package com.helger.photon.core.systemmsg;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.util.MicroHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages global system messages.
@@ -80,7 +79,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   }
 
   @Override
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     final IMicroElement eRoot = aDoc.getDocumentElement ();
     m_aData.setLastUpdate (eRoot.getAttributeValueWithConversion (ATTR_LAST_UPDATE, LocalDateTime.class));
@@ -113,7 +112,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
   /**
    * @return The type of system message. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ESystemMessageType getMessageType ()
   {
     return m_aRWLock.readLockedGet (m_aData::getMessageType);
@@ -137,8 +136,8 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
     return m_aRWLock.readLockedBoolean (m_aData::hasMessage);
   }
 
-  @Nonnull
-  public EChange setSystemMessage (@Nonnull final ESystemMessageType eMessageType, @Nullable final String sMessage)
+  @NonNull
+  public EChange setSystemMessage (@NonNull final ESystemMessageType eMessageType, @Nullable final String sMessage)
   {
     ValueEnforcer.notNull (eMessageType, "MessageType");
 

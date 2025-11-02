@@ -19,6 +19,9 @@ package com.helger.html.meta;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -33,9 +36,6 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.collection.commons.ICommonsOrderedSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages a list of meta elements.
@@ -52,21 +52,21 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   public MetaElementList ()
   {}
 
-  public MetaElementList (@Nonnull final MetaElementList aOther)
+  public MetaElementList (@NonNull final MetaElementList aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aItems.putAll (aOther.m_aItems);
   }
 
-  public MetaElementList (@Nonnull final Iterable <? extends IMetaElement> aMetaElementList)
+  public MetaElementList (@NonNull final Iterable <? extends IMetaElement> aMetaElementList)
   {
     ValueEnforcer.notNull (aMetaElementList, "MetaElementList");
     for (final IMetaElement aMetaElement : aMetaElementList)
       addMetaElement (aMetaElement);
   }
 
-  @Nonnull
-  public MetaElementList addMetaElement (@Nonnull final IMetaElement aMetaElement)
+  @NonNull
+  public MetaElementList addMetaElement (@NonNull final IMetaElement aMetaElement)
   {
     ValueEnforcer.notNull (aMetaElement, "MetaElement");
 
@@ -74,8 +74,8 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
     return this;
   }
 
-  @Nonnull
-  public MetaElementList addMetaElements (@Nonnull final Iterable <? extends IMetaElement> aMetaElementList)
+  @NonNull
+  public MetaElementList addMetaElements (@NonNull final Iterable <? extends IMetaElement> aMetaElementList)
   {
     ValueEnforcer.notNull (aMetaElementList, "MetaElementList");
     for (final IMetaElement aMetaElement : aMetaElementList)
@@ -83,8 +83,8 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
     return this;
   }
 
-  @Nonnull
-  public MetaElementList addMetaElements (@Nonnull final MetaElementList aMetaElementList)
+  @NonNull
+  public MetaElementList addMetaElements (@NonNull final MetaElementList aMetaElementList)
   {
     ValueEnforcer.notNull (aMetaElementList, "MetaElementList");
 
@@ -92,33 +92,33 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeMetaElement (@Nullable final String sMetaElementName)
   {
     return m_aRWLock.writeLockedGet ( () -> m_aItems.removeObject (sMetaElementName));
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAllMetaElements ()
   {
     return m_aRWLock.writeLockedGet (m_aItems::removeAll);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllMetaElementNames ()
   {
     return m_aRWLock.readLockedGet (m_aItems::copyOfKeySet);
   }
 
-  public void getAllMetaElements (@Nonnull final Collection <? super IMetaElement> aTarget)
+  public void getAllMetaElements (@NonNull final Collection <? super IMetaElement> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
     m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aItems.values ()));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IMetaElement> getAllMetaElements ()
   {
@@ -147,13 +147,13 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
     return m_aRWLock.readLockedBoolean (m_aItems::isNotEmpty);
   }
 
-  @Nonnull
+  @NonNull
   public Iterator <IMetaElement> iterator ()
   {
     return m_aRWLock.readLockedGet ( () -> m_aItems.values ().iterator ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public MetaElementList getClone ()
   {

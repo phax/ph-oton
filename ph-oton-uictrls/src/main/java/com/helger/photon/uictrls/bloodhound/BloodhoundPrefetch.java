@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -29,9 +32,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represent a prefetch object used in Bloodhound init options
@@ -63,13 +63,13 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
    * @param aURL
    *        A URL to a JSON file containing an array of datums.
    */
-  public BloodhoundPrefetch (@Nonnull final ISimpleURL aURL)
+  public BloodhoundPrefetch (@NonNull final ISimpleURL aURL)
   {
     ValueEnforcer.notNull (aURL, "URL");
     m_aURL = new SimpleURL (aURL);
   }
 
-  public BloodhoundPrefetch (@Nonnull final BloodhoundPrefetch aOther)
+  public BloodhoundPrefetch (@NonNull final BloodhoundPrefetch aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aURL = aOther.m_aURL.getClone ();
@@ -83,7 +83,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   /**
    * @return A URL to a JSON file containing an array of datums. Required.
    */
-  @Nonnull
+  @NonNull
   public ISimpleURL getURL ()
   {
     return m_aURL;
@@ -99,7 +99,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
     return m_sCacheKey;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch setCacheKey (@Nullable final String sCacheKey)
   {
     m_sCacheKey = sCacheKey;
@@ -124,7 +124,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
    *        Time to live in milliseconds. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch setTTL (@Nonnegative final long nTTL)
   {
     m_nTTL = ValueEnforcer.isGT0 (nTTL, "TTL");
@@ -142,7 +142,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
     return m_sThumbprint;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch setThumbprint (@Nullable final String sThumbprint)
   {
     m_sThumbprint = sThumbprint;
@@ -169,7 +169,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch setFilter (@Nullable final IJSExpression aFilter)
   {
     m_aFilter = aFilter;
@@ -186,14 +186,14 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
     return m_aAjax;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch setAjax (@Nullable final JQueryAjaxBuilder aAjax)
   {
     m_aAjax = aAjax;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {
@@ -212,7 +212,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundPrefetch getClone ()
   {
     return new BloodhoundPrefetch (this);

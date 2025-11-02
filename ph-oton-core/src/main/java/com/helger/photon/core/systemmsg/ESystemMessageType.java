@@ -18,14 +18,14 @@ package com.helger.photon.core.systemmsg;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This enumeration defines the different system message types.
@@ -44,13 +44,13 @@ public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
   private final String m_sID;
   private final EPhotonCoreText m_eText;
 
-  ESystemMessageType (@Nonnull @Nonempty final String sID, @Nonnull final EPhotonCoreText aText)
+  ESystemMessageType (@NonNull @Nonempty final String sID, @NonNull final EPhotonCoreText aText)
   {
     m_sID = sID;
     m_eText = aText;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -58,12 +58,12 @@ public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_eText.getDisplayText (aContentLocale);
   }
 
-  @Nonnull
+  @NonNull
   public static ESystemMessageType getFromIDOrDefault (@Nullable final String sID)
   {
     return EnumHelper.getFromIDOrDefault (ESystemMessageType.class, sID, DEFAULT);

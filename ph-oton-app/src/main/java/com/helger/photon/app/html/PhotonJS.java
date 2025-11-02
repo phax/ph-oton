@@ -18,6 +18,8 @@ package com.helger.photon.app.html;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,9 +40,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class keeps track of all the JS files that must be included globally for a single request.
  *
@@ -59,7 +58,7 @@ public final class PhotonJS
   private PhotonJS ()
   {}
 
-  public static void _readJSIncludes (@Nonnull final IReadableResource aRes, @Nonnull final JSResourceSet aTarget)
+  public static void _readJSIncludes (@NonNull final IReadableResource aRes, @NonNull final JSResourceSet aTarget)
   {
     ValueEnforcer.notNull (aRes, "Res");
     ValueEnforcer.notNull (aTarget, "Target");
@@ -95,7 +94,7 @@ public final class PhotonJS
       }
   }
 
-  public static void readJSIncludesForGlobal (@Nonnull final IReadableResource aRes)
+  public static void readJSIncludesForGlobal (@NonNull final IReadableResource aRes)
   {
     _readJSIncludes (aRes, GLOBAL);
   }
@@ -106,7 +105,7 @@ public final class PhotonJS
    * @param aJSPathProvider
    *        The JS path provider to use. May not be <code>null</code>.
    */
-  public static void registerJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
+  public static void registerJSIncludeForGlobal (@NonNull final IJSPathProvider aJSPathProvider)
   {
     GLOBAL.addItem (aJSPathProvider);
   }
@@ -119,7 +118,7 @@ public final class PhotonJS
    * @param aJSPathProvider
    *        The JS path provider to use. May not be <code>null</code>.
    */
-  public static void registerJSIncludeForGlobal (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
+  public static void registerJSIncludeForGlobal (final int nIndex, @NonNull final IJSPathProvider aJSPathProvider)
   {
     GLOBAL.addItem (nIndex, aJSPathProvider);
   }
@@ -130,7 +129,7 @@ public final class PhotonJS
    * @param aJSPathProvider
    *        The JS path provider to use. May not be <code>null</code>.
    */
-  public static void unregisterJSIncludeForGlobal (@Nonnull final IJSPathProvider aJSPathProvider)
+  public static void unregisterJSIncludeForGlobal (@NonNull final IJSPathProvider aJSPathProvider)
   {
     GLOBAL.removeItem (aJSPathProvider);
   }
@@ -146,14 +145,14 @@ public final class PhotonJS
   /**
    * @return A non-<code>null</code> set with all JS paths to be included globally.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <IJSPathProvider> getAllRegisteredJSIncludesForGlobal ()
   {
     return GLOBAL.getAllItems ();
   }
 
-  public static void getAllRegisteredJSIncludesForGlobal (@Nonnull final Collection <? super IJSPathProvider> aTarget)
+  public static void getAllRegisteredJSIncludesForGlobal (@NonNull final Collection <? super IJSPathProvider> aTarget)
   {
     GLOBAL.getAllItems (aTarget);
   }
@@ -188,7 +187,7 @@ public final class PhotonJS
    * @param aJSPathProvider
    *        The JS path provider to use. May not be <code>null</code>.
    */
-  public static void registerJSIncludeForThisRequest (@Nonnull final IJSPathProvider aJSPathProvider)
+  public static void registerJSIncludeForThisRequest (@NonNull final IJSPathProvider aJSPathProvider)
   {
     _getPerRequestSet (true).addItem (aJSPathProvider);
   }
@@ -199,7 +198,7 @@ public final class PhotonJS
    * @param aJSPathProvider
    *        The JS path provider to use. May not be <code>null</code>.
    */
-  public static void unregisterJSIncludeFromThisRequest (@Nonnull final IJSPathProvider aJSPathProvider)
+  public static void unregisterJSIncludeFromThisRequest (@NonNull final IJSPathProvider aJSPathProvider)
   {
     final JSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)
@@ -219,7 +218,7 @@ public final class PhotonJS
   /**
    * @return A non-<code>null</code> set with all JS paths to be included in this request.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <IJSPathProvider> getAllRegisteredJSIncludesForThisRequest ()
   {
@@ -230,7 +229,7 @@ public final class PhotonJS
     return aSet.getAllItems ();
   }
 
-  public static void getAllRegisteredJSIncludesForThisRequest (@Nonnull final Collection <? super IJSPathProvider> aTarget)
+  public static void getAllRegisteredJSIncludesForThisRequest (@NonNull final Collection <? super IJSPathProvider> aTarget)
   {
     final JSResourceSet aSet = _getPerRequestSet (false);
     if (aSet != null)

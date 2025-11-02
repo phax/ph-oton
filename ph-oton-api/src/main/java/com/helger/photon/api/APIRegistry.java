@@ -16,15 +16,15 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation if {@link IAPIRegistry}.
@@ -41,12 +41,12 @@ public class APIRegistry implements IAPIRegistry
   public APIRegistry ()
   {}
 
-  public void registerAPI (@Nonnull final APIDescriptor aDescriptor)
+  public void registerAPI (@NonNull final APIDescriptor aDescriptor)
   {
     m_aRWLock.writeLocked ( () -> m_aApiDecls.addDescriptor (aDescriptor));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAPIDescriptor> getAllAPIDescriptors ()
   {
@@ -54,7 +54,7 @@ public class APIRegistry implements IAPIRegistry
   }
 
   @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath, @Nonnull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getAPIByPath (@NonNull final APIPath aPath, @NonNull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
     return m_aRWLock.readLockedGet ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
   }

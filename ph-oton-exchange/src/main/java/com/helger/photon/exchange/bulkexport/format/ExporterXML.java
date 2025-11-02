@@ -19,6 +19,9 @@ package com.helger.photon.exchange.bulkexport.format;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsImmutableObject;
@@ -37,9 +40,6 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for XML files
@@ -65,33 +65,33 @@ public class ExporterXML implements IExporterFile
   {}
 
   @Override
-  @Nonnull
+  @NonNull
   public final EExchangeFileType getFileType ()
   {
     return EExchangeFileType.XML;
   }
 
-  @Nonnull
+  @NonNull
   public final Charset getCharset ()
   {
     return m_aXWS.getCharset ();
   }
 
-  @Nonnull
-  public final ExporterXML setCharset (@Nonnull final Charset aCharset)
+  @NonNull
+  public final ExporterXML setCharset (@NonNull final Charset aCharset)
   {
     m_aXWS.setCharset (aCharset);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final XMLWriterSettings xmlWriterSettings ()
   {
     return m_aXWS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final IXMLWriterSettings getXMLWriterSettings ()
   {
@@ -103,14 +103,14 @@ public class ExporterXML implements IExporterFile
     return m_bEmitTypeAttr;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterXML setEmitTypeAttr (final boolean bEmitTypeAttr)
   {
     m_bEmitTypeAttr = bEmitTypeAttr;
     return this;
   }
 
-  private void _emitRecord (@Nonnull final IMicroElement eParentRow, @Nonnull final IExportRecord aRecord)
+  private void _emitRecord (@NonNull final IMicroElement eParentRow, @NonNull final IExportRecord aRecord)
   {
     final IMicroElement eRecord = eParentRow.addElement (ELEMENT_RECORD);
     for (final IExportRecordField aField : aRecord.getAllFields ())
@@ -125,7 +125,7 @@ public class ExporterXML implements IExporterFile
   }
 
   @Nullable
-  public IMicroDocument convertRecords (@Nonnull final IExportRecordProvider aProvider)
+  public IMicroDocument convertRecords (@NonNull final IExportRecordProvider aProvider)
   {
     ValueEnforcer.notNull (aProvider, "Provider");
 
@@ -152,9 +152,9 @@ public class ExporterXML implements IExporterFile
   }
 
   @Override
-  @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                 @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess exportRecords (@NonNull final IExportRecordProvider aProvider,
+                                 @NonNull @WillClose final OutputStream aOS)
   {
     try
     {

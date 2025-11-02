@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Implementation of a node that is ONLY an out-of-band node!
@@ -33,12 +33,12 @@ public class HCOutOfBandNode extends AbstractHCWrappingNode
 {
   private final IHCNode m_aOutOfBandNode;
 
-  public HCOutOfBandNode (@Nonnull final IHCNode aOutOfBandNode)
+  public HCOutOfBandNode (@NonNull final IHCNode aOutOfBandNode)
   {
     m_aOutOfBandNode = ValueEnforcer.notNull (aOutOfBandNode, "OutOfBandNode");
   }
 
-  @Nonnull
+  @NonNull
   public IHCNode getWrappedNode ()
   {
     return m_aOutOfBandNode;

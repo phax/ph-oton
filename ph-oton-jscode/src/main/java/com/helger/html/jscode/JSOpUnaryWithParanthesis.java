@@ -16,24 +16,24 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 public class JSOpUnaryWithParanthesis extends JSOpUnary
 {
-  public JSOpUnaryWithParanthesis (@Nonnull @Nonempty final String sOp, @Nonnull final IJSExpression aExpr)
+  public JSOpUnaryWithParanthesis (@NonNull @Nonempty final String sOp, @NonNull final IJSExpression aExpr)
   {
     super (sOp, aExpr);
   }
 
-  public JSOpUnaryWithParanthesis (@Nonnull final IJSExpression aExpr, @Nonnull @Nonempty final String sOp)
+  public JSOpUnaryWithParanthesis (@NonNull final IJSExpression aExpr, @NonNull @Nonempty final String sOp)
   {
     super (aExpr, sOp);
   }
 
   @Override
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('(');
     super.generate (aFormatter);

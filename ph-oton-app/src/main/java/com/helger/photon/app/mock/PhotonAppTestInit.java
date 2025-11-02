@@ -18,6 +18,8 @@ package com.helger.photon.app.mock;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -26,8 +28,6 @@ import com.helger.collection.stack.NonBlockingStack;
 import com.helger.photon.app.PhotonAppInit;
 import com.helger.photon.io.WebFileIO;
 import com.helger.photon.io.WebIOIntIDFactory;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Static test init and shutdown code for this project
@@ -40,10 +40,10 @@ public final class PhotonAppTestInit
   private PhotonAppTestInit ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static NonBlockingStack <Runnable> init (@Nonnull final File aDataPath,
-                                                  @Nonnull @Nonempty final String sServletContextPath)
+  public static NonBlockingStack <Runnable> init (@NonNull final File aDataPath,
+                                                  @NonNull @Nonempty final String sServletContextPath)
   {
     final NonBlockingStack <Runnable> aCleansing = new NonBlockingStack <> ();
 

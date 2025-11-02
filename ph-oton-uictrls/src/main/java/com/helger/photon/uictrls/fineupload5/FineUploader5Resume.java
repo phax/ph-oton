@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper for Fine Uploader 5.x resume part
@@ -54,7 +54,7 @@ public class FineUploader5Resume implements IFineUploader5Part
    *        New value. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Resume setRecordsExpireIn (@Nonnegative final int nRecordsExpireIn)
   {
     ValueEnforcer.isGE0 (nRecordsExpireIn, "RecordsExpireIn");
@@ -74,14 +74,14 @@ public class FineUploader5Resume implements IFineUploader5Part
    *        New value.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Resume setEnabled (final boolean bEnabled)
   {
     m_bResumeEnabled = bEnabled;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getParamNameResuming ()
   {
@@ -95,15 +95,15 @@ public class FineUploader5Resume implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Resume setParamNameResuming (@Nonnull @Nonempty final String sParamNameResuming)
+  @NonNull
+  public FineUploader5Resume setParamNameResuming (@NonNull @Nonempty final String sParamNameResuming)
   {
     ValueEnforcer.notEmpty (sParamNameResuming, "ParamNameResuming");
     m_sResumeParamNamesResuming = sParamNameResuming;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

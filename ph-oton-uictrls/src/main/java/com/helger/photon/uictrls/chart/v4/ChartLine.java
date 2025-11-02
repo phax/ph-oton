@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Line Chart
@@ -36,7 +36,7 @@ public class ChartLine extends AbstractChartV4WithLabels <ChartLine, ChartDataSe
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSOptions ()
   {

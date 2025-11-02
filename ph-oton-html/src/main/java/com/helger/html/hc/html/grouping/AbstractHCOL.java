@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Represents an HTML &lt;ol&gt; element using {@link HCLI} as children.
@@ -34,7 +34,7 @@ public abstract class AbstractHCOL <IMPLTYPE extends AbstractHCOL <IMPLTYPE>> ex
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected HCLI createEmptyItem ()
   {
     return new HCLI ();

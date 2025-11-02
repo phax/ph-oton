@@ -18,6 +18,8 @@ package com.helger.html.entity;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -32,9 +34,6 @@ import com.helger.html.CHTMLDocTypes;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.xml.sax.InputSourceFactory;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The SAX entity resolver for XHTML resources.
  *
@@ -48,8 +47,8 @@ public final class HTMLEntityResolver implements EntityResolver
   /** Maps public ID to the DTD content for performance reasons */
   private final ICommonsMap <String, byte []> m_aResolveMap = new CommonsHashMap <> ();
 
-  private void _addResolvablePublicId (@Nonnull @Nonempty final String sPublicID,
-                                       @Nonnull @Nonempty final String sFilePath)
+  private void _addResolvablePublicId (@NonNull @Nonempty final String sPublicID,
+                                       @NonNull @Nonempty final String sFilePath)
   {
     if (m_aResolveMap.containsKey (sPublicID))
       throw new IllegalArgumentException ("Passed public id '" + sPublicID + "' is already contained!");
@@ -113,13 +112,13 @@ public final class HTMLEntityResolver implements EntityResolver
     _addResolvablePublicId ("-//W3C//ELEMENTS XHTML Block Presentation 1.0//EN", sPrefix + "xhtml-blkpres-1.mod");
   }
 
-  @Nonnull
+  @NonNull
   public static HTMLEntityResolver getInstance ()
   {
     return INSTANCE;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllPublicIds ()
   {

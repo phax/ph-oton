@@ -16,11 +16,11 @@
  */
 package com.helger.html.jquery.config;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The default JQuery based "on document ready" provider.
@@ -29,7 +29,7 @@ import jakarta.annotation.Nonnull;
  */
 public class JQueryOnDocumentReadyProvider implements IHCOnDocumentReadyProvider
 {
-  @Nonnull
+  @NonNull
   public IHasJSCode createOnDocumentReady (final IHasJSCode aJSCodeProvider)
   {
     return JQuery.onDocumentReady (aJSCodeProvider);

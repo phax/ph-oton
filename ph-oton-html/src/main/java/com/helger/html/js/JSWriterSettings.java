@@ -16,6 +16,9 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -23,9 +26,6 @@ import com.helger.base.clone.ICloneable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.system.ENewLineMode;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Settings for the textual representation of JSDOM objects
@@ -48,7 +48,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
     m_eNewLineMode = JSWriterDefaultSettings.getNewLineMode ();
   }
 
-  public JSWriterSettings (@Nonnull final IJSWriterSettings aOther)
+  public JSWriterSettings (@NonNull final IJSWriterSettings aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_bIndentAndAlign = aOther.isIndentAndAlign ();
@@ -62,7 +62,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
     return m_bIndentAndAlign;
   }
 
-  @Nonnull
+  @NonNull
   public JSWriterSettings setIndentAndAlign (final boolean bIndentAndAlign)
   {
     m_bIndentAndAlign = bIndentAndAlign;
@@ -74,7 +74,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
     return m_bGenerateComments;
   }
 
-  @Nonnull
+  @NonNull
   public JSWriterSettings setGenerateComments (final boolean bGenerateComments)
   {
     m_bGenerateComments = bGenerateComments;
@@ -89,7 +89,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
    *        true for minimum code size
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSWriterSettings setMinimumCodeSize (final boolean bMinimumCodeSize)
   {
     setIndentAndAlign (!bMinimumCodeSize);
@@ -97,41 +97,41 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getIndent ()
   {
     return m_sIndent;
   }
 
-  @Nonnull
-  public JSWriterSettings setIndent (@Nonnull @Nonempty final String sIndent)
+  @NonNull
+  public JSWriterSettings setIndent (@NonNull @Nonempty final String sIndent)
   {
     m_sIndent = ValueEnforcer.notEmpty (sIndent, "Indent");
     return this;
   }
 
-  @Nonnull
-  public JSWriterSettings setNewLineMode (@Nonnull final ENewLineMode eNewLineMode)
+  @NonNull
+  public JSWriterSettings setNewLineMode (@NonNull final ENewLineMode eNewLineMode)
   {
     m_eNewLineMode = ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ENewLineMode getNewLineMode ()
   {
     return m_eNewLineMode;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getNewLineString ()
   {
     return m_eNewLineMode.getText ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSWriterSettings getClone ()
   {
@@ -148,7 +148,7 @@ public class JSWriterSettings implements IJSWriterSettings, ICloneable <JSWriter
                                        .getToString ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static JSWriterSettings createCloneOnDemand (@Nullable final IJSWriterSettings aSettings)
   {

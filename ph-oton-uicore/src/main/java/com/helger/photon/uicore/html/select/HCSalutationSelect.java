@@ -18,28 +18,28 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.ESalutation;
 
-import jakarta.annotation.Nonnull;
-
 public class HCSalutationSelect extends HCExtSelect
 {
-  public HCSalutationSelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCSalutationSelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     this (aRF, aDisplayLocale, true);
   }
 
-  public HCSalutationSelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale, final boolean bAddOptionPleaseSelect)
+  public HCSalutationSelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale, final boolean bAddOptionPleaseSelect)
   {
     this (aRF, aDisplayLocale, bAddOptionPleaseSelect, ESalutation.values ());
   }
 
-  public HCSalutationSelect (@Nonnull final IHCRequestField aRF,
-                             @Nonnull final Locale aDisplayLocale,
+  public HCSalutationSelect (@NonNull final IHCRequestField aRF,
+                             @NonNull final Locale aDisplayLocale,
                              final boolean bAddOptionPleaseSelect,
-                             @Nonnull @Nonempty final ESalutation [] aSalutations)
+                             @NonNull @Nonempty final ESalutation [] aSalutations)
   {
     super (aRF);
 

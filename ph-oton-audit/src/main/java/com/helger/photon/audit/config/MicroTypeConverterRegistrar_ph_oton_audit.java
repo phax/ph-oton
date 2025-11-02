@@ -16,6 +16,8 @@
  */
 package com.helger.photon.audit.config;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.audit.AuditItem;
@@ -24,8 +26,6 @@ import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.domain.AuditEventMicroTypeConverter;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Register all MicroTypeConverter implementations of this project.
@@ -36,7 +36,7 @@ import jakarta.annotation.Nonnull;
 @IsSPIImplementation
 public final class MicroTypeConverterRegistrar_ph_oton_audit implements IMicroTypeConverterRegistrarSPI
 {
-  public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
+  public void registerMicroTypeConverter (@NonNull final IMicroTypeConverterRegistry aRegistry)
   {
     aRegistry.registerMicroElementTypeConverter (AuditItem.class, new AuditItemMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (AuditEvent.class, new AuditEventMicroTypeConverter ());

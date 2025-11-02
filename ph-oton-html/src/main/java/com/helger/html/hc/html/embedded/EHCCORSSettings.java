@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * CORS settings
@@ -35,17 +35,17 @@ public enum EHCCORSSettings implements IHCHasHTMLAttributeValue
   USE_CREDENTIALS ("use-credentials");
 
   /** Default CORS settings: anonymous */
-  @Nonnull
+  @NonNull
   public static final EHCCORSSettings DEFAULT = ANONYMOUS;
 
   private final String m_sAttrValue;
 
-  EHCCORSSettings (@Nonnull @Nonempty final String sAttrValue)
+  EHCCORSSettings (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

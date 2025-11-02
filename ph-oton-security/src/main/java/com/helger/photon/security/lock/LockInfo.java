@@ -18,14 +18,14 @@ package com.helger.photon.security.lock;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link ILockInfo} interface.
@@ -38,20 +38,20 @@ public final class LockInfo implements ILockInfo
   private final String m_sUserID;
   private final LocalDateTime m_aLockTime;
 
-  public LockInfo (@Nonnull @Nonempty final String sUserID)
+  public LockInfo (@NonNull @Nonempty final String sUserID)
   {
     m_sUserID = ValueEnforcer.notEmpty (sUserID, "UserID");
     m_aLockTime = PDTFactory.getCurrentLocalDateTime ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getLockUserID ()
   {
     return m_sUserID;
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getLockDateTime ()
   {
     return m_aLockTime;

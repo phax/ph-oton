@@ -18,14 +18,14 @@ package com.helger.photon.security.password.constraint;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Password constraint defining that at least a certain amount of lowercase
@@ -69,13 +69,13 @@ public class PasswordConstraintMustContainLetterLowerCase implements IPasswordCo
   }
 
   @Nullable
-  public String getDescription (@Nonnull final Locale aContentLocale)
+  public String getDescription (@NonNull final Locale aContentLocale)
   {
     return EPasswordConstraintText.DESC_MUST_CONTAIN_LETTERS_LOWERCASE.getDisplayTextWithArgs (aContentLocale,
                                                                                                Integer.valueOf (m_nMinLetters));
   }
 
-  public void fillMicroElement (@Nonnull final IMicroElement aElement)
+  public void fillMicroElement (@NonNull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_MIN_LETTERS_LOWERCASE, m_nMinLetters);
   }

@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Implementation of custom {@link IHCLinkType} objects that cannot be found in
@@ -34,19 +34,19 @@ public class HCLinkTypeCustom implements IHCLinkType
   private final String m_sAttrValue;
   private final boolean m_bAllowedMoreThanOnce;
 
-  public HCLinkTypeCustom (@Nonnull @Nonempty final String sAttrValue)
+  public HCLinkTypeCustom (@NonNull @Nonempty final String sAttrValue)
   {
     this (sAttrValue, false);
   }
 
-  public HCLinkTypeCustom (@Nonnull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
+  public HCLinkTypeCustom (@NonNull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
   {
     ValueEnforcer.notEmpty (sAttrValue, "AttrValue");
     m_sAttrValue = sAttrValue;
     m_bAllowedMoreThanOnce = bAllowedMoreThanOnce;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getAttrValue ()
   {

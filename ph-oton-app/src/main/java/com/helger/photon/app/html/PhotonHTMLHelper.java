@@ -16,6 +16,9 @@
  */
 package com.helger.photon.app.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.CGlobal;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
@@ -50,9 +53,6 @@ import com.helger.photon.app.resource.WebSiteResourceWithCondition;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A utility class for consistent HTML creation.
  *
@@ -66,7 +66,7 @@ public final class PhotonHTMLHelper
   private PhotonHTMLHelper ()
   {}
 
-  private static void _applySessionNonce (@Nonnull final HCConversionSettings aCS)
+  private static void _applySessionNonce (@NonNull final HCConversionSettings aCS)
   {
     final boolean bOnScript = HCSettings.isUseNonceInScript ();
     final boolean bOnStyle = HCSettings.isUseNonceInStyle ();
@@ -81,7 +81,7 @@ public final class PhotonHTMLHelper
     }
   }
 
-  @Nonnull
+  @NonNull
   public static HCConversionSettings getHCConversionSettingsWithNonce ()
   {
     final HCConversionSettings aCS = HCSettings.getMutableConversionSettings ().getClone ();
@@ -89,7 +89,7 @@ public final class PhotonHTMLHelper
     return aCS;
   }
 
-  @Nonnull
+  @NonNull
   public static HCConversionSettings getHCConversionSettingsWithoutNamespacesWithNonce ()
   {
     final HCConversionSettings aCS = HCSettings.getConversionSettingsWithoutNamespaces ();
@@ -104,7 +104,7 @@ public final class PhotonHTMLHelper
    *        The request scope. May be <code>null</code>-
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static IMimeType getMimeType (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Add the charset to the MIME type
@@ -112,9 +112,9 @@ public final class PhotonHTMLHelper
                                                             HCSettings.getHTMLCharset ().name ());
   }
 
-  @Nonnull
-  public static IHCNode getCSSNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final ICSSPathProvider aCSS,
+  @NonNull
+  public static IHCNode getCSSNode (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @NonNull final ICSSPathProvider aCSS,
                                     final boolean bRegular)
   {
     final HCLink aLink = HCLink.createCSSLink (PhotonAppSettings.getCSSPath (aRequestScope, aCSS, bRegular))
@@ -132,9 +132,9 @@ public final class PhotonHTMLHelper
     return aLink;
   }
 
-  @Nonnull
-  public static IHCNode getJSNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                   @Nonnull final IJSPathProvider aJS,
+  @NonNull
+  public static IHCNode getJSNode (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @NonNull final IJSPathProvider aJS,
                                    final boolean bRegular)
   {
     final HCScriptFile aScript = new HCScriptFile ().setSrc (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular))
@@ -152,9 +152,9 @@ public final class PhotonHTMLHelper
     return aScript;
   }
 
-  public static void createHTMLResponse (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                         @Nonnull final UnifiedResponse aUnifiedResponse,
-                                         @Nonnull final IHTMLProvider aHTMLProvider)
+  public static void createHTMLResponse (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                         @NonNull final UnifiedResponse aUnifiedResponse,
+                                         @NonNull final IHTMLProvider aHTMLProvider)
   {
     // Build the main HC tree
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
@@ -195,11 +195,11 @@ public final class PhotonHTMLHelper
    * @param aWSRBMgr
    *        The resource bundle provider. May not be <code>null</code>.
    */
-  public static void mergeExternalCSSAndJSNodes (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                 @Nonnull final HCHead aHead,
+  public static void mergeExternalCSSAndJSNodes (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @NonNull final HCHead aHead,
                                                  final boolean bMergeCSS,
                                                  final boolean bMergeJS,
-                                                 @Nonnull final IWebSiteResourceBundleProvider aWSRBMgr)
+                                                 @NonNull final IWebSiteResourceBundleProvider aWSRBMgr)
   {
     if (!bMergeCSS && !bMergeJS)
     {

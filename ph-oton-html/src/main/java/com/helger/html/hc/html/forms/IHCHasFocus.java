@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Base interface for focusable objects. Must not necessarily be an IHCElement!
@@ -41,6 +41,6 @@ public interface IHCHasFocus <IMPLTYPE extends IHCHasFocus <IMPLTYPE>>
    *        not focus the element.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoFocus (boolean bAutoFocus);
 }

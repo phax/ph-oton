@@ -16,8 +16,8 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Interface for OLs
@@ -34,23 +34,23 @@ public interface IHCOLBase <IMPLTYPE extends IHCOLBase <IMPLTYPE, ITEMTYPE>, ITE
   @Nullable
   Integer getStart ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setStart (final int nStart)
   {
     return setStart (Integer.valueOf (nStart));
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setStart (@Nullable Integer aStart);
 
   boolean isReversed ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setReversed (boolean bReversed);
 
   @Nullable
   EHCOLType getType ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setType (@Nullable EHCOLType eType);
 }

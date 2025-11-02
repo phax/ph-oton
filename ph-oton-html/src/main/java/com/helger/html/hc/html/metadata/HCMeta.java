@@ -18,6 +18,9 @@ package com.helger.html.hc.html.metadata;
 
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
@@ -25,9 +28,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;meta&gt; element
@@ -52,7 +52,7 @@ public class HCMeta extends AbstractHCElement <HCMeta>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMeta setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -65,7 +65,7 @@ public class HCMeta extends AbstractHCElement <HCMeta>
     return m_sHttpEquiv;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMeta setHttpEquiv (@Nullable final String sHttpEquiv)
   {
     m_sHttpEquiv = sHttpEquiv;
@@ -78,7 +78,7 @@ public class HCMeta extends AbstractHCElement <HCMeta>
     return m_sContent;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMeta setContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
@@ -91,14 +91,14 @@ public class HCMeta extends AbstractHCElement <HCMeta>
     return m_sCharset;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMeta setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMeta setCharset (@Nullable final Charset aCharset)
   {
     return setCharset (aCharset == null ? null : aCharset.name ());

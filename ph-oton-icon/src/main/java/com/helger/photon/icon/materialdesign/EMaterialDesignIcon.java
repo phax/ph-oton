@@ -16,6 +16,9 @@
  */
 package com.helger.photon.icon.materialdesign;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
@@ -29,9 +32,6 @@ import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Material design icons
@@ -975,7 +975,7 @@ public enum EMaterialDesignIcon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  EMaterialDesignIcon (@Nonnull @Nonempty final String sCSSClassName)
+  EMaterialDesignIcon (@NonNull @Nonempty final String sCSSClassName)
   {
     m_aCSSClass = DefaultCSSClassProvider.create (sCSSClassName);
   }
@@ -986,63 +986,63 @@ public enum EMaterialDesignIcon implements IIcon
     return m_aCSSClass.getCSSClass ();
   }
 
-  @Nonnull
-  public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
+  @NonNull
+  public <T extends IHCElement <?>> T applyToNode (@NonNull final T aElement)
   {
     aElement.addClasses (CMaterialDesignCSS.MATERIAL_ICONS, m_aCSSClass);
     aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode ()
   {
     return applyToNode (new HCI ());
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode18px ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_18);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode24px ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_24);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode36px ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_36);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode48px ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_48);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeDark ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_DARK);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeDarkInactive ()
   {
     return getAsNodeDark ().addClass (CMaterialDesignCSS.MD_INACTIVE);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeLight ()
   {
     return getAsNode ().addClass (CMaterialDesignCSS.MD_LIGHT);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeLightInactive ()
   {
     return getAsNodeLight ().addClass (CMaterialDesignCSS.MD_INACTIVE);
@@ -1079,7 +1079,7 @@ public enum EMaterialDesignIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EIconCSSPathProvider.MATERIAL_ICONS,

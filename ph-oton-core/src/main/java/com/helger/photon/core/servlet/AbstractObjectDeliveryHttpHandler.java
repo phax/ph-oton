@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +43,6 @@ import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -99,8 +99,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    *        The string to unify. May not be <code>null</code>.
    * @return The unified version and never <code>null</code>.
    */
-  @Nonnull
-  protected static final String getUnifiedItem (@Nonnull final String sItem)
+  @NonNull
+  protected static final String getUnifiedItem (@NonNull final String sItem)
   {
     return sItem.toLowerCase (Locale.US);
   }
@@ -117,7 +117,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
    *        file extensions but not for file names. This unification is only relevant because of the
    *        case insensitive file system on Windows machines.
    */
-  private static void _initialFillSet (@Nonnull final ICommonsOrderedSet <String> aSet,
+  private static void _initialFillSet (@NonNull final ICommonsOrderedSet <String> aSet,
                                        @Nullable final String sItemList,
                                        final boolean bUnify)
   {
@@ -147,7 +147,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
   }
 
   @Override
-  public void onServletInit (@Nonnull final ICommonsMap <String, String> aInitParams)
+  public void onServletInit (@NonNull final ICommonsMap <String, String> aInitParams)
   {
     _initialFillSet (m_aDeniedFilenames, aInitParams.get (INITPARAM_DENIED_FILENAMES), false);
     _initialFillSet (m_aDeniedExtensions, aInitParams.get (INITPARAM_DENIED_EXTENSIONS), true);
@@ -201,42 +201,42 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
                      ". This means that this servlet will not deliver any resource!");
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllDeniedFilenames ()
   {
     return m_aDeniedFilenames.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllDeniedExtensions ()
   {
     return m_aDeniedExtensions.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllDeniedRegExs ()
   {
     return m_aDeniedRegExs.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllAllowedFilenames ()
   {
     return m_aAllowedFilenames.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllAllowedExtensions ()
   {
     return m_aAllowedExtensions.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   protected final ICommonsOrderedSet <String> getAllAllowedRegExs ()
   {
@@ -328,7 +328,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
     return false;
   }
 
-  protected static final boolean isPossibleDirectoryTraversalRequest (@Nonnull final String sFilename)
+  protected static final boolean isPossibleDirectoryTraversalRequest (@NonNull final String sFilename)
   {
     return sFilename.indexOf ("/..") >= 0 ||
            sFilename.indexOf ("../") >= 0 ||
@@ -338,8 +338,8 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     final String sFilename = URLCoder.urlDecodeOrNull (aRequestScope.getPathWithinServlet ());
@@ -362,18 +362,18 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
   @Override
   @Nullable
-  public final String getSupportedETag (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public final String getSupportedETag (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return ETAG_VALUE_OBJECT_DELIVERY_SERVLET;
   }
 
-  protected abstract void onDeliverResource (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                             @Nonnull UnifiedResponse aUnifiedResponse,
-                                             @Nonnull String sFilename) throws IOException;
+  protected abstract void onDeliverResource (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                             @NonNull UnifiedResponse aUnifiedResponse,
+                                             @NonNull String sFilename) throws IOException;
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // The request has been checked and the filename is valid for delivery
     final String sFilename = aRequestScope.attrs ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);

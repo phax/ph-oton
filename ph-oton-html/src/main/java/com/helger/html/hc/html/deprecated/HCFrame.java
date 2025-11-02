@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.deprecated;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -26,9 +29,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.EHCScrolling;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;frame&gt; element
@@ -68,7 +68,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_bFrameBorder;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setFrameBorder (final boolean bFrameBorder)
   {
     m_bFrameBorder = bFrameBorder;
@@ -81,7 +81,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_sLongDesc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setLongDesc (@Nullable final String sLongDesc)
   {
     m_sLongDesc = sLongDesc;
@@ -93,7 +93,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_nMarginWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setMarginWidth (final int nMarginWidth)
   {
     m_nMarginWidth = nMarginWidth;
@@ -105,7 +105,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_nMarginHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setMarginHeight (final int nMarginHeight)
   {
     m_nMarginHeight = nMarginHeight;
@@ -118,7 +118,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -130,7 +130,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_bNoResize;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setNoResize (final boolean bNoResize)
   {
     m_bNoResize = bNoResize;
@@ -143,7 +143,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_eScrolling;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setScrolling (@Nullable final EHCScrolling eScrolling)
   {
     m_eScrolling = eScrolling;
@@ -156,7 +156,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return m_sSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrame setSrc (@Nullable final String sSrc)
   {
     m_sSrc = sSrc;

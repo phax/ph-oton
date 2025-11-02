@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.base.state.ETriState;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.base.state.ETriState;
 
 /**
  * Interface for TEXTAREAs
@@ -36,35 +36,35 @@ public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends I
 
   boolean isAutoCompleteUndefined ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
   {
     return setAutoComplete (ETriState.valueOf (bAutoComplete));
   }
 
-  @Nonnull
-  IMPLTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
+  @NonNull
+  IMPLTYPE setAutoComplete (@NonNull ETriState eAutoComplete);
 
   boolean isAutoFocus ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoFocus (boolean bAutoFocus);
 
   int getCols ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCols (int nCols);
 
   @Nullable
   String getDirName ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setDirName (@Nullable String sDirName);
 
   @Nullable
   String getForm ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setForm (@Nullable String sForm);
 
   /**
@@ -79,7 +79,7 @@ public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends I
    *        The max length. Should be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setMaxLength (int nMaxLength);
 
   /**
@@ -94,7 +94,7 @@ public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends I
    *        The min length. Should be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setMinLength (int nMinLength);
 
   /**
@@ -122,23 +122,23 @@ public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends I
    *        The new value. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setPlaceholder (@Nullable String sPlaceholder);
 
   int getRows ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setRows (int nRows);
 
   @Nullable
   String getValue ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setValue (@Nullable String sValue);
 
   @Nullable
   EHCTextAreaWrap getWrap ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setWrap (@Nullable EHCTextAreaWrap eWrap);
 }

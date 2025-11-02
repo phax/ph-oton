@@ -16,12 +16,12 @@
  */
 package com.helger.html.markdown;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The result of a Markdown processing
@@ -32,27 +32,27 @@ public class MarkdownProcessingResult
 {
   private final HCNodeList m_aNodeList;
 
-  public MarkdownProcessingResult (@Nonnull final MarkdownHCStack aResult)
+  public MarkdownProcessingResult (@NonNull final MarkdownHCStack aResult)
   {
     ValueEnforcer.notNull (aResult, "Result");
 
     m_aNodeList = aResult.getRoot ();
   }
 
-  @Nonnull
+  @NonNull
   public HCNodeList getNodeList ()
   {
     return m_aNodeList;
   }
 
-  @Nonnull
+  @NonNull
   public String getAsHTMLString ()
   {
     return HCRenderer.getAsHTMLStringWithoutNamespaces (m_aNodeList).trim ();
   }
 
-  @Nonnull
-  public String getAsHTMLString (@Nonnull final IHCConversionSettings aConversionSettings)
+  @NonNull
+  public String getAsHTMLString (@NonNull final IHCConversionSettings aConversionSettings)
   {
     return HCRenderer.getAsHTMLString (m_aNodeList, aConversionSettings).trim ();
   }

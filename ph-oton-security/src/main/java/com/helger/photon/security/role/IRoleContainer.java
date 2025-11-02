@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.role;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsSet;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base read-only interface for objects containing roles.
@@ -45,7 +45,7 @@ public interface IRoleContainer
    * @return A non-<code>null</code>but maybe empty set of all assigned role
    *         IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <String> getAllContainedRoleIDs ();
 

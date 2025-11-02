@@ -57,7 +57,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
             continue;
           }
 
-          String sRealPrefix = "@Nonnull\ndefault IMPLTYPE " + aEntry.getIdentifier ();
+          String sRealPrefix = "@NonNull\ndefault IMPLTYPE " + aEntry.getIdentifier ();
           if (aEntry.isDeprecated ())
             sRealPrefix = "@Deprecated\n" + sRealPrefix;
 
@@ -196,7 +196,7 @@ public class Main_IJQueryInvocationExtended extends AbstractCreateJQueryAPIList
                                                    "import java.math.BigDecimal;\n" +
                                                    "import java.math.BigInteger;\n" +
                                                    "\n" +
-                                                   "import jakarta.annotation.Nonnull;\n" +
+                                                   "import jakarta.annotation.NonNull;\n" +
                                                    "\n" +
                                                    "import com.helger.html.EHTMLElement;\n" +
                                                    "import com.helger.html.css.ICSSClassProvider;\n" +

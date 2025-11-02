@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The possible values of the <code>rel</code> attribute of a
@@ -74,18 +74,18 @@ public enum EHCLinkType implements IHCLinkType
   private final String m_sAttrValue;
   private final boolean m_bAllowedMoreThanOnce;
 
-  EHCLinkType (@Nonnull @Nonempty final String sAttrValue)
+  EHCLinkType (@NonNull @Nonempty final String sAttrValue)
   {
     this (sAttrValue, false);
   }
 
-  EHCLinkType (@Nonnull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
+  EHCLinkType (@NonNull @Nonempty final String sAttrValue, final boolean bAllowedMoreThanOnce)
   {
     m_sAttrValue = sAttrValue;
     m_bAllowedMoreThanOnce = bAllowedMoreThanOnce;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

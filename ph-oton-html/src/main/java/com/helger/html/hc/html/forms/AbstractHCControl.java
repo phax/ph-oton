@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -31,9 +34,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMPLTYPE>> extends
@@ -53,7 +53,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
   private boolean m_bReadOnly = DEFAULT_READ_ONLY;
   private boolean m_bRequired = DEFAULT_REQUIRED;
 
-  public AbstractHCControl (@Nonnull @Nonempty final EHTMLElement aElement)
+  public AbstractHCControl (@NonNull @Nonempty final EHTMLElement aElement)
   {
     super (aElement);
   }
@@ -63,7 +63,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -75,7 +75,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -87,7 +87,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     return m_bReadOnly;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setReadOnly (final boolean bReadOnly)
   {
     m_bReadOnly = bReadOnly;
@@ -99,7 +99,7 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
     return m_bRequired;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setRequired (final boolean bRequired)
   {
     m_bRequired = bRequired;
@@ -107,8 +107,8 @@ public abstract class AbstractHCControl <IMPLTYPE extends AbstractHCControl <IMP
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 

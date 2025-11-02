@@ -16,6 +16,8 @@
  */
 package com.helger.photon.ajax;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
@@ -23,8 +25,6 @@ import com.helger.annotation.style.VisibleForTesting;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Global AJAX invoker. Was reworked in v8.1.4 to clearly separate between
@@ -48,7 +48,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public GlobalAjaxInvoker ()
   {}
 
-  @Nonnull
+  @NonNull
   public static GlobalAjaxInvoker getInstance ()
   {
     return getGlobalSingleton (GlobalAjaxInvoker.class);
@@ -65,7 +65,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
     m_aInvoker = new AjaxInvoker ();
   }
 
-  @Nonnull
+  @NonNull
   public IAjaxRegistry getRegistry ()
   {
     return m_aRWLock.readLockedGet ( () -> m_aRegistry);
@@ -79,7 +79,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
    * @param aRegistry
    *        The registry to use. May not be <code>null</code>.
    */
-  public void setRegistry (@Nonnull final IAjaxRegistry aRegistry)
+  public void setRegistry (@NonNull final IAjaxRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
     if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
@@ -88,7 +88,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
     m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
-  @Nonnull
+  @NonNull
   public IAjaxInvoker getInvoker ()
   {
     return m_aRWLock.readLockedGet ( () -> m_aInvoker);
@@ -102,7 +102,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
    * @param aInvoker
    *        The invoker to be used. May not be <code>null</code>.
    */
-  public void setInvoker (@Nonnull final IAjaxInvoker aInvoker)
+  public void setInvoker (@NonNull final IAjaxInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
     m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);

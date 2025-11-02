@@ -19,6 +19,9 @@ package com.helger.photon.security.object;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.type.ObjectType;
@@ -26,9 +29,6 @@ import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The most simple {@link IBusinessObject} implementation. Used for serialization encapsulation and
@@ -40,7 +40,7 @@ public final class StubObject extends AbstractBusinessObject
 {
   public static final ObjectType OT_STUB = new ObjectType ("stub-object");
 
-  public StubObject (@Nonnull @Nonempty final String sID,
+  public StubObject (@NonNull @Nonempty final String sID,
                      @Nullable final String sCreationUserID,
                      @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -54,7 +54,7 @@ public final class StubObject extends AbstractBusinessObject
           aCustomAttrs);
   }
 
-  public StubObject (@Nonnull @Nonempty final String sID,
+  public StubObject (@NonNull @Nonempty final String sID,
                      @Nullable final LocalDateTime aCreationDT,
                      @Nullable final String sCreationUserID,
                      @Nullable final LocalDateTime aLastModificationDT,
@@ -73,7 +73,7 @@ public final class StubObject extends AbstractBusinessObject
            aCustomAttrs);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT_STUB;
@@ -84,7 +84,7 @@ public final class StubObject extends AbstractBusinessObject
    *
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static StubObject createForCurrentUser ()
   {
     return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID ());
@@ -97,7 +97,7 @@ public final class StubObject extends AbstractBusinessObject
    *        Custom attributes. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static StubObject createForCurrentUser (@Nullable final Map <String, String> aCustomAttrs)
   {
     return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
@@ -110,7 +110,7 @@ public final class StubObject extends AbstractBusinessObject
    *        User ID
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static StubObject createForUser (@Nullable final String sUserID)
   {
     return new StubObject (GlobalIDFactory.getNewPersistentStringID (), sUserID, null);
@@ -125,7 +125,7 @@ public final class StubObject extends AbstractBusinessObject
    *        Custom attributes. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static StubObject createForUser (@Nullable final String sUserID,
                                           @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -139,8 +139,8 @@ public final class StubObject extends AbstractBusinessObject
    *        Object ID
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID)
+  @NonNull
+  public static StubObject createForCurrentUserAndID (@NonNull @Nonempty final String sID)
   {
     return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), null);
   }
@@ -154,8 +154,8 @@ public final class StubObject extends AbstractBusinessObject
    *        Custom attributes. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static StubObject createForCurrentUserAndID (@Nonnull @Nonempty final String sID,
+  @NonNull
+  public static StubObject createForCurrentUserAndID (@NonNull @Nonempty final String sID,
                                                       @Nullable final Map <String, String> aCustomAttrs)
   {
     return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);

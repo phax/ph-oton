@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.chart.v4;
 
 import java.math.BigDecimal;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -32,9 +35,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Single data set for a complex chart.
@@ -66,35 +66,35 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
     return a == null ? null : new JSArray ().addAll (a);
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setData (@Nullable final int... aData)
   {
     m_aData = new JSArray ().addAll (aData);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setData (@Nullable final double... aData)
   {
     m_aData = new JSArray ().addAll (aData);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setData (@Nullable final BigDecimal... aData)
   {
     m_aData = new JSArray ().addAll (aData);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setData (@Nullable final MutableBigDecimal... aData)
   {
     final JSArray arr = new JSArray ();
@@ -105,20 +105,20 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public IMPLTYPE setCustomProperty (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     return setCustomProperty (sKey, _toExpr (sValue));
   }
 
-  @Nonnull
-  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final String... aValues)
+  @NonNull
+  public IMPLTYPE setCustomProperty (@NonNull @Nonempty final String sKey, @Nullable final String... aValues)
   {
     return setCustomProperty (sKey, _toExpr (aValues));
   }
 
-  @Nonnull
-  public IMPLTYPE setCustomProperty (@Nonnull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
+  @NonNull
+  public IMPLTYPE setCustomProperty (@NonNull @Nonempty final String sKey, @Nullable final IJSExpression aValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     if (aValue == null)
@@ -128,7 +128,7 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSData ()
@@ -136,7 +136,7 @@ public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTY
     return getJSData (m_aData);
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSData (@Nullable final IJSExpression aDatasetData)

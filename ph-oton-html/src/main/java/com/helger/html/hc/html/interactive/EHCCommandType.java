@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.interactive;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Command type
@@ -36,17 +36,17 @@ public enum EHCCommandType implements IHCHasHTMLAttributeValue
   RADIO ("radio");
 
   /** Default command: command */
-  @Nonnull
+  @NonNull
   public static final EHCCommandType DEFAULT = COMMAND;
 
   private final String m_sAttrValue;
 
-  EHCCommandType (@Nonnull @Nonempty final String sAttrValue)
+  EHCCommandType (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

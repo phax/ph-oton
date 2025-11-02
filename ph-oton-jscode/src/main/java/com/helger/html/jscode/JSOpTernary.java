@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a single ternary operator.
@@ -36,11 +36,11 @@ public class JSOpTernary extends AbstractJSExpression
   private final String m_sOp2;
   private final IJSExpression m_aExpr3;
 
-  public JSOpTernary (@Nonnull final IJSExpression aExpr1,
-                      @Nonnull @Nonempty final String sOp1,
-                      @Nonnull final IJSExpression aExpr2,
-                      @Nonnull @Nonempty final String sOp2,
-                      @Nonnull final IJSExpression aExpr3)
+  public JSOpTernary (@NonNull final IJSExpression aExpr1,
+                      @NonNull @Nonempty final String sOp1,
+                      @NonNull final IJSExpression aExpr2,
+                      @NonNull @Nonempty final String sOp2,
+                      @NonNull final IJSExpression aExpr3)
   {
     m_aExpr1 = ValueEnforcer.notNull (aExpr1, "Expr");
     m_sOp1 = ValueEnforcer.notEmpty (sOp1, "Operator1");
@@ -49,39 +49,39 @@ public class JSOpTernary extends AbstractJSExpression
     m_aExpr3 = ValueEnforcer.notNull (aExpr3, "Expr3");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr1 ()
   {
     return m_aExpr1;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String operator1 ()
   {
     return m_sOp1;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr2 ()
   {
     return m_aExpr2;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String operator2 ()
   {
     return m_sOp2;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr3 ()
   {
     return m_aExpr3;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('(').generatable (m_aExpr1).plain (m_sOp1).generatable (m_aExpr2).plain (m_sOp2).generatable (m_aExpr3).plain (')');
   }

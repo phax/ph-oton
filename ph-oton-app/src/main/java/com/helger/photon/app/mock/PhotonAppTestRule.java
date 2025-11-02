@@ -18,6 +18,8 @@ package com.helger.photon.app.mock;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.stack.NonBlockingStack;
@@ -26,8 +28,6 @@ import com.helger.io.file.FileOperationManager;
 import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
 import com.helger.servlet.ServletContextPathHolder;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory
@@ -60,7 +60,7 @@ public class PhotonAppTestRule extends ScopeTestRule
    *        <code>null</code>.
    * @since 8.0.1
    */
-  public PhotonAppTestRule (@Nonnull final File aPath)
+  public PhotonAppTestRule (@NonNull final File aPath)
   {
     this (aPath, aPath.getAbsolutePath ());
   }
@@ -73,7 +73,7 @@ public class PhotonAppTestRule extends ScopeTestRule
    * @param sServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public PhotonAppTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  public PhotonAppTestRule (@NonNull final File aDataPath, @NonNull @Nonempty final String sServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notEmpty (sServletContextPath, "ServletContextPath");
@@ -84,7 +84,7 @@ public class PhotonAppTestRule extends ScopeTestRule
   /**
    * @return The used data path. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final File getDataPath ()
   {
     return m_aDataPath;
@@ -93,7 +93,7 @@ public class PhotonAppTestRule extends ScopeTestRule
   /**
    * @return The used servlet context path. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getServletContextPath ()
   {
@@ -109,7 +109,7 @@ public class PhotonAppTestRule extends ScopeTestRule
    *        <code>false</code> if not.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final PhotonAppTestRule setDeleteAllData (final boolean bDeleteAllData)
   {
     m_bDeleteAllData = bDeleteAllData;

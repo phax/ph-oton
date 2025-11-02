@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.dimension.SizeInt;
 import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for IMGs
@@ -36,19 +36,19 @@ public interface IHCImg <IMPLTYPE extends IHCImg <IMPLTYPE>> extends IHCMediaEle
   @Nullable
   ISimpleURL getSrc ();
 
-  @Nonnull
-  IMPLTYPE setSrc (@Nonnull ISimpleURL aSrc);
+  @NonNull
+  IMPLTYPE setSrc (@NonNull ISimpleURL aSrc);
 
   @Nullable
   String getSrcSet ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSrcSet (@Nullable String sSrcSet);
 
   @Nullable
   String getSizes ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSizes (@Nullable String sSizes);
 
   boolean hasExtent ();
@@ -60,16 +60,16 @@ public interface IHCImg <IMPLTYPE extends IHCImg <IMPLTYPE>> extends IHCMediaEle
   @Nullable
   SizeInt getExtent ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setExtent (@Nullable SizeInt aImageData);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setExtent (@Nonnegative int nWidth, @Nonnegative int nHeight);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE scaleToWidth (@Nonnegative int nNewWidth);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE scaleToHeight (@Nonnegative int nNewHeight);
 
   /**
@@ -82,18 +82,18 @@ public interface IHCImg <IMPLTYPE extends IHCImg <IMPLTYPE>> extends IHCMediaEle
    *        Maximum height
    * @return the correctly resized image tag
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE scaleBestMatching (@Nonnegative int nMaxWidth, @Nonnegative int nMaxHeight);
 
   @Nullable
   String getAlt ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAlt (@Nullable String sAlt);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 }

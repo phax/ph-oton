@@ -16,6 +16,9 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
@@ -23,9 +26,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.config.IConfig;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link ISftpSettingsHost}.
@@ -49,7 +49,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
   // Status vars
   private String m_sDisplayName;
 
-  protected SftpSettingsHost (@Nonnull final ISftpSettingsHost aHost)
+  protected SftpSettingsHost (@NonNull final ISftpSettingsHost aHost)
   {
     this (aHost.getServerHost (),
           aHost.getServerPort (),
@@ -62,7 +62,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
           aHost.getMaximumParallelConnections ());
   }
 
-  public SftpSettingsHost (@Nonnull @Nonempty final String sServerHost,
+  public SftpSettingsHost (@NonNull @Nonempty final String sServerHost,
                            @Nonnegative final int nServerPort,
                            @Nonnegative final int nConnectionTimeoutMillis,
                            @Nullable final String sServerUserName,
@@ -87,7 +87,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
     m_sKeyPairPassphrase = sKeyPairPassphrase;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getServerHost ()
   {
@@ -142,7 +142,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
     return m_nMaxParallelConnections;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDisplayName ()
   {
@@ -175,8 +175,8 @@ public class SftpSettingsHost implements ISftpSettingsHost
   }
 
   @Nullable
-  public static SftpSettingsHost createFromConfig (@Nonnull final IConfig aConfig,
-                                                   @Nonnull @Nonempty final String sConfigPrefix)
+  public static SftpSettingsHost createFromConfig (@NonNull final IConfig aConfig,
+                                                   @NonNull @Nonempty final String sConfigPrefix)
   {
     ValueEnforcer.notNull (aConfig, "Config");
     ValueEnforcer.notEmpty (sConfigPrefix, "ConfigPrefix");

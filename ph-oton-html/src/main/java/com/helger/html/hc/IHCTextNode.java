@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.trait.IGenericImplTrait;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents a text node.
@@ -35,55 +35,55 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
   /**
    * @return The unescaped text. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   String getText ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setText (@Nullable String sText);
 
-  @Nonnull
-  default IMPLTYPE setText (@Nonnull final char [] aChars)
+  @NonNull
+  default IMPLTYPE setText (@NonNull final char [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return setText (new String (aChars));
   }
 
-  @Nonnull
-  default IMPLTYPE setText (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  @NonNull
+  default IMPLTYPE setText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return setText (new String (aChars, nOfs, nLen));
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE prependText (@Nullable String sText);
 
-  @Nonnull
-  default IMPLTYPE prependText (@Nonnull final char [] aChars)
+  @NonNull
+  default IMPLTYPE prependText (@NonNull final char [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return prependText (new String (aChars));
   }
 
-  @Nonnull
-  default IMPLTYPE prependText (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  @NonNull
+  default IMPLTYPE prependText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return prependText (new String (aChars, nOfs, nLen));
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addText (@Nullable String sText);
 
-  @Nonnull
-  default IMPLTYPE addText (@Nonnull final char [] aChars)
+  @NonNull
+  default IMPLTYPE addText (@NonNull final char [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return addText (new String (aChars));
   }
 
-  @Nonnull
-  default IMPLTYPE addText (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  @NonNull
+  default IMPLTYPE addText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return addText (new String (aChars, nOfs, nLen));
@@ -100,7 +100,7 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
    *        to disable it
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setEscape (boolean bEscape);
 
   /**

@@ -16,7 +16,7 @@
  */
 package com.helger.html.markdown;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * A markdown link reference.
@@ -42,14 +42,14 @@ final class LinkRef
    * @param bIsAbbrev
    *        Is abbreviation?
    */
-  public LinkRef (@Nonnull final String sLink, final String sTitle, final boolean bIsAbbrev)
+  public LinkRef (@NonNull final String sLink, final String sTitle, final boolean bIsAbbrev)
   {
     m_sLink = sLink;
     m_sTitle = sTitle;
     m_bIsAbbrev = bIsAbbrev;
   }
 
-  @Nonnull
+  @NonNull
   public String getLink ()
   {
     return m_sLink;

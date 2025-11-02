@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.request.IHCRequestField;
 import com.helger.html.request.IHCRequestFieldMultiValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;select&gt; element
@@ -38,12 +38,12 @@ public class HCSelect extends AbstractHCSelect <HCSelect>
     setName (sName);
   }
 
-  public HCSelect (@Nonnull final IHCRequestField aRF)
+  public HCSelect (@NonNull final IHCRequestField aRF)
   {
     super (aRF);
   }
 
-  public HCSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
+  public HCSelect (@NonNull final IHCRequestFieldMultiValue aRF)
   {
     super (aRF);
   }

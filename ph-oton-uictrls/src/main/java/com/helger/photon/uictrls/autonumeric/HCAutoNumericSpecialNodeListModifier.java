@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.autonumeric;
 
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
@@ -29,13 +31,11 @@ import com.helger.html.jquery.JQuerySelector;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.jscode.JSAssocArray;
 
-import jakarta.annotation.Nonnull;
-
 public final class HCAutoNumericSpecialNodeListModifier implements IHCSpecialNodeListModifier
 {
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull final ICommonsList <? extends IHCNode> aNodes)
+  public ICommonsList <? extends IHCNode> modifySpecialNodes (@NonNull final ICommonsList <? extends IHCNode> aNodes)
   {
     final ICommonsList <IHCNode> ret = new CommonsArrayList <> ();
     final ICommonsList <HCAutoNumericJS> aDTPs = new CommonsArrayList <> ();

@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,9 +30,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.http.EHttpMethod;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x request part
@@ -61,7 +61,7 @@ public class FineUploader5Request implements IFineUploader5Part
   public FineUploader5Request ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
   {
@@ -75,7 +75,7 @@ public class FineUploader5Request implements IFineUploader5Part
    *        Custom headers to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.setAll (aCustomHeaders);
@@ -89,7 +89,7 @@ public class FineUploader5Request implements IFineUploader5Part
    *        Custom headers to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.putAllIfNotNull (aCustomHeaders);
@@ -105,8 +105,8 @@ public class FineUploader5Request implements IFineUploader5Part
    *        Custom header value
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5Request addCustomHeader (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -115,7 +115,7 @@ public class FineUploader5Request implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getEndpoint ()
   {
     return m_aRequestEndpoint;
@@ -128,15 +128,15 @@ public class FineUploader5Request implements IFineUploader5Part
    *        The new action URL. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
+  @NonNull
+  public FineUploader5Request setEndpoint (@NonNull final ISimpleURL aRequestEndpoint)
   {
     ValueEnforcer.notNull (aRequestEndpoint, "RequestEndpoint");
     m_aRequestEndpoint = aRequestEndpoint;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public String getFilenameParam ()
   {
     return m_sRequestFilenameParam;
@@ -150,8 +150,8 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setFilenameParam (@Nonnull @Nonempty final String sFilenameParam)
+  @NonNull
+  public FineUploader5Request setFilenameParam (@NonNull @Nonempty final String sFilenameParam)
   {
     ValueEnforcer.notEmpty (sFilenameParam, "FilenameParam");
     m_sRequestFilenameParam = sFilenameParam;
@@ -170,14 +170,14 @@ public class FineUploader5Request implements IFineUploader5Part
    *        <code>true</code> to force
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request setForceMultipart (final boolean bForceMultipart)
   {
     m_bRequestForceMultipart = bForceMultipart;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getInputName ()
   {
@@ -193,15 +193,15 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setInputName (@Nonnull @Nonempty final String sInputName)
+  @NonNull
+  public FineUploader5Request setInputName (@NonNull @Nonempty final String sInputName)
   {
     ValueEnforcer.notEmpty (sInputName, "InputName");
     m_sRequestInputName = sInputName;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EHttpMethod getMethod ()
   {
     return m_eRequestMethod;
@@ -215,15 +215,15 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New value. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setMethod (@Nonnull final EHttpMethod eMethod)
+  @NonNull
+  public FineUploader5Request setMethod (@NonNull final EHttpMethod eMethod)
   {
     ValueEnforcer.notNull (eMethod, "Method");
     m_eRequestMethod = eMethod;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllParams ()
   {
@@ -237,7 +237,7 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New parameters to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request setParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.setAll (aParams);
@@ -251,7 +251,7 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New parameters to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request addParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.putAllIfNotNull (aParams);
@@ -267,8 +267,8 @@ public class FineUploader5Request implements IFineUploader5Part
    *        Parameter value
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5Request addParam (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -290,14 +290,14 @@ public class FineUploader5Request implements IFineUploader5Part
    *        <code>true</code> to put request params in body
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Request setParamsInBody (final boolean bRequestParamsInBody)
   {
     m_bRequestParamsInBody = bRequestParamsInBody;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getUUIDName ()
   {
@@ -312,15 +312,15 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setUUIDName (@Nonnull @Nonempty final String sUUIDName)
+  @NonNull
+  public FineUploader5Request setUUIDName (@NonNull @Nonempty final String sUUIDName)
   {
     ValueEnforcer.notEmpty (sUUIDName, "UUIDName");
     m_sRequestUUIDName = sUUIDName;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getTotalFileSizeName ()
   {
@@ -334,15 +334,15 @@ public class FineUploader5Request implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public FineUploader5Request setTotalFileSizeName (@Nonnull @Nonempty final String sTotalFileSizeName)
+  @NonNull
+  public FineUploader5Request setTotalFileSizeName (@NonNull @Nonempty final String sTotalFileSizeName)
   {
     ValueEnforcer.notEmpty (sTotalFileSizeName, "TotalFileSizeName");
     m_sRequestTotalFileSizeName = sTotalFileSizeName;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

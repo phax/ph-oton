@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
-import com.helger.html.jscode.JSAssocArray;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Wrapper for Fine Uploader 5.x cors part
@@ -50,7 +50,7 @@ public class FineUploader5Workarounds implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Workarounds setIosEmptyVideo (final boolean bIosEmptyVideo)
   {
     m_bWorkaroundsIosEmptyVideo = bIosEmptyVideo;
@@ -74,7 +74,7 @@ public class FineUploader5Workarounds implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Workarounds setIos8BrowserCrash (final boolean bIos8BrowserCrash)
   {
     m_bWorkaroundsIos8BrowserCrash = bIos8BrowserCrash;
@@ -96,14 +96,14 @@ public class FineUploader5Workarounds implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Workarounds setIos8SafariUploads (final boolean bIos8SafariUploads)
   {
     m_bWorkaroundsIos8SafariUploads = bIos8SafariUploads;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

@@ -19,6 +19,9 @@ package com.helger.photon.uictrls.autonumeric;
 import java.math.BigDecimal;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
@@ -26,9 +29,6 @@ import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSGlobal;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.request.IHCRequestField;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * jQuery autoNumeric plugin from
@@ -42,50 +42,50 @@ import jakarta.annotation.Nullable;
 @NotThreadSafe
 public class HCAutoNumeric extends AbstractHCAutoNumeric <HCAutoNumeric>
 {
-  public HCAutoNumeric (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumeric (@Nullable final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
   }
 
-  @Nonnull
-  public static JSInvocation autoNumericInit (@Nonnull final IJSExpression aAutoNumeric)
+  @NonNull
+  public static JSInvocation autoNumericInit (@NonNull final IJSExpression aAutoNumeric)
   {
     return invoke (aAutoNumeric).arg ("init");
   }
 
-  @Nonnull
-  public static JSInvocation autoNumericInit (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final JSAssocArray aOptions)
+  @NonNull
+  public static JSInvocation autoNumericInit (@NonNull final IJSExpression aAutoNumeric, @NonNull final JSAssocArray aOptions)
   {
     return autoNumericInit (aAutoNumeric).arg (aOptions);
   }
 
-  @Nonnull
-  public static IJSExpression autoNumericGet (@Nonnull final IJSExpression aAutoNumeric)
+  @NonNull
+  public static IJSExpression autoNumericGet (@NonNull final IJSExpression aAutoNumeric)
   {
     // Remember: the result is a String!!
     return invoke (aAutoNumeric).arg ("get");
   }
 
-  @Nonnull
-  public static IJSExpression autoNumericGetAsFloat (@Nonnull final IJSExpression aAutoNumeric)
+  @NonNull
+  public static IJSExpression autoNumericGetAsFloat (@NonNull final IJSExpression aAutoNumeric)
   {
     return JSGlobal.parseFloat (autoNumericGet (aAutoNumeric));
   }
 
-  @Nonnull
-  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final IJSExpression aValueToSet)
+  @NonNull
+  public static JSInvocation autoNumericSet (@NonNull final IJSExpression aAutoNumeric, @NonNull final IJSExpression aValueToSet)
   {
     return invoke (aAutoNumeric).arg ("set").arg (aValueToSet);
   }
 
-  @Nonnull
-  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric, final int nValueToSet)
+  @NonNull
+  public static JSInvocation autoNumericSet (@NonNull final IJSExpression aAutoNumeric, final int nValueToSet)
   {
     return autoNumericSet (aAutoNumeric, JSExpr.lit (nValueToSet));
   }
 
-  @Nonnull
-  public static JSInvocation autoNumericSet (@Nonnull final IJSExpression aAutoNumeric, @Nonnull final BigDecimal aValueToSet)
+  @NonNull
+  public static JSInvocation autoNumericSet (@NonNull final IJSExpression aAutoNumeric, @NonNull final BigDecimal aValueToSet)
   {
     return autoNumericSet (aAutoNumeric, JSExpr.lit (aValueToSet));
   }

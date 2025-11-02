@@ -18,14 +18,14 @@ package com.helger.photon.exchange.bulkexport;
 
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IExportRecordProvider} that uses a constant list
@@ -40,18 +40,18 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
   private final ICommonsList <IExportRecord> m_aBody;
   private final ICommonsList <IExportRecord> m_aFooter = new CommonsArrayList <> ();
 
-  public ConstantExportRecordProvider (@Nonnull final Iterable <? extends IExportRecord> aBody)
+  public ConstantExportRecordProvider (@NonNull final Iterable <? extends IExportRecord> aBody)
   {
     this (null, aBody, null);
   }
 
-  public ConstantExportRecordProvider (@Nullable final IExportRecord aHeader, @Nonnull final Iterable <? extends IExportRecord> aBody)
+  public ConstantExportRecordProvider (@Nullable final IExportRecord aHeader, @NonNull final Iterable <? extends IExportRecord> aBody)
   {
     this (aHeader, aBody, null);
   }
 
   public ConstantExportRecordProvider (@Nullable final IExportRecord aHeader,
-                                       @Nonnull final Iterable <? extends IExportRecord> aBody,
+                                       @NonNull final Iterable <? extends IExportRecord> aBody,
                                        @Nullable final IExportRecord aFooter)
   {
     ValueEnforcer.notNull (aBody, "Body");
@@ -63,19 +63,19 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
   }
 
   @Override
-  public void forEachHeaderRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  public void forEachHeaderRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {
     m_aHeader.forEach (aConsumer);
   }
 
   @Override
-  public void forEachBodyRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  public void forEachBodyRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {
     m_aBody.forEach (aConsumer);
   }
 
   @Override
-  public void forEachFooterRecord (@Nonnull final Consumer <? super IExportRecord> aConsumer)
+  public void forEachFooterRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {
     m_aFooter.forEach (aConsumer);
   }

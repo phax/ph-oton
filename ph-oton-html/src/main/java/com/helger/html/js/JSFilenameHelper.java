@@ -16,11 +16,11 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Utility class for handling JavaScript file names.
@@ -119,8 +119,8 @@ public final class JSFilenameHelper
     return isJSFilename (sFilename) && !isMinifiedJSFilename (sFilename);
   }
 
-  @Nonnull
-  public static String getMinifiedJSFilename (@Nonnull final String sJSFilename)
+  @NonNull
+  public static String getMinifiedJSFilename (@NonNull final String sJSFilename)
   {
     if (!isJSFilename (sJSFilename))
       throw new IllegalArgumentException ("Passed filename '" + sJSFilename + "' is not a JS filename!");

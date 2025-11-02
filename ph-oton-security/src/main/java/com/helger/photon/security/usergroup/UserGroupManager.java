@@ -18,6 +18,9 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -37,9 +40,6 @@ import com.helger.photon.security.object.StubObject;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUserManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class manages the available user groups.
  *
@@ -53,28 +53,28 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
 
   private final CallbackList <IUserGroupModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserGroupManager (@Nonnull @Nonempty final String sFilename,
-                           @Nonnull final IUserManager aUserMgr,
-                           @Nonnull final IRoleManager aRoleMgr) throws DAOException
+  public UserGroupManager (@NonNull @Nonempty final String sFilename,
+                           @NonNull final IUserManager aUserMgr,
+                           @NonNull final IRoleManager aRoleMgr) throws DAOException
   {
     super (UserGroup.class, sFilename);
     m_aUserMgr = ValueEnforcer.notNull (aUserMgr, "UserManager");
     m_aRoleMgr = ValueEnforcer.notNull (aRoleMgr, "RoleManager");
   }
 
-  @Nonnull
+  @NonNull
   public final IUserManager getUserManager ()
   {
     return m_aUserMgr;
   }
 
-  @Nonnull
+  @NonNull
   public final IRoleManager getRoleManager ()
   {
     return m_aRoleMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static UserGroup createDefaultUserGroupAdministrators ()
   {
     return new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_ADMINISTRATORS_ID),
@@ -82,7 +82,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                           (String) null);
   }
 
-  @Nonnull
+  @NonNull
   public static UserGroup createDefaultUserGroupUsers ()
   {
     return new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_USERS_ID),
@@ -90,7 +90,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                           (String) null);
   }
 
-  @Nonnull
+  @NonNull
   public static UserGroup createDefaultUserGroupGuests ()
   {
     return new UserGroup (StubObject.createForCurrentUserAndID (CSecurity.USERGROUP_GUESTS_ID),
@@ -127,15 +127,15 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // no role for this user group
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserGroupModificationCallback> userGroupModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
-  public IUserGroup createNewUserGroup (@Nonnull @Nonempty final String sName,
+  @NonNull
+  public IUserGroup createNewUserGroup (@NonNull @Nonempty final String sName,
                                         @Nullable final String sDescription,
                                         @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -152,9 +152,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return aUserGroup;
   }
 
-  @Nonnull
-  public IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty final String sID,
-                                               @Nonnull @Nonempty final String sName,
+  @NonNull
+  public IUserGroup createPredefinedUserGroup (@NonNull @Nonempty final String sID,
+                                               @NonNull @Nonempty final String sName,
                                                @Nullable final String sDescription,
                                                @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -178,7 +178,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return aUserGroup;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUserGroup (@Nullable final String sUserGroupID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -213,7 +213,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange undeleteUserGroup (@Nullable final String sUserGroupID)
   {
     final UserGroup aUserGroup = getOfID (sUserGroupID);
@@ -251,22 +251,22 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getOfID (sUserGroupID);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllActiveUserGroups ()
   {
     return getAll (x -> !x.isDeleted ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllDeletedUserGroups ()
   {
     return getAll (IUserGroup::isDeleted);
   }
 
-  @Nonnull
-  public EChange renameUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sNewName)
+  @NonNull
+  public EChange renameUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sNewName)
   {
     // Resolve user group
     final UserGroup aUserGroup = getOfID (sUserGroupID);
@@ -297,9 +297,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setUserGroupData (@Nullable final String sUserGroupID,
-                                   @Nonnull @Nonempty final String sNewName,
+                                   @NonNull @Nonempty final String sNewName,
                                    @Nullable final String sNewDescription,
                                    @Nullable final Map <String, String> aNewCustomAttrs)
   {
@@ -340,8 +340,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sUserID)
+  @NonNull
+  public EChange assignUserToUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
     if (StringHelper.isEmpty (sUserGroupID))
@@ -379,7 +379,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignUserFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -419,7 +419,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignUserFromAllUserGroups (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -454,7 +454,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable final String sUserID)
   {
@@ -464,7 +464,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getAll (aUserGroup -> aUserGroup.containsUserID (sUserID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable final String sUserID)
   {
@@ -474,8 +474,8 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getAllMapped (aUserGroup -> aUserGroup.containsUserID (sUserID), IUserGroup::getID);
   }
 
-  @Nonnull
-  public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @Nonnull @Nonempty final String sRoleID)
+  @NonNull
+  public EChange assignRoleToUserGroup (@Nullable final String sUserGroupID, @NonNull @Nonempty final String sRoleID)
   {
     ValueEnforcer.notEmpty (sRoleID, "RoleID");
     if (StringHelper.isEmpty (sUserGroupID))
@@ -513,7 +513,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignRoleFromUserGroup (@Nullable final String sUserGroupID, @Nullable final String sRoleID)
   {
     if (StringHelper.isEmpty (sUserGroupID))
@@ -552,7 +552,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange unassignRoleFromAllUserGroups (@Nullable final String sRoleID)
   {
     if (StringHelper.isEmpty (sRoleID))
@@ -587,7 +587,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable final String sRoleID)
   {
@@ -597,7 +597,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     return getAll (aUserGroup -> aUserGroup.containsRoleID (sRoleID));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable final String sRoleID)
   {

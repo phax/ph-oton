@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Switch statement
@@ -57,55 +57,55 @@ public class JSSwitch extends AbstractJSStatement
    * @param aTest
    *        Test expression
    */
-  public JSSwitch (@Nonnull final IJSExpression aTest)
+  public JSSwitch (@NonNull final IJSExpression aTest)
   {
     m_aTest = ValueEnforcer.notNull (aTest, "Test");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression test ()
   {
     return m_aTest;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <JSCase> cases ()
   {
     return m_aCases.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  public JSCase _case (@Nonnull final IJSExpression aLabel)
+  public JSCase _case (@NonNull final IJSExpression aLabel)
   {
     final JSCase aCase = new JSCase (aLabel);
     m_aCases.add (aCase);
     return aCase;
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSCase _case (final int nLabel)
   {
     return _case (JSExpr.lit (nLabel));
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSCase _case (final long nLabel)
   {
     return _case (JSExpr.lit (nLabel));
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  public JSCase _case (@Nonnull final String sLabel)
+  public JSCase _case (@NonNull final String sLabel)
   {
     return _case (JSExpr.lit (sLabel));
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSCase _default ()
   {
@@ -114,7 +114,7 @@ public class JSSwitch extends AbstractJSStatement
     return m_aDefaultCase;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     if (JSOp.hasOperator (m_aTest))
       aFormatter.plain ("switch ").generatable (m_aTest).plain ('{').nl ();

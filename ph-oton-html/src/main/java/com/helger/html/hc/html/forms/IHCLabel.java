@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.html.IHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for LABELs
@@ -41,7 +41,7 @@ public interface IHCLabel <IMPLTYPE extends IHCLabel <IMPLTYPE>> extends IHCElem
    *        The HTML ID of the other object.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setFor (@Nullable String sFor);
 
   /**
@@ -51,7 +51,7 @@ public interface IHCLabel <IMPLTYPE extends IHCLabel <IMPLTYPE>> extends IHCElem
    *        The HTML of the other object.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setFor (@Nullable IHCHasID <?> aFor);
 
   @Nullable
@@ -65,6 +65,6 @@ public interface IHCLabel <IMPLTYPE extends IHCLabel <IMPLTYPE>> extends IHCElem
    *        The HTML ID of the form.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setForm (@Nullable String sForm);
 }

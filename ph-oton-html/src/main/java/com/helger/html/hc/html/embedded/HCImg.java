@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.embedded;
 
-import com.helger.url.ISimpleURL;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.url.ISimpleURL;
 
 /**
  * Represents an HTML &lt;img&gt; element
@@ -31,7 +31,7 @@ public class HCImg extends AbstractHCImg <HCImg>
   public HCImg ()
   {}
 
-  @Nonnull
+  @NonNull
   public static HCImg create (@Nullable final ISimpleURL aSrc)
   {
     final HCImg ret = new HCImg ();

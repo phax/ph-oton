@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the possible label states.
@@ -42,13 +42,13 @@ public enum ELabelType implements IHasID <String>
   private final String m_sID;
   private final ICSSClassProvider m_aCSSClass;
 
-  ELabelType (@Nonnull @Nonempty final String sID, @Nullable final ICSSClassProvider aCSSClass)
+  ELabelType (@NonNull @Nonempty final String sID, @Nullable final ICSSClassProvider aCSSClass)
   {
     m_sID = sID;
     m_aCSSClass = aCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

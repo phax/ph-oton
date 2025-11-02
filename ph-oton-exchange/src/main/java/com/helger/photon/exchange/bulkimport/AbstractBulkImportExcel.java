@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -35,9 +37,6 @@ import com.helger.text.display.IHasDisplayText;
 import com.helger.text.display.IHasDisplayTextWithArgs;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation of a bulk import based on MS Excel files.
@@ -56,21 +55,21 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
 
     private final IMultilingualText m_aTP;
 
-    EText (@Nonnull final String sDE, @Nonnull final String sEN)
+    EText (@NonNull final String sDE, @NonNull final String sEN)
     {
       m_aTP = TextHelper.create_DE_EN (sDE, sEN);
     }
 
     @Nullable
-    public String getDisplayText (@Nonnull final Locale aContentLocale)
+    public String getDisplayText (@NonNull final Locale aContentLocale)
     {
       return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
     }
   }
 
   protected AbstractBulkImportExcel (@Nonnegative final int nHeaderRowsToSkip,
-                                     @Nonnull @Nonempty final List <IHasDisplayText> aColumns,
-                                     @Nonnull @Nonempty final EExchangeFileType... aFileTypes)
+                                     @NonNull @Nonempty final List <IHasDisplayText> aColumns,
+                                     @NonNull @Nonempty final EExchangeFileType... aFileTypes)
   {
     super (nHeaderRowsToSkip, aColumns, aFileTypes);
   }
@@ -88,7 +87,7 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
   }
 
   @Nullable
-  protected static final String getCellAsString (@Nonnull final Cell aCell)
+  protected static final String getCellAsString (@NonNull final Cell aCell)
   {
     final String sValue = ExcelReadHelper.getCellValueString (aCell);
     if (sValue == null)
@@ -103,9 +102,9 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
 
   @Nullable
   protected static final Integer getCellAsInteger (@Nonnegative final int nRowIndex,
-                                                   @Nonnull final Cell aCell,
-                                                   @Nonnull final BulkImportResult aRes,
-                                                   @Nonnull final Locale aDisplayLocale)
+                                                   @NonNull final Cell aCell,
+                                                   @NonNull final BulkImportResult aRes,
+                                                   @NonNull final Locale aDisplayLocale)
   {
     final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)
@@ -126,9 +125,9 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
 
   @Nullable
   protected static final Date getCellAsDate (@Nonnegative final int nRowIndex,
-                                             @Nonnull final Cell aCell,
-                                             @Nonnull final BulkImportResult aRes,
-                                             @Nonnull final Locale aDisplayLocale)
+                                             @NonNull final Cell aCell,
+                                             @NonNull final BulkImportResult aRes,
+                                             @NonNull final Locale aDisplayLocale)
   {
     final Date aValue = ExcelReadHelper.getCellValueJavaDate (aCell);
     if (aValue == null && ExcelReadHelper.getCellValueObject (aCell) != null)
@@ -141,11 +140,11 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
     return aValue;
   }
 
-  @Nonnull
+  @NonNull
   protected static final ETriState getCellAsBoolean (@Nonnegative final int nRowIndex,
-                                                     @Nonnull final Cell aCell,
-                                                     @Nonnull final BulkImportResult aRes,
-                                                     @Nonnull final Locale aDisplayLocale)
+                                                     @NonNull final Cell aCell,
+                                                     @NonNull final BulkImportResult aRes,
+                                                     @NonNull final Locale aDisplayLocale)
   {
     final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)

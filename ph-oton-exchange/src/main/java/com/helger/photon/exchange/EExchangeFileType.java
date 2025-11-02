@@ -19,6 +19,9 @@ package com.helger.photon.exchange;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
@@ -32,9 +35,6 @@ import com.helger.photon.exchange.bulkexport.format.ExporterXML;
 import com.helger.poi.excel.EExcelVersion;
 import com.helger.text.display.IHasDisplayText;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Defines common file types for import/export.
  *
@@ -45,7 +45,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   CSV ("csv", ".csv", CMimeType.TEXT_CSV, true, EExchangeFileTypeName.CSV)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterCSV createExporter ()
     {
       return new ExporterCSV ().setCharset (StandardCharsets.ISO_8859_1).setSeparatorChar (';');
@@ -54,7 +54,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   XLS ("xls", EExcelVersion.XLS.getFileExtension (), EExcelVersion.XLS.getMimeType (), true, EExchangeFileTypeName.XLS)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterExcel createExporter ()
     {
       return new ExporterExcel (EExcelVersion.XLS);
@@ -63,7 +63,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   XLSX ("xlsx", EExcelVersion.XLSX.getFileExtension (), EExcelVersion.XLSX.getMimeType (), true, EExchangeFileTypeName.XLSX)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterExcel createExporter ()
     {
       return new ExporterExcel (EExcelVersion.XLSX);
@@ -72,7 +72,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   XML ("xml", ".xml", CMimeType.TEXT_XML, false, EExchangeFileTypeName.XML)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterXML createExporter ()
     {
       return new ExporterXML ();
@@ -91,7 +91,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   JSON ("json", ".json", CMimeType.APPLICATION_JSON, false, EExchangeFileTypeName.JSON)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterJSON createExporter ()
     {
       return new ExporterJSON ();
@@ -100,7 +100,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   JSON_SIMPLE ("json-simple", ".json", CMimeType.APPLICATION_JSON, false, EExchangeFileTypeName.JSON_SIMPLE)
   {
     @Override
-    @Nonnull
+    @NonNull
     public ExporterJSON createExporter ()
     {
       return new ExporterJSON ().setEmitType (false);
@@ -113,11 +113,11 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   private final boolean m_bLineBased;
   private final EExchangeFileTypeName m_aName;
 
-  EExchangeFileType (@Nonnull @Nonempty final String sID,
-                     @Nonnull @Nonempty final String sExt,
-                     @Nonnull final IMimeType aMimeType,
+  EExchangeFileType (@NonNull @Nonempty final String sID,
+                     @NonNull @Nonempty final String sExt,
+                     @NonNull final IMimeType aMimeType,
                      final boolean bLineBased,
-                     @Nonnull final EExchangeFileTypeName aName)
+                     @NonNull final EExchangeFileTypeName aName)
   {
     m_sID = sID;
     m_sExt = sExt;
@@ -126,7 +126,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
     m_aName = aName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -136,7 +136,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   /**
    * @return The desired file extension including the leading dot.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getFileExtension ()
   {
@@ -146,7 +146,7 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   /**
    * @return The MIMe type for created files.
    */
-  @Nonnull
+  @NonNull
   public IMimeType getMimeType ()
   {
     return m_aMimeType;
@@ -162,19 +162,19 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aName.getDisplayText (aContentLocale);
   }
 
   @Nullable
-  public String getExportAsText (@Nonnull final Locale aContentLocale)
+  public String getExportAsText (@NonNull final Locale aContentLocale)
   {
     return EExchangeFileTypeText.EXPORT_AS.getDisplayTextWithArgs (aContentLocale, getDisplayText (aContentLocale));
   }
 
   @Nullable
-  public String getSaveAsText (@Nonnull final Locale aContentLocale)
+  public String getSaveAsText (@NonNull final Locale aContentLocale)
   {
     return EExchangeFileTypeText.SAVE_AS.getDisplayTextWithArgs (aContentLocale, getDisplayText (aContentLocale));
   }

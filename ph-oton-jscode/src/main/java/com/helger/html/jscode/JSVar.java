@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.Nonempty;
 
 /**
  * Variables and fields.
@@ -34,7 +34,7 @@ public class JSVar extends AbstractJSVariable <JSVar>
    * @param sName
    *        name of the variable
    */
-  public JSVar (@Nonnull @Nonempty final String sName)
+  public JSVar (@NonNull @Nonempty final String sName)
   {
     this (sName, (IJSExpression) null);
   }
@@ -47,7 +47,7 @@ public class JSVar extends AbstractJSVariable <JSVar>
    * @param aInit
    *        Value to initialize this variable to
    */
-  public JSVar (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  public JSVar (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInit)
   {
     super (EJSVarMode.VAR, sName, aInit);
   }

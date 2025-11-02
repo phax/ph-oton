@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,9 +30,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.http.EHttpMethod;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x deleteFile part
@@ -51,7 +51,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
   public FineUploader5DeleteFile ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
   {
@@ -65,7 +65,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        Custom headers to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5DeleteFile setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aDeleteFileCustomHeaders.setAll (aCustomHeaders);
@@ -79,7 +79,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        Custom headers to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5DeleteFile addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aDeleteFileCustomHeaders.putAllIfNotNull (aCustomHeaders);
@@ -95,8 +95,8 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        Custom header value
    * @return this
    */
-  @Nonnull
-  public FineUploader5DeleteFile addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5DeleteFile addCustomHeader (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -117,14 +117,14 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        New value.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5DeleteFile setEnabled (final boolean bEnabled)
   {
     m_bDeleteFileEnabled = bEnabled;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getEndpoint ()
   {
     return m_aDeleteFileEndpoint;
@@ -137,15 +137,15 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        New value. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5DeleteFile setEndpoint (@Nonnull final ISimpleURL aEndpoint)
+  @NonNull
+  public FineUploader5DeleteFile setEndpoint (@NonNull final ISimpleURL aEndpoint)
   {
     ValueEnforcer.notNull (aEndpoint, "Endpoint");
     m_aDeleteFileEndpoint = aEndpoint;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EHttpMethod getMethod ()
   {
     return m_eDeleteFileMethod;
@@ -158,15 +158,15 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        New value. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5DeleteFile setMethod (@Nonnull final EHttpMethod eMethod)
+  @NonNull
+  public FineUploader5DeleteFile setMethod (@NonNull final EHttpMethod eMethod)
   {
     ValueEnforcer.notNull (eMethod, "Method");
     m_eDeleteFileMethod = eMethod;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllParams ()
   {
@@ -180,7 +180,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        New parameters to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5DeleteFile setParams (@Nullable final Map <String, String> aParams)
   {
     m_aDeleteFileParams.setAll (aParams);
@@ -194,7 +194,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        New parameters to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5DeleteFile addParams (@Nullable final Map <String, String> aParams)
   {
     m_aDeleteFileParams.putAllIfNotNull (aParams);
@@ -210,8 +210,8 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
    *        Parameter value
    * @return this
    */
-  @Nonnull
-  public FineUploader5DeleteFile addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5DeleteFile addParam (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -220,7 +220,7 @@ public class FineUploader5DeleteFile implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

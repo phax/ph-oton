@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.tabular;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Class for representing a simple HTML &lt;table&gt;.

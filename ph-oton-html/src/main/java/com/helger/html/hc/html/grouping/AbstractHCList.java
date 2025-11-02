@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for UL and OL elements.
@@ -42,7 +42,7 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
 {
   private final Class <ITEMTYPE> m_aItemClass;
 
-  protected AbstractHCList (@Nonnull final EHTMLElement eElement, @Nonnull final Class <ITEMTYPE> aItemClass)
+  protected AbstractHCList (@NonNull final EHTMLElement eElement, @NonNull final Class <ITEMTYPE> aItemClass)
   {
     super (eElement);
     m_aItemClass = ValueEnforcer.notNull (aItemClass, "ItemClass");
@@ -56,7 +56,7 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
    *        The added item. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onAddItem (@Nonnull final ITEMTYPE aItem)
+  protected void onAddItem (@NonNull final ITEMTYPE aItem)
   {}
 
   @Nullable
@@ -70,30 +70,30 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
     return aItem;
   }
 
-  @Nonnull
+  @NonNull
   protected abstract ITEMTYPE createEmptyItem ();
 
-  @Nonnull
+  @NonNull
   public final ITEMTYPE addItem ()
   {
     return _addItem (createEmptyItem ());
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final ITEMTYPE addAndReturnItem (@Nullable final String sChild)
   {
     return addItem ().addChild (sChild);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final ITEMTYPE addAndReturnItem (@Nullable final String... aChildren)
   {
     return addItem ().addChildren (aChildren);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final ITEMTYPE addAndReturnItem (@Nullable final IHCNode aChild)
   {
@@ -106,7 +106,7 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
     return aItem;
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final ITEMTYPE addAndReturnItem (@Nullable final IHCNode... aChildren)
   {
@@ -115,7 +115,7 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
     return aItem;
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final ITEMTYPE addAndReturnItem (@Nullable final Iterable <? extends IHCNode> aChildren)
   {
@@ -131,42 +131,42 @@ public abstract class AbstractHCList <IMPLTYPE extends AbstractHCList <IMPLTYPE,
     return _addItem (aItem);
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final String sChild)
   {
     addAndReturnItem (sChild);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final String... aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final IHCNode aChild)
   {
     addAndReturnItem (aChild);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final IHCNode... aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final Iterable <? extends IHCNode> aChildren)
   {
     addAndReturnItem (aChildren);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addItem (@Nullable final ITEMTYPE aItem)
   {
     _addItem (aItem);

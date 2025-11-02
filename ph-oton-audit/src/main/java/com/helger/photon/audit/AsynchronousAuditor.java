@@ -22,6 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +35,6 @@ import com.helger.base.state.EChange;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The class handles audit items asynchronously. If a new audit item is to be handled it is put into
@@ -60,14 +59,14 @@ public class AsynchronousAuditor extends AbstractAuditor
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
   {
-    public MyCollector (@Nonnull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
+    public MyCollector (@NonNull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
     {
       setPerformer (aPerformer);
     }
   }
 
-  public AsynchronousAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider,
-                              @Nonnull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
+  public AsynchronousAuditor (@NonNull final ICurrentUserIDProvider aUserIDProvider,
+                              @NonNull final IConcurrentPerformer <List <IAuditItem>> aPerformer)
   {
     super (aUserIDProvider);
     ValueEnforcer.notNull (aPerformer, "Performer");
@@ -78,7 +77,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   }
 
   @Override
-  protected void handleAuditItem (@Nonnull final IAuditItem aAuditItem)
+  protected void handleAuditItem (@NonNull final IAuditItem aAuditItem)
   {
     ValueEnforcer.notNull (aAuditItem, "AuditItem");
 
@@ -99,7 +98,7 @@ public class AsynchronousAuditor extends AbstractAuditor
    * @return {@link EChange#CHANGED} if the shutdown was performed, {@link EChange#UNCHANGED} if the
    *         auditor was already shut down.
    */
-  @Nonnull
+  @NonNull
   public EChange stop ()
   {
     if (m_aRWLock.writeLockedBoolean ( () -> {

@@ -19,6 +19,8 @@ package com.helger.photon.uicore.page;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,9 +60,6 @@ import com.helger.text.display.IHasDisplayText;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Abstract base class for a web page that has the common form handling, with a
  * list view, details view, create and edit + binding.
@@ -91,16 +90,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
   private final ICommonsMap <String, IWebPageActionHandler <DATATYPE, WPECTYPE>> m_aCustomHandlers = new CommonsHashMap <> ();
   private boolean m_bObjectLockingEnabled = DEFAULT_OBJECT_LOCKING_ENABLED;
 
-  public AbstractWebPageForm (@Nonnull @Nonempty final String sID,
-                              @Nonnull final IMultilingualText aName,
+  public AbstractWebPageForm (@NonNull @Nonempty final String sID,
+                              @NonNull final IMultilingualText aName,
                               @Nullable final IMultilingualText aDescription,
-                              @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+                              @NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (sID, aName, aDescription);
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
   }
 
-  @Nonnull
+  @NonNull
   protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;
@@ -116,7 +115,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     m_aUndeleteHandler = aUndeleteHandler;
   }
 
-  protected final void addCustomHandler (@Nonnull @Nonempty final String sActionName,
+  protected final void addCustomHandler (@NonNull @Nonempty final String sActionName,
                                          @Nullable final IWebPageActionHandler <DATATYPE, WPECTYPE> aCustomHandler)
   {
     ValueEnforcer.notEmpty (sActionName, "ActionName");
@@ -163,7 +162,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @Nullable
   @OverrideOnDemand
-  protected String getObjectDisplayName (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected String getObjectDisplayName (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aSelectedObject)
   {
     return null;
   }
@@ -177,7 +176,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         is sufficient.
    */
   @OverrideOnDemand
-  protected boolean isFileUploadForm (@Nonnull final WPECTYPE aWPEC)
+  protected boolean isFileUploadForm (@NonNull final WPECTYPE aWPEC)
   {
     return false;
   }
@@ -190,19 +189,19 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @return <code>null</code> if no selected object is present.
    */
   @Nullable
-  protected final String getSelectedObjectID (@Nonnull final WPECTYPE aWPEC)
+  protected final String getSelectedObjectID (@NonNull final WPECTYPE aWPEC)
   {
     return aWPEC.params ().getAsString (CPageParam.PARAM_OBJECT);
   }
 
-  @Nonnull
+  @NonNull
   public static HCSpan createEmptyAction ()
   {
     // Assume each icon has a width of 16px
     return createEmptyAction (16);
   }
 
-  @Nonnull
+  @NonNull
   public static HCSpan createEmptyAction (@Nonnegative final int nPx)
   {
     return new HCSpan ().addClass (CUICoreCSS.CSS_CLASS_EMPTY_ACTION)
@@ -210,47 +209,47 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                         .addStyle (CCSSProperties.WIDTH.newValue (ECSSUnit.px (nPx)));
   }
 
-  @Nonnull
-  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sMenuItemID)
+  @NonNull
+  public static SimpleURL createCreateURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final String sMenuItemID)
   {
     return aLEC.getLinkToMenuItem (sMenuItemID).add (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
   }
 
-  @Nonnull
-  public static SimpleURL createCreateURL (@Nonnull final ILayoutExecutionContext aLEC)
+  @NonNull
+  public static SimpleURL createCreateURL (@NonNull final ILayoutExecutionContext aLEC)
   {
     return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_CREATE);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final String sMenuItemID,
-                                         @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final String sMenuItemID,
+                                         @NonNull final IHasID <String> aCurObject)
   {
     return createViewURL (aLEC, sMenuItemID, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final String sMenuItemID,
-                                         @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final String sMenuItemID,
+                                         @NonNull final IHasID <String> aCurObject,
                                          @Nullable final Map <String, String> aParams)
   {
     return createViewURL (aLEC, sMenuItemID, aCurObject.getID (), aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final String sMenuItemID,
-                                         @Nonnull final String sObjectID)
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final String sMenuItemID,
+                                         @NonNull final String sObjectID)
   {
     return createViewURL (aLEC, sMenuItemID, sObjectID, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final String sMenuItemID,
-                                         @Nonnull final String sObjectID,
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final String sMenuItemID,
+                                         @NonNull final String sObjectID,
                                          @Nullable final Map <String, String> aParams)
   {
     return aLEC.getLinkToMenuItem (sMenuItemID)
@@ -259,29 +258,29 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                .addAll (aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
   {
     return createViewURL (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final IHasID <String> aCurObject,
                                          @Nullable final Map <String, String> aParams)
   {
     return createViewURL (aLEC, aCurObject.getID (), aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final String sObjectID)
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final String sObjectID)
   {
     return createViewURL (aLEC, sObjectID, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createViewURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final String sObjectID,
+  @NonNull
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final String sObjectID,
                                          @Nullable final Map <String, String> aParams)
   {
     return aLEC.getSelfHref ()
@@ -290,16 +289,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                .addAll (aParams);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject)
   {
     return createEditLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject,
                                                                                   @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -309,16 +308,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                            aParams);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject)
   {
     return createEditLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject,
                                                                                   @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -328,23 +327,23 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                            aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createEditURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createEditURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
   {
     return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
-  @Nonnull
-  public static HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                    @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                    @NonNull final IHasID <String> aCurObject,
                                     @Nullable final String sTitle)
   {
     return createEditLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static HCA createEditLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                    @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createEditLink (@NonNull final ILayoutExecutionContext aLEC,
+                                    @NonNull final IHasID <String> aCurObject,
                                     @Nullable final String sTitle,
                                     @Nullable final Map <String, String> aParams)
   {
@@ -352,16 +351,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     return new HCA (aEditURL).setTitle (sTitle).addChild (EDefaultIcon.EDIT.getAsNode ());
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject)
   {
     return createCopyLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject,
                                                                                   @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -371,16 +370,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                            aParams);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject)
   {
     return createCopyLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                  @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                  @NonNull final T aCurObject,
                                                                                   @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -390,15 +389,15 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                            aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createCopyURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
   {
     return createCopyURL (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createCopyURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                         @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static SimpleURL createCopyURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final IHasID <String> aCurObject,
                                          @Nullable final Map <String, String> aParams)
   {
     return aLEC.getSelfHref ()
@@ -407,17 +406,17 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                .addAll (aParams);
   }
 
-  @Nonnull
-  public static HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                    @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                    @NonNull final IHasID <String> aCurObject,
                                     @Nullable final String sTitle)
   {
     return createCopyLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static HCA createCopyLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                    @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createCopyLink (@NonNull final ILayoutExecutionContext aLEC,
+                                    @NonNull final IHasID <String> aCurObject,
                                     @Nullable final String sTitle,
                                     @Nullable final Map <String, String> aParams)
   {
@@ -425,16 +424,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     return new HCA (aCopyURL).setTitle (sTitle).addChild (EDefaultIcon.COPY.getAsNode ());
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                    @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                    @NonNull final T aCurObject)
   {
     return createDeleteLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                    @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                    @NonNull final T aCurObject,
                                                                                     @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -444,16 +443,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                              aParams);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                    @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                    @NonNull final T aCurObject)
   {
     return createDeleteLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                    @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                    @NonNull final T aCurObject,
                                                                                     @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -463,15 +462,15 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                              aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createDeleteURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
   {
     return createDeleteURL (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createDeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                           @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static SimpleURL createDeleteURL (@NonNull final ILayoutExecutionContext aLEC,
+                                           @NonNull final IHasID <String> aCurObject,
                                            @Nullable final Map <String, String> aParams)
   {
     return aLEC.getSelfHref ()
@@ -480,17 +479,17 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                .addAll (aParams);
   }
 
-  @Nonnull
-  public static HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                      @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                      @NonNull final IHasID <String> aCurObject,
                                       @Nullable final String sTitle)
   {
     return createDeleteLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static HCA createDeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                      @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createDeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                      @NonNull final IHasID <String> aCurObject,
                                       @Nullable final String sTitle,
                                       @Nullable final Map <String, String> aParams)
   {
@@ -498,16 +497,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.DELETE.getAsNode ());
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                      @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                      @NonNull final T aCurObject)
   {
     return createUndeleteLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayName & IHasID <String>> HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                      @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayName & IHasID <String>> HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                      @NonNull final T aCurObject,
                                                                                       @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -517,16 +516,16 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                aParams);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                      @Nonnull final T aCurObject)
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                      @NonNull final T aCurObject)
   {
     return createUndeleteLink (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static <T extends IHasDisplayText & IHasID <String>> HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                                      @Nonnull final T aCurObject,
+  @NonNull
+  public static <T extends IHasDisplayText & IHasID <String>> HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                                                                      @NonNull final T aCurObject,
                                                                                       @Nullable final Map <String, String> aParams)
   {
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
@@ -537,15 +536,15 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                                aParams);
   }
 
-  @Nonnull
-  public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC, @Nonnull final IHasID <String> aCurObject)
+  @NonNull
+  public static SimpleURL createUndeleteURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
   {
     return createUndeleteURL (aLEC, aCurObject, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static SimpleURL createUndeleteURL (@Nonnull final ILayoutExecutionContext aLEC,
-                                             @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static SimpleURL createUndeleteURL (@NonNull final ILayoutExecutionContext aLEC,
+                                             @NonNull final IHasID <String> aCurObject,
                                              @Nullable final Map <String, String> aParams)
   {
     return aLEC.getSelfHref ()
@@ -554,17 +553,17 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
                .addAll (aParams);
   }
 
-  @Nonnull
-  public static HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                        @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                        @NonNull final IHasID <String> aCurObject,
                                         @Nullable final String sTitle)
   {
     return createUndeleteLink (aLEC, aCurObject, sTitle, (Map <String, String>) null);
   }
 
-  @Nonnull
-  public static HCA createUndeleteLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                        @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createUndeleteLink (@NonNull final ILayoutExecutionContext aLEC,
+                                        @NonNull final IHasID <String> aCurObject,
                                         @Nullable final String sTitle,
                                         @Nullable final Map <String, String> aParams)
   {
@@ -572,9 +571,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
     return new HCA (aURL).setTitle (sTitle).addChild (EDefaultIcon.UNDELETE.getAsNode ());
   }
 
-  @Nonnull
-  public static HCA createNestedCreateLink (@Nonnull final ILayoutExecutionContext aLEC,
-                                            @Nonnull final IHasID <String> aCurObject,
+  @NonNull
+  public static HCA createNestedCreateLink (@NonNull final ILayoutExecutionContext aLEC,
+                                            @NonNull final IHasID <String> aCurObject,
                                             @Nullable final String sTitle)
   {
     final ISimpleURL aURL = createCreateURL (aLEC).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
@@ -587,9 +586,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @return A newly created toolbar. May be overridden to create other types of
    *         toolbars. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createNewViewToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewViewToolbar (@NonNull final WPECTYPE aWPEC)
   {
     return getUIHandler ().createToolbar (aWPEC);
   }
@@ -603,7 +602,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         draw your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showViewToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected boolean showViewToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aSelectedObject)
   {
     return true;
   }
@@ -619,9 +618,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyViewToolbar (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final DATATYPE aSelectedObject,
-                                    @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyViewToolbar (@NonNull final WPECTYPE aWPEC,
+                                    @NonNull final DATATYPE aSelectedObject,
+                                    @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   /**
@@ -636,11 +635,11 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The selected object
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createViewToolbar (@Nonnull final WPECTYPE aWPEC,
+  protected TOOLBAR_TYPE createViewToolbar (@NonNull final WPECTYPE aWPEC,
                                             final boolean bCanGoBack,
-                                            @Nonnull final DATATYPE aSelectedObject)
+                                            @NonNull final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -667,9 +666,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @return A newly created toolbar. May be overridden to create other types of
    *         toolbars :). May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createNewEditToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewEditToolbar (@NonNull final WPECTYPE aWPEC)
   {
     return getUIHandler ().createToolbar (aWPEC);
   }
@@ -683,7 +682,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         draw your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showEditToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected boolean showEditToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aSelectedObject)
   {
     return true;
   }
@@ -699,14 +698,14 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyEditToolbar (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final DATATYPE aSelectedObject,
-                                    @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyEditToolbar (@NonNull final WPECTYPE aWPEC,
+                                    @NonNull final DATATYPE aSelectedObject,
+                                    @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
   @OverrideOnDemand
-  protected String getEditToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  protected String getEditToolbarSubmitButtonText (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale);
   }
@@ -729,11 +728,11 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The selected object. Never <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createEditToolbar (@Nonnull final WPECTYPE aWPEC,
-                                            @Nonnull final FORM_TYPE aForm,
-                                            @Nonnull final DATATYPE aSelectedObject)
+  protected TOOLBAR_TYPE createEditToolbar (@NonNull final WPECTYPE aWPEC,
+                                            @NonNull final FORM_TYPE aForm,
+                                            @NonNull final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -760,7 +759,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         draw your own toolbar
    */
   @OverrideOnDemand
-  protected boolean showCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
+  protected boolean showCreateToolbar (@NonNull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)
   {
     return true;
   }
@@ -771,9 +770,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @return A newly created toolbar. May be overridden to create other types of
    *         toolbars :). May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createNewCreateToolbar (@Nonnull final WPECTYPE aWPEC)
+  protected TOOLBAR_TYPE createNewCreateToolbar (@NonNull final WPECTYPE aWPEC)
   {
     return getUIHandler ().createToolbar (aWPEC);
   }
@@ -787,12 +786,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyCreateToolbar (@Nonnull final WPECTYPE aWPEC, @Nonnull final TOOLBAR_TYPE aToolbar)
+  protected void modifyCreateToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
   @OverrideOnDemand
-  protected String getCreateToolbarSubmitButtonText (@Nonnull final Locale aDisplayLocale)
+  protected String getCreateToolbarSubmitButtonText (@NonNull final Locale aDisplayLocale)
   {
     return EPhotonCoreText.BUTTON_SAVE.getDisplayText (aDisplayLocale);
   }
@@ -815,10 +814,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Optional selected object. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createCreateToolbar (@Nonnull final WPECTYPE aWPEC,
-                                              @Nonnull final FORM_TYPE aForm,
+  protected TOOLBAR_TYPE createCreateToolbar (@NonNull final WPECTYPE aWPEC,
+                                              @NonNull final FORM_TYPE aForm,
                                               @Nullable final DATATYPE aSelectedObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
@@ -852,8 +851,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         not
    */
   @OverrideOnDemand
-  protected boolean isActionAllowed (@Nonnull final WPECTYPE aWPEC,
-                                     @Nonnull final EWebPageFormAction eFormAction,
+  protected boolean isActionAllowed (@NonNull final WPECTYPE aWPEC,
+                                     @NonNull final EWebPageFormAction eFormAction,
                                      @Nullable final DATATYPE aSelectedObject)
   {
     return true;
@@ -869,7 +868,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @return <code>null</code> if no such object exists
    */
   @Nullable
-  protected abstract DATATYPE getSelectedObject (@Nonnull WPECTYPE aWPEC, @Nullable String sID);
+  protected abstract DATATYPE getSelectedObject (@NonNull WPECTYPE aWPEC, @Nullable String sID);
 
   /**
    * Check if locking should be performed on the current request or not.
@@ -886,9 +885,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected boolean performLocking (@Nonnull final WPECTYPE aWPEC,
-                                    @Nonnull final DATATYPE aSelectedObject,
-                                    @Nonnull final EWebPageFormAction eFormAction)
+  protected boolean performLocking (@NonNull final WPECTYPE aWPEC,
+                                    @NonNull final DATATYPE aSelectedObject,
+                                    @NonNull final EWebPageFormAction eFormAction)
   {
     // Lock EDIT and DELETE if an object is present
     // Also lock custom actions if an object is selected
@@ -916,12 +915,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         {@link EContinue#BREAK} if execution cannot continue (e.g. because
    *         object is already locked).
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected EContinue beforeProcessing (@Nonnull final WPECTYPE aWPEC,
+  protected EContinue beforeProcessing (@NonNull final WPECTYPE aWPEC,
                                         @Nullable final DATATYPE aSelectedObject,
-                                        @Nonnull final EWebPageFormAction eFormAction)
+                                        @NonNull final EWebPageFormAction eFormAction)
   {
     if (isObjectLockingEnabled ())
     {
@@ -971,9 +970,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        The current form action. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void afterProcessing (@Nonnull final WPECTYPE aWPEC,
+  protected void afterProcessing (@NonNull final WPECTYPE aWPEC,
                                   @Nullable final DATATYPE aSelectedObject,
-                                  @Nonnull final EWebPageFormAction eFormAction)
+                                  @NonNull final EWebPageFormAction eFormAction)
   {}
 
   /**
@@ -982,9 +981,9 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param aSelectedObject
    *        The currently selected object. Never <code>null</code>.
    */
-  protected abstract void showSelectedObject (@Nonnull WPECTYPE aWPEC, @Nonnull DATATYPE aSelectedObject);
+  protected abstract void showSelectedObject (@NonNull WPECTYPE aWPEC, @NonNull DATATYPE aSelectedObject);
 
-  protected final void handleViewObject (@Nonnull final WPECTYPE aWPEC, @Nonnull final DATATYPE aSelectedObject)
+  protected final void handleViewObject (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aSelectedObject)
   {
     // Valid object found - show details
     showSelectedObject (aWPEC, aSelectedObject);
@@ -1014,10 +1013,10 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *         not to
    */
   @OverrideOnDemand
-  protected boolean showInputFormAgain (@Nonnull final WPECTYPE aWPEC,
+  protected boolean showInputFormAgain (@NonNull final WPECTYPE aWPEC,
                                         @Nullable final DATATYPE aSelectedObject,
-                                        @Nonnull final FormErrorList aFormErrors,
-                                        @Nonnull final EWebPageFormAction eFormAction)
+                                        @NonNull final FormErrorList aFormErrors,
+                                        @NonNull final EWebPageFormAction eFormAction)
   {
     return false;
   }
@@ -1029,7 +1028,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Web page execution context. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onInputFormFinishedSuccess (@Nonnull final WPECTYPE aWPEC)
+  protected void onInputFormFinishedSuccess (@NonNull final WPECTYPE aWPEC)
   {}
 
   /**
@@ -1041,7 +1040,7 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Object for storing the validation errors. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onInputFormError (@Nonnull final WPECTYPE aWPEC, @Nonnull final FormErrorList aFormErrors)
+  protected void onInputFormError (@NonNull final WPECTYPE aWPEC, @NonNull final FormErrorList aFormErrors)
   {}
 
   /**
@@ -1059,8 +1058,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        <code>false</code> if not.
    */
   @OverrideOnDemand
-  protected void modifyFormBeforeShowInputForm (@Nonnull final WPECTYPE aWPEC,
-                                                @Nonnull final FORM_TYPE aForm,
+  protected void modifyFormBeforeShowInputForm (@NonNull final WPECTYPE aWPEC,
+                                                @NonNull final FORM_TYPE aForm,
                                                 final boolean bIsFormSubmitted)
   {}
 
@@ -1084,12 +1083,12 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        Previous errors from validation. Never <code>null</code> but maybe
    *        empty.
    */
-  protected abstract void showInputForm (@Nonnull WPECTYPE aWPEC,
+  protected abstract void showInputForm (@NonNull WPECTYPE aWPEC,
                                          @Nullable DATATYPE aSelectedObject,
-                                         @Nonnull FORM_TYPE aForm,
+                                         @NonNull FORM_TYPE aForm,
                                          boolean bIsFormSubmitted,
-                                         @Nonnull EWebPageFormAction eFormAction,
-                                         @Nonnull FormErrorList aFormErrors);
+                                         @NonNull EWebPageFormAction eFormAction,
+                                         @NonNull FormErrorList aFormErrors);
 
   /**
    * Add additional form IDs (e.g. client and accounting area). This method is
@@ -1106,8 +1105,8 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    *        <code>false</code> if not.
    */
   @OverrideOnDemand
-  protected void modifyFormAfterShowInputForm (@Nonnull final WPECTYPE aWPEC,
-                                               @Nonnull final FORM_TYPE aForm,
+  protected void modifyFormAfterShowInputForm (@NonNull final WPECTYPE aWPEC,
+                                               @NonNull final FORM_TYPE aForm,
                                                final boolean bIsFormSubmitted)
   {}
 
@@ -1122,19 +1121,19 @@ public abstract class AbstractWebPageForm <DATATYPE extends IHasID <String>, WPE
    * @param eFormAction
    *        The form action mode. Either create, copy or edit.
    */
-  protected abstract void validateAndSaveInputParameters (@Nonnull WPECTYPE aWPEC,
+  protected abstract void validateAndSaveInputParameters (@NonNull WPECTYPE aWPEC,
                                                           @Nullable DATATYPE aSelectedObject,
-                                                          @Nonnull FormErrorList aFormErrors,
-                                                          @Nonnull EWebPageFormAction eFormAction);
+                                                          @NonNull FormErrorList aFormErrors,
+                                                          @NonNull EWebPageFormAction eFormAction);
 
   /**
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
    */
-  protected abstract void showListOfExistingObjects (@Nonnull WPECTYPE aWPEC);
+  protected abstract void showListOfExistingObjects (@NonNull WPECTYPE aWPEC);
 
   @Override
-  protected final void fillContent (@Nonnull final WPECTYPE aWPEC)
+  protected final void fillContent (@NonNull final WPECTYPE aWPEC)
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
 

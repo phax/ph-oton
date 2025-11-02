@@ -16,6 +16,8 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +27,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringHex;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * JavaScript String helper
@@ -169,7 +168,7 @@ public final class JSMarshaller
     return new String (ret, 0, nIndex);
   }
 
-  @Nonnull
+  @NonNull
   public static String javaScriptEscapeForRegEx (final char cInput)
   {
     if (ArrayHelper.contains (CHARS_TO_MASK_REGEX, cInput))

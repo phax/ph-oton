@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.famfam;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
@@ -29,8 +31,6 @@ import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Contains all free FamFam 0.13 icons
@@ -1045,26 +1045,26 @@ public enum EFamFamIcon implements IIcon
 
   private final String m_sCSSClass;
 
-  EFamFamIcon (@Nonnull @Nonempty final String sCSSClass)
+  EFamFamIcon (@NonNull @Nonempty final String sCSSClass)
   {
     m_sCSSClass = sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSClass ()
   {
     return m_sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   public IHCElement <?> getAsNode ()
   {
     return applyToNode (new HCSpan ());
   }
 
-  @Nonnull
-  public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
+  @NonNull
+  public <T extends IHCElement <?>> T applyToNode (@NonNull final T aElement)
   {
     aElement.addClasses (CSS_CLASS_ICON_FAMFAM, this);
     aElement.customAttrs ().setAriaHidden (true);
@@ -1105,7 +1105,7 @@ public enum EFamFamIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, ACCEPT);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EUICtrlsCSSPathProvider.FAMFAM_ICONS);

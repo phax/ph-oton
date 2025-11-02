@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.page.handler;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.css.CPageParam;
@@ -23,15 +25,13 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-import jakarta.annotation.Nonnull;
-
 public abstract class AbstractWebPageActionHandlerDelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                          extends
                                                          AbstractWebPageActionHandlerWithQuery <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
   public static final String FORM_ID_DELETE = "deleteform";
 
-  public AbstractWebPageActionHandlerDelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+  public AbstractWebPageActionHandlerDelete (@NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     super (true, aUIHandler, CPageParam.ACTION_DELETE, FORM_ID_DELETE);
   }

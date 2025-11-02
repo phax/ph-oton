@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -24,9 +27,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionFind;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Encapsulates the request data to a single DataTables AJAX request
@@ -47,8 +47,8 @@ public final class DTSSRequestData
                           final int nDisplayLength,
                           @Nullable final String sSearchText,
                           final boolean bSearchRegEx,
-                          @Nonnull final ICommonsList <DTSSRequestDataColumn> aColumnData,
-                          @Nonnull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns)
+                          @NonNull final ICommonsList <DTSSRequestDataColumn> aColumnData,
+                          @NonNull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns)
   {
     ValueEnforcer.notNull (aColumnData, "ColumnData");
     ValueEnforcer.isFalse ( () -> CollectionFind.containsAnyNullElement (aColumnData),
@@ -125,26 +125,26 @@ public final class DTSSRequestData
   /**
    * @return Global search field
    */
-  @Nonnull
+  @NonNull
   public DTSSRequestDataSearch getSearch ()
   {
     return m_aSearch;
   }
 
-  @Nonnull
+  @NonNull
   public DTSSRequestDataColumn getColumn (@Nonnegative final int nIndex)
   {
     return m_aColumnData.get (nIndex);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <DTSSRequestDataColumn> getColumnData ()
   {
     return m_aColumnData.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public DTSSRequestDataColumn [] getColumnDataArray ()
   {
@@ -160,7 +160,7 @@ public final class DTSSRequestData
     return m_aOrderColumns.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("speed")
   public ICommonsList <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
   {

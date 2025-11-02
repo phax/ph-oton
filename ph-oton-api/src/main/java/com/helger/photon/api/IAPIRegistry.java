@@ -18,11 +18,11 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an API registry. It has a set of {@link APIDescriptor}
@@ -40,13 +40,13 @@ public interface IAPIRegistry extends Serializable
    * @param aDescriptor
    *        The descriptor to be registered. May not be <code>null</code>.
    */
-  void registerAPI (@Nonnull APIDescriptor aDescriptor);
+  void registerAPI (@NonNull APIDescriptor aDescriptor);
 
   /**
    * @return A mutable list of all registered descriptors. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IAPIDescriptor> getAllAPIDescriptors ();
 
@@ -59,7 +59,7 @@ public interface IAPIRegistry extends Serializable
    *         path cannot be handled by this invoker.
    */
   @Nullable
-  default InvokableAPIDescriptor getAPIByPath (@Nonnull final APIPath aPath)
+  default InvokableAPIDescriptor getAPIByPath (@NonNull final APIPath aPath)
   {
     return getAPIByPath (aPath, new LoggingAPIPathAmbiguityResolver ());
   }
@@ -76,5 +76,5 @@ public interface IAPIRegistry extends Serializable
    * @since 8.1.4
    */
   @Nullable
-  InvokableAPIDescriptor getAPIByPath (@Nonnull APIPath aPath, @Nonnull IAPIPathAmbiguityResolver aAmbiguityResolver);
+  InvokableAPIDescriptor getAPIByPath (@NonNull APIPath aPath, @NonNull IAPIPathAmbiguityResolver aAmbiguityResolver);
 }

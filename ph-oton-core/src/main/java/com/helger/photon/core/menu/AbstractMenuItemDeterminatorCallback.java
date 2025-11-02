@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of {@link IMenuItemDeterminatorCallback}.
@@ -34,12 +34,12 @@ public abstract class AbstractMenuItemDeterminatorCallback extends
 {
   private final IMenuTree m_aMenuTree;
 
-  public AbstractMenuItemDeterminatorCallback (@Nonnull final IMenuTree aMenuTree)
+  public AbstractMenuItemDeterminatorCallback (@NonNull final IMenuTree aMenuTree)
   {
     m_aMenuTree = ValueEnforcer.notNull (aMenuTree, "MenuTree");
   }
 
-  @Nonnull
+  @NonNull
   public final IMenuTree getMenuTree ()
   {
     return m_aMenuTree;

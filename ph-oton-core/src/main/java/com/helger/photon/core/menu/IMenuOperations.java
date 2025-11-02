@@ -19,6 +19,9 @@ package com.helger.photon.core.menu;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -29,9 +32,6 @@ import com.helger.text.display.IHasDisplayText;
 import com.helger.url.ISimpleURL;
 import com.helger.url.provider.ConstantHasSimpleURL;
 import com.helger.url.provider.IHasSimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains all the menu-specific menu operations. This is not meant to be
@@ -44,7 +44,7 @@ public interface IMenuOperations extends Serializable
   /**
    * @return A new unique ID to be used in a menu tree.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   static String getUniqueMenuObjectID ()
   {
@@ -56,7 +56,7 @@ public interface IMenuOperations extends Serializable
    *
    * @return The created menu item separator object. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   default IMenuSeparator createRootSeparator ()
   {
     return createRootSeparator (getUniqueMenuObjectID ());
@@ -71,8 +71,8 @@ public interface IMenuOperations extends Serializable
    * @return The created menu item separator object. Never <code>null</code>.
    * @since 8.0.1
    */
-  @Nonnull
-  IMenuSeparator createRootSeparator (@Nonnull @Nonempty String sID);
+  @NonNull
+  IMenuSeparator createRootSeparator (@NonNull @Nonempty String sID);
 
   /**
    * Append a new menu item separator as a child of the passed menu item
@@ -84,8 +84,8 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuSeparator createSeparator (@Nonnull final String sParentID)
+  @NonNull
+  default IMenuSeparator createSeparator (@NonNull final String sParentID)
   {
     return createSeparator (sParentID, getUniqueMenuObjectID ());
   }
@@ -100,8 +100,8 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuSeparator createSeparator (@Nonnull final IMenuItem aParent)
+  @NonNull
+  default IMenuSeparator createSeparator (@NonNull final IMenuItem aParent)
   {
     ValueEnforcer.notNull (aParent, "Parent");
     return createSeparator (aParent.getID ());
@@ -121,8 +121,8 @@ public interface IMenuOperations extends Serializable
    *         If the passed parent menu item could not be resolved
    * @since 8.0.1
    */
-  @Nonnull
-  IMenuSeparator createSeparator (@Nonnull String sParentID, @Nonnull @Nonempty String sID);
+  @NonNull
+  IMenuSeparator createSeparator (@NonNull String sParentID, @NonNull @Nonempty String sID);
 
   /**
    * Append a new menu item separator as a child of the passed menu item
@@ -138,8 +138,8 @@ public interface IMenuOperations extends Serializable
    *         If the passed parent menu item could not be resolved
    * @since 8.0.1
    */
-  @Nonnull
-  default IMenuSeparator createSeparator (@Nonnull final IMenuItem aParent, @Nonnull @Nonempty final String sID)
+  @NonNull
+  default IMenuSeparator createSeparator (@NonNull final IMenuItem aParent, @NonNull @Nonempty final String sID)
   {
     ValueEnforcer.notNull (aParent, "Parent");
     return createSeparator (aParent.getID (), sID);
@@ -154,8 +154,8 @@ public interface IMenuOperations extends Serializable
    *        The referenced page. May not be <code>null</code>.
    * @return The created menu item object. Never <code>null</code>.
    */
-  @Nonnull
-  IMenuItemPage createRootItem (@Nonnull String sItemID, @Nonnull IPage aPage);
+  @NonNull
+  IMenuItemPage createRootItem (@NonNull String sItemID, @NonNull IPage aPage);
 
   /**
    * Append a new menu item at root level.
@@ -165,8 +165,8 @@ public interface IMenuOperations extends Serializable
    * @return The created menu item object. The ID of the menu item is the ID of
    *         the page. Never <code>null</code>.
    */
-  @Nonnull
-  default IMenuItemPage createRootItem (@Nonnull final IPage aPage)
+  @NonNull
+  default IMenuItemPage createRootItem (@NonNull final IPage aPage)
   {
     ValueEnforcer.notNull (aPage, "Page");
     return createRootItem (aPage.getID (), aPage);
@@ -186,8 +186,8 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final String sItemID, @Nonnull final IPage aPage);
+  @NonNull
+  IMenuItemPage createItem (@NonNull final String sParentID, @NonNull final String sItemID, @NonNull final IPage aPage);
 
   /**
    * Append a new menu item below the specified parent.
@@ -202,8 +202,8 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuItemPage createItem (@Nonnull final String sParentID, @Nonnull final IPage aPage)
+  @NonNull
+  default IMenuItemPage createItem (@NonNull final String sParentID, @NonNull final IPage aPage)
   {
     ValueEnforcer.notNull (aPage, "Page");
     return createItem (sParentID, aPage.getID (), aPage);
@@ -222,8 +222,8 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuItemPage createItem (@Nonnull final IMenuItem aParent, @Nonnull final IPage aPage)
+  @NonNull
+  default IMenuItemPage createItem (@NonNull final IMenuItem aParent, @NonNull final IPage aPage)
   {
     ValueEnforcer.notNull (aParent, "Parent");
     return createItem (aParent.getID (), aPage);
@@ -240,10 +240,10 @@ public interface IMenuOperations extends Serializable
    *        The name of the menu item. May not be <code>null</code>.
    * @return The created menu item object. Never <code>null</code>.
    */
-  @Nonnull
-  default IMenuItemExternal createRootItem (@Nonnull final String sItemID,
-                                            @Nonnull final ISimpleURL aURL,
-                                            @Nonnull final IHasDisplayText aName)
+  @NonNull
+  default IMenuItemExternal createRootItem (@NonNull final String sItemID,
+                                            @NonNull final ISimpleURL aURL,
+                                            @NonNull final IHasDisplayText aName)
   {
     return createRootItem (sItemID, new ConstantHasSimpleURL (aURL), aName);
   }
@@ -259,8 +259,8 @@ public interface IMenuOperations extends Serializable
    *        The name of the menu item. May not be <code>null</code>.
    * @return The created menu item object. Never <code>null</code>.
    */
-  @Nonnull
-  IMenuItemExternal createRootItem (@Nonnull String sItemID, @Nonnull IHasSimpleURL aURL, @Nonnull IHasDisplayText aName);
+  @NonNull
+  IMenuItemExternal createRootItem (@NonNull String sItemID, @NonNull IHasSimpleURL aURL, @NonNull IHasDisplayText aName);
 
   /**
    * Append a new menu item below the specified parent.
@@ -278,11 +278,11 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
-                                        @Nonnull final String sItemID,
-                                        @Nonnull final ISimpleURL aURL,
-                                        @Nonnull final IHasDisplayText aName)
+  @NonNull
+  default IMenuItemExternal createItem (@NonNull final IMenuItem aParent,
+                                        @NonNull final String sItemID,
+                                        @NonNull final ISimpleURL aURL,
+                                        @NonNull final IHasDisplayText aName)
   {
     return createItem (aParent, sItemID, new ConstantHasSimpleURL (aURL), aName);
   }
@@ -303,11 +303,11 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuItemExternal createItem (@Nonnull final IMenuItem aParent,
-                                        @Nonnull final String sItemID,
-                                        @Nonnull final IHasSimpleURL aURL,
-                                        @Nonnull final IHasDisplayText aName)
+  @NonNull
+  default IMenuItemExternal createItem (@NonNull final IMenuItem aParent,
+                                        @NonNull final String sItemID,
+                                        @NonNull final IHasSimpleURL aURL,
+                                        @NonNull final IHasDisplayText aName)
   {
     ValueEnforcer.notNull (aParent, "Parent");
     return createItem (aParent.getID (), sItemID, aURL, aName);
@@ -329,11 +329,11 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  default IMenuItemExternal createItem (@Nonnull final String sParentID,
-                                        @Nonnull final String sItemID,
-                                        @Nonnull final ISimpleURL aURL,
-                                        @Nonnull final IHasDisplayText aName)
+  @NonNull
+  default IMenuItemExternal createItem (@NonNull final String sParentID,
+                                        @NonNull final String sItemID,
+                                        @NonNull final ISimpleURL aURL,
+                                        @NonNull final IHasDisplayText aName)
   {
     return createItem (sParentID, sItemID, new ConstantHasSimpleURL (aURL), aName);
   }
@@ -354,11 +354,11 @@ public interface IMenuOperations extends Serializable
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
-  @Nonnull
-  IMenuItemExternal createItem (@Nonnull String sParentID,
-                                @Nonnull String sItemID,
-                                @Nonnull IHasSimpleURL aURL,
-                                @Nonnull IHasDisplayText aName);
+  @NonNull
+  IMenuItemExternal createItem (@NonNull String sParentID,
+                                @NonNull String sItemID,
+                                @NonNull IHasSimpleURL aURL,
+                                @NonNull IHasDisplayText aName);
 
   /**
    * Create a new redirect from the passed ID to the specified menu item.
@@ -370,8 +370,8 @@ public interface IMenuOperations extends Serializable
    *        The page to redirect to. May not be <code>null</code>.
    * @return The created menu item. Never <code>null</code>.
    */
-  @Nonnull
-  IMenuItemRedirectToPage createRedirect (@Nonnull String sItemID, @Nonnull IMenuItemPage aPage);
+  @NonNull
+  IMenuItemRedirectToPage createRedirect (@NonNull String sItemID, @NonNull IMenuItemPage aPage);
 
   /**
    * Set the default menu item. This is a shortcut for
@@ -416,7 +416,7 @@ public interface IMenuOperations extends Serializable
    * @return The default menu item IDs. May not be <code>null</code> but may be
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <String> getAllDefaultMenuItemIDs ();
 
@@ -437,7 +437,7 @@ public interface IMenuOperations extends Serializable
    *         {@link #setDefaultMenuItemIDs(Iterable)}. Never <code>null</code>
    *         but may be empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IMenuItemPage> getAllDefaultMenuItems ();
 
@@ -458,7 +458,7 @@ public interface IMenuOperations extends Serializable
    *        The callback to be supplied for each menu object. May not be
    *        <code>null</code>.
    */
-  void iterateAllMenuObjects (@Nonnull Consumer <? super IMenuObject> aCallback);
+  void iterateAllMenuObjects (@NonNull Consumer <? super IMenuObject> aCallback);
 
   /**
    * Replace an eventually existing menu item with the new one. The ID of the
@@ -471,5 +471,5 @@ public interface IMenuOperations extends Serializable
    *         exists.
    */
   @Nullable
-  IMenuItemPage replaceMenuItem (@Nonnull IPage aNewPage);
+  IMenuItemPage replaceMenuItem (@NonNull IPage aNewPage);
 }

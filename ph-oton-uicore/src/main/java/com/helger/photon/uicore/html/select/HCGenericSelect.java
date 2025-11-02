@@ -21,22 +21,22 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.id.IHasID;
 import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
 import com.helger.text.display.IDisplayTextProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCGenericSelect <T extends IHasID <String>> extends HCExtSelect
 {
-  public HCGenericSelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Collection <? extends T> aElements,
+  public HCGenericSelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Collection <? extends T> aElements,
                           @Nullable final Comparator <? super T> aComparator,
-                          @Nonnull final Locale aDisplayLocale,
+                          @NonNull final Locale aDisplayLocale,
                           @Nullable final Predicate <? super T> aFilter,
-                          @Nonnull final IDisplayTextProvider <? super T> aDisplayTextProvider,
+                          @NonNull final IDisplayTextProvider <? super T> aDisplayTextProvider,
                           final boolean bAddOptionPleaseSelect)
   {
     super (aRF);

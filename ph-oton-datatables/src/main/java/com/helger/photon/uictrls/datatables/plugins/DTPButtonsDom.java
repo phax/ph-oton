@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
-import com.helger.html.jscode.JSAssocArray;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.jscode.JSAssocArray;
 
 public class DTPButtonsDom
 {
@@ -34,42 +34,42 @@ public class DTPButtonsDom
   /** DOM configuration of the Buttons container element. */
   private DTPButtonsDomContainer m_aContainer;
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDom setButton (@Nullable final DTPButtonsDomButton aButton)
   {
     m_aButton = aButton;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDom setButtonContainer (@Nullable final DTPButtonsDomButtonContainer aButtonContainer)
   {
     m_aButtonContainer = aButtonContainer;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDom setButtonLiner (@Nullable final DTPButtonsDomButtonLiner aButtonLiner)
   {
     m_aButtonLiner = aButtonLiner;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDom setCollection (@Nullable final DTPButtonsDomCollection aCollection)
   {
     m_aCollection = aCollection;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsDom setContainer (@Nullable final DTPButtonsDomContainer aContainer)
   {
     m_aContainer = aContainer;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();

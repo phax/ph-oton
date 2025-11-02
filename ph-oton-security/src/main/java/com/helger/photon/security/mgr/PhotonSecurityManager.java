@@ -18,6 +18,7 @@ package com.helger.photon.security.mgr;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +49,6 @@ import com.helger.photon.security.usergroup.UserGroupManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * The meta system manager encapsulates all managers that are located in this
  * project. Currently the contained managers are:
@@ -79,7 +78,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      *         In case of error
      * @since 8.3.2
      */
-    @Nonnull
+    @NonNull
     IAuditManager createAuditManager () throws Exception;
 
     /**
@@ -87,7 +86,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      * @throws Exception
      *         In case of error
      */
-    @Nonnull
+    @NonNull
     IUserManager createUserMgr () throws Exception;
 
     /**
@@ -95,7 +94,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      * @throws Exception
      *         In case of error
      */
-    @Nonnull
+    @NonNull
     IRoleManager createRoleMgr () throws Exception;
 
     /**
@@ -107,9 +106,9 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      * @throws Exception
      *         In case of error
      */
-    @Nonnull
-    IUserGroupManager createUserGroupMgr (@Nonnull IUserManager aUserMgr,
-                                          @Nonnull IRoleManager aRoleMgr) throws Exception;
+    @NonNull
+    IUserGroupManager createUserGroupMgr (@NonNull IUserManager aUserMgr,
+                                          @NonNull IRoleManager aRoleMgr) throws Exception;
 
     /**
      * @param aUserMgr
@@ -118,8 +117,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      * @throws Exception
      *         In case of error
      */
-    @Nonnull
-    IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws Exception;
+    @NonNull
+    IUserTokenManager createUserTokenMgr (@NonNull final IUserManager aUserMgr) throws Exception;
   }
 
   /**
@@ -138,33 +137,33 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     public static final String FILENAME_USERGROUPS_XML = "usergroups.xml";
     public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
 
-    @Nonnull
+    @NonNull
     public IAuditManager createAuditManager () throws DAOException
     {
       return new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
     }
 
-    @Nonnull
+    @NonNull
     public IUserManager createUserMgr () throws DAOException
     {
       return new UserManager (DIRECTORY_SECURITY + FILENAME_USERS_XML);
     }
 
-    @Nonnull
+    @NonNull
     public IRoleManager createRoleMgr () throws DAOException
     {
       return new RoleManager (DIRECTORY_SECURITY + FILENAME_ROLES_XML);
     }
 
-    @Nonnull
-    public IUserGroupManager createUserGroupMgr (@Nonnull final IUserManager aUserMgr,
-                                                 @Nonnull final IRoleManager aRoleMgr) throws DAOException
+    @NonNull
+    public IUserGroupManager createUserGroupMgr (@NonNull final IUserManager aUserMgr,
+                                                 @NonNull final IRoleManager aRoleMgr) throws DAOException
     {
       return new UserGroupManager (DIRECTORY_SECURITY + FILENAME_USERGROUPS_XML, aUserMgr, aRoleMgr);
     }
 
-    @Nonnull
-    public IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws DAOException
+    @NonNull
+    public IUserTokenManager createUserTokenMgr (@NonNull final IUserManager aUserMgr) throws DAOException
     {
       return new UserTokenManager (DIRECTORY_SECURITY + FILENAME_USERTOKENS_XML);
     }
@@ -191,7 +190,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
    *         an instance of {@link FactoryXML} is returned.
    * @see #setFactory(IFactory)
    */
-  @Nonnull
+  @NonNull
   public static IFactory getFactory ()
   {
     return s_aFactory;
@@ -203,7 +202,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
    * @param aFactory
    *        The new factory to be set. May not be <code>null</code>.
    */
-  public static void setFactory (@Nonnull final IFactory aFactory)
+  public static void setFactory (@NonNull final IFactory aFactory)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
     if (isAlreadyInitialized ())
@@ -234,13 +233,13 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     LoggedInUserManager.getInstance ().userLoginCallbacks ().add (new IUserLoginCallback ()
     {
       @Override
-      public void onUserLogin (@Nonnull final LoginInfo aInfo)
+      public void onUserLogin (@NonNull final LoginInfo aInfo)
       {
         m_aUserMgr.updateUserLastLogin (aInfo.getUserID ());
       }
 
       @Override
-      public void onUserLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+      public void onUserLoginError (@NonNull @Nonempty final String sUserID, @NonNull final ELoginResult eLoginResult)
       {
         if (eLoginResult == ELoginResult.INVALID_PASSWORD)
         {
@@ -252,7 +251,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Override
-  protected void onAfterInstantiation (@Nonnull final IScope aScope)
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
   {
     try
     {
@@ -278,7 +277,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Override
-  protected void onBeforeDestroy (@Nonnull final IScope aScopeToBeDestroyed)
+  protected void onBeforeDestroy (@NonNull final IScope aScopeToBeDestroyed)
   {
     if (m_aAuditMgr != null)
     {
@@ -291,7 +290,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction)
   {
     if (m_aAuditMgr != null)
     {
@@ -300,43 +299,43 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     }
   }
 
-  @Nonnull
+  @NonNull
   public static PhotonSecurityManager getInstance ()
   {
     return getGlobalSingleton (PhotonSecurityManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public static IAuditManager getAuditMgr ()
   {
     return getInstance ().m_aAuditMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static DefaultLockManager <String> getLockMgr ()
   {
     return ObjectLockManager.getInstance ().getDefaultLockMgr ();
   }
 
-  @Nonnull
+  @NonNull
   public static IRoleManager getRoleMgr ()
   {
     return getInstance ().m_aRoleMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static IUserManager getUserMgr ()
   {
     return getInstance ().m_aUserMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static IUserGroupManager getUserGroupMgr ()
   {
     return getInstance ().m_aUserGroupMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static IUserTokenManager getUserTokenMgr ()
   {
     return getInstance ().m_aUserTokenMgr;

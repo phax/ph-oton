@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.CGlobal;
@@ -32,9 +35,6 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYPE>> extends AbstractHCControl <IMPLTYPE>
@@ -96,7 +96,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
    * @param eType
    *        Type of input. May not be <code>null</code>.
    */
-  public AbstractHCInput (@Nonnull final EHCInputType eType)
+  public AbstractHCInput (@NonNull final EHCInputType eType)
   {
     this ();
     setType (eType);
@@ -108,7 +108,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setType (@Nullable final EHCInputType eType)
   {
     m_eType = eType;
@@ -121,14 +121,14 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sAccept;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAccept (@Nullable final String sAccept)
   {
     m_sAccept = sAccept;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAccept (@Nullable final IMimeType aAccept)
   {
     return setAccept (aAccept == null ? null : aAccept.getAsString ());
@@ -140,7 +140,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sAlt;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAlt (@Nullable final String sAlt)
   {
     m_sAlt = sAlt;
@@ -153,7 +153,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sAutoComplete;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAutoComplete (@Nullable final String sAutoComplete)
   {
     m_sAutoComplete = sAutoComplete;
@@ -165,7 +165,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_bChecked;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setChecked (final boolean bChecked)
   {
     m_bChecked = bChecked;
@@ -178,7 +178,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sDirName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDirName (@Nullable final String sDirName)
   {
     m_sDirName = sDirName;
@@ -191,7 +191,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -210,14 +210,14 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_aFormAction.getActionJS ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormAction (@Nullable final ISimpleURL aAction)
   {
     m_aFormAction.setAction (aAction);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aFormAction.setAction (aAction);
@@ -230,7 +230,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_aFormEncType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
   {
     m_aFormEncType = aFormEncType;
@@ -243,7 +243,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_eFormMethod;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormMethod (@Nullable final EHCFormMethod eFormMethod)
   {
     m_eFormMethod = eFormMethod;
@@ -255,7 +255,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_bFormNoValidate;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormNoValidate (final boolean bFormNoValidate)
   {
     m_bFormNoValidate = bFormNoValidate;
@@ -268,7 +268,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_aFormTarget;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormTarget (@Nullable final HC_Target aFormTarget)
   {
     m_aFormTarget = aFormTarget;
@@ -280,7 +280,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_nHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHeight (final int nHeight)
   {
     m_nHeight = nHeight;
@@ -293,7 +293,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sList;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setList (@Nullable final String sList)
   {
     m_sList = sList;
@@ -306,7 +306,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sMaxValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMaxValue (@Nullable final String sMaxValue)
   {
     m_sMaxValue = sMaxValue;
@@ -318,7 +318,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_nMaxLength;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMaxLength (final int nMaxLength)
   {
     m_nMaxLength = nMaxLength;
@@ -331,7 +331,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sMinValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMinValue (@Nullable final String sMinValue)
   {
     m_sMinValue = sMinValue;
@@ -343,7 +343,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_nMinLength;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMinLength (final int nMinLength)
   {
     m_nMinLength = nMinLength;
@@ -355,7 +355,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_bMultiple;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMultiple (final boolean bMultiple)
   {
     m_bMultiple = bMultiple;
@@ -368,7 +368,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sPattern;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPattern (@Nullable final String sPattern)
   {
     m_sPattern = sPattern;
@@ -381,7 +381,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sPlaceholder;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPlaceholder (@Nullable final String sPlaceholder)
   {
     m_sPlaceholder = sPlaceholder;
@@ -393,7 +393,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_nSize;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSize (final int nSize)
   {
     m_nSize = nSize;
@@ -406,7 +406,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -419,7 +419,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sStep;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setStep (@Nullable final String sStep)
   {
     m_sStep = sStep;
@@ -435,7 +435,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
@@ -447,7 +447,7 @@ public abstract class AbstractHCInput <IMPLTYPE extends AbstractHCInput <IMPLTYP
     return m_nWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidth (final int nWidth)
   {
     m_nWidth = nWidth;

@@ -19,6 +19,7 @@ package com.helger.photon.api;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +34,6 @@ import com.helger.mime.MimeType;
 import com.helger.mime.parse.MimeTypeParser;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An {@link InvokableAPIDescriptor} contains an {@link IAPIDescriptor} as well the original path by
@@ -60,9 +59,9 @@ public class InvokableAPIDescriptor implements Serializable
    * @param aPathVariables
    *        All resolved path variables, if the path descriptor contains variable elements.
    */
-  public InvokableAPIDescriptor (@Nonnull final IAPIDescriptor aDescriptor,
-                                 @Nonnull @Nonempty final String sPath,
-                                 @Nonnull final ICommonsOrderedMap <String, String> aPathVariables)
+  public InvokableAPIDescriptor (@NonNull final IAPIDescriptor aDescriptor,
+                                 @NonNull @Nonempty final String sPath,
+                                 @NonNull final ICommonsOrderedMap <String, String> aPathVariables)
   {
     ValueEnforcer.notNull (aDescriptor, "Descriptor");
     ValueEnforcer.notEmpty (sPath, "Path");
@@ -76,7 +75,7 @@ public class InvokableAPIDescriptor implements Serializable
   /**
    * @return The original API descriptor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IAPIDescriptor getAPIDescriptor ()
   {
     return m_aDescriptor;
@@ -86,7 +85,7 @@ public class InvokableAPIDescriptor implements Serializable
    * @return The URL path requested by the user, relative to the servlet. Never <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getPath ()
   {
@@ -97,7 +96,7 @@ public class InvokableAPIDescriptor implements Serializable
    * @return All resolved path variables, if the path descriptor contains variable elements. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsOrderedMap <String, String> getAllPathVariables ()
   {
@@ -115,8 +114,8 @@ public class InvokableAPIDescriptor implements Serializable
    *        400, bad request.
    * @return <code>true</code> if all prerequisites are fulfilled.
    */
-  public boolean canExecute (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final MutableInt aStatusCode)
+  public boolean canExecute (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final MutableInt aStatusCode)
   {
     if (aRequestScope == null)
       return false;
@@ -187,8 +186,8 @@ public class InvokableAPIDescriptor implements Serializable
    * @throws IllegalStateException
    *         In case the executor factory creates a <code>null</code> executor.
    */
-  public void invokeAPI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                         @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void invokeAPI (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                         @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final IAPIExecutor aExecutor = m_aDescriptor.getExecutorFactory ().get ();
     if (aExecutor == null)

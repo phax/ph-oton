@@ -16,6 +16,7 @@
  */
 package com.helger.html.hc.mock;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.rules.ExternalResource;
 
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
@@ -23,8 +24,6 @@ import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A JUnit test rule that ensures that a certain HTML version is used.
@@ -38,7 +37,7 @@ public class HCTestRuleHTMLVersion extends ExternalResource
   private final EHTMLVersion m_eHTMLVersion;
   private EHTMLVersion m_ePrevHTMLVersion;
 
-  public HCTestRuleHTMLVersion (@Nonnull final EHTMLVersion eHTMLVersion)
+  public HCTestRuleHTMLVersion (@NonNull final EHTMLVersion eHTMLVersion)
   {
     m_eHTMLVersion = ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
   }

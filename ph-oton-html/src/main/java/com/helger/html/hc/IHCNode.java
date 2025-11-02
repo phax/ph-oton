@@ -18,13 +18,13 @@ package com.helger.html.hc;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.hierarchy.IHasChildrenRecursive;
 import com.helger.collection.hierarchy.IHasChildrenSorted;
 import com.helger.html.EHTMLVersion;
 import com.helger.xml.microdom.IMicroNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a main HC node.<br>
@@ -37,7 +37,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
   /**
    * @return The current node state and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EHCNodeState getNodeState ();
 
   /**
@@ -54,8 +54,8 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    *        <code>null</code>.
    */
   void customizeNode (@Nullable IHCCustomizer aCustomizer,
-                      @Nonnull EHTMLVersion eHTMLVersion,
-                      @Nonnull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
+                      @NonNull EHTMLVersion eHTMLVersion,
+                      @NonNull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 
   /**
    * Finalize the node by applying any internal state that was not yet converted
@@ -72,8 +72,8 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    *        The target node where additional nodes should be added. May not be
    *        <code>null</code>.
    */
-  void finalizeNodeState (@Nonnull IHCConversionSettingsToNode aConversionSettings,
-                          @Nonnull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
+  void finalizeNodeState (@NonNull IHCConversionSettingsToNode aConversionSettings,
+                          @NonNull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 
   /**
    * Perform consistency checks on this node.<br>
@@ -86,7 +86,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    *        The current conversion settings to be used. May not be
    *        <code>null</code>.
    */
-  void consistencyCheck (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  void consistencyCheck (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
    * This method checks whether the node is suitable for conversion to an
@@ -98,7 +98,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    * @return <code>true</code> if the node can be converted to a node,
    *         <code>false</code> otherwise.
    */
-  boolean canConvertToMicroNode (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  boolean canConvertToMicroNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
    * Register external JS and CSS resources required for this node, but only if
@@ -114,7 +114,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    *        register resources only if the node can be converted to a micro
    *        node.
    */
-  void registerExternalResources (@Nonnull IHCConversionSettingsToNode aConversionSettings, boolean bForceRegistration);
+  void registerExternalResources (@NonNull IHCConversionSettingsToNode aConversionSettings, boolean bForceRegistration);
 
   /**
    * The main conversion to a micro node.<br>
@@ -125,12 +125,12 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    * @return The fully created HTML node
    */
   @Nullable
-  IMicroNode convertToMicroNode (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  IMicroNode convertToMicroNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
    * @return The plain text representation of this text. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   String getPlainText ();
 }

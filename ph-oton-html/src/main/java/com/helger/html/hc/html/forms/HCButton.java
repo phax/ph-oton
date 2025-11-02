@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.js.IHasJSCode;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nullable;
+import com.helger.html.js.IHasJSCode;
 
 /**
  * Represents an HTML &lt;button&gt; element with type "button"

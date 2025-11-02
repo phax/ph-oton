@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.fineupload;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.string.StringHelper;
@@ -40,16 +43,13 @@ import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.web.scope.mgr.WebScopeManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic>
 {
   private final FineUploaderBasic m_aUploader;
   private IHCElement <?> m_aButton;
   private String m_sButtonID;
 
-  public HCFineUploaderBasic (@Nonnull final FineUploaderBasic aUploader)
+  public HCFineUploaderBasic (@NonNull final FineUploaderBasic aUploader)
   {
     m_aUploader = ValueEnforcer.notNull (aUploader, "Uploader");
   }
@@ -62,7 +62,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
    *        The button object to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCFineUploaderBasic setButtonToUse (@Nullable final IHCElement <?> aButton)
   {
     m_aButton = aButton;
@@ -77,7 +77,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
    *        The button ID to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCFineUploaderBasic setButtonIDToUse (@Nullable final String sButtonID)
   {
     m_sButtonID = sButtonID;
@@ -85,8 +85,8 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -163,7 +163,7 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.FINEUPLOADER_320);

@@ -16,6 +16,7 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * JS method.
@@ -46,7 +45,7 @@ public class JSMethod extends JSFunction
    * @param sName
    *        Name of this method
    */
-  public JSMethod (@Nonnull final JSDefinedClass aOwnerClass, @Nonnull @Nonempty final String sName)
+  public JSMethod (@NonNull final JSDefinedClass aOwnerClass, @NonNull @Nonempty final String sName)
   {
     super (sName);
     ValueEnforcer.notNull (aOwnerClass, "OwnerClass");
@@ -60,7 +59,7 @@ public class JSMethod extends JSFunction
     body ().newlineAtEnd (false);
   }
 
-  @Nonnull
+  @NonNull
   public JSDefinedClass parentClass ()
   {
     return m_aOwnerClass;

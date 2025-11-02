@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.icon;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class maintains the actual icon objects to the different default icons.
@@ -66,7 +66,7 @@ public final class DefaultIcons
    * @return A copy of all currently defined default icons. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsMap <EDefaultIcon, IIcon> getAll ()
   {
@@ -83,7 +83,7 @@ public final class DefaultIcons
    *        The icon to set. May be <code>null</code> in which case the
    *        assignment is removed.
    */
-  public static void set (@Nonnull final EDefaultIcon eDefaultIcon, @Nullable final IIcon aIcon)
+  public static void set (@NonNull final EDefaultIcon eDefaultIcon, @Nullable final IIcon aIcon)
   {
     ValueEnforcer.notNull (eDefaultIcon, "DefaultIcon");
     if (aIcon != null)

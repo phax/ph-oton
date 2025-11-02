@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -26,9 +29,6 @@ import com.helger.css.ICSSWriterSettings;
 import com.helger.css.property.CSSPropertyFree;
 import com.helger.css.property.ECSSProperty;
 import com.helger.css.propertyvalue.ICSSValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for objects having CSS styles
@@ -48,8 +48,8 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *        The property value to be used. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  default IMPLTYPE addStyle (@Nonnull final ECSSProperty eProperty, @Nonnull @Nonempty final String sPropertyValue)
+  @NonNull
+  default IMPLTYPE addStyle (@NonNull final ECSSProperty eProperty, @NonNull @Nonempty final String sPropertyValue)
   {
     return addStyle (new CSSPropertyFree (eProperty).newValue (sPropertyValue));
   }
@@ -61,10 +61,10 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *        The value to be added. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE addStyle (@Nullable ICSSValue aValue);
 
-  @Nonnull
+  @NonNull
   @Deprecated (forRemoval = false)
   @DevelopersNote ("Use addStyle instead!")
   default IMPLTYPE addStyles (@Nullable final ICSSValue aValue)
@@ -79,7 +79,7 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *        The values to be added. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addStyles (@Nullable final ICSSValue... aValues)
   {
     if (aValues != null)
@@ -95,7 +95,7 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *        The values to be added. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addStyles (@Nullable final Iterable <? extends ICSSValue> aValues)
   {
     if (aValues != null)
@@ -111,28 +111,28 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *        The style property to remove
    * @return this
    */
-  @Nonnull
-  IMPLTYPE removeStyle (@Nonnull ECSSProperty eProperty);
+  @NonNull
+  IMPLTYPE removeStyle (@NonNull ECSSProperty eProperty);
 
   /**
    * Remove all styles from the element
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllStyles ();
 
   /**
    * @return A copy of all contained styles. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedMap <ECSSProperty, ICSSValue> getAllStyles ();
 
   /**
    * @return All style values. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <ICSSValue> getAllStyleValues ();
 
@@ -180,5 +180,5 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    * @return <code>null</code> if no styles are present
    */
   @Nullable
-  String getAllStylesAsString (@Nonnull ICSSWriterSettings aCSSSettings);
+  String getAllStylesAsString (@NonNull ICSSWriterSettings aCSSSettings);
 }

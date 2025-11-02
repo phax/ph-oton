@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +44,6 @@ import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
 import com.helger.servlet.request.IRequestParamMap;
 import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * AJAX handler for filling DataTables
@@ -88,7 +87,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
    * @return The created request data. Never <code>null</code>.
    * @since 8.1.3
    */
-  @Nonnull
+  @NonNull
   public static DTSSRequestData extractDTSRequestData (final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Read input parameters and ensure non negativeness
@@ -168,8 +167,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
                                 aOrderColumns);
   }
 
-  private static void _sort (@Nonnull final DTSSRequestData aRequestData,
-                             @Nonnull final DataTablesServerData aServerData)
+  private static void _sort (@NonNull final DTSSRequestData aRequestData,
+                             @NonNull final DataTablesServerData aServerData)
   {
     // Sorting possible and necessary?
     if (aServerData.getRowCount () > 1)
@@ -188,9 +187,9 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     }
   }
 
-  @Nonnull
-  private static ICommonsList <DataTablesServerDataRow> _filter (@Nonnull final DTSSRequestData aRequestData,
-                                                                 @Nonnull final DataTablesServerData aServerData)
+  @NonNull
+  private static ICommonsList <DataTablesServerDataRow> _filter (@NonNull final DTSSRequestData aRequestData,
+                                                                 @NonNull final DataTablesServerData aServerData)
   {
     if (!aRequestData.isSearchActive ())
     {
@@ -336,9 +335,9 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     return aFilteredRows;
   }
 
-  @Nonnull
-  private static DTSSResponseData _handleRequest (@Nonnull final DTSSRequestData aRequestData,
-                                                  @Nonnull final DataTablesServerData aServerData)
+  @NonNull
+  private static DTSSResponseData _handleRequest (@NonNull final DTSSRequestData aRequestData,
+                                                  @NonNull final DataTablesServerData aServerData)
   {
     // Sort before filtering, because if only filtering changes, the sorting
     // does not need to be performed again. If we would filter first, we would
@@ -405,8 +404,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
                                  aSpecialNodes);
   }
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("DataTables AJAX request: " + CollectionSort.getSortedByKey (aRequestScope.params ()));

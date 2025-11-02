@@ -16,13 +16,13 @@
  */
 package com.helger.photon.audit;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.array.ArrayHelper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
 import com.helger.base.type.ObjectType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Main interface for an auditing service. Not serializable.
@@ -46,8 +46,8 @@ public interface IAuditor
    * @param aArgs
    *        An optional array of arguments. May be <code>null</code> or empty.
    */
-  void createAuditItem (@Nonnull EAuditActionType eActionType,
-                        @Nonnull ESuccess eSuccess,
+  void createAuditItem (@NonNull EAuditActionType eActionType,
+                        @NonNull ESuccess eSuccess,
                         @Nullable ObjectType aActionObjectType,
                         @Nullable final String sAction,
                         @Nullable final Object... aArgs);
@@ -60,7 +60,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onCreateSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onCreateSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.CREATE, ESuccess.SUCCESS, aObjectType, null, aArgs);
@@ -74,7 +74,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onCreateFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onCreateFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.CREATE, ESuccess.FAILURE, aObjectType, null, aArgs);
@@ -90,8 +90,8 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifySuccess (@Nonnull final ObjectType aObjectType,
-                                @Nonnull final String sWhat,
+  default void onModifySuccess (@NonNull final ObjectType aObjectType,
+                                @NonNull final String sWhat,
                                 @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
@@ -112,8 +112,8 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onModifyFailure (@Nonnull final ObjectType aObjectType,
-                                @Nonnull final String sWhat,
+  default void onModifyFailure (@NonNull final ObjectType aObjectType,
+                                @NonNull final String sWhat,
                                 @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
@@ -132,7 +132,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onDeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onDeleteSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.DELETE, ESuccess.SUCCESS, aObjectType, null, aArgs);
@@ -146,7 +146,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onDeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onDeleteFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.DELETE, ESuccess.FAILURE, aObjectType, null, aArgs);
@@ -160,7 +160,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onUndeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onUndeleteSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.UNDELETE, ESuccess.SUCCESS, aObjectType, null, aArgs);
@@ -174,7 +174,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onUndeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  default void onUndeleteFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     createAuditItem (EAuditActionType.UNDELETE, ESuccess.FAILURE, aObjectType, null, aArgs);
@@ -188,7 +188,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteSuccess (@Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onExecuteSuccess (@NonNull final String sWhat, @Nullable final Object... aArgs)
   {
     createAuditItem (EAuditActionType.EXECUTE, ESuccess.SUCCESS, null, sWhat, aArgs);
   }
@@ -201,7 +201,7 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteFailure (@Nonnull final String sWhat, @Nullable final Object... aArgs)
+  default void onExecuteFailure (@NonNull final String sWhat, @Nullable final Object... aArgs)
   {
     createAuditItem (EAuditActionType.EXECUTE, ESuccess.FAILURE, null, sWhat, aArgs);
   }
@@ -216,8 +216,8 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteSuccess (@Nonnull final ObjectType aObjectType,
-                                 @Nonnull final String sWhat,
+  default void onExecuteSuccess (@NonNull final ObjectType aObjectType,
+                                 @NonNull final String sWhat,
                                  @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
@@ -238,8 +238,8 @@ public interface IAuditor
    * @param aArgs
    *        Additional arguments
    */
-  default void onExecuteFailure (@Nonnull final ObjectType aObjectType,
-                                 @Nonnull final String sWhat,
+  default void onExecuteFailure (@NonNull final ObjectType aObjectType,
+                                 @NonNull final String sWhat,
                                  @Nullable final Object... aArgs)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");

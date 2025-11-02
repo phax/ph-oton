@@ -16,10 +16,10 @@
  */
 package com.helger.photon.connect.connection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface having all required fields required for connecting to a server via
@@ -32,7 +32,7 @@ public interface IServerConnectionSettingsKeyPair extends IBaseServerConnectionS
   /**
    * @return Private key bytes. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   byte [] getPrivateKey ();
@@ -40,7 +40,7 @@ public interface IServerConnectionSettingsKeyPair extends IBaseServerConnectionS
   /**
    * @return Public key bytes. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   byte [] getPublicKey ();
@@ -48,7 +48,7 @@ public interface IServerConnectionSettingsKeyPair extends IBaseServerConnectionS
   /**
    * @return The pass phrase to be used to access the key pair.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   byte [] getKeyPairPassphrase ();
 }

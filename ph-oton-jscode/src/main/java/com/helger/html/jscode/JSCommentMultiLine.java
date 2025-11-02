@@ -18,6 +18,9 @@ package com.helger.html.jscode;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * JSDoc comment.
@@ -56,7 +56,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   {}
 
   @Override
-  @Nonnull
+  @NonNull
   public JSCommentMultiLine append (@Nullable final Object aObj)
   {
     add (aObj);
@@ -70,8 +70,8 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *        Param name
    * @return Comment part
    */
-  @Nonnull
-  public JSCommentPart addParam (@Nonnull final String sParam)
+  @NonNull
+  public JSCommentPart addParam (@NonNull final String sParam)
   {
     ValueEnforcer.notNull (sParam, "Param");
 
@@ -85,8 +85,8 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *        Param name
    * @return Comment part
    */
-  @Nonnull
-  public JSCommentPart addParam (@Nonnull final AbstractJSVariable <?> aParam)
+  @NonNull
+  public JSCommentPart addParam (@NonNull final AbstractJSVariable <?> aParam)
   {
     return addParam (aParam.name ());
   }
@@ -96,7 +96,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *
    * @return Comment part
    */
-  @Nonnull
+  @NonNull
   public JSCommentPart addReturn ()
   {
     if (m_aReturn == null)
@@ -109,7 +109,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *
    * @return Comment part
    */
-  @Nonnull
+  @NonNull
   public JSCommentPart addDeprecated ()
   {
     if (m_aDeprecated == null)
@@ -124,8 +124,8 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *        xdoclet name
    * @return XDoclect to be filled
    */
-  @Nonnull
-  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName)
+  @NonNull
+  public ICommonsMap <String, String> addXdoclet (@NonNull final String sName)
   {
     ValueEnforcer.notNull (sName, "Name");
 
@@ -141,9 +141,9 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *        Attributes to add
    * @return XDoclect to be filled
    */
-  @Nonnull
-  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName,
-                                                  @Nonnull final Map <String, String> aAttributes)
+  @NonNull
+  public ICommonsMap <String, String> addXdoclet (@NonNull final String sName,
+                                                  @NonNull final Map <String, String> aAttributes)
   {
     final ICommonsMap <String, String> p = addXdoclet (sName);
     p.putAll (aAttributes);
@@ -161,17 +161,17 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
    *        Attribute value
    * @return XDoclect to be filled
    */
-  @Nonnull
-  public ICommonsMap <String, String> addXdoclet (@Nonnull final String sName,
-                                                  @Nonnull final String sAttributeName,
-                                                  @Nonnull final String sAttributeValue)
+  @NonNull
+  public ICommonsMap <String, String> addXdoclet (@NonNull final String sName,
+                                                  @NonNull final String sAttributeName,
+                                                  @NonNull final String sAttributeValue)
   {
     final ICommonsMap <String, String> p = addXdoclet (sName);
     p.put (sAttributeName, sAttributeValue);
     return p;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     if (aFormatter.getSettings ().isGenerateComments ())
     {
@@ -213,7 +213,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
     }
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, this);

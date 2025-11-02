@@ -18,11 +18,11 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.state.EHandled;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * API exception mapper to convert exceptions into reasonable HTTP responses. It
@@ -46,9 +46,9 @@ public interface IAPIExceptionMapper extends Serializable
    * @return {@link EHandled#HANDLED} to indicate that the exception was handled
    *         and should NOT be re-thrown.
    */
-  @Nonnull
-  EHandled applyExceptionOnResponse (@Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                                     @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull UnifiedResponse aUnifiedResponse,
-                                     @Nonnull Throwable aThrowable);
+  @NonNull
+  EHandled applyExceptionOnResponse (@NonNull InvokableAPIDescriptor aInvokableDescriptor,
+                                     @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull UnifiedResponse aUnifiedResponse,
+                                     @NonNull Throwable aThrowable);
 }

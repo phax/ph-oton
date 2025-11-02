@@ -18,9 +18,9 @@ package com.helger.html.entity;
 
 import java.io.Serializable;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 /**
  * Base interface for a single HTML entity.
@@ -32,14 +32,14 @@ public interface IHTMLEntity extends Serializable
   /**
    * @return The name of the entity. E.g. <code>nbsp</code>
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getEntityName ();
 
   /**
    * @return The reference to the entity. E.g. <code>&amp;nbsp;</code>
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getEntityReference ();
 }

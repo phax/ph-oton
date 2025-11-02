@@ -18,6 +18,8 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.state.EContinue;
 import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
@@ -27,7 +29,6 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.servlets.scope.AbstractScopeAwareFilter;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,15 +62,15 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
    * @throws ServletException
    *         In case of an error
    */
-  @Nonnull
-  protected abstract EContinue handleRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                              @Nonnull UnifiedResponse aUnifiedResponse) throws ServletException;
+  @NonNull
+  protected abstract EContinue handleRequest (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                              @NonNull UnifiedResponse aUnifiedResponse) throws ServletException;
 
   @Override
-  @Nonnull
-  protected final EContinue doHttpFilter (@Nonnull final HttpServletRequest aHttpRequest,
-                                          @Nonnull final HttpServletResponse aHttpResponse,
-                                          @Nonnull final IRequestWebScope aRequestScope) throws IOException, ServletException
+  @NonNull
+  protected final EContinue doHttpFilter (@NonNull final HttpServletRequest aHttpRequest,
+                                          @NonNull final HttpServletResponse aHttpResponse,
+                                          @NonNull final IRequestWebScope aRequestScope) throws IOException, ServletException
   {
     // Check HTTP version
     final EHttpVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);

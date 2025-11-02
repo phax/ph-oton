@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSGlobal;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Contains the JS built-in type 'Number'
@@ -36,7 +36,7 @@ public class JSTypeNumber extends JSPrimitiveType
   /**
    * @return Global field <code>Number.MAX_VALUE</code>
    */
-  @Nonnull
+  @NonNull
   public JSFieldRef maxValue ()
   {
     return global ().ref ("MAX_VALUE");
@@ -45,7 +45,7 @@ public class JSTypeNumber extends JSPrimitiveType
   /**
    * @return Global field <code>Number.MIN_VALUE</code>
    */
-  @Nonnull
+  @NonNull
   public JSFieldRef minValue ()
   {
     return global ().ref ("MIN_VALUE");
@@ -55,7 +55,7 @@ public class JSTypeNumber extends JSPrimitiveType
    * @return Global field <code>Number.NaN</code> - same as <Code>NaN</code>
    * @see JSGlobal#NaN
    */
-  @Nonnull
+  @NonNull
   public JSFieldRef nan ()
   {
     return global ().ref ("NaN");
@@ -64,7 +64,7 @@ public class JSTypeNumber extends JSPrimitiveType
   /**
    * @return Global field <code>Number.NEGATIVE_INFINITY</code>
    */
-  @Nonnull
+  @NonNull
   public JSFieldRef negativeInfinity ()
   {
     return global ().ref ("NEGATIVE_INFINITY");
@@ -73,7 +73,7 @@ public class JSTypeNumber extends JSPrimitiveType
   /**
    * @return Global field <code>Number.POSITIVE_INFINITY</code>
    */
-  @Nonnull
+  @NonNull
   public JSFieldRef positiveInfinity ()
   {
     return global ().ref ("POSITIVE_INFINITY");

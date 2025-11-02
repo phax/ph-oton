@@ -16,14 +16,14 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a single TinyMCE4 external plugin
@@ -44,7 +44,7 @@ public class TinyMCE4ExternalPlugin
    * @param aPluginURL
    *        URL of the plugin. May not be <code>null</code>.
    */
-  public TinyMCE4ExternalPlugin (@Nonnull @Nonempty final String sPluginName, @Nonnull final ISimpleURL aPluginURL)
+  public TinyMCE4ExternalPlugin (@NonNull @Nonempty final String sPluginName, @NonNull final ISimpleURL aPluginURL)
   {
     ValueEnforcer.notEmpty (sPluginName, "PluginName");
     ValueEnforcer.notNull (aPluginURL, "PluginURL");
@@ -52,14 +52,14 @@ public class TinyMCE4ExternalPlugin
     m_aPluginURL = aPluginURL;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPluginName ()
   {
     return m_sPluginName;
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getPluginURL ()
   {
     return m_aPluginURL;

@@ -16,12 +16,12 @@
  */
 package com.helger.photon.security;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Generic access enum
@@ -37,13 +37,13 @@ public enum EAccess implements IHasID <String>
   private final String m_sID;
   private final boolean m_bHasAccess;
 
-  EAccess (@Nonnull @Nonempty final String sID, final boolean bHasAccess)
+  EAccess (@NonNull @Nonempty final String sID, final boolean bHasAccess)
   {
     m_sID = sID;
     m_bHasAccess = bHasAccess;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

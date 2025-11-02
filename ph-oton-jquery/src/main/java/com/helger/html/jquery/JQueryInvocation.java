@@ -16,14 +16,14 @@
  */
 package com.helger.html.jquery;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.jscode.AbstractJSInvocation;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFunction;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special invocation semantics for jQuery
@@ -32,12 +32,12 @@ import jakarta.annotation.Nullable;
  */
 public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements IJQueryInvocationExtended <JQueryInvocation>
 {
-  public JQueryInvocation (@Nonnull final JSFunction aFunction)
+  public JQueryInvocation (@NonNull final JSFunction aFunction)
   {
     super (aFunction);
   }
 
-  public JQueryInvocation (@Nullable final IJSExpression aLhs, @Nonnull @Nonempty final String sMethod)
+  public JQueryInvocation (@Nullable final IJSExpression aLhs, @NonNull @Nonempty final String sMethod)
   {
     super (aLhs, sMethod);
   }
@@ -51,8 +51,8 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return A new jQuery invocation object. Never <code>null</code>.
    */
   @Override
-  @Nonnull
-  public JQueryInvocation jqinvoke (@Nonnull @Nonempty final String sMethod)
+  @NonNull
+  public JQueryInvocation jqinvoke (@NonNull @Nonempty final String sMethod)
   {
     return new JQueryInvocation (this, sMethod);
   }
@@ -63,7 +63,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @since jQuery 1.6
    * @return The invocation of the jQuery function <code>prop('checked')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation propChecked ()
   {
     return prop ().arg ("checked");
@@ -74,7 +74,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return The invocation of the custom jQuery function <code>enable()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation enable ()
   {
     return jqinvoke ("enable");
@@ -83,7 +83,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return The invocation of the custom jQuery function <code>disable()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation disable ()
   {
     return jqinvoke ("disable");
@@ -93,7 +93,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setDisabled()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setDisabled ()
   {
     return jqinvoke ("setDisabled");
@@ -105,7 +105,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setDisabled()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setDisabled (final boolean bDisabled)
   {
     return setDisabled (JSExpr.lit (bDisabled));
@@ -117,8 +117,8 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setDisabled()</code>
    */
-  @Nonnull
-  public JQueryInvocation setDisabled (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JQueryInvocation setDisabled (@NonNull final IJSExpression aExpr)
   {
     return setDisabled ().arg (aExpr);
   }
@@ -128,7 +128,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    *         <code>setReadOnly()</code>
    * @since 8.3.1
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setReadOnly ()
   {
     return jqinvoke ("setReadOnly");
@@ -141,7 +141,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    *         <code>setReadOnly()</code>
    * @since 8.3.1
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setReadOnly (final boolean bReadOnly)
   {
     return setReadOnly (JSExpr.lit (bReadOnly));
@@ -154,8 +154,8 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    *         <code>setReadOnly()</code>
    * @since 8.3.1
    */
-  @Nonnull
-  public JQueryInvocation setReadOnly (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JQueryInvocation setReadOnly (@NonNull final IJSExpression aExpr)
   {
     return setReadOnly ().arg (aExpr);
   }
@@ -163,7 +163,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return The invocation of the custom jQuery function <code>check()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation check ()
   {
     return jqinvoke ("check");
@@ -172,7 +172,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return The invocation of the custom jQuery function <code>uncheck()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation uncheck ()
   {
     return jqinvoke ("uncheck");
@@ -182,7 +182,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setChecked()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setChecked ()
   {
     return jqinvoke ("setChecked");
@@ -194,7 +194,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setChecked()</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation setChecked (final boolean bChecked)
   {
     return setChecked (JSExpr.lit (bChecked));
@@ -206,8 +206,8 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * @return The invocation of the custom jQuery function
    *         <code>setChecked()</code>
    */
-  @Nonnull
-  public JQueryInvocation setChecked (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JQueryInvocation setChecked (@NonNull final IJSExpression aExpr)
   {
     return setChecked ().arg (aExpr);
   }
@@ -215,7 +215,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':disabled')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isDisabled ()
   {
     return is (JQuerySelector.disabled);
@@ -224,7 +224,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':enabled')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isEnabled ()
   {
     return is (JQuerySelector.enabled);
@@ -233,7 +233,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':first-child')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isFirstChild ()
   {
     return is (JQuerySelector.first_child);
@@ -242,7 +242,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':last-child')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isLastChild ()
   {
     return is (JQuerySelector.last_child);
@@ -251,7 +251,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':visible')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isVisible ()
   {
     return is (JQuerySelector.visible);
@@ -260,7 +260,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @return <code>is (':hidden')</code>
    */
-  @Nonnull
+  @NonNull
   public JQueryInvocation isHidden ()
   {
     return is (JQuerySelector.hidden);

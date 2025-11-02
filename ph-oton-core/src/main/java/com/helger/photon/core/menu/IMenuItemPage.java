@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.menu;
 
-import com.helger.photon.core.page.IPage;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.photon.core.page.IPage;
 
 /**
  * Base interface for a single menu item referencing an internal page.
@@ -31,18 +31,18 @@ public interface IMenuItemPage extends IMenuItem
   /**
    * {@inheritDoc}
    */
-  @Nonnull
+  @NonNull
   IMenuItemPage setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
    * @return The referenced page object.
    */
-  @Nonnull
+  @NonNull
   IPage getPage ();
 
   /*
    * Change return type
    */
-  @Nonnull
+  @NonNull
   IMenuItemPage setTarget (@Nullable String sTarget);
 }

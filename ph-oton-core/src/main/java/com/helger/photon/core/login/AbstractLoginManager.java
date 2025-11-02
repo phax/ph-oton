@@ -19,6 +19,8 @@ package com.helger.photon.core.login;
 import java.time.Duration;
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,6 @@ import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Handle the application login process. This class requires a separate UI.
@@ -100,7 +99,7 @@ public abstract class AbstractLoginManager
   protected AbstractLoginManager ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsSet <String> getAllRequiredRoles ()
   {
@@ -117,7 +116,7 @@ public abstract class AbstractLoginManager
    *         <code>null</code>.
    * @since v8.4.1
    */
-  @Nonnull
+  @NonNull
   public final Duration getFailedLoginWaitingTime ()
   {
     return m_aFailedLoginWaitTime;
@@ -132,7 +131,7 @@ public abstract class AbstractLoginManager
    * @param aFailedLoginWaitTime
    *        The failed login waiting time. May not be <code>null</code>.
    */
-  public final void setFailedLoginWaitingTime (@Nonnull final Duration aFailedLoginWaitTime)
+  public final void setFailedLoginWaitingTime (@NonNull final Duration aFailedLoginWaitTime)
   {
     ValueEnforcer.notNull (aFailedLoginWaitTime, "FailedLoginWaitTime");
     m_aFailedLoginWaitTime = aFailedLoginWaitTime;
@@ -150,7 +149,7 @@ public abstract class AbstractLoginManager
    */
   @OverrideOnDemand
   protected abstract IHTMLProvider createLoginScreen (final boolean bShowLoginError,
-                                                      @Nonnull final ICredentialValidationResult aLoginResult);
+                                                      @NonNull final ICredentialValidationResult aLoginResult);
 
   /**
    * Check if the login process is in progress
@@ -161,7 +160,7 @@ public abstract class AbstractLoginManager
    * @since 3.4.0
    */
   @OverrideOnDemand
-  protected boolean isLoginInProgress (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected boolean isLoginInProgress (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return CLogin.REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS.equals (aRequestScope.params ()
                                                                                  .getAsString (CLogin.REQUEST_PARAM_ACTION));
@@ -177,7 +176,7 @@ public abstract class AbstractLoginManager
    */
   @Nullable
   @OverrideOnDemand
-  protected String getLoginName (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected String getLoginName (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_USERID);
   }
@@ -192,7 +191,7 @@ public abstract class AbstractLoginManager
    */
   @Nullable
   @OverrideOnDemand
-  protected String getPassword (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected String getPassword (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_PASSWORD);
   }
@@ -224,8 +223,8 @@ public abstract class AbstractLoginManager
    *        Added in 3.4.0.
    */
   @OverrideOnDemand
-  protected void modifyLoginInfo (@Nonnull final LoginInfo aLoginInfo,
-                                  @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  protected void modifyLoginInfo (@NonNull final LoginInfo aLoginInfo,
+                                  @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                   final boolean bLoggedInInThisRequest)
   {
     // Set some debugging details
@@ -248,7 +247,7 @@ public abstract class AbstractLoginManager
    * @since 8.3.6
    */
   @OverrideOnDemand
-  protected String getPostLoginRedirectURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected String getPostLoginRedirectURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // NOTE: this method does not fit well, when behind a reverse proxy. It is
     // only contained for backwards compatibility
@@ -266,9 +265,9 @@ public abstract class AbstractLoginManager
    *         therefore the login screen should be shown,
    *         {@link EContinue#CONTINUE} if a user is correctly logged in.
    */
-  @Nonnull
-  public final EContinue checkUserAndShowLogin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                @Nonnull final UnifiedResponse aUnifiedResponse)
+  @NonNull
+  public final EContinue checkUserAndShowLogin (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                @NonNull final UnifiedResponse aUnifiedResponse)
   {
     final LoggedInUserManager aLoggedInUserManager = LoggedInUserManager.getInstance ();
     String sSessionUserID = aLoggedInUserManager.getCurrentUserID ();

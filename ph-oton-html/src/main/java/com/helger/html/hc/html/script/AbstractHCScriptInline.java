@@ -18,6 +18,9 @@ package com.helger.html.hc.html.script;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -30,9 +33,6 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNodeWithChildren;
 import com.helger.xml.microdom.MicroText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents an HTML &lt;script&gt; element with inline JS content.
@@ -58,7 +58,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   {
   }
 
-  protected AbstractHCScriptInline (@Nonnull final IHasJSCode aProvider)
+  protected AbstractHCScriptInline (@NonNull final IHasJSCode aProvider)
   {
     this ();
     setJSCodeProvider (aProvider);
@@ -67,14 +67,14 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   /**
    * @return The JS code passed in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IHasJSCode getJSCodeProvider ()
   {
     return m_aJSProvider;
   }
 
-  @Nonnull
-  public final IMPLTYPE setJSCodeProvider (@Nonnull final IHasJSCode aProvider)
+  @NonNull
+  public final IMPLTYPE setJSCodeProvider (@NonNull final IHasJSCode aProvider)
   {
     m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
     return thisAsT ();
@@ -87,7 +87,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    *         <code>null</code>.
    */
   @Nullable
-  public final String getJSCode (@Nonnull final IJSWriterSettings aSettings)
+  public final String getJSCode (@NonNull final IJSWriterSettings aSettings)
   {
     if (m_aJSProvider == null)
       return null;
@@ -100,7 +100,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   /**
    * @return The masking mode. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final EHCScriptInlineMode getMode ()
   {
     return m_eScriptMode;
@@ -113,8 +113,8 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
    *        The mode to use. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public final IMPLTYPE setMode (@Nonnull final EHCScriptInlineMode eMode)
+  @NonNull
+  public final IMPLTYPE setMode (@NonNull final EHCScriptInlineMode eMode)
   {
     m_eScriptMode = ValueEnforcer.notNull (eMode, "Mode");
     return thisAsT ();
@@ -125,17 +125,17 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
     return m_bEmitAfterFiles;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setEmitAfterFiles (final boolean bEmitAfterFiles)
   {
     m_bEmitAfterFiles = bEmitAfterFiles;
     return thisAsT ();
   }
 
-  public static void setInlineScript (@Nonnull final IMicroNodeWithChildren aElement,
+  public static void setInlineScript (@NonNull final IMicroNodeWithChildren aElement,
                                       @Nullable final String sContent,
-                                      @Nonnull final EHCScriptInlineMode eMode,
-                                      @Nonnull final String sLineSeparator)
+                                      @NonNull final EHCScriptInlineMode eMode,
+                                      @NonNull final String sLineSeparator)
   {
     if (StringHelper.isNotEmpty (sContent))
       switch (eMode)
@@ -170,7 +170,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     if (m_sCachedJSCode == null)
       m_sCachedJSCode = StringHelper.trim (getJSCode (aConversionSettings.getJSWriterSettings ()));
@@ -179,8 +179,8 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
 

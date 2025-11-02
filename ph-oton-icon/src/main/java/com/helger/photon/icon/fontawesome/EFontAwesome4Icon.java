@@ -16,6 +16,9 @@
  */
 package com.helger.photon.icon.fontawesome;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
@@ -28,9 +31,6 @@ import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Font Awesome icons
@@ -828,7 +828,7 @@ public enum EFontAwesome4Icon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  EFontAwesome4Icon (@Nonnull final ICSSClassProvider aCSSClass)
+  EFontAwesome4Icon (@NonNull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
@@ -839,106 +839,106 @@ public enum EFontAwesome4Icon implements IIcon
     return m_aCSSClass.getCSSClass ();
   }
 
-  @Nonnull
-  public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
+  @NonNull
+  public <T extends IHCElement <?>> T applyToNode (@NonNull final T aElement)
   {
     aElement.addClasses (CFontAwesome4CSS.FA, m_aCSSClass);
     aElement.customAttrs ().setAriaHidden (true);
     return aElement;
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode ()
   {
     return applyToNode (new HCI ());
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeLarge ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_LG);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode2x ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_2X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode3x ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_3X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode4x ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_4X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode5x ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_5X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFixedWidth ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_FW);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeListBullet ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_LI);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeSpinning ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_SPIN);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate90 ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_ROTATE_90);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate180 ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_ROTATE_180);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate270 ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_ROTATE_270);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFlipHorz ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_FLIP_HORIZONTAL);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFlipVert ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_FLIP_VERTICAL);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeInverse ()
   {
     return getAsNode ().addClass (CFontAwesome4CSS.FA_INVERSE);
   }
 
-  @Nonnull
-  public static HCSpan createIconStack (@Nonnull final IHCElement <?> aLargeIcon, @Nonnull final IHCElement <?> aSmallIcon)
+  @NonNull
+  public static HCSpan createIconStack (@NonNull final IHCElement <?> aLargeIcon, @NonNull final IHCElement <?> aSmallIcon)
   {
     final HCSpan ret = new HCSpan ().addClasses (CFontAwesome4CSS.FA_STACK, CFontAwesome4CSS.FA_LG);
     ret.addChild (aLargeIcon.addClass (CFontAwesome4CSS.FA_STACK_2X));
@@ -977,7 +977,7 @@ public enum EFontAwesome4Icon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EIconCSSPathProvider.FONT_AWESOME4);

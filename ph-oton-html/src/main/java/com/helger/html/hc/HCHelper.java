@@ -18,6 +18,9 @@ package com.helger.html.hc;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -30,9 +33,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.xml.microdom.IMicroElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Helper class for common {@link IHCNode} related elements.
  *
@@ -44,9 +44,9 @@ public final class HCHelper
   private HCHelper ()
   {}
 
-  @Nonnull
-  private static EContinue _recursiveIterateTreeBreakable (@Nonnull final IHCNode aNode,
-                                                           @Nonnull final IHCIteratorCallback aCallback)
+  @NonNull
+  private static EContinue _recursiveIterateTreeBreakable (@NonNull final IHCNode aNode,
+                                                           @NonNull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -66,9 +66,9 @@ public final class HCHelper
     return EContinue.CONTINUE;
   }
 
-  @Nonnull
-  private static EContinue _recursiveIterateTreeBreakableNoCopy (@Nonnull final IHCNode aNode,
-                                                                 @Nonnull final IHCIteratorCallback aCallback)
+  @NonNull
+  private static EContinue _recursiveIterateTreeBreakableNoCopy (@NonNull final IHCNode aNode,
+                                                                 @NonNull final IHCIteratorCallback aCallback)
   {
     if (aNode.hasChildren ())
     {
@@ -98,7 +98,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateTree (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  public static void iterateTree (@NonNull final IHCNode aNode, @NonNull final IHCIteratorCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -118,7 +118,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateTreeNoCopy (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  public static void iterateTreeNoCopy (@NonNull final IHCNode aNode, @NonNull final IHCIteratorCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -136,7 +136,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateChildren (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  public static void iterateChildren (@NonNull final IHCNode aNode, @NonNull final IHCIteratorCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -152,7 +152,7 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateChildrenNoCopy (@Nonnull final IHCNode aNode, @Nonnull final IHCIteratorCallback aCallback)
+  public static void iterateChildrenNoCopy (@NonNull final IHCNode aNode, @NonNull final IHCIteratorCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -160,9 +160,9 @@ public final class HCHelper
     _recursiveIterateTreeBreakableNoCopy (aNode, aCallback);
   }
 
-  private static void _iterateTreeNonBreakable (@Nonnull final ICommonsList <IHCNode> aParentNodes,
-                                                @Nonnull final ICommonsList <IHCNode> aNodes,
-                                                @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  private static void _iterateTreeNonBreakable (@NonNull final ICommonsList <IHCNode> aParentNodes,
+                                                @NonNull final ICommonsList <IHCNode> aNodes,
+                                                @NonNull final IHCIteratorNonBreakableCallback aCallback)
   {
     while (aParentNodes.isNotEmpty ())
     {
@@ -196,8 +196,8 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateTreeNonBreakable (@Nonnull final IHCNode aNode,
-                                              @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  public static void iterateTreeNonBreakable (@NonNull final IHCNode aNode,
+                                              @NonNull final IHCIteratorNonBreakableCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -218,8 +218,8 @@ public final class HCHelper
    * @param aCallback
    *        The callback to be invoked on every child
    */
-  public static void iterateChildrenNonBreakable (@Nonnull final IHCNode aNode,
-                                                  @Nonnull final IHCIteratorNonBreakableCallback aCallback)
+  public static void iterateChildrenNonBreakable (@NonNull final IHCNode aNode,
+                                                  @NonNull final IHCIteratorNonBreakableCallback aCallback)
   {
     ValueEnforcer.notNull (aNode, "node");
     ValueEnforcer.notNull (aCallback, "callback");
@@ -267,8 +267,8 @@ public final class HCHelper
    * @return <code>null</code> if no such child element is present.
    */
   @Nullable
-  public static IMicroElement getFirstChildElement (@Nonnull final IMicroElement aElement,
-                                                    @Nonnull final EHTMLElement eHTMLElement)
+  public static IMicroElement getFirstChildElement (@NonNull final IMicroElement aElement,
+                                                    @NonNull final EHTMLElement eHTMLElement)
   {
     ValueEnforcer.notNull (aElement, "element");
     ValueEnforcer.notNull (eHTMLElement, "HTMLElement");
@@ -294,10 +294,10 @@ public final class HCHelper
    * @return A non-<code>null</code> list where the lower-case elements are listed before the
    *         upper-case elements.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <IMicroElement> getChildElements (@Nonnull final IMicroElement aElement,
-                                                               @Nonnull final EHTMLElement eHTMLElement)
+  public static ICommonsList <IMicroElement> getChildElements (@NonNull final IMicroElement aElement,
+                                                               @NonNull final EHTMLElement eHTMLElement)
   {
     ValueEnforcer.notNull (aElement, "element");
     ValueEnforcer.notNull (eHTMLElement, "HTMLElement");
@@ -308,7 +308,7 @@ public final class HCHelper
     return ret;
   }
 
-  private static void _recursiveAddFlattened (@Nullable final IHCNode aNode, @Nonnull final List <IHCNode> aRealList)
+  private static void _recursiveAddFlattened (@Nullable final IHCNode aNode, @NonNull final List <IHCNode> aRealList)
   {
     ValueEnforcer.notNull (aRealList, "RealList");
 
@@ -336,7 +336,7 @@ public final class HCHelper
    *        The source node. May be <code>null</code>.
    * @return A non-<code>null</code> flattened list.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> getAsFlattenedList (@Nullable final IHCNode aNode)
   {
@@ -355,7 +355,7 @@ public final class HCHelper
    *        The source nodes. May be <code>null</code> or empty.
    * @return A non-<code>null</code> flattened list.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IHCNode> getAsFlattenedList (@Nullable final Iterable <? extends IHCNode> aNodes)
   {
@@ -409,7 +409,7 @@ public final class HCHelper
    * @return An underscore instead of an empty string. The string cleaned from the malicious
    *         characters.
    */
-  @Nonnull
+  @NonNull
   public static String getAsHTMLID (@Nullable final String sSrc)
   {
     String ret = StringHelper.getNotNull (sSrc, "").trim ();

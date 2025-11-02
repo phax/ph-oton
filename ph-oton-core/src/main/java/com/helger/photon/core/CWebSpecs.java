@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.io.resource.ClassPathResource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Constants in the field of Java web-related specifications
@@ -30,7 +30,7 @@ public final class CWebSpecs
 {
   private static final String PREFIX = "external/schemas/servlet/";
 
-  @Nonnull
+  @NonNull
   private static ClassLoader _getCL ()
   {
     return CWebSpecs.class.getClassLoader ();

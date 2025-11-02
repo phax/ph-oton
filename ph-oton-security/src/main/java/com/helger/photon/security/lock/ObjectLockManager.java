@@ -16,14 +16,14 @@
  */
 package com.helger.photon.security.lock;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Singleton of {@link ILockManager}.
@@ -40,7 +40,7 @@ public final class ObjectLockManager extends AbstractGlobalSingleton
   public ObjectLockManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static ObjectLockManager getInstance ()
   {
     return getGlobalSingleton (ObjectLockManager.class);
@@ -52,7 +52,7 @@ public final class ObjectLockManager extends AbstractGlobalSingleton
     return getGlobalSingletonIfInstantiated (ObjectLockManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public DefaultLockManager <String> getDefaultLockMgr ()
   {
     return m_aMgr;

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.io.dao;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.id.IHasID;
 import com.helger.dao.DAOException;
 import com.helger.dao.wal.AbstractMapBasedWALDAO;
 import com.helger.photon.io.WebFileIO;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractMapBasedWALDAO} that uses the
@@ -38,15 +38,15 @@ public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID
                                                    extends
                                                    AbstractMapBasedWALDAO <INTERFACETYPE, IMPLTYPE>
 {
-  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
+  public AbstractPhotonMapBasedWALDAO (@NonNull final Class <IMPLTYPE> aImplClass,
                                        @Nullable final String sFilename) throws DAOException
   {
     this (aImplClass, sFilename, new InitSettings <> ());
   }
 
-  public AbstractPhotonMapBasedWALDAO (@Nonnull final Class <IMPLTYPE> aImplClass,
+  public AbstractPhotonMapBasedWALDAO (@NonNull final Class <IMPLTYPE> aImplClass,
                                        @Nullable final String sFilename,
-                                       @Nonnull final InitSettings <IMPLTYPE> aInitSettings) throws DAOException
+                                       @NonNull final InitSettings <IMPLTYPE> aInitSettings) throws DAOException
   {
     super (aImplClass, WebFileIO.getDataIO (), sFilename, aInitSettings);
   }

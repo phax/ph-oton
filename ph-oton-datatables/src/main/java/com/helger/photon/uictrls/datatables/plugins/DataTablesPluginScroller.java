@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.css.propertyvalue.CCSSValue;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jquery.JQuery;
@@ -30,9 +33,6 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Enable and configure the Scroller extension for DataTables. <br>
@@ -62,60 +62,60 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
     super (PLUGIN_NAME);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setBoundaryScale (final double dBoundaryScale)
   {
     return setBoundaryScale (Double.valueOf (dBoundaryScale));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setBoundaryScale (@Nullable final Double aBoundaryScale)
   {
     m_aBoundaryScale = aBoundaryScale;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setDisplayBuffer (final int dDisplayBuffer)
   {
     return setDisplayBuffer (Integer.valueOf (dDisplayBuffer));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setDisplayBuffer (@Nullable final Integer aDisplayBuffer)
   {
     m_aDisplayBuffer = aDisplayBuffer;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setLoadingIndicator (final boolean bLoadingIndicator)
   {
     m_bLoadingIndicator = bLoadingIndicator;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setRowHeight (final int nRowHeight)
   {
     m_sRowHeight = Integer.toString (nRowHeight);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setRowHeightAuto ()
   {
     m_sRowHeight = DEFAULT_ROW_HEIGHT;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setServerWait (final int dServerWait)
   {
     return setServerWait (Integer.valueOf (dServerWait));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginScroller setServerWait (@Nullable final Integer aServerWait)
   {
     m_aServerWait = aServerWait;
@@ -123,13 +123,13 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   }
 
   @Override
-  public boolean canBeApplied (@Nonnull final DataTables aDT)
+  public boolean canBeApplied (@NonNull final DataTables aDT)
   {
     return aDT.isPaging ();
   }
 
   @Override
-  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
     aDT.setDeferRender (true);
     // Forces some browsers to use an arbitrary height for the whole datatables
@@ -161,7 +161,7 @@ public class DataTablesPluginScroller extends AbstractDataTablesPlugin
   }
 
   @Override
-  public void addInitJS (@Nonnull final DataTables aDT, @Nonnull final JSPackage aJSCode, @Nonnull final JSLet aJSTable)
+  public void addInitJS (@NonNull final DataTables aDT, @NonNull final JSPackage aJSCode, @NonNull final JSLet aJSTable)
   {
     // See http://legacy.datatables.net/ref#fnAdjustColumnSizing
     aJSCode.add (JQuery.jQueryWindow ()

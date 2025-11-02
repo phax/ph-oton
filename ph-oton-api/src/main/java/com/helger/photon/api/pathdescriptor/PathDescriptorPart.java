@@ -19,6 +19,9 @@ package com.helger.photon.api.pathdescriptor;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -30,9 +33,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class keeps a single path part. This can be either a static string or a variable argument
@@ -53,7 +53,7 @@ public final class PathDescriptorPart implements Serializable
   private final ICommonsList <PathDescriptorVariableConstraint> m_aVariableConstraints;
 
   private PathDescriptorPart (final boolean bIsVariable,
-                              @Nonnull @Nonempty final String sName,
+                              @NonNull @Nonempty final String sName,
                               @Nullable final ICommonsList <PathDescriptorVariableConstraint> aVariableConstraints)
   {
     ValueEnforcer.notEmpty (sName, "Name");
@@ -74,7 +74,7 @@ public final class PathDescriptorPart implements Serializable
    * @return Either the static string or the name of the variable. Neither <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
@@ -85,7 +85,7 @@ public final class PathDescriptorPart implements Serializable
    * @return The optional variable constraints. Only relevant if this is a variable path part. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <PathDescriptorVariableConstraint> getAllVariableConstraints ()
   {
@@ -101,7 +101,7 @@ public final class PathDescriptorPart implements Serializable
    *        The string to be checked.
    * @return <code>true</code> if the passed string matches, <code>false</code> otherwise.
    */
-  public boolean matches (@Nonnull final String sPathPart)
+  public boolean matches (@NonNull final String sPathPart)
   {
     if (m_bIsVariable)
     {
@@ -119,7 +119,7 @@ public final class PathDescriptorPart implements Serializable
     return m_sName.equals (sPathPart);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAsURLString ()
   {
@@ -171,9 +171,9 @@ public final class PathDescriptorPart implements Serializable
                                        .getToString ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getVariableName (@Nonnull @Nonempty final String sName)
+  public static String getVariableName (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
     ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START),
@@ -181,8 +181,8 @@ public final class PathDescriptorPart implements Serializable
     return VARIABLE_START + sName + VARIABLE_END;
   }
 
-  @Nonnull
-  public static PathDescriptorPart create (@Nonnull @Nonempty final String sPathPart)
+  @NonNull
+  public static PathDescriptorPart create (@NonNull @Nonempty final String sPathPart)
   {
     ValueEnforcer.notEmpty (sPathPart, "PathPart");
     if (sPathPart.length () > MIN_VARIABLE_LENGTH &&

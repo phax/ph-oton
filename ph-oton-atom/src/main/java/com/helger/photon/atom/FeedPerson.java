@@ -18,6 +18,7 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ import com.helger.base.email.EmailAddressHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a person within a feed.

@@ -25,6 +25,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.Comparator;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
@@ -38,9 +41,6 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.datetime.format.PDTFromString;
 import com.helger.text.compare.ComparatorHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class DateFormatBuilder implements IDateFormatBuilder
 {
   private final ICommonsList <Object> m_aList = new CommonsArrayList <> ();
@@ -48,16 +48,16 @@ public final class DateFormatBuilder implements IDateFormatBuilder
   public DateFormatBuilder ()
   {}
 
-  @Nonnull
-  public DateFormatBuilder append (@Nonnull final EDateTimeFormatToken eToken)
+  @NonNull
+  public DateFormatBuilder append (@NonNull final EDateTimeFormatToken eToken)
   {
     ValueEnforcer.notNull (eToken, "Token");
     m_aList.add (eToken);
     return this;
   }
 
-  @Nonnull
-  public DateFormatBuilder append (@Nonnull @Nonempty final String sText)
+  @NonNull
+  public DateFormatBuilder append (@NonNull @Nonempty final String sText)
   {
     ValueEnforcer.notEmpty (sText, "Text");
 
@@ -77,13 +77,13 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ICommonsList <Object> getAllInternalObjects ()
   {
     return m_aList.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCalendarFormatString ()
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -95,7 +95,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public String getJavaFormatString ()
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -107,7 +107,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public DateTimeFormatter getJavaFormatter ()
   {
     final DateTimeFormatterBuilder aBuilder = new DateTimeFormatterBuilder ();
@@ -121,7 +121,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
 
   private static final boolean USE_FORMATTER = true;
 
-  @Nonnull
+  @NonNull
   public LocalDate getDateFormatted (@Nullable final String sDate)
   {
     if (USE_FORMATTER)
@@ -130,7 +130,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalDateFromString (sDate, getJavaFormatString ());
   }
 
-  @Nonnull
+  @NonNull
   public LocalTime getTimeFormatted (@Nullable final String sTime)
   {
     if (USE_FORMATTER)
@@ -139,7 +139,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalTimeFromString (sTime, getJavaFormatString ());
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getLocalDateTimeFormatted (@Nullable final String sDateTime)
   {
     if (USE_FORMATTER)
@@ -148,7 +148,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 
-  @Nonnull
+  @NonNull
   public ZonedDateTime getDateTimeFormatted (@Nullable final String sDateTime)
   {
     if (USE_FORMATTER)
@@ -169,7 +169,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     private final ICommonsMap <String, EDateTimeFormatToken> m_aAllMatching = new CommonsHashMap <> ();
     private final Comparator <String> m_aComp = ComparatorHelper.getComparatorStringLongestFirst ();
 
-    public Searcher (@Nonnull final String sRest)
+    public Searcher (@NonNull final String sRest)
     {
       m_sRest = ValueEnforcer.notNull (sRest, "Rest");
     }
@@ -201,7 +201,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
       return aEntry.getValue ();
     }
 
-    @Nonnull
+    @NonNull
     public String getNextChar ()
     {
       final String ret = m_sRest.substring (0, 1);
@@ -239,8 +239,8 @@ public final class DateFormatBuilder implements IDateFormatBuilder
 
   private static final PatternCache CACHE = new PatternCache ();
 
-  @Nonnull
-  public static IDateFormatBuilder fromJavaPattern (@Nonnull final String sJavaPattern)
+  @NonNull
+  public static IDateFormatBuilder fromJavaPattern (@NonNull final String sJavaPattern)
   {
     ValueEnforcer.notEmpty (sJavaPattern, "JavaPattern");
 

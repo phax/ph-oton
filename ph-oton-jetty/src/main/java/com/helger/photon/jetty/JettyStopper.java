@@ -23,13 +23,12 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Stop a Jetty that was started with {@link JettyStarter}.
@@ -46,15 +45,15 @@ public final class JettyStopper
   public JettyStopper ()
   {}
 
-  @Nonnull
-  public JettyStopper setStopKey (@Nonnull final String sStopKey)
+  @NonNull
+  public JettyStopper setStopKey (@NonNull final String sStopKey)
   {
     ValueEnforcer.notNull (sStopKey, "StopKey");
     m_sStopKey = sStopKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JettyStopper setStopPort (@Nonnegative final int nStopPort)
   {
     ValueEnforcer.isGT0 (nStopPort, "StopPort");

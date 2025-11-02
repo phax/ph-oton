@@ -63,7 +63,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 
         if (bIsDeprecated)
           aLines.add ("@Deprecated");
-        aLines.add ("@Nonnull");
+        aLines.add ("@NonNull");
         aLines.add ("default IMPLTYPE " + aEntry.getIdentifier () + " ()");
         aLines.add ("{");
         aLines.add ("  return jqinvoke (\"" + sRealName + "\");");
@@ -74,7 +74,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 
     final StringBuilder aFull = new StringBuilder ("package com.helger.html.jquery;\n" +
                                                    "\n" +
-                                                   "import jakarta.annotation.Nonnull;\n" +
+                                                   "import jakarta.annotation.NonNull;\n" +
                                                    "import jakarta.annotation.Nullable;\n" +
                                                    "\n" +
                                                    "import com.helger.annotation.Nonempty;\n" +
@@ -99,8 +99,8 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   *        empty.\n" +
                                                    "   * @return A new jQuery invocation object. Never <code>null</code>.\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
-                                                   "  IMPLTYPE jqinvoke (@Nonnull @Nonempty String sMethod);\n" +
+                                                   "  @NonNull\n" +
+                                                   "  IMPLTYPE jqinvoke (@NonNull @Nonempty String sMethod);\n" +
                                                    "\n" +
                                                    "  /**\n" +
                                                    "   * Adds a CSSClassProvider selector as a string argument.\n" +
@@ -109,7 +109,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   *        value to be added as an argument\n" +
                                                    "   * @return this\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
+                                                   "  @NonNull\n" +
                                                    "  default IMPLTYPE arg (@Nullable ICSSClassProvider aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getCSSClass ());\n" +
@@ -122,7 +122,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   *        value to be added as an argument\n" +
                                                    "   * @return this\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
+                                                   "  @NonNull\n" +
                                                    "  default IMPLTYPE arg (@Nullable IJQuerySelector aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getExpression ());\n" +
@@ -135,7 +135,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "   *        value to be added as an argument\n" +
                                                    "   * @return this\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
+                                                   "  @NonNull\n" +
                                                    "  default IMPLTYPE arg (@Nullable JQuerySelectorList aArgument)\n" +
                                                    "  {\n" +
                                                    "    return aArgument == null ? argNull () : arg (aArgument.getAsExpression ());\n" +
@@ -146,7 +146,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "  /**\n" +
                                                    "   * @return The invocation of the jQuery field <code>jquery</code>\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
+                                                   "  @NonNull\n" +
                                                    "  default JSFieldRef jquery ()\n" +
                                                    "  {\n" +
                                                    "    return ref (\"jquery\");\n" +
@@ -155,7 +155,7 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
                                                    "  /**\n" +
                                                    "   * @return The invocation of the jQuery field <code>length()</code>\n" +
                                                    "   */\n" +
-                                                   "  @Nonnull\n" +
+                                                   "  @NonNull\n" +
                                                    "  default JSFieldRef length ()\n" +
                                                    "  {\n" +
                                                    "    return ref (\"length\");\n" +

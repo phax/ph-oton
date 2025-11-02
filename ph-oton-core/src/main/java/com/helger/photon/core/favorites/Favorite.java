@@ -18,6 +18,9 @@ package com.helger.photon.core.favorites;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -28,9 +31,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.type.ObjectType;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of favourites for bookmarks.
@@ -47,10 +47,10 @@ public class Favorite implements IFavorite
   private String m_sDisplayName;
   private ICommonsMap <String, String> m_aAdditionalParams;
 
-  public Favorite (@Nonnull @Nonempty final String sUserID,
-                   @Nonnull @Nonempty final String sApplicationID,
-                   @Nonnull @Nonempty final String sMenuItemID,
-                   @Nonnull @Nonempty final String sDisplayName,
+  public Favorite (@NonNull @Nonempty final String sUserID,
+                   @NonNull @Nonempty final String sApplicationID,
+                   @NonNull @Nonempty final String sMenuItemID,
+                   @NonNull @Nonempty final String sDisplayName,
                    @Nullable final Map <String, String> aAdditionalParams)
   {
     this (GlobalIDFactory.getNewPersistentStringID (),
@@ -61,11 +61,11 @@ public class Favorite implements IFavorite
           aAdditionalParams);
   }
 
-  Favorite (@Nonnull @Nonempty final String sID,
-            @Nonnull @Nonempty final String sUserID,
-            @Nonnull @Nonempty final String sApplicationID,
-            @Nonnull @Nonempty final String sMenuItemID,
-            @Nonnull @Nonempty final String sDisplayName,
+  Favorite (@NonNull @Nonempty final String sID,
+            @NonNull @Nonempty final String sUserID,
+            @NonNull @Nonempty final String sApplicationID,
+            @NonNull @Nonempty final String sMenuItemID,
+            @NonNull @Nonempty final String sDisplayName,
             @Nullable final Map <String, String> aAdditionalParams)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
@@ -76,36 +76,36 @@ public class Favorite implements IFavorite
     setAdditionalParams (aAdditionalParams);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getUserID ()
   {
     return m_sUserID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getApplicationID ()
   {
     return m_sApplicationID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getMenuItemID ()
   {
     return m_sMenuItemID;
   }
 
-  @Nonnull
-  public final EChange setMenuItemID (@Nonnull @Nonempty final String sMenuItemID)
+  @NonNull
+  public final EChange setMenuItemID (@NonNull @Nonempty final String sMenuItemID)
   {
     ValueEnforcer.notEmpty (sMenuItemID, "menu item ID");
 
@@ -116,15 +116,15 @@ public class Favorite implements IFavorite
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
-  @Nonnull
-  public final EChange setDisplayName (@Nonnull @Nonempty final String sDisplayName)
+  @NonNull
+  public final EChange setDisplayName (@NonNull @Nonempty final String sDisplayName)
   {
     ValueEnforcer.notEmpty (sDisplayName, "display name");
 
@@ -135,14 +135,14 @@ public class Favorite implements IFavorite
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, String> getAllAdditionalParams ()
   {
     return m_aAdditionalParams.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final EChange setAdditionalParams (@Nullable final Map <String, String> aAdditionalParams)
   {
     // Ensure same type
@@ -166,7 +166,7 @@ public class Favorite implements IFavorite
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String toString ()
   {
     return new ToStringGenerator (this).append ("id", m_sID)

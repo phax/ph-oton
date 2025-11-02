@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -30,9 +33,6 @@ import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.IHCCustomizer;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IHCCustomizer} that handles a list of multiple
@@ -61,22 +61,22 @@ public class HCCustomizerList extends AbstractHCCustomizer
         addCustomizer (aCustomizer);
   }
 
-  @Nonnull
-  public HCCustomizerList addCustomizer (@Nonnull final IHCCustomizer aCustomizer)
+  @NonNull
+  public HCCustomizerList addCustomizer (@NonNull final IHCCustomizer aCustomizer)
   {
     ValueEnforcer.notNull (aCustomizer, "Customizer");
     m_aRWLock.writeLocked ( () -> m_aList.add (aCustomizer));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeCustomizer (@Nullable final IHCCustomizer aCustomizer)
   {
     return m_aRWLock.writeLockedGet ( () -> m_aList.removeObject (aCustomizer));
   }
 
-  @Nonnull
-  public EChange removeAllCustomizersOfClass (@Nonnull final Class <? extends IHCCustomizer> aCustomizerClass)
+  @NonNull
+  public EChange removeAllCustomizersOfClass (@NonNull final Class <? extends IHCCustomizer> aCustomizerClass)
   {
     ValueEnforcer.notNull (aCustomizerClass, "CustomizerClass");
 
@@ -96,16 +96,16 @@ public class HCCustomizerList extends AbstractHCCustomizer
     return m_aRWLock.readLockedInt (m_aList::size);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IHCCustomizer> getAllCustomizers ()
   {
     return m_aRWLock.readLockedGet (m_aList::getClone);
   }
 
-  public void customizeNode (@Nonnull final IHCNode aNode,
-                             @Nonnull final EHTMLVersion eHTMLVersion,
-                             @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  public void customizeNode (@NonNull final IHCNode aNode,
+                             @NonNull final EHTMLVersion eHTMLVersion,
+                             @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     for (final IHCCustomizer aCustomizer : getAllCustomizers ())
       aCustomizer.customizeNode (aNode, eHTMLVersion, aTargetNode);

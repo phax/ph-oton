@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
-import com.helger.html.jscode.JSInvocation;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSInvocation;
 
 /**
  * Contains the JS built-in type 'JSON'
@@ -32,13 +32,13 @@ public class JSTypeJSON extends JSPrimitiveType
     super ("JSON");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation parse ()
   {
     return global ().invoke ("parse");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation stringify ()
   {
     return global ().invoke ("stringify");

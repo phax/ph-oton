@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSLet;
 import com.helger.html.jscode.JSPackage;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for DataTables plugins.
@@ -35,7 +35,7 @@ public interface IDataTablesPlugin
   /**
    * @return The name used as the key for the JS options.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getName ();
 
@@ -46,7 +46,7 @@ public interface IDataTablesPlugin
    *        DataTables to use. Never <code>null</code>.
    * @return <code>true</code> if it is applicable, <code>false</code> if not.
    */
-  boolean canBeApplied (@Nonnull DataTables aDT);
+  boolean canBeApplied (@NonNull DataTables aDT);
 
   /**
    * Apply all necessary information to the owning DataTables object. This can
@@ -55,7 +55,7 @@ public interface IDataTablesPlugin
    * @param aDT
    *        DataTables to use. Never <code>null</code>.
    */
-  void finalizeDataTablesSettings (@Nonnull DataTables aDT);
+  void finalizeDataTablesSettings (@NonNull DataTables aDT);
 
   /**
    * Add custom plugin JS initialization code.
@@ -67,7 +67,7 @@ public interface IDataTablesPlugin
    * @param aJSTable
    *        The reference to the DataTables JS object
    */
-  void addInitJS (@Nonnull DataTables aDT, @Nonnull JSPackage aJSCode, @Nonnull JSLet aJSTable);
+  void addInitJS (@NonNull DataTables aDT, @NonNull JSPackage aJSCode, @NonNull JSLet aJSTable);
 
   /**
    * Register custom resources required for this plugin.
@@ -75,7 +75,7 @@ public interface IDataTablesPlugin
    * @param aConversionSettings
    *        Conversion settings to use. Never <code>null</code>.
    */
-  void registerExternalResources (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  void registerExternalResources (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
    * @return The initialization parameters to be added to the DT init

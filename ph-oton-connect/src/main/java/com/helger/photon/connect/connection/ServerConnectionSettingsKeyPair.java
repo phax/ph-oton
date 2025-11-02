@@ -16,6 +16,8 @@
  */
 package com.helger.photon.connect.connection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
@@ -23,8 +25,6 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.array.ArrayHelper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link IServerConnectionSettingsKeyPair}
@@ -39,13 +39,13 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
   private final byte [] m_aPublicKeyBytes;
   private final byte [] m_aKeyPairPassphrase;
 
-  public ServerConnectionSettingsKeyPair (@Nonnull @Nonempty final String sIP,
+  public ServerConnectionSettingsKeyPair (@NonNull @Nonempty final String sIP,
                                           @Nonnegative final int nPort,
                                           final int nConnectionTimeoutMillis,
-                                          @Nonnull @Nonempty final String sUserName,
-                                          @Nonnull @Nonempty final byte [] aPrivateKeyBytes,
-                                          @Nonnull @Nonempty final byte [] aPublicKeyBytes,
-                                          @Nonnull final byte [] aKeyPairPassphrase)
+                                          @NonNull @Nonempty final String sUserName,
+                                          @NonNull @Nonempty final byte [] aPrivateKeyBytes,
+                                          @NonNull @Nonempty final byte [] aPublicKeyBytes,
+                                          @NonNull final byte [] aKeyPairPassphrase)
   {
     super (sIP, nPort, nConnectionTimeoutMillis, sUserName);
 
@@ -54,7 +54,7 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
     m_aKeyPairPassphrase = ArrayHelper.getCopy (ValueEnforcer.notNull (aKeyPairPassphrase, "KeyPairPassphrase"));
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public byte [] getPrivateKey ()
@@ -62,7 +62,7 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
     return ArrayHelper.getCopy (m_aPrivateKeyBytes);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public byte [] getPublicKey ()
@@ -70,7 +70,7 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
     return ArrayHelper.getCopy (m_aPublicKeyBytes);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public byte [] getKeyPairPassphrase ()
   {

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to be used with the {@link IAPIInvoker} to get notified
@@ -39,7 +39,7 @@ public interface IAPIBeforeExecutionCallback extends ICallback
    * @param aRequestScope
    *        The request scope of the current invocation
    */
-  void onBeforeExecution (@Nonnull IAPIInvoker aInvoker,
-                          @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                          @Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  void onBeforeExecution (@NonNull IAPIInvoker aInvoker,
+                          @NonNull InvokableAPIDescriptor aInvokableDescriptor,
+                          @NonNull IRequestWebScopeWithoutResponse aRequestScope);
 }

@@ -16,11 +16,11 @@
  */
 package com.helger.photon.app.resource;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An interface for merging resource bundles.
@@ -30,8 +30,8 @@ import jakarta.annotation.Nonnull;
  */
 public interface IWebSiteResourceBundleProvider
 {
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@Nonnull @Nonempty ICommonsList <WebSiteResourceWithCondition> aList,
+  ICommonsList <WebSiteResourceBundleSerialized> getResourceBundles (@NonNull @Nonempty ICommonsList <WebSiteResourceWithCondition> aList,
                                                                      boolean bRegular);
 }

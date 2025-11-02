@@ -18,6 +18,8 @@ package com.helger.photon.api;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
@@ -29,8 +31,6 @@ import com.helger.io.file.FilenameHelper;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class contains a combination of path and HTTP method.
@@ -52,7 +52,7 @@ public class APIPath implements Serializable
    * @param sPath
    *        The path relative to the owning servlet.
    */
-  public APIPath (@Nonnull final EHttpMethod eHttpMethod, @Nonnull @Nonempty final String sPath)
+  public APIPath (@NonNull final EHttpMethod eHttpMethod, @NonNull @Nonempty final String sPath)
   {
     m_eHttpMethod = ValueEnforcer.notNull (eHttpMethod, "HttpMethod");
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
@@ -62,7 +62,7 @@ public class APIPath implements Serializable
    * @return The HTTP method as provided in the constructor. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public EHttpMethod getHttpMethod ()
   {
     return m_eHttpMethod;
@@ -72,7 +72,7 @@ public class APIPath implements Serializable
    * @return The path as provided in the constructor. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPath ()
   {
@@ -89,8 +89,8 @@ public class APIPath implements Serializable
    * @return The new URL. Never <code>null</code>.
    * @see #getPath()
    */
-  @Nonnull
-  public SimpleURL getInvocationURL (@Nonnull final String sBasePath)
+  @NonNull
+  public SimpleURL getInvocationURL (@NonNull final String sBasePath)
   {
     ValueEnforcer.notNull (sBasePath, "BasePath");
     return new SimpleURL (sBasePath + m_sPath);
@@ -119,32 +119,32 @@ public class APIPath implements Serializable
     return new ToStringGenerator (null).append ("HTTPMethod", m_eHttpMethod).append ("Path", m_sPath).getToString ();
   }
 
-  @Nonnull
-  public static APIPath get (@Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static APIPath get (@NonNull @Nonempty final String sPath)
   {
     return new APIPath (EHttpMethod.GET, sPath);
   }
 
-  @Nonnull
-  public static APIPath post (@Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static APIPath post (@NonNull @Nonempty final String sPath)
   {
     return new APIPath (EHttpMethod.POST, sPath);
   }
 
-  @Nonnull
-  public static APIPath put (@Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static APIPath put (@NonNull @Nonempty final String sPath)
   {
     return new APIPath (EHttpMethod.PUT, sPath);
   }
 
-  @Nonnull
-  public static APIPath delete (@Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static APIPath delete (@NonNull @Nonempty final String sPath)
   {
     return new APIPath (EHttpMethod.DELETE, sPath);
   }
 
-  @Nonnull
-  public static APIPath createForFilter (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static APIPath createForFilter (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Ensure to use the encoded path
     String sPath = RequestHelper.getPathWithinServletContext (aRequestScope.getRequest (), true);
@@ -156,8 +156,8 @@ public class APIPath implements Serializable
     return new APIPath (aRequestScope.getHttpMethod (), sPath);
   }
 
-  @Nonnull
-  public static APIPath createForServlet (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static APIPath createForServlet (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Ensure to use the encoded path
     String sPath = RequestHelper.getPathWithinServlet (aRequestScope.getRequest (), true);

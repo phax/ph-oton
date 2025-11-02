@@ -19,6 +19,8 @@ package com.helger.photon.core.html;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
@@ -48,8 +50,6 @@ import com.helger.text.locale.LocaleHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Main class for creating HTML output
  *
@@ -61,8 +61,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
   {}
 
   @OverrideOnDemand
-  @Nonnull
-  protected HCHtml createHCHtml (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  protected HCHtml createHCHtml (@NonNull final Locale aDisplayLocale)
   {
     return new HCHtml ().setLanguage (aDisplayLocale.getLanguage ());
   }
@@ -76,8 +76,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The HTML head object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addMetaElements (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                  @Nonnull final HCHead aHead)
+  protected void addMetaElements (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @NonNull final HCHead aHead)
   {
     final ICommonsList <IMetaElement> aMetaElements = new CommonsArrayList <> ();
     {
@@ -116,8 +116,8 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    *        The current HTML object. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void addGlobalAndPerRequestCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                 @Nonnull final HCHtml aHtml)
+  protected void addGlobalAndPerRequestCSSAndJS (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                 @NonNull final HCHtml aHtml)
   {
     final boolean bRegular = HCSettings.isUseRegularResources ();
     final HCHead aHead = aHtml.head ();
@@ -149,12 +149,12 @@ public abstract class AbstractHTMLProvider implements IHTMLProvider
    * @param aDisplayLocale
    *        The display locale of the current request
    */
-  protected abstract void fillHeadAndBody (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull HCHtml aHtml,
-                                           @Nonnull Locale aDisplayLocale);
+  protected abstract void fillHeadAndBody (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                           @NonNull HCHtml aHtml,
+                                           @NonNull Locale aDisplayLocale);
 
-  @Nonnull
-  public final HCHtml createHTML (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
+  @NonNull
+  public final HCHtml createHTML (@NonNull final IRequestWebScopeWithoutResponse aRequestScope) throws ForcedRedirectException
   {
     final Locale aDisplayLocale = RequestSettings.getDisplayLocale (aRequestScope);
     final IHCConversionSettingsToNode aConversionSettings = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();

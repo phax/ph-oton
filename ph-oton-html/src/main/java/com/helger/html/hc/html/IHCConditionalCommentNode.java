@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCWrappingNode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for conditional comments.
@@ -32,7 +32,7 @@ public interface IHCConditionalCommentNode extends IHCWrappingNode
    * @return The condition for the conditional comment. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getCondition ();
 }

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -36,8 +37,6 @@ import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Test class for class {@link RequestParameterHandlerURLPathNamed}.
  *
@@ -50,7 +49,7 @@ public final class RequestParameterHandlerURLPathNamedTest
 
   private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
 
-  private void _test (@Nonnull final String sBasePath, final MenuTree aMenuTree, @Nonnull final IMenuItemPage aMenuItem)
+  private void _test (@NonNull final String sBasePath, final MenuTree aMenuTree, @NonNull final IMenuItemPage aMenuItem)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
     final RequestParameterHandlerURLPathNamed h = new RequestParameterHandlerURLPathNamed ();

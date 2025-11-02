@@ -19,6 +19,8 @@ package com.helger.photon.jdbc;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.dao.DAOException;
 import com.helger.db.jdbc.executor.DBExecutor;
@@ -35,8 +37,6 @@ import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.photon.security.user.IUserManager;
 import com.helger.photon.security.usergroup.IUserGroupManager;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * An implementation of {@link IFactory} for JDBC based managers.
  *
@@ -47,8 +47,8 @@ public class PhotonSecurityManagerFactoryJDBC implements IFactory
   private final Supplier <? extends DBExecutor> m_aDBExecSupplier;
   private final Function <String, String> m_aTableNameCustomizer;
 
-  public PhotonSecurityManagerFactoryJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                                           @Nonnull final Function <String, String> aTableNameCustomizer)
+  public PhotonSecurityManagerFactoryJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                                           @NonNull final Function <String, String> aTableNameCustomizer)
   {
     ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
     ValueEnforcer.notNull (aTableNameCustomizer, "TableNameCustomizer");
@@ -56,33 +56,33 @@ public class PhotonSecurityManagerFactoryJDBC implements IFactory
     m_aTableNameCustomizer = aTableNameCustomizer;
   }
 
-  @Nonnull
+  @NonNull
   public IAuditManager createAuditManager () throws Exception
   {
     return new AuditManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
-  @Nonnull
+  @NonNull
   public IUserManager createUserMgr () throws DAOException
   {
     return new UserManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
-  @Nonnull
+  @NonNull
   public IRoleManager createRoleMgr () throws DAOException
   {
     return new RoleManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
-  @Nonnull
-  public IUserGroupManager createUserGroupMgr (@Nonnull final IUserManager aUserMgr,
-                                               @Nonnull final IRoleManager aRoleMgr) throws DAOException
+  @NonNull
+  public IUserGroupManager createUserGroupMgr (@NonNull final IUserManager aUserMgr,
+                                               @NonNull final IRoleManager aRoleMgr) throws DAOException
   {
     return new UserGroupManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer, aUserMgr, aRoleMgr);
   }
 
-  @Nonnull
-  public IUserTokenManager createUserTokenMgr (@Nonnull final IUserManager aUserMgr) throws DAOException
+  @NonNull
+  public IUserTokenManager createUserTokenMgr (@NonNull final IUserManager aUserMgr) throws DAOException
   {
     return new UserTokenManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer, aUserMgr);
   }
@@ -95,8 +95,8 @@ public class PhotonSecurityManagerFactoryJDBC implements IFactory
    *        A customizer for database table names used by this class. May not be
    *        <code>null</code>.
    */
-  public static void install (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                              @Nonnull final Function <String, String> aTableNameCustomizer)
+  public static void install (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                              @NonNull final Function <String, String> aTableNameCustomizer)
   {
     ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
     ValueEnforcer.notNull (aTableNameCustomizer, "TableNameCustomizer");

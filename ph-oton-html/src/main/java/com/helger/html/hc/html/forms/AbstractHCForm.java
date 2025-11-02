@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
@@ -39,9 +42,6 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;form&gt; element
@@ -105,7 +105,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_sAcceptCharset;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAcceptCharset (@Nullable final String sAcceptCharset)
   {
     m_sAcceptCharset = sAcceptCharset;
@@ -124,14 +124,14 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_aAction.getActionJS ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAction (@Nullable final ISimpleURL aAction)
   {
     m_aAction.setAction (aAction);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aAction.setAction (aAction);
@@ -153,8 +153,8 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_eAutoComplete.isUndefined ();
   }
 
-  @Nonnull
-  public final IMPLTYPE setAutoComplete (@Nonnull final ETriState eAutoComplete)
+  @NonNull
+  public final IMPLTYPE setAutoComplete (@NonNull final ETriState eAutoComplete)
   {
     m_eAutoComplete = ValueEnforcer.notNull (eAutoComplete, "AutoComplete");
     return thisAsT ();
@@ -166,7 +166,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_aEncType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setEncType (@Nullable final IMimeType aEncType)
   {
     m_aEncType = aEncType;
@@ -179,7 +179,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_eMethod;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMethod (@Nullable final EHCFormMethod eMethod)
   {
     m_eMethod = eMethod;
@@ -192,7 +192,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -204,7 +204,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_bNoValidate;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setNoValidate (final boolean bNoValidate)
   {
     m_bNoValidate = bNoValidate;
@@ -217,7 +217,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_aTarget;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
@@ -234,7 +234,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
     return m_nSubmitButtonTabIndex;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter, final int nSubmitButtonTabIndex)
   {
     m_bSubmitPressingEnter = bSubmitPressingEnter;
@@ -243,8 +243,8 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     if (m_bSubmitPressingEnter)
@@ -252,7 +252,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.FORM))
@@ -260,7 +260,7 @@ public abstract class AbstractHCForm <IMPLTYPE extends AbstractHCForm <IMPLTYPE>
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
 

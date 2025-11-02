@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.datatables.column;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -37,9 +40,6 @@ import com.helger.html.jscode.JSArray;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains all data for a single DataTables column
@@ -105,7 +105,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     m_aOrderSpec = new DTOrderSpec ();
   }
 
-  public DataTablesColumnDef (@Nonnull @Nonempty final int... aTargets)
+  public DataTablesColumnDef (@NonNull @Nonempty final int... aTargets)
   {
     ValueEnforcer.notEmpty (aTargets, "Targets");
     for (final int nTarget : aTargets)
@@ -114,7 +114,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     m_aOrderSpec = new DTOrderSpec ();
   }
 
-  public DataTablesColumnDef (@Nonnegative final int nTarget, @Nonnull final DTCol aDTColumn)
+  public DataTablesColumnDef (@Nonnegative final int nTarget, @NonNull final DTCol aDTColumn)
   {
     ValueEnforcer.isGE0 (nTarget, "Target");
     m_aTargets = new int [] { nTarget };
@@ -136,7 +136,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     m_aOrderSpec = aDTColumn.getOrderSpec ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public int [] getAllTargets ()
@@ -149,15 +149,15 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return ArrayHelper.contains (m_aTargets, nTarget);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCellType ()
   {
     return m_sCellType;
   }
 
-  @Nonnull
-  public DataTablesColumnDef setCellType (@Nonnull @Nonempty final String sCellType)
+  @NonNull
+  public DataTablesColumnDef setCellType (@NonNull @Nonempty final String sCellType)
   {
     ValueEnforcer.notEmpty (sCellType, "CellType");
     m_sCellType = sCellType;
@@ -169,35 +169,35 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_aClassNames.containsClass (aCSSClassProvider);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef addClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     m_aClassNames.addClass (aCSSClassProvider);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     m_aClassNames.removeClass (aCSSClassProvider);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef removeAllClasses ()
   {
     m_aClassNames.removeAllClasses ();
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ICSSClassProvider> getAllClasses ()
   {
     return m_aClassNames.getAllClasses ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllClassNames ()
   {
@@ -221,7 +221,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sContentPadding;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setContentPadding (@Nullable final String sContentPadding)
   {
     m_sContentPadding = sContentPadding;
@@ -234,7 +234,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_aCreatedCell;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setCreatedCell (@Nullable final JSAnonymousFunction aCreatedCell)
   {
     m_aCreatedCell = aCreatedCell;
@@ -247,25 +247,25 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_aData;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setData (@Nonnegative final int nColumnIndex)
   {
     return setData (JSExpr.lit (nColumnIndex));
   }
 
-  @Nonnull
-  public DataTablesColumnDef setData (@Nonnull @Nonempty final String sPropertyName)
+  @NonNull
+  public DataTablesColumnDef setData (@NonNull @Nonempty final String sPropertyName)
   {
     return setData (JSExpr.lit (sPropertyName));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setDataNull ()
   {
     return setData (JSExpr.NULL);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setData (@Nullable final IJSExpression aData)
   {
     m_aData = aData;
@@ -278,7 +278,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sDefaultContent;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setDefaultContent (@Nullable final String sDefaultContent)
   {
     m_sDefaultContent = sDefaultContent;
@@ -291,7 +291,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -303,7 +303,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_bOrderable;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setOrderable (final boolean bOrderable)
   {
     m_bOrderable = bOrderable;
@@ -324,7 +324,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
    *        The sorting column (incl. this column!)
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setOrderData (@Nullable final int... aOrderData)
   {
     m_aOrderData = ArrayHelper.getCopy (aOrderData);
@@ -337,28 +337,28 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sOrderDataType;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setOrderDataType (@Nullable final String sOrderDataType)
   {
     m_sOrderDataType = sOrderDataType;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <EDataTablesOrderDirectionType> getOrderSequence ()
   {
     return new CommonsArrayList <> (m_aOrderSequence);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setOrderSequence (@Nullable final EDataTablesOrderDirectionType... aOrderSequence)
   {
     m_aOrderSequence = ArrayHelper.isEmpty (aOrderSequence) ? null : new CommonsArrayList <> (aOrderSequence);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setOrderSequence (@Nullable final List <EDataTablesOrderDirectionType> aOrderSequence)
   {
     m_aOrderSequence = CollectionHelper.isEmpty (aOrderSequence) ? null : new CommonsArrayList <> (aOrderSequence);
@@ -371,7 +371,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_aRender;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setRender (@Nullable final IJSExpression aRender)
   {
     m_aRender = aRender;
@@ -383,7 +383,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_bSearchable;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setSearchable (final boolean bSearchable)
   {
     m_bSearchable = bSearchable;
@@ -396,7 +396,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sTitle;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setTitle (@Nullable final String sTitle)
   {
     m_sTitle = sTitle;
@@ -409,7 +409,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setType (@Nullable final EDataTablesColumnType eType)
   {
     m_eType = eType;
@@ -421,7 +421,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_bVisible;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setVisible (final boolean bVisible)
   {
     m_bVisible = bVisible;
@@ -434,20 +434,20 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return m_sWidth;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesColumnDef setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTOrderSpec getOrderSpec ()
   {
     return m_aOrderSpec;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();

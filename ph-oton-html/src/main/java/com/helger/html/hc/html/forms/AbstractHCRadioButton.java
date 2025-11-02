@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;input&gt; element of type "radio"
@@ -44,12 +44,12 @@ public abstract class AbstractHCRadioButton <IMPLTYPE extends AbstractHCRadioBut
     setChecked (bChecked);
   }
 
-  public AbstractHCRadioButton (@Nonnull final IHCRequestFieldBoolean aRF)
+  public AbstractHCRadioButton (@NonNull final IHCRequestFieldBoolean aRF)
   {
     this (aRF.getFieldName (), null, aRF.isChecked ());
   }
 
-  public AbstractHCRadioButton (@Nonnull final IHCRequestFieldBooleanMultiValue aRF)
+  public AbstractHCRadioButton (@NonNull final IHCRequestFieldBooleanMultiValue aRF)
   {
     this (aRF.getFieldName (), aRF.getValue (), aRF.isChecked ());
   }

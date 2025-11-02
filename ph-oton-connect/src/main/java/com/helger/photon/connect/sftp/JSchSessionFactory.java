@@ -18,6 +18,7 @@ package com.helger.photon.connect.sftp;
 
 import java.util.Properties;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,6 @@ import com.helger.statistics.impl.StatisticsManager;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Utility class to create JSch sessions.
@@ -52,8 +51,8 @@ public final class JSchSessionFactory
   private JSchSessionFactory ()
   {}
 
-  @Nonnull
-  private static String _debugSession (@Nonnull final Session aSession)
+  @NonNull
+  private static String _debugSession (@NonNull final Session aSession)
   {
     return "[Session@" +
            Integer.toHexString (System.identityHashCode (aSession)) +
@@ -62,9 +61,9 @@ public final class JSchSessionFactory
            "]";
   }
 
-  @Nonnull
-  private static Session _createSession (@Nonnull final JSch aJSch,
-                                         @Nonnull final IBaseServerConnectionSettings aSettings) throws JSchException
+  @NonNull
+  private static Session _createSession (@NonNull final JSch aJSch,
+                                         @NonNull final IBaseServerConnectionSettings aSettings) throws JSchException
   {
     final Session aSession = aJSch.getSession (aSettings.getUserName (),
                                                aSettings.getServerAddress (),
@@ -82,8 +81,8 @@ public final class JSchSessionFactory
     return aSession;
   }
 
-  @Nonnull
-  public static Session createSession (@Nonnull final IServerConnectionSettingsPassword aSettings) throws JSchException
+  @NonNull
+  public static Session createSession (@NonNull final IServerConnectionSettingsPassword aSettings) throws JSchException
   {
     ValueEnforcer.notNull (aSettings, "Settings");
 
@@ -103,8 +102,8 @@ public final class JSchSessionFactory
     return aSession;
   }
 
-  @Nonnull
-  public static Session createSession (@Nonnull final IServerConnectionSettingsKeyPair aSettings) throws JSchException
+  @NonNull
+  public static Session createSession (@NonNull final IServerConnectionSettingsKeyPair aSettings) throws JSchException
   {
     ValueEnforcer.notNull (aSettings, "Settings");
 
@@ -129,8 +128,8 @@ public final class JSchSessionFactory
     return aSession;
   }
 
-  @Nonnull
-  public static EChange destroySession (@Nonnull final Session aSession)
+  @NonNull
+  public static EChange destroySession (@NonNull final Session aSession)
   {
     ValueEnforcer.notNull (aSession, "Session");
 

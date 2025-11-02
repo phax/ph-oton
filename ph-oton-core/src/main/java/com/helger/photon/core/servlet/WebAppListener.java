@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -89,8 +91,6 @@ import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.statistics.StatisticsExporter;
 import com.helger.xservlet.filter.XServletFilterConsistency;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -186,7 +186,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     LOGGER.info ("|_|                " + sSpaces + "v" + CPhotonVersion.BUILD_VERSION);
   }
 
-  protected final void logServerInfo (@Nonnull final ServletContext aSC)
+  protected final void logServerInfo (@NonNull final ServletContext aSC)
   {
     // Print Java and Server (e.g. Tomcat) info
     LOGGER.info ("Java " +
@@ -224,7 +224,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     }
   }
 
-  protected static final void logInitParameters (@Nonnull final ServletContext aSC)
+  protected static final void logInitParameters (@NonNull final ServletContext aSC)
   {
     // Put them in a sorted map
     final ICommonsNavigableMap <String, String> aParams = new CommonsTreeMap <> ();
@@ -294,7 +294,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   }
 
   @OverrideOnDemand
-  protected void logStartupInfo (@Nonnull final ServletContext aSC)
+  protected void logStartupInfo (@NonNull final ServletContext aSC)
   {
     logLogo ();
     logServerInfo (aSC);
@@ -311,7 +311,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        ServletContext
    */
   @OverrideOnDemand
-  protected void onTheVeryBeginning (@Nonnull final ServletContext aSC)
+  protected void onTheVeryBeginning (@NonNull final ServletContext aSC)
   {}
 
   /**
@@ -321,7 +321,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        ServletContext
    */
   @OverrideOnDemand
-  protected void beforeContextInitialized (@Nonnull final ServletContext aSC)
+  protected void beforeContextInitialized (@NonNull final ServletContext aSC)
   {}
 
   /**
@@ -331,7 +331,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        ServletContext
    */
   @OverrideOnDemand
-  protected void afterContextInitialized (@Nonnull final ServletContext aSC)
+  protected void afterContextInitialized (@NonNull final ServletContext aSC)
   {}
 
   /**
@@ -346,7 +346,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   @Nullable
   @OverrideOnDemand
-  protected String getInitParameterDebug (@Nonnull final ServletContext aSC)
+  protected String getInitParameterDebug (@NonNull final ServletContext aSC)
   {
     return aSC.getInitParameter (DEFAULT_INIT_PARAMETER_DEBUG);
   }
@@ -363,7 +363,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   @Nullable
   @OverrideOnDemand
-  protected String getInitParameterProduction (@Nonnull final ServletContext aSC)
+  protected String getInitParameterProduction (@NonNull final ServletContext aSC)
   {
     return aSC.getInitParameter (DEFAULT_INIT_PARAMETER_PRODUCTION);
   }
@@ -380,7 +380,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   @Nullable
   @OverrideOnDemand
-  protected String getInitParameterNoStartupInfo (@Nonnull final ServletContext aSC)
+  protected String getInitParameterNoStartupInfo (@NonNull final ServletContext aSC)
   {
     return aSC.getInitParameter (INIT_PARAMETER_NO_STARTUP_INFO);
   }
@@ -399,15 +399,15 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   @Nullable
   @OverrideOnDemand
-  protected String getInitParameterServerURL (@Nonnull final ServletContext aSC, final boolean bProductionMode)
+  protected String getInitParameterServerURL (@NonNull final ServletContext aSC, final boolean bProductionMode)
   {
     final String sParameterName = bProductionMode ? INIT_PARAMETER_SERVER_URL_PRODUCTION : INIT_PARAMETER_SERVER_URL;
     return aSC.getInitParameter (sParameterName);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  protected String getServletContextPath (@Nonnull final ServletContext aSC) throws IllegalStateException
+  protected String getServletContextPath (@NonNull final ServletContext aSC) throws IllegalStateException
   {
     return ServletHelper.getServletContextBasePath (aSC);
   }
@@ -421,10 +421,10 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        The servlet context. Never <code>null</code>.
    * @return The data path to use. May neither be <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @OverrideOnDemand
-  protected String getDataPath (@Nonnull final ServletContext aSC)
+  protected String getDataPath (@NonNull final ServletContext aSC)
   {
     String sDataPath = aSC.getInitParameter (INIT_PARAMETER_DATA_PATH);
     if (StringHelper.isEmpty (sDataPath))
@@ -461,7 +461,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @return <code>true</code> if file access should be checked, <code>false</code> otherwise.
    */
   @OverrideOnDemand
-  protected boolean shouldCheckFileAccess (@Nonnull final ServletContext aSC)
+  protected boolean shouldCheckFileAccess (@NonNull final ServletContext aSC)
   {
     return !StringParser.parseBool (aSC.getInitParameter (INIT_PARAMETER_NO_CHECK_FILE_ACCESS));
   }
@@ -476,7 +476,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void initPaths (@Nonnull final ServletContext aSC)
+  protected void initPaths (@NonNull final ServletContext aSC)
   {
     // Get the ServletContext base path
     final String sServletContextPath = getServletContextPath (aSC);
@@ -546,7 +546,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        Locale manager
    */
   @OverrideOnDemand
-  protected void initLocales (@Nonnull final ILocaleManager aLocaleMgr)
+  protected void initLocales (@NonNull final ILocaleManager aLocaleMgr)
   {}
 
   /**
@@ -564,7 +564,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        Ajax registry
    */
   @OverrideOnDemand
-  protected void initAjax (@Nonnull final IAjaxRegistry aAjaxRegistry)
+  protected void initAjax (@NonNull final IAjaxRegistry aAjaxRegistry)
   {}
 
   /**
@@ -574,7 +574,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        API registry
    */
   @OverrideOnDemand
-  protected void initAPI (@Nonnull final IAPIRegistry aAPIRegistry)
+  protected void initAPI (@NonNull final IAPIRegistry aAPIRegistry)
   {}
 
   /**
@@ -618,7 +618,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     return true;
   }
 
-  public final void contextInitialized (@Nonnull final ServletContextEvent aSCE)
+  public final void contextInitialized (@NonNull final ServletContextEvent aSCE)
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start contextInitialized");
@@ -775,7 +775,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        the servlet context in destruction
    */
   @OverrideOnDemand
-  protected void beforeContextDestroyed (@Nonnull final ServletContext aSC)
+  protected void beforeContextDestroyed (@NonNull final ServletContext aSC)
   {}
 
   /**
@@ -785,7 +785,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    *        the servlet context in destruction
    */
   @OverrideOnDemand
-  protected void afterContextDestroyed (@Nonnull final ServletContext aSC)
+  protected void afterContextDestroyed (@NonNull final ServletContext aSC)
   {}
 
   /**
@@ -797,7 +797,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     return m_bHandleStatisticsOnEnd;
   }
 
-  @Nonnull
+  @NonNull
   public final WebAppListener setHandleStatisticsOnEnd (final boolean bHandleStatisticsOnEnd)
   {
     m_bHandleStatisticsOnEnd = bHandleStatisticsOnEnd;
@@ -808,7 +808,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @return The filename where the statistics should be written to. May neither be
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @OverrideOnDemand
   protected String getStatisticsFilename ()
@@ -850,7 +850,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       LOGGER.error ("Not writing statistics because WebFileIO was not initialized!");
   }
 
-  public final void contextDestroyed (@Nonnull final ServletContextEvent aSCE)
+  public final void contextDestroyed (@NonNull final ServletContextEvent aSCE)
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start contextDestroyed");
@@ -910,7 +910,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @param aSessionEvent
    *        The notification event. Never <code>null</code>.
    */
-  public final void sessionCreated (@Nonnull final HttpSessionEvent aSessionEvent)
+  public final void sessionCreated (@NonNull final HttpSessionEvent aSessionEvent)
   {
     final HttpSession aHttpSession = aSessionEvent.getSession ();
 
@@ -927,7 +927,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
    * @param aSessionEvent
    *        The notification event. Never <code>null</code>.
    */
-  public final void sessionDestroyed (@Nonnull final HttpSessionEvent aSessionEvent)
+  public final void sessionDestroyed (@NonNull final HttpSessionEvent aSessionEvent)
   {
     final HttpSession aHttpSession = aSessionEvent.getSession ();
 

@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.html.js.IHasJSCodeWithSettings;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.js.IHasJSCodeWithSettings;
 
 /**
  * Common interface for code components that can generate uses of themselves.
@@ -27,5 +27,5 @@ import jakarta.annotation.Nonnull;
  */
 public interface IJSGeneratable extends IHasJSCodeWithSettings
 {
-  void generate (@Nonnull JSFormatter aFormatter);
+  void generate (@NonNull JSFormatter aFormatter);
 }

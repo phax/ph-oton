@@ -18,6 +18,9 @@ package com.helger.photon.core.page;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -27,9 +30,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.text.ReadOnlyMultilingualText;
 import com.helger.text.locale.LocaleHelper;
 import com.helger.typeconvert.collection.AttributeContainerAny;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation for {@link IPage}.
@@ -56,7 +56,7 @@ public abstract class AbstractPage implements IPage
    * @param sID
    *        The unique page ID. May not be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID)
+  public AbstractPage (@NonNull @Nonempty final String sID)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
   }
@@ -70,7 +70,7 @@ public abstract class AbstractPage implements IPage
    *        The constant (non-translatable) name of the page. May not be
    *        <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName)
+  public AbstractPage (@NonNull @Nonempty final String sID, @NonNull final String sName)
   {
     this (sID, getAsMLT (sName));
   }
@@ -87,7 +87,7 @@ public abstract class AbstractPage implements IPage
    *        The constant (non-translatable) description of the page. May be
    *        <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final String sName, @Nullable final String sDescription)
+  public AbstractPage (@NonNull @Nonempty final String sID, @NonNull final String sName, @Nullable final String sDescription)
   {
     this (sID, getAsMLT (sName), getAsMLT (sDescription));
   }
@@ -100,7 +100,7 @@ public abstract class AbstractPage implements IPage
    * @param aName
    *        The name of the page. May not be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID, @Nonnull final IMultilingualText aName)
+  public AbstractPage (@NonNull @Nonempty final String sID, @NonNull final IMultilingualText aName)
   {
     this (sID, aName, null);
   }
@@ -115,8 +115,8 @@ public abstract class AbstractPage implements IPage
    * @param aDescription
    *        Optional description of the page. May be <code>null</code>.
    */
-  public AbstractPage (@Nonnull @Nonempty final String sID,
-                       @Nonnull final IMultilingualText aName,
+  public AbstractPage (@NonNull @Nonempty final String sID,
+                       @NonNull final IMultilingualText aName,
                        @Nullable final IMultilingualText aDescription)
   {
     this (sID);
@@ -127,7 +127,7 @@ public abstract class AbstractPage implements IPage
   /*
    * Get the unique page ID
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getID ()
   {
@@ -140,7 +140,7 @@ public abstract class AbstractPage implements IPage
    * @param aName
    *        The multilingual name of the page. May not be <code>null</code>.
    */
-  public final void setName (@Nonnull final IMultilingualText aName)
+  public final void setName (@NonNull final IMultilingualText aName)
   {
     m_aName = ValueEnforcer.notNull (aName, "Name");
   }
@@ -149,7 +149,7 @@ public abstract class AbstractPage implements IPage
    * @return The complete name of the page in all available locales. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IMultilingualText getName ()
   {
     return m_aName;
@@ -159,7 +159,7 @@ public abstract class AbstractPage implements IPage
    * Get the name of the page in the passed locale.
    */
   @Nullable
-  public final String getDisplayText (@Nonnull final Locale aContentLocale)
+  public final String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aName == null ? null : m_aName.getText (aContentLocale);
   }
@@ -186,12 +186,12 @@ public abstract class AbstractPage implements IPage
   }
 
   @Nullable
-  public final String getDescription (@Nonnull final Locale aContentLocale)
+  public final String getDescription (@NonNull final Locale aContentLocale)
   {
     return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final AttributeContainerAny <String> attrs ()
   {

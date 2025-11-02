@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.Nonempty;
 
 /**
  * Object invocation
@@ -34,7 +34,7 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param aFunction
    *        Function to invoke
    */
-  public JSInvocation (@Nonnull final JSFunction aFunction)
+  public JSInvocation (@NonNull final JSFunction aFunction)
   {
     super (aFunction);
   }
@@ -45,7 +45,7 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param sFunctionName
    *        Function to invoke
    */
-  public JSInvocation (@Nonnull final String sFunctionName)
+  public JSInvocation (@NonNull final String sFunctionName)
   {
     super (sFunctionName);
   }
@@ -56,7 +56,7 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param aAnonymousFunction
    *        The function to be invoked
    */
-  public JSInvocation (@Nonnull final JSAnonymousFunction aAnonymousFunction)
+  public JSInvocation (@NonNull final JSAnonymousFunction aAnonymousFunction)
   {
     super (aAnonymousFunction);
   }
@@ -70,12 +70,12 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param sName
    *        Name of method to invoke
    */
-  public JSInvocation (@Nullable final IJSExpression aObject, @Nonnull @Nonempty final String sName)
+  public JSInvocation (@Nullable final IJSExpression aObject, @NonNull @Nonempty final String sName)
   {
     super (aObject, sName);
   }
 
-  public JSInvocation (@Nullable final IJSExpression aObject, @Nonnull final JSMethod aMethod)
+  public JSInvocation (@Nullable final IJSExpression aObject, @NonNull final JSMethod aMethod)
   {
     super (aObject, aMethod);
   }
@@ -88,12 +88,12 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param sName
    *        Function name to invoke
    */
-  public JSInvocation (@Nullable final AbstractJSClass aType, @Nonnull @Nonempty final String sName)
+  public JSInvocation (@Nullable final AbstractJSClass aType, @NonNull @Nonempty final String sName)
   {
     super (aType, sName);
   }
 
-  public JSInvocation (@Nullable final AbstractJSClass aType, @Nonnull final JSMethod aMethod)
+  public JSInvocation (@Nullable final AbstractJSClass aType, @NonNull final JSMethod aMethod)
   {
     super (aType, aMethod);
   }
@@ -104,7 +104,7 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * @param aType
    *        Type of the object to be created. May not be <code>null</code>.
    */
-  public JSInvocation (@Nonnull final IJSGeneratable aType)
+  public JSInvocation (@NonNull final IJSGeneratable aType)
   {
     super (aType);
   }

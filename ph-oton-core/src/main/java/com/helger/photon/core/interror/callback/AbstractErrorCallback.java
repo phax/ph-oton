@@ -19,6 +19,9 @@ package com.helger.photon.core.interror.callback;
 import java.util.List;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -49,9 +52,6 @@ import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
 import com.helger.xservlet.requesttrack.IParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.RequestTracker;
 import com.helger.xservlet.requesttrack.TrackedRequest;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A base class for a central error callback that handles all kind of errors and
@@ -87,14 +87,14 @@ public abstract class AbstractErrorCallback implements
    */
   protected abstract void onError (@Nullable Throwable t,
                                    @Nullable IRequestWebScopeWithoutResponse aRequestScope,
-                                   @Nonnull @Nonempty String sErrorCode,
+                                   @NonNull @Nonempty String sErrorCode,
                                    @Nullable Map <String, String> aCustomAttrs);
 
   public void onAjaxExecutionException (@Nullable final IAjaxInvoker aAjaxInvoker,
                                         @Nullable final String sAjaxFunctionName,
-                                        @Nonnull final IAjaxExecutor aAjaxExecutor,
-                                        @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull final Exception ex)
+                                        @NonNull final IAjaxExecutor aAjaxExecutor,
+                                        @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @NonNull final Exception ex)
   {
     final String sErrorCode = "ajax-error-" +
                               (StringHelper.isNotEmpty (sAjaxFunctionName) ? sAjaxFunctionName + "-" : "") +
@@ -103,15 +103,15 @@ public abstract class AbstractErrorCallback implements
   }
 
   public void onAPIExecutionException (@Nullable final IAPIInvoker aAPIInvoker,
-                                       @Nonnull final InvokableAPIDescriptor aDescriptor,
-                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                       @Nonnull final Throwable t)
+                                       @NonNull final InvokableAPIDescriptor aDescriptor,
+                                       @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @NonNull final Throwable t)
   {
     final String sErrorCode = "api-error-" + InternalErrorHandler.createNewErrorID () + "-" + aDescriptor.getPath ();
     onError (t, aRequestScope, sErrorCode, new StringMap ().add ("api-path", aDescriptor.getPath ()));
   }
 
-  public void onDAOReadException (@Nonnull final Throwable t, final boolean bInit, @Nullable final IReadableResource aRes)
+  public void onDAOReadException (@NonNull final Throwable t, final boolean bInit, @Nullable final IReadableResource aRes)
   {
     final String sErrorCode = "DAO " + (bInit ? "init" : "read") + " error" + (aRes == null ? "" : " for " + aRes.getPath ());
     onError (t,
@@ -120,15 +120,15 @@ public abstract class AbstractErrorCallback implements
              new StringMap ().add ("action", bInit ? "init" : "read").add ("path", aRes == null ? null : aRes.getPath ()));
   }
 
-  public void onDAOWriteException (@Nonnull final Throwable t,
-                                   @Nonnull final IReadableResource aRes,
-                                   @Nonnull final CharSequence aFileContent)
+  public void onDAOWriteException (@NonNull final Throwable t,
+                                   @NonNull final IReadableResource aRes,
+                                   @NonNull final CharSequence aFileContent)
   {
     final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
     onError (t, null, sErrorCode, new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
-  public void onScheduledJobException (@Nonnull final Throwable t, @Nullable final String sJobClassName, @Nonnull final IJob aJob)
+  public void onScheduledJobException (@NonNull final Throwable t, @Nullable final String sJobClassName, @NonNull final IJob aJob)
   {
     onError (t,
              (IRequestWebScopeWithoutResponse) null,
@@ -138,8 +138,8 @@ public abstract class AbstractErrorCallback implements
                              .add ("long-running", aJob instanceof ILongRunningJob));
   }
 
-  public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
-                                    @Nonnull final IRequestWebScope aRequestScope,
+  public void onLongRunningRequest (@NonNull @Nonempty final String sUniqueRequestID,
+                                    @NonNull final IRequestWebScope aRequestScope,
                                     @Nonnegative final long nRunningMilliseconds)
   {
     if (m_aHandledLongRunning.add (sUniqueRequestID))
@@ -153,7 +153,7 @@ public abstract class AbstractErrorCallback implements
     }
   }
 
-  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @Nonnull @Nonempty final List <TrackedRequest> aRequests)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @NonNull @Nonempty final List <TrackedRequest> aRequests)
   {
     final StringBuilder aURLs = new StringBuilder ();
     for (final TrackedRequest aRequest : aRequests)
@@ -192,7 +192,7 @@ public abstract class AbstractErrorCallback implements
    * @param aCallback
    *        The callback to be installed. May not be <code>null</code>.
    */
-  public static void installToPhoton (@Nonnull final AbstractErrorCallback aCallback)
+  public static void installToPhoton (@NonNull final AbstractErrorCallback aCallback)
   {
     AjaxSettings.exceptionCallbacks ().add (aCallback);
     APISettings.exceptionCallbacks ().add (aCallback);

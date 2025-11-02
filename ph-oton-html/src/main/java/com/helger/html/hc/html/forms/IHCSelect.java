@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.hc.impl.HCTextNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for definition items
@@ -37,33 +37,33 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
 {
   boolean isAutoFocus ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoFocus (final boolean bAutoFocus);
 
   @Nullable
   String getForm ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setForm (@Nullable String sForm);
 
   boolean isMultiple ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMultiple (final boolean bMultiple);
 
   int getSize ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSize (final int nSize);
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <String> getAllPreselectedValues ();
 
   boolean isPreselectedValue (@Nullable String sValue);
 
-  @Nonnull
-  HCOption addOption (@Nonnull HCOption aOption);
+  @NonNull
+  HCOption addOption (@NonNull HCOption aOption);
 
   /**
    * Add a new option at the specified index.
@@ -74,35 +74,35 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *        The option to be added. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  HCOption addOptionAt (@Nonnegative int nIndex, @Nonnull HCOption aOption);
+  @NonNull
+  HCOption addOptionAt (@Nonnegative int nIndex, @NonNull HCOption aOption);
 
-  @Nonnull
+  @NonNull
   default HCOption addOption (@Nullable final String sText)
   {
     return addOption (sText, sText);
   }
 
-  @Nonnull
+  @NonNull
   default HCOption addOption (@Nullable final String sText, final boolean bSelected)
   {
     return addOption (sText, sText, bSelected);
   }
 
-  @Nonnull
+  @NonNull
   default HCOption addOption (@Nullable final String sValue, @Nullable final String sText)
   {
     final HCOption aOption = new HCOption ().setValue (sValue).addChild (HCTextNode.createOnDemand (sText));
     return addOption (aOption);
   }
 
-  @Nonnull
+  @NonNull
   default HCOption addOption (@Nullable final String sValue, @Nullable final String sText, final boolean bSelected)
   {
     return addOption (sValue, sText).setSelected (bSelected);
   }
 
-  @Nonnull
+  @NonNull
   default HCOption addOption (@Nullable final String sValue, @Nullable final String sText, @Nullable final String sSelectedValue)
   {
     return addOption (sValue, sText, EqualsHelper.equals (sValue, sSelectedValue));
@@ -119,20 +119,20 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *        The text of the option to be added. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   default HCOption addOptionAt (@Nonnegative final int nIndex, @Nullable final String sValue, @Nullable final String sText)
   {
     final HCOption aOption = new HCOption ().setValue (sValue).addChild (HCTextNode.createOnDemand (sText));
     return addOptionAt (nIndex, aOption);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE addOptionGroup (@Nullable HCOptGroup aOptGroup);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllOptions ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllOptionGroups ();
 
   /**
@@ -142,7 +142,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *        The index to be removed. Should be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeOptionAt (@Nonnegative int nIndex);
 
   /**
@@ -152,7 +152,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *        The index to be removed. Should be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeOptionGroupAt (@Nonnegative int nIndex);
 
   /**
@@ -170,14 +170,14 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
   /**
    * @return A non-<code>null</code> list of all available options.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <HCOption> getAllOptions ();
 
   /**
    * @return A non-<code>null</code> list of all available option groups.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <HCOptGroup> getAllOptionGroups ();
 
@@ -216,7 +216,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
   /**
    * @return A non-<code>null</code> list of all selected options.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <HCOption> getAllSelectedOptions ();
 

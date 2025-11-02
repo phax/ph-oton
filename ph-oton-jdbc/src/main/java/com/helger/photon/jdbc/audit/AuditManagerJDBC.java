@@ -20,6 +20,9 @@ import java.time.LocalDate;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
@@ -30,9 +33,6 @@ import com.helger.photon.audit.IAuditor;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The JDBC based implementation of {@link IAuditManager}
  *
@@ -42,15 +42,15 @@ public class AuditManagerJDBC implements IAuditManager
 {
   private final AuditorJDBC m_aAuditor;
 
-  public AuditManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                           @Nonnull final Function <String, String> aTableNameCustomizer)
+  public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                           @NonNull final Function <String, String> aTableNameCustomizer)
   {
     this (aDBExecSupplier, aTableNameCustomizer, LoggedInUserManager.getInstance ());
   }
 
-  public AuditManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                           @Nonnull final Function <String, String> aTableNameCustomizer,
-                           @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                           @NonNull final Function <String, String> aTableNameCustomizer,
+                           @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     m_aAuditor = new AuditorJDBC (aDBExecSupplier, aTableNameCustomizer, aCurrentUserIDProvider);
   }
@@ -67,13 +67,13 @@ public class AuditManagerJDBC implements IAuditManager
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public IAuditor getAuditor ()
   {
     return m_aAuditor;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {

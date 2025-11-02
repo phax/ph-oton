@@ -16,6 +16,7 @@
  */
 package com.helger.photon.api.callback;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,15 +26,13 @@ import com.helger.photon.api.IAPILongRunningExecutionCallback;
 import com.helger.photon.api.InvokableAPIDescriptor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-
 public class LoggingAPILongRunningExecutionCallback implements IAPILongRunningExecutionCallback
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPILongRunningExecutionCallback.class);
 
-  public void onLongRunningExecution (@Nonnull final IAPIInvoker aInvoker,
-                                      @Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
-                                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  public void onLongRunningExecution (@NonNull final IAPIInvoker aInvoker,
+                                      @NonNull final InvokableAPIDescriptor aInvokableDescriptor,
+                                      @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                       @Nonnegative final long nExecutionMillis)
   {
     LOGGER.warn ("Finished invoking API '" +

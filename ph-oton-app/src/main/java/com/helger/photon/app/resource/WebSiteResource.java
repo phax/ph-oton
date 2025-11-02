@@ -22,6 +22,8 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,6 @@ import com.helger.security.messagedigest.MessageDigestValue;
 import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A single web site resource. This class is only used internally in {@link WebSiteResourceCache}.
  *
@@ -79,9 +78,9 @@ public class WebSiteResource
   private final String m_sContentHash;
   private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  public WebSiteResource (@Nonnull final EWebSiteResourceType eResourceType,
-                          @Nonnull @Nonempty final String sPath,
-                          @Nonnull final Charset aCharset)
+  public WebSiteResource (@NonNull final EWebSiteResourceType eResourceType,
+                          @NonNull @Nonempty final String sPath,
+                          @NonNull final Charset aCharset)
   {
     m_eResourceType = ValueEnforcer.notNull (eResourceType, "ResourceType");
     m_sPath = ValueEnforcer.notEmpty (sPath, "Path");
@@ -118,26 +117,26 @@ public class WebSiteResource
     }
   }
 
-  @Nonnull
+  @NonNull
   public final EWebSiteResourceType getResourceType ()
   {
     return m_eResourceType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getPath ()
   {
     return m_sPath;
   }
 
-  @Nonnull
+  @NonNull
   public final IReadableResource getResource ()
   {
     return m_aResource;
   }
 
-  @Nonnull
+  @NonNull
   public final Charset getCharset ()
   {
     return m_aCharset;
@@ -154,9 +153,9 @@ public class WebSiteResource
    *        <code>true</code> for normal output, <code>false</code> for minified output.
    * @return The modified String.
    */
-  @Nonnull
-  private String _readAndParseCSS (@Nonnull final IHasInputStream aISP,
-                                   @Nonnull @Nonempty final String sBasePath,
+  @NonNull
+  private String _readAndParseCSS (@NonNull final IHasInputStream aISP,
+                                   @NonNull @Nonempty final String sBasePath,
                                    final boolean bRegular)
   {
     final CascadingStyleSheet aCSS = CSSReader.readFromStream (aISP,
@@ -169,7 +168,7 @@ public class WebSiteResource
     CSSVisitor.visitCSSUrl (aCSS, new AbstractModifyingCSSUrlVisitor ()
     {
       @Override
-      protected String getModifiedURI (@Nonnull final String sURI)
+      protected String getModifiedURI (@NonNull final String sURI)
       {
         if (LinkHelper.hasKnownProtocol (sURI))
         {
@@ -191,25 +190,21 @@ public class WebSiteResource
     if (!m_bResourceExists)
       return null;
 
-    switch (m_eResourceType)
+    return switch (m_eResourceType)
     {
-      case JS:
-        // Read JS as UTF-8 and return it as one, global block
-        // Don't prefix with "(function(){" and don't suffix with "})();" as
-        // this has undesired side effects such that global functions are not
-        // available etc.
-        // In case of an error, fix the relevant JS file instead.
-        return StreamHelper.getAllBytesAsString (m_aResource, m_aCharset);
-      case CSS:
+      case JS -> /* Read JS as UTF-8 and return it as one, global block */ /* Don't prefix with "(function(){" and don't suffix with "})();" as */ /* this has undesired side effects such that global functions are not */ /* available etc. */ /* In case of an error, fix the relevant JS file instead. */ StreamHelper.getAllBytesAsString (m_aResource, m_aCharset);
+      case CSS ->
+      {
         // Remove the filename from the path
         // Not using a requestScope is okay here, because we don't want to link
         // anything right now
         final String sBasePath = FilenameHelper.getPath (PhotonAppSettings.getURIToURLConverter ()
-        .getAsURL (m_sPath).getAsString ());
-        return _readAndParseCSS (m_aResource, sBasePath, bRegular);
-      default:
-        throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);
-    }
+                                                                          .getAsURL (m_sPath)
+                                                                          .getAsString ());
+        yield _readAndParseCSS (m_aResource, sBasePath, bRegular);
+      }
+      default -> throw new IllegalStateException ("Unsupported resource type " + m_eResourceType);
+    };
   }
 
   public boolean isExisting ()
@@ -226,21 +221,21 @@ public class WebSiteResource
     return aURL.toExternalForm ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public byte [] getContentHashBytes ()
   {
     return ArrayHelper.getCopy (m_aContentHash);
   }
 
-  @Nonnull
+  @NonNull
   public String getContentHashAsString ()
   {
     return m_sContentHash;
   }
 
-  @Nonnull
-  public ISimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public ISimpleURL getAsURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // Append the version number to work around caching issues
     // Cut it down to the first 16 bytes, because the SHA512 hash is 128 bytes

@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for controls base on &lt;input&gt; area.
@@ -41,39 +41,39 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   @Nullable
   EHCInputType getType ();
 
-  @Nonnull
-  IMPLTYPE setType (@Nonnull EHCInputType eType);
+  @NonNull
+  IMPLTYPE setType (@NonNull EHCInputType eType);
 
   @Nullable
   String getAccept ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAccept (@Nullable String sAccept);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAccept (@Nullable IMimeType aAccept);
 
   @Nullable
   String getAlt ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAlt (@Nullable String sAlt);
 
   @Nullable
   String getAutoComplete ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setAutoComplete (@Nullable final EHCAutoComplete eAutoComplete)
   {
     return setAutoComplete (eAutoComplete == null ? null : eAutoComplete.getAttrValue ());
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoComplete (@Nullable String sAutoComplete);
 
   boolean isAutoFocus ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoFocus (final boolean bAutoFocus);
 
   /**
@@ -88,19 +88,19 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        new checked state
    * @return This object for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setChecked (final boolean bChecked);
 
   @Nullable
   String getDirName ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setDirName (@Nullable String sDirName);
 
   @Nullable
   String getForm ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setForm (@Nullable String sForm);
 
   @Nullable
@@ -109,10 +109,10 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
   @Nullable
   IHasJSCode getFormActionJS ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormAction (@Nullable ISimpleURL aAction);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormAction (@Nullable IHasJSCodeWithSettings aAction);
 
   @Nullable
@@ -123,7 +123,7 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormEncTypeFileUpload ()
   {
     return setFormEncType (CMimeType.MULTIPART_FORMDATA);
@@ -134,53 +134,53 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormEncTypeTextPlain ()
   {
     return setFormEncType (CMimeType.TEXT_PLAIN);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormEncType (@Nullable IMimeType aFormEncType);
 
   @Nullable
   EHCFormMethod getFormMethod ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormMethod (@Nullable EHCFormMethod eFormMethod);
 
   boolean isFormNoValidate ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormNoValidate (final boolean bFormNoValidate);
 
   @Nullable
   HC_Target getFormTarget ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormTargetBlank ()
   {
     return setFormTarget (HC_Target.BLANK);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormTarget (@Nullable HC_Target aFormTarget);
 
   int getHeight ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHeight (final int nHeight);
 
   @Nullable
   String getList ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setList (@Nullable String sList);
 
   @Nullable
   String getMaxValue ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMaxValue (@Nullable String sMaxValue);
 
   /**
@@ -195,13 +195,13 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        The max length. Should be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setMaxLength (final int nMaxLength);
 
   @Nullable
   String getMinValue ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMinValue (@Nullable String sMinValue);
 
   /**
@@ -216,18 +216,18 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        The min length. Should be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setMinLength (final int nMinLength);
 
   boolean isMultiple ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMultiple (final boolean bMultiple);
 
   @Nullable
   String getPattern ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setPattern (@Nullable String sPattern);
 
   /**
@@ -254,7 +254,7 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        The new value. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setPlaceholder (@Nullable String sPlaceholder);
 
   /**
@@ -271,19 +271,19 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        The width of the edit in characters.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setSize (final int nSize);
 
   @Nullable
   ISimpleURL getSrc ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSrc (@Nullable ISimpleURL aSrc);
 
   @Nullable
   String getStep ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setStep (@Nullable String sStep);
 
   /**
@@ -299,7 +299,7 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        Value to use.
    * @return This object for chaining
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setValue (final int nValue)
   {
     return setValue (Integer.toString (nValue));
@@ -312,7 +312,7 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        Value to use.
    * @return This object for chaining
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setValue (final long nValue)
   {
     return setValue (Long.toString (nValue));
@@ -325,11 +325,11 @@ public interface IHCInput <IMPLTYPE extends IHCInput <IMPLTYPE>> extends IHCCont
    *        Value to use.
    * @return This object for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setValue (@Nullable String sValue);
 
   int getWidth ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidth (final int nWidth);
 }

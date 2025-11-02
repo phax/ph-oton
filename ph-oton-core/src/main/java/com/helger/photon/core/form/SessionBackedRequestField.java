@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.form;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.SessionBackedRequestFieldData;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of a request field with a name and an optional default
@@ -37,7 +37,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName)
+  public SessionBackedRequestField (@NonNull @Nonempty final String sFieldName)
   {
     super (sFieldName);
   }
@@ -51,7 +51,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    *        The default value to use, if no value is present in the request
    *        scope.
    */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
+  public SessionBackedRequestField (@NonNull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
   {
     super (sFieldName, sDefaultValue);
   }
@@ -64,7 +64,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    * @param nDefaultValue
    *        The default value to be used. Is converted to a String
    */
-  public SessionBackedRequestField (@Nonnull @Nonempty final String sFieldName, final int nDefaultValue)
+  public SessionBackedRequestField (@NonNull @Nonempty final String sFieldName, final int nDefaultValue)
   {
     super (sFieldName, Integer.toString (nDefaultValue));
   }

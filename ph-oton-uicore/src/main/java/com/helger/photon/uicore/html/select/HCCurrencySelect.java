@@ -18,12 +18,12 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.currency.CurrencyHelper;
 import com.helger.masterdata.currency.ECurrency;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Select box for currencies
@@ -32,14 +32,14 @@ import jakarta.annotation.Nonnull;
  */
 public class HCCurrencySelect extends HCExtSelect
 {
-  public HCCurrencySelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCCurrencySelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     this (new CommonsArrayList <> (ECurrency.values ()), aRF, aDisplayLocale);
   }
 
-  public HCCurrencySelect (@Nonnull final Iterable <ECurrency> aCurrencies,
-                           @Nonnull final IHCRequestField aRF,
-                           @Nonnull final Locale aDisplayLocale)
+  public HCCurrencySelect (@NonNull final Iterable <ECurrency> aCurrencies,
+                           @NonNull final IHCRequestField aRF,
+                           @NonNull final Locale aDisplayLocale)
   {
     super (aRF);
 

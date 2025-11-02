@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -23,9 +26,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * If statement, with optional else clause
@@ -55,7 +55,7 @@ public class JSConditional extends AbstractJSStatement
    * @param aTest
    *        {@link IJSExpression} to be tested to determine branching
    */
-  public JSConditional (@Nonnull final IJSExpression aTest)
+  public JSConditional (@NonNull final IJSExpression aTest)
   {
     m_aTest = ValueEnforcer.notNull (aTest, "Test");
   }
@@ -68,7 +68,7 @@ public class JSConditional extends AbstractJSStatement
    * @param aThen
    *        "then" block content. May be <code>null</code>.
    */
-  public JSConditional (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen)
+  public JSConditional (@NonNull final IJSExpression aTest, @Nullable final IHasJSCode aThen)
   {
     this (aTest);
     if (aThen != null)
@@ -85,14 +85,14 @@ public class JSConditional extends AbstractJSStatement
    * @param aElse
    *        "else" block content. May be <code>null</code>.
    */
-  public JSConditional (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen, @Nullable final IHasJSCode aElse)
+  public JSConditional (@NonNull final IJSExpression aTest, @Nullable final IHasJSCode aThen, @Nullable final IHasJSCode aElse)
   {
     this (aTest, aThen);
     if (aElse != null)
       _else ().add (aElse);
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression test ()
   {
     return m_aTest;
@@ -103,7 +103,7 @@ public class JSConditional extends AbstractJSStatement
    *
    * @return Then block
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public final JSBlock _then ()
   {
@@ -115,7 +115,7 @@ public class JSConditional extends AbstractJSStatement
    *
    * @return Newly generated else block
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public final JSBlock _else ()
   {
@@ -131,13 +131,13 @@ public class JSConditional extends AbstractJSStatement
    *        The boolean expression
    * @return The conditional for the next "if"
    */
-  @Nonnull
-  public JSConditional elseif (@Nonnull final IJSExpression aBoolExp)
+  @NonNull
+  public JSConditional elseif (@NonNull final IJSExpression aBoolExp)
   {
     return _else ()._if (aBoolExp);
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     if (m_aTest == JSExpr.TRUE)
     {

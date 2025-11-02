@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.servlet;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 import com.helger.xservlet.handler.specific.RedirectToServletXServletHandler;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An {@link IXServletSimpleHandler} that does the necessary redirect for a ROOT
@@ -38,7 +38,7 @@ public class RootXServletHandler extends RedirectToServletXServletHandler
    *        The servlet path (relative to the current context) to redirect to.
    *        Must start with a slash ("/").
    */
-  public RootXServletHandler (@Nonnull @Nonempty final String sServletPath)
+  public RootXServletHandler (@NonNull @Nonempty final String sServletPath)
   {
     super (sServletPath);
   }

@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.html.js.IJSWriterSettings;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.js.IJSWriterSettings;
 
 /**
  * A JS package. This is the entry point for all functions, declarations etc.
@@ -34,7 +34,7 @@ public class JSPackage extends AbstractJSBlock <JSPackage>
   public JSPackage ()
   {}
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, this);

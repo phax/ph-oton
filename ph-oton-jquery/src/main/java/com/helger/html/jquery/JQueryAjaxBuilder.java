@@ -18,6 +18,9 @@ package com.helger.html.jquery;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.clone.ICloneable;
 import com.helger.base.enforce.ValueEnforcer;
@@ -28,9 +31,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.http.EHttpMethod;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Utility class handling <code>$.ajax</code>.<br>
@@ -68,7 +68,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     cache (false);
   }
 
-  public JQueryAjaxBuilder (@Nonnull final JQueryAjaxBuilder aOther)
+  public JQueryAjaxBuilder (@NonNull final JQueryAjaxBuilder aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aAsync = aOther.m_aAsync;
@@ -94,13 +94,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aAsync;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder async (final boolean bAsync)
   {
     return async (JSExpr.lit (bAsync));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder async (@Nullable final IJSExpression aAsync)
   {
     m_aAsync = aAsync;
@@ -113,13 +113,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aCache;
   }
 
-  @Nonnull
+  @NonNull
   public final JQueryAjaxBuilder cache (final boolean bCache)
   {
     return cache (JSExpr.lit (bCache));
   }
 
-  @Nonnull
+  @NonNull
   public final JQueryAjaxBuilder cache (@Nullable final IJSExpression aCache)
   {
     m_aCache = aCache;
@@ -132,7 +132,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aData;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder data (@Nullable final IJSExpression aData)
   {
     m_aData = aData;
@@ -145,13 +145,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aDataType;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder dataType (@Nullable final String sDataType)
   {
     return dataType (sDataType == null ? null : JSExpr.lit (sDataType));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder dataType (@Nullable final IJSExpression aDataType)
   {
     m_aDataType = aDataType;
@@ -164,13 +164,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aGlobalEvents;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder global (final boolean bGlobalEvents)
   {
     return global (JSExpr.lit (bGlobalEvents));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder global (@Nullable final IJSExpression aGlobalEvents)
   {
     m_aGlobalEvents = aGlobalEvents;
@@ -183,13 +183,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aProcessData;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder processData (final boolean bProcessData)
   {
     return processData (JSExpr.lit (bProcessData));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder processData (@Nullable final IJSExpression aProcessData)
   {
     m_aProcessData = aProcessData;
@@ -202,13 +202,13 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aTraditional;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder traditional (final boolean bTraditional)
   {
     return traditional (JSExpr.lit (bTraditional));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder traditional (@Nullable final IJSExpression aTraditional)
   {
     m_aTraditional = aTraditional;
@@ -221,19 +221,19 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aURL;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder url (@Nullable final ISimpleURL aURL)
   {
     return url (aURL == null ? null : aURL.getAsString ());
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder url (@Nullable final String sURL)
   {
     return url (sURL == null ? null : JSExpr.lit (sURL));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder url (@Nullable final IJSExpression aURL)
   {
     m_aURL = aURL;
@@ -246,19 +246,19 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aMethod;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder method (@Nullable final EHttpMethod eMethod)
   {
     return method (eMethod == null ? null : JSExpr.lit (eMethod.getName ()));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder method (@Nullable final String sMethod)
   {
     return method (sMethod == null ? null : JSExpr.lit (sMethod));
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder method (@Nullable final IJSExpression aMethod)
   {
     m_aMethod = aMethod;
@@ -273,7 +273,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return m_aCallbackContext;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder context (@Nullable final IJSExpression aContext)
   {
     m_aCallbackContext = aContext;
@@ -293,7 +293,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
    *        May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder beforeSend (@Nullable final JSAnonymousFunction aBeforeSend)
   {
     m_aBeforeSend = aBeforeSend;
@@ -313,7 +313,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
    *        May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder complete (@Nullable final JSAnonymousFunction aComplete)
   {
     m_aComplete = aComplete;
@@ -334,7 +334,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
    *        May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder error (@Nullable final JSAnonymousFunction aError)
   {
     m_aError = aError;
@@ -355,21 +355,21 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
    *        May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JQueryAjaxBuilder success (@Nullable final JSAnonymousFunction aSuccess)
   {
     m_aSuccess = aSuccess;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JQueryAjaxBuilder getClone ()
   {
     return new JQueryAjaxBuilder (this);
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSSettings ()
   {
     final JSAssocArray aSettings = new JSAssocArray ();
@@ -404,7 +404,7 @@ public class JQueryAjaxBuilder implements Serializable, ICloneable <JQueryAjaxBu
     return aSettings;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryInvocation build ()
   {
     return JQuery.ajax (m_aURL, getJSSettings ());

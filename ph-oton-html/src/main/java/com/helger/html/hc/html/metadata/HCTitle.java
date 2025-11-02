@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;title&gt; element
@@ -51,7 +51,7 @@ public class HCTitle extends AbstractHCElement <HCTitle>
     return m_sContent;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTitle setContent (@Nullable final String sContent)
   {
     m_sContent = sContent;
@@ -59,13 +59,13 @@ public class HCTitle extends AbstractHCElement <HCTitle>
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return StringHelper.isNotEmpty (m_sContent);
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement, @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     aElement.addText (m_sContent);

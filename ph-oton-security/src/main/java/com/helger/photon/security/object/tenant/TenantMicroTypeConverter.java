@@ -16,22 +16,22 @@
  */
 package com.helger.photon.security.object.tenant;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class TenantMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <Tenant>
 {
   private static final String ATTR_DISPLAYNAME = "displayname";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final Tenant aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final Tenant aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
@@ -39,8 +39,8 @@ public final class TenantMicroTypeConverter extends AbstractBusinessObjectMicroT
     return aElement;
   }
 
-  @Nonnull
-  public Tenant convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public Tenant convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sDisplayName = aElement.getAttributeValue (ATTR_DISPLAYNAME);
     return new Tenant (getStubObject (aElement), sDisplayName);

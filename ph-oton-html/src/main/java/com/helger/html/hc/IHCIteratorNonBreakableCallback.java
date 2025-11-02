@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc;
 
-import com.helger.base.callback.ICallback;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.base.callback.ICallback;
 
 /**
  * Callback interface to be used when iterating an HC tree.
@@ -38,5 +38,5 @@ public interface IHCIteratorNonBreakableCallback extends ICallback
    * @param aChildNode
    *        The current child node. Never <code>null</code>.
    */
-  void call (@Nullable IHCNode aParentNode, @Nonnull IHCNode aChildNode);
+  void call (@Nullable IHCNode aParentNode, @NonNull IHCNode aChildNode);
 }

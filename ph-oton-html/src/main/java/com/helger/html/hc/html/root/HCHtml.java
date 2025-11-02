@@ -18,6 +18,9 @@ package com.helger.html.hc.html.root;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -44,9 +47,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroDocument;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The node that represents a full HTML document.
  *
@@ -65,7 +65,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     this (new HCHead (), new HCBody ());
   }
 
-  public HCHtml (@Nonnull final HCHead aHead, @Nonnull final HCBody aBody)
+  public HCHtml (@NonNull final HCHead aHead, @NonNull final HCBody aBody)
   {
     super (EHTMLElement.HTML);
     m_aHead = ValueEnforcer.notNull (aHead, "Head");
@@ -75,20 +75,20 @@ public class HCHtml extends AbstractHCElement <HCHtml>
     setDirection (EHCTextDirection.LTR);
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead head ()
   {
     return m_aHead;
   }
 
-  @Nonnull
+  @NonNull
   public final HCBody body ()
   {
     return m_aBody;
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <? extends IHCNode> getAllChildren ()
   {
@@ -96,7 +96,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final ICommonsIterable <? extends IHCNode> getChildren ()
   {
     return getAllChildren ();
@@ -114,14 +114,14 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final IHCNode getFirstChild ()
   {
     return m_aHead;
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final IHCNode getLastChild ()
   {
     return m_aBody;
@@ -140,8 +140,8 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Override
-  @Nonnull
-  protected final IMicroDocument internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected final IMicroDocument internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     final EHTMLVersion eHTMLVersion = aConversionSettings.getHTMLVersion ();
 
@@ -170,7 +170,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
    *
    * @return An ordered list of all OOB nodes in the correct order.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IHCNode> getAllOutOfBandNodesWithMergedInlineNodes ()
   {
@@ -195,7 +195,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
    *        The out-of-band node list. Usually retrieved from
    *        {@link #getAllOutOfBandNodesWithMergedInlineNodes()}. May not be <code>null</code>.
    */
-  public void addAllOutOfBandNodesToHead (@Nonnull final List <IHCNode> aAllOOBNodes)
+  public void addAllOutOfBandNodesToHead (@NonNull final List <IHCNode> aAllOOBNodes)
   {
     ValueEnforcer.notNull (aAllOOBNodes, "AllOOBNodes");
     // And now add all to head in the correct order
@@ -248,7 +248,7 @@ public class HCHtml extends AbstractHCElement <HCHtml>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return StringHelper.getConcatenatedOnDemand (m_aHead.getPlainText (), " ", m_aBody.getPlainText ());

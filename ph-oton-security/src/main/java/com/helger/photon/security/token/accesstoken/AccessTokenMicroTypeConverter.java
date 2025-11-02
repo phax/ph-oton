@@ -18,6 +18,9 @@ package com.helger.photon.security.token.accesstoken;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.photon.security.token.revocation.RevocationStatus;
 import com.helger.xml.microdom.IMicroElement;
@@ -26,9 +29,6 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Micro type converter for class {@link AccessToken}.
@@ -42,10 +42,10 @@ public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter 
   private static final IMicroQName ATTR_NOT_AFTER = new MicroQName ("notafter");
   private static final String ELEMENT_REVOCATION = "revocation";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final AccessToken aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final AccessToken aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_TOKEN_STRING, aValue.getTokenString ());
@@ -57,8 +57,8 @@ public final class AccessTokenMicroTypeConverter implements IMicroTypeConverter 
     return aElement;
   }
 
-  @Nonnull
-  public AccessToken convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public AccessToken convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sTokenString = aElement.getAttributeValue (ATTR_TOKEN_STRING);
     final LocalDateTime aNotBefore = aElement.getAttributeValueWithConversion (ATTR_NOT_BEFORE, LocalDateTime.class);

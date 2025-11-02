@@ -18,6 +18,9 @@ package com.helger.photon.core.menu;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.page.IPage;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IMenuItemPage} interface.
@@ -41,32 +41,32 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
   private final IHasDisplayText m_aDisplayText;
   private String m_sTarget;
 
-  public MenuItemPage (@Nonnull @Nonempty final String sItemID, @Nonnull final IPage aPage)
+  public MenuItemPage (@NonNull @Nonempty final String sItemID, @NonNull final IPage aPage)
   {
     this (sItemID, aPage, aPage);
   }
 
-  public MenuItemPage (@Nonnull @Nonempty final String sItemID, @Nonnull final IPage aPage, @Nonnull final IHasDisplayText aDisplayText)
+  public MenuItemPage (@NonNull @Nonempty final String sItemID, @NonNull final IPage aPage, @NonNull final IHasDisplayText aDisplayText)
   {
     super (sItemID);
     m_aPage = ValueEnforcer.notNull (aPage, "Page");
     m_aDisplayText = ValueEnforcer.notNull (aDisplayText, "DisplayText");
   }
 
-  @Nonnull
+  @NonNull
   public final EMenuObjectType getMenuObjectType ()
   {
     return EMenuObjectType.PAGE;
   }
 
-  @Nonnull
+  @NonNull
   public IPage getPage ()
   {
     return m_aPage;
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aDisplayLocale)
+  public String getDisplayText (@NonNull final Locale aDisplayLocale)
   {
     return m_aDisplayText.getDisplayText (aDisplayLocale);
   }
@@ -77,7 +77,7 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
     return m_sTarget;
   }
 
-  @Nonnull
+  @NonNull
   public MenuItemPage setTarget (@Nullable final String sTarget)
   {
     m_sTarget = sTarget;

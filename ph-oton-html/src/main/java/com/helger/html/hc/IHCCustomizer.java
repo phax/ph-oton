@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc;
 
-import com.helger.html.EHTMLVersion;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.EHTMLVersion;
 
 /**
  * A special customization interface, that lets you modify existing elements
@@ -40,7 +40,7 @@ public interface IHCCustomizer
    *        The node where additional elements should be appended to. May not be
    *        <code>null</code>.
    */
-  void customizeNode (@Nonnull IHCNode aNode,
-                      @Nonnull EHTMLVersion eHTMLVersion,
-                      @Nonnull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
+  void customizeNode (@NonNull IHCNode aNode,
+                      @NonNull EHTMLVersion eHTMLVersion,
+                      @NonNull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 }

@@ -20,6 +20,8 @@ import java.util.Locale;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
@@ -31,8 +33,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.util.MicroVisitor;
-
-import jakarta.annotation.Nonnull;
 
 public class MainHtml2Code
 {
@@ -362,7 +362,7 @@ public class MainHtml2Code
     MicroVisitor.visit (aBody, new DefaultHierarchyVisitorCallback <IMicroNode> ()
     {
       @Override
-      @Nonnull
+      @NonNull
       public EHierarchyVisitorReturn onItemBeforeChildren (final IMicroNode aItem)
       {
         if (aItem.isElement ())
@@ -390,7 +390,7 @@ public class MainHtml2Code
       }
 
       @Override
-      @Nonnull
+      @NonNull
       public EHierarchyVisitorReturn onItemAfterChildren (final IMicroNode aItem)
       {
         if (aItem.isElement ())
@@ -405,8 +405,8 @@ public class MainHtml2Code
 
   }
 
-  @Nonnull
-  private static String _camel (@Nonnull final String s)
+  @NonNull
+  private static String _camel (@NonNull final String s)
   {
     return s.substring (0, 1).toUpperCase (Locale.US) + s.substring (1).toLowerCase (Locale.US);
   }
@@ -421,8 +421,8 @@ public class MainHtml2Code
     return "HC" + _camel (sTagName);
   }
 
-  @Nonnull
-  private static String _quote (@Nonnull final String s)
+  @NonNull
+  private static String _quote (@NonNull final String s)
   {
     return "\"" + s + "\"";
   }

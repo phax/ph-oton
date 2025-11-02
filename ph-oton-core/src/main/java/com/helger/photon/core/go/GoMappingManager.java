@@ -20,6 +20,8 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,9 +53,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Manager for {@link GoMappingItem} objects.
  *
@@ -81,14 +80,14 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     initialRead ();
   }
 
-  @Nonnull
-  private static String _unifyKey (@Nonnull final String sKey)
+  @NonNull
+  private static String _unifyKey (@NonNull final String sKey)
   {
     return sKey.toLowerCase (Locale.US);
   }
 
   @MustBeLocked (ELockType.WRITE)
-  private EChange _addItem (@Nonnull final GoMappingItem aItem, final boolean bAllowOverwrite)
+  private EChange _addItem (@NonNull final GoMappingItem aItem, final boolean bAllowOverwrite)
   {
     ValueEnforcer.notNull (aItem, "Item");
 
@@ -109,7 +108,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     return EChange.CHANGED;
   }
 
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc, @Nonnull final Consumer <GoMappingItem> aCallback)
+  public static void readFromXML (@NonNull final IMicroDocument aDoc, @NonNull final Consumer <GoMappingItem> aCallback)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aCallback, "Callback");
@@ -132,7 +131,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
   }
 
   @Override
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     readFromXML (aDoc, aCurrentObject -> _addItem (aCurrentObject, false));
     return EChange.UNCHANGED;
@@ -179,17 +178,17 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     LOGGER.info ("Reloaded " + m_aMap.size () + " go-mappings!");
   }
 
-  @Nonnull
-  public EChange addItem (@Nonnull @Nonempty final String sKey,
+  @NonNull
+  public EChange addItem (@NonNull @Nonempty final String sKey,
                           final boolean bIsInternal,
-                          @Nonnull @Nonempty final String sTargetURL,
+                          @NonNull @Nonempty final String sTargetURL,
                           final boolean bIsEditable)
   {
     return addItem (new GoMappingItem (sKey, bIsInternal, sTargetURL, bIsEditable));
   }
 
-  @Nonnull
-  public EChange addItem (@Nonnull final GoMappingItem aItem)
+  @NonNull
+  public EChange addItem (@NonNull final GoMappingItem aItem)
   {
     ValueEnforcer.notNull (aItem, "Item");
 
@@ -205,17 +204,17 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     });
   }
 
-  @Nonnull
-  public EChange setItem (@Nonnull @Nonempty final String sKey,
+  @NonNull
+  public EChange setItem (@NonNull @Nonempty final String sKey,
                           final boolean bIsInternal,
-                          @Nonnull @Nonempty final String sTargetURL,
+                          @NonNull @Nonempty final String sTargetURL,
                           final boolean bIsEditable)
   {
     return setItem (new GoMappingItem (sKey, bIsInternal, sTargetURL, bIsEditable));
   }
 
-  @Nonnull
-  public EChange setItem (@Nonnull final GoMappingItem aItem)
+  @NonNull
+  public EChange setItem (@NonNull final GoMappingItem aItem)
   {
     ValueEnforcer.notNull (aItem, "Item");
 
@@ -228,7 +227,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     });
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeItem (@Nullable final String sKey)
   {
     if (StringHelper.isEmpty (sKey))
@@ -244,7 +243,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     });
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAllItems ()
   {
     return m_aRWLock.writeLockedGet ( () -> {
@@ -280,7 +279,7 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
     return m_aRWLock.readLockedInt (m_aMap::size);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, GoMappingItem> getAllItems ()
   {
@@ -297,8 +296,8 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    * @return The number of errors occurred. Always &ge; 0.
    */
   @Nonnegative
-  public int checkInternalMappings (@Nonnull final IMenuTree aMenuTree,
-                                    @Nonnull final Consumer <GoMappingItem> aErrorCallback)
+  public int checkInternalMappings (@NonNull final IMenuTree aMenuTree,
+                                    @NonNull final Consumer <GoMappingItem> aErrorCallback)
   {
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
     ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
@@ -349,9 +348,9 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    *        Go mapping key. May neither be <code>null</code> nor empty.
    * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
    */
-  @Nonnull
-  public static SimpleURL getGoLink (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull @Nonempty final String sKey)
+  @NonNull
+  public static SimpleURL getGoLink (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull @Nonempty final String sKey)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
 
@@ -366,8 +365,8 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
    *        Go mapping key. May neither be <code>null</code> nor empty.
    * @return <code>/webapp-context/go/<i>key</i></code>. Never <code>null</code>
    */
-  @Nonnull
-  public static String getGoLinkURI (@Nonnull @Nonempty final String sKey)
+  @NonNull
+  public static String getGoLinkURI (@NonNull @Nonempty final String sKey)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
 

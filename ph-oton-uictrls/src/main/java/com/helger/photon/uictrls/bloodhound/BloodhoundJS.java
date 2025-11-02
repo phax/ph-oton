@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSExpr;
@@ -23,21 +25,19 @@ import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
 
-import jakarta.annotation.Nonnull;
-
 @Immutable
 public final class BloodhoundJS
 {
   private BloodhoundJS ()
   {}
 
-  @Nonnull
+  @NonNull
   public static JSRef bloodhound ()
   {
     return JSExpr.ref ("Bloodhound");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef bloodhoundTokenizers ()
   {
     return bloodhound ().ref ("tokenizers");
@@ -46,7 +46,7 @@ public final class BloodhoundJS
   /**
    * @return The Bloodhound built-in "whitespace" tokenizer.
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef bloodhoundTokenizersWhitespace ()
   {
     return bloodhoundTokenizers ().ref ("whitespace");
@@ -55,20 +55,20 @@ public final class BloodhoundJS
   /**
    * @return The Bloodhound built-in "nonword" tokenizer.
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef bloodhoundTokenizersNonword ()
   {
     return bloodhoundTokenizers ().ref ("nonword");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation bloodhoundNoConflict ()
   {
     return bloodhound ().invoke ("noConflict");
   }
 
-  @Nonnull
-  public static BloodhoundJSInvocation newBloodhound (@Nonnull final BloodhoundOptions aOptions)
+  @NonNull
+  public static BloodhoundJSInvocation newBloodhound (@NonNull final BloodhoundOptions aOptions)
   {
     ValueEnforcer.notNull (aOptions, "Options");
 

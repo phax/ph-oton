@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Draggable?
@@ -36,12 +36,12 @@ public enum EHCDraggable implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCDraggable (@Nonnull @Nonempty final String sAttrValue)
+  EHCDraggable (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.callback.ICallback;
 import com.helger.base.state.EContinue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Callback interface to be used when iterating an HC tree.
@@ -41,6 +41,6 @@ public interface IHCIteratorCallback extends ICallback
    * @return {@link EContinue#BREAK} to break iteration and
    *         {@link EContinue#CONTINUE} to continue iteration.
    */
-  @Nonnull
-  EContinue call (@Nullable IHCNode aParentNode, @Nonnull IHCNode aChildNode);
+  @NonNull
+  EContinue call (@Nullable IHCNode aParentNode, @NonNull IHCNode aChildNode);
 }

@@ -16,9 +16,9 @@
  */
 package com.helger.html.resource.css;
 
-import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
 /**
  * Interface for an inline CSS code provider.
@@ -31,6 +31,6 @@ public interface ICSSCodeProvider extends ICSSProvider
   /**
    * @return The CSS code of the CSS inline item.
    */
-  @Nonnull
+  @NonNull
   String getCSSCode ();
 }

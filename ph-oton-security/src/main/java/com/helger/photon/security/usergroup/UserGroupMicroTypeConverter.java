@@ -18,6 +18,9 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.xml.microdom.IMicroElement;
@@ -26,9 +29,6 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <UserGroup>
 {
   private static final IMicroQName ATTR_NAME = new MicroQName ("name");
@@ -36,10 +36,10 @@ public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMic
   private static final String ELEMENT_USER = "user";
   private static final String ELEMENT_ROLE = "role";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final UserGroup aUserGroup,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final UserGroup aUserGroup,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUserGroup, aElement);
@@ -53,8 +53,8 @@ public final class UserGroupMicroTypeConverter extends AbstractBusinessObjectMic
     return aElement;
   }
 
-  @Nonnull
-  public UserGroup convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public UserGroup convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sName = aElement.getAttributeValue (ATTR_NAME);
     final String sDescription = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_DESCRIPTION);

@@ -19,6 +19,9 @@ package com.helger.photon.tinymce4;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -59,9 +62,6 @@ import com.helger.photon.tinymce4.type.TinyMCE4ToolbarControlList;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wraps TinyMCE4 into an HC node. The only required settings is
@@ -195,7 +195,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     _init ();
   }
 
-  public HCTinyMCE4 (@Nonnull final RequestField aRF)
+  public HCTinyMCE4 (@NonNull final RequestField aRF)
   {
     super (aRF);
     _init ();
@@ -216,7 +216,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        Editor ID
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setAutoFocus (@Nullable final String sAutoFocus)
   {
     m_sAutoFocus = sAutoFocus;
@@ -241,7 +241,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        direction
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setDirectionality (@Nullable final EHCTextDirection eDirectionality)
   {
     m_eDirectionality = eDirectionality;
@@ -261,7 +261,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setBrowserSpellcheck (final boolean bBrowserSpellcheck)
   {
     m_eBrowserSpellcheck = ETriState.valueOf (bBrowserSpellcheck);
@@ -277,7 +277,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setBrowserSpellcheck (@Nullable final Boolean aBrowserSpellcheck)
   {
     m_eBrowserSpellcheck = ETriState.valueOf (aBrowserSpellcheck);
@@ -297,7 +297,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The language to use. <code>null</code> means English
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setTinyMCELanguage (@Nullable final ETinyMCE4Language eTinyMCELanguage)
   {
     m_eTinyMCELanguage = eTinyMCELanguage;
@@ -318,7 +318,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The language URL to use.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setLanguageURL (@Nullable final ISimpleURL aLanguageURL)
   {
     m_aLanguageURL = aLanguageURL;
@@ -338,7 +338,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setNoWrap (final boolean bNoWrap)
   {
     m_eNoWrap = ETriState.valueOf (bNoWrap);
@@ -354,7 +354,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setNoWrap (@Nullable final Boolean aNoWrap)
   {
     m_eNoWrap = ETriState.valueOf (aNoWrap);
@@ -374,7 +374,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setObjectResizing (final boolean bObjectResizing)
   {
     m_eObjectResizing = ETriState.valueOf (bObjectResizing);
@@ -390,14 +390,14 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setObjectResizing (@Nullable final Boolean aObjectResizing)
   {
     m_eObjectResizing = ETriState.valueOf (aObjectResizing);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <ETinyMCE4Plugin> getAllPlugins ()
   {
@@ -417,8 +417,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The plugin to add. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public HCTinyMCE4 addPlugin (@Nonnull final ETinyMCE4Plugin ePlugin)
+  @NonNull
+  public HCTinyMCE4 addPlugin (@NonNull final ETinyMCE4Plugin ePlugin)
   {
     ValueEnforcer.notNull (ePlugin, "Plugin");
     m_aPlugins.add (ePlugin);
@@ -433,7 +433,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        contained elements may not be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 addPlugins (@Nullable final ETinyMCE4Plugin... aPlugins)
   {
     if (aPlugins != null)
@@ -450,7 +450,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        contained elements may not be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 addPlugins (@Nullable final Iterable <ETinyMCE4Plugin> aPlugins)
   {
     if (aPlugins != null)
@@ -464,7 +464,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 addAllPlugins ()
   {
     return addPlugins (ETinyMCE4Plugin.values ());
@@ -477,7 +477,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The plugin to be removed. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if the plugin was successfully removed.
    */
-  @Nonnull
+  @NonNull
   public EChange removePlugin (@Nullable final ETinyMCE4Plugin ePlugin)
   {
     return EChange.valueOf (ePlugin != null && m_aPlugins.remove (ePlugin));
@@ -491,7 +491,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return {@link EChange#CHANGED} it at least one plugin was removed
    *         successfully.
    */
-  @Nonnull
+  @NonNull
   public EChange removePlugins (@Nullable final ETinyMCE4Plugin... aPlugins)
   {
     EChange ret = EChange.UNCHANGED;
@@ -509,7 +509,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return {@link EChange#CHANGED} it at least one plugin was removed
    *         successfully.
    */
-  @Nonnull
+  @NonNull
   public EChange removePlugins (@Nullable final Iterable <ETinyMCE4Plugin> aPlugins)
   {
     EChange ret = EChange.UNCHANGED;
@@ -519,7 +519,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <TinyMCE4ExternalPlugin> getAllExternalPlugins ()
   {
@@ -541,9 +541,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The request to be used. Required if cookies are disabled.
    * @return this
    */
-  @Nonnull
-  public HCTinyMCE4 addExternalPlugin (@Nonnull final ETinyMCE4ExternalPlugin eExternalPlugin,
-                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public HCTinyMCE4 addExternalPlugin (@NonNull final ETinyMCE4ExternalPlugin eExternalPlugin,
+                                       @NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return addExternalPlugin (eExternalPlugin.getAsExternalPlugin (aRequestScope));
   }
@@ -555,8 +555,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The plugin to be added. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public HCTinyMCE4 addExternalPlugin (@Nonnull final TinyMCE4ExternalPlugin aExternalPlugin)
+  @NonNull
+  public HCTinyMCE4 addExternalPlugin (@NonNull final TinyMCE4ExternalPlugin aExternalPlugin)
   {
     ValueEnforcer.notNull (aExternalPlugin, "ExternalPlugin");
     m_aExternalPlugins.add (aExternalPlugin);
@@ -571,7 +571,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        plugin may be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 addExternalPlugins (@Nullable final TinyMCE4ExternalPlugin... aExternalPlugins)
   {
     if (aExternalPlugins != null)
@@ -588,7 +588,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        plugin may be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 addExternalPlugins (@Nullable final Iterable <? extends TinyMCE4ExternalPlugin> aExternalPlugins)
   {
     if (aExternalPlugins != null)
@@ -604,7 +604,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The plugin to be removed. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if the plugin was removed successfully.
    */
-  @Nonnull
+  @NonNull
   public EChange removeExternalPlugin (@Nullable final TinyMCE4ExternalPlugin aExternalPlugin)
   {
     return EChange.valueOf (aExternalPlugin != null && m_aExternalPlugins.remove (aExternalPlugin));
@@ -618,7 +618,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return {@link EChange#CHANGED} it at least one plugin was removed
    *         successfully.
    */
-  @Nonnull
+  @NonNull
   public EChange removeExternalPlugins (@Nullable final TinyMCE4ExternalPlugin... aExternalPlugins)
   {
     EChange ret = EChange.UNCHANGED;
@@ -636,7 +636,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return {@link EChange#CHANGED} it at least one plugin was removed
    *         successfully.
    */
-  @Nonnull
+  @NonNull
   public EChange removeExternalPlugins (@Nullable final Iterable <? extends TinyMCE4ExternalPlugin> aExternalPlugins)
   {
     EChange ret = EChange.UNCHANGED;
@@ -650,7 +650,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return The jQuery selector to be used to convert nodes to TinyMCE
    *         elements.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getSelector ()
   {
@@ -674,8 +674,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The selector to use. May neither be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public HCTinyMCE4 setSelector (@Nonnull @Nonempty final String sSelector)
+  @NonNull
+  public HCTinyMCE4 setSelector (@NonNull @Nonempty final String sSelector)
   {
     ValueEnforcer.notEmpty (sSelector, "Selector");
     m_sSelector = sSelector;
@@ -695,7 +695,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        Skin to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setSkin (@Nullable final ETinyMCE4Skin eSkin)
   {
     m_eSkin = eSkin;
@@ -717,7 +717,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The skin URL to use.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setSkinURL (@Nullable final ISimpleURL aSkinURL)
   {
     m_aSkinURL = aSkinURL;
@@ -737,7 +737,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        Theme to use.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setTheme (@Nullable final ETinyMCE4Theme eTheme)
   {
     m_eTheme = eTheme;
@@ -759,7 +759,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        The theme URL to use.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setThemeURL (@Nullable final ISimpleURL aThemeURL)
   {
     m_aThemeURL = aThemeURL;
@@ -779,7 +779,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setInline (final boolean bInline)
   {
     m_eInline = ETriState.valueOf (bInline);
@@ -795,7 +795,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setInline (@Nullable final Boolean aInline)
   {
     m_eInline = ETriState.valueOf (aInline);
@@ -818,7 +818,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setHiddenInput (final boolean bHiddenInput)
   {
     m_eHiddenInput = ETriState.valueOf (bHiddenInput);
@@ -837,7 +837,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setHiddenInput (@Nullable final Boolean aHiddenInput)
   {
     m_eHiddenInput = ETriState.valueOf (aHiddenInput);
@@ -861,7 +861,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to enabled, <code>false</code> to disable
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setConvertFontsToSpans (final boolean bConvertFontsToSpans)
   {
     m_eConvertFontsToSpans = ETriState.valueOf (bConvertFontsToSpans);
@@ -879,7 +879,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setConvertFontsToSpans (@Nullable final Boolean aConvertFontsToSpans)
   {
     m_eConvertFontsToSpans = ETriState.valueOf (aConvertFontsToSpans);
@@ -909,7 +909,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> a clone of the object is stored.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setToolbar (@Nullable final TinyMCE4ToolbarControlList aToolbar)
   {
     m_aToolbar = aToolbar == null ? null : aToolbar.getClone ();
@@ -928,7 +928,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to disable it
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setToolbarDisabled (final boolean bToolbarDisabled)
   {
     m_bToolbarDisabled = bToolbarDisabled;
@@ -951,7 +951,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> a clone of the object is stored.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setMenubar (@Nullable final TinyMCE4MenubarItemList aMenubar)
   {
     m_aMenubar = aMenubar == null ? null : aMenubar.getClone ();
@@ -970,7 +970,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to disable it
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setMenubarDisabled (final boolean bMenubarDisabled)
   {
     m_bMenubarDisabled = bMenubarDisabled;
@@ -989,7 +989,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to show, <code>false</code> to hide
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setStatusbar (final boolean bStatusbar)
   {
     m_eStatusbar = ETriState.valueOf (bStatusbar);
@@ -1004,7 +1004,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setStatusbar (@Nullable final Boolean aStatusbar)
   {
     m_eStatusbar = ETriState.valueOf (aStatusbar);
@@ -1017,7 +1017,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     return m_eResize;
   }
 
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setResize (@Nullable final ETinyMCE4Resize eResize)
   {
     m_eResize = eResize;
@@ -1036,7 +1036,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        New width. Only values &ge; 0 are considered!
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setWidth (final int nWidth)
   {
     m_nWidth = nWidth;
@@ -1055,7 +1055,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        New height. Only values &ge; 0 are considered!
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setHeight (final int nHeight)
   {
     m_nHeight = nHeight;
@@ -1075,7 +1075,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>true</code> to show, <code>false</code> to hide
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setPreviewStyles (final boolean bPreviewStyles)
   {
     m_ePreviewStyles = ETriState.valueOf (bPreviewStyles);
@@ -1091,7 +1091,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        <code>null</code> for default value.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setPreviewStyles (@Nullable final Boolean aPreviewStyles)
   {
     m_ePreviewStyles = ETriState.valueOf (aPreviewStyles);
@@ -1127,7 +1127,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *        Callback function
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTinyMCE4 setFileBrowserCallback (@Nullable final JSAnonymousFunction aFileBrowserCallback)
   {
     m_aFileBrowserCallback = aFileBrowserCallback;
@@ -1136,38 +1136,38 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
 
   // --- custom options ---
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, final boolean bValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, final boolean bValue)
   {
     return addCustomOption (sName, JSExpr.lit (bValue));
   }
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, final int nValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, final int nValue)
   {
     return addCustomOption (sName, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, final double dValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, final double dValue)
   {
     return addCustomOption (sName, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, @Nonnull final BigDecimal aValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, @NonNull final BigDecimal aValue)
   {
     return addCustomOption (sName, JSExpr.lit (aValue));
   }
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, @Nonnull final String sValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, @NonNull final String sValue)
   {
     return addCustomOption (sName, JSExpr.lit (sValue));
   }
 
-  @Nonnull
-  public HCTinyMCE4 addCustomOption (@Nonnull @Nonempty final String sName, @Nonnull final IJSExpression aValue)
+  @NonNull
+  public HCTinyMCE4 addCustomOption (@NonNull @Nonempty final String sName, @NonNull final IJSExpression aValue)
   {
     ValueEnforcer.notEmpty (sName, "Name");
     ValueEnforcer.notNull (aValue, "Value");
@@ -1181,7 +1181,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     return m_aCustom.remove (sName);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, IJSExpression> getAllCustomOptions ()
   {
@@ -1205,7 +1205,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
     return m_aCustom.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSInitOptions ()
   {
@@ -1307,22 +1307,22 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * @return The JSInvocation with the tinymce.init code and all options
    *         specified for this instance.
    */
-  @Nonnull
+  @NonNull
   public JSInvocation getJSInvocation ()
   {
     return JSTinyMCE4.init (getJSInitOptions ());
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     aTargetNode.addChild (new HCScriptInline (getJSInvocation ()));
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);

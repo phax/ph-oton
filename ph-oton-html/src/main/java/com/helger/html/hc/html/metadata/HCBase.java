@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
@@ -24,9 +27,6 @@ import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;base&gt; element
@@ -49,7 +49,7 @@ public class HCBase extends AbstractHCElement <HCBase>
     return m_aHref;
   }
 
-  @Nonnull
+  @NonNull
   public final HCBase setHref (@Nullable final ISimpleURL aHref)
   {
     m_aHref = aHref;
@@ -62,7 +62,7 @@ public class HCBase extends AbstractHCElement <HCBase>
     return m_aTarget;
   }
 
-  @Nonnull
+  @NonNull
   public final HCBase setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
@@ -70,7 +70,7 @@ public class HCBase extends AbstractHCElement <HCBase>
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return m_aHref != null || m_aTarget != null;
   }

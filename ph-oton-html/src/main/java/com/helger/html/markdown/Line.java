@@ -16,12 +16,12 @@
  */
 package com.helger.html.markdown;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.collection.commons.CommonsLinkedList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a text line.
@@ -221,7 +221,7 @@ final class Line
    *        Whether extended profile is enabled or not
    * @return The LineType.
    */
-  @Nonnull
+  @NonNull
   public ELineType getLineType (final boolean bExtendedMode)
   {
     if (m_bIsEmpty)
@@ -442,7 +442,7 @@ final class Line
    * @return <code>EHTMLType.TAG</code> or <code>EHTMLType.COMMENT</code> if it
    *         is a valid block.
    */
-  @Nonnull
+  @NonNull
   private EHTMLElementType _checkHTML ()
   {
     final ICommonsList <String> aTags = new CommonsLinkedList <> ();

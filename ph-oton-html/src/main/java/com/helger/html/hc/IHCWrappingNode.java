@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Interface for nodes that wrap other nodes (e.g. conditional comment)
@@ -28,6 +28,6 @@ public interface IHCWrappingNode extends IHCNode
   /**
    * @return The wrapped node and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IHCNode getWrappedNode ();
 }

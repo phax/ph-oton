@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.interror;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.xml.microdom.IHasMicroNodeRepresentation;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @NotThreadSafe
 public class InternalErrorMetadata implements IHasMicroNodeRepresentation
 {
@@ -43,13 +42,13 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     private final String m_sKey;
     private final String m_sValue;
 
-    public Entry (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+    public Entry (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
     {
       m_sKey = ValueEnforcer.notEmpty (sKey, "Key");
       m_sValue = sValue;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getKey ()
     {
@@ -62,14 +61,14 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
       return m_sValue;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getAsString ()
     {
       return m_sKey + ": " + m_sValue;
     }
 
-    @Nonnull
+    @NonNull
     public IMicroElement getAsMicroNode ()
     {
       final IMicroElement eEntry = new MicroElement ("entry");
@@ -100,15 +99,15 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     return m_sErrorID;
   }
 
-  @Nonnull
-  public InternalErrorMetadata addField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addField (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aFields.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
-  public InternalErrorMetadata addFieldRetrievalError (@Nonnull @Nonempty final String sKey, @Nonnull final Throwable t)
+  @NonNull
+  public InternalErrorMetadata addFieldRetrievalError (@NonNull @Nonempty final String sKey, @NonNull final Throwable t)
   {
     final String sValue = "Failed to get " + sKey + ": " + t.getMessage () + " -- " + t.getClass ().getName ();
     LOGGER.warn (sValue);
@@ -123,84 +122,84 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     return aEntry != null ? aEntry.getValue () : sDefaultValue;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllFields ()
   {
     return m_aFields.getClone ();
   }
 
-  @Nonnull
-  public InternalErrorMetadata addRequestField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addRequestField (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestFields.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllRequestFields ()
   {
     return m_aRequestFields.getClone ();
   }
 
-  @Nonnull
-  public InternalErrorMetadata addRequestHeader (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addRequestHeader (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestHeaders.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllRequestHeaders ()
   {
     return m_aRequestHeaders.getClone ();
   }
 
-  @Nonnull
-  public InternalErrorMetadata addRequestParameter (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addRequestParameter (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestParameters.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllRequestParameters ()
   {
     return m_aRequestParameters.getClone ();
   }
 
-  @Nonnull
-  public InternalErrorMetadata addRequestCookie (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addRequestCookie (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aRequestCookies.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllRequestCookies ()
   {
     return m_aRequestCookies.getClone ();
   }
 
-  @Nonnull
-  public InternalErrorMetadata addSessionField (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
+  @NonNull
+  public InternalErrorMetadata addSessionField (@NonNull @Nonempty final String sKey, @Nullable final String sValue)
   {
     m_aSessionFields.add (new Entry (sKey, sValue));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Entry> getAllSessionFields ()
   {
     return m_aSessionFields.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public String getAsString ()
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -245,7 +244,7 @@ public class InternalErrorMetadata implements IHasMicroNodeRepresentation
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public IMicroElement getAsMicroNode ()
   {
     final IMicroElement eMetadata = new MicroElement ("metadata");

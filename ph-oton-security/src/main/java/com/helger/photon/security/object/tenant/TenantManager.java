@@ -16,6 +16,9 @@
  */
 package com.helger.photon.security.object.tenant;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.state.EChange;
 import com.helger.dao.DAOException;
@@ -26,9 +29,6 @@ import com.helger.tenancy.tenant.CTenant;
 import com.helger.tenancy.tenant.ITenant;
 import com.helger.tenancy.tenant.ITenantResolver;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Manages all available tenants (before v8 called client).
  *
@@ -36,13 +36,13 @@ import jakarta.annotation.Nullable;
  */
 public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant> implements ITenantResolver
 {
-  public TenantManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public TenantManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (Tenant.class, sFilename);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected EChange onInit ()
   {
     internalCreateItem (new Tenant (CTenant.GLOBAL_TENANT_ID, CTenant.GLOBAL_TENANT_NAME));
@@ -50,7 +50,7 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
   }
 
   @Nullable
-  public ITenant createTenant (@Nonnull @Nonempty final String sTenantID, @Nonnull @Nonempty final String sDisplayName)
+  public ITenant createTenant (@NonNull @Nonempty final String sTenantID, @NonNull @Nonempty final String sDisplayName)
   {
     if (containsWithID (sTenantID))
       return null;
@@ -63,8 +63,8 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
     return aTenant;
   }
 
-  @Nonnull
-  public EChange updateTenant (@Nonnull @Nonempty final String sTenantID, @Nonnull @Nonempty final String sDisplayName)
+  @NonNull
+  public EChange updateTenant (@NonNull @Nonempty final String sTenantID, @NonNull @Nonempty final String sDisplayName)
   {
     final Tenant aTenant = getOfID (sTenantID);
     if (aTenant == null)
@@ -93,7 +93,7 @@ public class TenantManager extends AbstractPhotonMapBasedWALDAO <ITenant, Tenant
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteTenant (@Nullable final String sTenantID)
   {
     final Tenant aDeletedObject = getOfID (sTenantID);

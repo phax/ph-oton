@@ -22,6 +22,8 @@ import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,9 +80,6 @@ import com.helger.photon.uictrls.datatables.column.EDTColType;
 import com.helger.photon.uictrls.datatables.plugins.DataTablesPluginClientSortingDate;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is the basic oh-oton DataTables wrapper.
@@ -267,7 +266,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        The table to apply the data table to. May not be <code>null</code> and must have a valid
    *        ID!
    */
-  public DataTables (@Nonnull final IHCTable <?> aTable)
+  public DataTables (@NonNull final IHCTable <?> aTable)
   {
     ValueEnforcer.notNull (aTable, "Table");
     ValueEnforcer.notEmpty (aTable.getID (), "Table must have an ID to work with DataTables!");
@@ -303,7 +302,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /**
    * @return The underlying table on which this object is operating.
    */
-  @Nonnull
+  @NonNull
   public final IHCTable <?> getTable ()
   {
     return m_aTable;
@@ -312,7 +311,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   /**
    * @return The ID of the underlying table on which this object is operating.
    */
-  @Nonnull
+  @NonNull
   public final String getTableID ()
   {
     return m_aTable.getID ();
@@ -331,15 +330,15 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    * @return The name of the JS variable that contains the dataTable object. The scope of the
    *         variable depends on the state of the {@link #isGenerateOnDocumentReady()} method.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getJSVariableName ()
   {
     return m_sJSVariableName;
   }
 
-  @Nonnull
-  public DataTables setJSVariableName (@Nonnull @Nonempty final String sJSVariableName)
+  @NonNull
+  public DataTables setJSVariableName (@NonNull @Nonempty final String sJSVariableName)
   {
     ValueEnforcer.notEmpty (sJSVariableName, "JSVariableName");
     ValueEnforcer.isTrue (JSMarshaller.isJSIdentifier (sJSVariableName),
@@ -357,7 +356,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bAutoWidth;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setAutoWidth (final boolean bAutoWidth)
   {
     m_bAutoWidth = bAutoWidth;
@@ -369,7 +368,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bDeferRender;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDeferRender (final boolean bDeferRender)
   {
     m_bDeferRender = bDeferRender;
@@ -381,7 +380,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bInfo;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setInfo (final boolean bInfo)
   {
     m_bInfo = bInfo;
@@ -393,7 +392,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bJQueryUI;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setJQueryUI (final boolean bJQueryUI)
   {
     m_bJQueryUI = bJQueryUI;
@@ -413,7 +412,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        the selector on top disappears.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public DataTables setLengthChange (final boolean bLengthChange)
   {
     m_bLengthChange = bLengthChange;
@@ -425,7 +424,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bOrdering;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setOrdering (final boolean bOrdering)
   {
     m_bOrdering = bOrdering;
@@ -441,7 +440,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bPaging;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setPaging (final boolean bPaging)
   {
     m_bPaging = bPaging;
@@ -453,7 +452,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bProcessing;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setProcessing (final boolean bProcessing)
   {
     m_bProcessing = bProcessing;
@@ -465,7 +464,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_eScrollX.getAsBooleanValue (DEFAULT_SCROLL_X);
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setScrollX (final boolean bScrollX)
   {
     m_eScrollX = ETriState.valueOf (bScrollX);
@@ -478,25 +477,25 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aScrollY;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setScrollY (final boolean bScrollY)
   {
     return setScrollY (JSExpr.lit (bScrollY));
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setScrollY (final int nScrollY)
   {
     return setScrollY (JSExpr.lit (nScrollY));
   }
 
-  @Nonnull
-  public DataTables setScrollY (@Nonnull final String sScrollY)
+  @NonNull
+  public DataTables setScrollY (@NonNull final String sScrollY)
   {
     return setScrollY (JSExpr.lit (sScrollY));
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setScrollY (@Nullable final IJSExpression aScrollY)
   {
     m_aScrollY = aScrollY;
@@ -508,7 +507,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bSearching;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setSearching (final boolean bSearching)
   {
     m_bSearching = bSearching;
@@ -520,7 +519,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bStateSave;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setStateSave (final boolean bStateSave)
   {
     m_bStateSave = bStateSave;
@@ -537,7 +536,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aAjaxBuilder;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setAjaxBuilder (@Nullable final JQueryAjaxBuilder aAjaxBuilder)
   {
     if (aAjaxBuilder != null)
@@ -567,14 +566,14 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aAjaxBuilder == null;
   }
 
-  @Nonnull
+  @NonNull
   public EDataTablesFilterType getServerFilterType ()
   {
     return m_eServerFilterType;
   }
 
-  @Nonnull
-  public DataTables setServerFilterType (@Nonnull final EDataTablesFilterType eServerFilterType)
+  @NonNull
+  public DataTables setServerFilterType (@NonNull final EDataTablesFilterType eServerFilterType)
   {
     m_eServerFilterType = ValueEnforcer.notNull (eServerFilterType, "ServerFilterType");
     return this;
@@ -597,7 +596,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        function footerCallback( tfoot, data, start, end, display )
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTables setFooterCallback (@Nullable final JSAnonymousFunction aFooterCallback)
   {
     m_aFooterCallback = aFooterCallback;
@@ -617,7 +616,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        function headerCallback( thead, data, start, end, display )
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTables setHeaderCallback (@Nullable final JSAnonymousFunction aHeaderCallback)
   {
     m_aHeaderCallback = aHeaderCallback;
@@ -637,7 +636,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        initComplete( settings, json )
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTables setInitComplete (@Nullable final JSAnonymousFunction aInitComplete)
   {
     m_aInitComplete = aInitComplete;
@@ -652,7 +651,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bDeferLoading;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDeferLoading (final boolean bDeferLoading)
   {
     m_bDeferLoading = bDeferLoading;
@@ -664,7 +663,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bDestroy;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDestroy (final boolean bDestroy)
   {
     m_bDestroy = bDestroy;
@@ -677,7 +676,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_nDisplayStart;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDisplayStart (@Nonnegative final int nDisplayStart)
   {
     m_nDisplayStart = nDisplayStart;
@@ -698,7 +697,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aDom;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDom (@Nullable final DataTablesDom aDom)
   {
     m_aDom = CloneHelper.getCloneIfNotNull (aDom);
@@ -719,7 +718,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aLayout;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setLayout (@Nullable final DataTablesLayout aLayout)
   {
     m_aLayout = CloneHelper.getCloneIfNotNull (aLayout);
@@ -732,7 +731,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aLengthMenu;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setLengthMenu (@Nullable final IDataTablesLengthMenu aLengthMenu)
   {
     m_aLengthMenu = aLengthMenu;
@@ -751,7 +750,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aInitialOrder;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setInitialOrder (@Nullable final DataTablesOrder aInitialOrder)
   {
     m_aInitialOrder = aInitialOrder;
@@ -774,14 +773,14 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        Number of items to display per page
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTables setPageLength (final int nPageLength)
   {
     m_nPageLength = nPageLength;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setPageLengthAll ()
   {
     return setPageLength (DataTablesLengthMenu.COUNT_ALL);
@@ -793,7 +792,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_ePagingType;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setPagingType (@Nullable final EDataTablesPagingType ePaginationType)
   {
     m_ePagingType = ePaginationType;
@@ -816,7 +815,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        true to retrieve
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public DataTables setRetrieve (final boolean bRetrieve)
   {
     m_bRetrieve = bRetrieve;
@@ -828,7 +827,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bScrollCollapse;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setScrollCollapse (final boolean bScrollCollapse)
   {
     m_bScrollCollapse = bScrollCollapse;
@@ -838,7 +837,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   //
   // DataTables - Columns
   //
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <DataTablesColumnDef> columnDefs ()
   {
@@ -851,8 +850,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aColumnDefs.findFirst (x -> x.hasTarget (nTarget));
   }
 
-  @Nonnull
-  public DataTables addColumn (@Nonnull final DataTablesColumnDef aColumn)
+  @NonNull
+  public DataTables addColumn (@NonNull final DataTablesColumnDef aColumn)
   {
     ValueEnforcer.notNull (aColumn, "Column");
 
@@ -868,8 +867,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnull
-  public DataTables addAllColumns (@Nonnull final IHCTable <?> aTable)
+  @NonNull
+  public DataTables addAllColumns (@NonNull final IHCTable <?> aTable)
   {
     ValueEnforcer.notNull (aTable, "Table");
 
@@ -903,7 +902,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setAllColumnsOrderable (final boolean bSortable)
   {
     for (final DataTablesColumnDef aColumn : m_aColumnDefs)
@@ -911,7 +910,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setAllColumnsSearchable (final boolean bSearchable)
   {
     for (final DataTablesColumnDef aColumn : m_aColumnDefs)
@@ -947,7 +946,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aDisplayLocale;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
@@ -966,13 +965,13 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_sTextLoadingURLLocaleParameterName;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setNoTextLoadingURL ()
   {
     return setTextLoadingURL (null, null);
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setTextLoadingURL (@Nullable final ISimpleURL aTextLoadingURL,
                                        @Nullable final String sTextLoadingURLLocaleParameterName)
   {
@@ -990,8 +989,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // DataTables - Plugins
   //
 
-  @Nonnull
-  public DataTables addPlugin (@Nonnull final IDataTablesPlugin aPlugin)
+  @NonNull
+  public DataTables addPlugin (@NonNull final IDataTablesPlugin aPlugin)
   {
     ValueEnforcer.notNull (aPlugin, "Plugin");
     final String sName = aPlugin.getName ();
@@ -1002,8 +1001,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return this;
   }
 
-  @Nonnull
-  public EChange removePlugin (@Nonnull final String sPluginName)
+  @NonNull
+  public EChange removePlugin (@NonNull final String sPluginName)
   {
     if (StringHelper.isEmpty (sPluginName))
       return EChange.UNCHANGED;
@@ -1018,7 +1017,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aPlugins.get (sName);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IDataTablesPlugin> getAllPlugins ()
   {
@@ -1032,7 +1031,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_bGenerateOnDocumentReady;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setGenerateOnDocumentReady (final boolean bGenerateOnDocumentReady)
   {
     m_bGenerateOnDocumentReady = bGenerateOnDocumentReady;
@@ -1045,7 +1044,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aJSBeforeModifier;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setJSBeforeModifier (@Nullable final Consumer <JSPackage> aJSBeforeModifier)
   {
     // TODO this should be a list
@@ -1059,7 +1058,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return m_aJSAfterModifier;
   }
 
-  @Nonnull
+  @NonNull
   public DataTables setJSAfterModifier (@Nullable final BiConsumer <JSPackage, JSLet> aJSAfterModifier)
   {
     // TODO this should be a list
@@ -1074,11 +1073,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
    *        parameter map
    */
   @OverrideOnDemand
-  protected void modifyParams (@Nonnull final JSAssocArray aParams)
+  protected void modifyParams (@NonNull final JSAssocArray aParams)
   {}
 
-  @Nonnull
-  public static IJsonObject createLanguageJson (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static IJsonObject createLanguageJson (@NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
@@ -1116,19 +1115,19 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     return aLanguage;
   }
 
-  @Nonnull
+  @NonNull
   public JQueryInvocation invokeDataTables ()
   {
     return JQuery.idRef (m_aTable).jqinvoke ("dataTable");
   }
 
-  @Nonnull
+  @NonNull
   public JQueryInvocation invokeDataTablesAPI ()
   {
     return JQuery.idRef (m_aTable).jqinvoke ("DataTable");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation invokeDataTablesMoment ()
   {
     return JQuery.fn ().ref ("dataTable").invoke ("moment");
@@ -1154,8 +1153,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     _applyClientSideSortingSettings ();
 
@@ -1364,7 +1363,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);

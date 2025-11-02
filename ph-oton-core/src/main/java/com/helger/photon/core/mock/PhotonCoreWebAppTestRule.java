@@ -19,11 +19,11 @@ package com.helger.photon.core.mock;
 import java.io.File;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.io.resourceprovider.IReadableResourceProvider;
 import com.helger.servlet.mock.MockServletContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized
@@ -39,7 +39,7 @@ public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
   public static final File RESOURCE_BASE_FILE = new File ("target/webapp-classes").getAbsoluteFile ();
 
   @Override
-  @Nonnull
+  @NonNull
   protected MockServletContext createMockServletContext (@Nullable final String sContextPath,
                                                          @Nullable final Map <String, String> aInitParams)
   {

@@ -16,9 +16,9 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
-import com.helger.html.jscode.JSAssocArray;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSAssocArray;
 
 /**
  * Wrapper for Fine Uploader 5.x cors part
@@ -51,7 +51,7 @@ public class FineUploader5Cors implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Cors setAllowXdr (final boolean bAllowXdr)
   {
     m_bCorsAllowXdr = bAllowXdr;
@@ -70,7 +70,7 @@ public class FineUploader5Cors implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Cors setExpected (final boolean bExpected)
   {
     m_bCorsExpected = bExpected;
@@ -90,14 +90,14 @@ public class FineUploader5Cors implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Cors setSendCredentials (final boolean bSendCredentials)
   {
     m_bCorsSendCredentials = bSendCredentials;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

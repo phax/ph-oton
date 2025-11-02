@@ -183,7 +183,7 @@ public class MainCreateJQueryAPIList extends AbstractCreateJQueryAPIList
             if (sSince != null)
               aLines.add (" * @since jQuery " + sSince);
             aLines.add (" */");
-            aLines.add ("@Nonnull");
+            aLines.add ("@NonNull");
             if (bIsDeprecated)
               aLines.add ("@Deprecated");
             aLines.add ("public static JQueryInvocation " +

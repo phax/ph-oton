@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;th&gt; element
@@ -46,7 +46,7 @@ public class HCTH extends AbstractHCCell <HCTH>
     return m_eScope;
   }
 
-  @Nonnull
+  @NonNull
   public final HCTH setScope (@Nullable final EHCTHScope eScope)
   {
     m_eScope = eScope;

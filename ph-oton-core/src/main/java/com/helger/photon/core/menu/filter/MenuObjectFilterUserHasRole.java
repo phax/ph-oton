@@ -18,6 +18,9 @@ package com.helger.photon.core.menu.filter;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.security.util.SecurityHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This filter checks that a user is logged in, and that the logged in user is
@@ -40,12 +40,12 @@ public class MenuObjectFilterUserHasRole extends AbstractMenuObjectFilter
 {
   private final String m_sRoleID;
 
-  public MenuObjectFilterUserHasRole (@Nonnull @Nonempty final String sRoleID)
+  public MenuObjectFilterUserHasRole (@NonNull @Nonempty final String sRoleID)
   {
     m_sRoleID = ValueEnforcer.notEmpty (sRoleID, "RoleID");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getRoleID ()
   {
@@ -54,7 +54,7 @@ public class MenuObjectFilterUserHasRole extends AbstractMenuObjectFilter
 
   @Override
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return EPhotonCoreText.MENU_OBJECT_FILTER_USER_HAS_ROLE.getDisplayTextWithArgs (aContentLocale, m_sRoleID);
   }

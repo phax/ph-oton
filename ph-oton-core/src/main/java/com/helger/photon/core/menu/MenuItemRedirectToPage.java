@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link IMenuItemRedirectToPage} interface.
@@ -35,19 +35,19 @@ public class MenuItemRedirectToPage extends AbstractMenuObject <MenuItemRedirect
 {
   private final IMenuItemPage m_aMenuItemPage;
 
-  public MenuItemRedirectToPage (@Nonnull @Nonempty final String sItemID, @Nonnull final IMenuItemPage aMenuItemPage)
+  public MenuItemRedirectToPage (@NonNull @Nonempty final String sItemID, @NonNull final IMenuItemPage aMenuItemPage)
   {
     super (sItemID);
     m_aMenuItemPage = ValueEnforcer.notNull (aMenuItemPage, "MenuItemPage");
   }
 
-  @Nonnull
+  @NonNull
   public final EMenuObjectType getMenuObjectType ()
   {
     return EMenuObjectType.REDIRECT_TO_PAGE;
   }
 
-  @Nonnull
+  @NonNull
   public IMenuItemPage getTargetMenuItemPage ()
   {
     return m_aMenuItemPage;

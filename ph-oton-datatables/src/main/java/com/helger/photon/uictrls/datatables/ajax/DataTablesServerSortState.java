@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.enforce.ValueEnforcer;
@@ -28,8 +30,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * The current sort state of a {@link DataTables} object.
  *
@@ -39,14 +39,14 @@ final class DataTablesServerSortState
 {
   private final ICommonsList <DTSSRequestDataOrderColumn> m_aOrderColumns;
 
-  DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData, @Nonnull final Locale aDisplayLocale)
+  DataTablesServerSortState (@NonNull final DataTablesServerData aServerData, @NonNull final Locale aDisplayLocale)
   {
     this (aServerData, new CommonsArrayList <> (0), aDisplayLocale);
   }
 
-  public DataTablesServerSortState (@Nonnull final DataTablesServerData aServerData,
-                                    @Nonnull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns,
-                                    @Nonnull final Locale aDisplayLocale)
+  public DataTablesServerSortState (@NonNull final DataTablesServerData aServerData,
+                                    @NonNull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns,
+                                    @NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aServerData, "ServerData");
     ValueEnforcer.notNull (aOrderColumns, "OrderColumns");
@@ -78,7 +78,7 @@ final class DataTablesServerSortState
     return m_aOrderColumns.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("speed")
   public ICommonsList <DTSSRequestDataOrderColumn> directGetAllOrderColumns ()
   {

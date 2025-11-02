@@ -18,12 +18,12 @@ package com.helger.photon.core.menu.ui;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.grouping.IHCList;
 import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation of {@link IMenuItemRenderer}
@@ -36,36 +36,36 @@ public abstract class AbstractMenuItemRenderer <T extends IHCList <?, HCLI>> imp
 {
   private final Locale m_aContentLocale;
 
-  public AbstractMenuItemRenderer (@Nonnull final Locale aContentLocale)
+  public AbstractMenuItemRenderer (@NonNull final Locale aContentLocale)
   {
     ValueEnforcer.notNull (aContentLocale, "ContentLocale");
     m_aContentLocale = aContentLocale;
   }
 
-  @Nonnull
+  @NonNull
   public final Locale getContentLocale ()
   {
     return m_aContentLocale;
   }
 
-  public void onLevelDown (@Nonnull final T aNewLevel)
+  public void onLevelDown (@NonNull final T aNewLevel)
   {}
 
-  public void onLevelUp (@Nonnull final T aLastLevel)
+  public void onLevelUp (@NonNull final T aLastLevel)
   {}
 
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
+  public void onMenuSeparatorItem (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCLI aLI)
   {}
 
-  public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final HCLI aLI,
+  public void onMenuItemPageItem (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                  @NonNull final HCLI aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
   {}
 
-  public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final HCLI aLI,
+  public void onMenuItemExternalItem (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                      @NonNull final HCLI aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)

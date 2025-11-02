@@ -18,12 +18,12 @@ package com.helger.html.hc.html.script;
 
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.mime.IMimeType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for SCRIPTs
@@ -40,22 +40,22 @@ public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCEl
   @Nullable
   String getType ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setType (@Nullable String sType);
 
-  @Nonnull
-  default IMPLTYPE setType (@Nonnull final IMimeType aType)
+  @NonNull
+  default IMPLTYPE setType (@NonNull final IMimeType aType)
   {
     return setType (aType.getAsString ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setTypeImportMap ()
   {
     return setType (TYPE_IMPORT_MAP);
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setTypeModule ()
   {
     return setType (TYPE_MODULE);
@@ -64,24 +64,24 @@ public interface IHCScript <IMPLTYPE extends IHCScript <IMPLTYPE>> extends IHCEl
   @Nullable
   String getCharset ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setCharset (@Nullable final Charset aCharset)
   {
     return setCharset (aCharset == null ? null : aCharset.name ());
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCharset (@Nullable String sCharset);
 
   @Nullable
   EHCCORSSettings getCrossOrigin ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCrossOrigin (@Nullable EHCCORSSettings eCrossOrigin);
 
   @Nullable
   String getIntegrity ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setIntegrity (@Nullable String sIntegrity);
 }

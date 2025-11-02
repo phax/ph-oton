@@ -22,6 +22,9 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.stream.StreamHelper;
@@ -33,21 +36,18 @@ import com.helger.io.file.FileSystemIterator;
 import com.helger.photon.connect.generic.IConnectorFileBased;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class FileConnector implements IConnectorFileBased <File, File>
 {
   private final IFileConnectionDestination m_aDestination;
   private File m_aChannel;
 
-  public FileConnector (@Nonnull final IFileConnectionDestination aDestination)
+  public FileConnector (@NonNull final IFileConnectionDestination aDestination)
   {
     ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
-  @Nonnull
+  @NonNull
   public IFileConnectionDestination getDestination ()
   {
     return m_aDestination;
@@ -59,8 +59,8 @@ public class FileConnector implements IConnectorFileBased <File, File>
     return m_aChannel;
   }
 
-  @Nonnull
-  public EChange openConnection (@Nonnull final IAuthCredentials aCredentials)
+  @NonNull
+  public EChange openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     // already open?
     if (isConnectionOpen ())
@@ -71,7 +71,7 @@ public class FileConnector implements IConnectorFileBased <File, File>
     return EChange.valueOf (isConnectionOpen ());
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection ()
   {
     if (isConnectionOpen () && m_aDestination.closeConnection (m_aChannel).isChanged ())
@@ -88,8 +88,8 @@ public class FileConnector implements IConnectorFileBased <File, File>
     return m_aChannel != null;
   }
 
-  @Nonnull
-  public ESuccess getData (@Nonnull final String sFilename, @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess getData (@NonNull final String sFilename, @NonNull @WillClose final OutputStream aOS)
   {
     try
     {
@@ -106,8 +106,8 @@ public class FileConnector implements IConnectorFileBased <File, File>
     }
   }
 
-  @Nonnull
-  public ESuccess putData (@Nonnull final String sFilename, @Nonnull @WillClose final InputStream aIS)
+  @NonNull
+  public ESuccess putData (@NonNull final String sFilename, @NonNull @WillClose final InputStream aIS)
   {
     try
     {
@@ -124,8 +124,8 @@ public class FileConnector implements IConnectorFileBased <File, File>
     }
   }
 
-  @Nonnull
-  public ESuccess changeWorkingDirectory (@Nonnull final String sDirectory)
+  @NonNull
+  public ESuccess changeWorkingDirectory (@NonNull final String sDirectory)
   {
     if (m_aChannel != null)
     {
@@ -135,14 +135,14 @@ public class FileConnector implements IConnectorFileBased <File, File>
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess changeToParentDirectory ()
   {
     return changeWorkingDirectory ("..");
   }
 
-  @Nonnull
-  public ESuccess deleteFile (@Nonnull final String sFilename)
+  @NonNull
+  public ESuccess deleteFile (@NonNull final String sFilename)
   {
     if (m_aChannel != null)
     {
@@ -152,8 +152,8 @@ public class FileConnector implements IConnectorFileBased <File, File>
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
-  public ESuccess listFiles (@Nullable final Predicate <File> aFilter, @Nonnull final List <File> aTargetList)
+  @NonNull
+  public ESuccess listFiles (@Nullable final Predicate <File> aFilter, @NonNull final List <File> aTargetList)
   {
     if (m_aChannel != null)
     {

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
@@ -30,9 +33,6 @@ import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.page.AbstractPage;
 import com.helger.photon.uicore.css.CUICoreCSS;
 import com.helger.text.IMultilingualText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base implementation for {@link IWebPage}.
@@ -63,14 +63,14 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @param aDescription
    *        Optional description of the page. May be <code>null</code>.
    */
-  public AbstractWebPage (@Nonnull @Nonempty final String sID,
-                          @Nonnull final IMultilingualText aName,
+  public AbstractWebPage (@NonNull @Nonempty final String sID,
+                          @NonNull final IMultilingualText aName,
                           @Nullable final IMultilingualText aDescription)
   {
     super (sID, aName, aDescription);
   }
 
-  @Nonnull
+  @NonNull
   public final IWebPageCSRFHandler getCSRFHandler ()
   {
     return m_aCSRFHandler;
@@ -82,7 +82,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @param aCSRFHandler
    *        The new handler. May not be <code>null</code>.
    */
-  public final void setCSRFHandler (@Nonnull final IWebPageCSRFHandler aCSRFHandler)
+  public final void setCSRFHandler (@NonNull final IWebPageCSRFHandler aCSRFHandler)
   {
     m_aCSRFHandler = ValueEnforcer.notNull (aCSRFHandler, "CSRFHandler");
   }
@@ -96,8 +96,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
-  @Nonnull
-  protected IValidityIndicator isValidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
+  @NonNull
+  protected IValidityIndicator isValidToDisplayPage (@NonNull final WPECTYPE aWPEC)
   {
     return EValidity.VALID;
   }
@@ -110,7 +110,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        The web page execution context. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void beforeFillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void beforeFillContent (@NonNull final WPECTYPE aWPEC)
   {}
 
   /**
@@ -122,7 +122,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
    */
-  protected abstract void fillContent (@Nonnull WPECTYPE aWPEC);
+  protected abstract void fillContent (@NonNull WPECTYPE aWPEC);
 
   /**
    * This method is called after the main
@@ -132,7 +132,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        The web page execution context. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void afterFillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void afterFillContent (@NonNull final WPECTYPE aWPEC)
   {}
 
   /**
@@ -144,14 +144,14 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        The web page execution context. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onInvalidToDisplayPage (@Nonnull final WPECTYPE aWPEC)
+  protected void onInvalidToDisplayPage (@NonNull final WPECTYPE aWPEC)
   {}
 
   /**
    * Default implementation calling the abstract fillContent method and creating
    * the help node if desired.
    */
-  public final void getContent (@Nonnull final WPECTYPE aWPEC)
+  public final void getContent (@NonNull final WPECTYPE aWPEC)
   {
     if (isValidToDisplayPage (aWPEC).isValid ())
     {
@@ -179,8 +179,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        The executor to be executed. May not be <code>null</code>.
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
    */
-  @Nonnull
-  public static final AjaxFunctionDeclaration addAjax (@Nonnull final IAjaxExecutor aExecutor)
+  @NonNull
+  public static final AjaxFunctionDeclaration addAjax (@NonNull final IAjaxExecutor aExecutor)
   {
     return addAjax (null, aExecutor);
   }
@@ -196,9 +196,9 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    *        The executor to be executed. May not be <code>null</code>.
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
    */
-  @Nonnull
+  @NonNull
   public static final AjaxFunctionDeclaration addAjax (@Nullable final String sPrefix,
-                                                       @Nonnull final IAjaxExecutor aExecutor)
+                                                       @NonNull final IAjaxExecutor aExecutor)
   {
     // null means "random" name
     final String sFuncName = StringHelper.isNotEmpty (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()

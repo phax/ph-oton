@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5.servlet;
 
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
@@ -31,8 +34,6 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
@@ -105,10 +106,10 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
      *        Fine Uploader. Only suitable in case of success. May be
      *        <code>null</code>.
      */
-    protected Response (@Nonnull final ESuccess eSuccess,
+    protected Response (@NonNull final ESuccess eSuccess,
                         @Nullable final String sErrorMsg,
-                        @Nonnull final ETriState ePreventRetry,
-                        @Nonnull final ETriState eReset,
+                        @NonNull final ETriState ePreventRetry,
+                        @NonNull final ETriState eReset,
                         @Nullable final String sNewUUID)
     {
       m_eSuccess = ValueEnforcer.notNull (eSuccess, "Success");
@@ -118,7 +119,7 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
       m_sNewUUID = sNewUUID;
     }
 
-    @Nonnull
+    @NonNull
     protected IJsonObject getAsJson ()
     {
       final JsonObject ret = new JsonObject ();
@@ -134,7 +135,7 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
       return ret;
     }
 
-    @Nonnull
+    @NonNull
     public String getAsJsonString ()
     {
       return getAsJson ().getAsJsonString ();
@@ -145,7 +146,7 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
      *
      * @return Never <code>null</code>.
      */
-    @Nonnull
+    @NonNull
     public static Response createSuccess ()
     {
       return createSuccess (null);
@@ -158,28 +159,28 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
      *        New UUID to use. May be <code>null</code>.
      * @return Never <code>null</code>.
      */
-    @Nonnull
+    @NonNull
     public static Response createSuccess (@Nullable final String sNewUUID)
     {
       return new Response (ESuccess.SUCCESS, null, ETriState.UNDEFINED, ETriState.UNDEFINED, sNewUUID);
     }
 
-    @Nonnull
+    @NonNull
     public static Response createError (@Nullable final String sErrorMsg)
     {
       return createError (sErrorMsg, ETriState.UNDEFINED, ETriState.UNDEFINED);
     }
 
-    @Nonnull
+    @NonNull
     public static Response createError (@Nullable final String sErrorMsg, final boolean bPreventRetry, final boolean bReset)
     {
       return createError (sErrorMsg, ETriState.valueOf (bPreventRetry), ETriState.valueOf (bReset));
     }
 
-    @Nonnull
+    @NonNull
     public static Response createError (@Nullable final String sErrorMsg,
-                                        @Nonnull final ETriState ePreventRetry,
-                                        @Nonnull final ETriState eReset)
+                                        @NonNull final ETriState ePreventRetry,
+                                        @NonNull final ETriState eReset)
     {
       return new Response (ESuccess.FAILURE, sErrorMsg, ePreventRetry, eReset, null);
     }
@@ -195,12 +196,12 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
    *        The request scope.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  protected abstract Response handleUploadedFile (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
+  @NonNull
+  protected abstract Response handleUploadedFile (@NonNull final IRequestWebScopeWithoutResponse aRequestScope);
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     try
     {

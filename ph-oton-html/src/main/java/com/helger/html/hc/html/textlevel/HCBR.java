@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;br&gt; element
@@ -34,7 +34,7 @@ public class HCBR extends AbstractHCElement <HCBR>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return "\n";

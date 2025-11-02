@@ -108,7 +108,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.html.jquery</Automatic-Module-Name>
             <Export-Package>com.helger.html.jquery.*</Export-Package>
-            <Import-Package>!jakarta.annotation.*,*</Import-Package>
+            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.html.hc.config.IHCSettingsProviderSPI</Provide-Capability>
           </instructions>

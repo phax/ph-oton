@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 /**
  * JS function parameter, without a variable type prefix.
@@ -34,7 +34,7 @@ public class JSParam extends AbstractJSVariable <JSParam>
    * @param sName
    *        name of the variable
    */
-  public JSParam (@Nonnull @Nonempty final String sName)
+  public JSParam (@NonNull @Nonempty final String sName)
   {
     super (EJSVarMode.PARAM, sName, null);
   }

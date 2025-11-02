@@ -18,6 +18,7 @@ package com.helger.photon.security.login;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.io.file.FileOperationManager;
 import com.helger.io.file.FilenameHelper;
 import com.helger.photon.io.WebFileIO;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class encapsulates the file IO base directory for the current user
@@ -58,7 +57,7 @@ public final class LoggedInUserStorage
   /**
    * @return The base directory to be used. By default {@link #BASE_DIRECTORY} is used.
    */
-  @Nonnull
+  @NonNull
   public static String getBaseDirectory ()
   {
     return RW_LOCK.readLockedGet ( () -> s_sBaseDirectory);
@@ -70,7 +69,7 @@ public final class LoggedInUserStorage
    * @param sBaseDirectory
    *        The new base directory. May not be <code>null</code> but maybe empty.
    */
-  public static void setBaseDirectory (@Nonnull final String sBaseDirectory)
+  public static void setBaseDirectory (@NonNull final String sBaseDirectory)
   {
     ValueEnforcer.notNull (sBaseDirectory, "BaseDirectory");
 
@@ -80,7 +79,7 @@ public final class LoggedInUserStorage
   /**
    * @return The base directory for all user-related data of the current user
    */
-  @Nonnull
+  @NonNull
   public static File getUserdataDirectory ()
   {
     final String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
@@ -93,8 +92,8 @@ public final class LoggedInUserStorage
    *        <code>null</code> nor empty.
    * @return The base directory for all user-related data
    */
-  @Nonnull
-  public static File getUserdataDirectory (@Nonnull @Nonempty final String sUserID)
+  @NonNull
+  public static File getUserdataDirectory (@NonNull @Nonempty final String sUserID)
   {
     ValueEnforcer.notEmpty (sUserID, "UserID");
 

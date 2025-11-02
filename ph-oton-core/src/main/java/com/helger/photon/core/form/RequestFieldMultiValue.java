@@ -18,12 +18,12 @@ package com.helger.photon.core.form;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.web.scope.util.RequestFieldDataMultiValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class RequestFieldMultiValue extends RequestFieldDataMultiValue implements IHCRequestFieldMultiValue
 {
@@ -34,7 +34,7 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    *        The request field to copy the values from. May not be
    *        <code>null</code>.
    */
-  public RequestFieldMultiValue (@Nonnull final RequestFieldDataMultiValue aRF)
+  public RequestFieldMultiValue (@NonNull final RequestFieldDataMultiValue aRF)
   {
     super (aRF);
   }
@@ -45,7 +45,7 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
-  public RequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName)
+  public RequestFieldMultiValue (@NonNull @Nonempty final String sFieldName)
   {
     super (sFieldName);
   }
@@ -59,7 +59,7 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    *        The default values to use, if no value is present in the request
    *        scope.
    */
-  public RequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName, @Nullable final Collection <String> aDefaultValues)
+  public RequestFieldMultiValue (@NonNull @Nonempty final String sFieldName, @Nullable final Collection <String> aDefaultValues)
   {
     super (sFieldName, aDefaultValues);
   }

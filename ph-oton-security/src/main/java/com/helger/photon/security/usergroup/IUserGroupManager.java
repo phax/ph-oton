@@ -18,6 +18,9 @@ package com.helger.photon.security.usergroup;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -29,9 +32,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.io.mgr.IPhotonManager;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUserManager;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface to manages the available user groups.
@@ -45,13 +45,13 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   /**
    * @return The user manager this manager is acting upon. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IUserManager getUserManager ();
 
   /**
    * @return The role manager this manager is acting upon. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IRoleManager getRoleManager ();
 
   /**
@@ -62,7 +62,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   /**
    * @return The user group callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   CallbackList <IUserGroupModificationCallback> userGroupModificationCallbacks ();
 
@@ -78,7 +78,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return The created user group. May be <code>null</code> if persistence fails.
    */
   @Nullable
-  IUserGroup createNewUserGroup (@Nonnull @Nonempty String sName,
+  IUserGroup createNewUserGroup (@NonNull @Nonempty String sName,
                                  @Nullable String sDescription,
                                  @Nullable Map <String, String> aCustomAttrs);
 
@@ -96,8 +96,8 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return The created user group. May be <code>null</code> if serialization fails.
    */
   @Nullable
-  IUserGroup createPredefinedUserGroup (@Nonnull @Nonempty String sID,
-                                        @Nonnull @Nonempty String sName,
+  IUserGroup createPredefinedUserGroup (@NonNull @Nonempty String sID,
+                                        @NonNull @Nonempty String sName,
                                         @Nullable String sDescription,
                                         @Nullable Map <String, String> aCustomAttrs);
 
@@ -109,7 +109,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group was deleted, {@link EChange#UNCHANGED}
    *         otherwise
    */
-  @Nonnull
+  @NonNull
   EChange deleteUserGroup (@Nullable String sUserGroupID);
 
   /**
@@ -120,7 +120,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group was undeleted, {@link EChange#UNCHANGED}
    *         otherwise.
    */
-  @Nonnull
+  @NonNull
   EChange undeleteUserGroup (@Nullable String sUserGroupID);
 
   /**
@@ -136,14 +136,14 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
   /**
    * @return A non-<code>null</code> list of all available active (=not deleted) user groups
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUserGroup> getAllActiveUserGroups ();
 
   /**
    * @return A non-<code>null</code> list of all deleted user groups
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUserGroup> getAllDeletedUserGroups ();
 
@@ -157,8 +157,8 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group ID was valid, and the new name was different
    *         from the old name
    */
-  @Nonnull
-  EChange renameUserGroup (@Nullable String sUserGroupID, @Nonnull @Nonempty String sNewName);
+  @NonNull
+  EChange renameUserGroup (@Nullable String sUserGroupID, @NonNull @Nonempty String sNewName);
 
   /**
    * Change the modifiable data of a user group
@@ -173,9 +173,9 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        Custom attributes. May be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange setUserGroupData (@Nullable String sUserGroupID,
-                            @Nonnull @Nonempty String sNewName,
+                            @NonNull @Nonempty String sNewName,
                             @Nullable String sNewDescription,
                             @Nullable Map <String, String> aNewCustomAttrs);
 
@@ -190,8 +190,8 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group ID was valid, and the specified user ID was
    *         not already contained.
    */
-  @Nonnull
-  EChange assignUserToUserGroup (@Nullable String sUserGroupID, @Nonnull @Nonempty String sUserID);
+  @NonNull
+  EChange assignUserToUserGroup (@Nullable String sUserGroupID, @NonNull @Nonempty String sUserID);
 
   /**
    * Unassign the specified user ID from the passed user group ID.
@@ -203,7 +203,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group ID was resolved, and the passed user ID was
    *         assigned to the user group
    */
-  @Nonnull
+  @NonNull
   EChange unassignUserFromUserGroup (@Nullable String sUserGroupID, @Nullable String sUserID);
 
   /**
@@ -213,7 +213,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        ID of the user to be unassigned.
    * @return {@link EChange#CHANGED} if the passed user ID was at least assigned to one user group.
    */
-  @Nonnull
+  @NonNull
   EChange unassignUserFromAllUserGroups (@Nullable String sUserID);
 
   /**
@@ -241,7 +241,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        The user ID to search
    * @return A non-<code>null</code>but may be empty collection with all matching user groups.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUserGroup> getAllUserGroupsWithAssignedUser (@Nullable String sUserID);
 
@@ -252,7 +252,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        The user ID to search
    * @return A non-<code>null</code>but may be empty collection with all matching user group IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <String> getAllUserGroupIDsWithAssignedUser (@Nullable String sUserID);
 
@@ -267,8 +267,8 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the passed user group ID was resolved, and the role ID was
    *         not already previously contained
    */
-  @Nonnull
-  EChange assignRoleToUserGroup (@Nullable String sUserGroupID, @Nonnull @Nonempty String sRoleID);
+  @NonNull
+  EChange assignRoleToUserGroup (@Nullable String sUserGroupID, @NonNull @Nonempty String sRoleID);
 
   /**
    * Unassign the passed role ID from the passed user group ID
@@ -280,7 +280,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    * @return {@link EChange#CHANGED} if the user group ID was resolved and the passed role ID was
    *         contained
    */
-  @Nonnull
+  @NonNull
   EChange unassignRoleFromUserGroup (@Nullable String sUserGroupID, @Nullable String sRoleID);
 
   /**
@@ -290,7 +290,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        The role ID to be unassigned
    * @return {@link EChange#CHANGED} if the passed role ID was contained in at least one user group
    */
-  @Nonnull
+  @NonNull
   EChange unassignRoleFromAllUserGroups (@Nullable String sRoleID);
 
   /**
@@ -300,7 +300,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        The role ID to search
    * @return A non-<code>null</code>but may be empty collection with all matching user groups.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUserGroup> getAllUserGroupsWithAssignedRole (@Nullable String sRoleID);
 
@@ -311,7 +311,7 @@ public interface IUserGroupManager extends IPhotonManager <IUserGroup>
    *        The role ID to search
    * @return A non-<code>null</code>but may be empty collection with all matching user group IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <String> getAllUserGroupIDsWithAssignedRole (@Nullable String sRoleID);
 

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringReplace;
 import com.helger.html.resource.IHTMLResourceProvider;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains default JS paths for this project.
@@ -56,17 +56,17 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICtrlsJSPathProvider (@NonNull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().build ();
   }
 
-  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath, final boolean bCanBeBundled)
+  EUICtrlsJSPathProvider (@NonNull @Nonempty final String sPath, final boolean bCanBeBundled)
   {
     m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().bundlable (bCanBeBundled).build ();
   }
 
-  EUICtrlsJSPathProvider (@Nonnull @Nonempty final String sPath,
+  EUICtrlsJSPathProvider (@NonNull @Nonempty final String sPath,
                           final boolean bCanBeBundled,
                           final boolean bIsAlreadyMinified)
   {
@@ -76,7 +76,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
       m_aPP = ConstantJSPathProvider.builder ().path (sPath).minifiedPathFromPath ().bundlable (bCanBeBundled).build ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPath (final boolean bRegular)
   {
@@ -94,8 +94,8 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
     return m_aPP.isBundlable ();
   }
 
-  @Nonnull
-  public IJSPathProvider getInstance (@Nonnull @Nonempty final String sLanguage)
+  @NonNull
+  public IJSPathProvider getInstance (@NonNull @Nonempty final String sLanguage)
   {
     return ConstantJSPathProvider.builder ()
                                  .path (StringReplace.replaceAll (m_aPP.getJSItemPathRegular (), "{0}", sLanguage))

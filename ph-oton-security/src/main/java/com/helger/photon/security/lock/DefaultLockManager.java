@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +48,6 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Default implementation of a locking manager.
  *
@@ -70,7 +69,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   private final ICommonsMap <IDTYPE, ILockInfo> m_aLockedObjs = new CommonsHashMap <> ();
   private final AtomicBoolean m_aSilentMode = new AtomicBoolean (GlobalDebug.DEFAULT_SILENT_MODE);
 
-  public DefaultLockManager (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public DefaultLockManager (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     setCurrentUserIDProvider (aCurrentUserIDProvider);
   }
@@ -85,7 +84,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return m_aSilentMode.getAndSet (bSilentMode);
   }
 
-  public final void setCurrentUserIDProvider (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public final void setCurrentUserIDProvider (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
     m_aRWLock.writeLocked ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
@@ -117,8 +116,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return aLock != null ? aLock.getLockDateTime () : null;
   }
 
-  @Nonnull
-  public final ELocked lockObject (@Nonnull final IDTYPE aObjID)
+  @NonNull
+  public final ELocked lockObject (@NonNull final IDTYPE aObjID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
 
@@ -126,8 +125,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return lockObject (aObjID, sCurrentUserID);
   }
 
-  @Nonnull
-  private LockResult <IDTYPE> _lockObjectAndUnlockOthers (@Nonnull final IDTYPE aObjID,
+  @NonNull
+  private LockResult <IDTYPE> _lockObjectAndUnlockOthers (@NonNull final IDTYPE aObjID,
                                                           @Nullable final String sUserID,
                                                           final boolean bUnlockOtherObjects)
   {
@@ -183,8 +182,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return new LockResult <> (aObjID, eLocked, bIsNewLock, aUnlockedObjects);
   }
 
-  @Nonnull
-  public final ELocked lockObject (@Nonnull final IDTYPE aObjID, @Nullable final String sUserID)
+  @NonNull
+  public final ELocked lockObject (@NonNull final IDTYPE aObjID, @Nullable final String sUserID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
 
@@ -193,8 +192,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return ELocked.valueOf (aLockResult);
   }
 
-  @Nonnull
-  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID)
+  @NonNull
+  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull final IDTYPE aObjID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
 
@@ -202,8 +201,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return lockObjectAndUnlockAllOthers (aObjID, sCurrentUserID);
   }
 
-  @Nonnull
-  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull final IDTYPE aObjID,
+  @NonNull
+  public final LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull final IDTYPE aObjID,
                                                                  @Nullable final String sUserID)
   {
     ValueEnforcer.notNull (aObjID, "ObjectID");
@@ -212,8 +211,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return _lockObjectAndUnlockOthers (aObjID, sUserID, true);
   }
 
-  @Nonnull
-  public final EChange unlockObject (@Nonnull final IDTYPE aObjID)
+  @NonNull
+  public final EChange unlockObject (@NonNull final IDTYPE aObjID)
   {
     final String sCurrentUserID = _getCurrentUserID ();
     if (StringHelper.isEmpty (sCurrentUserID))
@@ -222,8 +221,8 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return unlockObject (sCurrentUserID, aObjID);
   }
 
-  @Nonnull
-  public final EChange unlockObject (@Nonnull final String sUserID, @Nonnull final IDTYPE aObjID)
+  @NonNull
+  public final EChange unlockObject (@NonNull final String sUserID, @NonNull final IDTYPE aObjID)
   {
     ValueEnforcer.notNull (sUserID, "UserID");
     ValueEnforcer.notNull (aObjID, "ObjectID");
@@ -262,14 +261,14 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUser ()
   {
     return unlockAllObjectsOfCurrentUserExcept ((Set <IDTYPE>) null);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable final Set <IDTYPE> aObjectsToKeepLocked)
   {
@@ -277,7 +276,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return unlockAllObjectsOfUserExcept (sCurrentUserID, aObjectsToKeepLocked);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IDTYPE> unlockAllObjectsOfUser (@Nullable final String sUserID)
   {
@@ -285,9 +284,9 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   }
 
   @MustBeLocked (ELockType.WRITE)
-  private void _unlockAllObjects (@Nonnull @Nonempty final String sUserID,
+  private void _unlockAllObjects (@NonNull @Nonempty final String sUserID,
                                   @Nullable final Set <IDTYPE> aObjectsToKeepLocked,
-                                  @Nonnull final List <IDTYPE> aUnlockedObjects)
+                                  @NonNull final List <IDTYPE> aUnlockedObjects)
   {
     // determine locks to be removed
     for (final Map.Entry <IDTYPE, ILockInfo> aEntry : m_aLockedObjs.entrySet ())
@@ -312,7 +311,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                                          aUnlockedObjects);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable final String sUserID,
                                                                    @Nullable final Set <IDTYPE> aObjectsToKeepLocked)
@@ -362,21 +361,21 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return getLockUserID (aObjID) != null;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsSet <IDTYPE> getAllLockedObjects ()
   {
     return m_aRWLock.readLockedGet (m_aLockedObjs::copyOfKeySet);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ()
   {
     return m_aRWLock.readLockedGet (m_aLockedObjs::getClone);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <IDTYPE> getAllLockedObjectsOfCurrentUser ()
   {
@@ -384,7 +383,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     return getAllLockedObjectsOfUser (sCurrentUserID);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable final String sUserID)
   {

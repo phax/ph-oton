@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.hierarchy.visit.IHierarchyVisitorCallback;
 import com.helger.tree.withid.DefaultTreeItemWithID;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for {@link MenuItemDeterminatorCallback}.
@@ -34,7 +34,7 @@ public interface IMenuItemDeterminatorCallback extends IHierarchyVisitorCallback
    * @return The menu tree on which this item determinator works. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IMenuTree getMenuTree ();
 
   /**
@@ -42,7 +42,7 @@ public interface IMenuItemDeterminatorCallback extends IHierarchyVisitorCallback
    *         item ID and the value is the expansion state of the item (and never
    *         <code>null</code>).
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsMap <String, Boolean> getAllItemIDs ();
 }

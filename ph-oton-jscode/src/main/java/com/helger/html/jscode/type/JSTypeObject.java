@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
-import com.helger.html.jscode.JSInvocation;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSInvocation;
 
 /**
  * Contains the JS built-in type 'Object'
@@ -32,109 +32,109 @@ public class JSTypeObject extends JSPrimitiveType
     super ("Object");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation assign ()
   {
     return global ().invoke ("assign");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation create ()
   {
     return global ().invoke ("create");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation defineProperty ()
   {
     return global ().invoke ("defineProperty");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation defineProperties ()
   {
     return global ().invoke ("defineProperties");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation freeze ()
   {
     return global ().invoke ("freeze");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation getOwnPropertyDescriptor ()
   {
     return global ().invoke ("getOwnPropertyDescriptor");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation getOwnPropertyNames ()
   {
     return global ().invoke ("getOwnPropertyNames");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation getOwnPropertySymbols ()
   {
     return global ().invoke ("getOwnPropertySymbols");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation getPrototypeOf ()
   {
     return global ().invoke ("getPrototypeOf");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation is ()
   {
     return global ().invoke ("is");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation isExtensible ()
   {
     return global ().invoke ("isExtensible");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation isFrozen ()
   {
     return global ().invoke ("isFrozen");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation isSealed ()
   {
     return global ().invoke ("isSealed");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation keys ()
   {
     return global ().invoke ("keys");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation observe ()
   {
     return global ().invoke ("observe");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation preventExtensions ()
   {
     return global ().invoke ("preventExtensions");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation seal ()
   {
     return global ().invoke ("seal");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation setPrototypeOf ()
   {
     return global ().invoke ("setPrototypeOf");

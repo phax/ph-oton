@@ -18,13 +18,13 @@ package com.helger.photon.api;
 
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.rt.StackTraceHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.mime.CMimeType;
 import com.helger.servlet.response.UnifiedResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract implementation of {@link IAPIExceptionMapper} with some helper
@@ -35,21 +35,21 @@ import jakarta.annotation.Nullable;
  */
 public abstract class AbstractAPIExceptionMapper implements IAPIExceptionMapper
 {
-  @Nonnull
-  public static String getResponseEntityWithoutStackTrace (@Nonnull final Throwable ex)
+  @NonNull
+  public static String getResponseEntityWithoutStackTrace (@NonNull final Throwable ex)
   {
     // The class name does not really matter
     return ex.getMessage ();
   }
 
-  @Nonnull
-  public static String getResponseEntityWithStackTrace (@Nonnull final Throwable ex)
+  @NonNull
+  public static String getResponseEntityWithStackTrace (@NonNull final Throwable ex)
   {
     // Includes class name and message
     return StackTraceHelper.getStackAsString (ex);
   }
 
-  protected static void setSimpleTextResponse (@Nonnull final UnifiedResponse aUnifiedResponse,
+  protected static void setSimpleTextResponse (@NonNull final UnifiedResponse aUnifiedResponse,
                                                final int nStatusCode,
                                                @Nullable final String sContent)
   {

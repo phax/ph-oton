@@ -19,6 +19,9 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.trait.IGenericImplTrait;
@@ -29,9 +32,6 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.xml.microdom.IMicroQName;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends IJSExpression, IJSStatement, IGenericImplTrait <IMPLTYPE>
 {
   /**
@@ -41,8 +41,8 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
-  IMPLTYPE arg (@Nonnull final IJSExpression aExpr);
+  @NonNull
+  IMPLTYPE arg (@NonNull final IJSExpression aExpr);
 
   /**
    * Adds a literal argument. Short for {@code arg(JSExpr.lit(bArgument))}
@@ -51,7 +51,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final boolean bValue)
   {
     return arg (JSExpr.lit (bValue));
@@ -64,7 +64,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final char cValue)
   {
     return arg (JSExpr.lit (cValue));
@@ -77,7 +77,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final double dValue)
   {
     return arg (JSExpr.lit (dValue));
@@ -90,7 +90,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final float fValue)
   {
     return arg (JSExpr.lit (fValue));
@@ -103,7 +103,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final int nValue)
   {
     return arg (JSExpr.lit (nValue));
@@ -116,7 +116,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (final long nValue)
   {
     return arg (JSExpr.lit (nValue));
@@ -130,55 +130,55 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argOrNull (@Nullable final IJSExpression aExpr)
   {
     return aExpr == null ? argNull () : arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE argOrNull (@Nullable final Integer aValue)
   {
     return aValue == null ? argNull () : arg (aValue.intValue ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE argOrNull (@Nullable final Long aValue)
   {
     return aValue == null ? argNull () : arg (aValue.longValue ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final String sValue)
   {
     return sValue == null ? argNull () : arg (JSExpr.lit (sValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final IJson aValue)
   {
     return aValue == null ? argNull () : arg (JSExpr.json (aValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final IMicroQName aValue)
   {
     return aValue == null ? argNull () : arg (JSExpr.lit (aValue.getName ()));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final BigDecimal aValue)
   {
     return aValue == null ? argNull () : arg (JSExpr.lit (aValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final BigInteger aValue)
   {
     return aValue == null ? argNull () : arg (JSExpr.lit (aValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final EHTMLElement... aElements)
   {
     if (aElements == null)
@@ -194,7 +194,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
     return arg (aSB.toString ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final Iterable <EHTMLElement> aElements)
   {
     if (aElements == null)
@@ -210,7 +210,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
     return arg (aSB.toString ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final String... aElements)
   {
     if (aElements == null)
@@ -226,7 +226,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
     return arg (aSB.toString ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable final IHCNode aHCNode)
   {
     return aHCNode == null ? argNull () : arg (HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
@@ -237,7 +237,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argNull ()
   {
     return arg (JSExpr.NULL);
@@ -248,7 +248,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argThis ()
   {
     return arg (JSExpr.THIS);
@@ -263,7 +263,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argOrNull (@Nonnegative final int nIndex, @Nullable final IJSExpression aArgument)
   {
     return aArgument == null ? argNull (nIndex) : arg (nIndex, aArgument);
@@ -278,8 +278,8 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
-  IMPLTYPE arg (@Nonnegative final int nIndex, @Nonnull final IJSExpression aArgument);
+  @NonNull
+  IMPLTYPE arg (@Nonnegative final int nIndex, @NonNull final IJSExpression aArgument);
 
   /**
    * Adds a literal argument. Short for {@code arg(nIndex, JSExpr.lit(v))}
@@ -290,7 +290,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final boolean bValue)
   {
     return arg (nIndex, JSExpr.lit (bValue));
@@ -305,7 +305,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final char cValue)
   {
     return arg (nIndex, JSExpr.lit (cValue));
@@ -320,7 +320,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final double dValue)
   {
     return arg (nIndex, JSExpr.lit (dValue));
@@ -335,7 +335,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final float fValue)
   {
     return arg (nIndex, JSExpr.lit (fValue));
@@ -350,7 +350,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final int nValue)
   {
     return arg (nIndex, JSExpr.lit (nValue));
@@ -365,31 +365,31 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        argument value
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, final long nValue)
   {
     return arg (nIndex, JSExpr.lit (nValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, @Nullable final Integer aValue)
   {
     return aValue == null ? argNull (nIndex) : arg (nIndex, aValue.intValue ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, @Nullable final Long aValue)
   {
     return aValue == null ? argNull (nIndex) : arg (nIndex, aValue.longValue ());
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, @Nullable final String sValue)
   {
     return sValue == null ? argNull (nIndex) : arg (nIndex, JSExpr.lit (sValue));
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nonnegative final int nIndex, @Nullable final IJson aValue)
   {
     return aValue == null ? argNull (nIndex) : arg (nIndex, JSExpr.json (aValue));
@@ -402,7 +402,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Index to insert
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argNull (@Nonnegative final int nIndex)
   {
     return arg (nIndex, JSExpr.NULL);
@@ -415,7 +415,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Index to insert
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argThis (@Nonnegative final int nIndex)
   {
     return arg (nIndex, JSExpr.THIS);
@@ -428,7 +428,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE args (@Nullable final Iterable <? extends IJSExpression> aExprs)
   {
     if (aExprs != null)
@@ -444,7 +444,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE args (@Nullable final IJSExpression... aExprs)
   {
     if (aExprs != null)
@@ -460,7 +460,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argsOrNull (@Nullable final Iterable <? extends IJSExpression> aExprs)
   {
     if (aExprs != null)
@@ -476,7 +476,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE argssOrNull (@Nullable final IJSExpression... aExprs)
   {
     if (aExprs != null)
@@ -490,7 +490,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *
    * @return If there's no arguments, an empty array will be returned.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IJSExpression> args ();
 
@@ -514,6 +514,6 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllArgs ();
 }

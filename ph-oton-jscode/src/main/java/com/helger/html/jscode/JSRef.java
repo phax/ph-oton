@@ -16,15 +16,15 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Global Reference
@@ -43,19 +43,19 @@ public class JSRef extends AbstractJSAssignmentTarget
    */
   private AbstractJSVariable <?> m_aVar;
 
-  public JSRef (@Nonnull @Nonempty final String sName)
+  public JSRef (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
     m_sName = sName;
   }
 
-  public JSRef (@Nonnull final AbstractJSVariable <?> aVar)
+  public JSRef (@NonNull final AbstractJSVariable <?> aVar)
   {
     m_aVar = ValueEnforcer.notNull (aVar, "Var");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String name ()
   {
@@ -84,7 +84,7 @@ public class JSRef extends AbstractJSAssignmentTarget
     return m_aVar;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (name ());
   }

@@ -18,6 +18,9 @@ package com.helger.html.js.tostring;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper around JavaScript types.
@@ -106,7 +106,7 @@ public class JSType implements Serializable
    * @param eType
    *        The basic type. May not be <code>null</code>.
    */
-  protected JSType (@Nonnull final EJSType eType)
+  protected JSType (@NonNull final EJSType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
   }

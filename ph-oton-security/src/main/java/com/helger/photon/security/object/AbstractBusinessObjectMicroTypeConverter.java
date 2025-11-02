@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.ContainsSoftMigration;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
@@ -29,9 +32,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for object related micro type conversion.
@@ -55,8 +55,8 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
   protected AbstractBusinessObjectMicroTypeConverter ()
   {}
 
-  public static final void setObjectFields (@Nonnull final IBusinessObject aValue,
-                                            @Nonnull final IMicroElement aElement)
+  public static final void setObjectFields (@NonNull final IBusinessObject aValue,
+                                            @NonNull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_ID, aValue.getID ());
     aElement.setAttributeWithConversion (ATTR_CREATIONLDT, aValue.getCreationDateTime ());
@@ -86,9 +86,9 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
    */
   @Nullable
   @ContainsSoftMigration
-  public static LocalDateTime readAsLocalDateTime (@Nonnull final IMicroElement aElement,
-                                                   @Nonnull final IMicroQName aLDTName,
-                                                   @Nonnull final String aDTName)
+  public static LocalDateTime readAsLocalDateTime (@NonNull final IMicroElement aElement,
+                                                   @NonNull final IMicroQName aLDTName,
+                                                   @NonNull final String aDTName)
   {
     LocalDateTime aLDT = aElement.getAttributeValueWithConversion (aLDTName, LocalDateTime.class);
     if (aLDT == null)
@@ -100,8 +100,8 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
     return aLDT;
   }
 
-  @Nonnull
-  public static final StubObject getStubObject (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public static final StubObject getStubObject (@NonNull final IMicroElement aElement)
   {
     // ID
     final String sID = aElement.getAttributeValue (ATTR_ID);

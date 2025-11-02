@@ -18,6 +18,8 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +34,6 @@ import com.helger.mime.EMimeContentType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single entry within an ATOM 1.0 feed.<br>
@@ -62,26 +61,26 @@ public class FeedEntry extends AbstractFeedElement
   public FeedEntry ()
   {}
 
-  public void addAuthor (@Nonnull final FeedPerson aAuthor)
+  public void addAuthor (@NonNull final FeedPerson aAuthor)
   {
     ValueEnforcer.notNull (aAuthor, "Author");
     m_aAuthors.add (aAuthor);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FeedPerson> getAllAuthors ()
   {
     return m_aAuthors.getClone ();
   }
 
-  public void addCategory (@Nonnull final FeedCategory aCategory)
+  public void addCategory (@NonNull final FeedCategory aCategory)
   {
     ValueEnforcer.notNull (aCategory, "Category");
     m_aCategories.add (aCategory);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FeedCategory> getAllCategories ()
   {
@@ -99,13 +98,13 @@ public class FeedEntry extends AbstractFeedElement
     return m_aContent;
   }
 
-  public void addContributor (@Nonnull final FeedPerson aContributor)
+  public void addContributor (@NonNull final FeedPerson aContributor)
   {
     ValueEnforcer.notNull (aContributor, "Contributor");
     m_aContributors.add (aContributor);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FeedPerson> getAllContributors ()
   {
@@ -123,13 +122,13 @@ public class FeedEntry extends AbstractFeedElement
     return m_aID;
   }
 
-  public void addLink (@Nonnull final FeedLink aLink)
+  public void addLink (@NonNull final FeedLink aLink)
   {
     ValueEnforcer.notNull (aLink, "Link");
     m_aLinks.add (aLink);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FeedLink> getAllLinks ()
   {

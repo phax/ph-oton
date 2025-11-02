@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains default JS paths for this project.
@@ -53,7 +53,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  EUICoreJSPathProvider (@Nonnull @Nonempty final String sPath)
+  EUICoreJSPathProvider (@NonNull @Nonempty final String sPath)
   {
     m_aPP = ConstantJSPathProvider.builder ()
                                   .path (sPath)
@@ -62,7 +62,7 @@ public enum EUICoreJSPathProvider implements IJSPathProvider
                                   .build ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPath (final boolean bRegular)
   {

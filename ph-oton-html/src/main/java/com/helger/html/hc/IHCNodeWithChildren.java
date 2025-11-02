@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.html.hc.impl.HCTextNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special node interface for objects containing other objects
@@ -40,7 +40,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    *        Child text to add. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addChild (@Nullable final String sText)
   {
     // Empty text is OK!!!
@@ -56,7 +56,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    *        Child text to add. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setChild (@Nullable final String sText)
   {
     removeAllChildren ();
@@ -70,7 +70,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    *        Child text to add. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addChildAt (@Nonnegative final int nIndex, @Nullable final String sText)
   {
     // Empty text is OK!!!
@@ -86,7 +86,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    *        Child to add. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   @DevelopersNote ("Use addChild instead")
   @Deprecated (forRemoval = false)
   default IMPLTYPE addChildren (@Nullable final String sChild)
@@ -99,7 +99,7 @@ public interface IHCNodeWithChildren <IMPLTYPE extends IHCNodeWithChildren <IMPL
    *        Children to add. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addChildren (@Nullable final String... aChildren)
   {
     if (aChildren != null)

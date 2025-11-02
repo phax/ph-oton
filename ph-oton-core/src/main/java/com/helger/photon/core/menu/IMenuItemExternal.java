@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.url.ISimpleURL;
 import com.helger.url.provider.IHasSimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single menu item referencing an arbitrary URL.
@@ -32,19 +32,19 @@ public interface IMenuItemExternal extends IMenuItem
   /**
    * {@inheritDoc}
    */
-  @Nonnull
+  @NonNull
   IMenuItemExternal setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
    * @return The URL provider used internally. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IHasSimpleURL getURLProvider ();
 
   /**
    * @return The referenced external URL. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   default ISimpleURL getURL ()
   {
     return getURLProvider ().getSimpleURL ();
@@ -53,6 +53,6 @@ public interface IMenuItemExternal extends IMenuItem
   /*
    * Change return type
    */
-  @Nonnull
+  @NonNull
   IMenuItemExternal setTarget (@Nullable String sTarget);
 }

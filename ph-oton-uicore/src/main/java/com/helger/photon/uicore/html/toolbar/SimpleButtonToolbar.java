@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.html.toolbar;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.html.forms.HCButton;
 import com.helger.html.hc.html.forms.HCButton_Submit;
@@ -26,9 +29,6 @@ import com.helger.photon.uicore.icon.IIcon;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Simple button toolbar
  *
@@ -38,24 +38,24 @@ public class SimpleButtonToolbar extends AbstractHCDiv <SimpleButtonToolbar> imp
 {
   private final SimpleURL m_aSelfHref;
 
-  public SimpleButtonToolbar (@Nonnull final ILayoutExecutionContext aLEC)
+  public SimpleButtonToolbar (@NonNull final ILayoutExecutionContext aLEC)
   {
     this (aLEC.getSelfHref ());
   }
 
-  public SimpleButtonToolbar (@Nonnull final SimpleURL aSelfHref)
+  public SimpleButtonToolbar (@NonNull final SimpleURL aSelfHref)
   {
     m_aSelfHref = ValueEnforcer.notNull (aSelfHref, "SelfHref");
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public ISimpleURL getSelfHref ()
   {
     return m_aSelfHref;
   }
 
-  @Nonnull
+  @NonNull
   public final HCButton addAndReturnButton (@Nullable final String sCaption,
                                             @Nullable final IHasJSCode aOnClick,
                                             @Nullable final IIcon aIcon)
@@ -65,7 +65,7 @@ public class SimpleButtonToolbar extends AbstractHCDiv <SimpleButtonToolbar> imp
                                              .setOnClick (aOnClick));
   }
 
-  @Nonnull
+  @NonNull
   public final HCButton_Submit addAndReturnSubmitButton (@Nullable final String sCaption,
                                                          @Nullable final IHasJSCode aOnClick,
                                                          @Nullable final IIcon aIcon)

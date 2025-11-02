@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.compare.ESortOrder;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.jscode.JSArray;
-
-import jakarta.annotation.Nonnull;
 
 public class DataTablesOrder
 {
@@ -31,14 +31,14 @@ public class DataTablesOrder
   public DataTablesOrder ()
   {}
 
-  @Nonnull
-  public DataTablesOrder addColumn (@Nonnegative final int nIndex, @Nonnull final ESortOrder eSortOrder)
+  @NonNull
+  public DataTablesOrder addColumn (@Nonnegative final int nIndex, @NonNull final ESortOrder eSortOrder)
   {
     m_aColumns.add (new DataTablesOrderColumn (nIndex, eSortOrder));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSArray getAsJS ()
   {
     final JSArray ret = new JSArray ();

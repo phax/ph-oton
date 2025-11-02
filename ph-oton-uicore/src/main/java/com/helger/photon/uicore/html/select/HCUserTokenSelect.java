@@ -19,19 +19,19 @@ package com.helger.photon.uicore.html.select;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.name.IHasDisplayName;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.user.IUserToken;
 import com.helger.text.compare.ComparatorHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCUserTokenSelect extends HCExtSelect
 {
-  public HCUserTokenSelect (@Nonnull final IHCRequestField aRF,
-                            @Nonnull final Locale aDisplayLocale,
+  public HCUserTokenSelect (@NonNull final IHCRequestField aRF,
+                            @NonNull final Locale aDisplayLocale,
                             @Nullable final Predicate <? super IUserToken> aFilter)
   {
     super (aRF);

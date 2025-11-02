@@ -19,13 +19,13 @@ package com.helger.photon.core.userdata;
 import java.io.File;
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.io.resource.FileSystemResource;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single web accessible object, that was provided by the user.
@@ -42,7 +42,7 @@ public interface IUserDataObject extends Serializable
    *         starting with a "/". This method does not contain any server
    *         specific context path!
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getPath ();
 
@@ -61,9 +61,9 @@ public interface IUserDataObject extends Serializable
    *         <code>/context/user/file.txt</code> if this object points to
    *         <code>/file.txt</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  default String getAsURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  default String getAsURLPath (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return UserDataManager.getURLPath (aRequestScope, this);
   }
@@ -77,8 +77,8 @@ public interface IUserDataObject extends Serializable
    *         <code>/context/user/file.txt</code> if this object points to
    *         <code>/file.txt</code>.
    */
-  @Nonnull
-  default SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  default SimpleURL getAsURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return UserDataManager.getURL (aRequestScope, this);
   }
@@ -87,7 +87,7 @@ public interface IUserDataObject extends Serializable
    * @return The file system resource underlying this object. Never
    *         <code>null</code> but potentially not existing.
    */
-  @Nonnull
+  @NonNull
   default FileSystemResource getAsResource ()
   {
     return UserDataManager.getResource (this);
@@ -99,7 +99,7 @@ public interface IUserDataObject extends Serializable
    * @return The matching File. No check is performed, whether the file exists
    *         or not!
    */
-  @Nonnull
+  @NonNull
   default File getAsFile ()
   {
     return UserDataManager.getFile (this);
@@ -116,6 +116,6 @@ public interface IUserDataObject extends Serializable
    *         original. An implementation may chose to return <code>this</code>
    *         if the path is identical to the path of this UDO.
    */
-  @Nonnull
-  IUserDataObject getCloneWithDifferentPath (@Nonnull @Nonempty String sPath);
+  @NonNull
+  IUserDataObject getCloneWithDifferentPath (@NonNull @Nonempty String sPath);
 }

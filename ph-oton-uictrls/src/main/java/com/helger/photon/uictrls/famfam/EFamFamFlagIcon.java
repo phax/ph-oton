@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.famfam;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
@@ -29,9 +32,6 @@ import com.helger.html.resource.css.ICSSPathProvider;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.uicore.icon.IIcon;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains all free FamFam 0.13 icons
@@ -293,27 +293,27 @@ public enum EFamFamFlagIcon implements IIcon, IHasID <String>
   private final String m_sID;
   private final String m_sCSSClass;
 
-  EFamFamFlagIcon (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sCSSClass)
+  EFamFamFlagIcon (@NonNull @Nonempty final String sID, @NonNull @Nonempty final String sCSSClass)
   {
     m_sID = sID;
     m_sCSSClass = sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSClass ()
   {
     return m_sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   public IHCElement <?> getAsNode ()
   {
     final HCSpan ret = new HCSpan ();
@@ -328,7 +328,7 @@ public enum EFamFamFlagIcon implements IIcon, IHasID <String>
     return EnumHelper.getFromIDCaseInsensitiveOrNull (EFamFamFlagIcon.class, sID);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EUICtrlsCSSPathProvider.FAMFAM_FLAGS);

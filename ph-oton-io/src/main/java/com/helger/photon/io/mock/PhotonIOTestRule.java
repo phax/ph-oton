@@ -18,6 +18,7 @@ package com.helger.photon.io.mock;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.rules.ExternalResource;
 
 import com.helger.annotation.Nonempty;
@@ -26,8 +27,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.dao.AbstractDAO;
 import com.helger.photon.io.WebFileIO;
 import com.helger.scope.mock.ScopeTestRule;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Non-web scope aware test rule, with a defined storage root directory
@@ -55,7 +54,7 @@ public class PhotonIOTestRule extends ExternalResource
    * @param aDataPath
    *        The data path to be used. May not be <code>null</code>.
    */
-  public PhotonIOTestRule (@Nonnull final File aDataPath)
+  public PhotonIOTestRule (@NonNull final File aDataPath)
   {
     this (aDataPath, aDataPath.getAbsolutePath ());
   }
@@ -68,7 +67,7 @@ public class PhotonIOTestRule extends ExternalResource
    * @param sServletContextPath
    *        The servlet context path to be used. May not be <code>null</code>.
    */
-  public PhotonIOTestRule (@Nonnull final File aDataPath, @Nonnull @Nonempty final String sServletContextPath)
+  public PhotonIOTestRule (@NonNull final File aDataPath, @NonNull @Nonempty final String sServletContextPath)
   {
     ValueEnforcer.notNull (aDataPath, "DataPath");
     ValueEnforcer.notNull (sServletContextPath, "ServletContextPath");
@@ -79,7 +78,7 @@ public class PhotonIOTestRule extends ExternalResource
   /**
    * @return The used data path. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final File getDataPath ()
   {
     return m_aDataPath;
@@ -88,7 +87,7 @@ public class PhotonIOTestRule extends ExternalResource
   /**
    * @return The used servlet context path. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getServletContextPath ()
   {

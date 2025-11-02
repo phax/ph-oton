@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.autosize;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.forms.AbstractHCTextArea;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * jQuery autosize plugin from
@@ -46,13 +46,13 @@ public class HCTextAreaAutosize extends AbstractHCTextArea <HCTextAreaAutosize>
     super (sName, sValue);
   }
 
-  public HCTextAreaAutosize (@Nonnull final IHCRequestField aRF)
+  public HCTextAreaAutosize (@NonNull final IHCRequestField aRF)
   {
     super (aRF);
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.AUTOSIZE3);

@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.base.enforce.ValueEnforcer;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.base.enforce.ValueEnforcer;
 
 /**
  * Indicates that a declaration is already created.
@@ -29,7 +29,7 @@ public class JSNameAlreadyExistsException extends RuntimeException
 {
   private final IJSDeclaration m_aExisting;
 
-  public JSNameAlreadyExistsException (@Nonnull final IJSDeclaration aExisting)
+  public JSNameAlreadyExistsException (@NonNull final IJSDeclaration aExisting)
   {
     super ("JS name '" + aExisting.name () + "' is already in use!");
     m_aExisting = ValueEnforcer.notNull (aExisting, "Existing");
@@ -40,7 +40,7 @@ public class JSNameAlreadyExistsException extends RuntimeException
    *
    * @return This method always return non-null valid object.
    */
-  @Nonnull
+  @NonNull
   public IJSDeclaration getExisting ()
   {
     return m_aExisting;

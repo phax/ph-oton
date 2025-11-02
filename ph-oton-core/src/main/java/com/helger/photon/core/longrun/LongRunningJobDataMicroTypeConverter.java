@@ -19,6 +19,9 @@ package com.helger.photon.core.longrun;
 import java.io.File;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.ETriState;
 import com.helger.json.serialize.JsonReader;
 import com.helger.text.IMultilingualText;
@@ -29,9 +32,6 @@ import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Micro type converter for class {@link LongRunningJobData}.
@@ -50,9 +50,9 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   private static final String ATTR_TYPE = "type";
 
   @Nullable
-  public IMicroElement convertToMicroElement (@Nonnull final LongRunningJobData aValue,
+  public IMicroElement convertToMicroElement (@NonNull final LongRunningJobData aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement eJobData = new MicroElement (sNamespaceURI, sTagName);
     eJobData.setAttribute (ATTR_ID, aValue.getID ());
@@ -76,7 +76,7 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   }
 
   @Nullable
-  public LongRunningJobData convertToNative (@Nonnull final IMicroElement aElement)
+  public LongRunningJobData convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_ID);
     final IMultilingualText aJobDescription = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_DESCRIPTION),

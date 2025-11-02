@@ -18,9 +18,9 @@ package com.helger.photon.audit.v2.pipeline;
 
 import java.io.Serializable;
 
-import com.helger.photon.audit.v2.domain.AuditEvent;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.photon.audit.v2.domain.AuditEvent;
 
 /**
  * Abstract {@link AuditEvent} handler.
@@ -38,5 +38,5 @@ public interface IAuditEventConsumer extends Serializable
    *         in case something goes wrong. This exception will be handled
    *         separately.
    */
-  void consumeAuditEvent (@Nonnull AuditEvent aAuditEvent);
+  void consumeAuditEvent (@NonNull AuditEvent aAuditEvent);
 }

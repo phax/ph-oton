@@ -18,10 +18,10 @@ package com.helger.photon.exchange.bulkexport;
 
 import java.io.OutputStream;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.WillClose;
 import com.helger.base.state.ESuccess;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Generic interface for exporting records to an OutputStream.
@@ -41,6 +41,6 @@ public interface IExporter
    * @return {@link ESuccess#SUCCESS} if at lease one record was provided and
    *         saving was successful.
    */
-  @Nonnull
-  ESuccess exportRecords (@Nonnull IExportRecordProvider aProvider, @Nonnull @WillClose OutputStream aOS);
+  @NonNull
+  ESuccess exportRecords (@NonNull IExportRecordProvider aProvider, @NonNull @WillClose OutputStream aOS);
 }

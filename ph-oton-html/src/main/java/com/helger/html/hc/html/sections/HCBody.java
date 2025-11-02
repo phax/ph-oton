@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.sections;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.string.StringHelper;
@@ -30,8 +32,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.xml.microdom.IMicroElement;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Represents an HTML &lt;body&gt; element
  *
@@ -45,7 +45,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
 
@@ -72,7 +72,7 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement eHead, @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement eHead, @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (eHead, aConversionSettings);
   }

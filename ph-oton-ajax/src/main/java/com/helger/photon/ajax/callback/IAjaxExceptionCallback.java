@@ -16,12 +16,12 @@
  */
 package com.helger.photon.ajax.callback;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.callback.ICallback;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to handle thrown exception objects from the Ajax servlet.
@@ -45,9 +45,9 @@ public interface IAjaxExceptionCallback extends ICallback
    * @param ex
    *        The exception. Never <code>null</code>.
    */
-  void onAjaxExecutionException (@Nonnull IAjaxInvoker aAjaxInvoker,
-                                 @Nonnull String sFunctionName,
-                                 @Nonnull IAjaxExecutor aAjaxExecutor,
-                                 @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                 @Nonnull Exception ex);
+  void onAjaxExecutionException (@NonNull IAjaxInvoker aAjaxInvoker,
+                                 @NonNull String sFunctionName,
+                                 @NonNull IAjaxExecutor aAjaxExecutor,
+                                 @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                 @NonNull Exception ex);
 }

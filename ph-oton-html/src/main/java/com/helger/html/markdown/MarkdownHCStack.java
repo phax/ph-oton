@@ -16,6 +16,9 @@
  */
 package com.helger.html.markdown;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -47,9 +50,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.js.UnparsedJSCodeProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @NotThreadSafe
 final class MarkdownHCStack
 {
@@ -60,14 +60,14 @@ final class MarkdownHCStack
     m_aStack.push (new HCNodeList ());
   }
 
-  public void push (@Nonnull final IHCNode aNode)
+  public void push (@NonNull final IHCNode aNode)
   {
     append (aNode);
     m_aStack.push (aNode);
   }
 
-  @Nonnull
-  public <T extends IHCNodeWithChildren <T>> T push (@Nonnull final T aNode)
+  @NonNull
+  public <T extends IHCNodeWithChildren <T>> T push (@NonNull final T aNode)
   {
     append (aNode);
     m_aStack.push (aNode);
@@ -82,7 +82,7 @@ final class MarkdownHCStack
     m_aStack.pop ();
   }
 
-  @Nonnull
+  @NonNull
   public HCNodeList getRoot ()
   {
     return (HCNodeList) m_aStack.get (0);
@@ -106,7 +106,7 @@ final class MarkdownHCStack
       append (new HCTextNode (s));
   }
 
-  public void append (@Nonnull final IHCNode aNode)
+  public void append (@NonNull final IHCNode aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
 

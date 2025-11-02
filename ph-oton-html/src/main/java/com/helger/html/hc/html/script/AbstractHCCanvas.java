@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.CGlobal;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * BAse class for HTML &lt;canvas&gt; elements.
@@ -49,7 +49,7 @@ public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLT
     return m_nHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHeight (final long nHeight)
   {
     m_nHeight = nHeight;
@@ -61,7 +61,7 @@ public abstract class AbstractHCCanvas <IMPLTYPE extends AbstractHCCanvas <IMPLT
     return m_nWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidth (final long nWidth)
   {
     m_nWidth = nWidth;

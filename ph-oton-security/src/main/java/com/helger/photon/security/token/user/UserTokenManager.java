@@ -19,6 +19,9 @@ package com.helger.photon.security.token.user;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -34,9 +37,6 @@ import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.object.AccessTokenList;
 import com.helger.photon.security.user.IUser;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A manager for {@link UserToken} objects.
  *
@@ -46,22 +46,22 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
 {
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserTokenManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public UserTokenManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (UserToken.class, sFilename);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
+  @NonNull
   public UserToken createUserToken (@Nullable final String sTokenString,
                                     @Nullable final Map <String, String> aCustomAttrs,
-                                    @Nonnull final IUser aUser,
+                                    @NonNull final IUser aUser,
                                     @Nullable final String sDescription)
   {
     final UserToken aUserToken = new UserToken (sTokenString, aCustomAttrs, aUser, sDescription);
@@ -75,7 +75,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return aUserToken;
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserToken (@Nullable final String sUserTokenID,
                                   @Nullable final Map <String, String> aNewCustomAttrs,
                                   @Nullable final String sNewDescription)
@@ -112,7 +112,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUserToken (@Nullable final String sUserTokenID)
   {
     final UserToken aUserToken = getOfID (sUserTokenID);
@@ -144,11 +144,11 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange createNewAccessToken (@Nullable final String sUserTokenID,
-                                       @Nonnull @Nonempty final String sRevocationUserID,
-                                       @Nonnull final LocalDateTime aRevocationDT,
-                                       @Nonnull @Nonempty final String sRevocationReason,
+                                       @NonNull @Nonempty final String sRevocationUserID,
+                                       @NonNull final LocalDateTime aRevocationDT,
+                                       @NonNull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
     final UserToken aUserToken = getOfID (sUserTokenID);
@@ -186,11 +186,11 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange revokeAccessToken (@Nullable final String sUserTokenID,
-                                    @Nonnull @Nonempty final String sRevocationUserID,
-                                    @Nonnull final LocalDateTime aRevocationDT,
-                                    @Nonnull @Nonempty final String sRevocationReason)
+                                    @NonNull @Nonempty final String sRevocationUserID,
+                                    @NonNull final LocalDateTime aRevocationDT,
+                                    @NonNull @Nonempty final String sRevocationReason)
   {
     final UserToken aUserToken = getOfID (sUserTokenID);
     if (aUserToken == null)
@@ -229,7 +229,7 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserToken> getAllActiveUserTokens ()
   {

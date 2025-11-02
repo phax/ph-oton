@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -25,9 +28,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.mime.IMimeType;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single parameter for an {@link HCObject} or an applet.
@@ -46,7 +46,7 @@ public class HCParam extends AbstractHCElement <HCParam>
     super (EHTMLElement.PARAM);
   }
 
-  public HCParam (@Nonnull final String sName)
+  public HCParam (@NonNull final String sName)
   {
     this ();
     setName (sName);
@@ -58,8 +58,8 @@ public class HCParam extends AbstractHCElement <HCParam>
     return m_sName;
   }
 
-  @Nonnull
-  public final HCParam setName (@Nonnull final String sName)
+  @NonNull
+  public final HCParam setName (@NonNull final String sName)
   {
     m_sName = ValueEnforcer.notNull (sName, "Name");
     return this;
@@ -71,7 +71,7 @@ public class HCParam extends AbstractHCElement <HCParam>
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final HCParam setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
@@ -84,7 +84,7 @@ public class HCParam extends AbstractHCElement <HCParam>
     return m_eValueType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCParam setValueType (@Nullable final EHCParamValueType eValueType)
   {
     m_eValueType = eValueType;
@@ -97,7 +97,7 @@ public class HCParam extends AbstractHCElement <HCParam>
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCParam setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;

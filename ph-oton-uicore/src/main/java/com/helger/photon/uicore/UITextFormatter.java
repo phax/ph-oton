@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +44,6 @@ import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.util.MicroVisitor;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @Immutable
 public final class UITextFormatter
 {
@@ -65,7 +64,7 @@ public final class UITextFormatter
    *        <code>null</code>.
    * @return A slightly beautified version.
    */
-  @Nonnull
+  @NonNull
   public static IHCNode getToStringContent (final Object aValue)
   {
     final String sOrigValue = String.valueOf (aValue);
@@ -110,7 +109,7 @@ public final class UITextFormatter
    * @return Either the processed markdown code or in case of an internal error a {@link HCTextNode}
    *         which contains the source text.
    */
-  @Nonnull
+  @NonNull
   public static IHCNode markdown (@Nullable final String sMD)
   {
     try
@@ -155,8 +154,8 @@ public final class UITextFormatter
    * @throws IllegalStateException
    *         If parsing fails
    */
-  @Nonnull
-  public static IHCNode unescapeHTML (@Nonnull final String sHTML)
+  @NonNull
+  public static IHCNode unescapeHTML (@NonNull final String sHTML)
   {
     // Do standard cleansing (setting the correct namespace URI etc.)
     return unescapeHTML (sHTML,
@@ -176,8 +175,8 @@ public final class UITextFormatter
    * @throws IllegalStateException
    *         If parsing fails
    */
-  @Nonnull
-  public static IHCNode unescapeHTML (@Nonnull final String sHTML,
+  @NonNull
+  public static IHCNode unescapeHTML (@NonNull final String sHTML,
                                       @Nullable final IHierarchyVisitorCallback <? super IMicroNode> aCleanupHandler)
   {
     // Parse content with a non-HTML5 parser because entity resolving would fail

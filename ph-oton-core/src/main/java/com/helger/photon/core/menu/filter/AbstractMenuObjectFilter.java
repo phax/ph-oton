@@ -18,15 +18,15 @@ package com.helger.photon.core.menu.filter;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuObjectFilter;
 import com.helger.text.IMultilingualText;
 import com.helger.text.ReadOnlyMultilingualText;
 import com.helger.text.locale.LocaleHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for a menu object filter.
@@ -47,13 +47,13 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
     return m_aDescription;
   }
 
-  @Nonnull
+  @NonNull
   public AbstractMenuObjectFilter setDescription (@Nullable final String sDescription)
   {
     return setDescription (sDescription == null ? null : new ReadOnlyMultilingualText (LocaleHelper.LOCALE_INDEPENDENT, sDescription));
   }
 
-  @Nonnull
+  @NonNull
   public AbstractMenuObjectFilter setDescription (@Nullable final IMultilingualText aDescription)
   {
     m_aDescription = aDescription;
@@ -62,7 +62,7 @@ public abstract class AbstractMenuObjectFilter implements IMenuObjectFilter
 
   @Nullable
   @Override
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aDescription == null ? null : m_aDescription.getText (aContentLocale);
   }

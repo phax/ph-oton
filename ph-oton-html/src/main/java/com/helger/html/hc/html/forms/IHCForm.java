@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.state.ETriState;
 import com.helger.html.hc.IHCHasName;
@@ -26,9 +29,6 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for FORMs
@@ -42,7 +42,7 @@ public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElemen
   @Nullable
   String getAcceptCharset ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAcceptCharset (@Nullable String sAcceptCharset);
 
   @Nullable
@@ -51,10 +51,10 @@ public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElemen
   @Nullable
   IHasJSCode getActionJS ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAction (@Nullable ISimpleURL aAction);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAction (@Nullable IHasJSCodeWithSettings aAction);
 
   boolean isAutoCompleteOn ();
@@ -63,14 +63,14 @@ public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElemen
 
   boolean isAutoCompleteUndefined ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setAutoComplete (final boolean bAutoComplete)
   {
     return setAutoComplete (ETriState.valueOf (bAutoComplete));
   }
 
-  @Nonnull
-  IMPLTYPE setAutoComplete (@Nonnull ETriState eAutoComplete);
+  @NonNull
+  IMPLTYPE setAutoComplete (@NonNull ETriState eAutoComplete);
 
   @Nullable
   IMimeType getEncType ();
@@ -80,7 +80,7 @@ public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElemen
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setEncTypeFileUpload ()
   {
     return setEncType (CMimeType.MULTIPART_FORMDATA);
@@ -91,42 +91,42 @@ public interface IHCForm <IMPLTYPE extends IHCForm <IMPLTYPE>> extends IHCElemen
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setEncTypeTextPlain ()
   {
     return setEncType (CMimeType.TEXT_PLAIN);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setEncType (@Nullable IMimeType aEncType);
 
   @Nullable
   EHCFormMethod getMethod ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMethod (@Nullable EHCFormMethod eMethod);
 
   boolean isNoValidate ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setNoValidate (boolean bNoValidate);
 
   @Nullable
   HC_Target getTarget ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setTarget (@Nullable HC_Target aTarget);
 
   boolean isSubmitPressingEnter ();
 
   int getSubmitButtonTabIndex ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setSubmitPressingEnter (final boolean bSubmitPressingEnter)
   {
     return setSubmitPressingEnter (bSubmitPressingEnter, CGlobal.ILLEGAL_UINT);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSubmitPressingEnter (boolean bSubmitPressingEnter, int nSubmitButtonTabIndex);
 }

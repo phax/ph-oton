@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Object invocation
@@ -73,7 +73,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param aFunction
    *        Function to be invoked
    */
-  protected AbstractJSInvocation (@Nonnull final JSFunction aFunction)
+  protected AbstractJSInvocation (@NonNull final JSFunction aFunction)
   {
     m_aObject = null;
     m_sName = null;
@@ -87,7 +87,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param sFunctionName
    *        function name
    */
-  public AbstractJSInvocation (@Nonnull final String sFunctionName)
+  public AbstractJSInvocation (@NonNull final String sFunctionName)
   {
     m_aObject = null;
     m_sName = ValueEnforcer.notNull (sFunctionName, "FunctionName");
@@ -101,7 +101,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param aAnonymousFunction
    *        The function to be invoked
    */
-  protected AbstractJSInvocation (@Nonnull final JSAnonymousFunction aAnonymousFunction)
+  protected AbstractJSInvocation (@NonNull final JSAnonymousFunction aAnonymousFunction)
   {
     m_aObject = null;
     m_sName = null;
@@ -118,12 +118,12 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param sMethod
    *        Name of method to invoke
    */
-  protected AbstractJSInvocation (@Nullable final IJSExpression aLhs, @Nonnull @Nonempty final String sMethod)
+  protected AbstractJSInvocation (@Nullable final IJSExpression aLhs, @NonNull @Nonempty final String sMethod)
   {
     this ((IJSGeneratable) aLhs, sMethod);
   }
 
-  protected AbstractJSInvocation (@Nullable final IJSExpression aLhs, @Nonnull final JSMethod aMethod)
+  protected AbstractJSInvocation (@Nullable final IJSExpression aLhs, @NonNull final JSMethod aMethod)
   {
     this ((IJSGeneratable) aLhs, aMethod);
   }
@@ -136,17 +136,17 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param sMethod
    *        Method name to invoke
    */
-  protected AbstractJSInvocation (@Nullable final AbstractJSClass aType, @Nonnull @Nonempty final String sMethod)
+  protected AbstractJSInvocation (@Nullable final AbstractJSClass aType, @NonNull @Nonempty final String sMethod)
   {
     this ((IJSGeneratable) aType, sMethod);
   }
 
-  protected AbstractJSInvocation (@Nullable final AbstractJSClass aType, @Nonnull final JSMethod aMethod)
+  protected AbstractJSInvocation (@Nullable final AbstractJSClass aType, @NonNull final JSMethod aMethod)
   {
     this ((IJSGeneratable) aType, aMethod);
   }
 
-  private AbstractJSInvocation (@Nullable final IJSGeneratable aLhs, @Nonnull @Nonempty final String sMethod)
+  private AbstractJSInvocation (@Nullable final IJSGeneratable aLhs, @NonNull @Nonempty final String sMethod)
   {
     if (!JSMarshaller.isJSIdentifier (sMethod))
       throw new IllegalArgumentException ("The name '" + sMethod + "' is not a legal JS identifier!");
@@ -156,7 +156,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
     m_aCtorType = null;
   }
 
-  private AbstractJSInvocation (@Nullable final IJSGeneratable aLhs, @Nonnull final JSMethod aMethod)
+  private AbstractJSInvocation (@Nullable final IJSGeneratable aLhs, @NonNull final JSMethod aMethod)
   {
     m_aObject = aLhs;
     m_sName = null;
@@ -170,7 +170,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * @param aType
    *        Type of the object to be created. May not be <code>null</code>.
    */
-  protected AbstractJSInvocation (@Nonnull final IJSGeneratable aType)
+  protected AbstractJSInvocation (@NonNull final IJSGeneratable aType)
   {
     m_aObject = null;
     m_sName = null;
@@ -179,7 +179,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   }
 
   @SuppressWarnings ("unchecked")
-  @Nonnull
+  @NonNull
   private IMPLTYPE _thisAsT ()
   {
     return (IMPLTYPE) this;
@@ -192,8 +192,8 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
-  public IMPLTYPE arg (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE arg (@NonNull final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (aExpr, "Argument");
     m_aArgs.add (aExpr);
@@ -209,8 +209,8 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    *        Argument to add to argument list
    * @return this
    */
-  @Nonnull
-  public IMPLTYPE arg (@Nonnegative final int nIndex, @Nonnull final IJSExpression aArgument)
+  @NonNull
+  public IMPLTYPE arg (@Nonnegative final int nIndex, @NonNull final IJSExpression aArgument)
   {
     ValueEnforcer.notNull (aArgument, "Argument");
     m_aArgs.add (nIndex, aArgument);
@@ -222,7 +222,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    *
    * @return If there's no arguments, an empty array will be returned.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IJSExpression> args ()
   {
@@ -258,14 +258,14 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE removeAllArgs ()
   {
     m_aArgs.clear ();
     return _thisAsT ();
   }
 
-  public void generate (@Nonnull final JSFormatter f)
+  public void generate (@NonNull final JSFormatter f)
   {
     if (m_aCallee instanceof JSAnonymousFunction)
     {
@@ -304,13 +304,13 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
     f.generatable (m_aArgs).plain (')');
   }
 
-  public void state (@Nonnull final JSFormatter f)
+  public void state (@NonNull final JSFormatter f)
   {
     f.generatable (this).plain (';').nl ();
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, (IJSStatement) this);

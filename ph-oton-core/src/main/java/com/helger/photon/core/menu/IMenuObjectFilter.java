@@ -19,12 +19,12 @@ package com.helger.photon.core.menu;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special menu item filter to determine the visibility of a menu item. If
@@ -36,13 +36,13 @@ import jakarta.annotation.Nullable;
 public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayText
 {
   @Nullable
-  default String getDisplayText (@Nonnull final Locale aContentLocale)
+  default String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return null;
   }
 
-  @Nonnull
-  default IMenuObjectFilter and (@Nonnull final IMenuObjectFilter aOther)
+  @NonNull
+  default IMenuObjectFilter and (@NonNull final IMenuObjectFilter aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     final IMenuObjectFilter aThis = this;
@@ -55,15 +55,15 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
 
       @Nullable
       @Override
-      public String getDisplayText (@Nonnull final Locale aContentLocale)
+      public String getDisplayText (@NonNull final Locale aContentLocale)
       {
         return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale), " + ", aOther.getDisplayText (aContentLocale));
       }
     };
   }
 
-  @Nonnull
-  default IMenuObjectFilter or (@Nonnull final IMenuObjectFilter aOther)
+  @NonNull
+  default IMenuObjectFilter or (@NonNull final IMenuObjectFilter aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     final IMenuObjectFilter aThis = this;
@@ -76,7 +76,7 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
 
       @Nullable
       @Override
-      public String getDisplayText (@Nonnull final Locale aContentLocale)
+      public String getDisplayText (@NonNull final Locale aContentLocale)
       {
         return StringHelper.getNotNull (aThis.getDisplayText (aContentLocale), aOther.getDisplayText (aContentLocale));
       }

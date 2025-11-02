@@ -18,10 +18,10 @@ package com.helger.photon.core.menu;
 
 import java.util.Locale;
 
-import com.helger.annotation.style.UnsupportedOperation;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.style.UnsupportedOperation;
 
 /**
  * A special menu item that is just a link to an existing other menu item.
@@ -37,7 +37,7 @@ public interface IMenuItemRedirectToPage extends IMenuItem
    * @return The target page to which this item links. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IMenuItemPage getTargetMenuItemPage ();
 
   @Nullable
@@ -53,7 +53,7 @@ public interface IMenuItemRedirectToPage extends IMenuItem
   }
 
   @Nullable
-  default String getDisplayText (@Nonnull final Locale aContentLocale)
+  default String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return getTargetMenuItemPage ().getDisplayText (aContentLocale);
   }

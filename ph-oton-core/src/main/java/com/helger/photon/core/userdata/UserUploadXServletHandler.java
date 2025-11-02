@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,6 @@ import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**
@@ -54,20 +54,20 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
   public UserUploadXServletHandler ()
   {}
 
-  @Nonnull
+  @NonNull
   protected IJsonObject createSuccess ()
   {
     return new JsonObject ().add ("success", true);
   }
 
-  @Nonnull
-  protected IJsonObject createError (@Nonnull final String sErrorMsg)
+  @NonNull
+  protected IJsonObject createError (@NonNull final String sErrorMsg)
   {
     LOGGER.error ("User upload error: " + sErrorMsg);
     return new JsonObject ().add ("success", false).add ("error", sErrorMsg).add ("preventRetry", true);
   }
 
-  private void _post (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final UnifiedResponse aUnifiedResponse)
+  private void _post (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final UnifiedResponse aUnifiedResponse)
   {
     IJsonObject ret;
 
@@ -131,8 +131,8 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
     aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (), StandardCharsets.UTF_8);
   }
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     aUnifiedResponse.disableCaching ();
     _post (aRequestScope, aUnifiedResponse);

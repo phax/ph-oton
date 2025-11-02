@@ -16,12 +16,12 @@
  */
 package com.helger.html;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroQName;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Contains constant HTML attribute names.

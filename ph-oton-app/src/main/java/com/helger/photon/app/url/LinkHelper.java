@@ -16,6 +16,8 @@
  */
 package com.helger.photon.app.url;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.url.SimpleURL;
 import com.helger.url.protocol.URLProtocolRegistry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.web.scope.mgr.WebScopeManager;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Misc utilities to create link URLs.
@@ -60,7 +59,7 @@ public final class LinkHelper
   private LinkHelper ()
   {}
 
-  public static void setStreamServletName (@Nonnull @Nonempty final String sStreamServletName)
+  public static void setStreamServletName (@NonNull @Nonempty final String sStreamServletName)
   {
     ValueEnforcer.notEmpty (sStreamServletName, "StreamServletName");
     if (!RegExHelper.stringMatchesPattern (STREAM_SERVLET_NAME_REGEX, sStreamServletName))
@@ -76,7 +75,7 @@ public final class LinkHelper
    * @return The name of the stream servlet path. Default is <code>stream</code>
    * @see #getStreamServletPath()
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getStreamServletName ()
   {
@@ -87,7 +86,7 @@ public final class LinkHelper
    * @return The relative path of the stream servlet. Default is <code>/stream</code>
    * @see #getStreamServletName()
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getStreamServletPath ()
   {
@@ -109,8 +108,8 @@ public final class LinkHelper
     return URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI) || sURI.startsWith ("//");
   }
 
-  @Nonnull
-  private static String _getURIWithContext (@Nonnull final String sContextPath, @Nonnull final String sHRef)
+  @NonNull
+  private static String _getURIWithContext (@NonNull final String sContextPath, @NonNull final String sHRef)
   {
     if (StringHelper.isNotEmpty (sContextPath) && sHRef.startsWith (sContextPath))
     {
@@ -135,8 +134,8 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
-  @Nonnull
-  public static String getURIWithContext (@Nonnull final String sHRef)
+  @NonNull
+  public static String getURIWithContext (@NonNull final String sHRef)
   {
     ValueEnforcer.notNull (sHRef, "HRef");
 
@@ -160,9 +159,9 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
-  @Nonnull
-  public static String getURIWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                          @Nonnull final String sHRef)
+  @NonNull
+  public static String getURIWithContext (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                          @NonNull final String sHRef)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notNull (sHRef, "HRef");
@@ -185,8 +184,8 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
-  @Nonnull
-  public static SimpleURL getURLWithContext (@Nonnull final String sHRef)
+  @NonNull
+  public static SimpleURL getURLWithContext (@NonNull final String sHRef)
   {
     return new SimpleURL (getURIWithContext (sHRef));
   }
@@ -203,9 +202,9 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>/webapp-context/<i>href</i></code> otherwise. Never <code>null</code>.
    */
-  @Nonnull
-  public static SimpleURL getURLWithContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                             @Nonnull final String sHRef)
+  @NonNull
+  public static SimpleURL getURLWithContext (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                             @NonNull final String sHRef)
   {
     return new SimpleURL (getURIWithContext (aRequestScope, sHRef));
   }
@@ -221,8 +220,8 @@ public final class LinkHelper
    *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise. Never
    *         <code>null</code>.
    */
-  @Nonnull
-  public static String getURIWithServerAndContext (@Nonnull final String sHRef)
+  @NonNull
+  public static String getURIWithServerAndContext (@NonNull final String sHRef)
   {
     // If known protocol, keep it
     if (hasKnownProtocol (sHRef))
@@ -246,9 +245,9 @@ public final class LinkHelper
    *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise. Never
    *         <code>null</code>.
    */
-  @Nonnull
-  public static String getURIWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nonnull final String sHRef)
+  @NonNull
+  public static String getURIWithServerAndContext (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                   @NonNull final String sHRef)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notNull (sHRef, "HRef");
@@ -272,8 +271,8 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise.
    */
-  @Nonnull
-  public static SimpleURL getURLWithServerAndContext (@Nonnull final String sHRef)
+  @NonNull
+  public static SimpleURL getURLWithServerAndContext (@NonNull final String sHRef)
   {
     return new SimpleURL (getURIWithServerAndContext (sHRef));
   }
@@ -290,9 +289,9 @@ public final class LinkHelper
    * @return Either the original href if already absolute or
    *         <code>http://servername:8123/webapp-context/<i>href</i></code> otherwise.
    */
-  @Nonnull
-  public static SimpleURL getURLWithServerAndContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                      @Nonnull final String sHRef)
+  @NonNull
+  public static SimpleURL getURLWithServerAndContext (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                      @NonNull final String sHRef)
   {
     return new SimpleURL (getURIWithServerAndContext (aRequestScope, sHRef));
   }
@@ -301,7 +300,7 @@ public final class LinkHelper
    * @return A link to the start page without any session ID. Never <code>null</code>. E.g.
    *         <code>/</code> or <code>/context</code>. This is useful for logout links.
    */
-  @Nonnull
+  @NonNull
   public static SimpleURL getHomeLinkWithoutSession ()
   {
     final String sContextPath = ServletContextPathHolder.getContextPath ();
@@ -322,9 +321,9 @@ public final class LinkHelper
    * @return The URL incl. the context to be stream. E.g.
    *         <code>/<i>webapp-context</i>/stream/<i>URL</i></code>.
    */
-  @Nonnull
-  public static SimpleURL getStreamURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                        @Nonnull @Nonempty final String sURL)
+  @NonNull
+  public static SimpleURL getStreamURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                        @NonNull @Nonempty final String sURL)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURL, "URL");

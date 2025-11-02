@@ -94,7 +94,7 @@
           <instructions>
             <Automatic-Module-Name>com.helger.photon.html</Automatic-Module-Name>
             <Export-Package>com.helger.html.*</Export-Package>
-            <Import-Package>!jakarta.annotation.*,*</Import-Package>
+            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.processor)",
 osgi.serviceloader; filter:="(osgi.serviceloader=com.helger.html.hc.config.IHCSettingsProviderSPI)"; cardinality:=multiple; resolution:=optional</Require-Capability>
           </instructions>

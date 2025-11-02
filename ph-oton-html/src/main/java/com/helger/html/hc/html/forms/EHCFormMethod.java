@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An enumeration that can be used in
@@ -38,12 +38,12 @@ public enum EHCFormMethod implements IHCHasHTMLAttributeValue
 
   private final String m_sMethod;
 
-  EHCFormMethod (@Nonnull final String sMethod)
+  EHCFormMethod (@NonNull final String sMethod)
   {
     m_sMethod = sMethod;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

@@ -18,14 +18,14 @@ package com.helger.photon.audit.v2.domain;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A single field of an {@link AuditEvent}. Has a mandatory name and an optional
@@ -118,7 +118,7 @@ public class AuditField implements Serializable
    *        Field name. May be <code>null</code>.
    * @return A new {@link AuditField} and never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static AuditField createWithHiddenValue (@Nullable final String sFieldName)
   {
     return new AuditField (sFieldName, ToStringGenerator.CONSTANT_PASSWORD);

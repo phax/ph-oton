@@ -18,13 +18,13 @@ package com.helger.html.js;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.ReturnsImmutableObject;
 import com.helger.collection.commons.CommonsHashSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This enumeration contains all known java script events.
@@ -144,7 +144,7 @@ public enum EJSEvent
   @CodingStyleguideUnaware
   private final Set <EJSEventType> m_aJSEventTypes;
 
-  EJSEvent (@Nonnull @Nonempty final String sEvent, @Nonnull @Nonempty final EJSEventType... aTypes)
+  EJSEvent (@NonNull @Nonempty final String sEvent, @NonNull @Nonempty final EJSEventType... aTypes)
   {
     m_sEvent = sEvent;
     m_aJSEventTypes = new CommonsHashSet <> (aTypes).getAsUnmodifiable ();
@@ -153,7 +153,7 @@ public enum EJSEvent
   /**
    * @return The JS event name without a leading "on"
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSEventName ()
   {
@@ -164,14 +164,14 @@ public enum EJSEvent
    * @return The HTML attribute to be emitted for this event (starting with
    *         "on")
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getHTMLEventName ()
   {
     return "on" + m_sEvent;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsImmutableObject
   @CodingStyleguideUnaware

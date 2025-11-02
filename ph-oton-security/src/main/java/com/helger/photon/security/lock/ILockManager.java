@@ -19,14 +19,14 @@ package com.helger.photon.security.lock;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a manager that handles object locking. See
@@ -83,8 +83,8 @@ public interface ILockManager <IDTYPE>
    *         after the call to this method, {@link ELocked#NOT_LOCKED} if the
    *         object was already locked by another user.
    */
-  @Nonnull
-  ELocked lockObject (@Nonnull IDTYPE aObjID);
+  @NonNull
+  ELocked lockObject (@NonNull IDTYPE aObjID);
 
   /**
    * Lock the object with the given ID. If the passed object is already locked
@@ -99,8 +99,8 @@ public interface ILockManager <IDTYPE>
    *         the object was already locked by another user or no user ID was
    *         provided.
    */
-  @Nonnull
-  ELocked lockObject (@Nonnull IDTYPE aObjID, @Nullable String sUserID);
+  @NonNull
+  ELocked lockObject (@NonNull IDTYPE aObjID, @Nullable String sUserID);
 
   /**
    * Lock the object with the given ID and unlock all other objects. If the
@@ -115,8 +115,8 @@ public interface ILockManager <IDTYPE>
    *         If {@link ILockedIndicator#isNotLocked()} is <code>true</code> the
    *         object was already locked by another user.
    */
-  @Nonnull
-  LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull IDTYPE aObjID);
+  @NonNull
+  LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull IDTYPE aObjID);
 
   /**
    * Lock the object with the given ID and unlock all other objects. If the
@@ -132,8 +132,8 @@ public interface ILockManager <IDTYPE>
    *         the object was already locked by another user or no user ID was
    *         provided.
    */
-  @Nonnull
-  LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@Nonnull IDTYPE aObjID, @Nullable String sUserID);
+  @NonNull
+  LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull IDTYPE aObjID, @Nullable String sUserID);
 
   /**
    * Unlock the object with the given ID. Unlocking is only possible, if the
@@ -145,8 +145,8 @@ public interface ILockManager <IDTYPE>
    *         <code>false</code> if either the object is not locked or the object
    *         is locked by another user than the current session user.
    */
-  @Nonnull
-  EChange unlockObject (@Nonnull IDTYPE aObjID);
+  @NonNull
+  EChange unlockObject (@NonNull IDTYPE aObjID);
 
   /**
    * Manually unlock a special object locked by a special user. This manual
@@ -159,15 +159,15 @@ public interface ILockManager <IDTYPE>
    * @return <code>true</code> if unlocking succeeded, <code>false</code>
    *         otherwise.
    */
-  @Nonnull
-  EChange unlockObject (@Nonnull String sUserID, @Nonnull IDTYPE aObjID);
+  @NonNull
+  EChange unlockObject (@NonNull String sUserID, @NonNull IDTYPE aObjID);
 
   /**
    * Unlock all objects of the current user.
    *
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUser ();
 
@@ -179,7 +179,7 @@ public interface ILockManager <IDTYPE>
    *        <code>null</code> or empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IDTYPE> unlockAllObjectsOfCurrentUserExcept (@Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
@@ -191,7 +191,7 @@ public interface ILockManager <IDTYPE>
    *        <code>null</code> or empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IDTYPE> unlockAllObjectsOfUser (@Nullable String sUserID);
 
@@ -206,7 +206,7 @@ public interface ILockManager <IDTYPE>
    *        <code>null</code> or empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID, @Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
@@ -247,7 +247,7 @@ public interface ILockManager <IDTYPE>
    * @return A non-<code>null</code> set of all locked objects of all users.
    *         Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <IDTYPE> getAllLockedObjects ();
 
@@ -255,7 +255,7 @@ public interface ILockManager <IDTYPE>
    * @return A non-<code>null</code> map of all locked objects of all users.
    *         Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ();
 
@@ -263,7 +263,7 @@ public interface ILockManager <IDTYPE>
    * @return A non-<code>null</code> set of all locked objects of the current
    *         user. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <IDTYPE> getAllLockedObjectsOfCurrentUser ();
 
@@ -274,7 +274,7 @@ public interface ILockManager <IDTYPE>
    * @return A non-<code>null</code> set of all locked objects of the passed
    *         user. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <IDTYPE> getAllLockedObjectsOfUser (@Nullable String sUserID);
 }

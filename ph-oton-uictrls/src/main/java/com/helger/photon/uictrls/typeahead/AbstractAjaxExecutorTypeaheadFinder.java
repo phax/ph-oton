@@ -19,6 +19,9 @@ package com.helger.photon.uictrls.typeahead;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -34,9 +37,6 @@ import com.helger.json.JsonArray;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.ajax.executor.AbstractAjaxExecutorWithContext;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract AJAX handler that can be used as the source for a Bootstrap typeahead control.
@@ -67,7 +67,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      * @param aSortLocale
      *        The sort locale to use. May not be <code>null</code>.
      */
-    protected Finder (@Nonnull final Locale aSortLocale)
+    protected Finder (@NonNull final Locale aSortLocale)
     {
       m_aSortLocale = ValueEnforcer.notNull (aSortLocale, "SortLocale");
     }
@@ -80,8 +80,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      *        "\s+" regular expression.
      * @return this
      */
-    @Nonnull
-    protected Finder initialize (@Nonnull @Nonempty final String sSearchTerms)
+    @NonNull
+    protected Finder initialize (@NonNull @Nonempty final String sSearchTerms)
     {
       if (StringHelper.isEmptyAfterTrim (sSearchTerms))
         throw new IllegalArgumentException ("SearchTerms");
@@ -99,7 +99,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     /**
      * @return An array with all search terms. Never <code>null</code> nor empty.
      */
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     @Nonempty
     public final String [] getAllSearchTerms ()
@@ -110,7 +110,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     /**
      * @return The sort locale provided in the constructor. Never <code>null</code>.
      */
-    @Nonnull
+    @NonNull
     public final Locale getSortLocale ()
     {
       return m_aSortLocale;
@@ -141,7 +141,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
      *         otherwise.
      */
     @OverrideOnDemand
-    protected boolean isSingleStringMatching (@Nonnull final String sSource, @Nonnull final String sSearchTerm)
+    protected boolean isSingleStringMatching (@NonNull final String sSource, @NonNull final String sSearchTerm)
     {
       return StringHelper.containsIgnoreCase (sSource, sSearchTerm, m_aSortLocale);
     }
@@ -206,7 +206,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    */
   @Nullable
   @OverrideOnDemand
-  protected String getQueryString (@Nonnull final LECTYPE aLEC)
+  protected String getQueryString (@NonNull final LECTYPE aLEC)
   {
     return aLEC.params ().getAsString (PARAM_QUERY);
   }
@@ -220,9 +220,9 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    *        The layout execution context. Never <code>null</code>.
    * @return The non-<code>null</code> {@link Finder} object.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected Finder createFinder (@Nonnull final String sOriginalQuery, @Nonnull final LECTYPE aLEC)
+  protected Finder createFinder (@NonNull final String sOriginalQuery, @NonNull final LECTYPE aLEC)
   {
     return new Finder (aLEC.getDisplayLocale ()).initialize (sOriginalQuery);
   }
@@ -237,9 +237,9 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
    *        The layout execution context. Never <code>null</code>.
    * @return A non-<code>null</code> list with all datums to use.
    */
-  @Nonnull
-  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@Nonnull Finder aFinder,
-                                                                                   @Nonnull LECTYPE aLEC);
+  @NonNull
+  protected abstract ICommonsList <? extends TypeaheadDatum> getAllMatchingDatums (@NonNull Finder aFinder,
+                                                                                   @NonNull LECTYPE aLEC);
 
   /**
    * @return <code>true</code> if the default suffix "[x of y]" should not be added to the
@@ -256,7 +256,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   }
 
   @Override
-  protected void mainHandleRequest (@Nonnull final LECTYPE aLEC, @Nonnull final PhotonUnifiedResponse aAjaxResponse)
+  protected void mainHandleRequest (@NonNull final LECTYPE aLEC, @NonNull final PhotonUnifiedResponse aAjaxResponse)
                                                                                                                      throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);

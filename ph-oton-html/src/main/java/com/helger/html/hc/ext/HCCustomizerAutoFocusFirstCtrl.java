@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.state.EContinue;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.html.EHTMLVersion;
@@ -28,8 +30,6 @@ import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.html.hc.html.forms.IHCHasFocus;
 import com.helger.html.hc.impl.AbstractHCCustomizer;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Special customizer that customizes the first input element on the page (if available).
  *
@@ -40,7 +40,7 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
   public HCCustomizerAutoFocusFirstCtrl ()
   {}
 
-  public static void setAutoFocusOnFirstControl (@Nonnull final IHCNode aStartNode)
+  public static void setAutoFocusOnFirstControl (@NonNull final IHCNode aStartNode)
   {
     final Wrapper <IHCHasFocus <?>> aFirstCtrl = new Wrapper <> ();
 
@@ -81,9 +81,9 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
   }
 
   @Override
-  public void customizeNode (@Nonnull final IHCNode aNode,
-                             @Nonnull final EHTMLVersion eHTMLVersion,
-                             @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  public void customizeNode (@NonNull final IHCNode aNode,
+                             @NonNull final EHTMLVersion eHTMLVersion,
+                             @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     if (aNode instanceof IHCForm <?>)
       setAutoFocusOnFirstControl (aNode);

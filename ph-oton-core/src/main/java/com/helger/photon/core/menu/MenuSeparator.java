@@ -16,10 +16,10 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link IMenuSeparator} interface.
@@ -29,12 +29,12 @@ import jakarta.annotation.Nonnull;
 @NotThreadSafe
 public class MenuSeparator extends AbstractMenuObject <MenuSeparator> implements IMenuSeparator
 {
-  public MenuSeparator (@Nonnull @Nonempty final String sID)
+  public MenuSeparator (@NonNull @Nonempty final String sID)
   {
     super (sID);
   }
 
-  @Nonnull
+  @NonNull
   public final EMenuObjectType getMenuObjectType ()
   {
     return EMenuObjectType.SEPARATOR;

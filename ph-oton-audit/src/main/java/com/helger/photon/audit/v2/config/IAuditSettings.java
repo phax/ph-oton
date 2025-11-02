@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Read-only interface for audit settings.
@@ -32,13 +32,13 @@ public interface IAuditSettings extends Serializable
   /**
    * @return The ID provide for AuditEvent objects. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   ILongSupplier getAuditEventIDProvider ();
 
   /**
    * @return The date and time provider to be used. Never <code>null</code>. The
    *         returned supplier may not return <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   Supplier <LocalDateTime> getAuditEventDateTimeProvider ();
 }

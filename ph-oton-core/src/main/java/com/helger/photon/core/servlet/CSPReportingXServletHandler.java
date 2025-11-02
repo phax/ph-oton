@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,6 @@ import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.handler.IXServletHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -73,7 +73,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
     this (CSPReportingXServletHandler::logCSPReport);
   }
 
-  public CSPReportingXServletHandler (@Nonnull final Consumer <? super IJsonObject> aJsonHandler)
+  public CSPReportingXServletHandler (@NonNull final Consumer <? super IJsonObject> aJsonHandler)
   {
     m_aJsonHandler = ValueEnforcer.notNull (aJsonHandler, "JsonHandler");
   }
@@ -81,7 +81,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
   /**
    * @return The JSON consumer provided in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final Consumer <? super IJsonObject> getJsonHandler ()
   {
     return m_aJsonHandler;
@@ -108,22 +108,22 @@ public class CSPReportingXServletHandler implements IXServletHandler
   }
 
   @IsLocked (ELockType.WRITE)
-  protected final boolean rememberBlockedURL (@Nonnull @Nonempty final String sBlockedURI)
+  protected final boolean rememberBlockedURL (@NonNull @Nonempty final String sBlockedURI)
   {
     ValueEnforcer.notEmpty (sBlockedURI, "BlockedURI");
     return m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
   }
 
-  public static void logCSPReport (@Nonnull final IJsonObject aJson)
+  public static void logCSPReport (@NonNull final IJsonObject aJson)
   {
     LOGGER.warn ("CSP report: " + aJson.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));
   }
 
-  public void onRequest (@Nonnull final HttpServletRequest aHttpRequest,
-                         @Nonnull final HttpServletResponse aHttpResponse,
-                         @Nonnull final EHttpVersion eHttpVersion,
-                         @Nonnull final EHttpMethod eHttpMethod,
-                         @Nonnull final IRequestWebScope aRequestScope) throws ServletException, IOException
+  public void onRequest (@NonNull final HttpServletRequest aHttpRequest,
+                         @NonNull final HttpServletResponse aHttpResponse,
+                         @NonNull final EHttpVersion eHttpVersion,
+                         @NonNull final EHttpMethod eHttpMethod,
+                         @NonNull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
     // Read all request body bytes
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
@@ -162,14 +162,14 @@ public class CSPReportingXServletHandler implements IXServletHandler
     aHttpResponse.setStatus (HttpServletResponse.SC_ACCEPTED);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsSet <String> getAllBlockedURIs ()
   {
     return m_aRWLock.readLockedGet (m_aBlockedURIs::getClone);
   }
 
-  @Nonnull
+  @NonNull
   public final EChange clearAllBlockedURIs ()
   {
     return m_aRWLock.readLockedGet (m_aBlockedURIs::removeAll);

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
 import com.helger.collection.commons.CommonsArrayList;
@@ -34,9 +37,6 @@ import com.helger.photon.uictrls.datatables.DataTables;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 import com.helger.photon.uictrls.datatables.column.DataTablesColumnDef;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
 {
@@ -58,8 +58,8 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
     super (PLUGIN_NAME);
   }
 
-  @Nonnull
-  public DataTablesPluginResponsive addBreakpoint (@Nonnull final DTPResponsiveBreakpoint aBreakpoint)
+  @NonNull
+  public DataTablesPluginResponsive addBreakpoint (@NonNull final DTPResponsiveBreakpoint aBreakpoint)
   {
     ValueEnforcer.notNull (aBreakpoint, "Breakpoint");
     if (m_aBreakpoints == null)
@@ -68,41 +68,41 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
     return this;
   }
 
-  @Nonnull
-  public DataTablesPluginResponsive setDetails (@Nonnull final ETriState eDetails)
+  @NonNull
+  public DataTablesPluginResponsive setDetails (@NonNull final ETriState eDetails)
   {
     ValueEnforcer.notNull (eDetails, "Details");
     m_eDetails = eDetails;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginResponsive setDetailsRenderer (@Nullable final JSAnonymousFunction aDetailsRenderer)
   {
     m_aDetailsRenderer = aDetailsRenderer;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginResponsive setDetailsTarget (final int nDetailsTarget)
   {
     return setDetailsTarget (JSExpr.lit (nDetailsTarget));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginResponsive setDetailsTarget (final String sDetailsTarget)
   {
     return setDetailsTarget (JSExpr.lit (sDetailsTarget));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginResponsive setDetailsTarget (@Nullable final IJSExpression aDetailsTarget)
   {
     m_aDetailsTarget = aDetailsTarget;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginResponsive setDetailsType (@Nullable final EDTPResponsiveType eDetailsType)
   {
     m_eDetailsType = eDetailsType;
@@ -110,7 +110,7 @@ public class DataTablesPluginResponsive extends AbstractDataTablesPlugin
   }
 
   @Override
-  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
     // Source:
     // https://github.com/DataTables/Responsive/issues/8

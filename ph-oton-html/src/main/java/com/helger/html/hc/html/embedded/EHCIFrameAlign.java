@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Enumeration for {@link com.helger.html.hc.html.embedded.HCIFrame} alignment.
@@ -39,12 +39,12 @@ public enum EHCIFrameAlign implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCIFrameAlign (@Nonnull @Nonempty final String sAttrValue)
+  EHCIFrameAlign (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

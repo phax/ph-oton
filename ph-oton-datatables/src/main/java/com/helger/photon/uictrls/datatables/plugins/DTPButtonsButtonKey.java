@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
 
 public class DTPButtonsButtonKey
 {
@@ -55,70 +55,70 @@ public class DTPButtonsButtonKey
     m_cKey = cKey;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonKey setKey (final char cKey)
   {
     m_cKey = cKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonKey setShiftKey (final boolean bShiftKey)
   {
     return setShiftKey (ETriState.valueOf (bShiftKey));
   }
 
-  @Nonnull
-  public DTPButtonsButtonKey setShiftKey (@Nonnull final ETriState eShiftKey)
+  @NonNull
+  public DTPButtonsButtonKey setShiftKey (@NonNull final ETriState eShiftKey)
   {
     ValueEnforcer.notNull (eShiftKey, "ShiftKey");
     m_eShiftKey = eShiftKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonKey setAltKey (final boolean bAltKey)
   {
     return setAltKey (ETriState.valueOf (bAltKey));
   }
 
-  @Nonnull
-  public DTPButtonsButtonKey setAltKey (@Nonnull final ETriState eAltKey)
+  @NonNull
+  public DTPButtonsButtonKey setAltKey (@NonNull final ETriState eAltKey)
   {
     ValueEnforcer.notNull (eAltKey, "AltKey");
     m_eAltKey = eAltKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonKey setCtrlKey (final boolean bCtrlKey)
   {
     return setCtrlKey (ETriState.valueOf (bCtrlKey));
   }
 
-  @Nonnull
-  public DTPButtonsButtonKey setCtrlKey (@Nonnull final ETriState eCtrlKey)
+  @NonNull
+  public DTPButtonsButtonKey setCtrlKey (@NonNull final ETriState eCtrlKey)
   {
     ValueEnforcer.notNull (eCtrlKey, "CtrlKey");
     m_eCtrlKey = eCtrlKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonKey setMetaKey (final boolean bMetaKey)
   {
     return setMetaKey (ETriState.valueOf (bMetaKey));
   }
 
-  @Nonnull
-  public DTPButtonsButtonKey setMetaKey (@Nonnull final ETriState eMetaKey)
+  @NonNull
+  public DTPButtonsButtonKey setMetaKey (@NonNull final ETriState eMetaKey)
   {
     ValueEnforcer.notNull (eMetaKey, "MetaKey");
     m_eMetaKey = eMetaKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();

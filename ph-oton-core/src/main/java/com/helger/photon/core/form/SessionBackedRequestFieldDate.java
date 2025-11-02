@@ -24,6 +24,9 @@ import java.util.Locale;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -34,9 +37,6 @@ import com.helger.datetime.util.PDTXMLConverter;
 import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.SessionBackedRequestFieldData;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Special session backed request field specially for dates.
  *
@@ -46,9 +46,9 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
 {
   private final Locale m_aDisplayLocale;
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final String sDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     super (sFieldName, sDefaultValue);
     m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
@@ -62,42 +62,42 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
    * @param aDisplayLocale
    *        Display locale to use.
    */
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName, @Nonnull final Locale aDisplayLocale)
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName, @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, (String) null, aDisplayLocale);
   }
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final LocalDate aDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
   }
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final LocalTime aDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
   }
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final LocalDateTime aDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
   }
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final ZonedDateTime aDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTToString.getAsString (aDefaultValue, aDisplayLocale), aDisplayLocale);
   }
 
-  public SessionBackedRequestFieldDate (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
                                         @Nullable final XMLGregorianCalendar aDefaultValue,
-                                        @Nonnull final Locale aDisplayLocale)
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, PDTXMLConverter.getZonedDateTime (aDefaultValue), aDisplayLocale);
   }
@@ -106,7 +106,7 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
    * @return The locale as specified in the constructor. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
@@ -135,23 +135,23 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
     return ToStringGenerator.getDerived (super.toString ()).append ("DisplayLocale", m_aDisplayLocale).getToString ();
   }
 
-  @Nonnull
-  public static SessionBackedRequestFieldDate createLocalDateNow (@Nonnull @Nonempty final String sFieldName,
-                                                                  @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static SessionBackedRequestFieldDate createLocalDateNow (@NonNull @Nonempty final String sFieldName,
+                                                                  @NonNull final Locale aDisplayLocale)
   {
     return new SessionBackedRequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDate (), aDisplayLocale);
   }
 
-  @Nonnull
-  public static SessionBackedRequestFieldDate createLocalDateTimeNow (@Nonnull @Nonempty final String sFieldName,
-                                                                      @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static SessionBackedRequestFieldDate createLocalDateTimeNow (@NonNull @Nonempty final String sFieldName,
+                                                                      @NonNull final Locale aDisplayLocale)
   {
     return new SessionBackedRequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDateTime (), aDisplayLocale);
   }
 
-  @Nonnull
-  public static SessionBackedRequestFieldDate createDateTimeNow (@Nonnull @Nonempty final String sFieldName,
-                                                                 @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static SessionBackedRequestFieldDate createDateTimeNow (@NonNull @Nonempty final String sFieldName,
+                                                                 @NonNull final Locale aDisplayLocale)
   {
     return new SessionBackedRequestFieldDate (sFieldName, PDTFactory.getCurrentZonedDateTime (), aDisplayLocale);
   }

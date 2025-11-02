@@ -16,6 +16,9 @@
  */
 package com.helger.photon.app.resource;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
@@ -32,9 +35,6 @@ import com.helger.mime.IMimeType;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Defines the available resource types.
  *
@@ -45,8 +45,8 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   JS ("js", CMimeType.TEXT_JAVASCRIPT, CJS.FILE_EXTENSION_JS, "JavaScript")
   {
     @Override
-    @Nonnull
-    public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
+    @NonNull
+    public IHCNode createNode (@NonNull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
     {
       final HCScriptFile ret = new HCScriptFile ().setSrc (aURL);
       // Set explicitly, because the resulting node does not go through all
@@ -59,8 +59,8 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   CSS ("css", CMimeType.TEXT_CSS, CCSS.FILE_EXTENSION_CSS, "CSS")
   {
     @Override
-    @Nonnull
-    public IHCNode createNode (@Nonnull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
+    @NonNull
+    public IHCNode createNode (@NonNull final ISimpleURL aURL, @Nullable final ICSSMediaList aMediaList)
     {
       final HCLink ret = HCLink.createCSSLink (aURL).setMedia (aMediaList);
       // Set explicitly, because the resulting node does ot go through all
@@ -76,10 +76,10 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   private final String m_sFileExtension;
   private final String m_sDisplayName;
 
-  EWebSiteResourceType (@Nonnull @Nonempty final String sID,
-                        @Nonnull final IMimeType aMimeType,
-                        @Nonnull @Nonempty final String sFileExtension,
-                        @Nonnull @Nonempty final String sDisplayName)
+  EWebSiteResourceType (@NonNull @Nonempty final String sID,
+                        @NonNull final IMimeType aMimeType,
+                        @NonNull @Nonempty final String sFileExtension,
+                        @NonNull @Nonempty final String sDisplayName)
   {
     m_sID = sID;
     m_aMimeType = aMimeType;
@@ -87,7 +87,7 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
     m_sDisplayName = sDisplayName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -97,7 +97,7 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   /**
    * @return The MIME type. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IMimeType getMimeType ()
   {
     return m_aMimeType;
@@ -106,22 +106,22 @@ public enum EWebSiteResourceType implements IHasID <String>, IHasDisplayName
   /**
    * @return The file extension including the leading dot. E.g. ".css"
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getFileExtension ()
   {
     return m_sFileExtension;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
-  @Nonnull
-  public abstract IHCNode createNode (@Nonnull ISimpleURL aURL, @Nullable ICSSMediaList aMediaList);
+  @NonNull
+  public abstract IHCNode createNode (@NonNull ISimpleURL aURL, @Nullable ICSSMediaList aMediaList);
 
   @Nullable
   public static EWebSiteResourceType getFromIDOrNull (@Nullable final String sID)

@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uicore.html.google;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A generic session singleton maintaining the state of the captcha.
@@ -36,7 +36,7 @@ public final class CaptchaStateSessionSingleton extends AbstractSessionWebSingle
   public CaptchaStateSessionSingleton ()
   {}
 
-  @Nonnull
+  @NonNull
   public static CaptchaStateSessionSingleton getInstance ()
   {
     return getSessionSingleton (CaptchaStateSessionSingleton.class);

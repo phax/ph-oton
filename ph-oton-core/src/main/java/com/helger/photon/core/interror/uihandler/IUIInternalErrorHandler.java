@@ -19,8 +19,8 @@ package com.helger.photon.core.interror.uihandler;
 import java.io.Serializable;
 import java.util.Locale;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Callback interface to show internal errors on the UI in a generic way.
@@ -38,5 +38,5 @@ public interface IUIInternalErrorHandler extends Serializable
    * @param aDisplayLocale
    *        The display locale to be used. Never <code>null</code>.
    */
-  void onInternalError (@Nullable Throwable t, @Nonnull String sErrorID, @Nonnull Locale aDisplayLocale);
+  void onInternalError (@Nullable Throwable t, @NonNull String sErrorID, @NonNull Locale aDisplayLocale);
 }

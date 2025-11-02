@@ -16,10 +16,10 @@
  */
 package com.helger.photon.audit.mock;
 
-import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
  * Mock implementation of {@link ICurrentUserIDProvider}.
@@ -42,7 +42,7 @@ public class MockCurrentUserIDProvider implements ICurrentUserIDProvider
     m_sUserID = sUserID;
   }
 
-  @Nonnull
+  @NonNull
   public static MockCurrentUserIDProvider getInstance ()
   {
     return INSTANCE;

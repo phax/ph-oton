@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.compare.ESortOrder;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.name.IHasName;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * DataTables column order sequence type
@@ -48,13 +48,13 @@ public enum EDataTablesOrderDirectionType implements IHasName
   private final String m_sName;
   private final ESortOrder m_eSortOrder;
 
-  EDataTablesOrderDirectionType (@Nonnull final String sName, @Nullable final ESortOrder eSortOrder)
+  EDataTablesOrderDirectionType (@NonNull final String sName, @Nullable final ESortOrder eSortOrder)
   {
     m_sName = sName;
     m_eSortOrder = eSortOrder;
   }
 
-  @Nonnull
+  @NonNull
   public String getName ()
   {
     return m_sName;

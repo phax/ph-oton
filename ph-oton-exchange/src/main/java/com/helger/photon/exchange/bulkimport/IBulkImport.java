@@ -18,13 +18,13 @@ package com.helger.photon.exchange.bulkimport;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.io.iface.IHasInputStream;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.exchange.EExchangeFileType;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a bulk import action.
@@ -36,7 +36,7 @@ public interface IBulkImport
   /**
    * @return A non-<code>null</code>, non-empty set of all supported file types.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   ICommonsList <EExchangeFileType> getSupportedFileTypes ();
 
@@ -59,9 +59,9 @@ public interface IBulkImport
    *        The locale to be used.
    * @return The non-<code>null</code>, non-empty list of column descriptions.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  ICommonsList <String> getColumnDescriptions (@Nonnull Locale aContentLocale);
+  ICommonsList <String> getColumnDescriptions (@NonNull Locale aContentLocale);
 
   /**
    * Read the objects from the passed input stream.
@@ -73,6 +73,6 @@ public interface IBulkImport
    *        The display locale. May not be <code>null</code>.
    * @return The import result. Never <code>null</code>.
    */
-  @Nonnull
-  BulkImportResult importObjects (@Nonnull IHasInputStream aIIS, @Nonnull Locale aDisplayLocale);
+  @NonNull
+  BulkImportResult importObjects (@NonNull IHasInputStream aIIS, @NonNull Locale aDisplayLocale);
 }

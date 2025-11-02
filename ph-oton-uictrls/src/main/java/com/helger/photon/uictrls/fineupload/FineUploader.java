@@ -18,26 +18,26 @@ package com.helger.photon.uictrls.fineupload;
 
 import java.util.Locale;
 
-import com.helger.html.jscode.JSAssocArray;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.jscode.JSAssocArray;
 
 public class FineUploader extends FineUploaderBasic
 {
-  public FineUploader (@Nonnull final Locale aDisplayLocale)
+  public FineUploader (@NonNull final Locale aDisplayLocale)
   {
     super (aDisplayLocale);
   }
 
   @Override
-  protected void extendJSONMessages (@Nonnull final JSAssocArray aMessages, @Nonnull final Locale aDisplayLocale)
+  protected void extendJSONMessages (@NonNull final JSAssocArray aMessages, @NonNull final Locale aDisplayLocale)
   {
     aMessages.add ("tooManyFilesError", EFineUploaderText.TOO_MANY_FILE_ERROR.getDisplayText (aDisplayLocale));
   }
 
   @Override
-  protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
+  protected void extendJSON (@NonNull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
   {
     if (aDisplayLocale != null)
     {

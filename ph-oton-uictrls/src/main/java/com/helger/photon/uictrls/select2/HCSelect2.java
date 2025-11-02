@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.select2;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCHasChildrenMutable;
@@ -33,18 +36,15 @@ import com.helger.photon.uicore.html.select.HCExtSelect;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCSelect2 extends HCExtSelect
 {
-  public HCSelect2 (@Nonnull final IHCRequestField aRF)
+  public HCSelect2 (@NonNull final IHCRequestField aRF)
   {
     super (aRF);
     ensureID ();
   }
 
-  public HCSelect2 (@Nonnull final IHCRequestFieldMultiValue aRF)
+  public HCSelect2 (@NonNull final IHCRequestFieldMultiValue aRF)
   {
     super (aRF);
     ensureID ();
@@ -66,7 +66,7 @@ public class HCSelect2 extends HCExtSelect
    * @return The select2 JS invocation to be used. May not be <code>null</code>.
    * @since 8.0.2
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   protected JSInvocation getSelect2Invocation ()
   {
@@ -78,8 +78,8 @@ public class HCSelect2 extends HCExtSelect
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -88,7 +88,7 @@ public class HCSelect2 extends HCExtSelect
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     PhotonCSS.registerCSSIncludeForThisRequest (EUICtrlsCSSPathProvider.SELECT2);

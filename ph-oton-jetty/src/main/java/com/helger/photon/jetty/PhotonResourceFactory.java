@@ -24,10 +24,10 @@ import org.eclipse.jetty.util.resource.MountedPathResourceFactory;
 import org.eclipse.jetty.util.resource.PathResourceFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
+import org.jspecify.annotations.NonNull;
 
 import com.helger.base.enforce.ValueEnforcer;
 
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
@@ -42,7 +42,7 @@ public class PhotonResourceFactory implements ResourceFactory
   private final MountedPathResourceFactory m_aMPRF = new MountedPathResourceFactory ();
   private final PhotonFileSystemCache m_aFSCache;
 
-  public PhotonResourceFactory (@Nonnull final PhotonFileSystemCache aFSCache)
+  public PhotonResourceFactory (@NonNull final PhotonFileSystemCache aFSCache)
   {
     ValueEnforcer.notNull (aFSCache, "FSCache");
     m_aFSCache = aFSCache;

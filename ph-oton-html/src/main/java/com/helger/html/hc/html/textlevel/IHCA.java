@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElementWithChildren;
@@ -25,9 +28,6 @@ import com.helger.html.js.EJSEvent;
 import com.helger.html.js.IHasJSCode;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for As
@@ -44,8 +44,8 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
   @Nullable
   ISimpleURL getHref ();
 
-  @Nonnull
-  IMPLTYPE setHref (@Nonnull ISimpleURL aHref);
+  @NonNull
+  IMPLTYPE setHref (@NonNull ISimpleURL aHref);
 
   @Nullable
   HC_Target getTarget ();
@@ -55,10 +55,10 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
     return getTarget () != null;
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setTarget (@Nullable HC_Target aTarget);
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setTargetBlank ()
   {
     return setTarget (HC_Target.BLANK);
@@ -67,31 +67,31 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
   @Nullable
   String getDownload ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setDownload (@Nullable String sDownload);
 
   @Nullable
   ISimpleURL getPing ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setPing (@Nullable ISimpleURL aPing);
 
   @Nullable
   String getRel ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setRel (@Nullable String sRel);
 
   @Nullable
   IMimeType getType ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setType (@Nullable IMimeType aType);
 
   @Nullable
   EHCReferrerPolicy getReferrerPolicy ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setReferrerPolicy (@Nullable EHCReferrerPolicy eReferrerPolicy);
 
   /**
@@ -101,7 +101,7 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
    *        JS event to trigger
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return setEventHandler (EJSEvent.CLICK, aOnClick);
@@ -114,7 +114,7 @@ public interface IHCA <IMPLTYPE extends IHCA <IMPLTYPE>> extends
    *        JS event to trigger
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return addEventHandler (EJSEvent.CLICK, aOnClick);

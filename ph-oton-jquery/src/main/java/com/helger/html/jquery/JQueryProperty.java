@@ -18,13 +18,13 @@ package com.helger.html.jquery;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.PresentForCodeCoverage;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSRef;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper around jQuery to allow for easy function calls
@@ -67,7 +67,7 @@ public final class JQueryProperty
   /**
    * @return <code>$</code> or <code>jQuery</code> as a field
    */
-  @Nonnull
+  @NonNull
   public static JSRef jQueryField ()
   {
     return JSExpr.ref (isUseDollarForJQuery () ? "$" : "jQuery");
@@ -76,7 +76,7 @@ public final class JQueryProperty
   /**
    * @return <code>$.fx</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef fx ()
   {
     return jQueryField ().ref ("fx");
@@ -86,7 +86,7 @@ public final class JQueryProperty
    * @return <code>$.fx.interval</code>
    * @since jQuery 1.4.3
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef fxInterval ()
   {
     return fx ().ref ("interval");
@@ -96,7 +96,7 @@ public final class JQueryProperty
    * @return <code>$.fx.off</code>
    * @since jQuery 1.3
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef fxOff ()
   {
     return fx ().ref ("off");
@@ -106,7 +106,7 @@ public final class JQueryProperty
    * @return <code>$.support</code>
    * @since jQuery 1.3
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef support ()
   {
     return jQueryField ().ref ("support");
@@ -116,7 +116,7 @@ public final class JQueryProperty
    * @return <code>$.cssHooks</code>
    * @since jQuery 1.4.3
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef cssHooks ()
   {
     return jQueryField ().ref ("cssHooks");
@@ -127,7 +127,7 @@ public final class JQueryProperty
   /**
    * @return <code>$.fn</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef fn ()
   {
     return jQueryField ().ref ("fn");
@@ -136,7 +136,7 @@ public final class JQueryProperty
   /**
    * @return <code>$.error</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef error ()
   {
     return jQueryField ().ref ("error");

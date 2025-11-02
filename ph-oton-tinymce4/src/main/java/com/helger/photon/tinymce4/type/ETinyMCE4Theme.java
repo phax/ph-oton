@@ -16,12 +16,12 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * All TinyMCE4 supported themes.<br>
@@ -81,13 +81,13 @@ public enum ETinyMCE4Theme
   private final String m_sValue;
   private final TinyMCE4ToolbarControlList m_aDefaultToolbar;
 
-  ETinyMCE4Theme (@Nonnull @Nonempty final String sValue, @Nonnull final TinyMCE4ToolbarControlList aDefaultToolbar)
+  ETinyMCE4Theme (@NonNull @Nonempty final String sValue, @NonNull final TinyMCE4ToolbarControlList aDefaultToolbar)
   {
     m_sValue = sValue;
     m_aDefaultToolbar = aDefaultToolbar;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValue ()
   {
@@ -97,7 +97,7 @@ public enum ETinyMCE4Theme
   /**
    * @return The default toolbar. See the respective theme.js file.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public TinyMCE4ToolbarControlList getDefaultToolbar ()
   {

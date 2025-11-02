@@ -16,14 +16,14 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.name.IHasDisplayName;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.SftpException;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface for executing SFTP actions. The {@link IHasDisplayName} interface is only used
@@ -41,7 +41,7 @@ public interface IChannelSftpRunnable extends IHasDisplayName
    * @throws SftpException
    *         In case anything goes wrong.
    */
-  void execute (@Nonnull ChannelSftp aChannel) throws SftpException;
+  void execute (@NonNull ChannelSftp aChannel) throws SftpException;
 
   /**
    * Create a new runnable that first executes this action, and than the provided one.
@@ -51,9 +51,9 @@ public interface IChannelSftpRunnable extends IHasDisplayName
    * @return Never <code>null</code>.
    * @since 8.3.2
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  default IChannelSftpRunnable followedBy (@Nonnull final IChannelSftpRunnable aOther)
+  default IChannelSftpRunnable followedBy (@NonNull final IChannelSftpRunnable aOther)
   {
     return and (this, aOther);
   }
@@ -68,22 +68,22 @@ public interface IChannelSftpRunnable extends IHasDisplayName
    * @return Never <code>null</code>.
    * @since 8.3.2
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  static IChannelSftpRunnable and (@Nonnull final IChannelSftpRunnable aLhs, @Nonnull final IChannelSftpRunnable aRhs)
+  static IChannelSftpRunnable and (@NonNull final IChannelSftpRunnable aLhs, @NonNull final IChannelSftpRunnable aRhs)
   {
     ValueEnforcer.notNull (aLhs, "Lhs");
     ValueEnforcer.notNull (aRhs, "Rhs");
     return new IChannelSftpRunnable ()
     {
-      @Nonnull
+      @NonNull
       @Nonempty
       public String getDisplayName ()
       {
         return aLhs.getDisplayName () + " & " + aRhs.getDisplayName ();
       }
 
-      public void execute (@Nonnull final ChannelSftp aChannel) throws SftpException
+      public void execute (@NonNull final ChannelSftp aChannel) throws SftpException
       {
         aLhs.execute (aChannel);
         aRhs.execute (aChannel);

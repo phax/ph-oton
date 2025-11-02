@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.form;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scope.IRequestParamContainer;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special session backed request field specially for check boxes with a fixed
@@ -44,7 +44,7 @@ public class SessionBackedRequestFieldBoolean extends SessionBackedRequestField 
    * @param bDefaultValue
    *        The status to be returned, if no request value is present.
    */
-  public SessionBackedRequestFieldBoolean (@Nonnull @Nonempty final String sFieldName, final boolean bDefaultValue)
+  public SessionBackedRequestFieldBoolean (@NonNull @Nonempty final String sFieldName, final boolean bDefaultValue)
   {
     super (sFieldName, RequestFieldBoolean.getStringValue (bDefaultValue));
 
@@ -52,7 +52,7 @@ public class SessionBackedRequestFieldBoolean extends SessionBackedRequestField 
     m_bDefaultValue = bDefaultValue;
   }
 
-  public boolean isChecked (@Nonnull final IRequestParamContainer aParams)
+  public boolean isChecked (@NonNull final IRequestParamContainer aParams)
   {
     return aParams.isCheckBoxChecked (getFieldName (), m_bDefaultValue);
   }

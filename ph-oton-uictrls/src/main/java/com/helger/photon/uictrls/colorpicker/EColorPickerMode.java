@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.colorpicker;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Defines the basic color picker modes.
@@ -33,12 +33,12 @@ public enum EColorPickerMode implements IHCHasHTMLAttributeValue
 
   private final String m_sID;
 
-  EColorPickerMode (@Nonnull @Nonempty final String sID)
+  EColorPickerMode (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

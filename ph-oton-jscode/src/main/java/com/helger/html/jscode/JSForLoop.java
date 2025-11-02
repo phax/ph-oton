@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * For statement
@@ -44,8 +44,8 @@ public class JSForLoop extends AbstractJSStatement
   public JSForLoop ()
   {}
 
-  @Nonnull
-  public JSForLoop simpleLoop (@Nonnull @Nonempty final String sVarName, final int nStartIncl, final int nEndExcl)
+  @NonNull
+  public JSForLoop simpleLoop (@NonNull @Nonempty final String sVarName, final int nStartIncl, final int nEndExcl)
   {
     final JSLet aLoopVar = init (sVarName, nStartIncl);
     if (nEndExcl >= nStartIncl)
@@ -61,20 +61,20 @@ public class JSForLoop extends AbstractJSStatement
     return this;
   }
 
-  @Nonnull
-  public JSLet init (@Nonnull @Nonempty final String sVarName, final int nValue)
+  @NonNull
+  public JSLet init (@NonNull @Nonempty final String sVarName, final int nValue)
   {
     return init (sVarName, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public JSLet init (@Nonnull @Nonempty final String sVarName, final long nValue)
+  @NonNull
+  public JSLet init (@NonNull @Nonempty final String sVarName, final long nValue)
   {
     return init (sVarName, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public JSLet init (@Nonnull @Nonempty final String sVarName, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSLet init (@NonNull @Nonempty final String sVarName, @NonNull final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (aExpr, "InitExpression");
 
@@ -83,31 +83,31 @@ public class JSForLoop extends AbstractJSStatement
     return aVar;
   }
 
-  public void init (@Nonnull final JSLet aVar, @Nonnull final IJSExpression aExpr)
+  public void init (@NonNull final JSLet aVar, @NonNull final IJSExpression aExpr)
   {
     m_aInits.add (aVar.assign (aExpr));
   }
 
-  public void test (@Nonnull final IJSExpression aTest)
+  public void test (@NonNull final IJSExpression aTest)
   {
     m_aTest = ValueEnforcer.notNull (aTest, "Test");
   }
 
-  public void update (@Nonnull final IJSExpression aExpr)
+  public void update (@NonNull final IJSExpression aExpr)
   {
     ValueEnforcer.notNull (aExpr, "Expr");
 
     m_aUpdates.add (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IJSExpression> updates ()
   {
     return m_aUpdates.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -115,7 +115,7 @@ public class JSForLoop extends AbstractJSStatement
     return m_aBody;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ("for(");
     boolean bFirst = true;

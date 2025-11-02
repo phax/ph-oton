@@ -24,6 +24,9 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -33,9 +36,6 @@ import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IExportRecord}.
@@ -50,7 +50,7 @@ public class ExportRecord implements IExportRecord
   public ExportRecord ()
   {}
 
-  public ExportRecord (@Nonnull final IExportRecordField... aFields)
+  public ExportRecord (@NonNull final IExportRecordField... aFields)
   {
     ValueEnforcer.notNull (aFields, "Fields");
 
@@ -58,7 +58,7 @@ public class ExportRecord implements IExportRecord
       addField (aField);
   }
 
-  public ExportRecord (@Nonnull final Iterable <? extends IExportRecordField> aFields)
+  public ExportRecord (@NonNull final Iterable <? extends IExportRecordField> aFields)
   {
     ValueEnforcer.notNull (aFields, "Fields");
 
@@ -66,129 +66,129 @@ public class ExportRecord implements IExportRecord
       addField (aField);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeFieldAtIndex (@Nonnegative final int nIndex)
   {
     return m_aFields.removeAtIndex (nIndex);
   }
 
-  @Nonnull
-  public ExportRecord addField (@Nonnull final IExportRecordField aField)
+  @NonNull
+  public ExportRecord addField (@NonNull final IExportRecordField aField)
   {
     ValueEnforcer.notNull (aField, "Field");
     m_aFields.add (aField);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final Object aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final String sValue)
   {
     return addField (ExportRecordField.create (sValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final LocalDate aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final LocalTime aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final LocalDateTime aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final ZonedDateTime aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final OffsetDateTime aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (final boolean bValue)
   {
     return addField (ExportRecordField.create (bValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (final Boolean aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (final int nValue)
   {
     return addField (ExportRecordField.create (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final Integer aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (final long nValue)
   {
     return addField (ExportRecordField.create (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final Long aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final BigInteger aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (final double dValue)
   {
     return addField (ExportRecordField.create (dValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final Double aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addField (@Nullable final BigDecimal aValue)
   {
     return addField (ExportRecordField.create (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addNullField ()
   {
     return addField (new ExportRecordField (EExportDataType.TEXT, null));
   }
 
-  @Nonnull
+  @NonNull
   public ExportRecord addNullFields (@Nonnegative final int nFields)
   {
     ValueEnforcer.isGE0 (nFields, "Fields");
@@ -197,7 +197,7 @@ public class ExportRecord implements IExportRecord
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IExportRecordField> getAllFields ()
   {

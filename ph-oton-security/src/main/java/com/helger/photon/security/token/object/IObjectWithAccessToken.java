@@ -16,10 +16,10 @@
  */
 package com.helger.photon.security.token.object;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.tenancy.IBusinessObject;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for all kind of access tokens.
@@ -31,6 +31,6 @@ public interface IObjectWithAccessToken extends IBusinessObject, IAuthSubject
   /**
    * @return The access token list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IAccessTokenList getAccessTokenList ();
 }

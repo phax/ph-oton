@@ -16,10 +16,10 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single record to be exported.
@@ -31,7 +31,7 @@ public interface IExportRecord
   /**
    * @return A list of all fields in the correct order.
    */
-  @Nonnull
+  @NonNull
   ICommonsList <? extends IExportRecordField> getAllFields ();
 
   /**

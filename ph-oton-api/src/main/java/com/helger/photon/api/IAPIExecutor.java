@@ -19,11 +19,11 @@ package com.helger.photon.api;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for API executors. Implementations of this class contain the
@@ -52,9 +52,9 @@ public interface IAPIExecutor extends Serializable
    * @throws Exception
    *         In case of an error
    */
-  void invokeAPI (@Nonnull IAPIDescriptor aAPIDescriptor,
-                  @Nonnull @Nonempty String sPath,
-                  @Nonnull Map <String, String> aPathVariables,
-                  @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                  @Nonnull UnifiedResponse aUnifiedResponse) throws Exception;
+  void invokeAPI (@NonNull IAPIDescriptor aAPIDescriptor,
+                  @NonNull @Nonempty String sPath,
+                  @NonNull Map <String, String> aPathVariables,
+                  @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                  @NonNull UnifiedResponse aUnifiedResponse) throws Exception;
 }

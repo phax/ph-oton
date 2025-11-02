@@ -19,6 +19,9 @@ package com.helger.photon.core.mock;
 import java.io.File;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsMap;
@@ -29,9 +32,6 @@ import com.helger.servlet.mock.MockServletContext;
 import com.helger.typeconvert.collection.StringMap;
 import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.web.scope.mock.WebScopeTestRule;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A JUnit test rule that is suitable for all ph-oton projects. It is optimized
@@ -49,7 +49,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
    * @return The default Servlet Context init parameters to be used. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static StringMap createDefaultServletContextInitParameters ()
   {
@@ -78,7 +78,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   protected MockServletContext createMockServletContext (@Nullable final String sContextPath,
                                                          @Nullable final Map <String, String> aInitParams)

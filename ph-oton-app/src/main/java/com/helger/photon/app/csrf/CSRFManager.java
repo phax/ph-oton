@@ -19,6 +19,8 @@ package com.helger.photon.app.csrf;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +36,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Global CSRF manager keeping track of the available nonces. All nonces are provided as Base64
@@ -59,7 +58,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   public CSRFManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static CSRFManager getInstance ()
   {
     return getGlobalSingleton (CSRFManager.class);
@@ -77,7 +76,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
    *
    * @return A new Base64 encoded nonce string.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String createNewNonce ()
   {
@@ -101,7 +100,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     });
   }
 
-  public void removeNonce (@Nonnull @Nonempty final String sNonce)
+  public void removeNonce (@NonNull @Nonempty final String sNonce)
   {
     ValueEnforcer.notEmpty (sNonce, "Nonce");
 
@@ -125,7 +124,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     return m_aRWLock.readLockedInt (m_aNoncesBase64::size);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllNonces ()
   {

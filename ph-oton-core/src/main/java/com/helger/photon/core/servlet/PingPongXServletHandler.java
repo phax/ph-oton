@@ -19,6 +19,8 @@ package com.helger.photon.core.servlet;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.servlet.response.UnifiedResponse;
@@ -27,7 +29,6 @@ import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**
@@ -53,8 +54,8 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
   {}
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException
   {
     aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET).setMimeType (RESPONSE_MIMETYPE).disableCaching ();
     STATS_PING_PONG.increment ();

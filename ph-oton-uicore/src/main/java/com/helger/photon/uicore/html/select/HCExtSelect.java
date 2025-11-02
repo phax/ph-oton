@@ -18,6 +18,9 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -27,9 +30,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.request.IHCRequestField;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.core.EPhotonCoreText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An extension of the simple select box, where you can add a multilingual
@@ -46,17 +46,17 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
 
   public static final ICSSClassProvider CSS_CLASS_SPECIAL_OPTION = DefaultCSSClassProvider.create ("select-option-special");
 
-  public HCExtSelect (@Nonnull final IHCRequestField aRF)
+  public HCExtSelect (@NonNull final IHCRequestField aRF)
   {
     super (aRF);
   }
 
-  public HCExtSelect (@Nonnull final IHCRequestFieldMultiValue aRF)
+  public HCExtSelect (@NonNull final IHCRequestFieldMultiValue aRF)
   {
     super (aRF);
   }
 
-  @Nonnull
+  @NonNull
   public static HCOption createSpecialOption (@Nullable final String sContent)
   {
     final HCOption aOption = new HCOption ().setValue (VALUE_PLEASE_SELECT).addChild (new HCTextNode (sContent));
@@ -64,26 +64,26 @@ public class HCExtSelect extends AbstractHCSelect <HCExtSelect>
     return aOption;
   }
 
-  @Nonnull
-  public static HCOption createOptionPleaseSelect (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static HCOption createOptionPleaseSelect (@NonNull final Locale aDisplayLocale)
   {
     return createSpecialOption (EPhotonCoreText.PLEASE_SELECT.getDisplayText (aDisplayLocale));
   }
 
-  @Nonnull
-  public final HCOption addOptionPleaseSelect (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public final HCOption addOptionPleaseSelect (@NonNull final Locale aDisplayLocale)
   {
     return addOptionAt (0, createOptionPleaseSelect (aDisplayLocale));
   }
 
-  @Nonnull
-  public static HCOption createOptionNone (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static HCOption createOptionNone (@NonNull final Locale aDisplayLocale)
   {
     return createSpecialOption (EPhotonCoreText.SELECT_NONE.getDisplayText (aDisplayLocale));
   }
 
-  @Nonnull
-  public final HCOption addOptionNone (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public final HCOption addOptionNone (@NonNull final Locale aDisplayLocale)
   {
     return addOptionAt (0, createOptionNone (aDisplayLocale));
   }

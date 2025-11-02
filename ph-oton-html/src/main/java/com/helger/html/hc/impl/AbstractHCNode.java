@@ -20,6 +20,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -38,9 +41,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.xml.microdom.IMicroNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IHCNode} interface.
@@ -82,29 +82,29 @@ public abstract class AbstractHCNode implements IHCNode
   }
 
   @Override
-  public void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
+  public void forAllChildren (@NonNull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
 
-  @Nonnull
+  @NonNull
   @Override
-  public EContinue forAllChildrenBreakable (@Nonnull final Function <? super IHCNode, EContinue> aConsumer)
+  public EContinue forAllChildrenBreakable (@NonNull final Function <? super IHCNode, EContinue> aConsumer)
   {
     return EContinue.CONTINUE;
   }
 
   @Override
-  public void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter,
-                              @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter,
+                              @NonNull final Consumer <? super IHCNode> aConsumer)
   {
     // empty
   }
 
   @Override
-  public <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                              @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
-                                              @Nonnull final Consumer <? super DSTTYPE> aConsumer)
+  public <DSTTYPE> void forAllChildrenMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                              @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
+                                              @NonNull final Consumer <? super DSTTYPE> aConsumer)
   {
     // empty
   }
@@ -126,15 +126,15 @@ public abstract class AbstractHCNode implements IHCNode
 
   @Override
   @Nullable
-  public IHCNode findFirstChild (@Nonnull final Predicate <? super IHCNode> aFilter)
+  public IHCNode findFirstChild (@NonNull final Predicate <? super IHCNode> aFilter)
   {
     return null;
   }
 
   @Override
   @Nullable
-  public <DSTTYPE> DSTTYPE findFirstChildMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                                 @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper)
+  public <DSTTYPE> DSTTYPE findFirstChildMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                                 @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper)
   {
     return null;
   }
@@ -147,13 +147,13 @@ public abstract class AbstractHCNode implements IHCNode
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public EHCNodeState getNodeState ()
   {
     return m_eNodeState;
   }
 
-  private final void _ensureNodeState (@Nonnull final EHCNodeState eNodeState)
+  private final void _ensureNodeState (@NonNull final EHCNodeState eNodeState)
   {
     ValueEnforcer.notNull (eNodeState, "NodeState");
     if (false)
@@ -175,7 +175,7 @@ public abstract class AbstractHCNode implements IHCNode
    * @param eNodeState
    *        The new node state. May not be <code>null</code>.
    */
-  public final void internalSetNodeState (@Nonnull final EHCNodeState eNodeState)
+  public final void internalSetNodeState (@NonNull final EHCNodeState eNodeState)
   {
     if (DEBUG_NODE_STATE)
     {
@@ -191,16 +191,16 @@ public abstract class AbstractHCNode implements IHCNode
   }
 
   @OverrideOnDemand
-  protected void onCustomizeNode (@Nonnull final IHCCustomizer aCustomizer,
-                                  @Nonnull final EHTMLVersion eHTMLVersion,
-                                  @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onCustomizeNode (@NonNull final IHCCustomizer aCustomizer,
+                                  @NonNull final EHTMLVersion eHTMLVersion,
+                                  @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     aCustomizer.customizeNode (this, eHTMLVersion, aTargetNode);
   }
 
   public final void customizeNode (@Nullable final IHCCustomizer aCustomizer,
-                                   @Nonnull final EHTMLVersion eHTMLVersion,
-                                   @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+                                   @NonNull final EHTMLVersion eHTMLVersion,
+                                   @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     // Customize only once
     if (m_eNodeState.isBefore (EHCNodeState.CUSTOMIZED))
@@ -224,14 +224,14 @@ public abstract class AbstractHCNode implements IHCNode
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     // empty
   }
 
-  public final void finalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  public final void finalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                       @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     // finalize only once
     if (m_eNodeState.isBefore (EHCNodeState.FINALIZED))
@@ -248,12 +248,12 @@ public abstract class AbstractHCNode implements IHCNode
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // empty
   }
 
-  public final void consistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public final void consistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // finalize only once
     if (m_eNodeState.isBefore (EHCNodeState.CONSISTENCY_CHECKED))
@@ -269,7 +269,7 @@ public abstract class AbstractHCNode implements IHCNode
   }
 
   @OverrideOnDemand
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return true;
   }
@@ -281,11 +281,11 @@ public abstract class AbstractHCNode implements IHCNode
    *        <code>true</code> if the registration is forced by the caller.
    */
   @OverrideOnDemand
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {}
 
-  public final void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  public final void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                                final boolean bForcedRegistration)
   {
     // register resources only once
@@ -302,10 +302,10 @@ public abstract class AbstractHCNode implements IHCNode
 
   @Nullable
   @OverrideOnDemand
-  protected abstract IMicroNode internalConvertToMicroNode (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  protected abstract IMicroNode internalConvertToMicroNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   @Nullable
-  public final IMicroNode convertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public final IMicroNode convertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     _ensureNodeState (EHCNodeState.RESOURCES_REGISTERED);
 
@@ -318,7 +318,7 @@ public abstract class AbstractHCNode implements IHCNode
   }
 
   @OverrideOnDemand
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return "";

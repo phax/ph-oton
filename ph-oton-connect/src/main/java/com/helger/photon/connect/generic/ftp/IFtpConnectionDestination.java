@@ -17,12 +17,11 @@
 package com.helger.photon.connect.generic.ftp;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.jspecify.annotations.NonNull;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.network.port.DefaultNetworkPorts;
 import com.helger.photon.connect.generic.IConnectionDestination;
-
-import jakarta.annotation.Nonnull;
 
 public interface IFtpConnectionDestination extends IConnectionDestination <FTPClient>
 {
@@ -31,7 +30,7 @@ public interface IFtpConnectionDestination extends IConnectionDestination <FTPCl
   /**
    * @return The hostname or IP address of the host.
    */
-  @Nonnull
+  @NonNull
   String getHostname ();
 
   /**

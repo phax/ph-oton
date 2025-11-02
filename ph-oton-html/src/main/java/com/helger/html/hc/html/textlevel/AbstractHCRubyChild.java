@@ -16,16 +16,16 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
 
 public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                           implements
                                           IHCRubyChild <IMPLTYPE>
 {
-  public AbstractHCRubyChild (@Nonnull final EHTMLElement aElement)
+  public AbstractHCRubyChild (@NonNull final EHTMLElement aElement)
   {
     super (aElement);
   }

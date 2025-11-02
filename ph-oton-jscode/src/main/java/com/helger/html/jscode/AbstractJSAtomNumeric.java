@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Base class for numeric values
@@ -36,27 +36,27 @@ public abstract class AbstractJSAtomNumeric extends AbstractJSExpression
    */
   public abstract double doubleValue ();
 
-  @Nonnull
+  @NonNull
   public abstract AbstractJSAtomNumeric numericMinus ();
 
-  @Nonnull
+  @NonNull
   public abstract AbstractJSAtomNumeric numericIncr ();
 
-  @Nonnull
+  @NonNull
   public abstract AbstractJSAtomNumeric numericDecr ();
 
-  @Nonnull
-  public abstract AbstractJSAtomNumeric numericPlus (@Nonnull AbstractJSAtomNumeric aExpr);
+  @NonNull
+  public abstract AbstractJSAtomNumeric numericPlus (@NonNull AbstractJSAtomNumeric aExpr);
 
-  @Nonnull
-  public abstract AbstractJSAtomNumeric numericMinus (@Nonnull AbstractJSAtomNumeric aExpr);
+  @NonNull
+  public abstract AbstractJSAtomNumeric numericMinus (@NonNull AbstractJSAtomNumeric aExpr);
 
-  @Nonnull
-  public abstract AbstractJSAtomNumeric numericMul (@Nonnull AbstractJSAtomNumeric aExpr);
+  @NonNull
+  public abstract AbstractJSAtomNumeric numericMul (@NonNull AbstractJSAtomNumeric aExpr);
 
-  @Nonnull
-  public abstract AbstractJSAtomNumeric numericDiv (@Nonnull AbstractJSAtomNumeric aExpr);
+  @NonNull
+  public abstract AbstractJSAtomNumeric numericDiv (@NonNull AbstractJSAtomNumeric aExpr);
 
-  @Nonnull
-  public abstract AbstractJSAtomNumeric numericMod (@Nonnull AbstractJSAtomNumeric aExpr);
+  @NonNull
+  public abstract AbstractJSAtomNumeric numericMod (@NonNull AbstractJSAtomNumeric aExpr);
 }

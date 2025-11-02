@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.dimension.SizeInt;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,9 +30,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCMediaElementChild;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;img&gt; element
@@ -62,8 +62,8 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_aSrc;
   }
 
-  @Nonnull
-  public final IMPLTYPE setSrc (@Nonnull final ISimpleURL aSrc)
+  @NonNull
+  public final IMPLTYPE setSrc (@NonNull final ISimpleURL aSrc)
   {
     ValueEnforcer.notNull (aSrc, "src");
 
@@ -77,7 +77,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_sSrcSet;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSrcSet (@Nullable final String sSrcSet)
   {
     m_sSrcSet = sSrcSet;
@@ -90,7 +90,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_sSizes;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
@@ -118,20 +118,20 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_aExtent;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setExtent (@Nullable final SizeInt aExtent)
   {
     m_aExtent = aExtent;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setExtent (@Nonnegative final int nWidth, @Nonnegative final int nHeight)
   {
     return setExtent (new SizeInt (nWidth, nHeight));
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE scaleToWidth (@Nonnegative final int nNewWidth)
   {
     if (m_aExtent != null)
@@ -139,7 +139,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE scaleToHeight (@Nonnegative final int nNewHeight)
   {
     if (m_aExtent != null)
@@ -156,7 +156,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
    *        Maximum height
    * @return the correctly resized image tag
    */
-  @Nonnull
+  @NonNull
   public final IMPLTYPE scaleBestMatching (@Nonnegative final int nMaxWidth, @Nonnegative final int nMaxHeight)
   {
     if (m_aExtent != null)
@@ -170,7 +170,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_sAlt;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAlt (@Nullable final String sAlt)
   {
     m_sAlt = sAlt;
@@ -183,7 +183,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_eCrossOrigin;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
@@ -196,7 +196,7 @@ public abstract class AbstractHCImg <IMPLTYPE extends AbstractHCImg <IMPLTYPE>> 
     return m_eLoading;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLoading (@Nullable final EHCLoadingType eLoading)
   {
     m_eLoading = eLoading;

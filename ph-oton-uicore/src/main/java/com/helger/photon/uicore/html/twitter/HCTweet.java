@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html.twitter;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.debug.GlobalDebug;
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
@@ -25,8 +27,6 @@ import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * <pre>
@@ -48,21 +48,21 @@ public class HCTweet extends AbstractHCA <HCTweet>
   {}
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Render "tweet" nodes only in production mode
     return GlobalDebug.isProductionMode ();
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
     PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path ("https://platform.twitter.com/widgets.js").minifiedPath ("https://platform.twitter.com/widgets.js").bundlable (false).build ());
   }
 
-  @Nonnull
+  @NonNull
   public static HCTweet createShareButton ()
   {
     final HCTweet ret = new HCTweet ().addClass (CSS_TWITTER_SHARE_BUTTON).setHref (URL_SHARE).addChild ("Tweet");

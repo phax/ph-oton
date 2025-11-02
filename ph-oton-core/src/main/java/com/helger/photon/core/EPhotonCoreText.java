@@ -18,14 +18,14 @@ package com.helger.photon.core;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.Translatable;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayTextWithArgs;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains some global texts.
@@ -148,19 +148,19 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }
 
-  @Nonnull
+  @NonNull
   public IMultilingualText getMultilingualText ()
   {
     return m_aTP;
   }
 
   @Nullable
-  public static String getYesOrNo (final boolean bYes, @Nonnull final Locale aContentLocale)
+  public static String getYesOrNo (final boolean bYes, @NonNull final Locale aContentLocale)
   {
     return (bYes ? BUTTON_YES : BUTTON_NO).getDisplayText (aContentLocale);
   }

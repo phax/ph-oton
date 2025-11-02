@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -26,9 +29,6 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represent a prefetch object used in a dataset
@@ -54,13 +54,13 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
    * @param aURL
    *        A URL to a JSON file containing an array of datums.
    */
-  public TypeaheadPrefetch (@Nonnull final ISimpleURL aURL)
+  public TypeaheadPrefetch (@NonNull final ISimpleURL aURL)
   {
     ValueEnforcer.notNull (aURL, "URL");
     m_aURL = new SimpleURL (aURL);
   }
 
-  public TypeaheadPrefetch (@Nonnull final TypeaheadPrefetch aOther)
+  public TypeaheadPrefetch (@NonNull final TypeaheadPrefetch aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aURL = aOther.m_aURL.getClone ();
@@ -71,7 +71,7 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   /**
    * @return A URL to a JSON file containing an array of datums.
    */
-  @Nonnull
+  @NonNull
   public ISimpleURL getURL ()
   {
     return m_aURL;
@@ -85,7 +85,7 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
    *        Time to live in milliseconds. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadPrefetch setTTL (@Nonnegative final int nTTL)
   {
     if (nTTL < 1)
@@ -113,7 +113,7 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadPrefetch setFilter (@Nullable final JSAnonymousFunction aFilter)
   {
     m_aFilter = aFilter;
@@ -131,7 +131,7 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
     return m_aFilter;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {
@@ -144,7 +144,7 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public TypeaheadPrefetch getClone ()
   {
     return new TypeaheadPrefetch (this);

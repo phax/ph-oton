@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -26,9 +29,6 @@ import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;embed&gt; element
@@ -63,7 +63,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -75,7 +75,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_nWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setWidth (final int nWidth)
   {
     m_nWidth = nWidth;
@@ -87,7 +87,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_nHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setHeight (final int nHeight)
   {
     m_nHeight = nHeight;
@@ -100,7 +100,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_sPluginURL;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setPluginURL (@Nullable final String sPluginURL)
   {
     m_sPluginURL = sPluginURL;
@@ -113,7 +113,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_sPluginsPage;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setPluginsPage (@Nullable final String sPluginsPage)
   {
     m_sPluginsPage = sPluginsPage;
@@ -125,7 +125,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_bAutoStart;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setAutoStart (final boolean bAutoStart)
   {
     m_bAutoStart = bAutoStart;
@@ -137,7 +137,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_bLoop;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setLoop (final boolean bLoop)
   {
     m_bLoop = bLoop;
@@ -150,7 +150,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_sPalette;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setPalette (@Nullable final String sPalette)
   {
     m_sPalette = sPalette;
@@ -163,7 +163,7 @@ public class HCEmbed extends AbstractHCElement <HCEmbed>
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCEmbed setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;

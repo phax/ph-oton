@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
@@ -24,9 +27,6 @@ import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;optgroup&gt; element
@@ -51,7 +51,7 @@ public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGrou
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOptGroup setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -64,7 +64,7 @@ public class HCOptGroup extends AbstractHCElementWithInternalChildren <HCOptGrou
     return m_sLabel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCOptGroup setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;

@@ -19,6 +19,7 @@ package com.helger.photon.api.servlet;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,6 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -61,26 +61,26 @@ public class APIXServletHandler implements IXServletSimpleHandler
     this ( () -> GlobalAPIInvoker.getInstance ().getRegistry (), () -> GlobalAPIInvoker.getInstance ().getInvoker ());
   }
 
-  public APIXServletHandler (@Nonnull final Supplier <? extends IAPIRegistry> aRegistryFactory,
-                             @Nonnull final Supplier <? extends IAPIInvoker> aInvokerFactory)
+  public APIXServletHandler (@NonNull final Supplier <? extends IAPIRegistry> aRegistryFactory,
+                             @NonNull final Supplier <? extends IAPIInvoker> aInvokerFactory)
   {
     m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "RegistryFactory");
     m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");
   }
 
-  @Nonnull
+  @NonNull
   @Override
-  public PhotonUnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
-                                                      @Nonnull final EHttpMethod eHttpMethod,
-                                                      @Nonnull final HttpServletRequest aHttpRequest,
-                                                      @Nonnull final IRequestWebScope aRequestScope)
+  public PhotonUnifiedResponse createUnifiedResponse (@NonNull final EHttpVersion eHttpVersion,
+                                                      @NonNull final EHttpMethod eHttpMethod,
+                                                      @NonNull final HttpServletRequest aHttpRequest,
+                                                      @NonNull final IRequestWebScope aRequestScope)
   {
     return new PhotonUnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
   }
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     final EHttpMethod eHttpMethod = aRequestScope.getHttpMethod ();
     if (eHttpMethod == null)

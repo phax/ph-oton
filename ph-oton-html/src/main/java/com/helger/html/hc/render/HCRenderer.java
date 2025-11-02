@@ -18,6 +18,9 @@ package com.helger.html.hc.render;
 
 import java.io.OutputStream;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.VisibleForTesting;
@@ -39,9 +42,6 @@ import com.helger.html.hc.impl.HCNodeList;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @Immutable
 public final class HCRenderer
 {
@@ -61,10 +61,10 @@ public final class HCRenderer
    * @param <T>
    *        Input and return node type
    */
-  @Nonnull
-  public static <T extends IHCNode> T getPreparedNode (@Nonnull final T aNode,
-                                                       @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode,
-                                                       @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  public static <T extends IHCNode> T getPreparedNode (@NonNull final T aNode,
+                                                       @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode,
+                                                       @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Run the customizers
     aNode.customizeNode (aConversionSettings.getCustomizer (), aConversionSettings.getHTMLVersion (), aTargetNode);
@@ -82,8 +82,8 @@ public final class HCRenderer
     return aNode;
   }
 
-  public static void prepareHtmlForConversion (@Nonnull final HCHtml aHtml,
-                                               @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static void prepareHtmlForConversion (@NonNull final HCHtml aHtml,
+                                               @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // customize, finalize and extract resources
     prepareForConversion (aHtml, aHtml.body (), aConversionSettings);
@@ -114,9 +114,9 @@ public final class HCRenderer
    * @param aConversionSettings
    *        The conversion settings to use. May not be <code>null</code>.
    */
-  public static void prepareForConversion (@Nonnull final IHCNode aStartNode,
-                                           @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aGlobalTargetNode,
-                                           @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static void prepareForConversion (@NonNull final IHCNode aStartNode,
+                                           @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aGlobalTargetNode,
+                                           @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     ValueEnforcer.notNull (aStartNode, "NodeToBeCustomized");
     ValueEnforcer.notNull (aGlobalTargetNode, "TargetNode");
@@ -175,7 +175,7 @@ public final class HCRenderer
    * @return The fully created HTML node
    */
   @Nullable
-  public static IMicroNode getAsNode (@Nonnull final IHCNode aHCNode)
+  public static IMicroNode getAsNode (@NonNull final IHCNode aHCNode)
   {
     return getAsNode (aHCNode, HCSettings.getConversionSettings ());
   }
@@ -191,8 +191,8 @@ public final class HCRenderer
    */
   @SuppressWarnings ("unchecked")
   @Nullable
-  public static IMicroNode getAsNode (@Nonnull final IHCNode aSrcNode,
-                                      @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public static IMicroNode getAsNode (@NonNull final IHCNode aSrcNode,
+                                      @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     IHCNode aConvertNode = aSrcNode;
 
@@ -236,9 +236,9 @@ public final class HCRenderer
    *        The node to be converted. May not be <code>null</code>.
    * @return The node as XML with or without indentation.
    */
-  @Nonnull
+  @NonNull
   @VisibleForTesting
-  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode)
+  public static String getAsHTMLString (@NonNull final IHCNode aHCNode)
   {
     return getAsHTMLString (aHCNode, HCSettings.getConversionSettings ());
   }
@@ -253,9 +253,9 @@ public final class HCRenderer
    *        The conversion settings to be used. May not be <code>null</code>.
    * @return The node as HTML string. Never <code>null</code>.
    */
-  @Nonnull
-  public static String getAsHTMLString (@Nonnull final IHCNode aHCNode,
-                                        @Nonnull final IHCConversionSettings aConversionSettings)
+  @NonNull
+  public static String getAsHTMLString (@NonNull final IHCNode aHCNode,
+                                        @NonNull final IHCConversionSettings aConversionSettings)
   {
     final IMicroNode aMicroNode = getAsNode (aHCNode, aConversionSettings);
     if (aMicroNode == null)
@@ -271,16 +271,16 @@ public final class HCRenderer
    *        The node to be converted. May not be <code>null</code>.
    * @return The node as XML with or without indentation.
    */
-  @Nonnull
-  public static String getAsHTMLStringWithoutNamespaces (@Nonnull final IHCNode aHCNode)
+  @NonNull
+  public static String getAsHTMLStringWithoutNamespaces (@NonNull final IHCNode aHCNode)
   {
     // Only works, if no nonce is needed
     return getAsHTMLString (aHCNode, HCSettings.getConversionSettingsWithoutNamespaces ());
   }
 
-  public static void writeHtmlTo (@Nonnull final IHCNode aHCNode,
-                                  @Nonnull final IHCConversionSettings aConversionSettings,
-                                  @Nonnull @WillClose final OutputStream aOS)
+  public static void writeHtmlTo (@NonNull final IHCNode aHCNode,
+                                  @NonNull final IHCConversionSettings aConversionSettings,
+                                  @NonNull @WillClose final OutputStream aOS)
   {
     try
     {

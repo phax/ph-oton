@@ -19,6 +19,9 @@ package com.helger.photon.security.object.accarea;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
@@ -31,9 +34,6 @@ import com.helger.tenancy.IBusinessObject;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.accarea.IAccountingAreaObject;
 import com.helger.tenancy.tenant.ITenant;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Like {@link AbstractAccountingAreaObject} but with an optional accounting
@@ -49,21 +49,21 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   // Status vars
   private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  protected AbstractAccountingAreaOptionalObject (@Nonnull final IAccountingAreaObject aOther)
+  protected AbstractAccountingAreaOptionalObject (@NonNull final IAccountingAreaObject aOther)
   {
     super (aOther);
     m_aTenant = aOther.getTenant ();
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
-  public AbstractAccountingAreaOptionalObject (@Nonnull final IAccountingArea aAccountingArea, @Nonnull final IBusinessObject aObject)
+  public AbstractAccountingAreaOptionalObject (@NonNull final IAccountingArea aAccountingArea, @NonNull final IBusinessObject aObject)
   {
     this (aAccountingArea.getTenant (), aAccountingArea, aObject);
   }
 
-  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aTenant,
+  public AbstractAccountingAreaOptionalObject (@NonNull final ITenant aTenant,
                                                @Nullable final IAccountingArea aAccountingArea,
-                                               @Nonnull final IBusinessObject aObject)
+                                               @NonNull final IBusinessObject aObject)
   {
     super (aObject);
     ValueEnforcer.notNull (aTenant, "Tenant");
@@ -78,10 +78,10 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
     m_aAccountingArea = aAccountingArea;
   }
 
-  public AbstractAccountingAreaOptionalObject (@Nonnull final ITenant aTenant,
+  public AbstractAccountingAreaOptionalObject (@NonNull final ITenant aTenant,
                                                @Nullable final IAccountingArea aAccountingArea,
-                                               @Nonnull @Nonempty final String sID,
-                                               @Nonnull final LocalDateTime aCreationDT,
+                                               @NonNull @Nonempty final String sID,
+                                               @NonNull final LocalDateTime aCreationDT,
                                                @Nullable final String sCreationUserID,
                                                @Nullable final LocalDateTime aLastModificationDT,
                                                @Nullable final String sLastModificationUserID,
@@ -108,7 +108,7 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
     m_aAccountingArea = aAccountingArea;
   }
 
-  @Nonnull
+  @NonNull
   public final ITenant getTenant ()
   {
     return m_aTenant;

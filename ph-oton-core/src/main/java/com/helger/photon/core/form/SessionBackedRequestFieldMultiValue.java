@@ -18,12 +18,12 @@ package com.helger.photon.core.form;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.web.scope.util.SessionBackedRequestFieldDataMultiValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFieldDataMultiValue implements IHCRequestFieldMultiValue
 {
@@ -33,7 +33,7 @@ public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFie
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    */
-  public SessionBackedRequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName)
+  public SessionBackedRequestFieldMultiValue (@NonNull @Nonempty final String sFieldName)
   {
     super (sFieldName);
   }
@@ -47,7 +47,7 @@ public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFie
    *        The default values to use, if no value is present in the request
    *        scope.
    */
-  public SessionBackedRequestFieldMultiValue (@Nonnull @Nonempty final String sFieldName,
+  public SessionBackedRequestFieldMultiValue (@NonNull @Nonempty final String sFieldName,
                                               @Nullable final Collection <String> aDefaultValues)
   {
     super (sFieldName, aDefaultValues);

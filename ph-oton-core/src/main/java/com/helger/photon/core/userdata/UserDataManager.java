@@ -18,6 +18,7 @@ package com.helger.photon.core.userdata;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,6 @@ import com.helger.photon.app.url.LinkHelper;
 import com.helger.photon.io.WebFileIO;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Manager for {@link IUserDataObject} objects.
@@ -65,7 +64,7 @@ public final class UserDataManager
    *        The path to be set. May neither be <code>null</code> nor empty and
    *        must start with a "/" character.
    */
-  public static void setUserDataPath (@Nonnull @Nonempty final String sUserDataPath)
+  public static void setUserDataPath (@NonNull @Nonempty final String sUserDataPath)
   {
     ValueEnforcer.isTrue (StringHelper.getLength (sUserDataPath) >= 2, "userDataPath is too short");
     ValueEnforcer.isTrue (StringHelper.startsWith (sUserDataPath, '/'), "userDataPath must start with a slash");
@@ -83,7 +82,7 @@ public final class UserDataManager
    *         any context information. By default the return value is
    *         {@value #DEFAULT_USER_DATA_PATH}.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getUserDataPath ()
   {
@@ -97,9 +96,9 @@ public final class UserDataManager
    * @return Context and user data path. Always starting with a "/". E.g.
    *         <code>/user</code> or <code>/context/user</code>
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getContextAndUserDataPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static String getContextAndUserDataPath (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return LinkHelper.getURIWithContext (aRequestScope, getUserDataPath ());
   }
@@ -118,10 +117,10 @@ public final class UserDataManager
    *         <code>/file.txt</code> and the user data path is <code>/user</code>
    *         .
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getURLPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                   @Nonnull final IUserDataObject aUDO)
+  public static String getURLPath (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                   @NonNull final IUserDataObject aUDO)
   {
     ValueEnforcer.notNull (aUDO, "UDO");
 
@@ -141,15 +140,15 @@ public final class UserDataManager
    *         this object points to <code>/file.txt</code> and the user data path
    *         is <code>/user</code> .
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static SimpleURL getURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                  @Nonnull final IUserDataObject aUDO)
+  public static SimpleURL getURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @NonNull final IUserDataObject aUDO)
   {
     return new SimpleURL (getURLPath (aRequestScope, aUDO));
   }
 
-  @Nonnull
+  @NonNull
   private static IFileRelativeIO _getFileIO ()
   {
     return WebFileIO.getDataIO ();
@@ -158,7 +157,7 @@ public final class UserDataManager
   /**
    * @return The file system base path for UDOs.
    */
-  @Nonnull
+  @NonNull
   public static File getBasePathFile ()
   {
     return _getFileIO ().getBasePathFile ();
@@ -172,8 +171,8 @@ public final class UserDataManager
    * @return The matching file system resource. No check is performed, whether
    *         the resource exists or not!
    */
-  @Nonnull
-  public static FileSystemResource getResource (@Nonnull final IUserDataObject aUDO)
+  @NonNull
+  public static FileSystemResource getResource (@NonNull final IUserDataObject aUDO)
   {
     ValueEnforcer.notNull (aUDO, "UDO");
 
@@ -188,8 +187,8 @@ public final class UserDataManager
    * @return The matching File. No check is performed, whether the file exists
    *         or not!
    */
-  @Nonnull
-  public static File getFile (@Nonnull final IUserDataObject aUDO)
+  @NonNull
+  public static File getFile (@NonNull final IUserDataObject aUDO)
   {
     ValueEnforcer.notNull (aUDO, "UDO");
 

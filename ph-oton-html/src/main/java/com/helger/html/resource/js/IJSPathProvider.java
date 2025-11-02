@@ -16,11 +16,11 @@
  */
 package com.helger.html.resource.js;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.html.hc.html.script.EHCScriptLoadingMode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Provides a path to an external JS object.
@@ -38,7 +38,7 @@ public interface IJSPathProvider extends IJSProvider
    *        retrieved, otherwise the minified version of the file.
    * @return The path to the external JS item.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getJSItemPath (boolean bRegular);
 
@@ -46,7 +46,7 @@ public interface IJSPathProvider extends IJSProvider
    * @return The script loading mode to use. May not be <code>null</code>.
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   default EHCScriptLoadingMode getScriptLoadingMode ()
   {
     return EHCScriptLoadingMode.DEFAULT;

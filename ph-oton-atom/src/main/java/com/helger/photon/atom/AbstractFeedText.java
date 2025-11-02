@@ -18,13 +18,13 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public abstract class AbstractFeedText extends AbstractFeedElement
 {
@@ -39,7 +39,7 @@ public abstract class AbstractFeedText extends AbstractFeedElement
     m_sText = sText;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getType ()
   {

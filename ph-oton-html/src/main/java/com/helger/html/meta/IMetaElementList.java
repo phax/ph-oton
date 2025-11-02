@@ -18,15 +18,15 @@ package com.helger.html.meta;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsIterable;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Read only base interface for a list of {@link IMetaElement} objects.
@@ -39,14 +39,14 @@ public interface IMetaElementList extends ICommonsIterable <IMetaElement>
   /**
    * @return A set with used meta element names. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <String> getAllMetaElementNames ();
 
   /**
    * @return A list with all contained meta elements. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IMetaElement> getAllMetaElements ();
 
@@ -56,7 +56,7 @@ public interface IMetaElementList extends ICommonsIterable <IMetaElement>
    * @param aTarget
    *        The target container to be filled. May not be <code>null</code>.
    */
-  void getAllMetaElements (@Nonnull Collection <? super IMetaElement> aTarget);
+  void getAllMetaElements (@NonNull Collection <? super IMetaElement> aTarget);
 
   /**
    * Find the meta element with the given name.

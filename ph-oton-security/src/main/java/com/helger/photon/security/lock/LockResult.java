@@ -18,6 +18,9 @@ package com.helger.photon.security.lock;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -26,9 +29,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains the result of a locking operation.
@@ -45,8 +45,8 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   private final boolean m_bIsNewLock;
   private final ICommonsList <IDTYPE> m_aUnlockedObjects;
 
-  public LockResult (@Nonnull final IDTYPE aObjID,
-                     @Nonnull final ELocked eLocked,
+  public LockResult (@NonNull final IDTYPE aObjID,
+                     @NonNull final ELocked eLocked,
                      final boolean bIsNewLock,
                      @Nullable final List <IDTYPE> aUnlockedObjects)
   {
@@ -59,7 +59,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   /**
    * @return The ID of the locked object. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IDTYPE getLockedObjectID ()
   {
     return m_aObjID;
@@ -88,7 +88,7 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
    * @return A list with all objects that were unlocked during the locking
    *         process. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IDTYPE> getUnlockedObjects ()
   {
@@ -129,8 +129,8 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
                                        .getToString ();
   }
 
-  @Nonnull
-  public static <IDTYPE> LockResult <IDTYPE> createFailure (@Nonnull final IDTYPE aObjID)
+  @NonNull
+  public static <IDTYPE> LockResult <IDTYPE> createFailure (@NonNull final IDTYPE aObjID)
   {
     return new LockResult <> (aObjID, ELocked.NOT_LOCKED, false, null);
   }

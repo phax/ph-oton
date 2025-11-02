@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.Nonempty;
 
 /**
  * JS "let".
@@ -35,7 +35,7 @@ public class JSLet extends AbstractJSVariable <JSLet>
    * @param sName
    *        name of the variable
    */
-  public JSLet (@Nonnull @Nonempty final String sName)
+  public JSLet (@NonNull @Nonempty final String sName)
   {
     this (sName, (IJSExpression) null);
   }
@@ -48,7 +48,7 @@ public class JSLet extends AbstractJSVariable <JSLet>
    * @param aInit
    *        Value to initialize this variable to
    */
-  public JSLet (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  public JSLet (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInit)
   {
     super (EJSVarMode.LET, sName, aInit);
   }

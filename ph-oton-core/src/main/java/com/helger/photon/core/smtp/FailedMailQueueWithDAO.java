@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.ELockType;
 import com.helger.annotation.concurrent.MustBeLocked;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -36,9 +39,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A special {@link FailedMailQueue} that supports persistent storage.
@@ -80,8 +80,8 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     }
 
     @Override
-    @Nonnull
-    protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+    @NonNull
+    protected EChange onRead (@NonNull final IMicroDocument aDoc)
     {
       for (final IMicroElement eFMD : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_FAILEDMAILDATA))
       {
@@ -93,7 +93,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     }
 
     @Override
-    @Nonnull
+    @NonNull
     protected IMicroDocument createWriteData ()
     {
       final IMicroDocument aDoc = new MicroDocument ();
@@ -120,13 +120,13 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
     }
   }
 
-  private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException
+  private void writeObject (@NonNull final ObjectOutputStream aOOS) throws IOException
   {
     aOOS.defaultWriteObject ();
     aOOS.writeUTF (m_aDAO.getFilenameProvider ().get ());
   }
 
-  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException, ClassNotFoundException
+  private void readObject (@NonNull final ObjectInputStream aOIS) throws IOException, ClassNotFoundException
   {
     aOIS.defaultReadObject ();
     final String sFilename = aOIS.readUTF ();
@@ -149,12 +149,12 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
   }
 
   @Override
-  public void add (@Nonnull final FailedMailData aFailedMailData)
+  public void add (@NonNull final FailedMailData aFailedMailData)
   {
     this.add (aFailedMailData, true);
   }
 
-  public void add (@Nonnull final FailedMailData aFailedMailData, final boolean bAudit)
+  public void add (@NonNull final FailedMailData aFailedMailData, final boolean bAudit)
   {
     super.add (aFailedMailData);
     _markAsChanged ();
@@ -178,7 +178,7 @@ public class FailedMailQueueWithDAO extends FailedMailQueue
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <FailedMailData> removeAll ()
   {

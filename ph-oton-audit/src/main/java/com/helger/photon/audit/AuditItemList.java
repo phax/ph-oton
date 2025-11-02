@@ -19,6 +19,8 @@ package com.helger.photon.audit;
 import java.util.Comparator;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.CodingStyleguideUnaware;
@@ -29,8 +31,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Manages a list of {@link IAuditItem} objects.
@@ -52,7 +52,7 @@ public final class AuditItemList
     m_aItems.add (aLastItem);
   }
 
-  void internalAddItem (@Nonnull final IAuditItem aItem)
+  void internalAddItem (@NonNull final IAuditItem aItem)
   {
     ValueEnforcer.notNull (aItem, "Item");
 
@@ -65,14 +65,14 @@ public final class AuditItemList
     return m_aItems.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAuditItem> getAllItems ()
   {
     return m_aItems.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   @CodingStyleguideUnaware
   public List <IAuditItem> getLastItems (@Nonnegative final int nMaxItems)

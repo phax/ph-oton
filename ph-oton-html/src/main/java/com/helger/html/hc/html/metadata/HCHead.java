@@ -18,6 +18,9 @@ package com.helger.html.hc.html.metadata;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsImmutableObject;
@@ -41,9 +44,6 @@ import com.helger.html.hc.html.script.HCJSNodeDetector;
 import com.helger.mime.CMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;head&gt; element
@@ -75,7 +75,7 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_sProfile;
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead setProfile (@Nullable final String sProfile)
   {
     m_sProfile = sProfile;
@@ -88,7 +88,7 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_aPageTitle.getContent ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead setPageTitle (@Nullable final String sPageTitle)
   {
     m_aPageTitle.setContent (sPageTitle);
@@ -101,7 +101,7 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_aBase.getHref ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead setBaseHref (@Nullable final ISimpleURL aBaseHref)
   {
     m_aBase.setHref (aBaseHref);
@@ -114,7 +114,7 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_aBase.getTarget ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead setBaseTarget (@Nullable final HC_Target aTarget)
   {
     m_aBase.setTarget (aTarget);
@@ -128,14 +128,14 @@ public class HCHead extends AbstractHCElement <HCHead>
   /**
    * @return meta element list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <HCMeta> metaElements ()
   {
     return m_aMetaElements;
   }
 
-  @Nonnull
+  @NonNull
   public final EChange removeMetaElement (@Nullable final String sName)
   {
     if (StringHelper.isNotEmpty (sName))
@@ -150,14 +150,14 @@ public class HCHead extends AbstractHCElement <HCHead>
   /**
    * @return linkmeta element list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <HCLink> links ()
   {
     return m_aLinks;
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead setShortcutIconHref (@Nullable final ISimpleURL aShortcutIconHref)
   {
     if (aShortcutIconHref == null)
@@ -178,8 +178,8 @@ public class HCHead extends AbstractHCElement <HCHead>
   // CSS handling
   //
 
-  @Nonnull
-  public final HCHead addCSS (@Nonnull final IHCNode aCSS)
+  @NonNull
+  public final HCHead addCSS (@NonNull final IHCNode aCSS)
   {
     ValueEnforcer.notNull (aCSS, "CSS");
     if (!HCCSSNodeDetector.isCSSNode (aCSS))
@@ -197,8 +197,8 @@ public class HCHead extends AbstractHCElement <HCHead>
    *        The CSS node to be added. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public final HCHead addCSSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aCSS)
+  @NonNull
+  public final HCHead addCSSAt (@Nonnegative final int nIndex, @NonNull final IHCNode aCSS)
   {
     ValueEnforcer.notNull (aCSS, "CSS");
     if (!HCCSSNodeDetector.isCSSNode (aCSS))
@@ -213,35 +213,35 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_aCSS.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <IHCNode> cssNodes ()
   {
     return m_aCSS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final ICommonsIterable <IHCNode> getCSSNodes ()
   {
     return m_aCSS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IHCNode> getAllCSSNodes ()
   {
     return m_aCSS.getClone ();
   }
 
-  public final void getAllAndRemoveAllCSSNodes (@Nonnull final List <IHCNode> aTargetList)
+  public final void getAllAndRemoveAllCSSNodes (@NonNull final List <IHCNode> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
     aTargetList.addAll (m_aCSS);
     m_aCSS.clear ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead removeAllCSS ()
   {
     m_aCSS.clear ();
@@ -259,8 +259,8 @@ public class HCHead extends AbstractHCElement <HCHead>
    *        The JS to be added. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public final HCHead addJS (@Nonnull final IHCNode aJS)
+  @NonNull
+  public final HCHead addJS (@NonNull final IHCNode aJS)
   {
     ValueEnforcer.notNull (aJS, "JS");
     if (!HCJSNodeDetector.isJSNode (aJS))
@@ -278,8 +278,8 @@ public class HCHead extends AbstractHCElement <HCHead>
    *        The JS to be added. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public final HCHead addJSAt (@Nonnegative final int nIndex, @Nonnull final IHCNode aJS)
+  @NonNull
+  public final HCHead addJSAt (@Nonnegative final int nIndex, @NonNull final IHCNode aJS)
   {
     ValueEnforcer.notNull (aJS, "JS");
     if (!HCJSNodeDetector.isJSNode (aJS))
@@ -297,35 +297,35 @@ public class HCHead extends AbstractHCElement <HCHead>
     return m_aJS.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <IHCNode> jsNodes ()
   {
     return m_aJS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsImmutableObject
   public final ICommonsIterable <IHCNode> getJSNodes ()
   {
     return m_aJS;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IHCNode> getAllJSNodes ()
   {
     return m_aJS.getClone ();
   }
 
-  public final void getAllAndRemoveAllJSNodes (@Nonnull final List <IHCNode> aTargetList)
+  public final void getAllAndRemoveAllJSNodes (@NonNull final List <IHCNode> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
     aTargetList.addAll (m_aJS);
     m_aJS.clear ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHead removeAllJS ()
   {
     m_aJS.clear ();
@@ -337,16 +337,16 @@ public class HCHead extends AbstractHCElement <HCHead>
   //
 
   @OverrideOnDemand
-  protected void emitLinks (@Nonnull final IMicroElement eHead,
-                            @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitLinks (@NonNull final IMicroElement eHead,
+                            @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final HCLink aLink : m_aLinks)
       eHead.addChild (aLink.convertToMicroNode (aConversionSettings));
   }
 
   @OverrideOnDemand
-  protected void emitCSS (@Nonnull final IMicroElement eHead,
-                          @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitCSS (@NonNull final IMicroElement eHead,
+                          @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     int nCSSExternals = 0;
     for (final IHCNode aCSS : m_aCSS)
@@ -365,16 +365,16 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @OverrideOnDemand
-  protected void emitJS (@Nonnull final IMicroElement eHead,
-                         @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void emitJS (@NonNull final IMicroElement eHead,
+                         @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     for (final IHCNode aJS : m_aJS)
       eHead.addChild (aJS.convertToMicroNode (aConversionSettings));
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement eHead,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement eHead,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (eHead, aConversionSettings);
 
@@ -406,7 +406,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     // Use the page title as plain text
@@ -414,7 +414,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IHCNode> getAllChildren ()
   {
@@ -429,7 +429,7 @@ public class HCHead extends AbstractHCElement <HCHead>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final ICommonsIterable <IHCNode> getChildren ()
   {
     return getAllChildren ();

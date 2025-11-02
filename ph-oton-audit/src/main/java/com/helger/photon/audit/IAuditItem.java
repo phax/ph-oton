@@ -19,13 +19,13 @@ package com.helger.photon.audit;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.state.ESuccess;
 import com.helger.base.state.ISuccessIndicator;
 import com.helger.security.authentication.subject.user.IHasUserID;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a single audit item
@@ -38,19 +38,19 @@ public interface IAuditItem extends IHasUserID, ISuccessIndicator, Serializable
   /**
    * @return The date and time when the audit item was created
    */
-  @Nonnull
+  @NonNull
   LocalDateTime getDateTime ();
 
   /**
    * @return The audit action type. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EAuditActionType getType ();
 
   /**
    * @return The ID of the audit action type. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getTypeID ()
   {
@@ -60,7 +60,7 @@ public interface IAuditItem extends IHasUserID, ISuccessIndicator, Serializable
   /**
    * @return Success or error?
    */
-  @Nonnull
+  @NonNull
   ESuccess getSuccess ();
 
   default boolean isSuccess ()
@@ -72,6 +72,6 @@ public interface IAuditItem extends IHasUserID, ISuccessIndicator, Serializable
    * @return The performed action in a textual representation like
    *         "action(param1,param2,...)"
    */
-  @Nonnull
+  @NonNull
   String getAction ();
 }

@@ -20,14 +20,14 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Txtmark configuration.
@@ -123,8 +123,8 @@ public class MarkdownConfiguration
    *        Custom plugins
    */
   public MarkdownConfiguration (final boolean bSafeMode,
-                                @Nonnull final Charset aEncoding,
-                                @Nonnull final IMarkdownDecorator aDecorator,
+                                @NonNull final Charset aEncoding,
+                                @NonNull final IMarkdownDecorator aDecorator,
                                 @Nullable final IMarkdownBlockEmitter aCodeBlockEmitter,
                                 final boolean bForceExtendedProfile,
                                 final boolean bConvertNewline2Br,
@@ -149,13 +149,13 @@ public class MarkdownConfiguration
     return m_bSafeMode;
   }
 
-  @Nonnull
+  @NonNull
   public Charset getEncoding ()
   {
     return m_aEncoding;
   }
 
-  @Nonnull
+  @NonNull
   public IMarkdownDecorator getDecorator ()
   {
     return m_aDecorator;
@@ -183,7 +183,7 @@ public class MarkdownConfiguration
     return m_aSpecialLinkEmitter;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <AbstractMarkdownPlugin> getAllPlugins ()
   {
@@ -195,7 +195,7 @@ public class MarkdownConfiguration
    *
    * @return A new Builder instance.
    */
-  @Nonnull
+  @NonNull
   public static Builder builder ()
   {
     return new Builder ();
@@ -232,7 +232,7 @@ public class MarkdownConfiguration
      * @return This builder.
      * @since 0.7
      */
-    @Nonnull
+    @NonNull
     public Builder extendedProfile (final boolean bExtendedProfile)
     {
       m_bForceExtendedProfile = bExtendedProfile;
@@ -244,7 +244,7 @@ public class MarkdownConfiguration
      *
      * @return This builder.
      */
-    @Nonnull
+    @NonNull
     public Builder convertNewline2Br ()
     {
       m_bConvertNewline2Br = true;
@@ -259,7 +259,7 @@ public class MarkdownConfiguration
      * @return This builder
      * @since 0.7
      */
-    @Nonnull
+    @NonNull
     public Builder safeMode (final boolean flag)
     {
       m_bSafeMode = flag;
@@ -274,14 +274,14 @@ public class MarkdownConfiguration
      * @return This builder
      * @since 0.7
      */
-    @Nonnull
-    public Builder encoding (@Nonnull final Charset aEncoding)
+    @NonNull
+    public Builder encoding (@NonNull final Charset aEncoding)
     {
       m_aEncoding = ValueEnforcer.notNull (aEncoding, "Encoding");
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public IMarkdownDecorator decorator ()
     {
       return m_aDecorator;
@@ -296,8 +296,8 @@ public class MarkdownConfiguration
      * @see MarkdownDefaultDecorator
      * @since 0.7
      */
-    @Nonnull
-    public Builder decorator (@Nonnull final IMarkdownDecorator aDecorator)
+    @NonNull
+    public Builder decorator (@NonNull final IMarkdownDecorator aDecorator)
     {
       m_aDecorator = ValueEnforcer.notNull (aDecorator, "Decorator");
       return this;
@@ -312,7 +312,7 @@ public class MarkdownConfiguration
      * @see IMarkdownBlockEmitter
      * @since 0.7
      */
-    @Nonnull
+    @NonNull
     public Builder codeBlockEmitter (@Nullable final IMarkdownBlockEmitter emitter)
     {
       m_aCodeBlockEmitter = emitter;
@@ -327,7 +327,7 @@ public class MarkdownConfiguration
      * @return This builder.
      * @since 0.7
      */
-    @Nonnull
+    @NonNull
     public Builder specialLinkEmitter (@Nullable final IMarkdownSpanEmitter emitter)
     {
       m_aSpecialLinkEmitter = emitter;
@@ -341,8 +341,8 @@ public class MarkdownConfiguration
      *        The plugins.
      * @return This builder.
      */
-    @Nonnull
-    public Builder registerPlugins (@Nonnull final AbstractMarkdownPlugin... aPlugins)
+    @NonNull
+    public Builder registerPlugins (@NonNull final AbstractMarkdownPlugin... aPlugins)
     {
       m_aPlugins.addAll (aPlugins);
       return this;
@@ -354,7 +354,7 @@ public class MarkdownConfiguration
      * @return a Configuration instance
      * @since 0.7
      */
-    @Nonnull
+    @NonNull
     public MarkdownConfiguration build ()
     {
       return new MarkdownConfiguration (m_bSafeMode,

@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.annotation.OutOfBandNode;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Regular inline JS script elements with the special semantics, that stuff will
@@ -41,26 +41,26 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
   protected HCScriptInlineOnDocumentReady ()
   {}
 
-  public HCScriptInlineOnDocumentReady (@Nonnull final IHasJSCode aOnDocumentReadyCode)
+  public HCScriptInlineOnDocumentReady (@NonNull final IHasJSCode aOnDocumentReadyCode)
   {
     setOnDocumentReadyCode (aOnDocumentReadyCode);
   }
 
-  public HCScriptInlineOnDocumentReady (@Nonnull final IHCOnDocumentReadyProvider aODRProvider,
-                                        @Nonnull final IHasJSCode aOnDocumentReadyCode)
+  public HCScriptInlineOnDocumentReady (@NonNull final IHCOnDocumentReadyProvider aODRProvider,
+                                        @NonNull final IHasJSCode aOnDocumentReadyCode)
   {
     setOnDocumentReadyCode (aODRProvider, aOnDocumentReadyCode);
   }
 
-  @Nonnull
-  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHasJSCode aOnDocumentReadyCode)
+  @NonNull
+  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@NonNull final IHasJSCode aOnDocumentReadyCode)
   {
     return setOnDocumentReadyCode (HCSettings.getOnDocumentReadyProvider (), aOnDocumentReadyCode);
   }
 
-  @Nonnull
-  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@Nonnull final IHCOnDocumentReadyProvider aODRProvider,
-                                                                     @Nonnull final IHasJSCode aOnDocumentReadyCode)
+  @NonNull
+  public final HCScriptInlineOnDocumentReady setOnDocumentReadyCode (@NonNull final IHCOnDocumentReadyProvider aODRProvider,
+                                                                     @NonNull final IHasJSCode aOnDocumentReadyCode)
   {
     ValueEnforcer.notNull (aODRProvider, "OnDocumentReadyProvider");
     ValueEnforcer.notNull (aOnDocumentReadyCode, "OnDocumentReadyCode");
@@ -72,7 +72,7 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
   /**
    * @return The contained code, to be executed on document.ready
    */
-  @Nonnull
+  @NonNull
   public final IHasJSCode getOnDocumentReadyCode ()
   {
     return m_aOnDocumentReadyCode;

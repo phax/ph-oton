@@ -19,15 +19,15 @@ package com.helger.photon.core.favorites;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.security.authentication.subject.user.IHasUserID;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single favorite bookmark.
@@ -39,14 +39,14 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
   /**
    * @return The internal application ID to which this favorite belongs.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getApplicationID ();
 
   /**
    * @return The menu item to which this favorite bookmark points to.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getMenuItemID ();
 
@@ -54,7 +54,7 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
    * @return The additional optional parameters of this favorite. May be empty
    *         but never be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsMap <String, String> getAllAdditionalParams ();
 

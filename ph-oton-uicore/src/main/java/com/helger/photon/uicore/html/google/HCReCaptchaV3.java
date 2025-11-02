@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uicore.html.google;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
@@ -31,9 +34,6 @@ import com.helger.html.jscode.html.JSHtml;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Handle Google reCAPTCHA according to
@@ -54,9 +54,9 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
   private final String m_sDisplayLanguage;
   private final String m_sFormID;
 
-  public HCReCaptchaV3 (@Nonnull @Nonempty final String sSiteKey,
+  public HCReCaptchaV3 (@NonNull @Nonempty final String sSiteKey,
                         @Nullable final String sDisplayLanguage,
-                        @Nonnull final String sFormID)
+                        @NonNull final String sFormID)
   {
     ValueEnforcer.notEmpty (sSiteKey, "SiteKey");
     ValueEnforcer.notEmpty (sFormID, "FormID");
@@ -91,7 +91,7 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);

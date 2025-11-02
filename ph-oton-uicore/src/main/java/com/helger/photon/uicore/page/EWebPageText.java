@@ -18,14 +18,14 @@ package com.helger.photon.uicore.page;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.Translatable;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayTextWithArgs;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains some web page base class texts.
@@ -98,19 +98,19 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
 
   private final IMultilingualText m_aTP;
 
-  EWebPageText (@Nonnull final String sDE, @Nonnull final String sEN)
+  EWebPageText (@NonNull final String sDE, @NonNull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
-  @Nonnull
+  @NonNull
   public IMultilingualText getAsMLT ()
   {
     return m_aTP;
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }

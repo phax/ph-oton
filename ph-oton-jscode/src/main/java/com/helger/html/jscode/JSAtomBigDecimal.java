@@ -18,13 +18,13 @@ package com.helger.html.jscode;
 
 import java.math.BigDecimal;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An atomic BigDecimal number
@@ -36,7 +36,7 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
 {
   private final BigDecimal m_aValue;
 
-  public JSAtomBigDecimal (@Nonnull final BigDecimal aValue)
+  public JSAtomBigDecimal (@NonNull final BigDecimal aValue)
   {
     m_aValue = ValueEnforcer.notNull (aValue, "Value");
   }
@@ -54,80 +54,80 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public JSAtomBigDecimal numericMinus ()
   {
     return new JSAtomBigDecimal (m_aValue.negate ());
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public AbstractJSAtomNumeric numericIncr ()
   {
     return new JSAtomBigDecimal (m_aValue.add (BigDecimal.ONE));
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public AbstractJSAtomNumeric numericDecr ()
   {
     return new JSAtomBigDecimal (m_aValue.subtract (BigDecimal.ONE));
   }
 
-  @Nonnull
-  private static BigDecimal _getParam (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  private static BigDecimal _getParam (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     return aRhs instanceof JSAtomBigDecimal ? ((JSAtomBigDecimal) aRhs).getContainedValue () : BigDecimal.valueOf (aRhs
                                                                                                                        .doubleValue ());
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericPlus (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericPlus (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
     return new JSAtomBigDecimal (m_aValue.add (aParam));
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMinus (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMinus (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
     return new JSAtomBigDecimal (m_aValue.subtract (aParam));
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMul (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMul (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
     return new JSAtomBigDecimal (m_aValue.multiply (aParam));
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericDiv (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericDiv (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
     return new JSAtomBigDecimal (m_aValue.divide (aParam));
   }
 
   @Override
-  @Nonnull
-  public AbstractJSAtomNumeric numericMod (@Nonnull final AbstractJSAtomNumeric aRhs)
+  @NonNull
+  public AbstractJSAtomNumeric numericMod (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
     return new JSAtomBigDecimal (m_aValue.remainder (aParam));
   }
 
-  @Nonnull
+  @NonNull
   public BigDecimal getContainedValue ()
   {
     return m_aValue;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     // Avoid exponential notation
     aFormatter.plain (m_aValue.toPlainString ());

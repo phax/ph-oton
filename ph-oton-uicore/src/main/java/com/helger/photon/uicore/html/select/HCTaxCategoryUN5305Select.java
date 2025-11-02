@@ -18,14 +18,14 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.tax.ETaxCategoryUN5305;
 
-import jakarta.annotation.Nonnull;
-
 public class HCTaxCategoryUN5305Select extends HCExtSelect
 {
-  public HCTaxCategoryUN5305Select (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCTaxCategoryUN5305Select (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     super (aRF);
 

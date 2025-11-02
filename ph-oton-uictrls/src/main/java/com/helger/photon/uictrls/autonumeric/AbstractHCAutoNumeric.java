@@ -20,6 +20,9 @@ import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -43,9 +46,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * jQuery autoNumeric plugin from
@@ -80,7 +80,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   private EAutoNumericLeadingZero m_eLeadingZero;
   private EAutoNumericRoundingMode m_eRoundingMode;
 
-  public AbstractHCAutoNumeric (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public AbstractHCAutoNumeric (@Nullable final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     // Don't use NUMBER here - will create ugly spin buttons
     super (EHCInputType.TEXT);
@@ -125,7 +125,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_sThousandSeparator;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setThousandSeparator (@Nullable final String sThousandSeparator)
   {
     m_sThousandSeparator = sThousandSeparator;
@@ -138,7 +138,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_sDecimalSeparator;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setDecimalSeparator (@Nullable final String sDecimalSeparator)
   {
     m_sDecimalSeparator = sDecimalSeparator;
@@ -151,7 +151,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_aDecimalPlaces;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setDecimalPlaces (final int nDecimalPlaces)
   {
     m_aDecimalPlaces = Integer.valueOf (nDecimalPlaces);
@@ -170,19 +170,19 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_aMin;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMin (final long nMin)
   {
     return setMin (BigDecimal.valueOf (nMin));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMin (final double dMin)
   {
     return setMin (BigDecimal.valueOf (dMin));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMin (@Nullable final BigDecimal aMin)
   {
     m_aMin = aMin;
@@ -196,19 +196,19 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_aMax;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMax (final long nMax)
   {
     return setMax (BigDecimal.valueOf (nMax));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMax (final double dMax)
   {
     return setMax (BigDecimal.valueOf (dMax));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setMax (@Nullable final BigDecimal aMax)
   {
     m_aMax = aMax;
@@ -222,7 +222,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_eLeadingZero;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setLeadingZero (@Nullable final EAutoNumericLeadingZero eLeadingZero)
   {
     m_eLeadingZero = eLeadingZero;
@@ -235,105 +235,105 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
     return m_eRoundingMode;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setRoundingMode (@Nullable final EAutoNumericRoundingMode eRoundingMode)
   {
     m_eRoundingMode = eRoundingMode;
     return thisAsT ();
   }
 
-  @Nonnull
-  public static JSInvocation invoke (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation invoke (@NonNull final IJSExpression aExpr)
   {
     return aExpr.invoke ("autoNumeric");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation invoke ()
   {
     return invoke (JQuery.idRef (this));
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericInit ()
   {
     return invoke ().arg ("init");
   }
 
-  @Nonnull
-  public JSInvocation autoNumericInit (@Nonnull final JSAssocArray aOptions)
+  @NonNull
+  public JSInvocation autoNumericInit (@NonNull final JSAssocArray aOptions)
   {
     return autoNumericInit ().arg (aOptions);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericDestroy ()
   {
     return invoke ().arg ("destroy");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericUpdate ()
   {
     return invoke ().arg ("update");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericSet ()
   {
     return invoke ().arg ("set");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericSet (final int nValue)
   {
     return autoNumericSet ().arg (nValue);
   }
 
-  @Nonnull
-  public JSInvocation autoNumericSet (@Nonnull final BigDecimal aValueToSet)
+  @NonNull
+  public JSInvocation autoNumericSet (@NonNull final BigDecimal aValueToSet)
   {
     return autoNumericSet ().arg (aValueToSet);
   }
 
-  @Nonnull
-  public JSInvocation autoNumericSet (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation autoNumericSet (@NonNull final IJSExpression aExpr)
   {
     return autoNumericSet ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericGet ()
   {
     // Remember: the result is a String!!
     return invoke ().arg ("get");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericGetAsFloat ()
   {
     return JSGlobal.parseFloat (autoNumericGet ());
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericGetString ()
   {
     return invoke ().arg ("getString");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericGetArray ()
   {
     return invoke ().arg ("getArray");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation autoNumericGetSettings ()
   {
     return invoke ().arg ("getSettings");
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSOptions ()
   {
@@ -358,8 +358,8 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -368,7 +368,7 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForcedRegistration);

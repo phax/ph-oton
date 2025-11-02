@@ -18,6 +18,9 @@ package com.helger.photon.core.requestparam;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.photon.core.menu.IMenuTree;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IRequestParameterHandler} that takes the request parameters from the
@@ -45,10 +45,10 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
   public RequestParameterHandlerURLParameter ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                           @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                           @NonNull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
     ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
@@ -57,10 +57,10 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
-                                                       @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@NonNull final ISimpleURL aURL,
+                                                       @NonNull final IMenuTree aMenuTree)
   {
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
     ret.setLocaleFromString (GlobalLocaleManager.getInstance (),
@@ -69,9 +69,9 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public SimpleURL buildURL (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull @Nonempty final String sBasePath,
+                             @NonNull @Nonempty final String sBasePath,
                              @Nullable final Locale aDisplayLocale,
                              @Nullable final String sMenuItemID)
   {
@@ -85,7 +85,7 @@ public class RequestParameterHandlerURLParameter extends AbstractRequestParamete
   }
 
   @Override
-  public boolean isValidParameterName (@Nonnull final String sParamName)
+  public boolean isValidParameterName (@NonNull final String sParamName)
   {
     // Question mark (separator between path and params) may not be part
     // Ampersand may not be part of the name

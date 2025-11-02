@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
-import com.helger.html.jscode.JSFieldRef;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSFieldRef;
 
 /**
  * Contains the JS built-in type 'RegExp'
@@ -32,13 +32,13 @@ public class JSTypeRegExp extends JSPrimitiveType
     super ("RegExp");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef length ()
   {
     return global ().ref ("length");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef lastIndex ()
   {
     return global ().ref ("lastIndex");

@@ -19,6 +19,9 @@ package com.helger.html.hc.html.embedded;
 import java.util.Collections;
 import java.util.EnumSet;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.CGlobal;
 import com.helger.base.string.StringHelper;
@@ -31,9 +34,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.EHCScrolling;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;iframe&gt; element
@@ -78,7 +78,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -91,7 +91,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -104,7 +104,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_sLongDesc;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLongDesc (@Nullable final String sLongDesc)
   {
     m_sLongDesc = sLongDesc;
@@ -117,7 +117,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_eScrolling;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setScrolling (@Nullable final EHCScrolling eScrolling)
   {
     m_eScrolling = eScrolling;
@@ -130,7 +130,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_eAlign;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAlign (@Nullable final EHCIFrameAlign eAlign)
   {
     m_eAlign = eAlign;
@@ -142,7 +142,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_bFrameBorder;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFrameBorder (final boolean bFrameBorder)
   {
     m_bFrameBorder = bFrameBorder;
@@ -162,7 +162,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
    *        the width in pixel
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidth (final int nWidth)
   {
     if (nWidth >= 0)
@@ -170,7 +170,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidthPercentage (final double dPercentage)
   {
     m_sWidth = ECSSUnit.perc (dPercentage);
@@ -183,7 +183,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_sHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHeight (final int nHeight)
   {
     if (nHeight >= 0)
@@ -191,7 +191,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHeightPercentage (final double dPercentage)
   {
     m_sHeight = ECSSUnit.perc (dPercentage);
@@ -203,7 +203,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_nMarginWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMarginWidth (final int nMarginWidth)
   {
     m_nMarginWidth = nMarginWidth;
@@ -215,7 +215,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_nMarginHeight;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMarginHeight (final int nMarginHeight)
   {
     m_nMarginHeight = nMarginHeight;
@@ -227,14 +227,14 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_bSandbox;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final EnumSet <EHCSandboxAllow> getSandboxAllow ()
   {
     return EnumSet.copyOf (m_aSandboxAllows);
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSandbox (final boolean bSandbox, @Nullable final EHCSandboxAllow... aSandboxAllows)
   {
     m_bSandbox = bSandbox;
@@ -250,7 +250,7 @@ public abstract class AbstractHCIFrame <IMPLTYPE extends AbstractHCIFrame <IMPLT
     return m_eLoading;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLoading (@Nullable final EHCLoadingType eLoading)
   {
     m_eLoading = eLoading;

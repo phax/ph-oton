@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Throw statement
@@ -42,18 +42,18 @@ public class JSThrow extends AbstractJSStatement
    * @param aExpr
    *        JExpression which evaluates to JThrow value
    */
-  public JSThrow (@Nonnull final IJSExpression aExpr)
+  public JSThrow (@NonNull final IJSExpression aExpr)
   {
     m_aExpr = ValueEnforcer.notNull (aExpr, "Expr");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr ()
   {
     return m_aExpr;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ("throw ").generatable (m_aExpr).plain (';').nl ();
   }

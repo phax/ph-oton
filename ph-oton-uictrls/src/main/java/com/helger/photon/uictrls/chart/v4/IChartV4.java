@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base class for all chartjs.org v4 charts.
@@ -31,14 +31,14 @@ import jakarta.annotation.Nullable;
  */
 public interface IChartV4
 {
-  @Nonnull
+  @NonNull
   @Nonempty
   String getType ();
 
   /**
    * @return The JS data array for invocation.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   JSAssocArray getJSData ();
 
@@ -49,14 +49,14 @@ public interface IChartV4
    *        Dataset data object.
    * @return The JS data array for invocation.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   JSAssocArray getJSData (@Nullable IJSExpression aDatasetData);
 
   /**
    * @return The JS options of this chart.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   JSAssocArray getJSOptions ();
 }

@@ -16,18 +16,18 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
 
 @NotThreadSafe
 public abstract class AbstractHCElementWithChildren <IMPLTYPE extends AbstractHCElementWithChildren <IMPLTYPE>> extends
                                                     AbstractHCElementWithInternalChildren <IMPLTYPE, IHCNode> implements
                                                     IHCElementWithChildren <IMPLTYPE>
 {
-  protected AbstractHCElementWithChildren (@Nonnull final EHTMLElement eElement)
+  protected AbstractHCElementWithChildren (@NonNull final EHTMLElement eElement)
   {
     super (eElement);
   }

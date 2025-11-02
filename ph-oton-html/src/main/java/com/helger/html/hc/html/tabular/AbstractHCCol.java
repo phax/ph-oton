@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
@@ -27,9 +30,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;col&gt; element
@@ -61,7 +61,7 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
     return m_sWidth;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setWidth (@Nullable final String sWidth)
   {
     m_sWidth = sWidth;
@@ -74,7 +74,7 @@ public abstract class AbstractHCCol <IMPLTYPE extends AbstractHCCol <IMPLTYPE>> 
     return m_nSpan;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSpan (final int nSpan)
   {
     m_nSpan = nSpan;

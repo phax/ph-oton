@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -24,9 +27,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.trait.IGenericImplTrait;
 import com.helger.typeconvert.collection.AttributeContainerAny;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation base class for menu items.
@@ -44,19 +44,19 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
   private IMenuObjectFilter m_aDisplayFilter;
   private final AttributeContainerAny <String> m_aAttrs = new AttributeContainerAny <> ();
 
-  public AbstractMenuObject (@Nonnull @Nonempty final String sID)
+  public AbstractMenuObject (@NonNull @Nonempty final String sID)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDisplayFilter (@Nullable final IMenuObjectFilter aDisplayFilter)
   {
     m_aDisplayFilter = aDisplayFilter;
@@ -75,7 +75,7 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
     return m_aDisplayFilter == null || m_aDisplayFilter.test (this);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final AttributeContainerAny <String> attrs ()
   {

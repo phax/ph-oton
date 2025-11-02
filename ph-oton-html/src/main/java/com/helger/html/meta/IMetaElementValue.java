@@ -19,10 +19,10 @@ package com.helger.html.meta;
 import java.io.Serializable;
 import java.util.Locale;
 
-import com.helger.base.name.IHasName;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.base.name.IHasName;
 
 /**
  * Represents the value of a single meta element
@@ -34,13 +34,13 @@ public interface IMetaElementValue extends IHasName, Serializable
   /**
    * @return The type of the meta element. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EMetaElementType getType ();
 
   /**
    * @return The content of the meta tag. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   String getContent ();
 
   /**

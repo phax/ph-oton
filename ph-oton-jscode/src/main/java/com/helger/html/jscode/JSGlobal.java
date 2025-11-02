@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.PresentForCodeCoverage;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This contains global JS function wrappers.<br>
@@ -41,7 +41,7 @@ public final class JSGlobal
   /**
    * @return Global field <code>Infinity</code>
    */
-  @Nonnull
+  @NonNull
   public static JSRef Infinity ()
   {
     return JSExpr.ref ("Infinity");
@@ -50,7 +50,7 @@ public final class JSGlobal
   /**
    * @return Global field <code>NaN</code>
    */
-  @Nonnull
+  @NonNull
   public static JSRef NaN ()
   {
     return JSExpr.ref ("NaN");
@@ -59,7 +59,7 @@ public final class JSGlobal
   /**
    * @return Global field <code>undefined</code>
    */
-  @Nonnull
+  @NonNull
   public static JSRef undefined ()
   {
     return JSExpr.ref ("undefined");
@@ -68,7 +68,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>decodeURI(uri)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation decodeURI ()
   {
     return JSExpr.invoke ("decodeURI");
@@ -79,8 +79,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>decodeURI(uri)</code>
    */
-  @Nonnull
-  public static JSInvocation decodeURI (@Nonnull final IJSExpression aURI)
+  @NonNull
+  public static JSInvocation decodeURI (@NonNull final IJSExpression aURI)
   {
     return decodeURI ().arg (aURI);
   }
@@ -88,7 +88,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>decodeURIComponent(uri)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation decodeURIComponent ()
   {
     return JSExpr.invoke ("decodeURIComponent");
@@ -99,8 +99,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>decodeURIComponent(uri)</code>
    */
-  @Nonnull
-  public static JSInvocation decodeURIComponent (@Nonnull final IJSExpression aURI)
+  @NonNull
+  public static JSInvocation decodeURIComponent (@NonNull final IJSExpression aURI)
   {
     return decodeURIComponent ().arg (aURI);
   }
@@ -108,7 +108,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>encodeURI(uri)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation encodeURI ()
   {
     return JSExpr.invoke ("encodeURI");
@@ -119,8 +119,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>encodeURI(uri)</code>
    */
-  @Nonnull
-  public static JSInvocation encodeURI (@Nonnull final IJSExpression aURI)
+  @NonNull
+  public static JSInvocation encodeURI (@NonNull final IJSExpression aURI)
   {
     return encodeURI ().arg (aURI);
   }
@@ -128,7 +128,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>encodeURIComponent(uri)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation encodeURIComponent ()
   {
     return JSExpr.invoke ("encodeURIComponent");
@@ -139,8 +139,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>encodeURIComponent(uri)</code>
    */
-  @Nonnull
-  public static JSInvocation encodeURIComponent (@Nonnull final IJSExpression aURI)
+  @NonNull
+  public static JSInvocation encodeURIComponent (@NonNull final IJSExpression aURI)
   {
     return encodeURIComponent ().arg (aURI);
   }
@@ -148,7 +148,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>escape(string)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation escape ()
   {
     return JSExpr.invoke ("escape");
@@ -159,8 +159,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>escape(string)</code>
    */
-  @Nonnull
-  public static JSInvocation escape (@Nonnull final IJSExpression aString)
+  @NonNull
+  public static JSInvocation escape (@NonNull final IJSExpression aString)
   {
     return escape ().arg (aString);
   }
@@ -168,7 +168,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>eval(string)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation eval ()
   {
     return JSExpr.invoke ("eval");
@@ -179,8 +179,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>eval(string)</code>
    */
-  @Nonnull
-  public static JSInvocation eval (@Nonnull final IJSExpression aString)
+  @NonNull
+  public static JSInvocation eval (@NonNull final IJSExpression aString)
   {
     return eval ().arg (aString);
   }
@@ -188,7 +188,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>isFinite(value)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation isFinite ()
   {
     return JSExpr.invoke ("isFinite");
@@ -199,8 +199,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>isFinite(value)</code>
    */
-  @Nonnull
-  public static JSInvocation isFinite (@Nonnull final IJSExpression aValue)
+  @NonNull
+  public static JSInvocation isFinite (@NonNull final IJSExpression aValue)
   {
     return isFinite ().arg (aValue);
   }
@@ -208,7 +208,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>isNaN(value)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation isNaN ()
   {
     return JSExpr.invoke ("isNaN");
@@ -219,8 +219,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>isNaN(value)</code>
    */
-  @Nonnull
-  public static JSInvocation isNaN (@Nonnull final IJSExpression aValue)
+  @NonNull
+  public static JSInvocation isNaN (@NonNull final IJSExpression aValue)
   {
     return isNaN ().arg (aValue);
   }
@@ -228,7 +228,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>Number(value)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation Number ()
   {
     return JSExpr.invoke ("Number");
@@ -239,8 +239,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>Number(aValue)</code>
    */
-  @Nonnull
-  public static JSInvocation Number (@Nonnull final IJSExpression aValue)
+  @NonNull
+  public static JSInvocation Number (@NonNull final IJSExpression aValue)
   {
     return Number ().arg (aValue);
   }
@@ -248,7 +248,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>parseFloat(string)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation parseFloat ()
   {
     return JSExpr.invoke ("parseFloat");
@@ -259,8 +259,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>parseFloat(string)</code>
    */
-  @Nonnull
-  public static JSInvocation parseFloat (@Nonnull final IJSExpression aString)
+  @NonNull
+  public static JSInvocation parseFloat (@NonNull final IJSExpression aString)
   {
     return parseFloat ().arg (aString);
   }
@@ -268,7 +268,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>parseInt(string,radix)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation parseInt ()
   {
     return JSExpr.invoke ("parseInt");
@@ -279,8 +279,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>parseInt(string, radix)</code>
    */
-  @Nonnull
-  public static JSInvocation parseInt (@Nonnull final IJSExpression aString)
+  @NonNull
+  public static JSInvocation parseInt (@NonNull final IJSExpression aString)
   {
     return parseInt ().arg (aString);
   }
@@ -292,8 +292,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>parseInt(string, radix)</code>
    */
-  @Nonnull
-  public static JSInvocation parseInt (@Nonnull final IJSExpression aString, @Nonnull final IJSExpression aRadix)
+  @NonNull
+  public static JSInvocation parseInt (@NonNull final IJSExpression aString, @NonNull final IJSExpression aRadix)
   {
     return parseInt ().arg (aString).arg (aRadix);
   }
@@ -305,8 +305,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>parseInt(string, radix)</code>
    */
-  @Nonnull
-  public static JSInvocation parseInt (@Nonnull final IJSExpression aString, final int nRadix)
+  @NonNull
+  public static JSInvocation parseInt (@NonNull final IJSExpression aString, final int nRadix)
   {
     return parseInt (aString, JSExpr.lit (nRadix));
   }
@@ -314,7 +314,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>String(object)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation String ()
   {
     return JSExpr.invoke ("String");
@@ -325,8 +325,8 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>String(string)</code>
    */
-  @Nonnull
-  public static JSInvocation String (@Nonnull final IJSExpression aObject)
+  @NonNull
+  public static JSInvocation String (@NonNull final IJSExpression aObject)
   {
     return String ().arg (aObject);
   }
@@ -334,7 +334,7 @@ public final class JSGlobal
   /**
    * @return Global function <code>unescape(string)</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation unescape ()
   {
     return JSExpr.invoke ("unescape");
@@ -345,38 +345,38 @@ public final class JSGlobal
    *        parameter
    * @return Global function <code>unescape(string)</code>
    */
-  @Nonnull
-  public static JSInvocation unescape (@Nonnull final IJSExpression aString)
+  @NonNull
+  public static JSInvocation unescape (@NonNull final IJSExpression aString)
   {
     return unescape ().arg (aString);
   }
 
-  @Nonnull
+  @NonNull
   public static JSRef json ()
   {
     return JSExpr.ref ("JSON");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation jsonParse ()
   {
     return json ().invoke ("parse");
   }
 
-  @Nonnull
-  public static JSInvocation jsonParse (@Nonnull final IJSExpression aText)
+  @NonNull
+  public static JSInvocation jsonParse (@NonNull final IJSExpression aText)
   {
     return jsonParse ().arg (aText);
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation jsonStringify ()
   {
     return json ().invoke ("stringify");
   }
 
-  @Nonnull
-  public static JSInvocation jsonStringify (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation jsonStringify (@NonNull final IJSExpression aExpr)
   {
     return jsonStringify ().arg (aExpr);
   }

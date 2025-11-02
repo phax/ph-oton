@@ -18,6 +18,9 @@ package com.helger.photon.core.execcontext;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.requestparam.RequestParameterManager;
@@ -27,9 +30,6 @@ import com.helger.servlet.request.IRequestParamMap;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface with the simple web execution context. It consist of a request
@@ -45,13 +45,13 @@ public interface ISimpleWebExecutionContext
   /**
    * @return The current request scope. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IRequestWebScopeWithoutResponse getRequestScope ();
 
   /**
    * @return The container with all request parameters. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   default IRequestParamContainer params ()
   {
     return getRequestScope ().params ();
@@ -60,7 +60,7 @@ public interface ISimpleWebExecutionContext
   /**
    * @return A cached request param map for this request.
    */
-  @Nonnull
+  @NonNull
   default IRequestParamMap getRequestParamMap ()
   {
     return getRequestScope ().getRequestParamMap ();
@@ -70,14 +70,14 @@ public interface ISimpleWebExecutionContext
    * @return The current display locale. Based on the locale of the request
    *         manager.
    */
-  @Nonnull
+  @NonNull
   Locale getDisplayLocale ();
 
   /**
    * @return The current menu tree. Based on the menu tree of the request
    *         manager.
    */
-  @Nonnull
+  @NonNull
   IMenuTree getMenuTree ();
 
   /**
@@ -130,8 +130,8 @@ public interface ISimpleWebExecutionContext
    *        The ID of the menu item to link to. May not be <code>null</code>.
    * @return The non-<code>null</code> URL to the specified menu item.
    */
-  @Nonnull
-  default SimpleURL getLinkToMenuItem (@Nonnull final String sMenuItemID)
+  @NonNull
+  default SimpleURL getLinkToMenuItem (@NonNull final String sMenuItemID)
   {
     return getLinkToMenuItem (getDisplayLocale (), sMenuItemID);
   }
@@ -146,8 +146,8 @@ public interface ISimpleWebExecutionContext
    * @return The non-<code>null</code> URL to the specified menu item.
    * @since 7.0.2
    */
-  @Nonnull
-  default SimpleURL getLinkToMenuItem (@Nonnull final Locale aDisplayLocale, @Nonnull final String sMenuItemID)
+  @NonNull
+  default SimpleURL getLinkToMenuItem (@NonNull final Locale aDisplayLocale, @NonNull final String sMenuItemID)
   {
     return RequestParameterManager.getInstance ().getLinkToMenuItem (getRequestScope (), aDisplayLocale, sMenuItemID);
   }
@@ -164,8 +164,8 @@ public interface ISimpleWebExecutionContext
    *        The ID of the menu item to link to. May not be <code>null</code>.
    * @return The non-<code>null</code> URL to the specified menu item.
    */
-  @Nonnull
-  default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID, @Nonnull final String sMenuItemID)
+  @NonNull
+  default SimpleURL getLinkToMenuItem (@NonNull @Nonempty final String sAppID, @NonNull final String sMenuItemID)
   {
     return getLinkToMenuItem (sAppID, getDisplayLocale (), sMenuItemID);
   }
@@ -185,10 +185,10 @@ public interface ISimpleWebExecutionContext
    * @return The non-<code>null</code> URL to the specified menu item.
    * @since 7.0.2
    */
-  @Nonnull
-  default SimpleURL getLinkToMenuItem (@Nonnull @Nonempty final String sAppID,
-                                       @Nonnull final Locale aDisplayLocale,
-                                       @Nonnull final String sMenuItemID)
+  @NonNull
+  default SimpleURL getLinkToMenuItem (@NonNull @Nonempty final String sAppID,
+                                       @NonNull final Locale aDisplayLocale,
+                                       @NonNull final String sMenuItemID)
   {
     return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
   }

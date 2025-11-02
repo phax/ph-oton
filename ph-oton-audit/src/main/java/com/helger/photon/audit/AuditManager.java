@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.serialize.MicroReader;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The class handles all system audit actions. It collects them asynchronously (see
@@ -102,25 +101,25 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   // status vars
   private LocalDate m_aEarliestAuditDate;
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getRelativeAuditDirectoryYear (final int nYear)
   {
     return nYear + "/";
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getRelativeAuditDirectory (@Nonnull final LocalDate aDate)
+  public static String getRelativeAuditDirectory (@NonNull final LocalDate aDate)
   {
     return getRelativeAuditDirectoryYear (aDate.getYear ()) +
            StringHelper.getLeadingZero (aDate.getMonthValue (), 2) +
            "/";
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getRelativeAuditFilename (@Nonnull final LocalDate aDate)
+  public static String getRelativeAuditFilename (@NonNull final LocalDate aDate)
   {
     return getRelativeAuditDirectory (aDate) + PDTIOHelper.getDateForFilename (aDate) + ".xml";
   }
@@ -137,7 +136,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    *         In case reading failed
    */
   @ContainsSoftMigration
-  public AuditManager (@Nullable final String sBaseDir, @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider)
+  public AuditManager (@Nullable final String sBaseDir, @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
                                                                                                                       throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
@@ -199,14 +198,14 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     return m_sBaseDir;
   }
 
-  @Nonnull
+  @NonNull
   public AsynchronousAuditor getAuditor ()
   {
     return m_aAuditor;
   }
 
-  public static void readFromXML (@Nonnull final IMicroDocument aDoc,
-                                  @Nonnull final Consumer <? super IAuditItem> aHandler)
+  public static void readFromXML (@NonNull final IMicroDocument aDoc,
+                                  @NonNull final Consumer <? super IAuditItem> aHandler)
   {
     ValueEnforcer.notNull (aDoc, "Doc");
     ValueEnforcer.notNull (aHandler, "Handler");
@@ -219,8 +218,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   }
 
   @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  @NonNull
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     readFromXML (aDoc, m_aItems::internalAddItem);
     // read-only :)
@@ -239,7 +238,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   }
 
   @Override
-  protected void onFilenameChange (@Nullable final String sPreviousFilename, @Nonnull final String sNewFilename)
+  protected void onFilenameChange (@Nullable final String sPreviousFilename, @NonNull final String sNewFilename)
   {
     // Called within a write lock
     if (sPreviousFilename != null)
@@ -256,7 +255,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     return m_aRWLock.readLockedInt (m_aItems::getItemCount);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @CodingStyleguideUnaware
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
@@ -273,7 +272,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
 
   @Nullable
   @ReturnsMutableCopy
-  public ICommonsList <IAuditItem> getAllAuditItemsOfDate (@Nonnull final LocalDate aDate)
+  public ICommonsList <IAuditItem> getAllAuditItemsOfDate (@NonNull final LocalDate aDate)
   {
     ValueEnforcer.notNull (aDate, "Date");
 
@@ -288,7 +287,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public LocalDate getEarliestAuditDate ()
   {
     if (m_aEarliestAuditDate == null)

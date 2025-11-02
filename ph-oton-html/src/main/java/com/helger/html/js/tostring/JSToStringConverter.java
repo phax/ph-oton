@@ -16,13 +16,13 @@
  */
 package com.helger.html.js.tostring;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IJSToStringConverter} interface, using
@@ -54,7 +54,7 @@ public class JSToStringConverter implements IJSToStringConverter
   }
 
   @Nullable
-  public String objectToJSString (@Nullable final Object aObject, @Nonnull final JSType aType)
+  public String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType)
   {
     return aObject == null ? null : JSToString.objectToJSString (aObject, aType, m_bWithSurroundingVar);
   }

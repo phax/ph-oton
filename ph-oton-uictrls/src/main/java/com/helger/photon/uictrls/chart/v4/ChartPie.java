@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Pie Chart
@@ -36,7 +36,7 @@ public class ChartPie extends AbstractChartV4WithLabels <ChartPie, ChartDataSetP
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSOptions ()
   {

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.ajax;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,6 @@ import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The default implementation of {@link IAjaxInvoker}.
@@ -52,10 +51,10 @@ public class AjaxInvoker implements IAjaxInvoker
   public AjaxInvoker ()
   {}
 
-  public void invokeFunction (@Nonnull final String sFunctionName,
-                              @Nonnull final IAjaxExecutor aAjaxExecutor,
-                              @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                              @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void invokeFunction (@NonNull final String sFunctionName,
+                              @NonNull final IAjaxExecutor aAjaxExecutor,
+                              @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                              @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     ValueEnforcer.notNull (sFunctionName, "FunctionName");
     ValueEnforcer.notNull (aAjaxExecutor, "AjaxExecutor");

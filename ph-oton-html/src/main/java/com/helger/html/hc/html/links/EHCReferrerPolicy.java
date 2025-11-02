@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.links;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Referrer policy<br>
@@ -118,17 +118,17 @@ public enum EHCReferrerPolicy implements IHCHasHTMLAttributeValue
   UNSAFE_URL ("unsafe-url");
 
   /** Default policy: strict-origin-when-cross-origin */
-  @Nonnull
+  @NonNull
   public static final EHCReferrerPolicy DEFAULT = STRICT_ORIGIN_WHEN_CROSS_ORIGIN;
 
   private final String m_sAttrValue;
 
-  EHCReferrerPolicy (@Nonnull @Nonempty final String sAttrValue)
+  EHCReferrerPolicy (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

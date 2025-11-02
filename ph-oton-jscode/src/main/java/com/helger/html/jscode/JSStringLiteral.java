@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * String literal.
@@ -33,7 +33,7 @@ public class JSStringLiteral extends AbstractJSExpression
 {
   private final String m_sStr;
 
-  public JSStringLiteral (@Nonnull final String sStr)
+  public JSStringLiteral (@NonNull final String sStr)
   {
     // May be empty
     m_sStr = ValueEnforcer.notNull (sStr, "String");
@@ -42,20 +42,20 @@ public class JSStringLiteral extends AbstractJSExpression
   /**
    * @return The contained string.
    */
-  @Nonnull
+  @NonNull
   public String getContainedString ()
   {
     return m_sStr;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getAsString (@Nonnull final String sStr)
+  public static String getAsString (@NonNull final String sStr)
   {
     return '\'' + JSMarshaller.javaScriptEscape (sStr) + '\'';
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (getAsString (m_sStr));
   }

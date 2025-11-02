@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.config.EHCScriptInlineMode;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for inline SCRIPTs
@@ -32,13 +32,13 @@ import jakarta.annotation.Nullable;
  */
 public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> extends IHCScript <IMPLTYPE>
 {
-  @Nonnull
-  IMPLTYPE setJSCodeProvider (@Nonnull IHasJSCode aProvider);
+  @NonNull
+  IMPLTYPE setJSCodeProvider (@NonNull IHasJSCode aProvider);
 
   /**
    * @return The JS code passed in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IHasJSCode getJSCodeProvider ();
 
   /**
@@ -49,12 +49,12 @@ public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> e
    *         May be <code>null</code>.
    */
   @Nullable
-  String getJSCode (@Nonnull final IJSWriterSettings aSettings);
+  String getJSCode (@NonNull final IJSWriterSettings aSettings);
 
   /**
    * @return The masking mode. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EHCScriptInlineMode getMode ();
 
   /**
@@ -64,8 +64,8 @@ public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> e
    *        The mode to use. MAy not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  IMPLTYPE setMode (@Nonnull EHCScriptInlineMode eMode);
+  @NonNull
+  IMPLTYPE setMode (@NonNull EHCScriptInlineMode eMode);
 
   boolean isEmitAfterFiles ();
 
@@ -74,6 +74,6 @@ public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> e
     return !isEmitAfterFiles ();
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setEmitAfterFiles (boolean bEmitAfterFiles);
 }

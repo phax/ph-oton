@@ -16,9 +16,9 @@
  */
 package com.helger.photon.atom;
 
-import com.helger.html.hc.html.grouping.HCDiv;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.html.grouping.HCDiv;
 
 /**
  * XHTML text construct.
@@ -27,7 +27,7 @@ import jakarta.annotation.Nonnull;
  */
 public class FeedXHTMLTextConstruct extends AbstractFeedXHTML implements IFeedTextConstruct
 {
-  public FeedXHTMLTextConstruct (@Nonnull final HCDiv aDiv)
+  public FeedXHTMLTextConstruct (@NonNull final HCDiv aDiv)
   {
     super (aDiv);
   }

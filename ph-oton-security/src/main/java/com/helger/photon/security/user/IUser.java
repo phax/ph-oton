@@ -19,6 +19,9 @@ package com.helger.photon.security.user;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
@@ -27,9 +30,6 @@ import com.helger.security.authentication.subject.IAuthSubject;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.tenancy.IBusinessObject;
 import com.helger.text.IHasDescription;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for a single user
@@ -79,7 +79,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   /**
    * @return The login name of the user.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getLoginName ();
 
@@ -94,7 +94,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   /**
    * @return The hashed password of the user. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   PasswordHash getPasswordHash ();
 
   /**
@@ -123,7 +123,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
    * @return The display name of the user. May be empty if both first and last
    *         name are empty but never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   default String getDisplayName ()
   {
     return StringHelper.getConcatenatedOnDemand (getFirstName (), " ", getLastName ());

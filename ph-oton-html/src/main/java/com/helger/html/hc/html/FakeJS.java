@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.config.HCSettings;
@@ -23,8 +25,6 @@ import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSMarshaller;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class FakeJS
@@ -35,16 +35,16 @@ public final class FakeJS
   private FakeJS ()
   {}
 
-  @Nonnull
-  public static IHasJSCode focus (@Nonnull final IHCHasID <?> aElement)
+  @NonNull
+  public static IHasJSCode focus (@NonNull final IHCHasID <?> aElement)
   {
     return new UnparsedJSCodeProvider ("document.getElementById('" +
                                        JSMarshaller.javaScriptEscape (aElement.ensureID ().getID ()) +
                                        "').focus();");
   }
 
-  @Nonnull
-  public static IHasJSCode windowLocationHref (@Nonnull final ISimpleURL aURL)
+  @NonNull
+  public static IHasJSCode windowLocationHref (@NonNull final ISimpleURL aURL)
   {
     return new UnparsedJSCodeProvider ("window.location.href='" +
                                        JSMarshaller.javaScriptEscape (aURL.getWithCharset (HCSettings.getHTMLCharset ())

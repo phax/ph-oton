@@ -16,10 +16,10 @@
  */
 package com.helger.html.meta;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.CHTMLAttributes;
 import com.helger.xml.microdom.IMicroQName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An enumeration with all meta element types. The type defines the layout of
@@ -41,7 +41,7 @@ public enum EMetaElementType
    */
   private final IMicroQName m_aAttrName;
 
-  EMetaElementType (@Nonnull final IMicroQName aAttrName)
+  EMetaElementType (@NonNull final IMicroQName aAttrName)
   {
     m_aAttrName = aAttrName;
   }
@@ -49,7 +49,7 @@ public enum EMetaElementType
   /**
    * @return the HTML attribute name to use. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IMicroQName getAttrName ()
   {
     return m_aAttrName;

@@ -21,11 +21,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.base.state.ESuccess;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConnector <HANDLETYPE>
 {
@@ -39,8 +39,8 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    *        The output stream to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
    */
-  @Nonnull
-  ESuccess getData (@Nonnull String sID, @Nonnull @WillClose OutputStream aOS);
+  @NonNull
+  ESuccess getData (@NonNull String sID, @NonNull @WillClose OutputStream aOS);
 
   /**
    * Write data to somewhere.
@@ -52,8 +52,8 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    *        The input stream to read from. May not be <code>null</code>.
    * @return {@link ESuccess}
    */
-  @Nonnull
-  ESuccess putData (@Nonnull String sID, @Nonnull @WillClose InputStream aIS);
+  @NonNull
+  ESuccess putData (@NonNull String sID, @NonNull @WillClose InputStream aIS);
 
   /**
    * Change the working directory to the specified directory.
@@ -62,8 +62,8 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    *        The directory to use.
    * @return {@link ESuccess}
    */
-  @Nonnull
-  ESuccess changeWorkingDirectory (@Nonnull String sDirectory);
+  @NonNull
+  ESuccess changeWorkingDirectory (@NonNull String sDirectory);
 
   /**
    * Go one directory level up
@@ -71,7 +71,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    * @return {@link ESuccess}.
    * @see #changeWorkingDirectory(String)
    */
-  @Nonnull
+  @NonNull
   ESuccess changeToParentDirectory ();
 
   /**
@@ -81,7 +81,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    *        The filename to be deleted.
    * @return {@link ESuccess}.
    */
-  @Nonnull
+  @NonNull
   ESuccess deleteFile (String sFilename);
 
   /**
@@ -94,6 +94,6 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    *        <code>null</code>.
    * @return {@link ESuccess}
    */
-  @Nonnull
-  ESuccess listFiles (@Nullable Predicate <REMOTEITEMTYPE> aFilter, @Nonnull List <REMOTEITEMTYPE> aTargetList);
+  @NonNull
+  ESuccess listFiles (@Nullable Predicate <REMOTEITEMTYPE> aFilter, @NonNull List <REMOTEITEMTYPE> aTargetList);
 }

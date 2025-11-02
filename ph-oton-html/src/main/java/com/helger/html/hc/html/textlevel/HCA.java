@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.HC_Target;
@@ -23,9 +26,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.url.validate.URLValidator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;a&gt; element
@@ -37,7 +37,7 @@ public class HCA extends AbstractHCA <HCA>
   public HCA ()
   {}
 
-  public HCA (@Nonnull final ISimpleURL aHref)
+  public HCA (@NonNull final ISimpleURL aHref)
   {
     super (aHref);
   }
@@ -66,7 +66,7 @@ public class HCA extends AbstractHCA <HCA>
    * @return A new {@link HCA} - depending on the link.
    * @since 8.3.2
    */
-  @Nonnull
+  @NonNull
   public static HCA of (@Nullable final String sHref)
   {
     if (StringHelper.isEmpty (sHref))

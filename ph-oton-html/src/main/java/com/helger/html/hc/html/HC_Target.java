@@ -35,13 +35,13 @@ package com.helger.html.hc.html;
 
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the value of the "target" attribute of an HTML &lt;a&gt; element
@@ -63,19 +63,19 @@ public class HC_Target implements IHCHasHTMLAttributeValue
 
   private final String m_sName;
 
-  public HC_Target (@Nonnull @Nonempty final String sName)
+  public HC_Target (@NonNull @Nonempty final String sName)
   {
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getAttrValue ()
   {
@@ -102,7 +102,7 @@ public class HC_Target implements IHCHasHTMLAttributeValue
    *         <code>null</code> and the name was not found.
    */
   @Nullable
-  public static HC_Target getFromName (@Nonnull final String sName, @Nullable final HC_Target aDefault)
+  public static HC_Target getFromName (@NonNull final String sName, @Nullable final HC_Target aDefault)
   {
     return getFromName (sName, x -> aDefault);
   }
@@ -122,7 +122,7 @@ public class HC_Target implements IHCHasHTMLAttributeValue
    * @since 8.2.6
    */
   @Nullable
-  public static HC_Target getFromName (@Nonnull final String sName, @Nonnull final Function <String, ? extends HC_Target> aDefaultSupplier)
+  public static HC_Target getFromName (@NonNull final String sName, @NonNull final Function <String, ? extends HC_Target> aDefaultSupplier)
   {
     if (BLANK.getAttrValue ().equalsIgnoreCase (sName))
       return BLANK;

@@ -19,6 +19,8 @@ package com.helger.photon.core.requestparam;
 import java.util.List;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +35,6 @@ import com.helger.photon.core.menu.IMenuTree;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IRequestParameterHandler} that takes the request parameters from the
@@ -72,7 +71,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
    *        The separator to use. May neither be <code>null</code> nor empty. May not contain the
    *        "/" character!
    */
-  public RequestParameterHandlerURLPathNamed (@Nonnull @Nonempty final String sSeparator)
+  public RequestParameterHandlerURLPathNamed (@NonNull @Nonempty final String sSeparator)
   {
     ValueEnforcer.notEmpty (sSeparator, "Separator");
     ValueEnforcer.isTrue (sSeparator.indexOf ('/') < 0, "The separator may not contain a path delimiter '/'!");
@@ -82,16 +81,16 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   /**
    * @return The separator as passed in the constructor. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getSeparator ()
   {
     return m_sSeparator;
   }
 
-  @Nonnull
-  protected PhotonRequestParameters getParametersFromPath (@Nonnull final String sPath,
-                                                           @Nonnull final IMenuTree aMenuTree)
+  @NonNull
+  protected PhotonRequestParameters getParametersFromPath (@NonNull final String sPath,
+                                                           @NonNull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
@@ -115,25 +114,25 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                           @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                           @NonNull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aRequestScope.getPathInfo (), aMenuTree);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@Nonnull final ISimpleURL aURL,
-                                                       @Nonnull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@NonNull final ISimpleURL aURL,
+                                                       @NonNull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aURL.getPath (), aMenuTree);
   }
 
-  @Nonnull
+  @NonNull
   public SimpleURL buildURL (@Nullable final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull @Nonempty final String sBasePath,
+                             @NonNull @Nonempty final String sBasePath,
                              @Nullable final Locale aDisplayLocale,
                              @Nullable final String sMenuItemID)
   {
@@ -153,7 +152,7 @@ public class RequestParameterHandlerURLPathNamed extends AbstractRequestParamete
   }
 
   @Override
-  public boolean isValidParameterName (@Nonnull final String sParamName)
+  public boolean isValidParameterName (@NonNull final String sParamName)
   {
     // Separator may not be part of the parameter name
     // Path separator may not be part of the parameter name

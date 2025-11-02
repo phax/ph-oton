@@ -19,6 +19,9 @@ package com.helger.html.meta;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
@@ -26,9 +29,6 @@ import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single meta element
@@ -49,7 +49,7 @@ public interface IMetaElement extends IMetaElementDeclaration
   /**
    * @return A set with all locales a value is present
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <Locale> getAllLocales ();
 
@@ -62,14 +62,14 @@ public interface IMetaElement extends IMetaElementDeclaration
   /**
    * @return A non-<code>null</code> map from language to value.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedMap <Locale, String> getContentMap ();
 
   /**
    * @return A non-<code>null</code> map from language to value.
    */
-  @Nonnull
+  @NonNull
   Iterable <Map.Entry <Locale, String>> getContent ();
 
   /**
@@ -78,7 +78,7 @@ public interface IMetaElement extends IMetaElementDeclaration
    *
    * @return A non-<code>null</code> modifiable list of meta tags.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IMetaElementValue> getAsMetaElementValueList ();
 
@@ -90,5 +90,5 @@ public interface IMetaElement extends IMetaElementDeclaration
    * @return <code>null</code> if this meta element contains no content.
    */
   @Nullable
-  IMicroNode convertToNode (@Nonnull IHCConversionSettingsToNode aConversionSettings);
+  IMicroNode convertToNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 }

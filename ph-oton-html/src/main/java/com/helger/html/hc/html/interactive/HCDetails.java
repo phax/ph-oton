@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.interactive;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 public class HCDetails extends AbstractHCElementWithChildren <HCDetails>
 {
@@ -41,7 +41,7 @@ public class HCDetails extends AbstractHCElementWithChildren <HCDetails>
     return m_bOpen;
   }
 
-  @Nonnull
+  @NonNull
   public final HCDetails setOpen (final boolean bOpen)
   {
     m_bOpen = bOpen;

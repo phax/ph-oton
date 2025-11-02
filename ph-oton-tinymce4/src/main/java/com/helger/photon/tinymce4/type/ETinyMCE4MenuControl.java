@@ -16,11 +16,11 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * All TinyMCE4 menu controls.<br>
@@ -74,13 +74,13 @@ public enum ETinyMCE4MenuControl
   private final String m_sValue;
   private final ETinyMCE4Plugin m_eRequiredPlugin;
 
-  ETinyMCE4MenuControl (@Nonnull @Nonempty final String sValue, @Nullable final ETinyMCE4Plugin eRequiredPlugin)
+  ETinyMCE4MenuControl (@NonNull @Nonempty final String sValue, @Nullable final ETinyMCE4Plugin eRequiredPlugin)
   {
     m_sValue = sValue;
     m_eRequiredPlugin = eRequiredPlugin;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValue ()
   {

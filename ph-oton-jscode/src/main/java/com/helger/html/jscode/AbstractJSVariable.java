@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -24,9 +27,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base class for "var", "let" and "const".
@@ -50,7 +50,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
 
     private final String m_sCode;
 
-    EJSVarMode (@Nonnull final String sCode)
+    EJSVarMode (@NonNull final String sCode)
     {
       m_sCode = sCode;
     }
@@ -59,7 +59,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
      * @return The code for usage with "formatter.plain", including a trailing
      *         whitespace if it is non-empty.
      */
-    @Nonnull
+    @NonNull
     public String getCode ()
     {
       return m_sCode;
@@ -88,8 +88,8 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
    * @param aInit
    *        Value to initialize this variable to
    */
-  protected AbstractJSVariable (@Nonnull final EJSVarMode eMode,
-                                @Nonnull @Nonempty final String sName,
+  protected AbstractJSVariable (@NonNull final EJSVarMode eMode,
+                                @NonNull @Nonempty final String sName,
                                 @Nullable final IJSExpression aInit)
   {
     ValueEnforcer.notNull (eMode, "Mode");
@@ -103,7 +103,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
   /**
    * @return The JS variable mode. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final EJSVarMode getJSVarMode ()
   {
     return m_eMode;
@@ -114,7 +114,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
    *
    * @return Name of the variable
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String name ()
   {
@@ -128,8 +128,8 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
    *        New variable name
    * @return this
    */
-  @Nonnull
-  public IMPLTYPE name (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public IMPLTYPE name (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
@@ -163,34 +163,34 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
    *        <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE init (@Nullable final IJSExpression aNewInit)
   {
     m_aInit = aNewInit;
     return thisAsT ();
   }
 
-  public void bind (@Nonnull final JSFormatter aFormatter)
+  public void bind (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sName);
     if (m_aInit != null)
       aFormatter.plain ('=').generatable (m_aInit);
   }
 
-  public void declare (@Nonnull final JSFormatter aFormatter)
+  public void declare (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_eMode.getCode ());
     bind (aFormatter);
     aFormatter.plain (';').nl ();
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sName);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, (IJSDeclaration) this);

@@ -18,6 +18,9 @@ package com.helger.photon.core.longrun;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.rt.StackTraceHelper;
@@ -30,9 +33,6 @@ import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class represents the result of a single long running job execution.
  *
@@ -44,7 +44,7 @@ public class LongRunningJobResult
   private final ELongRunningJobResultType m_eType;
   private final Object m_aResult;
 
-  protected LongRunningJobResult (@Nonnull final ELongRunningJobResultType eType, @Nonnull final Object aResult)
+  protected LongRunningJobResult (@NonNull final ELongRunningJobResultType eType, @NonNull final Object aResult)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notNull (aResult, "Result");
@@ -55,13 +55,13 @@ public class LongRunningJobResult
   /**
    * @return The type as specified in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final ELongRunningJobResultType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public final Object getResultObject ()
   {
     return m_aResult;
@@ -97,7 +97,7 @@ public class LongRunningJobResult
     return getType ().equals (ELongRunningJobResultType.JSON) ? (IJson) m_aResult : null;
   }
 
-  @Nonnull
+  @NonNull
   public String getAsString ()
   {
     switch (m_eType)
@@ -123,32 +123,32 @@ public class LongRunningJobResult
     return new ToStringGenerator (this).append ("Type", m_eType).append ("Result", m_aResult).getToString ();
   }
 
-  @Nonnull
-  public static LongRunningJobResult createFile (@Nonnull final File aResult)
+  @NonNull
+  public static LongRunningJobResult createFile (@NonNull final File aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.FILE, aResult);
   }
 
-  @Nonnull
-  public static LongRunningJobResult createXML (@Nonnull final IMicroNode aResult)
+  @NonNull
+  public static LongRunningJobResult createXML (@NonNull final IMicroNode aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.XML, aResult);
   }
 
-  @Nonnull
-  public static LongRunningJobResult createXML (@Nonnull final IHCNode aResult)
+  @NonNull
+  public static LongRunningJobResult createXML (@NonNull final IHCNode aResult)
   {
     return createXML (HCRenderer.getAsNode (aResult));
   }
 
-  @Nonnull
-  public static LongRunningJobResult createText (@Nonnull final String sResult)
+  @NonNull
+  public static LongRunningJobResult createText (@NonNull final String sResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.TEXT, sResult);
   }
 
-  @Nonnull
-  public static LongRunningJobResult createExceptionText (@Nonnull final Throwable t)
+  @NonNull
+  public static LongRunningJobResult createExceptionText (@NonNull final Throwable t)
   {
     return createText (t.getClass ()
                         .getName () +
@@ -158,14 +158,14 @@ public class LongRunningJobResult
                        StackTraceHelper.getStackAsString (t));
   }
 
-  @Nonnull
-  public static LongRunningJobResult createLink (@Nonnull final ISimpleURL aResult)
+  @NonNull
+  public static LongRunningJobResult createLink (@NonNull final ISimpleURL aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.LINK, aResult);
   }
 
-  @Nonnull
-  public static LongRunningJobResult createJson (@Nonnull final IJson aResult)
+  @NonNull
+  public static LongRunningJobResult createJson (@NonNull final IJson aResult)
   {
     return new LongRunningJobResult (ELongRunningJobResultType.JSON, aResult);
   }

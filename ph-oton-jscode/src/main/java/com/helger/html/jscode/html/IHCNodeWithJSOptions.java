@@ -16,15 +16,15 @@
  */
 package com.helger.html.jscode.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.jscode.JSAssocArray;
 
-import jakarta.annotation.Nonnull;
-
 public interface IHCNodeWithJSOptions extends IHCNode
 {
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   JSAssocArray getJSOptions ();
 }

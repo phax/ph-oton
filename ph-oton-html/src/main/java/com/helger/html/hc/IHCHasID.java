@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.string.StringHelper;
 import com.helger.base.trait.IGenericImplTrait;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special interface for HC elements having an optional ID
@@ -65,7 +65,7 @@ public interface IHCHasID <IMPLTYPE extends IHCHasID <IMPLTYPE>> extends IGeneri
    *        The ID to use. Must conform to the HTML rules for an element ID.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setID (@Nullable String sID);
 
   /**
@@ -74,7 +74,7 @@ public interface IHCHasID <IMPLTYPE extends IHCHasID <IMPLTYPE>> extends IGeneri
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setUniqueID ()
   {
     return setID (GlobalIDFactory.getNewStringID ());
@@ -86,7 +86,7 @@ public interface IHCHasID <IMPLTYPE extends IHCHasID <IMPLTYPE>> extends IGeneri
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE ensureID ()
   {
     if (!hasID ())

@@ -57,6 +57,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,8 +71,6 @@ import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.io.file.FileSystemRecursiveIterator;
 import com.helger.io.file.FilenameHelper;
 import com.helger.io.file.SimpleFileIO;
-
-import jakarta.annotation.Nonnull;
 
 @RunWith (value = Parameterized.class)
 public final class MarkdownProcessorTest
@@ -104,7 +103,7 @@ public final class MarkdownProcessorTest
     m_sTestName = sTestName;
   }
 
-  @Nonnull
+  @NonNull
   private static String _slurp (final String sFilename)
   {
     // Avoid differences in newlines

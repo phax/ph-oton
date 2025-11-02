@@ -16,10 +16,10 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * All TinyMCE4 resize options
@@ -34,12 +34,12 @@ public enum ETinyMCE4Resize
 
   private final IJSExpression m_aExpr;
 
-  ETinyMCE4Resize (@Nonnull final IJSExpression aExpr)
+  ETinyMCE4Resize (@NonNull final IJSExpression aExpr)
   {
     m_aExpr = aExpr;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getValue ()
   {
     return m_aExpr;

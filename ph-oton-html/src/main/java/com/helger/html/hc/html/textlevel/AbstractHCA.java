@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -31,9 +34,6 @@ import com.helger.html.hc.html.links.EHCReferrerPolicy;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;a&gt; element
@@ -61,7 +61,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     super (EHTMLElement.A);
   }
 
-  public AbstractHCA (@Nonnull final ISimpleURL aHref)
+  public AbstractHCA (@NonNull final ISimpleURL aHref)
   {
     this ();
     setHref (aHref);
@@ -73,7 +73,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -86,8 +86,8 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_aHref;
   }
 
-  @Nonnull
-  public final IMPLTYPE setHref (@Nonnull final ISimpleURL aHref)
+  @NonNull
+  public final IMPLTYPE setHref (@NonNull final ISimpleURL aHref)
   {
     ValueEnforcer.notNull (aHref, "href");
 
@@ -101,7 +101,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_aTarget;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setTarget (@Nullable final HC_Target aTarget)
   {
     m_aTarget = aTarget;
@@ -114,7 +114,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_sDownload;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDownload (@Nullable final String sDownload)
   {
     m_sDownload = sDownload;
@@ -127,7 +127,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_aPing;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPing (@Nullable final ISimpleURL aPing)
   {
     m_aPing = aPing;
@@ -140,7 +140,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_sRel;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setRel (@Nullable final String sRel)
   {
     m_sRel = sRel;
@@ -153,7 +153,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
@@ -166,7 +166,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_eReferrerPolicy;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setReferrerPolicy (@Nullable final EHCReferrerPolicy eReferrerPolicy)
   {
     m_eReferrerPolicy = eReferrerPolicy;
@@ -179,7 +179,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
     return m_sMediaQuery;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMedia (@Nullable final String sMediaQuery)
   {
     m_sMediaQuery = sMediaQuery;
@@ -187,7 +187,7 @@ public abstract class AbstractHCA <IMPLTYPE extends AbstractHCA <IMPLTYPE>> exte
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.A))

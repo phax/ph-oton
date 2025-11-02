@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.Test;
 
 import com.helger.base.string.StringHelper;
@@ -32,8 +33,6 @@ import com.helger.html.hc.config.HCSettings;
 import com.helger.unittest.support.TestHelper;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Test class for class {@link MetaElement}.

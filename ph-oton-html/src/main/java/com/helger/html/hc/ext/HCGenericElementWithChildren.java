@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Fallback implementation of {@link AbstractHCElementWithChildren} for
@@ -29,7 +29,7 @@ import jakarta.annotation.Nonnull;
  */
 public class HCGenericElementWithChildren extends AbstractHCElementWithChildren <HCGenericElementWithChildren>
 {
-  public HCGenericElementWithChildren (@Nonnull final EHTMLElement eElement)
+  public HCGenericElementWithChildren (@NonNull final EHTMLElement eElement)
   {
     super (eElement);
   }

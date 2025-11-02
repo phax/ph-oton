@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.colorpicker;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -34,8 +36,6 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * A wrapper around the JSColor color picker control. http://jscolor.com/
  *
@@ -53,22 +53,22 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
     // No input type needed
   }
 
-  public HCColorPicker (@Nonnull final IHCRequestField aRF)
+  public HCColorPicker (@NonNull final IHCRequestField aRF)
   {
     this ();
     setName (aRF.getFieldName ());
     setValue (aRF.getRequestValue ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("design")
   public ColorPickerOptions getOptions ()
   {
     return m_aOptions;
   }
 
-  @Nonnull
-  public HCColorPicker setOptions (@Nonnull final ColorPickerOptions aOptions)
+  @NonNull
+  public HCColorPicker setOptions (@NonNull final ColorPickerOptions aOptions)
   {
     ValueEnforcer.notNull (aOptions, "Options");
     m_aOptions = aOptions;
@@ -78,8 +78,8 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -98,7 +98,7 @@ public class HCColorPicker extends AbstractHCInput <HCColorPicker>
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);

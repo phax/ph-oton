@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.colorbox;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jquery.IJQuerySelector;
@@ -24,8 +26,6 @@ import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * jQuery colorbox plugin from
@@ -42,8 +42,8 @@ public final class ColorBoxJS
   private ColorBoxJS ()
   {}
 
-  @Nonnull
-  public static JSInvocation invokeColorBox (@Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public static JSInvocation invokeColorBox (@NonNull final IJQuerySelector aSelector)
   {
     ValueEnforcer.notNull (aSelector, "Selector");
     registerExternalResources ();
@@ -51,8 +51,8 @@ public final class ColorBoxJS
     return aSelector.invoke ().invoke ("colorbox");
   }
 
-  @Nonnull
-  public static JSInvocation invokeColorBox (@Nonnull final IJQuerySelector aSelector, @Nonnull final ColorBoxOptions aOptions)
+  @NonNull
+  public static JSInvocation invokeColorBox (@NonNull final IJQuerySelector aSelector, @NonNull final ColorBoxOptions aOptions)
   {
     ValueEnforcer.notNull (aOptions, "Options");
     return invokeColorBox (aSelector).arg (aOptions.getJSOptions ());

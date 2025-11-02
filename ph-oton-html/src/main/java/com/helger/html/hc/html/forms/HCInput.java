@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc.html.forms;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Represents a generic HTML &lt;input&gt; element.<br>
@@ -31,7 +31,7 @@ public class HCInput extends AbstractHCInput <HCInput>
   public HCInput ()
   {}
 
-  public HCInput (@Nonnull final EHCInputType eType)
+  public HCInput (@NonNull final EHCInputType eType)
   {
     super (eType);
   }

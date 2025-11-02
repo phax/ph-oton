@@ -16,9 +16,9 @@
  */
 package com.helger.photon.security.password.hash;
 
-import com.helger.annotation.style.IsSPIInterface;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.style.IsSPIInterface;
 
 /**
  * SPI interface to be implemented by other modules wishing to register their
@@ -36,5 +36,5 @@ public interface IPasswordHashCreatorRegistrarSPI
    * @param aRegistry
    *        The registry to register your creators. Never <code>null</code>.
    */
-  void registerPasswordHashCreators (@Nonnull PasswordHashCreatorManager aRegistry);
+  void registerPasswordHashCreators (@NonNull PasswordHashCreatorManager aRegistry);
 }

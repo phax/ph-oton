@@ -18,6 +18,8 @@ package com.helger.photon.uicore.html.formlabel;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,6 @@ import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public final class HCFormLabelHelper
@@ -75,7 +74,7 @@ public final class HCFormLabelHelper
    *         maybe empty.
    * @since 8.3.1
    */
-  @Nonnull
+  @NonNull
   public static String getDefaultLabelEnd ()
   {
     return s_sDefaultLabelEnd;
@@ -99,13 +98,13 @@ public final class HCFormLabelHelper
   }
 
   @Nullable
-  public static String getSuffixStringOrNull (@Nonnull final ELabelType eType)
+  public static String getSuffixStringOrNull (@NonNull final ELabelType eType)
   {
     return DEFAULT_SUFFIXES.get (eType);
   }
 
-  @Nonnull
-  public static String getSuffixString (@Nonnull final ELabelType eType)
+  @NonNull
+  public static String getSuffixString (@NonNull final ELabelType eType)
   {
     return StringHelper.getNotNull (getSuffixStringOrNull (eType));
   }
@@ -121,7 +120,7 @@ public final class HCFormLabelHelper
    *        indicate "none".
    * @since 8.3.1
    */
-  public static void setDefaultSuffixString (@Nonnull final ELabelType eType, @Nullable final String sValue)
+  public static void setDefaultSuffixString (@NonNull final ELabelType eType, @Nullable final String sValue)
   {
     ValueEnforcer.notNull (eType, "Type");
 
@@ -143,14 +142,14 @@ public final class HCFormLabelHelper
    * @see #getSuffixString(ELabelType)
    * @see #getDefaultLabelEnd()
    */
-  @Nonnull
-  public static String getSuffix (@Nonnull final ELabelType eType, final boolean bAppendLabelEnd)
+  @NonNull
+  public static String getSuffix (@NonNull final ELabelType eType, final boolean bAppendLabelEnd)
   {
     final String sSuffix = getSuffixString (eType);
     return bAppendLabelEnd ? sSuffix + getDefaultLabelEnd () : sSuffix;
   }
 
-  private static boolean _isNoLabelEndNeeded (@Nonnull final ELabelType eType, @Nonnull final String sText)
+  private static boolean _isNoLabelEndNeeded (@NonNull final ELabelType eType, @NonNull final String sText)
   {
     if (eType == ELabelType.NONE)
       return true;
@@ -160,8 +159,8 @@ public final class HCFormLabelHelper
     return false;
   }
 
-  @Nonnull
-  private static String _getTextToAppend (@Nonnull final ELabelType eType, @Nonnull final String sPlainText)
+  @NonNull
+  private static String _getTextToAppend (@NonNull final ELabelType eType, @NonNull final String sPlainText)
   {
     final String sSuffixString = getSuffixString (eType);
     final String sLabelEnd = getDefaultLabelEnd ();
@@ -198,8 +197,8 @@ public final class HCFormLabelHelper
     return "";
   }
 
-  @Nonnull
-  public static String getTextWithState (@Nonnull final String sText, @Nonnull final ELabelType eType)
+  @NonNull
+  public static String getTextWithState (@NonNull final String sText, @NonNull final ELabelType eType)
   {
     ValueEnforcer.notNull (sText, "Text");
     ValueEnforcer.notNull (eType, "Type");
@@ -213,9 +212,9 @@ public final class HCFormLabelHelper
     return sPlainText;
   }
 
-  @Nonnull
-  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@Nonnull final T aNode,
-                                                                        @Nonnull final ELabelType eType)
+  @NonNull
+  public static <T extends IHCNodeWithChildren <?>> T getNodeWithState (@NonNull final T aNode,
+                                                                        @NonNull final ELabelType eType)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.notNull (eType, "Type");

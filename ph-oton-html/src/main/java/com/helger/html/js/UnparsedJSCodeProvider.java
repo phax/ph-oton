@@ -16,13 +16,13 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.UnsafeAPI;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Implementation of {@link IHasJSCode} that takes an arbitrary string from any
@@ -36,7 +36,7 @@ public class UnparsedJSCodeProvider implements IHasJSCode
   private final String m_sJSCode;
 
   @UnsafeAPI
-  public UnparsedJSCodeProvider (@Nonnull final String sJSCode)
+  public UnparsedJSCodeProvider (@NonNull final String sJSCode)
   {
     m_sJSCode = ValueEnforcer.notNull (sJSCode, "JSCode");
   }
@@ -44,7 +44,7 @@ public class UnparsedJSCodeProvider implements IHasJSCode
   /**
    * @return The plain JS code passed in the constructor
    */
-  @Nonnull
+  @NonNull
   public String getJSCode ()
   {
     return m_sJSCode;

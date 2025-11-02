@@ -16,7 +16,7 @@
  */
 package com.helger.html.jscode;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Marker interface for code components that can be placed to the left of '=' in
@@ -27,102 +27,102 @@ import jakarta.annotation.Nonnull;
  */
 public interface IJSAssignmentTarget extends IJSExpression
 {
-  @Nonnull
+  @NonNull
   JSAssignment assign (boolean bValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assign (char cValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assign (double dValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assign (float fValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assign (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assign (long nValue);
 
-  @Nonnull
-  JSAssignment assign (@Nonnull String sValue);
+  @NonNull
+  JSAssignment assign (@NonNull String sValue);
 
-  @Nonnull
-  JSAssignment assign (@Nonnull IJSExpression aExpr);
+  @NonNull
+  JSAssignment assign (@NonNull IJSExpression aExpr);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignPlus (char cValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignPlus (double dValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignPlus (float fValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignPlus (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignPlus (long nValue);
 
-  @Nonnull
-  JSAssignment assignPlus (@Nonnull String sValue);
+  @NonNull
+  JSAssignment assignPlus (@NonNull String sValue);
 
-  @Nonnull
-  JSAssignment assignPlus (@Nonnull IJSExpression aRhs);
+  @NonNull
+  JSAssignment assignPlus (@NonNull IJSExpression aRhs);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMinus (double dValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMinus (float fValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMinus (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMinus (long nValue);
 
-  @Nonnull
-  JSAssignment assignMinus (@Nonnull IJSExpression aExpr);
+  @NonNull
+  JSAssignment assignMinus (@NonNull IJSExpression aExpr);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMultiply (double dValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMultiply (float fValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMultiply (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignMultiply (long nValue);
 
-  @Nonnull
-  JSAssignment assignMultiply (@Nonnull IJSExpression aRhs);
+  @NonNull
+  JSAssignment assignMultiply (@NonNull IJSExpression aRhs);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignDivide (double dValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignDivide (float fValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignDivide (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignDivide (long nValue);
 
-  @Nonnull
-  JSAssignment assignDivide (@Nonnull IJSExpression aRhs);
+  @NonNull
+  JSAssignment assignDivide (@NonNull IJSExpression aRhs);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignModulo (int nValue);
 
-  @Nonnull
+  @NonNull
   JSAssignment assignModulo (long nValue);
 
-  @Nonnull
-  JSAssignment assignModulo (@Nonnull IJSExpression aRhs);
+  @NonNull
+  JSAssignment assignModulo (@NonNull IJSExpression aRhs);
 }

@@ -21,6 +21,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -38,9 +41,6 @@ import com.helger.text.IMultilingualText;
 import com.helger.text.locale.LocaleHelper;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Renders a page with HTML code that is provided from an external resource
@@ -60,26 +60,26 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     private final IReadableResource m_aResource;
     private IMicroContainer m_aCont;
 
-    public ContentPerLocale (@Nonnull final IReadableResource aResource, @Nonnull final IMicroContainer aCont)
+    public ContentPerLocale (@NonNull final IReadableResource aResource, @NonNull final IMicroContainer aCont)
     {
       m_aResource = ValueEnforcer.notNull (aResource, "Resource");
       setContainer (aCont);
     }
 
-    @Nonnull
+    @NonNull
     public IReadableResource getResource ()
     {
       return m_aResource;
     }
 
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     public IMicroContainer getContainerClone ()
     {
       return m_aCont.getClone ();
     }
 
-    public void setContainer (@Nonnull final IMicroContainer aCont)
+    public void setContainer (@NonNull final IMicroContainer aCont)
     {
       m_aCont = ValueEnforcer.notNull (aCont, "Cont");
     }
@@ -95,8 +95,8 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <Locale, ContentPerLocale> m_aContent = new CommonsHashMap <> ();
 
-  @Nonnull
-  private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
+  @NonNull
+  private IMicroContainer _readFromResource (@NonNull final IReadableResource aResource)
   {
     final boolean bHasContentCleanser = hasContentCleanser ();
 
@@ -109,7 +109,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     return ret;
   }
 
-  private void _init (@Nonnull final Map <Locale, IReadableResource> aResources)
+  private void _init (@NonNull final Map <Locale, IReadableResource> aResources)
   {
     // Read once anyway to check if the resource is readable
     for (final Map.Entry <Locale, IReadableResource> aEntry : aResources.entrySet ())
@@ -121,19 +121,19 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     }
   }
 
-  public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
-                                           @Nonnull final String sName,
-                                           @Nonnull final Map <Locale, IReadableResource> aResources,
-                                           @Nonnull final Locale aDefaultLocale,
+  public BasePageViewExternalMultilingual (@NonNull @Nonempty final String sID,
+                                           @NonNull final String sName,
+                                           @NonNull final Map <Locale, IReadableResource> aResources,
+                                           @NonNull final Locale aDefaultLocale,
                                            @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResources, aDefaultLocale, aContentCleanser);
   }
 
-  public BasePageViewExternalMultilingual (@Nonnull @Nonempty final String sID,
-                                           @Nonnull final IMultilingualText aName,
-                                           @Nonnull final Map <Locale, IReadableResource> aResources,
-                                           @Nonnull final Locale aDefaultLocale,
+  public BasePageViewExternalMultilingual (@NonNull @Nonempty final String sID,
+                                           @NonNull final IMultilingualText aName,
+                                           @NonNull final Map <Locale, IReadableResource> aResources,
+                                           @NonNull final Locale aDefaultLocale,
                                            @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
@@ -190,7 +190,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   }
 
   @Override
-  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void fillContent (@NonNull final WPECTYPE aWPEC)
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();

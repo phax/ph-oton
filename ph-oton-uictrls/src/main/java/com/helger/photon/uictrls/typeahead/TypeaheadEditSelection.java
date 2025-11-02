@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Domain object to easily handle the selected elements of a
@@ -88,8 +88,8 @@ public class TypeaheadEditSelection
    *        The name of the hidden field with the ID.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static TypeaheadEditSelection getSelectionForRequiredObject (@Nonnull final IWebPageExecutionContext aWPEC,
+  @NonNull
+  public static TypeaheadEditSelection getSelectionForRequiredObject (@NonNull final IWebPageExecutionContext aWPEC,
                                                                       @Nullable final String sEditFieldName,
                                                                       @Nullable final String sHiddenFieldName)
   {

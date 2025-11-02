@@ -16,9 +16,9 @@
  */
 package com.helger.photon.atom;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 /**
  * Base interface for the content element.
@@ -27,7 +27,7 @@ import jakarta.annotation.Nonnull;
  */
 public interface IFeedContent extends IFeedElement
 {
-  @Nonnull
+  @NonNull
   @Nonempty
   String getType ();
 }

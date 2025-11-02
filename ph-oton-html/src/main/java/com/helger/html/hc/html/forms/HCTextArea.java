@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.request.IHCRequestField;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Represents an HTML &lt;textarea&gt; element
@@ -41,7 +41,7 @@ public class HCTextArea extends AbstractHCTextArea <HCTextArea>
     super (sName, sValue);
   }
 
-  public HCTextArea (@Nonnull final IHCRequestField aRF)
+  public HCTextArea (@NonNull final IHCRequestField aRF)
   {
     super (aRF);
   }

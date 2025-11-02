@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.interactive;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.html.CHTMLAttributeValues;
@@ -26,9 +29,6 @@ import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.html.hc.html.IHCHasState;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasState <HCCommand>
 {
@@ -57,7 +57,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_bChecked;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setChecked (final boolean bChecked)
   {
     m_bChecked = bChecked;
@@ -69,7 +69,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_bDefault;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setDefault (final boolean bDefault)
   {
     m_bDefault = bDefault;
@@ -81,7 +81,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -94,7 +94,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_aIcon;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setIcon (@Nullable final ISimpleURL aIcon)
   {
     m_aIcon = aIcon;
@@ -107,7 +107,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_sLabel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
@@ -120,21 +120,21 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
     return m_sRadioGroup;
   }
 
-  @Nonnull
+  @NonNull
   public final HCCommand setRadioGroup (@Nullable final String sRadioGroup)
   {
     m_sRadioGroup = sRadioGroup;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final EHCCommandType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
-  public final HCCommand setType (@Nonnull final EHCCommandType eType)
+  @NonNull
+  public final HCCommand setType (@NonNull final EHCCommandType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return this;
@@ -161,7 +161,7 @@ public class HCCommand extends AbstractHCElement <HCCommand> implements IHCHasSt
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return StringHelper.getNotNull (m_sLabel);

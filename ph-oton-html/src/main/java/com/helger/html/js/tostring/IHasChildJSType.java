@@ -16,7 +16,7 @@
  */
 package com.helger.html.js.tostring;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Interface for {@link JSType} objects having child types. Used for lists,
@@ -29,6 +29,6 @@ public interface IHasChildJSType
   /**
    * @return The type of the child. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   JSType getChildType ();
 }

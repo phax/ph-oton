@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.form;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special request field specially for check boxes where the same field name can
@@ -45,8 +45,8 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
    * @param bDefaultValue
    *        The status to be returned, if no request value is present.
    */
-  public RequestFieldBooleanMultiValue (@Nonnull @Nonempty final String sFieldName,
-                                        @Nonnull final String sValue,
+  public RequestFieldBooleanMultiValue (@NonNull @Nonempty final String sFieldName,
+                                        @NonNull final String sValue,
                                         final boolean bDefaultValue)
   {
     super (sFieldName, bDefaultValue ? sValue : null);
@@ -56,7 +56,7 @@ public class RequestFieldBooleanMultiValue extends RequestField implements IHCRe
     m_bDefaultValue = bDefaultValue;
   }
 
-  @Nonnull
+  @NonNull
   public String getValue ()
   {
     return m_sValue;

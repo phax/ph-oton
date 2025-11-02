@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a single binary operator
@@ -35,7 +35,7 @@ public class JSOpBinary extends AbstractJSExpression
   private final IJSGeneratable m_aRight;
   private boolean m_bUseBraces;
 
-  private static boolean _useBraces (@Nonnull final IJSExpression aLeft, @Nonnull final String sOp, @Nonnull final IJSGeneratable aRight)
+  private static boolean _useBraces (@NonNull final IJSExpression aLeft, @NonNull final String sOp, @NonNull final IJSGeneratable aRight)
   {
     if (aLeft instanceof JSOpBinary)
     {
@@ -63,7 +63,7 @@ public class JSOpBinary extends AbstractJSExpression
    * @param aRight
    *        Right side. May not be <code>null</code>.
    */
-  public JSOpBinary (@Nonnull final IJSExpression aLeft, @Nonnull final String sOp, @Nonnull final IJSGeneratable aRight)
+  public JSOpBinary (@NonNull final IJSExpression aLeft, @NonNull final String sOp, @NonNull final IJSGeneratable aRight)
   {
     this (aLeft, sOp, aRight, _useBraces (aLeft, sOp, aRight));
   }
@@ -82,9 +82,9 @@ public class JSOpBinary extends AbstractJSExpression
    *        <code>true</code> to indicate usage of braces, <code>false</code> to
    *        disable it
    */
-  public JSOpBinary (@Nonnull final IJSExpression aLeft,
-                     @Nonnull final String sOp,
-                     @Nonnull final IJSGeneratable aRight,
+  public JSOpBinary (@NonNull final IJSExpression aLeft,
+                     @NonNull final String sOp,
+                     @NonNull final IJSGeneratable aRight,
                      final boolean bUseBraces)
   {
     m_aLeft = ValueEnforcer.notNull (aLeft, "Left");
@@ -93,20 +93,20 @@ public class JSOpBinary extends AbstractJSExpression
     m_bUseBraces = bUseBraces;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression left ()
   {
     return m_aLeft;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String operator ()
   {
     return m_sOp;
   }
 
-  @Nonnull
+  @NonNull
   public IJSGeneratable right ()
   {
     return m_aRight;
@@ -117,7 +117,7 @@ public class JSOpBinary extends AbstractJSExpression
     return m_bUseBraces;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     final boolean bUseBraces = m_bUseBraces;
 

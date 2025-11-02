@@ -18,6 +18,9 @@ package com.helger.photon.uicore.page.external;
 
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.GuardedBy;
@@ -32,9 +35,6 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.text.IMultilingualText;
 import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Renders a page with HTML code that is provided from an external resource
@@ -51,8 +51,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   @GuardedBy ("m_aRWLock")
   protected IMicroContainer m_aParsedContent;
 
-  @Nonnull
-  private IMicroContainer _readFromResource (@Nonnull final IReadableResource aResource)
+  @NonNull
+  private IMicroContainer _readFromResource (@NonNull final IReadableResource aResource)
   {
     final boolean bHasContentCleanser = hasContentCleanser ();
 
@@ -65,17 +65,17 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
     return ret;
   }
 
-  public BasePageViewExternal (@Nonnull @Nonempty final String sID,
-                               @Nonnull final String sName,
-                               @Nonnull final IReadableResource aResource,
+  public BasePageViewExternal (@NonNull @Nonempty final String sID,
+                               @NonNull final String sName,
+                               @NonNull final IReadableResource aResource,
                                @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     this (sID, getAsMLT (sName), aResource, aContentCleanser);
   }
 
-  public BasePageViewExternal (@Nonnull @Nonempty final String sID,
-                               @Nonnull final IMultilingualText aName,
-                               @Nonnull final IReadableResource aResource,
+  public BasePageViewExternal (@NonNull @Nonempty final String sID,
+                               @NonNull final IMultilingualText aName,
+                               @NonNull final IReadableResource aResource,
                                @Nullable final Consumer <? super IMicroContainer> aContentCleanser)
   {
     super (sID, aName, aContentCleanser);
@@ -89,7 +89,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
    * @return The resource to be read as specified in the constructor. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IReadableResource getResource ()
   {
     return m_aResource;
@@ -98,7 +98,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   /**
    * @return A clone of the passed content. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public IMicroContainer getParsedContent ()
   {
@@ -112,7 +112,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void fillContent (@Nonnull final WPECTYPE aWPEC)
+  protected void fillContent (@NonNull final WPECTYPE aWPEC)
   {
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();

@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5.ui;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -25,9 +28,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.photon.uictrls.fineupload5.FineUploader5Core;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class FineUploader5UI extends FineUploader5Core
 {
@@ -40,7 +40,7 @@ public class FineUploader5UI extends FineUploader5Core
   private IJSExpression m_aShowPrompt;
   private String m_sTemplateID = DEFAULT_TEMPLATE;
 
-  public FineUploader5UI (@Nonnull final Locale aDisplayLocale)
+  public FineUploader5UI (@NonNull final Locale aDisplayLocale)
   {
     super (aDisplayLocale);
   }
@@ -58,7 +58,7 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5UI setElementID (@Nullable final String sElementID)
   {
     m_sElementID = sElementID;
@@ -78,7 +78,7 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5UI setListElementID (@Nullable final String sListElementID)
   {
     m_sListElementID = sListElementID;
@@ -102,7 +102,7 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5UI setShowMessage (@Nullable final IJSExpression aShowMessage)
   {
     m_aShowMessage = aShowMessage;
@@ -125,7 +125,7 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5UI setShowConfirm (@Nullable final IJSExpression aShowConfirm)
   {
     m_aShowConfirm = aShowConfirm;
@@ -149,14 +149,14 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5UI setShowPrompt (@Nullable final IJSExpression aShowPrompt)
   {
     m_aShowPrompt = aShowPrompt;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getTemplateID ()
   {
@@ -173,8 +173,8 @@ public class FineUploader5UI extends FineUploader5Core
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5UI setTemplateID (@Nonnull @Nonempty final String sTemplateID)
+  @NonNull
+  public FineUploader5UI setTemplateID (@NonNull @Nonempty final String sTemplateID)
   {
     ValueEnforcer.notEmpty (sTemplateID, "TemplateID");
     m_sTemplateID = sTemplateID;
@@ -182,8 +182,8 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   @Override
-  protected void extendJSONPart (@Nonnull @Nonempty final String sKey,
-                                 @Nonnull final JSAssocArray aAssocArray,
+  protected void extendJSONPart (@NonNull @Nonempty final String sKey,
+                                 @NonNull final JSAssocArray aAssocArray,
                                  @Nullable final Locale aDisplayLocale)
   {
     if (sKey.equals (KEY_DELETE_FILE))
@@ -198,7 +198,7 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   @Override
-  protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
+  protected void extendJSON (@NonNull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
   {
     if (StringHelper.isEmpty (m_sElementID))
       aRoot.add ("element", JSHtml.documentGetElementById (m_sElementID));

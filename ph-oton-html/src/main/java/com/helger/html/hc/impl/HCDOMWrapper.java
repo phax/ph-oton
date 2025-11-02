@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -25,8 +27,6 @@ import com.helger.xml.microdom.IMicroCDATA;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.util.MicroRecursiveIterator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This is a simple wrapper around any {@link IMicroNode} so it can easily be
@@ -44,7 +44,7 @@ public class HCDOMWrapper extends AbstractHCNode
    * @param aNode
    *        The node to be wrapped. May not be <code>null</code>.
    */
-  public HCDOMWrapper (@Nonnull final IMicroNode aNode)
+  public HCDOMWrapper (@NonNull final IMicroNode aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     ValueEnforcer.isTrue (!aNode.hasParent (), "Passed MicroNode may not have a parent!");
@@ -54,15 +54,15 @@ public class HCDOMWrapper extends AbstractHCNode
   /**
    * @return The source micro node. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IMicroNode getNode ()
   {
     return m_aNode;
   }
 
   @Override
-  @Nonnull
-  protected IMicroNode internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroNode internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Always return a clone, because otherwise upon first generation the node
     // will be assigned a parent, and upon second generation an exception is
@@ -71,7 +71,7 @@ public class HCDOMWrapper extends AbstractHCNode
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     final StringBuilder ret = new StringBuilder ();

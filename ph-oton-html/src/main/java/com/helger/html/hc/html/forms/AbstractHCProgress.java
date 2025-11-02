@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.CGlobal;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.html.CHTMLAttributes;
@@ -25,8 +27,6 @@ import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
                                          implements
@@ -45,7 +45,7 @@ public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <I
     return m_dValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setValue (final double dValue)
   {
     m_dValue = dValue;
@@ -57,7 +57,7 @@ public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <I
     return m_dMax;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMax (final double dMax)
   {
     m_dMax = dMax;
@@ -65,7 +65,7 @@ public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <I
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     if (HCHTMLHelper.recursiveContainsChildWithTagName (this, EHTMLElement.PROGRESS))

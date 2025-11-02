@@ -16,6 +16,9 @@
  */
 package com.helger.html.resource.css;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.builder.IBuilder;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.CSSFilenameHelper;
 import com.helger.css.media.CSSMediaList;
 import com.helger.css.media.ICSSMediaList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link ICSSPathProvider} with constant paths.
@@ -42,8 +42,8 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   private final CSSMediaList m_aCSSMediaList;
   private final boolean m_bIsBundlable;
 
-  protected ConstantCSSPathProvider (@Nonnull @Nonempty final String sPath,
-                                     @Nonnull @Nonempty final String sMinifiedPath,
+  protected ConstantCSSPathProvider (@NonNull @Nonempty final String sPath,
+                                     @NonNull @Nonempty final String sMinifiedPath,
                                      @Nullable final String sConditionalComment,
                                      @Nullable final ICSSMediaList aMediaList,
                                      final boolean bIsBundlable)
@@ -60,7 +60,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     m_bIsBundlable = bIsBundlable;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSItemPath (final boolean bRegular)
   {
@@ -73,7 +73,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     return m_sConditionalComment;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICSSMediaList getMediaList ()
   {
@@ -133,48 +133,48 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
       bundlable (DEFAULT_IS_BUNDLABLE);
     }
 
-    @Nonnull
+    @NonNull
     public Builder path (@Nullable final String s)
     {
       m_sPath = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder minifiedPath (@Nullable final String s)
     {
       m_sMinifiedPath = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder minifiedPathFromPath ()
     {
       return minifiedPath (CSSFilenameHelper.getMinifiedCSSFilename (m_sPath));
     }
 
-    @Nonnull
+    @NonNull
     public Builder conditionalComment (@Nullable final String s)
     {
       m_sConditionalComment = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder cssMediaList (@Nullable final ICSSMediaList a)
     {
       m_aCSSMediaList = a;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder bundlable (final boolean b)
     {
       m_bIsBundlable = b;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public ConstantCSSPathProvider build ()
     {
       return new ConstantCSSPathProvider (m_sPath,
@@ -185,7 +185,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     }
   }
 
-  @Nonnull
+  @NonNull
   public static Builder builder ()
   {
     return new Builder ();

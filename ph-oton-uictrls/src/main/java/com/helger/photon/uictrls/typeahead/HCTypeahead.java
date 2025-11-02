@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.typeahead;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -38,9 +41,6 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @OutOfBandNode
 public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 {
@@ -59,24 +59,24 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   private JSAnonymousFunction m_aOnSelected;
   private JSAnonymousFunction m_aOnAutoCompleted;
 
-  public HCTypeahead (@Nonnull final IJQuerySelector aSelector)
+  public HCTypeahead (@NonNull final IJQuerySelector aSelector)
   {
     this (aSelector.invoke ());
   }
 
-  public HCTypeahead (@Nonnull final IJSExpression aSelector)
+  public HCTypeahead (@NonNull final IJSExpression aSelector)
   {
     m_aSelector = ValueEnforcer.notNull (aSelector, "Selector");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getSelector ()
   {
     return m_aSelector;
   }
 
-  @Nonnull
-  public HCTypeahead addDataset (@Nonnull final TypeaheadDataset aDataset)
+  @NonNull
+  public HCTypeahead addDataset (@NonNull final TypeaheadDataset aDataset)
   {
     ValueEnforcer.notNull (aDataset, "Dataset");
 
@@ -102,7 +102,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
     return m_aDatasets.getAtIndex (nIndex);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <TypeaheadDataset> getAllDatasets ()
   {
@@ -117,7 +117,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTypeahead setOnInitialized (@Nullable final JSAnonymousFunction aOnInitialized)
   {
     m_aOnInitialized = aOnInitialized;
@@ -142,7 +142,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTypeahead setOnOpened (@Nullable final JSAnonymousFunction aOnOpened)
   {
     m_aOnOpened = aOnOpened;
@@ -165,7 +165,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
    *        Function to call. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTypeahead setOnClosed (@Nullable final JSAnonymousFunction aOnClosed)
   {
     m_aOnClosed = aOnClosed;
@@ -190,7 +190,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
    *        Function to call. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTypeahead setOnSelected (@Nullable final JSAnonymousFunction aOnSelected)
   {
     m_aOnSelected = aOnSelected;
@@ -218,7 +218,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
    *        Function to call. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public HCTypeahead setOnAutoCompleted (@Nullable final JSAnonymousFunction aOnAutoCompleted)
   {
     m_aOnAutoCompleted = aOnAutoCompleted;
@@ -271,8 +271,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -281,7 +281,7 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
@@ -303,20 +303,20 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
                                        .getToString ();
   }
 
-  @Nonnull
-  public static JSInvocation invoke (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation invoke (@NonNull final IJSExpression aExpr)
   {
     return aExpr.invoke ("typeahead");
   }
 
-  @Nonnull
-  public static JSInvocation typeaheadDestroy (@Nonnull final IJSExpression aTypeahead)
+  @NonNull
+  public static JSInvocation typeaheadDestroy (@NonNull final IJSExpression aTypeahead)
   {
     return invoke (aTypeahead).arg ("destroy");
   }
 
-  @Nonnull
-  public static JSInvocation typeaheadSetQuery (@Nonnull final IJSExpression aTypeahead, @Nonnull final String sQuery)
+  @NonNull
+  public static JSInvocation typeaheadSetQuery (@NonNull final IJSExpression aTypeahead, @NonNull final String sQuery)
   {
     return invoke (aTypeahead).arg ("setQuery").arg (sQuery);
   }

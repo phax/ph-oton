@@ -16,6 +16,9 @@
  */
 package com.helger.html.entity;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -25,9 +28,6 @@ import com.helger.base.string.StringReplace;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains some predefined entities.
@@ -358,7 +358,7 @@ public enum EHTMLEntity implements IHTMLEntity
   private final char m_cChar;
   private final String m_sDescription;
 
-  EHTMLEntity (@Nonnull @Nonempty final String sName, final char c, @Nonnull @Nonempty final String sDescription)
+  EHTMLEntity (@NonNull @Nonempty final String sName, final char c, @NonNull @Nonempty final String sDescription)
   {
     m_sEntityName = sName;
     m_sEntityReference = '&' + sName + ';';
@@ -366,14 +366,14 @@ public enum EHTMLEntity implements IHTMLEntity
     m_sDescription = sDescription;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getEntityName ()
   {
     return m_sEntityName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getEntityReference ()
   {
@@ -391,7 +391,7 @@ public enum EHTMLEntity implements IHTMLEntity
   /**
    * @return The source character object matching the entity. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public Character getCharObj ()
   {
     return Character.valueOf (m_cChar);
@@ -400,13 +400,13 @@ public enum EHTMLEntity implements IHTMLEntity
   /**
    * @return The source character string matching the entity.
    */
-  @Nonnull
+  @NonNull
   public String getCharString ()
   {
     return Character.toString (m_cChar);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDescription ()
   {
@@ -477,7 +477,7 @@ public enum EHTMLEntity implements IHTMLEntity
    *         <code>"&amp;ndash;"</code> to <code>EHTMLEntity.ndash</code>). Never <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <String, EHTMLEntity> getEntityRefToEntityMap ()
@@ -489,7 +489,7 @@ public enum EHTMLEntity implements IHTMLEntity
    * @return The global map from entity reference string to the according entity (e.g. from
    *         <code>'–'</code> to <code>EHTMLEntity.ndash</code>). Never <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <Character, EHTMLEntity> getCharToEntityMap ()
@@ -501,7 +501,7 @@ public enum EHTMLEntity implements IHTMLEntity
    * @return The global map from entity reference string to the according character (e.g. from
    *         <code>"&amp;ndash;"</code> to <code>'–'</code> ). Never <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <String, Character> getEntityRefToCharMap ()
@@ -514,7 +514,7 @@ public enum EHTMLEntity implements IHTMLEntity
    *         (e.g. from <code>"&amp;ndash;"</code> to <code>"–"</code>). Never <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <String, String> getEntityRefToCharStringMap ()
@@ -526,7 +526,7 @@ public enum EHTMLEntity implements IHTMLEntity
    * @return The global map from character to the according entity reference string (e.g. from
    *         <code>'–'</code> to <code>"&amp;ndash;"</code> ). Never <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <Character, String> getCharToEntityRefMap ()
@@ -539,7 +539,7 @@ public enum EHTMLEntity implements IHTMLEntity
    *         from <code>"–"</code> to <code>"&amp;ndash;"</code> ). Never <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public static final ICommonsOrderedMap <String, String> getCharStringToEntityRefMap ()

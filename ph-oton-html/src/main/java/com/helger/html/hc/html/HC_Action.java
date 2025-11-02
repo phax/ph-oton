@@ -18,6 +18,9 @@ package com.helger.html.hc.html;
 
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.clone.ICloneable;
@@ -29,9 +32,6 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroQName;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the action to be used with button and form.
@@ -47,7 +47,7 @@ public class HC_Action implements ICloneable <HC_Action>
   public HC_Action ()
   {}
 
-  public HC_Action (@Nonnull final HC_Action aOther)
+  public HC_Action (@NonNull final HC_Action aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aActionURL = aOther.m_aActionURL;
@@ -78,10 +78,10 @@ public class HC_Action implements ICloneable <HC_Action>
     m_aActionJS = aAction;
   }
 
-  public void applyProperties (@Nonnull final IMicroQName aAttributeName,
-                               @Nonnull final IMicroElement aElement,
-                               @Nonnull final IJSWriterSettings aSettings,
-                               @Nonnull final Charset aCharset)
+  public void applyProperties (@NonNull final IMicroQName aAttributeName,
+                               @NonNull final IMicroElement aElement,
+                               @NonNull final IJSWriterSettings aSettings,
+                               @NonNull final Charset aCharset)
   {
     if (m_aActionJS != null)
     {
@@ -93,7 +93,7 @@ public class HC_Action implements ICloneable <HC_Action>
         aElement.setAttribute (aAttributeName, m_aActionURL.getWithCharset (aCharset).getAsString ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public HC_Action getClone ()
   {

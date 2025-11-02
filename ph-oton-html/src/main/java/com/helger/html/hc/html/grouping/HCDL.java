@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;dl&gt; element
@@ -39,7 +39,7 @@ public class HCDL extends AbstractHCElementWithInternalChildren <HCDL, IHCDefini
     return hasChildren ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCDL addItem (@Nullable final IHCDefinitionItem <?> aItem)
   {
     if (aItem != null)

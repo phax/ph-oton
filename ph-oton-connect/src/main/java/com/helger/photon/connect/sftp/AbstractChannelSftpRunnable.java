@@ -16,10 +16,10 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract implementation of the {@link IChannelSftpRunnable} interface
@@ -31,13 +31,13 @@ public abstract class AbstractChannelSftpRunnable implements IChannelSftpRunnabl
 {
   private final String m_sDisplayName;
 
-  public AbstractChannelSftpRunnable (@Nonnull @Nonempty final String sDisplayName)
+  public AbstractChannelSftpRunnable (@NonNull @Nonempty final String sDisplayName)
   {
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     m_sDisplayName = sDisplayName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getDisplayName ()
   {

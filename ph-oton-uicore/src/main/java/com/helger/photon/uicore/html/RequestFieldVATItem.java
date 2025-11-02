@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uicore.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
 import com.helger.photon.core.form.RequestField;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special {@link RequestField} child class, that handles {@link IVATItem}
@@ -31,7 +31,7 @@ import jakarta.annotation.Nullable;
  */
 public class RequestFieldVATItem extends RequestField
 {
-  public RequestFieldVATItem (@Nonnull final String sFieldName, @Nullable final IVATItem aVATItem)
+  public RequestFieldVATItem (@NonNull final String sFieldName, @Nullable final IVATItem aVATItem)
   {
     super (sFieldName, aVATItem == null ? VATManager.VATTYPE_NONE.getID () : aVATItem.getID ());
   }

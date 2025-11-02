@@ -18,12 +18,12 @@ package com.helger.photon.tinymce4.type;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 import com.helger.text.locale.LocaleCache;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * All TinyMCE4 supported languages. Note: not all locales here are valid Java
@@ -108,12 +108,12 @@ public enum ETinyMCE4Language
 
   private final String m_sValue;
 
-  ETinyMCE4Language (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4Language (@NonNull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValue ()
   {

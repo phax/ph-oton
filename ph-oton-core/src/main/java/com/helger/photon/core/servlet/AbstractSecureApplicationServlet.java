@@ -16,9 +16,9 @@
  */
 package com.helger.photon.core.servlet;
 
-import com.helger.photon.core.appid.CApplicationID;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.photon.core.appid.CApplicationID;
 
 /**
  * The servlet to show the secure application
@@ -30,7 +30,7 @@ public abstract class AbstractSecureApplicationServlet extends AbstractApplicati
   public static final String SERVLET_DEFAULT_NAME = "secure";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  protected AbstractSecureApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler)
+  protected AbstractSecureApplicationServlet (@NonNull final AbstractApplicationXServletHandler aHandler)
   {
     super (aHandler, CApplicationID.APP_ID_SECURE);
   }

@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,8 +79,6 @@ import com.helger.html.hc.mock.HCTestRuleOptimized;
 import com.helger.html.markdown.MarkdownConfiguration.Builder;
 import com.helger.io.resource.ClassPathResource;
 
-import jakarta.annotation.Nonnull;
-
 @RunWith (Parameterized.class)
 public final class MarkupFileFuncTest
 {
@@ -92,7 +91,7 @@ public final class MarkupFileFuncTest
                                                                   "lists.txt" };
 
   private static void _addTestResultPair (final List <String []> list,
-                                          @Nonnull final String sFilename,
+                                          @NonNull final String sFilename,
                                           final StringBuilder testbuf,
                                           final StringBuilder resultbuf,
                                           final String testNumber,
@@ -107,7 +106,7 @@ public final class MarkupFileFuncTest
     }
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   private static ICommonsList <String []> _getTestResultPairList (final String sFilename) throws IOException
   {

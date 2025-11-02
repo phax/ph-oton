@@ -16,12 +16,12 @@
  */
 package com.helger.photon.tinymce4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.html.resource.js.IJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public enum ETinyMCE4JSPathProvider implements IJSPathProvider
 {
@@ -29,8 +29,8 @@ public enum ETinyMCE4JSPathProvider implements IJSPathProvider
 
   private final ConstantJSPathProvider m_aPP;
 
-  ETinyMCE4JSPathProvider (@Nonnull @Nonempty final String sRegularPath,
-                           @Nonnull @Nonempty final String sMinPath,
+  ETinyMCE4JSPathProvider (@NonNull @Nonempty final String sRegularPath,
+                           @NonNull @Nonempty final String sMinPath,
                            final boolean bCanBeBundled)
   {
     m_aPP = ConstantJSPathProvider.builder ()
@@ -40,7 +40,7 @@ public enum ETinyMCE4JSPathProvider implements IJSPathProvider
                                   .build ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPath (final boolean bRegular)
   {

@@ -21,6 +21,8 @@ import java.net.SocketTimeoutException;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,6 @@ import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class FftpConnectionDestination implements IFtpConnectionDestination
 {
@@ -43,27 +42,27 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
   private final int m_nPort;
   private final boolean m_bEnterLocalPassiveMode;
 
-  public FftpConnectionDestination (@Nonnull final String sHostname)
+  public FftpConnectionDestination (@NonNull final String sHostname)
   {
     this (sHostname, DEFAULT_ENTER_LOCAL_PASSIVE_MODE);
   }
 
-  public FftpConnectionDestination (@Nonnull final String sHostname, final boolean bEnterLocalPassiveMode)
+  public FftpConnectionDestination (@NonNull final String sHostname, final boolean bEnterLocalPassiveMode)
   {
     this (sHostname, DEFAULT_FTP_PORT, bEnterLocalPassiveMode);
   }
 
-  public FftpConnectionDestination (@Nonnull final String sHostname, @Nonnegative final int nPort)
+  public FftpConnectionDestination (@NonNull final String sHostname, @Nonnegative final int nPort)
   {
     this (sHostname, nPort, DEFAULT_ENTER_LOCAL_PASSIVE_MODE);
   }
 
-  public FftpConnectionDestination (@Nonnull final String sHostname, @Nonnegative final int nPort, final boolean bEnterLocalPassiveMode)
+  public FftpConnectionDestination (@NonNull final String sHostname, @Nonnegative final int nPort, final boolean bEnterLocalPassiveMode)
   {
     this (sHostname, nPort, 2000, bEnterLocalPassiveMode);
   }
 
-  public FftpConnectionDestination (@Nonnull final String sHostname,
+  public FftpConnectionDestination (@NonNull final String sHostname,
                                     @Nonnegative final int nPort,
                                     @Nonnegative final int nConnectTimeoutMilliSeconds,
                                     final boolean bEnterLocalPassiveMode)
@@ -80,7 +79,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     m_bEnterLocalPassiveMode = bEnterLocalPassiveMode;
   }
 
-  @Nonnull
+  @NonNull
   public String getHostname ()
   {
     return m_sHostname;
@@ -93,7 +92,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
   }
 
   @Nullable
-  public FTPClient openConnection (@Nonnull final IAuthCredentials aCredentials)
+  public FTPClient openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     if (!(aCredentials instanceof IUserNamePasswordCredentials))
       throw new IllegalArgumentException ("Needs to be username/password credentials");
@@ -133,7 +132,7 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection (@Nullable final FTPClient aFtpClient)
   {
     if (aFtpClient == null)

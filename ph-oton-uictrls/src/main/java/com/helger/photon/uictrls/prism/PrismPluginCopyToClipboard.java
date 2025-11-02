@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.prism;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Shows a "Copy to clipboard" button on the right top
@@ -42,9 +42,9 @@ public class PrismPluginCopyToClipboard implements IPrismPlugin
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.CLIPBOARD);
   }
 
-  public void applyOnPre (@Nonnull final IMicroElement aPreElement,
-                          @Nonnull final HCHasCSSClasses aPreClasses,
-                          @Nonnull final HCHasCSSStyles aPreStyles)
+  public void applyOnPre (@NonNull final IMicroElement aPreElement,
+                          @NonNull final HCHasCSSClasses aPreClasses,
+                          @NonNull final HCHasCSSStyles aPreStyles)
   {
     // Nothing
   }

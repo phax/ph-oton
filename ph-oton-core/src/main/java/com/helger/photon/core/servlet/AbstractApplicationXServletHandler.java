@@ -18,6 +18,7 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,6 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 
 /**
@@ -48,7 +48,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   {}
 
   @OverrideOnDemand
-  protected void invokeInternalErrorHandler (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final Throwable t)
+  protected void invokeInternalErrorHandler (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final Throwable t)
   {
     // Send internal error mail if needed
     new InternalErrorBuilder ().setThrowable (t)
@@ -57,11 +57,11 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
                                .handle ();
   }
 
-  @Nonnull
+  @NonNull
   @Override
-  public EContinue onException (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull final UnifiedResponse aUnifiedResponse,
-                                @Nonnull final Throwable t)
+  public EContinue onException (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                @NonNull final UnifiedResponse aUnifiedResponse,
+                                @NonNull final Throwable t)
   {
     if (!GlobalDebug.isDebugMode ())
     {
@@ -82,12 +82,12 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
    * @return The HTML provider that creates the content. May not be
    *         <code>null</code>.
    */
-  @Nonnull
-  protected abstract IHTMLProvider createHTMLProvider (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope);
+  @NonNull
+  protected abstract IHTMLProvider createHTMLProvider (@NonNull final IRequestWebScopeWithoutResponse aRequestScope);
 
   @OverridingMethodsMustInvokeSuper
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start handleRequest");

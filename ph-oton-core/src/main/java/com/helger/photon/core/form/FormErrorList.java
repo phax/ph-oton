@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.form;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.SingleError;
 import com.helger.diagnostics.error.list.ErrorList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special error list for form errors. Basically an {@link ErrorList} with
@@ -49,7 +49,7 @@ public class FormErrorList extends ErrorList
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */
-  public void addFieldInfo (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
+  public void addFieldInfo (@NonNull @Nonempty final String sFieldName, @NonNull @Nonempty final String sText)
   {
     add (SingleError.builderInfo ().errorFieldName (sFieldName).errorText (sText).build ());
   }
@@ -63,7 +63,7 @@ public class FormErrorList extends ErrorList
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */
-  public void addFieldWarning (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
+  public void addFieldWarning (@NonNull @Nonempty final String sFieldName, @NonNull @Nonempty final String sText)
   {
     add (SingleError.builderWarn ().errorFieldName (sFieldName).errorText (sText).build ());
   }
@@ -77,13 +77,13 @@ public class FormErrorList extends ErrorList
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */
-  public void addFieldError (@Nonnull @Nonempty final String sFieldName, @Nonnull @Nonempty final String sText)
+  public void addFieldError (@NonNull @Nonempty final String sFieldName, @NonNull @Nonempty final String sText)
   {
     add (SingleError.builderError ().errorFieldName (sFieldName).errorText (sText).build ());
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public FormErrorList getClone ()
   {
     return new FormErrorList (this);

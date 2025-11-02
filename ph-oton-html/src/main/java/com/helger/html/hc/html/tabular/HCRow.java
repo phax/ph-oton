@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.misc.DevelopersNote;
@@ -24,9 +27,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;tr&gt; element
@@ -59,7 +59,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IHCCell <?> addCell ()
   {
     return addCell (m_bDefaultIsHeader);
@@ -73,7 +73,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The created cell. Never <code>null</code>.
    * @since 9.2.5
    */
-  @Nonnull
+  @NonNull
   public final IHCCell <?> addCell (final boolean bHeader)
   {
     return bHeader ? addTH () : addTD ();
@@ -85,7 +85,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The created cell. Never <code>null</code>.
    * @since 9.2.5
    */
-  @Nonnull
+  @NonNull
   public final HCTH addTH ()
   {
     final HCTH ret = new HCTH ();
@@ -100,7 +100,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    * @return The created cell. Never <code>null</code>.
    * @since 9.2.5
    */
-  @Nonnull
+  @NonNull
   public final HCTD addTD ()
   {
     final HCTD ret = new HCTD ();
@@ -116,7 +116,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IHCCell <?> addCellAt (@Nonnegative final int nIndex)
   {
     return addCellAt (nIndex, m_bDefaultIsHeader);
@@ -131,7 +131,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IHCCell <?> addCellAt (@Nonnegative final int nIndex, final boolean bHeader)
   {
     return bHeader ? addTHAt (nIndex) : addTDAt (nIndex);
@@ -144,7 +144,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final HCTH addTHAt (@Nonnegative final int nIndex)
   {
     final HCTH ret = new HCTH ();
@@ -160,7 +160,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The index where the cell should be added
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final HCTD addTDAt (@Nonnegative final int nIndex)
   {
     final HCTD ret = new HCTD ();
@@ -176,7 +176,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCell (@Nullable final String sCellText)
   {
@@ -190,7 +190,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The element to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCell (@Nullable final IHCNode aCellChild)
   {
@@ -204,7 +204,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCell (@Nullable final String... aCellTexts)
   {
@@ -218,7 +218,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCell (@Nullable final IHCNode... aCellChildren)
   {
@@ -232,7 +232,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
@@ -248,7 +248,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
@@ -264,7 +264,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The element to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aCellChild)
   {
@@ -280,7 +280,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return the created table cell
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellTexts)
   {
@@ -296,7 +296,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
   {
@@ -312,7 +312,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return The created cell. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public final IHCCell <?> addAndReturnCellAt (@Nonnegative final int nIndex,
                                                @Nullable final Iterable <? extends IHCNode> aCellChildren)
@@ -327,7 +327,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCell (@Nullable final String sCellText)
   {
     addCell ().addChild (sCellText);
@@ -341,7 +341,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The element to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCell (@Nullable final IHCNode aChild)
   {
     addCell ().addChild (aChild);
@@ -355,7 +355,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of texts to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCell (@Nullable final String... aCellTexts)
   {
     addCell ().addChildren (aCellTexts);
@@ -369,7 +369,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCell (@Nullable final IHCNode... aCellChildren)
   {
     addCell ().addChildren (aCellChildren);
@@ -383,7 +383,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCell (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     addCell ().addChildren (aCellChildren);
@@ -399,7 +399,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The text to be set into the cell. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String sCellText)
   {
     addCellAt (nIndex).addChild (sCellText);
@@ -415,7 +415,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The element to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode aChild)
   {
     addCellAt (nIndex).addChild (aChild);
@@ -431,7 +431,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of texts to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final String... aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
@@ -447,7 +447,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCellAt (@Nonnegative final int nIndex, @Nullable final IHCNode... aCellChildren)
   {
     addCellAt (nIndex).addChildren (aCellChildren);
@@ -463,7 +463,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements to add. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCellAt (@Nonnegative final int nIndex,
                                 @Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
@@ -472,7 +472,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   @Deprecated (forRemoval = false)
-  @Nonnull
+  @NonNull
   @DevelopersNote ("Use addCell")
   public final HCRow addCells (@Nullable final String sCellChild)
   {
@@ -486,7 +486,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of strings for which a table cell should be created.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCells (@Nullable final String... aCellTexts)
   {
     if (aCellTexts != null)
@@ -496,7 +496,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   @Deprecated (forRemoval = false)
-  @Nonnull
+  @NonNull
   @DevelopersNote ("Use addCell")
   public final HCRow addCells (@Nullable final IHCNode aCellChild)
   {
@@ -510,7 +510,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements for which new cells should be created. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCells (@Nullable final IHCNode... aCellChildren)
   {
     if (aCellChildren != null)
@@ -526,7 +526,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The list of elements for which new cells should be created. May be <code>null</code>.
    * @return this (the table row)
    */
-  @Nonnull
+  @NonNull
   public final HCRow addCells (@Nullable final Iterable <? extends IHCNode> aCellChildren)
   {
     if (aCellChildren != null)
@@ -603,7 +603,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
    *        The index to remove
    * @return this
    */
-  @Nonnull
+  @NonNull
   public final HCRow removeCellAt (@Nonnegative final int nIndex)
   {
     removeChildAt (nIndex);
@@ -635,7 +635,7 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
   }
 
   @Override
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Avoid rows without cells!
     return hasChildren ();

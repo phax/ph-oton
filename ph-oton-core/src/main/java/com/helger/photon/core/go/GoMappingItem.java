@@ -18,6 +18,8 @@ package com.helger.photon.core.go;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,8 +29,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of go-mapping for absolute URLs.
@@ -43,17 +43,17 @@ public class GoMappingItem implements Serializable
   private final ISimpleURL m_aTargetURL;
   private final boolean m_bIsEditable;
 
-  public GoMappingItem (@Nonnull @Nonempty final String sKey,
+  public GoMappingItem (@NonNull @Nonempty final String sKey,
                         final boolean bIsInternal,
-                        @Nonnull @Nonempty final String sTargetURL,
+                        @NonNull @Nonempty final String sTargetURL,
                         final boolean bIsEditable)
   {
     this (sKey, bIsInternal, bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL), bIsEditable);
   }
 
-  public GoMappingItem (@Nonnull @Nonempty final String sKey,
+  public GoMappingItem (@NonNull @Nonempty final String sKey,
                         final boolean bIsInternal,
-                        @Nonnull final ISimpleURL aTargetURL,
+                        @NonNull final ISimpleURL aTargetURL,
                         final boolean bIsEditable)
   {
     m_sKey = ValueEnforcer.notEmpty (sKey, "Key");
@@ -66,7 +66,7 @@ public class GoMappingItem implements Serializable
    * @return The URL key, under which the item is reachable. May neither be
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getKey ()
   {
@@ -86,7 +86,7 @@ public class GoMappingItem implements Serializable
    * @return The target URL which should be invoked. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ISimpleURL getTargetURLReadonly ()
   {
     return m_aTargetURL;
@@ -96,7 +96,7 @@ public class GoMappingItem implements Serializable
    * @return The target URL which should be invoked. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public SimpleURL getTargetURL ()
   {
@@ -107,7 +107,7 @@ public class GoMappingItem implements Serializable
    * @return The target URL which should be invoked as a string. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public String getTargetURLAsString ()
   {
     return m_aTargetURL.getAsString ();
@@ -118,7 +118,7 @@ public class GoMappingItem implements Serializable
     return m_bIsEditable;
   }
 
-  @Nonnull
+  @NonNull
   public GoMappingItem getAsNotEditable ()
   {
     if (!m_bIsEditable)
@@ -147,7 +147,7 @@ public class GoMappingItem implements Serializable
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String toString ()
   {
     return new ToStringGenerator (this).append ("key", m_sKey)

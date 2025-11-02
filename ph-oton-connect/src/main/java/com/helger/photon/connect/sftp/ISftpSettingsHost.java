@@ -16,15 +16,15 @@
  */
 package com.helger.photon.connect.sftp;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.CGlobal;
 import com.helger.base.name.IHasDisplayName;
 import com.helger.base.string.StringHelper;
 import com.helger.network.port.DefaultNetworkPorts;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for SFTP settings per host. These settings
@@ -43,7 +43,7 @@ public interface ISftpSettingsHost extends IHasDisplayName
   /**
    * @return The IP address of the sever to connect to.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getServerHost ();
 
@@ -118,7 +118,7 @@ public interface ISftpSettingsHost extends IHasDisplayName
   @Nonnegative
   int getMaximumParallelConnections ();
 
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getLogPrefix ()
   {

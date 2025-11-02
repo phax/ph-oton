@@ -16,6 +16,9 @@
  */
 package com.helger.html.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A JSCode provider that encapsulates a list of {@link IHasJSCode} elements and
@@ -65,7 +65,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    * @return The underlying modifiable list. Never <code>null</code> but maybe
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <IHasJSCode> directAll ()
   {
@@ -76,7 +76,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    * @return A copy of the list with all members. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IHasJSCode> getAll ()
   {
@@ -92,7 +92,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    *        The JS code provider to be added. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider addAt (@Nonnegative final int nIndex, @Nullable final IHasJSCode aProvider)
   {
     if (aProvider != null)
@@ -110,7 +110,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    *        The JS code provider to be added. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider addFlattenedAt (@Nonnegative final int nIndex, @Nullable final IHasJSCode aProvider)
   {
     if (aProvider != null)
@@ -121,7 +121,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider append (@Nullable final IHasJSCode aProvider)
   {
     if (aProvider != null)
@@ -138,7 +138,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    *        The provider to add. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider appendFlattened (@Nullable final IHasJSCode aProvider)
   {
     if (aProvider != null)
@@ -149,13 +149,13 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider prepend (@Nullable final IHasJSCode aProvider)
   {
     return addAt (0, aProvider);
   }
 
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider prependFlattened (@Nullable final IHasJSCode aProvider)
   {
     return addFlattenedAt (0, aProvider);
@@ -168,7 +168,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
    *        the index to be removed. Should be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider removeAt (@Nonnegative final int nIndex)
   {
     m_aList.removeAtIndex (nIndex);
@@ -191,7 +191,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     return m_aList.isEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -207,7 +207,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public CollectingJSCodeProvider getClone ()
   {
     return new CollectingJSCodeProvider (m_aList);

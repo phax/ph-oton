@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Simple code components that merely generate themselves.
@@ -34,19 +34,19 @@ public class JSAtom extends AbstractJSExpression
 {
   private final String m_sAtom;
 
-  public JSAtom (@Nonnull @Nonempty final String sAtom)
+  public JSAtom (@NonNull @Nonempty final String sAtom)
   {
     m_sAtom = ValueEnforcer.notEmpty (sAtom, "Atom");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getContainedAtom ()
   {
     return m_sAtom;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sAtom);
   }

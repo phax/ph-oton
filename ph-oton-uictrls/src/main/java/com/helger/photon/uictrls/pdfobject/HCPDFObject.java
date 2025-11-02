@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.pdfobject;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -28,9 +31,6 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Embed an PDF inline into the page. See https://pdfobject.com/
  *
@@ -41,19 +41,19 @@ public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
   private final ISimpleURL m_aPathToPDF;
   private PDFObjectOptions m_aOptions;
 
-  public HCPDFObject (@Nonnull final ISimpleURL aPathToPDF)
+  public HCPDFObject (@NonNull final ISimpleURL aPathToPDF)
   {
     ensureID ();
     m_aPathToPDF = ValueEnforcer.notNull (aPathToPDF, "PathToPDF");
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getPathToPDF ()
   {
     return m_aPathToPDF;
   }
 
-  @Nonnull
+  @NonNull
   public HCPDFObject setOptions (@Nullable final PDFObjectOptions aOptions)
   {
     m_aOptions = aOptions;
@@ -68,8 +68,8 @@ public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -78,7 +78,7 @@ public class HCPDFObject extends AbstractHCDiv <HCPDFObject>
   }
 
   @Override
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForcedRegistration)
   {
     PhotonJS.registerJSIncludeForThisRequest (EUICtrlsJSPathProvider.PDFOBJECT2);

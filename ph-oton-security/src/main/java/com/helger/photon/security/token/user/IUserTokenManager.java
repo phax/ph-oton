@@ -19,6 +19,9 @@ package com.helger.photon.security.token.user;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -27,9 +30,6 @@ import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.io.mgr.IPhotonManager;
 import com.helger.photon.security.user.IUser;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a manager for {@link UserToken} objects.
@@ -42,7 +42,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   /**
    * @return The user token callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ();
 
@@ -64,7 +64,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   @Nullable
   UserToken createUserToken (@Nullable String sTokenString,
                              @Nullable Map <String, String> aCustomAttrs,
-                             @Nonnull IUser aUser,
+                             @NonNull IUser aUser,
                              @Nullable String sDescription);
 
   /**
@@ -78,7 +78,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        The description of the user token. May be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange updateUserToken (@Nullable String sUserTokenID,
                            @Nullable Map <String, String> aNewCustomAttrs,
                            @Nullable String sNewDescription);
@@ -90,7 +90,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        The ID of the token to be deleted.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange deleteUserToken (@Nullable String sUserTokenID);
 
   /**
@@ -109,11 +109,11 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        token string is created.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange createNewAccessToken (@Nullable String sUserTokenID,
-                                @Nonnull @Nonempty String sRevocationUserID,
-                                @Nonnull LocalDateTime aRevocationDT,
-                                @Nonnull @Nonempty String sRevocationReason,
+                                @NonNull @Nonempty String sRevocationUserID,
+                                @NonNull LocalDateTime aRevocationDT,
+                                @NonNull @Nonempty String sRevocationReason,
                                 @Nullable String sTokenString);
 
   /**
@@ -130,17 +130,17 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    *        Why was it revoked.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange revokeAccessToken (@Nullable String sUserTokenID,
-                             @Nonnull @Nonempty String sRevocationUserID,
-                             @Nonnull LocalDateTime aRevocationDT,
-                             @Nonnull @Nonempty String sRevocationReason);
+                             @NonNull @Nonempty String sRevocationUserID,
+                             @NonNull LocalDateTime aRevocationDT,
+                             @NonNull @Nonempty String sRevocationReason);
 
   /**
    * @return All contained, non-deleted user token. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUserToken> getAllActiveUserTokens ();
 

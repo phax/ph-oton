@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.job.app;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,8 +35,6 @@ import com.helger.schedule.quartz.GlobalQuartzScheduler;
 import com.helger.schedule.quartz.trigger.JDK8TriggerBuilder;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * A Quartz job to be scheduled to check for thread dead locks.
  *
@@ -53,8 +52,8 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final JobDataMap aJobDataMap,
-                            @Nonnull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap,
+                            @NonNull final IJobExecutionContext aContext) throws JobExecutionException
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Checking for dead locks");
@@ -73,8 +72,8 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (2)</code>
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
-  @Nonnull
-  public static TriggerKey schedule (@Nonnull final SimpleScheduleBuilder aScheduleBuilder)
+  @NonNull
+  public static TriggerKey schedule (@NonNull final SimpleScheduleBuilder aScheduleBuilder)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
 

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.execcontext.LayoutExecutionContext;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This page is instantiated per page view, so that the thread safety of the
@@ -37,20 +37,20 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   private final IWebPage <? extends IWebPageExecutionContext> m_aWebPage;
   private final HCNodeList m_aNodeList = new HCNodeList ();
 
-  public WebPageExecutionContext (@Nonnull final ILayoutExecutionContext aLEC,
-                                  @Nonnull final IWebPage <? extends IWebPageExecutionContext> aWebPage)
+  public WebPageExecutionContext (@NonNull final ILayoutExecutionContext aLEC,
+                                  @NonNull final IWebPage <? extends IWebPageExecutionContext> aWebPage)
   {
     super (aLEC);
     m_aWebPage = ValueEnforcer.notNull (aWebPage, "WebPage");
   }
 
-  @Nonnull
+  @NonNull
   public final IWebPage <? extends IWebPageExecutionContext> getWebPage ()
   {
     return m_aWebPage;
   }
 
-  @Nonnull
+  @NonNull
   public final HCNodeList getNodeList ()
   {
     return m_aNodeList;

@@ -16,15 +16,15 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A block of JS code, which may contain statements and local declarations.
@@ -83,7 +83,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
    *        <code>true</code> to enable newline at the end
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSBlock newlineAtEnd (final boolean bNewLineAtEnd)
   {
     m_bNewLineAtEnd = bNewLineAtEnd;
@@ -91,7 +91,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
   }
 
   @Override
-  protected void onAddDeclaration (@Nonnull final IJSDeclaration aDeclaration)
+  protected void onAddDeclaration (@NonNull final IJSDeclaration aDeclaration)
   {
     if (aDeclaration instanceof AbstractJSVariable <?>)
     {
@@ -105,14 +105,14 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
    *
    * @return Created break block
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSBlock _break ()
   {
     return _break (null);
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSBlock _break (@Nullable final JSLabel aLabel)
   {
@@ -120,7 +120,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSBlock _continue ()
   {
@@ -134,7 +134,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
    *        optional label to be used
    * @return Created continue block
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSBlock _continue (@Nullable final JSLabel aLabel)
   {
@@ -142,7 +142,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
     return this;
   }
 
-  public void generate (@Nonnull final JSFormatter f)
+  public void generate (@NonNull final JSFormatter f)
   {
     if (m_bBracesRequired)
       f.plain ('{').nl ();
@@ -155,7 +155,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
       f.plain ('}');
   }
 
-  void generateBody (@Nonnull final JSFormatter aFormatter)
+  void generateBody (@NonNull final JSFormatter aFormatter)
   {
     for (final IHasJSCode aJSCode : directMembers ())
     {
@@ -172,7 +172,7 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
     }
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (this);
     if (m_bBracesRequired && m_bNewLineAtEnd)

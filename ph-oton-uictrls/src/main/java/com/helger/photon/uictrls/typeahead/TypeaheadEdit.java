@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.typeahead;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
@@ -36,8 +38,6 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * This class encapsulates a HTML input field, a hidden field for the ID and the
  * script to execute the typeahead action
@@ -53,10 +53,10 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
   private final JSAnonymousFunction m_aSelectionCallback;
   private final HCTypeahead m_aScript;
 
-  public TypeaheadEdit (@Nonnull final IHCRequestField aRFEdit,
-                        @Nonnull final IHCRequestField aRFHidden,
-                        @Nonnull final ISimpleURL aAjaxInvocationURL,
-                        @Nonnull final Locale aDisplayLocale)
+  public TypeaheadEdit (@NonNull final IHCRequestField aRFEdit,
+                        @NonNull final IHCRequestField aRFHidden,
+                        @NonNull final ISimpleURL aAjaxInvocationURL,
+                        @NonNull final Locale aDisplayLocale)
   {
     super (EHCInputType.TEXT);
 
@@ -97,7 +97,7 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
    * @return The ID of the hidden field that is generated for this edit. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getHiddenFieldID ()
   {
@@ -110,7 +110,7 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
    *         as this is required to be present for the correct working of this
    *         control!
    */
-  @Nonnull
+  @NonNull
   public final JSAnonymousFunction getJSSelectionCallback ()
   {
     return m_aSelectionCallback;
@@ -121,15 +121,15 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
    *         input. Never <code>null</code>. Changes on the script only have an
    *         effect if they are performed before this control is build!
    */
-  @Nonnull
+  @NonNull
   public final HCTypeahead getScript ()
   {
     return m_aScript;
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 

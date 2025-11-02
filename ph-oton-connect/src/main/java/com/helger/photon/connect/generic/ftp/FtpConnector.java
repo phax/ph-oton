@@ -25,6 +25,8 @@ import java.util.function.Predicate;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,42 +39,39 @@ import com.helger.base.state.ESuccess;
 import com.helger.photon.connect.generic.IConnectorFileBased;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (FtpConnector.class);
   private final IFtpConnectionDestination m_aDestination;
   private FTPClient m_aChannel;
 
-  public FtpConnector (@Nonnull final String sHostname)
+  public FtpConnector (@NonNull final String sHostname)
   {
     this (new FftpConnectionDestination (sHostname));
   }
 
-  public FtpConnector (@Nonnull final String sHostname, final boolean bEnterLocalPassiveMode)
+  public FtpConnector (@NonNull final String sHostname, final boolean bEnterLocalPassiveMode)
   {
     this (new FftpConnectionDestination (sHostname, bEnterLocalPassiveMode));
   }
 
-  public FtpConnector (@Nonnull final String sHostname, final int nPort)
+  public FtpConnector (@NonNull final String sHostname, final int nPort)
   {
     this (new FftpConnectionDestination (sHostname, nPort));
   }
 
-  public FtpConnector (@Nonnull final String sHostname, final int nPort, final boolean bEnterLocalPassiveMode)
+  public FtpConnector (@NonNull final String sHostname, final int nPort, final boolean bEnterLocalPassiveMode)
   {
     this (new FftpConnectionDestination (sHostname, nPort, bEnterLocalPassiveMode));
   }
 
-  public FtpConnector (@Nonnull final IFtpConnectionDestination aDestination)
+  public FtpConnector (@NonNull final IFtpConnectionDestination aDestination)
   {
     ValueEnforcer.notNull (aDestination, "Destination");
     m_aDestination = aDestination;
   }
 
-  @Nonnull
+  @NonNull
   public IFtpConnectionDestination getDestination ()
   {
     return m_aDestination;
@@ -84,8 +83,8 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return m_aChannel;
   }
 
-  @Nonnull
-  public EChange openConnection (@Nonnull final IAuthCredentials aCredentials)
+  @NonNull
+  public EChange openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     // already open?
     if (isConnectionOpen ())
@@ -96,7 +95,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return EChange.valueOf (isConnectionOpen ());
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection ()
   {
     if (isConnectionOpen () && m_aDestination.closeConnection (m_aChannel).isChanged ())
@@ -113,8 +112,8 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return m_aChannel != null;
   }
 
-  @Nonnull
-  public ESuccess getData (@Nonnull final String sFilename, @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess getData (@NonNull final String sFilename, @NonNull @WillClose final OutputStream aOS)
   {
     try
     {
@@ -141,8 +140,8 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     }
   }
 
-  @Nonnull
-  public ESuccess putData (@Nonnull final String sFilename, @Nonnull @WillClose final InputStream aIS)
+  @NonNull
+  public ESuccess putData (@NonNull final String sFilename, @NonNull @WillClose final InputStream aIS)
   {
     try
     {
@@ -169,7 +168,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     }
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess changeWorkingDirectory (final String sDirectory)
   {
     if (m_aChannel != null)
@@ -189,7 +188,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess changeToParentDirectory ()
   {
     if (m_aChannel != null)
@@ -209,7 +208,7 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
+  @NonNull
   public ESuccess deleteFile (@Nullable final String sFilename)
   {
     if (m_aChannel != null)
@@ -236,8 +235,8 @@ public class FtpConnector implements IConnectorFileBased <FTPClient, FTPFile>
     return ESuccess.FAILURE;
   }
 
-  @Nonnull
-  public ESuccess listFiles (@Nullable final Predicate <FTPFile> aFilter, @Nonnull final List <FTPFile> aTargetList)
+  @NonNull
+  public ESuccess listFiles (@Nullable final Predicate <FTPFile> aFilter, @NonNull final List <FTPFile> aTargetList)
   {
     ValueEnforcer.notNull (aTargetList, "TargetList");
 

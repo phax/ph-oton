@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -36,9 +39,6 @@ import com.helger.photon.uictrls.datatables.DataTablesDom;
 import com.helger.photon.uictrls.datatables.EDataTablesCSSPathProvider;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class DataTablesPluginButtons extends AbstractDataTablesPlugin
 {
   public static final String PLUGIN_NAME = "buttons";
@@ -56,7 +56,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     super (PLUGIN_NAME);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @OverrideOnDemand
   protected DataTablesDom createDom ()
@@ -65,13 +65,13 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   }
 
   @OverrideOnDemand
-  protected void weaveIntoDom (@Nonnull final DataTablesDom aDom)
+  protected void weaveIntoDom (@NonNull final DataTablesDom aDom)
   {
     aDom.setPosition (0).addCustom ("B").openDiv ("clear").closeDiv ();
   }
 
   @Override
-  public void finalizeDataTablesSettings (@Nonnull final DataTables aDT)
+  public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
     DataTablesDom aDom = aDT.directGetDom ();
     if (aDom == null)
@@ -82,30 +82,30 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     weaveIntoDom (aDom);
   }
 
-  @Nonnull
-  public DataTablesPluginButtons addButton (@Nonnull @Nonempty final String sButton)
+  @NonNull
+  public DataTablesPluginButtons addButton (@NonNull @Nonempty final String sButton)
   {
     ValueEnforcer.notEmpty (sButton, "Button");
     m_aButtons.add (sButton);
     return this;
   }
 
-  @Nonnull
-  public DataTablesPluginButtons addButton (@Nonnull final DTPButtonsButton aButton)
+  @NonNull
+  public DataTablesPluginButtons addButton (@NonNull final DTPButtonsButton aButton)
   {
     ValueEnforcer.notNull (aButton, "Button");
     m_aButtons.add (aButton);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginButtons setDom (@Nullable final DTPButtonsDom aDom)
   {
     m_aDom = aDom;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesPluginButtons setName (@Nullable final String sName)
   {
     m_sName = sName;
@@ -148,7 +148,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   }
 
   @Override
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_BUTTONS);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_BUTTONS);

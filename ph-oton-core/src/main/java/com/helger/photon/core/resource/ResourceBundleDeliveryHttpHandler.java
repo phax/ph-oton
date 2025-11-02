@@ -19,6 +19,7 @@ package com.helger.photon.core.resource;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,15 +34,14 @@ import com.helger.photon.core.servlet.AbstractObjectDeliveryHttpHandler;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHttpHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (ResourceBundleDeliveryHttpHandler.class);
 
-  @Nonnull
-  private static String _getBundleIDFromFilename (@Nonnull final String sFilename)
+  @NonNull
+  private static String _getBundleIDFromFilename (@NonNull final String sFilename)
   {
     // Cut leading path ("/") and file extension
     return FilenameHelper.getBaseName (sFilename);
@@ -49,8 +49,8 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull final UnifiedResponse aUnifiedResponse)
   {
     if (super.initRequestState (aRequestScope, aUnifiedResponse).isBreak ())
       return EContinue.BREAK;
@@ -77,9 +77,9 @@ public class ResourceBundleDeliveryHttpHandler extends AbstractObjectDeliveryHtt
   }
 
   @Override
-  protected void onDeliverResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final UnifiedResponse aUnifiedResponse,
-                                    @Nonnull final String sFilename) throws IOException
+  protected void onDeliverResource (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @NonNull final UnifiedResponse aUnifiedResponse,
+                                    @NonNull final String sFilename) throws IOException
   {
     final String sBundleID = _getBundleIDFromFilename (sFilename);
     final WebSiteResourceBundleSerialized aBundle = PhotonAppManager.getWebSiteResourceBundleMgr ()

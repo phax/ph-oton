@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.html.jscode.JSInvocation;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Contains the JS built-in type 'Date'
@@ -33,19 +33,19 @@ public class JSTypeDate extends JSPrimitiveType
     super ("Date");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation now ()
   {
     return global ().invoke ("now");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation parse ()
   {
     return global ().invoke ("parse");
   }
 
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public JSInvocation UTC ()
   {

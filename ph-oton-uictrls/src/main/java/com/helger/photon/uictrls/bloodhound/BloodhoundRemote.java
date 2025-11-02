@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.bloodhound;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -28,9 +31,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represent a remote object used in Bloodhound options
@@ -68,14 +68,14 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        A URL to make requests to when when the data provided by local and
    *        prefetch is insufficient. Required.
    */
-  public BloodhoundRemote (@Nonnull final ISimpleURL aURL)
+  public BloodhoundRemote (@NonNull final ISimpleURL aURL)
   {
     ValueEnforcer.notNull (aURL, "URL");
 
     m_aURL = new SimpleURL (aURL);
   }
 
-  public BloodhoundRemote (@Nonnull final BloodhoundRemote aOther)
+  public BloodhoundRemote (@NonNull final BloodhoundRemote aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
 
@@ -92,7 +92,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    * @return A URL to make requests to when when the data provided by local and
    *         prefetch is insufficient. Required. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ISimpleURL getURL ()
   {
     return m_aURL;
@@ -117,7 +117,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        The wild card to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundRemote setWildcard (@Nullable final String sWildcard)
   {
     m_sWildcard = sWildcard;
@@ -145,7 +145,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        The function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundRemote setReplace (@Nullable final IJSExpression aReplace)
   {
     m_aReplace = aReplace;
@@ -157,7 +157,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *         <code>debounce</code> or <code>throttle</code>. Defaults to
    *         <code>debounce</code>.
    */
-  @Nonnull
+  @NonNull
   public EBloodhoundRemoteRateLimitBy getRateLimitBy ()
   {
     return m_eRateLimitBy;
@@ -172,8 +172,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        function to use. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public BloodhoundRemote setRateLimitBy (@Nonnull final EBloodhoundRemoteRateLimitBy eRateLimitBy)
+  @NonNull
+  public BloodhoundRemote setRateLimitBy (@NonNull final EBloodhoundRemoteRateLimitBy eRateLimitBy)
   {
     m_eRateLimitBy = ValueEnforcer.notNull (eRateLimitBy, "RateLimitBy");
     return this;
@@ -197,7 +197,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        Milliseconds to use. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundRemote setRateLimitWait (@Nonnegative final int nRateLimitWait)
   {
     m_nRateLimitWait = ValueEnforcer.isGT0 (nRateLimitWait, "RateLimitWait");
@@ -224,7 +224,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    *        Function to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundRemote setFilter (@Nullable final IJSExpression aFilter)
   {
     m_aFilter = aFilter;
@@ -241,14 +241,14 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
     return m_aAjax;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundRemote setAjax (@Nullable final JQueryAjaxBuilder aAjax)
   {
     m_aAjax = aAjax;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {
@@ -269,7 +269,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundRemote getClone ()
   {
     return new BloodhoundRemote (this);

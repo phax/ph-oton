@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +35,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class DataTablesDom implements ICloneable <DataTablesDom>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesDom.class);
@@ -51,7 +50,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     m_aElements = new CommonsArrayList <> ();
   }
 
-  public DataTablesDom (@Nonnull final DataTablesDom aOther)
+  public DataTablesDom (@NonNull final DataTablesDom aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aElements = new CommonsArrayList <> (aOther.m_aElements);
@@ -63,14 +62,14 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return m_nPos;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom setPosition (final int nNewPosition)
   {
     m_nPos = nNewPosition;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom setPositionToEnd ()
   {
     return setPosition (m_aElements.size ());
@@ -89,7 +88,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return indexOf (s) >= 0;
   }
 
-  @Nonnull
+  @NonNull
   public EChange remove (@Nullable final String s)
   {
     final int nIndex = indexOf (s);
@@ -98,13 +97,13 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return remove (nIndex);
   }
 
-  @Nonnull
+  @NonNull
   public EChange remove ()
   {
     return remove (m_nPos);
   }
 
-  @Nonnull
+  @NonNull
   public EChange remove (final int nIndex)
   {
     if (nIndex < 0 || nIndex >= m_aElements.size ())
@@ -115,7 +114,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return EChange.CHANGED;
   }
 
-  private void _internalAdd (@Nonnull final String s)
+  private void _internalAdd (@NonNull final String s)
   {
     if (m_nPos < 0)
     {
@@ -130,15 +129,15 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     }
   }
 
-  @Nonnull
-  private DataTablesDom _internalOpenDiv (@Nonnull final String s)
+  @NonNull
+  private DataTablesDom _internalOpenDiv (@NonNull final String s)
   {
     _internalAdd (s);
     ++m_nOpenDivs;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom openDiv ()
   {
     return _internalOpenDiv (OPEN_DIV);
@@ -151,7 +150,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return StringHelper.isEmpty (sCSSClass) ? OPEN_DIV : OPEN_DIV + "'" + sCSSClass + "'";
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom openDiv (@Nullable final ICSSClassProvider aCSSClass)
   {
     return _internalOpenDiv (getDivString (aCSSClass));
@@ -179,13 +178,13 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return OPEN_DIV;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom openDiv (@Nullable final ICSSClassProvider... aCSSClasses)
   {
     return _internalOpenDiv (getDivString (aCSSClasses));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom openDiv (@Nullable final String sCSSClasses)
   {
     if (StringHelper.isNotEmpty (sCSSClasses))
@@ -199,13 +198,13 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return StringHelper.isEmpty (sID) ? OPEN_DIV : OPEN_DIV + "'#" + sID + "'";
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom openDivWithID (@Nullable final String sID)
   {
     return _internalOpenDiv (getDivStringWithID (sID));
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom closeDiv ()
   {
     _internalAdd (CLOSE_DIV);
@@ -219,7 +218,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addLengthMenu ()
   {
     _internalAdd ("l");
@@ -231,7 +230,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addFiltering ()
   {
     _internalAdd ("f");
@@ -243,7 +242,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addTable ()
   {
     _internalAdd ("t");
@@ -255,7 +254,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addInformationSummary ()
   {
     _internalAdd ("i");
@@ -267,7 +266,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addPagination ()
   {
     _internalAdd ("p");
@@ -279,7 +278,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public DataTablesDom addProcessing ()
   {
     _internalAdd ("r");
@@ -293,15 +292,15 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
    *        Custom element to add. May not be <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public DataTablesDom addCustom (@Nonnull @Nonempty final String sStr)
+  @NonNull
+  public DataTablesDom addCustom (@NonNull @Nonempty final String sStr)
   {
     ValueEnforcer.notEmpty (sStr, "Str");
     _internalAdd (sStr);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public String getAsString ()
   {
     if (m_nOpenDivs != 0)
@@ -310,7 +309,7 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
     return StringImplode.getImploded (m_aElements);
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesDom getClone ()
   {
     return new DataTablesDom (this);

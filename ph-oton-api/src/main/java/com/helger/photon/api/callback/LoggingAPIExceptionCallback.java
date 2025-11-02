@@ -18,6 +18,7 @@ package com.helger.photon.api.callback;
 
 import java.io.IOException;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,6 @@ import com.helger.photon.api.InvokableAPIDescriptor;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Implementation of {@link IAPIExceptionCallback} logging to an SLF4J logger
  *
@@ -40,10 +39,10 @@ public class LoggingAPIExceptionCallback implements IAPIExceptionCallback
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPIExceptionCallback.class);
 
-  public void onAPIExecutionException (@Nonnull final IAPIInvoker aInvoker,
-                                       @Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
-                                       @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                       @Nonnull final Throwable t)
+  public void onAPIExecutionException (@NonNull final IAPIInvoker aInvoker,
+                                       @NonNull final InvokableAPIDescriptor aInvokableDescriptor,
+                                       @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @NonNull final Throwable t)
   {
     if (t instanceof IOException)
     {

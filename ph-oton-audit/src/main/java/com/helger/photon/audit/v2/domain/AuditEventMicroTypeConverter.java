@@ -18,6 +18,9 @@ package com.helger.photon.audit.v2.domain;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.state.ESuccess;
 import com.helger.base.string.StringHelper;
@@ -30,9 +33,6 @@ import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Convert {@link AuditEvent} objects to {@link IMicroElement} and vice versa.
@@ -52,10 +52,10 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
   public static final IMicroQName ATTR_NAME = new MicroQName ("name");
   public static final IMicroQName ATTR_VALUE = new MicroQName ("value");
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final AuditEvent aObject,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final AuditEvent aObject,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_ID, aObject.getID ());
@@ -72,8 +72,8 @@ public class AuditEventMicroTypeConverter implements IMicroTypeConverter <AuditE
     return aElement;
   }
 
-  @Nonnull
-  public AuditEvent convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public AuditEvent convertToNative (@NonNull final IMicroElement aElement)
   {
     final long nID = aElement.getAttributeValueAsLong (ATTR_ID, -1);
     final LocalDateTime aCDT = aElement.getAttributeValueWithConversion (ATTR_CDT, LocalDateTime.class);

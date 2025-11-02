@@ -16,6 +16,7 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,6 @@ import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IAPIInvoker}.
@@ -48,9 +47,9 @@ public class APIInvoker implements IAPIInvoker
   private static final IMutableStatisticsHandlerKeyedTimer STATS_FUNCTION_TIMER = StatisticsManager.getKeyedTimerHandler (APIInvoker.class.getName () +
                                                                                                                           "$timer");
 
-  public void invoke (@Nonnull final InvokableAPIDescriptor aInvokableDescriptor,
-                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void invoke (@NonNull final InvokableAPIDescriptor aInvokableDescriptor,
+                      @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                      @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     ValueEnforcer.notNull (aInvokableDescriptor, "InvokableDescriptor");
     ValueEnforcer.notNull (aRequestScope, "RequestScope");

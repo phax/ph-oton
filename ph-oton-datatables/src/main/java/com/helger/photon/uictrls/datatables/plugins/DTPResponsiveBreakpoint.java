@@ -16,38 +16,38 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 public class DTPResponsiveBreakpoint
 {
   private final String m_sName;
   private final String m_sWidth;
 
-  public DTPResponsiveBreakpoint (@Nonnull @Nonempty final String sName, @Nonnull @Nonempty final String sWidth)
+  public DTPResponsiveBreakpoint (@NonNull @Nonempty final String sName, @NonNull @Nonempty final String sWidth)
   {
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
     m_sWidth = ValueEnforcer.notEmpty (sWidth, "Width");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getWidth ()
   {
     return m_sWidth;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getAsJS ()
   {
     return new JSAssocArray ().add ("name", m_sName).add ("width", m_sWidth);

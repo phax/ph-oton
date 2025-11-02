@@ -16,6 +16,9 @@
  */
 package com.helger.photon.icon.bootstrapicons;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.DefaultCSSClassProvider;
@@ -28,9 +31,6 @@ import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Bootstrap icons v1.11.3
@@ -2097,7 +2097,7 @@ public enum EBootstrapIcon implements IIcon
 
   private final ICSSClassProvider m_aCSSClass;
 
-  EBootstrapIcon (@Nonnull final ICSSClassProvider aCSSClass)
+  EBootstrapIcon (@NonNull final ICSSClassProvider aCSSClass)
   {
     m_aCSSClass = aCSSClass;
   }
@@ -2108,8 +2108,8 @@ public enum EBootstrapIcon implements IIcon
     return m_aCSSClass.getCSSClass ();
   }
 
-  @Nonnull
-  public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
+  @NonNull
+  public <T extends IHCElement <?>> T applyToNode (@NonNull final T aElement)
   {
     // No additional classes needed
     aElement.addClass (m_aCSSClass);
@@ -2117,25 +2117,25 @@ public enum EBootstrapIcon implements IIcon
     return aElement;
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode ()
   {
     return applyToNode (new HCI ());
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode2x ()
   {
     return getAsNode ().addClass (CSS_CLASS_SCALE_2);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode3x ()
   {
     return getAsNode ().addClass (CSS_CLASS_SCALE_3);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode4x ()
   {
     return getAsNode ().addClass (CSS_CLASS_SCALE_4);
@@ -2172,7 +2172,7 @@ public enum EBootstrapIcon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EIconCSSPathProvider.BOOTSTRAP_ICONS, EIconCSSPathProvider.PH_OTON_BOOTSTRAP_ICONS);

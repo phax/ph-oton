@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.autonumeric;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
-
-import jakarta.annotation.Nonnull;
 
 public enum EAutoNumericLeadingZero implements IHasID <String>
 {
@@ -35,12 +35,12 @@ public enum EAutoNumericLeadingZero implements IHasID <String>
 
   private final String m_sID;
 
-  EAutoNumericLeadingZero (@Nonnull @Nonempty final String sID)
+  EAutoNumericLeadingZero (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

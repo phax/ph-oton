@@ -19,6 +19,9 @@ package com.helger.photon.security.user;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -30,9 +33,6 @@ import com.helger.photon.io.mgr.IPhotonManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for managing all available users.
@@ -50,7 +50,7 @@ public interface IUserManager extends IPhotonManager <IUser>
   /**
    * @return The user callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   CallbackList <IUserModificationCallback> userModificationCallbacks ();
 
@@ -81,9 +81,9 @@ public interface IUserManager extends IPhotonManager <IUser>
    *         email address is already present or if serialization failed.
    */
   @Nullable
-  IUser createNewUser (@Nonnull @Nonempty String sLoginName,
+  IUser createNewUser (@NonNull @Nonempty String sLoginName,
                        @Nullable String sEmailAddress,
-                       @Nonnull String sPlainTextPassword,
+                       @NonNull String sPlainTextPassword,
                        @Nullable String sFirstName,
                        @Nullable String sLastName,
                        @Nullable String sDescription,
@@ -120,10 +120,10 @@ public interface IUserManager extends IPhotonManager <IUser>
    *         email address is already present or if serialization failed.
    */
   @Nullable
-  IUser createPredefinedUser (@Nonnull @Nonempty String sID,
-                              @Nonnull @Nonempty String sLoginName,
+  IUser createPredefinedUser (@NonNull @Nonempty String sID,
+                              @NonNull @Nonempty String sLoginName,
                               @Nullable String sEmailAddress,
-                              @Nonnull String sPlainTextPassword,
+                              @NonNull String sPlainTextPassword,
                               @Nullable String sFirstName,
                               @Nullable String sLastName,
                               @Nullable String sDescription,
@@ -194,7 +194,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return A non-<code>null</code> collection of all contained enabled and
    *         not-deleted users
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUser> getAllActiveUsers ();
 
@@ -208,7 +208,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return A non-<code>null</code> collection of all contained disabled and
    *         not-deleted users
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUser> getAllDisabledUsers ();
 
@@ -216,14 +216,14 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return A non-<code>null</code> collection of all contained not deleted
    *         users
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUser> getAllNotDeletedUsers ();
 
   /**
    * @return A non-<code>null</code> collection of all contained deleted users
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUser> getAllDeletedUsers ();
 
@@ -255,9 +255,9 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        <code>true</code> if the user is disabled
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange setUserData (@Nullable String sUserID,
-                       @Nonnull @Nonempty String sNewLoginName,
+                       @NonNull @Nonempty String sNewLoginName,
                        @Nullable String sNewEmailAddress,
                        @Nullable String sNewFirstName,
                        @Nullable String sNewLastName,
@@ -275,13 +275,13 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        The new password in plain text. May not be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange setUserPassword (@Nullable String sUserID, @Nonnull String sNewPlainTextPassword);
+  @NonNull
+  EChange setUserPassword (@Nullable String sUserID, @NonNull String sNewPlainTextPassword);
 
-  @Nonnull
+  @NonNull
   EChange updateUserLastLogin (@Nullable String sUserID);
 
-  @Nonnull
+  @NonNull
   EChange updateUserLastFailedLogin (@Nullable String sUserID);
 
   /**
@@ -292,7 +292,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return {@link EChange#CHANGED} if the user was deleted,
    *         {@link EChange#UNCHANGED} otherwise.
    */
-  @Nonnull
+  @NonNull
   EChange deleteUser (@Nullable String sUserID);
 
   /**
@@ -303,7 +303,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return {@link EChange#CHANGED} if the user was undeleted,
    *         {@link EChange#UNCHANGED} otherwise.
    */
-  @Nonnull
+  @NonNull
   EChange undeleteUser (@Nullable String sUserID);
 
   /**
@@ -314,7 +314,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return {@link EChange#CHANGED} if the user was disabled,
    *         {@link EChange#UNCHANGED} otherwise.
    */
-  @Nonnull
+  @NonNull
   EChange disableUser (@Nullable String sUserID);
 
   /**
@@ -325,7 +325,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @return {@link EChange#CHANGED} if the user was enabled,
    *         {@link EChange#UNCHANGED} otherwise.
    */
-  @Nonnull
+  @NonNull
   EChange enableUser (@Nullable String sUserID);
 
   /**

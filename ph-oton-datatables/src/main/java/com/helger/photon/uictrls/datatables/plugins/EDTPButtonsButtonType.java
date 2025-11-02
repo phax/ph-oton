@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
 import com.helger.collection.commons.CommonsArrayList;
@@ -23,9 +26,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * DataTables Buttons plugin, button type
@@ -83,13 +83,13 @@ public enum EDTPButtonsButtonType implements IHasName
   private final String m_sName;
   private final ICommonsList <IJSPathProvider> m_aJSIncludes;
 
-  EDTPButtonsButtonType (@Nonnull @Nonempty final String sName, @Nullable final IJSPathProvider... aJSIncludes)
+  EDTPButtonsButtonType (@NonNull @Nonempty final String sName, @Nullable final IJSPathProvider... aJSIncludes)
   {
     m_sName = sName;
     m_aJSIncludes = new CommonsArrayList <> (aJSIncludes);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

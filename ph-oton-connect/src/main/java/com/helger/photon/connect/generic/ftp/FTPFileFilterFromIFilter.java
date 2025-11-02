@@ -21,23 +21,22 @@ import java.util.function.Predicate;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPFileFilters;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class FTPFileFilterFromIFilter implements FTPFileFilter
 {
   private final Predicate <FTPFile> m_aFilter;
 
-  public FTPFileFilterFromIFilter (@Nonnull final Predicate <FTPFile> aFilter)
+  public FTPFileFilterFromIFilter (@NonNull final Predicate <FTPFile> aFilter)
   {
     ValueEnforcer.notNull (aFilter, "Filter");
     m_aFilter = aFilter;
   }
 
-  @Nonnull
+  @NonNull
   public Predicate <FTPFile> getFilter ()
   {
     return m_aFilter;
@@ -48,7 +47,7 @@ public final class FTPFileFilterFromIFilter implements FTPFileFilter
     return m_aFilter.test (aFile);
   }
 
-  @Nonnull
+  @NonNull
   public static FTPFileFilter create (@Nullable final Predicate <FTPFile> aFilter)
   {
     return aFilter == null ? FTPFileFilters.NON_NULL : new FTPFileFilterFromIFilter (aFilter);

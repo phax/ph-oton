@@ -18,6 +18,9 @@ package com.helger.photon.core.appid;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -27,9 +30,6 @@ import com.helger.scope.mgr.ScopeManager;
 import com.helger.text.locale.country.CountryCache;
 import com.helger.typeconvert.collection.IAttributeContainerAny;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is a utility class to get the
@@ -45,7 +45,7 @@ public final class RequestSettings
   {}
 
   @Nullable
-  private static String _getApplicationIDOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  private static String _getApplicationIDOrNull (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     String sAppID = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_APP_ID);
     if (StringHelper.isEmpty (sAppID))
@@ -62,9 +62,9 @@ public final class RequestSettings
     return sAppID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getApplicationID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static String getApplicationID (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final String sAppID = _getApplicationIDOrNull (aRequestScope);
     if (StringHelper.isEmpty (sAppID))
@@ -73,7 +73,7 @@ public final class RequestSettings
   }
 
   @Nullable
-  private static PhotonRequestState _getRequestStateOrNull (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  private static PhotonRequestState _getRequestStateOrNull (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     PhotonRequestState ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_STATE);
     if (ret == null)
@@ -100,8 +100,8 @@ public final class RequestSettings
     return ret;
   }
 
-  @Nonnull
-  public static PhotonRequestState getRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static PhotonRequestState getRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final PhotonRequestState aState = _getRequestStateOrNull (aRequestScope);
     if (aState == null)
@@ -109,8 +109,8 @@ public final class RequestSettings
     return aState;
   }
 
-  @Nonnull
-  public static IMenuTree getMenuTree (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static IMenuTree getMenuTree (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final IMenuTree aMenuTree = getRequestState (aRequestScope).getMenuTree ();
     if (aMenuTree == null)
@@ -118,8 +118,8 @@ public final class RequestSettings
     return aMenuTree;
   }
 
-  @Nonnull
-  public static IMenuItemPage getMenuItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static IMenuItemPage getMenuItem (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final IMenuItemPage aMenuItem = getRequestState (aRequestScope).getMenuItem ();
     if (aMenuItem == null)
@@ -127,15 +127,15 @@ public final class RequestSettings
     return aMenuItem;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getMenuItemID (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public static String getMenuItemID (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return getMenuItem (aRequestScope).getID ();
   }
 
-  @Nonnull
-  public static Locale getDisplayLocale (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static Locale getDisplayLocale (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final Locale aLocale = getRequestState (aRequestScope).getDisplayLocale ();
     if (aLocale == null)
@@ -143,21 +143,21 @@ public final class RequestSettings
     return aLocale;
   }
 
-  @Nonnull
-  public static Locale getDisplayCountry (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static Locale getDisplayCountry (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return CountryCache.getInstance ().getCountry (getDisplayLocale (aRequestScope));
   }
 
-  @Nonnull
-  public static String getDisplayLanguage (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static String getDisplayLanguage (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return getDisplayLocale (aRequestScope).getLanguage ();
   }
 
-  static void setRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                               @Nonnull @Nonempty final String sAppID,
-                               @Nonnull final PhotonRequestState aState)
+  static void setRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                               @NonNull @Nonempty final String sAppID,
+                               @NonNull final PhotonRequestState aState)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     ValueEnforcer.notNull (aState, "State");

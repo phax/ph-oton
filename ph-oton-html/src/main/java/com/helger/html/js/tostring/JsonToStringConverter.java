@@ -18,13 +18,13 @@ package com.helger.html.js.tostring;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.json.IJson;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of the {@link IJSToStringConverter} interface, for converting
@@ -36,7 +36,7 @@ import jakarta.annotation.Nullable;
 public final class JsonToStringConverter implements IJSToStringConverter, Serializable
 {
   @Nullable
-  public String objectToJSString (@Nullable final Object aObject, @Nonnull final JSType aType)
+  public String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType)
   {
     if (aObject != null && !(aObject instanceof IJson))
       throw new IllegalArgumentException ("The passed object is not of type IJson but " + aObject.getClass ().getName ());

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.userdata;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.io.resource.IReadableResource;
 import com.helger.photon.core.servlet.AbstractResourceDeliveryHttpHandler;
 import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHandler
 {
@@ -35,10 +35,10 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
    *        Filename as extracted from the URL
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected UserDataObject getUserDataObject (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                              @Nonnull final String sFilename)
+  protected UserDataObject getUserDataObject (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                              @NonNull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
     final String sFilename1 = URLCoder.urlDecodeOrDefault (sFilename, sFilename);
@@ -47,9 +47,9 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
   }
 
   @Override
-  @Nonnull
-  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull final String sFilename)
+  @NonNull
+  protected IReadableResource getResource (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                           @NonNull final String sFilename)
   {
     return UserDataManager.getResource (getUserDataObject (aRequestScope, sFilename));
   }

@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.typeahead;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +41,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSStringLiteral;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single typeahead dataset.
@@ -85,7 +84,7 @@ public class TypeaheadDataset
    *        The string used to identify the dataset. Used by typeahead.js to
    *        cache intelligently.
    */
-  public TypeaheadDataset (@Nonnull @Nonempty final String sName)
+  public TypeaheadDataset (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
     m_sName = sName;
@@ -95,7 +94,7 @@ public class TypeaheadDataset
    * @return The string used to identify the dataset. Used by typeahead.js to
    *         cache intelligently.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
@@ -111,8 +110,8 @@ public class TypeaheadDataset
    *        <code>null</code> nor empty.
    * @return this
    */
-  @Nonnull
-  public TypeaheadDataset setValueKey (@Nonnull @Nonempty final String sValueKey)
+  @NonNull
+  public TypeaheadDataset setValueKey (@NonNull @Nonempty final String sValueKey)
   {
     ValueEnforcer.notEmpty (sValueKey, "ValueKey");
     m_sValueKey = sValueKey;
@@ -123,7 +122,7 @@ public class TypeaheadDataset
    * @return The key used to access the value of the datum in the datum object.
    *         Defaults to <code>value</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValueKey ()
   {
@@ -138,7 +137,7 @@ public class TypeaheadDataset
    *        The new limit. Must be &ge; 1.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setLimit (@Nonnegative final int nLimit)
   {
     ValueEnforcer.isGT0 (nLimit, "Limit");
@@ -166,7 +165,7 @@ public class TypeaheadDataset
    *        The String template to use. May be <code>null</code> or empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setTemplate (@Nullable final String sTemplate)
   {
     return setTemplate (StringHelper.isNotEmpty (sTemplate) ? JSExpr.lit (sTemplate) : null);
@@ -182,7 +181,7 @@ public class TypeaheadDataset
    *        The JS expression to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setTemplate (@Nullable final IJSExpression aTemplate)
   {
     m_aTemplate = aTemplate;
@@ -213,7 +212,7 @@ public class TypeaheadDataset
    *        The name of the engine to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setEngine (@Nullable final String sEngine)
   {
     m_sEngine = sEngine;
@@ -240,7 +239,7 @@ public class TypeaheadDataset
    *        The header to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setHeader (@Nullable final IHCNode aHeader)
   {
     // No nonce needed
@@ -255,7 +254,7 @@ public class TypeaheadDataset
    *        The header to use. May be <code>null</code> or empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setHeader (@Nullable final String sHeaderHTML)
   {
     return setHeader (StringHelper.isNotEmpty (sHeaderHTML) ? JSExpr.lit (sHeaderHTML) : null);
@@ -269,7 +268,7 @@ public class TypeaheadDataset
    *        The header to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setHeader (@Nullable final IJSExpression aHeader)
   {
     m_aHeader = aHeader;
@@ -294,7 +293,7 @@ public class TypeaheadDataset
    *        The footer to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setFooter (@Nullable final IHCNode aFooter)
   {
     // No nonce needed
@@ -309,7 +308,7 @@ public class TypeaheadDataset
    *        The footer to use. May be <code>null</code> or empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setFooter (@Nullable final String sFooterHTML)
   {
     return setFooter (StringHelper.isNotEmpty (sFooterHTML) ? JSExpr.lit (sFooterHTML) : null);
@@ -323,7 +322,7 @@ public class TypeaheadDataset
    *        The footer to use. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setFooter (@Nullable final IJSExpression aFooter)
   {
     m_aFooter = aFooter;
@@ -340,14 +339,14 @@ public class TypeaheadDataset
     return m_aFooter;
   }
 
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setLocal (@Nullable final TypeaheadDatum... aLocal)
   {
     m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setLocal (@Nullable final List <? extends TypeaheadDatum> aLocal)
   {
     m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
@@ -368,7 +367,7 @@ public class TypeaheadDataset
    *        URL to the JSON file. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setPrefetch (@Nullable final ISimpleURL aURL)
   {
     return setPrefetch (aURL == null ? null : new TypeaheadPrefetch (aURL));
@@ -383,7 +382,7 @@ public class TypeaheadDataset
    *        is!
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setPrefetch (@Nullable final TypeaheadPrefetch aPrefetch)
   {
     m_aPrefetch = aPrefetch;
@@ -413,7 +412,7 @@ public class TypeaheadDataset
    *        stored as is!
    * @return this
    */
-  @Nonnull
+  @NonNull
   public TypeaheadDataset setRemote (@Nullable final TypeaheadRemote aRemote)
   {
     m_aRemote = aRemote;
@@ -434,7 +433,7 @@ public class TypeaheadDataset
     return m_aRemote;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.ajax.callback;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,16 +25,14 @@ import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-
 public class LoggingAjaxLongRunningExecutionCallback implements IAjaxLongRunningExecutionCallback
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAjaxLongRunningExecutionCallback.class);
 
-  public void onLongRunningExecution (@Nonnull final IAjaxInvoker aInvoker,
-                                      @Nonnull final String sFunctionName,
-                                      @Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nonnull final IAjaxExecutor aExecutor,
+  public void onLongRunningExecution (@NonNull final IAjaxInvoker aInvoker,
+                                      @NonNull final String sFunctionName,
+                                      @NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @NonNull final IAjaxExecutor aExecutor,
                                       @Nonnegative final long nExecutionMillis)
   {
     LOGGER.warn ("Finished invoking Ajax function '" +

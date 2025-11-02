@@ -18,14 +18,14 @@ package com.helger.photon.exchange;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.Translatable;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Exchange file type names.
@@ -52,13 +52,13 @@ public enum EExchangeFileTypeName implements IHasDisplayText
 
   private final IMultilingualText m_aTP;
 
-  EExchangeFileTypeName (@Nonnull final String sDE, @Nonnull final String sEN)
+  EExchangeFileTypeName (@NonNull final String sDE, @NonNull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return DefaultTextResolver.getTextStatic (this, m_aTP, aContentLocale);
   }

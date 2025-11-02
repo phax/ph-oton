@@ -19,10 +19,10 @@ package com.helger.html.jscode;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.json.IJson;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A JS expression.
@@ -34,55 +34,55 @@ public interface IJSExpression extends IJSGeneratable
   /**
    * @return "-[this]" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression minus ();
 
   /**
    * @return "([this]);" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression inParantheses ();
 
   /**
    * @return "![this]" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression not ();
 
   /**
    * @return "~[this]" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression complement ();
 
   /**
    * @return "[this]++" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression incrPostfix ();
 
   /**
    * @return "++[this]" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression incrPrefix ();
 
   /**
    * @return "[this]--" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression decrPostfix ();
 
   /**
    * @return "--[this]" from "[this]".
    */
-  @Nonnull
+  @NonNull
   IJSExpression decrPrefix ();
 
   /**
    * @return "typeof [this]" from "[this]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression typeof ();
 
   /**
@@ -90,29 +90,29 @@ public interface IJSExpression extends IJSGeneratable
    *        The type to compare against
    * @return "typeof [this] === typename" from "[this]"
    */
-  @Nonnull
-  IJSExpression isTypeof (@Nonnull AbstractJSType aType);
+  @NonNull
+  IJSExpression isTypeof (@NonNull AbstractJSType aType);
 
   /**
    * @param aType
    *        The type to compare against
    * @return "typeof [this] !== typename" from "[this]"
    */
-  @Nonnull
-  IJSExpression isNotTypeof (@Nonnull AbstractJSType aType);
+  @NonNull
+  IJSExpression isNotTypeof (@NonNull AbstractJSType aType);
 
   /**
    * @return "typeof [this] === 'undefined'" or "[this] === undefined" from
    *         "[this]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression isUndefined ();
 
   /**
    * @return "typeof [this] !== 'undefined'" or "[this] !== undefined" from
    *         "[this]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression isNotUndefined ();
 
   /**
@@ -120,7 +120,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant char to add
    * @return "[this]+[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression plus (char cValue);
 
   /**
@@ -128,7 +128,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression plus (double dValue);
 
   /**
@@ -136,7 +136,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression plus (float fValue);
 
   /**
@@ -144,7 +144,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression plus (int nValue);
 
   /**
@@ -152,7 +152,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression plus (long nValue);
 
   /**
@@ -160,39 +160,39 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
-  IJSExpression plus (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression plus (@NonNull BigInteger aValue);
 
   /**
    * @param aValue
    *        constant value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
-  IJSExpression plus (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression plus (@NonNull BigDecimal aValue);
 
   /**
    * @param sValue
    *        constant String value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
-  IJSExpression plus (@Nonnull String sValue);
+  @NonNull
+  IJSExpression plus (@NonNull String sValue);
 
   /**
    * @param aExpr
    *        value to add
    * @return "[this]+[right]"
    */
-  @Nonnull
-  IJSExpression plus (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression plus (@NonNull IJSExpression aExpr);
 
   /**
    * @param dValue
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression minus (double dValue);
 
   /**
@@ -200,7 +200,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression minus (float fValue);
 
   /**
@@ -208,7 +208,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression minus (int nValue);
 
   /**
@@ -216,7 +216,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression minus (long nValue);
 
   /**
@@ -224,31 +224,31 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
-  IJSExpression minus (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression minus (@NonNull BigInteger aValue);
 
   /**
    * @param aValue
    *        constant value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
-  IJSExpression minus (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression minus (@NonNull BigDecimal aValue);
 
   /**
    * @param aExpr
    *        value to subtract
    * @return "[this]-[right]"
    */
-  @Nonnull
-  IJSExpression minus (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression minus (@NonNull IJSExpression aExpr);
 
   /**
    * @param dValue
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mul (double dValue);
 
   /**
@@ -256,7 +256,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mul (float fValue);
 
   /**
@@ -264,7 +264,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mul (int nValue);
 
   /**
@@ -272,7 +272,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mul (long nValue);
 
   /**
@@ -280,31 +280,31 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
-  IJSExpression mul (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression mul (@NonNull BigInteger aValue);
 
   /**
    * @param aValue
    *        constant value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
-  IJSExpression mul (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression mul (@NonNull BigDecimal aValue);
 
   /**
    * @param aExpr
    *        value to multiply with
    * @return "[this]*[right]"
    */
-  @Nonnull
-  IJSExpression mul (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression mul (@NonNull IJSExpression aExpr);
 
   /**
    * @param dValue
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression div (double dValue);
 
   /**
@@ -312,7 +312,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression div (float fValue);
 
   /**
@@ -320,7 +320,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression div (int nValue);
 
   /**
@@ -328,7 +328,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression div (long nValue);
 
   /**
@@ -336,31 +336,31 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
-  IJSExpression div (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression div (@NonNull BigInteger aValue);
 
   /**
    * @param aValue
    *        constant value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
-  IJSExpression div (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression div (@NonNull BigDecimal aValue);
 
   /**
    * @param aExpr
    *        value to divide through
    * @return "[this]/[right]"
    */
-  @Nonnull
-  IJSExpression div (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression div (@NonNull IJSExpression aExpr);
 
   /**
    * @param nValue
    *        value to modulo against
    * @return "[this]%[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mod (int nValue);
 
   /**
@@ -368,7 +368,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value to modulo against
    * @return "[this]%[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression mod (long nValue);
 
   /**
@@ -376,23 +376,23 @@ public interface IJSExpression extends IJSGeneratable
    *        value to modulo against
    * @return "[this]%[right]"
    */
-  @Nonnull
-  IJSExpression mod (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression mod (@NonNull BigInteger aValue);
 
   /**
    * @param aExpr
    *        value to modulo against
    * @return "[this]%[right]"
    */
-  @Nonnull
-  IJSExpression mod (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression mod (@NonNull IJSExpression aExpr);
 
   /**
    * @param nValue
    *        constant value to shift left
    * @return "[this]&lt;&lt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shl (int nValue);
 
   /**
@@ -400,7 +400,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift left
    * @return "[this]&lt;&lt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shl (long nValue);
 
   /**
@@ -408,23 +408,23 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift left
    * @return "[this]&lt;&lt;[right]"
    */
-  @Nonnull
-  IJSExpression shl (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression shl (@NonNull BigInteger aValue);
 
   /**
    * @param aExpr
    *        value to shift left
    * @return "[this]&lt;&lt;[right]"
    */
-  @Nonnull
-  IJSExpression shl (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression shl (@NonNull IJSExpression aExpr);
 
   /**
    * @param nValue
    *        constant value to shift right
    * @return "[this]&gt;&gt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shr (int nValue);
 
   /**
@@ -432,7 +432,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift right
    * @return "[this]&gt;&gt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shr (long nValue);
 
   /**
@@ -440,23 +440,23 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift right
    * @return "[this]&gt;&gt;[right]"
    */
-  @Nonnull
-  IJSExpression shr (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression shr (@NonNull BigInteger aValue);
 
   /**
    * @param aExpr
    *        value to shift right
    * @return "[this]&gt;&gt;[right]"
    */
-  @Nonnull
-  IJSExpression shr (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression shr (@NonNull IJSExpression aExpr);
 
   /**
    * @param nValue
    *        constant value to shift right with zero padding
    * @return "[this]&gt;&gt;&gt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shrz (int nValue);
 
   /**
@@ -464,7 +464,7 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift right with zero padding
    * @return "[this]&gt;&gt;&gt;[right]"
    */
-  @Nonnull
+  @NonNull
   IJSExpression shrz (long nValue);
 
   /**
@@ -472,16 +472,16 @@ public interface IJSExpression extends IJSGeneratable
    *        constant value to shift right with zero padding
    * @return "[this]&gt;&gt;&gt;[right]"
    */
-  @Nonnull
-  IJSExpression shrz (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression shrz (@NonNull BigInteger aValue);
 
   /**
    * @param aExpr
    *        value to shift right with zero padding
    * @return "[this]&gt;&gt;&gt;[right]"
    */
-  @Nonnull
-  IJSExpression shrz (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression shrz (@NonNull IJSExpression aExpr);
 
   /**
    * Bit-wise AND '&amp;'.
@@ -490,7 +490,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &amp; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression band (int nValue);
 
   /**
@@ -500,7 +500,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &amp; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression band (long nValue);
 
   /**
@@ -510,8 +510,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &amp; value
    */
-  @Nonnull
-  IJSExpression band (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression band (@NonNull BigInteger aValue);
 
   /**
    * Bit-wise AND '&amp;'.
@@ -520,8 +520,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &amp; value
    */
-  @Nonnull
-  IJSExpression band (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression band (@NonNull IJSExpression aExpr);
 
   /**
    * Bit-wise OR '|'.
@@ -530,7 +530,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] | value
    */
-  @Nonnull
+  @NonNull
   IJSExpression bor (int nValue);
 
   /**
@@ -540,7 +540,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] | value
    */
-  @Nonnull
+  @NonNull
   IJSExpression bor (long nValue);
 
   /**
@@ -550,8 +550,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] | value
    */
-  @Nonnull
-  IJSExpression bor (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression bor (@NonNull BigInteger aValue);
 
   /**
    * Bit-wise OR '|'.
@@ -560,8 +560,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] | value
    */
-  @Nonnull
-  IJSExpression bor (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression bor (@NonNull IJSExpression aExpr);
 
   /**
    * Logical AND '&amp;&amp;'.
@@ -570,8 +570,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &amp;&amp; value
    */
-  @Nonnull
-  IJSExpression cand (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression cand (@NonNull IJSExpression aExpr);
 
   /**
    * Logical OR '||'.
@@ -580,8 +580,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] || value
    */
-  @Nonnull
-  IJSExpression cor (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression cor (@NonNull IJSExpression aExpr);
 
   /**
    * XOR '^'.
@@ -590,7 +590,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] ^ value
    */
-  @Nonnull
+  @NonNull
   IJSExpression xor (int nValue);
 
   /**
@@ -600,7 +600,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] ^ value
    */
-  @Nonnull
+  @NonNull
   IJSExpression xor (long nValue);
 
   /**
@@ -610,8 +610,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] ^ value
    */
-  @Nonnull
-  IJSExpression xor (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression xor (@NonNull BigInteger aValue);
 
   /**
    * XOR '^'.
@@ -620,8 +620,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] ^ value
    */
-  @Nonnull
-  IJSExpression xor (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression xor (@NonNull IJSExpression aExpr);
 
   /**
    * Lower than '&lt;'.
@@ -630,7 +630,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lt (double dValue);
 
   /**
@@ -640,7 +640,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lt (float fValue);
 
   /**
@@ -650,7 +650,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lt (int nValue);
 
   /**
@@ -660,7 +660,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lt (long nValue);
 
   /**
@@ -670,8 +670,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
-  IJSExpression lt (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression lt (@NonNull BigInteger aValue);
 
   /**
    * Lower than '&lt;'.
@@ -680,8 +680,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
-  IJSExpression lt (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression lt (@NonNull BigDecimal aValue);
 
   /**
    * Lower than '&lt;'.
@@ -690,8 +690,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt; value
    */
-  @Nonnull
-  IJSExpression lt (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression lt (@NonNull IJSExpression aExpr);
 
   /**
    * Lower than or equal '&lt;='.
@@ -700,7 +700,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lte (double dValue);
 
   /**
@@ -710,7 +710,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lte (float fValue);
 
   /**
@@ -720,7 +720,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lte (int nValue);
 
   /**
@@ -730,7 +730,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression lte (long nValue);
 
   /**
@@ -740,8 +740,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
-  IJSExpression lte (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression lte (@NonNull BigInteger aValue);
 
   /**
    * Lower than or equal '&lt;='.
@@ -750,8 +750,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
-  IJSExpression lte (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression lte (@NonNull BigDecimal aValue);
 
   /**
    * Lower than or equal '&lt;='.
@@ -760,8 +760,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &lt;= value
    */
-  @Nonnull
-  IJSExpression lte (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression lte (@NonNull IJSExpression aExpr);
 
   /**
    * Greater than '&gt;'.
@@ -770,7 +770,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gt (double dValue);
 
   /**
@@ -780,7 +780,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gt (float fValue);
 
   /**
@@ -790,7 +790,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gt (int nValue);
 
   /**
@@ -800,7 +800,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gt (long nValue);
 
   /**
@@ -810,8 +810,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
-  IJSExpression gt (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression gt (@NonNull BigInteger aValue);
 
   /**
    * Greater than '&gt;'.
@@ -820,8 +820,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
-  IJSExpression gt (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression gt (@NonNull BigDecimal aValue);
 
   /**
    * Greater than '&gt;'.
@@ -830,8 +830,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt; value
    */
-  @Nonnull
-  IJSExpression gt (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression gt (@NonNull IJSExpression aExpr);
 
   /**
    * Greater than or equal '&gt;='.
@@ -840,7 +840,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gte (double dValue);
 
   /**
@@ -850,7 +850,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gte (float fValue);
 
   /**
@@ -860,7 +860,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gte (int nValue);
 
   /**
@@ -870,7 +870,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
+  @NonNull
   IJSExpression gte (long nValue);
 
   /**
@@ -880,8 +880,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
-  IJSExpression gte (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression gte (@NonNull BigInteger aValue);
 
   /**
    * Greater than or equal '&gt;='.
@@ -890,8 +890,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
-  IJSExpression gte (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression gte (@NonNull BigDecimal aValue);
 
   /**
    * Greater than or equal '&gt;='.
@@ -900,8 +900,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] &gt;= value
    */
-  @Nonnull
-  IJSExpression gte (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression gte (@NonNull IJSExpression aExpr);
 
   /**
    * Equals '=='.
@@ -910,7 +910,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (boolean bValue);
 
   /**
@@ -920,7 +920,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (char cValue);
 
   /**
@@ -930,7 +930,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (float fValue);
 
   /**
@@ -940,7 +940,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (double dValue);
 
   /**
@@ -950,7 +950,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (int nValue);
 
   /**
@@ -960,7 +960,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eq (long nValue);
 
   /**
@@ -970,8 +970,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
-  IJSExpression eq (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression eq (@NonNull BigInteger aValue);
 
   /**
    * Equals '=='.
@@ -980,8 +980,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
-  IJSExpression eq (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression eq (@NonNull BigDecimal aValue);
 
   /**
    * Equals '=='.
@@ -990,8 +990,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
-  IJSExpression eq (@Nonnull String sValue);
+  @NonNull
+  IJSExpression eq (@NonNull String sValue);
 
   /**
    * Equals '=='.
@@ -1000,8 +1000,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
-  IJSExpression eq (@Nonnull IJson aValue);
+  @NonNull
+  IJSExpression eq (@NonNull IJson aValue);
 
   /**
    * Equals '=='.
@@ -1010,8 +1010,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] == value
    */
-  @Nonnull
-  IJSExpression eq (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression eq (@NonNull IJSExpression aExpr);
 
   /**
    * Exactly equals '==='.
@@ -1020,7 +1020,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (boolean bValue);
 
   /**
@@ -1030,7 +1030,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (char cValue);
 
   /**
@@ -1040,7 +1040,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (float fValue);
 
   /**
@@ -1050,7 +1050,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (double dValue);
 
   /**
@@ -1060,7 +1060,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (int nValue);
 
   /**
@@ -1070,7 +1070,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
+  @NonNull
   IJSExpression eeq (long nValue);
 
   /**
@@ -1080,8 +1080,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
-  IJSExpression eeq (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression eeq (@NonNull BigInteger aValue);
 
   /**
    * Exactly equals '==='.
@@ -1090,8 +1090,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
-  IJSExpression eeq (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression eeq (@NonNull BigDecimal aValue);
 
   /**
    * Exactly equals '==='.
@@ -1100,8 +1100,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
-  IJSExpression eeq (@Nonnull String sValue);
+  @NonNull
+  IJSExpression eeq (@NonNull String sValue);
 
   /**
    * Exactly equals '==='.
@@ -1110,8 +1110,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
-  IJSExpression eeq (@Nonnull IJson aValue);
+  @NonNull
+  IJSExpression eeq (@NonNull IJson aValue);
 
   /**
    * Exactly equals '==='.
@@ -1120,8 +1120,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] === value
    */
-  @Nonnull
-  IJSExpression eeq (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression eeq (@NonNull IJSExpression aExpr);
 
   /**
    * Not equals '!='.
@@ -1130,7 +1130,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (boolean bValue);
 
   /**
@@ -1140,7 +1140,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (char cValue);
 
   /**
@@ -1150,7 +1150,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (float fValue);
 
   /**
@@ -1160,7 +1160,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (double dValue);
 
   /**
@@ -1170,7 +1170,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (int nValue);
 
   /**
@@ -1180,7 +1180,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ne (long nValue);
 
   /**
@@ -1190,8 +1190,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
-  IJSExpression ne (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression ne (@NonNull BigInteger aValue);
 
   /**
    * Not equals '!='.
@@ -1200,8 +1200,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
-  IJSExpression ne (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression ne (@NonNull BigDecimal aValue);
 
   /**
    * Not equals '!='.
@@ -1210,8 +1210,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
-  IJSExpression ne (@Nonnull String sValue);
+  @NonNull
+  IJSExpression ne (@NonNull String sValue);
 
   /**
    * Not equals '!='.
@@ -1220,8 +1220,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
-  IJSExpression ne (@Nonnull IJson aValue);
+  @NonNull
+  IJSExpression ne (@NonNull IJson aValue);
 
   /**
    * Not equals '!='.
@@ -1230,8 +1230,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] != value
    */
-  @Nonnull
-  IJSExpression ne (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression ne (@NonNull IJSExpression aExpr);
 
   /**
    * Exactly not equals '!=='.
@@ -1240,7 +1240,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (boolean bValue);
 
   /**
@@ -1250,7 +1250,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (char cValue);
 
   /**
@@ -1260,7 +1260,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (float fValue);
 
   /**
@@ -1270,7 +1270,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (double dValue);
 
   /**
@@ -1280,7 +1280,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (int nValue);
 
   /**
@@ -1290,7 +1290,7 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
+  @NonNull
   IJSExpression ene (long nValue);
 
   /**
@@ -1300,8 +1300,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
-  IJSExpression ene (@Nonnull BigInteger aValue);
+  @NonNull
+  IJSExpression ene (@NonNull BigInteger aValue);
 
   /**
    * Exactly not equals '!=='.
@@ -1310,8 +1310,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
-  IJSExpression ene (@Nonnull BigDecimal aValue);
+  @NonNull
+  IJSExpression ene (@NonNull BigDecimal aValue);
 
   /**
    * Exactly not equals '!=='.
@@ -1320,8 +1320,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
-  IJSExpression ene (@Nonnull String sValue);
+  @NonNull
+  IJSExpression ene (@NonNull String sValue);
 
   /**
    * Exactly not equals '!=='.
@@ -1330,8 +1330,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
-  IJSExpression ene (@Nonnull IJson aValue);
+  @NonNull
+  IJSExpression ene (@NonNull IJson aValue);
 
   /**
    * Exactly not equals '!=='.
@@ -1340,8 +1340,8 @@ public interface IJSExpression extends IJSGeneratable
    *        value
    * @return [this] !== value
    */
-  @Nonnull
-  IJSExpression ene (@Nonnull IJSExpression aExpr);
+  @NonNull
+  IJSExpression ene (@NonNull IJSExpression aExpr);
 
   /**
    * instanceof
@@ -1350,9 +1350,9 @@ public interface IJSExpression extends IJSGeneratable
    *        Type to check
    * @return [this] instanceof type
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
-  IJSExpression _instanceof (@Nonnull AbstractJSType aType);
+  IJSExpression _instanceof (@NonNull AbstractJSType aType);
 
   /**
    * @param aMethod
@@ -1360,8 +1360,8 @@ public interface IJSExpression extends IJSGeneratable
    * @return "[this].[method]". Arguments shall be added to the returned
    *         {@link JSInvocation} object.
    */
-  @Nonnull
-  JSInvocation invoke (@Nonnull JSMethod aMethod);
+  @NonNull
+  JSInvocation invoke (@NonNull JSMethod aMethod);
 
   /**
    * @param sMethod
@@ -1369,24 +1369,24 @@ public interface IJSExpression extends IJSGeneratable
    * @return "[this].[method]". Arguments shall be added to the returned
    *         {@link JSInvocation} object.
    */
-  @Nonnull
-  JSInvocation invoke (@Nonnull String sMethod);
+  @NonNull
+  JSInvocation invoke (@NonNull String sMethod);
 
   /**
    * @param aField
    *        Field to reference
    * @return "[this].[field]"
    */
-  @Nonnull
-  JSFieldRef ref (@Nonnull AbstractJSVariable <?> aField);
+  @NonNull
+  JSFieldRef ref (@NonNull AbstractJSVariable <?> aField);
 
   /**
    * @param sField
    *        Field to reference
    * @return "[this].[field]"
    */
-  @Nonnull
-  JSFieldRef ref (@Nonnull String sField);
+  @NonNull
+  JSFieldRef ref (@NonNull String sField);
 
   /**
    * Get the array component at the specified index.
@@ -1395,7 +1395,7 @@ public interface IJSExpression extends IJSGeneratable
    *        Index expression
    * @return [this]<b>[</b>value<b>]</b>
    */
-  @Nonnull
+  @NonNull
   JSArrayCompRef component (char cIndex);
 
   /**
@@ -1405,7 +1405,7 @@ public interface IJSExpression extends IJSGeneratable
    *        Index expression
    * @return [this]<b>[</b>value<b>]</b>
    */
-  @Nonnull
+  @NonNull
   JSArrayCompRef component (int nIndex);
 
   /**
@@ -1415,7 +1415,7 @@ public interface IJSExpression extends IJSGeneratable
    *        Index expression
    * @return [this]<b>[</b>value<b>]</b>
    */
-  @Nonnull
+  @NonNull
   JSArrayCompRef component (long nIndex);
 
   /**
@@ -1425,8 +1425,8 @@ public interface IJSExpression extends IJSGeneratable
    *        Index expression
    * @return [this]<b>[</b>value<b>]</b>
    */
-  @Nonnull
-  JSArrayCompRef component (@Nonnull String sIndex);
+  @NonNull
+  JSArrayCompRef component (@NonNull String sIndex);
 
   /**
    * Get the array component at the specified index.
@@ -1435,14 +1435,14 @@ public interface IJSExpression extends IJSGeneratable
    *        Index expression
    * @return [this]<b>[</b>value<b>]</b>
    */
-  @Nonnull
-  JSArrayCompRef component (@Nonnull IJSExpression aExpr);
+  @NonNull
+  JSArrayCompRef component (@NonNull IJSExpression aExpr);
 
   /**
    * Get the array component at index 0.
    *
    * @return [this]<b>[</b>0<b>]</b>
    */
-  @Nonnull
+  @NonNull
   JSArrayCompRef component0 ();
 }

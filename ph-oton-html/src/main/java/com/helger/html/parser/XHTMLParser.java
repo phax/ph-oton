@@ -18,6 +18,9 @@ package com.helger.html.parser;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -39,9 +42,6 @@ import com.helger.xml.serialize.write.EXMLIncorrectCharacterHandling;
 import com.helger.xml.serialize.write.EXMLSerializeVersion;
 import com.helger.xml.serialize.write.XMLEmitter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Utility class for parsing stuff as HTML.
  *
@@ -54,7 +54,7 @@ public class XHTMLParser
 
   private SAXReaderSettings m_aSAXReaderSettings = createDefaultSAXReaderSettings ();
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static SAXReaderSettings createDefaultSAXReaderSettings ()
   {
@@ -71,7 +71,7 @@ public class XHTMLParser
                                    .setEntityResolver (HTMLEntityResolver.getInstance ());
   }
 
-  public XHTMLParser (@Nonnull final EHTMLVersion eHTMLVersion)
+  public XHTMLParser (@NonNull final EHTMLVersion eHTMLVersion)
   {
     m_eHTMLVersion = ValueEnforcer.notNull (eHTMLVersion, "HTMLVersion");
   }
@@ -79,7 +79,7 @@ public class XHTMLParser
   /**
    * @return The HTML version as specified in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public EHTMLVersion getHTMLVersion ()
   {
     return m_eHTMLVersion;
@@ -90,7 +90,7 @@ public class XHTMLParser
    *         secure processing is active, that disallows inline DTDs in HTML documents.
    * @since 9.1.1
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public SAXReaderSettings getSAXReaderSettings ()
   {
@@ -108,7 +108,7 @@ public class XHTMLParser
    * @return this for chaining
    * @since 9.1.1
    */
-  @Nonnull
+  @NonNull
   public XHTMLParser setSAXReaderSettings (@Nullable final ISAXReaderSettings aAdditionalSaxReaderSettings)
   {
     m_aSAXReaderSettings = SAXReaderSettings.createCloneOnDemand (aAdditionalSaxReaderSettings);

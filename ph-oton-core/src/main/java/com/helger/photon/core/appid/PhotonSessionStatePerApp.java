@@ -19,14 +19,14 @@ package com.helger.photon.core.appid;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Single session state per app
@@ -51,7 +51,7 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_aMenuTree);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonSessionStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
     m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
@@ -64,7 +64,7 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_aMenuItem);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonSessionStatePerApp setMenuItem (@Nullable final IMenuItemPage aMenuItem)
   {
     m_aRWLock.writeLocked ( () -> m_aMenuItem = aMenuItem);
@@ -77,7 +77,7 @@ public final class PhotonSessionStatePerApp implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_aDisplayLocale);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonSessionStatePerApp setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aRWLock.writeLocked ( () -> m_aDisplayLocale = aDisplayLocale);

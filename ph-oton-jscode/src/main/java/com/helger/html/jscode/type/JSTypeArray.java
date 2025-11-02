@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
-import com.helger.html.jscode.JSInvocation;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSInvocation;
 
 /**
  * Contains the JS built-in type 'Array'
@@ -32,7 +32,7 @@ public class JSTypeArray extends JSPrimitiveType
     super ("Array");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation isArray ()
   {
     return global ().invoke ("isArray");

@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper for Fine Uploader 5.x form part
@@ -41,7 +41,7 @@ public class FineUploader5Form implements IFineUploader5Part
   public FineUploader5Form ()
   {}
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getElementID ()
   {
@@ -56,8 +56,8 @@ public class FineUploader5Form implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Form setElementID (@Nonnull @Nonempty final String sElementID)
+  @NonNull
+  public FineUploader5Form setElementID (@NonNull @Nonempty final String sElementID)
   {
     ValueEnforcer.notEmpty (sElementID, "ElementID");
     m_sFormElementID = sElementID;
@@ -77,7 +77,7 @@ public class FineUploader5Form implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Form setAutoUpload (final boolean bAutoUpload)
   {
     m_bFormAutoUpload = bAutoUpload;
@@ -99,14 +99,14 @@ public class FineUploader5Form implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Form setInterceptSubmit (final boolean bInterceptSubmit)
   {
     m_bFormInterceptSubmit = bInterceptSubmit;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

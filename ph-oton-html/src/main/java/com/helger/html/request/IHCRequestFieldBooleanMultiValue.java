@@ -16,7 +16,7 @@
  */
 package com.helger.html.request;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Special request field for check boxes and radio buttons where the same field
@@ -37,6 +37,6 @@ public interface IHCRequestFieldBooleanMultiValue extends IHCRequestFieldBoolean
   /**
    * @return The value to be used for the check box or radio button.
    */
-  @Nonnull
+  @NonNull
   String getValue ();
 }

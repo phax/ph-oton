@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Encapsulates the response to a single DataTables AJAX request
@@ -64,7 +64,7 @@ public final class DTSSResponseData implements IHasJson
                            final int nTotalDisplayRecords,
                            @Nullable final ICommonsList <IJsonObject> aData,
                            @Nullable final String sErrorMsg,
-                           @Nonnull final IHCSpecialNodes aSpecialNodes)
+                           @NonNull final IHCSpecialNodes aSpecialNodes)
   {
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
     m_nDraw = nDraw;
@@ -124,7 +124,7 @@ public final class DTSSResponseData implements IHasJson
     return m_sErrorMsg;
   }
 
-  @Nonnull
+  @NonNull
   public IJsonObject getAsJson ()
   {
     final IJsonObject ret = new JsonObject ();
@@ -138,7 +138,7 @@ public final class DTSSResponseData implements IHasJson
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public IHCSpecialNodes getSpecialNodes ()
   {
     return m_aSpecialNodes;

@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.misc.DevelopersNote;
@@ -31,9 +34,6 @@ import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains JS builder default constructs that are used very commonly
@@ -55,61 +55,61 @@ public final class JSHtml
    * @return Global console object
    * @see #windowConsole()
    */
-  @Nonnull
+  @NonNull
   public static JSRef console ()
   {
     return JSExpr.ref ("console");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleAssert ()
   {
     return console ().invoke ("assert");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleClear ()
   {
     return console ().invoke ("clear");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleDebug ()
   {
     return console ().invoke ("debug");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleError ()
   {
     return console ().invoke ("error");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleInfo ()
   {
     return console ().invoke ("info");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleLog ()
   {
     return console ().invoke ("log");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleLog (@Nullable final String sText)
   {
     return consoleLog ().arg (sText);
   }
 
-  @Nonnull
-  public static JSInvocation consoleLog (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation consoleLog (@NonNull final IJSExpression aExpr)
   {
     return consoleLog ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation consoleWarn ()
   {
     return console ().invoke ("warn");
@@ -121,153 +121,153 @@ public final class JSHtml
    * @return Global document object
    * @see #windowDocument()
    */
-  @Nonnull
+  @NonNull
   public static JSRef document ()
   {
     return JSExpr.ref ("document");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef documentAnchors ()
   {
     return document ().ref ("anchors");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation documentAddEventListener ()
   {
     return document ().invoke ("addEventListener");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation documentCreateAttribute ()
   {
     return document ().invoke ("createAttribute");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation documentCreateElement ()
   {
     return document ().invoke ("createElement");
   }
 
-  @Nonnull
-  public static JSInvocation documentCreateElement (@Nonnull final EHTMLElement eHTMLElement)
+  @NonNull
+  public static JSInvocation documentCreateElement (@NonNull final EHTMLElement eHTMLElement)
   {
     return documentCreateElement ().arg (eHTMLElement);
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation documentCreateTextNode ()
   {
     return document ().invoke ("createTextNode");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef documentEmbeds ()
   {
     return document ().ref ("embeds");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef documentForms ()
   {
     return document ().ref ("forms");
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementById (@Nonnull final String sID)
+  @NonNull
+  public static JSInvocation documentGetElementById (@NonNull final String sID)
   {
     return documentGetElementById (JSExpr.lit (sID));
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementById (@Nonnull final IHCHasID <?> aElement)
+  @NonNull
+  public static JSInvocation documentGetElementById (@NonNull final IHCHasID <?> aElement)
   {
     return documentGetElementById (aElement.ensureID ().getID ());
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementById (@Nonnull final IJSExpression aID)
+  @NonNull
+  public static JSInvocation documentGetElementById (@NonNull final IJSExpression aID)
   {
     return document ().invoke ("getElementById").arg (aID);
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByName (@Nonnull final EHTMLElement eHTMLElement)
+  @NonNull
+  public static JSInvocation documentGetElementsByName (@NonNull final EHTMLElement eHTMLElement)
   {
     return documentGetElementsByName (eHTMLElement.getElementName ());
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByName (@Nonnull final String sElementName)
+  @NonNull
+  public static JSInvocation documentGetElementsByName (@NonNull final String sElementName)
   {
     return documentGetElementsByName (JSExpr.lit (sElementName));
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByName (@Nonnull final IJSExpression aElementName)
+  @NonNull
+  public static JSInvocation documentGetElementsByName (@NonNull final IJSExpression aElementName)
   {
     return document ().invoke ("getElementsByName").arg (aElementName);
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByTagName (@Nonnull final EHTMLElement eHTMLElement)
+  @NonNull
+  public static JSInvocation documentGetElementsByTagName (@NonNull final EHTMLElement eHTMLElement)
   {
     return documentGetElementsByTagName (eHTMLElement.getElementName ());
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByTagName (@Nonnull final String sElementName)
+  @NonNull
+  public static JSInvocation documentGetElementsByTagName (@NonNull final String sElementName)
   {
     return documentGetElementsByTagName (JSExpr.lit (sElementName));
   }
 
-  @Nonnull
-  public static JSInvocation documentGetElementsByTagName (@Nonnull final IJSExpression aElementName)
+  @NonNull
+  public static JSInvocation documentGetElementsByTagName (@NonNull final IJSExpression aElementName)
   {
     return document ().invoke ("getElementsByTagName").arg (aElementName);
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef documentImages ()
   {
     return document ().ref ("images");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef documentLinks ()
   {
     return document ().ref ("links");
   }
 
-  @Nonnull
-  public static JSInvocation documentWrite (@Nonnull final String sText)
+  @NonNull
+  public static JSInvocation documentWrite (@NonNull final String sText)
   {
     return documentWrite (JSExpr.lit (sText));
   }
 
-  @Nonnull
-  public static JSInvocation documentWrite (@Nonnull final IJSExpression aText)
+  @NonNull
+  public static JSInvocation documentWrite (@NonNull final IJSExpression aText)
   {
     return document ().invoke ("write").arg (aText);
   }
 
-  @Nonnull
-  public static JSInvocation documentWriteln (@Nonnull final String sText)
+  @NonNull
+  public static JSInvocation documentWriteln (@NonNull final String sText)
   {
     return documentWriteln (JSExpr.lit (sText));
   }
 
-  @Nonnull
-  public static JSInvocation documentWriteln (@Nonnull final IJSExpression aText)
+  @NonNull
+  public static JSInvocation documentWriteln (@NonNull final IJSExpression aText)
   {
     return document ().invoke ("writeln").arg (aText);
   }
 
   // --- event ---
 
-  @Nonnull
+  @NonNull
   public static JSRef event ()
   {
     return JSExpr.ref ("event");
@@ -279,37 +279,37 @@ public final class JSHtml
    * @return The history object
    * @see #windowHistory()
    */
-  @Nonnull
+  @NonNull
   public static JSRef history ()
   {
     return JSExpr.ref ("history");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation historyBack ()
   {
     return history ().invoke ("back");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation historyForward ()
   {
     return history ().invoke ("forward");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation historyGo (final int nJumpCount)
   {
     return historyGo (JSExpr.lit (nJumpCount));
   }
 
-  @Nonnull
-  public static JSInvocation historyGo (@Nonnull final IJSExpression aJumpCount)
+  @NonNull
+  public static JSInvocation historyGo (@NonNull final IJSExpression aJumpCount)
   {
     return history ().invoke ("go").arg (aJumpCount);
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef historyLength ()
   {
     return history ().ref ("length");
@@ -321,75 +321,75 @@ public final class JSHtml
    * @return Global navigator object
    * @see #windowNavigator()
    */
-  @Nonnull
+  @NonNull
   public static JSRef navigator ()
   {
     return JSExpr.ref ("navigator");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorAppCodeName ()
   {
     return navigator ().ref ("appCodeName");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorAppName ()
   {
     return navigator ().ref ("appName");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorAppVersion ()
   {
     return navigator ().ref ("appVersion");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorCookieEnabled ()
   {
     return navigator ().ref ("cookieEnabled");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorLanguage ()
   {
     return navigator ().ref ("language");
   }
 
   // is an array!
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorMimeTypes ()
   {
     return navigator ().ref ("mimeTypes");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorOnLine ()
   {
     return navigator ().ref ("onLine");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorPlatform ()
   {
     return navigator ().ref ("platform");
   }
 
   // is an array!
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorPlugins ()
   {
     return navigator ().ref ("plugins");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef navigatorUserAgent ()
   {
     return navigator ().ref ("userAgent");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation navigatorJavaEnabled ()
   {
     return navigator ().invoke ("javaEnabled");
@@ -398,7 +398,7 @@ public final class JSHtml
   /*
    * IE and Opera only
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation navigatorTaintEnabled ()
   {
     return navigator ().invoke ("taintEnabled");
@@ -410,43 +410,43 @@ public final class JSHtml
    * @return Global screen object
    * @see #windowScreen()
    */
-  @Nonnull
+  @NonNull
   public static JSRef screen ()
   {
     return JSExpr.ref ("screen");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenAvailHeight ()
   {
     return screen ().ref ("availHeight");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenAvailWidth ()
   {
     return screen ().ref ("availWidth");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenColorDepth ()
   {
     return screen ().ref ("colorDepth");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenHeight ()
   {
     return screen ().ref ("height");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenPixelDepth ()
   {
     return screen ().ref ("pixelDepth");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef screenWidth ()
   {
     return screen ().ref ("width");
@@ -457,7 +457,7 @@ public final class JSHtml
   /**
    * @return <code>window</code>
    */
-  @Nonnull
+  @NonNull
   public static JSRef window ()
   {
     return JSExpr.ref ("window");
@@ -466,20 +466,20 @@ public final class JSHtml
   /**
    * @return <code>window.alert</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowAlert ()
   {
     return window ().invoke ("alert");
   }
 
-  @Nonnull
+  @NonNull
   public static JSInvocation windowAlert (@Nullable final String sMessage)
   {
     return windowAlert ().arg (sMessage);
   }
 
-  @Nonnull
-  public static JSInvocation windowAlert (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSInvocation windowAlert (@NonNull final IJSExpression aExpr)
   {
     return windowAlert ().arg (aExpr);
   }
@@ -487,7 +487,7 @@ public final class JSHtml
   /**
    * @return <code>window.blur</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowBlur ()
   {
     return window ().invoke ("blur");
@@ -496,14 +496,14 @@ public final class JSHtml
   /**
    * @return <code>window.clearInterval</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowClearInterval ()
   {
     return window ().invoke ("clearInterval");
   }
 
-  @Nonnull
-  public static JSInvocation windowClearInterval (@Nonnull final AbstractJSVariable <?> aVar)
+  @NonNull
+  public static JSInvocation windowClearInterval (@NonNull final AbstractJSVariable <?> aVar)
   {
     return windowClearInterval ().arg (aVar);
   }
@@ -511,14 +511,14 @@ public final class JSHtml
   /**
    * @return <code>window.clearTimeout</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowClearTimeout ()
   {
     return window ().invoke ("clearTimeout");
   }
 
-  @Nonnull
-  public static JSInvocation windowClearTimeout (@Nonnull final AbstractJSVariable <?> aVar)
+  @NonNull
+  public static JSInvocation windowClearTimeout (@NonNull final AbstractJSVariable <?> aVar)
   {
     return windowClearTimeout ().arg (aVar);
   }
@@ -526,7 +526,7 @@ public final class JSHtml
   /**
    * @return <code>window.close</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowClose ()
   {
     return window ().invoke ("close");
@@ -535,7 +535,7 @@ public final class JSHtml
   /**
    * @return <code>window.closed</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowClosed ()
   {
     return window ().ref ("closed");
@@ -544,7 +544,7 @@ public final class JSHtml
   /**
    * @return <code>window.confirm</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowConfirm ()
   {
     return window ().invoke ("confirm");
@@ -553,7 +553,7 @@ public final class JSHtml
   /**
    * @return <code>window.console</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowConsole ()
   {
     return window ().ref ("console");
@@ -562,7 +562,7 @@ public final class JSHtml
   /**
    * @return <code>window.createPopup</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowCreatePopup ()
   {
     return window ().invoke ("createPopup");
@@ -571,7 +571,7 @@ public final class JSHtml
   /**
    * @return <code>window.defaultStatus</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowDefaultStatus ()
   {
     return window ().ref ("defaultStatus");
@@ -580,7 +580,7 @@ public final class JSHtml
   /**
    * @return <code>window.document</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowDocument ()
   {
     return window ().ref ("document");
@@ -589,7 +589,7 @@ public final class JSHtml
   /**
    * @return <code>window.focus</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowFocus ()
   {
     return window ().invoke ("focus");
@@ -598,7 +598,7 @@ public final class JSHtml
   /**
    * @return <code>window.frames</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowFrames ()
   {
     return window ().ref ("frames");
@@ -607,7 +607,7 @@ public final class JSHtml
   /**
    * @return <code>window.history</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowHistory ()
   {
     return window ().ref ("history");
@@ -616,7 +616,7 @@ public final class JSHtml
   /**
    * @return <code>window.innerHeight</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowInnerHeight ()
   {
     return window ().ref ("innerHeight");
@@ -625,7 +625,7 @@ public final class JSHtml
   /**
    * @return <code>window.innerWidth</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowInnerWidth ()
   {
     return window ().ref ("innerWidth");
@@ -634,7 +634,7 @@ public final class JSHtml
   /**
    * @return <code>window.length</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLength ()
   {
     return window ().ref ("length");
@@ -643,7 +643,7 @@ public final class JSHtml
   /**
    * @return <code>window.localStorage</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocalStorage ()
   {
     return window ().ref ("localStorage");
@@ -652,7 +652,7 @@ public final class JSHtml
   /**
    * @return <code>window.location</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocation ()
   {
     return window ().ref ("location");
@@ -661,7 +661,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.hash</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationHash ()
   {
     return windowLocation ().ref ("hash");
@@ -670,7 +670,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.host</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationHost ()
   {
     return windowLocation ().ref ("host");
@@ -679,7 +679,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.hostname</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationHostname ()
   {
     return windowLocation ().ref ("hostname");
@@ -688,15 +688,15 @@ public final class JSHtml
   /**
    * @return <code>window.location.href</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationHref ()
   {
     return windowLocation ().ref ("href");
   }
 
-  @Nonnull
+  @NonNull
   @DevelopersNote ("Should be deprecated but is used too often")
-  public static JSAssignment windowLocationHref (@Nonnull final ISimpleURL aURL)
+  public static JSAssignment windowLocationHref (@NonNull final ISimpleURL aURL)
   {
     // Use the version with the default charset - not nice :(
     return windowLocationHref ().assign (aURL.getAsString ());
@@ -705,7 +705,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.pathname</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationPathname ()
   {
     return windowLocation ().ref ("pathname");
@@ -714,7 +714,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.port</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationPort ()
   {
     return windowLocation ().ref ("port");
@@ -723,7 +723,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.protocol</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationProtocol ()
   {
     return windowLocation ().ref ("protocol");
@@ -732,7 +732,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.reload</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowLocationReload ()
   {
     return windowLocation ().invoke ("reload");
@@ -741,20 +741,20 @@ public final class JSHtml
   /**
    * @return <code>window.location.replace</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowLocationReplace ()
   {
     return windowLocation ().invoke ("replace");
   }
 
-  @Nonnull
-  public static JSInvocation windowLocationReplace (@Nonnull final ISimpleURL aURL)
+  @NonNull
+  public static JSInvocation windowLocationReplace (@NonNull final ISimpleURL aURL)
   {
     return windowLocationReplace (JSExpr.lit (aURL.getAsString ()));
   }
 
-  @Nonnull
-  public static JSInvocation windowLocationReplace (@Nonnull final IJSExpression aURL)
+  @NonNull
+  public static JSInvocation windowLocationReplace (@NonNull final IJSExpression aURL)
   {
     return windowLocationReplace ().arg (aURL);
   }
@@ -762,7 +762,7 @@ public final class JSHtml
   /**
    * @return <code>window.location.search</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowLocationSearch ()
   {
     return windowLocation ().ref ("search");
@@ -771,7 +771,7 @@ public final class JSHtml
   /**
    * @return <code>window.moveBy</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowMoveBy ()
   {
     return window ().invoke ("moveBy");
@@ -780,7 +780,7 @@ public final class JSHtml
   /**
    * @return <code>window.moveTo</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowMoveTo ()
   {
     return window ().invoke ("moveTo");
@@ -789,7 +789,7 @@ public final class JSHtml
   /**
    * @return <code>window.name</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowName ()
   {
     return window ().ref ("name");
@@ -798,7 +798,7 @@ public final class JSHtml
   /**
    * @return <code>window.navigator</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowNavigator ()
   {
     return window ().ref ("navigator");
@@ -807,7 +807,7 @@ public final class JSHtml
   /**
    * @return <code>window.open</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowOpen ()
   {
     return window ().invoke ("open");
@@ -816,7 +816,7 @@ public final class JSHtml
   /**
    * @return <code>window.opener</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowOpener ()
   {
     return window ().ref ("opener");
@@ -825,7 +825,7 @@ public final class JSHtml
   /**
    * @return <code>window.outerHeight</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowOuterHeight ()
   {
     return window ().ref ("outerHeight");
@@ -834,7 +834,7 @@ public final class JSHtml
   /**
    * @return <code>window.outerWidth</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowOuterWidth ()
   {
     return window ().ref ("outerWidth");
@@ -843,7 +843,7 @@ public final class JSHtml
   /**
    * @return <code>window.pageXOffset</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowPageXOffset ()
   {
     return window ().ref ("pageXOffset");
@@ -852,7 +852,7 @@ public final class JSHtml
   /**
    * @return <code>window.pageYOffset</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowPageYOffset ()
   {
     return window ().ref ("pageYOffset");
@@ -861,7 +861,7 @@ public final class JSHtml
   /**
    * @return <code>window.parent</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowParent ()
   {
     return window ().ref ("parent");
@@ -870,7 +870,7 @@ public final class JSHtml
   /**
    * @return <code>window.parent.frames</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowParentFrames ()
   {
     return windowParent ().ref ("frames");
@@ -879,7 +879,7 @@ public final class JSHtml
   /**
    * @return <code>window.print</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowPrint ()
   {
     return window ().invoke ("print");
@@ -888,7 +888,7 @@ public final class JSHtml
   /**
    * @return <code>window.prompt</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowPrompt ()
   {
     return window ().invoke ("prompt");
@@ -897,7 +897,7 @@ public final class JSHtml
   /**
    * @return <code>window.resizeBy</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowResizeBy ()
   {
     return window ().invoke ("resizeBy");
@@ -906,7 +906,7 @@ public final class JSHtml
   /**
    * @return <code>window.resizeTo</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowResizeTo ()
   {
     return window ().invoke ("resizeTo");
@@ -915,7 +915,7 @@ public final class JSHtml
   /**
    * @return <code>window.screen</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowScreen ()
   {
     return window ().ref ("screen");
@@ -924,7 +924,7 @@ public final class JSHtml
   /**
    * @return <code>window.screenLeft</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowScreenLeft ()
   {
     return window ().ref ("screenLeft");
@@ -933,7 +933,7 @@ public final class JSHtml
   /**
    * @return <code>window.screenTop</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowScreenTop ()
   {
     return window ().ref ("screenTop");
@@ -942,7 +942,7 @@ public final class JSHtml
   /**
    * @return <code>window.screenX</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowScreenX ()
   {
     return window ().ref ("screenX");
@@ -951,7 +951,7 @@ public final class JSHtml
   /**
    * @return <code>window.screenY</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowScreenY ()
   {
     return window ().ref ("screenY");
@@ -960,7 +960,7 @@ public final class JSHtml
   /**
    * @return <code>window.scroll</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowScroll ()
   {
     return window ().invoke ("scroll");
@@ -969,7 +969,7 @@ public final class JSHtml
   /**
    * @return <code>window.scrollBy</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowScrollBy ()
   {
     return window ().invoke ("scrollBy");
@@ -978,7 +978,7 @@ public final class JSHtml
   /**
    * @return <code>window.scrollTo</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowScrollTo ()
   {
     return window ().invoke ("scrollTo");
@@ -987,7 +987,7 @@ public final class JSHtml
   /**
    * @return <code>window.self</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowSelf ()
   {
     return window ().ref ("self");
@@ -996,14 +996,14 @@ public final class JSHtml
   /**
    * @return <code>window.setInterval</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowSetInterval ()
   {
     return window ().invoke ("setInterval");
   }
 
-  @Nonnull
-  public static JSInvocation windowSetInterval (@Nonnull final JSAnonymousFunction aCallback,
+  @NonNull
+  public static JSInvocation windowSetInterval (@NonNull final JSAnonymousFunction aCallback,
                                                 @Nonnegative final int nMillis)
   {
     return windowSetInterval ().arg (aCallback).arg (nMillis);
@@ -1012,14 +1012,14 @@ public final class JSHtml
   /**
    * @return <code>window.setTimeout</code>
    */
-  @Nonnull
+  @NonNull
   public static JSInvocation windowSetTimeout ()
   {
     return window ().invoke ("setTimeout");
   }
 
-  @Nonnull
-  public static JSInvocation windowSetTimeout (@Nonnull final JSAnonymousFunction aCallback,
+  @NonNull
+  public static JSInvocation windowSetTimeout (@NonNull final JSAnonymousFunction aCallback,
                                                @Nonnegative final int nMillis)
   {
     return windowSetTimeout ().arg (aCallback).arg (nMillis);
@@ -1028,7 +1028,7 @@ public final class JSHtml
   /**
    * @return <code>window.status</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowStatus ()
   {
     return window ().ref ("status");
@@ -1037,7 +1037,7 @@ public final class JSHtml
   /**
    * @return <code>window.top</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowTop ()
   {
     return window ().ref ("top");
@@ -1046,7 +1046,7 @@ public final class JSHtml
   /**
    * @return <code>window.onbeforeunload</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef windowOnbeforeunload ()
   {
     return window ().ref ("onbeforeunload");
@@ -1060,8 +1060,8 @@ public final class JSHtml
    *        message or null to display none.
    * @return The JS assignment
    */
-  @Nonnull
-  public static JSAssignment windowOnbeforeunload (@Nonnull final JSAnonymousFunction aCallback)
+  @NonNull
+  public static JSAssignment windowOnbeforeunload (@NonNull final JSAnonymousFunction aCallback)
   {
     return windowOnbeforeunload ().assign (aCallback);
   }
@@ -1073,8 +1073,8 @@ public final class JSHtml
    *        Source expression
    * @return <code>aExpr.options[aExpr.selectedIndex].value</code>
    */
-  @Nonnull
-  public static JSFieldRef getSelectSelectedValue (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JSFieldRef getSelectSelectedValue (@NonNull final IJSExpression aExpr)
   {
     return aExpr.ref ("options").component (aExpr.ref ("selectedIndex")).ref ("value");
   }
@@ -1082,7 +1082,7 @@ public final class JSHtml
   /**
    * @return <code>this.options[this.selectedIndex].value</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef getSelectSelectedValue ()
   {
     return getSelectSelectedValue (JSExpr.THIS);

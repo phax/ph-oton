@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.user;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsSet;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base read-only interface for objects containing users.
@@ -45,7 +45,7 @@ public interface IUserContainer
    * @return A non-<code>null</code>but maybe empty set of all assigned user
    *         IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsSet <String> getAllContainedUserIDs ();
 

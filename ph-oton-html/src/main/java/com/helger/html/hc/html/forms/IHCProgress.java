@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.hc.html.IHCElementWithChildren;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.html.IHCElementWithChildren;
 
 /**
  * Interface for METERs
@@ -31,11 +31,11 @@ public interface IHCProgress <IMPLTYPE extends IHCProgress <IMPLTYPE>> extends I
 {
   double getValue ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setValue (double dValue);
 
   double getMax ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMax (double dMax);
 }

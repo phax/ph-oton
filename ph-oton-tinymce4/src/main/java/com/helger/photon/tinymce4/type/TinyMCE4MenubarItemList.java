@@ -18,6 +18,8 @@ package com.helger.photon.tinymce4.type;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -28,8 +30,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
 
 public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemList>
 {
@@ -49,7 +49,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    * @param aList
    *        Separators are denoted by <code>null</code> elements.
    */
-  public TinyMCE4MenubarItemList (@Nonnull final ETinyMCE4MenuItem... aList)
+  public TinyMCE4MenubarItemList (@NonNull final ETinyMCE4MenuItem... aList)
   {
     ValueEnforcer.notNull (aList, "List");
     m_aList = new CommonsArrayList <> (aList);
@@ -61,7 +61,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    * @param aList
    *        May not contain <code>null</code> elements.
    */
-  public TinyMCE4MenubarItemList (@Nonnull final List <ETinyMCE4MenuItem> aList)
+  public TinyMCE4MenubarItemList (@NonNull final List <ETinyMCE4MenuItem> aList)
   {
     ValueEnforcer.notNull (aList, "List");
     m_aList = new CommonsArrayList <> (aList);
@@ -73,7 +73,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    * @param aOther
    *        Source object to copy from. May not be <code>null</code>.
    */
-  public TinyMCE4MenubarItemList (@Nonnull final TinyMCE4MenubarItemList aOther)
+  public TinyMCE4MenubarItemList (@NonNull final TinyMCE4MenubarItemList aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aList = aOther.m_aList.getClone ();
@@ -83,23 +83,23 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
    * @return The default toolbar. Separators are denoted by <code>null</code> elements. See the
    *         respective theme.js file.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ETinyMCE4MenuItem> getAllMenuItems ()
   {
     return new CommonsArrayList <> (m_aList);
   }
 
-  @Nonnull
-  public TinyMCE4MenubarItemList addMenuItem (@Nonnull final ETinyMCE4MenuItem eMenuItem)
+  @NonNull
+  public TinyMCE4MenubarItemList addMenuItem (@NonNull final ETinyMCE4MenuItem eMenuItem)
   {
     ValueEnforcer.notNull (eMenuItem, "MenuItem");
     m_aList.add (eMenuItem);
     return this;
   }
 
-  @Nonnull
-  public TinyMCE4MenubarItemList addMenuItem (@Nonnegative final int nIndex, @Nonnull final ETinyMCE4MenuItem eMenuItem)
+  @NonNull
+  public TinyMCE4MenubarItemList addMenuItem (@Nonnegative final int nIndex, @NonNull final ETinyMCE4MenuItem eMenuItem)
   {
     ValueEnforcer.notNull (eMenuItem, "MenuItem");
     m_aList.add (nIndex, eMenuItem);
@@ -107,26 +107,26 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
   }
 
   @CheckForSigned
-  public int getMenuItemIndex (@Nonnull final ETinyMCE4MenuItem eMenuItem)
+  public int getMenuItemIndex (@NonNull final ETinyMCE4MenuItem eMenuItem)
   {
     ValueEnforcer.notNull (eMenuItem, "MenuItem");
     return m_aList.indexOf (eMenuItem);
   }
 
-  @Nonnull
-  public EChange removeMenuItem (@Nonnull final ETinyMCE4MenuItem eMenuItem)
+  @NonNull
+  public EChange removeMenuItem (@NonNull final ETinyMCE4MenuItem eMenuItem)
   {
     ValueEnforcer.notNull (eMenuItem, "MenuItem");
     return EChange.valueOf (m_aList.remove (eMenuItem));
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAtIndex (@Nonnegative final int nIndex)
   {
     return CollectionHelper.removeAtIndex (m_aList, nIndex);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     if (m_aList.isEmpty ())
@@ -135,7 +135,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public String getAsOptionString ()
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -148,7 +148,7 @@ public class TinyMCE4MenubarItemList implements ICloneable <TinyMCE4MenubarItemL
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public TinyMCE4MenubarItemList getClone ()
   {
     return new TinyMCE4MenubarItemList (this);

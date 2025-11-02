@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.userdata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A special version of {@link AbstractUserDataObject} creating a "temporary
@@ -34,14 +34,14 @@ import jakarta.annotation.Nullable;
 @Immutable
 public class TemporaryUserDataObject extends AbstractUserDataObject
 {
-  public TemporaryUserDataObject (@Nonnull @Nonempty final String sPath)
+  public TemporaryUserDataObject (@NonNull @Nonempty final String sPath)
   {
     super (sPath, true);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public TemporaryUserDataObject getCloneWithDifferentPath (@Nonnull @Nonempty final String sPath)
+  public TemporaryUserDataObject getCloneWithDifferentPath (@NonNull @Nonempty final String sPath)
   {
     return new TemporaryUserDataObject (sPath);
   }

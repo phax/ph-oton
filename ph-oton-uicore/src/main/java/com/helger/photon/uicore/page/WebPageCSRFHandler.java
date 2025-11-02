@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.uicore.css.CPageParam;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IWebPageCSRFHandler}. Using the nonce from
@@ -52,29 +52,29 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     return m_bCSRFPreventionEnabled;
   }
 
-  @Nonnull
+  @NonNull
   public final WebPageCSRFHandler setCSRFPreventionEnabled (final boolean bCSRFPreventionEnabled)
   {
     m_bCSRFPreventionEnabled = bCSRFPreventionEnabled;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final ICSRFErrorHandler getCSRFErrorHandler ()
   {
     return m_aErrorHdl;
   }
 
-  @Nonnull
-  public final WebPageCSRFHandler setCSRFErrorHandler (@Nonnull final ICSRFErrorHandler aErrorHdl)
+  @NonNull
+  public final WebPageCSRFHandler setCSRFErrorHandler (@NonNull final ICSRFErrorHandler aErrorHdl)
   {
     ValueEnforcer.notNull (aErrorHdl, "ErrorHdl");
     m_aErrorHdl = aErrorHdl;
     return this;
   }
 
-  @Nonnull
-  public EContinue checkCSRFNonce (@Nonnull final IWebPageExecutionContext aWPEC)
+  @NonNull
+  public EContinue checkCSRFNonce (@NonNull final IWebPageExecutionContext aWPEC)
   {
     if (m_bCSRFPreventionEnabled)
     {

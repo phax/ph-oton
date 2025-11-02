@@ -19,15 +19,15 @@ package com.helger.photon.core.requestparam;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for extracting parameters from URLs.
@@ -46,9 +46,9 @@ public interface IRequestParameterHandler extends Serializable
    *        Relevant menu tree. May not be <code>null</code>.
    * @return A non-<code>null</code> list of all parameters.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope, @Nonnull IMenuTree aMenuTree);
+  PhotonRequestParameters getParametersFromRequest (@NonNull IRequestWebScopeWithoutResponse aRequestScope, @NonNull IMenuTree aMenuTree);
 
   /**
    * Get all request parameters from the provided URL.
@@ -60,9 +60,9 @@ public interface IRequestParameterHandler extends Serializable
    *        Relevant menu tree. May not be <code>null</code>.
    * @return A non-<code>null</code> list of all parameters.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromURL (@Nonnull ISimpleURL aURL, @Nonnull IMenuTree aMenuTree);
+  PhotonRequestParameters getParametersFromURL (@NonNull ISimpleURL aURL, @NonNull IMenuTree aMenuTree);
 
   /**
    * Build a URL based on the passed base path and an optional list of
@@ -79,9 +79,9 @@ public interface IRequestParameterHandler extends Serializable
    *        The menu item ID to use. May be <code>null</code>.
    * @return The URL to use.
    */
-  @Nonnull
+  @NonNull
   SimpleURL buildURL (@Nullable IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull @Nonempty String sBasePath,
+                      @NonNull @Nonempty String sBasePath,
                       @Nullable Locale aDisplayLocale,
                       @Nullable String sMenuItemID);
 }

@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonnegative;
 import com.helger.css.ECSSUnit;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.hc.html.IHCElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a table column.
@@ -56,7 +56,7 @@ public interface IHCCol <IMPLTYPE extends IHCCol <IMPLTYPE>> extends IHCElement 
    *        Pixel width.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setWidth (@Nonnegative final int nWidth)
   {
     return setWidth (Integer.toString (nWidth));
@@ -69,7 +69,7 @@ public interface IHCCol <IMPLTYPE extends IHCCol <IMPLTYPE>> extends IHCElement 
    *        percentage width.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setWidthPerc (@Nonnegative final double dPerc)
   {
     return setWidth (ECSSUnit.perc (dPerc));
@@ -83,12 +83,12 @@ public interface IHCCol <IMPLTYPE extends IHCCol <IMPLTYPE>> extends IHCElement 
    *        The width as a string. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidth (@Nullable String sWidth);
 
   @CheckForSigned
   int getSpan ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setSpan (int nSpan);
 }

@@ -22,6 +22,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.util.Collections;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,8 +31,6 @@ import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A specific cache for {@link FileSystem} objects.
@@ -49,7 +48,7 @@ public class PhotonFileSystemCache implements AutoCloseable
   public PhotonFileSystemCache ()
   {}
 
-  public void ensureFileSystemIsPresent (@Nonnull @Nonempty final String sKey, @Nonnull final URI aUri)
+  public void ensureFileSystemIsPresent (@NonNull @Nonempty final String sKey, @NonNull final URI aUri)
                                                                                                         throws IOException
   {
     // Try in read-lock for performance

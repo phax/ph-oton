@@ -18,6 +18,8 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -31,8 +33,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroElement;
 
-import jakarta.annotation.Nonnull;
-
 public abstract class AbstractFeedXHTML extends AbstractFeedElement
 {
   // Feed XML always as XHTML 1.1
@@ -42,20 +42,20 @@ public abstract class AbstractFeedXHTML extends AbstractFeedElement
 
   private final HCDiv m_aDiv;
 
-  public AbstractFeedXHTML (@Nonnull final HCDiv aDiv)
+  public AbstractFeedXHTML (@NonNull final HCDiv aDiv)
   {
     ValueEnforcer.notNull (aDiv, "Div");
     m_aDiv = aDiv;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getType ()
   {
     return EFeedTextType.XHTML.getType ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCDiv getDIV ()
   {
     return m_aDiv;

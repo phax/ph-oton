@@ -16,6 +16,8 @@
  */
 package com.helger.photon.ajax;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +32,6 @@ import com.helger.cache.regex.RegExHelper;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The default implementation of {@link IAjaxRegistry}.
@@ -58,7 +57,7 @@ public class AjaxRegistry implements IAjaxRegistry
     return StringHelper.isNotEmpty (sFunctionName) && RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, IAjaxFunctionDeclaration> getAllRegisteredFunctions ()
   {
@@ -82,7 +81,7 @@ public class AjaxRegistry implements IAjaxRegistry
     return m_aRWLock.readLockedBoolean ( () -> m_aFuncDecls.containsKey (sFunctionName));
   }
 
-  public void registerFunction (@Nonnull final IAjaxFunctionDeclaration aFunctionDeclaration)
+  public void registerFunction (@NonNull final IAjaxFunctionDeclaration aFunctionDeclaration)
   {
     ValueEnforcer.notNull (aFunctionDeclaration, "FunctionDeclaration");
 

@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.bloodhound;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSParam;
 import com.helger.html.jscode.JSReturn;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @NotThreadSafe
 public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
@@ -69,7 +68,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
   public BloodhoundOptions ()
   {}
 
-  public BloodhoundOptions (@Nonnull final BloodhoundOptions aOther)
+  public BloodhoundOptions (@NonNull final BloodhoundOptions aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aDatumTokenizer = aOther.m_aDatumTokenizer;
@@ -92,16 +91,16 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aDatumTokenizer;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setDatumTokenizer (@Nullable final IJSExpression aDatumTokenizer)
   {
     m_aDatumTokenizer = aDatumTokenizer;
     return this;
   }
 
-  @Nonnull
-  private BloodhoundOptions _setSpecialDatumTokenizer (@Nonnull final JSFieldRef aFieldRef,
-                                                       @Nonnull @Nonempty final String sDatumValueFieldName)
+  @NonNull
+  private BloodhoundOptions _setSpecialDatumTokenizer (@NonNull final JSFieldRef aFieldRef,
+                                                       @NonNull @Nonempty final String sDatumValueFieldName)
   {
     ValueEnforcer.notEmpty (sDatumValueFieldName, "DatumValueFieldName");
     final JSParam aVarDatum = new JSParam ("d");
@@ -109,14 +108,14 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
                                                        aFieldRef.invoke ().arg (aVarDatum.ref (sDatumValueFieldName))));
   }
 
-  @Nonnull
-  public BloodhoundOptions setDatumTokenizerNonword (@Nonnull @Nonempty final String sDatumValueFieldName)
+  @NonNull
+  public BloodhoundOptions setDatumTokenizerNonword (@NonNull @Nonempty final String sDatumValueFieldName)
   {
     return _setSpecialDatumTokenizer (BloodhoundJS.bloodhoundTokenizersNonword (), sDatumValueFieldName);
   }
 
-  @Nonnull
-  public BloodhoundOptions setDatumTokenizerWhitespace (@Nonnull @Nonempty final String sDatumValueFieldName)
+  @NonNull
+  public BloodhoundOptions setDatumTokenizerWhitespace (@NonNull @Nonempty final String sDatumValueFieldName)
   {
     return _setSpecialDatumTokenizer (BloodhoundJS.bloodhoundTokenizersWhitespace (), sDatumValueFieldName);
   }
@@ -127,7 +126,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setDatumTokenizerPreTokenized ()
   {
     final JSParam aVarDatum = new JSParam ("d");
@@ -145,20 +144,20 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aQueryTokenizer;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setQueryTokenizer (@Nullable final IJSExpression aQueryTokenizer)
   {
     m_aQueryTokenizer = aQueryTokenizer;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setQueryTokenizerNonword ()
   {
     return setQueryTokenizer (BloodhoundJS.bloodhoundTokenizersNonword ());
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setQueryTokenizerWhitespace ()
   {
     return setQueryTokenizer (BloodhoundJS.bloodhoundTokenizersWhitespace ());
@@ -174,7 +173,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_nLimit;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setLimit (@Nonnegative final int nLimit)
   {
     m_nLimit = ValueEnforcer.isGT0 (nLimit, "Limit");
@@ -192,7 +191,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aDupDetector;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setDupDetector (@Nullable final IJSExpression aDupDetector)
   {
     m_aDupDetector = aDupDetector;
@@ -212,7 +211,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aSorter;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setSorter (@Nullable final IJSExpression aSorter)
   {
     m_aSorter = aSorter;
@@ -226,13 +225,13 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aLocal == null ? null : m_aLocal.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setLocal (@Nullable final BloodhoundDatum... aLocal)
   {
     return setLocal (aLocal == null ? null : new CommonsArrayList <> (aLocal));
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setLocal (@Nullable final List <? extends BloodhoundDatum> aLocal)
   {
     m_aLocal = aLocal == null ? null : new CommonsArrayList <> (aLocal);
@@ -245,7 +244,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aPrefetch;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setPrefetch (@Nullable final BloodhoundPrefetch aPrefetch)
   {
     m_aPrefetch = aPrefetch;
@@ -258,14 +257,14 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return m_aRemote;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions setRemote (@Nullable final BloodhoundRemote aRemote)
   {
     m_aRemote = aRemote;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getAsJSObject ()
   {
@@ -301,7 +300,7 @@ public class BloodhoundOptions implements ICloneable <BloodhoundOptions>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public BloodhoundOptions getClone ()
   {
     return new BloodhoundOptions (this);

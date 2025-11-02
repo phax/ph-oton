@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,17 +38,14 @@ import com.helger.base.state.ESuccess;
 import com.helger.base.system.SystemHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-import com.helger.commons.csv.CCSV;
-import com.helger.commons.csv.CSVWriter;
+import com.helger.csv.CCSV;
+import com.helger.csv.CSVWriter;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.photon.exchange.bulkexport.IExportRecord;
 import com.helger.photon.exchange.bulkexport.IExportRecordField;
 import com.helger.photon.exchange.bulkexport.IExportRecordProvider;
 import com.helger.photon.exchange.bulkexport.IExporterFile;
 import com.helger.typeconvert.impl.TypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IExporterFile} for CSV files.
@@ -72,26 +71,26 @@ public class ExporterCSV implements IExporterFile
     this (SystemHelper.getSystemCharset ());
   }
 
-  public ExporterCSV (@Nonnull final Charset aCharset)
+  public ExporterCSV (@NonNull final Charset aCharset)
   {
     setCharset (aCharset);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final EExchangeFileType getFileType ()
   {
     return EExchangeFileType.CSV;
   }
 
-  @Nonnull
+  @NonNull
   public final Charset getCharset ()
   {
     return m_aCharset;
   }
 
-  @Nonnull
-  public final ExporterCSV setCharset (@Nonnull final Charset aCharset)
+  @NonNull
+  public final ExporterCSV setCharset (@NonNull final Charset aCharset)
   {
     m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     return this;
@@ -110,7 +109,7 @@ public class ExporterCSV implements IExporterFile
    *        Separator char
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final ExporterCSV setSeparatorChar (final char cSeparator)
   {
     m_cSeparatorChar = cSeparator;
@@ -122,7 +121,7 @@ public class ExporterCSV implements IExporterFile
     return m_cQuoteChar;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterCSV setQuoteChar (final char cQuote)
   {
     m_cQuoteChar = cQuote;
@@ -134,22 +133,22 @@ public class ExporterCSV implements IExporterFile
     return m_cEscapeChar;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterCSV setEscapeChar (final char cEscape)
   {
     m_cEscapeChar = cEscape;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getLineEnd ()
   {
     return m_sLineEnd;
   }
 
-  @Nonnull
-  public final ExporterCSV setLineEnd (@Nonnull @Nonempty final String sLineEnd)
+  @NonNull
+  public final ExporterCSV setLineEnd (@NonNull @Nonempty final String sLineEnd)
   {
     ValueEnforcer.notEmpty (sLineEnd, "LineEnd");
     m_sLineEnd = sLineEnd;
@@ -162,7 +161,7 @@ public class ExporterCSV implements IExporterFile
     return m_eBOM;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterCSV setUnicodeBOM (@Nullable final EUnicodeBOM eBOM)
   {
     m_eBOM = eBOM;
@@ -188,7 +187,7 @@ public class ExporterCSV implements IExporterFile
    * @return this for chaining
    * @since 7.0.4
    */
-  @Nonnull
+  @NonNull
   public final ExporterCSV setAvoidWriteEmpty (final boolean bAvoidWriteEmpty)
   {
     m_bAvoidWriteEmpty = bAvoidWriteEmpty;
@@ -213,15 +212,15 @@ public class ExporterCSV implements IExporterFile
    * @return this for chaining
    * @since 7.1.1
    */
-  @Nonnull
+  @NonNull
   public final ExporterCSV setAvoidFinalLineEnd (final boolean bAvoidFinalLineEnd)
   {
     m_bAvoidFinalLineEnd = bAvoidFinalLineEnd;
     return this;
   }
 
-  @Nonnull
-  private static ICommonsList <String> _getAsCSVRecord (@Nonnull final IExportRecord aRecord)
+  @NonNull
+  private static ICommonsList <String> _getAsCSVRecord (@NonNull final IExportRecord aRecord)
   {
     final ICommonsList <? extends IExportRecordField> aAllFields = aRecord.getAllFields ();
     final ICommonsList <String> aCSVValues = new CommonsArrayList <> (aAllFields.size ());
@@ -247,10 +246,10 @@ public class ExporterCSV implements IExporterFile
    * @return The {@link CSVWriter} to used. Never <code>null</code>.
    */
   @SuppressWarnings ("resource")
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
   @WillCloseWhenClosed
-  protected CSVWriter createCSVWriter (@Nonnull final OutputStream aOS)
+  protected CSVWriter createCSVWriter (@NonNull final OutputStream aOS)
   {
     return new CSVWriter (new OutputStreamWriter (aOS, m_aCharset)).setSeparatorChar (m_cSeparatorChar)
                                                                    .setQuoteChar (m_cQuoteChar)
@@ -260,9 +259,9 @@ public class ExporterCSV implements IExporterFile
   }
 
   @Override
-  @Nonnull
-  public ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                 @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public ESuccess exportRecords (@NonNull final IExportRecordProvider aProvider,
+                                 @NonNull @WillClose final OutputStream aOS)
   {
     try
     {

@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.special;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
 
 @FunctionalInterface
 public interface IHCSpecialNodeListModifier
@@ -32,7 +32,7 @@ public interface IHCSpecialNodeListModifier
    *        The source list of special nodes to be merged.
    * @return The modified list to be used for further processing.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <? extends IHCNode> modifySpecialNodes (@Nonnull ICommonsList <? extends IHCNode> aNodes);
+  ICommonsList <? extends IHCNode> modifySpecialNodes (@NonNull ICommonsList <? extends IHCNode> aNodes);
 }

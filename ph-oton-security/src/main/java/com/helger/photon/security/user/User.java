@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -33,9 +36,6 @@ import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.StubObject;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.tenancy.AbstractBusinessObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of the {@link IUser} interface.
@@ -81,9 +81,9 @@ public class User extends AbstractBusinessObject implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  public User (@Nonnull @Nonempty final String sLoginName,
+  public User (@NonNull @Nonempty final String sLoginName,
                @Nullable final String sEmailAddress,
-               @Nonnull final PasswordHash aPasswordHash,
+               @NonNull final PasswordHash aPasswordHash,
                @Nullable final String sFirstName,
                @Nullable final String sLastName,
                @Nullable final String sDescription,
@@ -133,10 +133,10 @@ public class User extends AbstractBusinessObject implements IUser
    * @param bDisabled
    *        <code>true</code> if the user is disabled
    */
-  public User (@Nonnull final StubObject aStubObject,
-               @Nonnull @Nonempty final String sLoginName,
+  public User (@NonNull final StubObject aStubObject,
+               @NonNull @Nonempty final String sLoginName,
                @Nullable final String sEmailAddress,
-               @Nonnull final PasswordHash aPasswordHash,
+               @NonNull final PasswordHash aPasswordHash,
                @Nullable final String sFirstName,
                @Nullable final String sLastName,
                @Nullable final String sDescription,
@@ -162,7 +162,7 @@ public class User extends AbstractBusinessObject implements IUser
     setDisabled (bDisabled);
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return User.OT;
@@ -173,15 +173,15 @@ public class User extends AbstractBusinessObject implements IUser
     return CSecurity.USER_ADMINISTRATOR_ID.equals (getID ());
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getLoginName ()
   {
     return m_sLoginName;
   }
 
-  @Nonnull
-  public EChange setLoginName (@Nonnull @Nonempty final String sLoginName)
+  @NonNull
+  public EChange setLoginName (@NonNull @Nonempty final String sLoginName)
   {
     ValueEnforcer.notEmpty (sLoginName, "loginName");
 
@@ -197,7 +197,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_sEmailAddress;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setEmailAddress (@Nullable final String sEmailAddress)
   {
     if (EqualsHelper.equals (sEmailAddress, m_sEmailAddress))
@@ -206,15 +206,15 @@ public class User extends AbstractBusinessObject implements IUser
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public PasswordHash getPasswordHash ()
   {
     return m_aPasswordHash;
   }
 
-  @Nonnull
-  public EChange setPasswordHash (@Nonnull final PasswordHash aPasswordHash)
+  @NonNull
+  public EChange setPasswordHash (@NonNull final PasswordHash aPasswordHash)
   {
     ValueEnforcer.notNull (aPasswordHash, "PasswordHash");
 
@@ -230,7 +230,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_sFirstName;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setFirstName (@Nullable final String sFirstName)
   {
     if (EqualsHelper.equals (sFirstName, m_sFirstName))
@@ -245,7 +245,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_sLastName;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setLastName (@Nullable final String sLastName)
   {
     if (EqualsHelper.equals (sLastName, m_sLastName))
@@ -260,7 +260,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_sDescription;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDescription (@Nullable final String sDescription)
   {
     if (EqualsHelper.equals (sDescription, m_sDescription))
@@ -275,7 +275,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_aDesiredLocale;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDesiredLocale (@Nullable final Locale aDesiredLocale)
   {
     if (EqualsHelper.equals (aDesiredLocale, m_aDesiredLocale))
@@ -319,7 +319,7 @@ public class User extends AbstractBusinessObject implements IUser
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setDisabled (final boolean bDisabled)
   {
     if (bDisabled == m_bDisabled)
@@ -361,11 +361,11 @@ public class User extends AbstractBusinessObject implements IUser
   }
 
   // Internal use only
-  @Nonnull
-  public static User createdPredefinedUser (@Nonnull @Nonempty final String sID,
-                                            @Nonnull @Nonempty final String sLoginName,
+  @NonNull
+  public static User createdPredefinedUser (@NonNull @Nonempty final String sID,
+                                            @NonNull @Nonempty final String sLoginName,
                                             @Nullable final String sEmailAddress,
-                                            @Nonnull final PasswordHash aPasswordHash,
+                                            @NonNull final PasswordHash aPasswordHash,
                                             @Nullable final String sFirstName,
                                             @Nullable final String sLastName,
                                             @Nullable final String sDescription,

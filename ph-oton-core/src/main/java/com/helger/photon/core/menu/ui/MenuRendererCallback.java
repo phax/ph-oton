@@ -19,6 +19,8 @@ package com.helger.photon.core.menu.ui;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.hierarchy.visit.DefaultHierarchyVisitorCallback;
@@ -38,8 +40,6 @@ import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.core.menu.MenuItemDeterminatorCallback;
 import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Renders menu item nodes.
@@ -61,11 +61,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
   private final NonBlockingStack <DefaultTreeItemWithID <String, IMenuObject>> m_aTreeItemStack = new NonBlockingStack <> ();
   private final String m_sSelectedItem;
 
-  protected MenuRendererCallback (@Nonnull final ILayoutExecutionContext aLEC,
-                                  @Nonnull final Supplier <T> aFactory,
-                                  @Nonnull final NonBlockingStack <T> aMenuListStack,
-                                  @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                  @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
+  protected MenuRendererCallback (@NonNull final ILayoutExecutionContext aLEC,
+                                  @NonNull final Supplier <T> aFactory,
+                                  @NonNull final NonBlockingStack <T> aMenuListStack,
+                                  @NonNull final IMenuItemRenderer <T> aRenderer,
+                                  @NonNull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     ValueEnforcer.notNull (aLEC, "LEC");
     ValueEnforcer.notNull (aMenuListStack, "MenuListStack");
@@ -116,7 +116,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
   }
 
   @Override
-  public final EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+  public final EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     m_aTreeItemStack.push (aItem);
 
@@ -208,7 +208,7 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public final EHierarchyVisitorReturn onItemAfterChildren (final DefaultTreeItemWithID <String, IMenuObject> aItem)
   {
     m_aTreeItemStack.pop ();
@@ -231,10 +231,10 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param <T>
    *        HC list type to be instantiated
    */
-  @Nonnull
-  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final Supplier <T> aFactory,
-                                                                    @Nonnull final IMenuItemRenderer <T> aRenderer)
+  @NonNull
+  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@NonNull final ILayoutExecutionContext aLEC,
+                                                                    @NonNull final Supplier <T> aFactory,
+                                                                    @NonNull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     return createRenderedMenu (aLEC,
@@ -262,11 +262,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param <T>
    *        HC list type to be instantiated
    */
-  @Nonnull
-  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final Supplier <T> aFactory,
-                                                                    @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
-                                                                    @Nonnull final IMenuItemRenderer <T> aRenderer)
+  @NonNull
+  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@NonNull final ILayoutExecutionContext aLEC,
+                                                                    @NonNull final Supplier <T> aFactory,
+                                                                    @NonNull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
+                                                                    @NonNull final IMenuItemRenderer <T> aRenderer)
   {
     final IMenuTree aMenuTree = aLEC.getMenuTree ();
     return createRenderedMenu (aLEC,
@@ -295,11 +295,11 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param <T>
    *        HC list type to be instantiated
    */
-  @Nonnull
-  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final Supplier <T> aFactory,
-                                                                    @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                    @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
+  @NonNull
+  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@NonNull final ILayoutExecutionContext aLEC,
+                                                                    @NonNull final Supplier <T> aFactory,
+                                                                    @NonNull final IMenuItemRenderer <T> aRenderer,
+                                                                    @NonNull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     return createRenderedMenu (aLEC, aFactory, aLEC.getMenuTree ().getRootItem (), aRenderer, aDisplayMenuItemIDs);
   }
@@ -324,12 +324,12 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * @param <T>
    *        HC list type to be instantiated
    */
-  @Nonnull
-  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@Nonnull final ILayoutExecutionContext aLEC,
-                                                                    @Nonnull final Supplier <T> aFactory,
-                                                                    @Nonnull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
-                                                                    @Nonnull final IMenuItemRenderer <T> aRenderer,
-                                                                    @Nonnull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
+  @NonNull
+  public static <T extends IHCList <T, HCLI>> T createRenderedMenu (@NonNull final ILayoutExecutionContext aLEC,
+                                                                    @NonNull final Supplier <T> aFactory,
+                                                                    @NonNull final DefaultTreeItemWithID <String, IMenuObject> aStartTreeItem,
+                                                                    @NonNull final IMenuItemRenderer <T> aRenderer,
+                                                                    @NonNull final ICommonsMap <String, Boolean> aDisplayMenuItemIDs)
   {
     ValueEnforcer.notNull (aFactory, "Factory");
 

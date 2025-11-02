@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +37,6 @@ import com.helger.base.log.ConditionalLogger;
 import com.helger.base.timing.StopWatch;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Asynchronous worker pool that handles stuff that runs in the background.
@@ -67,13 +66,13 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
                                                                         .build ()));
   }
 
-  public PhotonWorkerPool (@Nonnull final ExecutorService aES)
+  public PhotonWorkerPool (@NonNull final ExecutorService aES)
   {
     ValueEnforcer.notNull (aES, "ExecutorService");
     m_aES = aES;
   }
 
-  @Nonnull
+  @NonNull
   public static PhotonWorkerPool getInstance ()
   {
     return getGlobalSingleton (PhotonWorkerPool.class);
@@ -102,15 +101,15 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   }
 
   @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction) throws Exception
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction) throws Exception
   {
     CONDLOG.debug ( () -> "ph-oton worker pool about to be closed");
     ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
     CONDLOG.info ("ph-oton worker pool was closed!");
   }
 
-  @Nonnull
-  public CompletableFuture <Void> run (@Nonnull final String sActionName, @Nonnull final Runnable aRunnable)
+  @NonNull
+  public CompletableFuture <Void> run (@NonNull final String sActionName, @NonNull final Runnable aRunnable)
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
@@ -131,9 +130,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     }, m_aES);
   }
 
-  @Nonnull
-  public CompletableFuture <Void> runThrowing (@Nonnull final String sActionName,
-                                               @Nonnull final IThrowingRunnable <? extends Exception> aRunnable)
+  @NonNull
+  public CompletableFuture <Void> runThrowing (@NonNull final String sActionName,
+                                               @NonNull final IThrowingRunnable <? extends Exception> aRunnable)
   {
     return CompletableFuture.runAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
@@ -154,8 +153,8 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     }, m_aES);
   }
 
-  @Nonnull
-  public <T> CompletableFuture <T> supply (@Nonnull final String sActionName, @Nonnull final Supplier <T> aSupplier)
+  @NonNull
+  public <T> CompletableFuture <T> supply (@NonNull final String sActionName, @NonNull final Supplier <T> aSupplier)
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();
@@ -177,9 +176,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     }, m_aES);
   }
 
-  @Nonnull
-  public <T> CompletableFuture <T> supplyThrowing (@Nonnull final String sActionName,
-                                                   @Nonnull final IThrowingSupplier <T, ? extends Exception> aSupplier)
+  @NonNull
+  public <T> CompletableFuture <T> supplyThrowing (@NonNull final String sActionName,
+                                                   @NonNull final IThrowingSupplier <T, ? extends Exception> aSupplier)
   {
     return CompletableFuture.supplyAsync ( () -> {
       final StopWatch aSW = StopWatch.createdStarted ();

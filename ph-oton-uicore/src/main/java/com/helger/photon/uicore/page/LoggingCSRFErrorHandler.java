@@ -16,11 +16,10 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Logging implementation of {@link ICSRFErrorHandler}
@@ -31,9 +30,9 @@ public class LoggingCSRFErrorHandler implements ICSRFErrorHandler
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingCSRFErrorHandler.class);
 
-  public void onCSRFError (@Nonnull final IWebPageExecutionContext aWPEC,
+  public void onCSRFError (@NonNull final IWebPageExecutionContext aWPEC,
                            @Nullable final String sProvidedNonce,
-                           @Nonnull final String sExpectedNone)
+                           @NonNull final String sExpectedNone)
   {
     LOGGER.error ("The expected CSRF nonce on page '" +
                   aWPEC.getWebPage ().getID () +

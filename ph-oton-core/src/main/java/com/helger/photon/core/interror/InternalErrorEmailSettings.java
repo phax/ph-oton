@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.interror;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.array.ArrayHelper;
@@ -27,9 +30,6 @@ import com.helger.collection.CollectionFind;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.smtp.settings.ISMTPSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special email settings for Internal Error handling.
@@ -47,7 +47,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
   public InternalErrorEmailSettings ()
   {}
 
-  public InternalErrorEmailSettings (@Nonnull final InternalErrorEmailSettings aOther)
+  public InternalErrorEmailSettings (@NonNull final InternalErrorEmailSettings aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aSMTPSettings = aOther.m_aSMTPSettings;
@@ -55,7 +55,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
     m_aReceiverAddresses.setAll (aOther.m_aReceiverAddresses);
   }
 
-  @Nonnull
+  @NonNull
   public InternalErrorEmailSettings setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
     m_aSMTPSettings = aSMTPSettings;
@@ -68,7 +68,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
     return m_aSMTPSettings;
   }
 
-  @Nonnull
+  @NonNull
   public InternalErrorEmailSettings setSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
     m_aSenderAddress = aSenderAddress;
@@ -81,13 +81,13 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
     return m_aSenderAddress;
   }
 
-  @Nonnull
+  @NonNull
   public InternalErrorEmailSettings setReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
     return setReceiverAddresses (aReceiverAddress == null ? null : new CommonsArrayList <> (aReceiverAddress));
   }
 
-  @Nonnull
+  @NonNull
   public InternalErrorEmailSettings setReceiverAddresses (@Nullable final Iterable <? extends IEmailAddress> aReceiverAddresses)
   {
     if (aReceiverAddresses != null && CollectionFind.containsAnyNullElement (aReceiverAddresses))
@@ -97,7 +97,7 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public InternalErrorEmailSettings setReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
     if (aReceiverAddresses != null && ArrayHelper.containsAnyNullElement (aReceiverAddresses))
@@ -107,14 +107,14 @@ public final class InternalErrorEmailSettings implements ICloneable <InternalErr
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IEmailAddress> getAllReceiverAddresses ()
   {
     return m_aReceiverAddresses.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public InternalErrorEmailSettings getClone ()
   {

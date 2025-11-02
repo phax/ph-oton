@@ -19,6 +19,8 @@ package com.helger.photon.api.pathdescriptor;
 import java.io.Serializable;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -31,8 +33,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.url.codec.URLCoder;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * This class keeps a list of {@link PathDescriptorPart} objects that are created when initially
  * parsing an API path. It consists of plain string parts as well as of dynamic (variable) parts.
@@ -44,14 +44,14 @@ public final class PathDescriptor implements Serializable
 {
   private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList <> ();
 
-  private PathDescriptor (@Nonnull @Nonempty final List <String> aPathParts)
+  private PathDescriptor (@NonNull @Nonempty final List <String> aPathParts)
   {
     ValueEnforcer.notEmpty (aPathParts, "PathParts");
     for (final String sPathPart : aPathParts)
       m_aPathParts.add (PathDescriptorPart.create (sPathPart));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <PathDescriptorPart> getAllParts ()
   {
@@ -68,8 +68,8 @@ public final class PathDescriptor implements Serializable
    * @return A non-<code>null</code> {@link PathMatchingResult} object with all matching variable
    *         names.
    */
-  @Nonnull
-  public PathMatchingResult matchesParts (@Nonnull final List <String> aPathParts)
+  @NonNull
+  public PathMatchingResult matchesParts (@NonNull final List <String> aPathParts)
   {
     ValueEnforcer.notNull (aPathParts, "PathParts");
     final int nPartCount = m_aPathParts.size ();
@@ -102,7 +102,7 @@ public final class PathDescriptor implements Serializable
     return PathMatchingResult.createSuccess (aVariableValues);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAsURLString ()
   {
@@ -140,8 +140,8 @@ public final class PathDescriptor implements Serializable
     return new ToStringGenerator (null).append ("PathParts", m_aPathParts).getToString ();
   }
 
-  @Nonnull
-  public static PathDescriptor create (@Nonnull @Nonempty final String sPath)
+  @NonNull
+  public static PathDescriptor create (@NonNull @Nonempty final String sPath)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
 

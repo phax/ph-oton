@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.string.StringHelper;
 import com.helger.commons.gfx.ImageDataManager;
 import com.helger.html.hc.html.embedded.AbstractHCImg;
@@ -24,8 +26,6 @@ import com.helger.photon.io.WebFileIO;
 import com.helger.servlet.ServletContextPathHolder;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An extended image that tries to deduce the extent from the image payload.
@@ -36,7 +36,7 @@ public class HCExtImg extends AbstractHCImg <HCExtImg>
 {
   private final IReadableResource m_aImgResource;
 
-  public HCExtImg (@Nonnull final ISimpleURL aSrc)
+  public HCExtImg (@NonNull final ISimpleURL aSrc)
   {
     setSrc (aSrc);
 
@@ -62,7 +62,7 @@ public class HCExtImg extends AbstractHCImg <HCExtImg>
    *         non-existing resource.
    * @since 8.2.10
    */
-  @Nonnull
+  @NonNull
   public final IReadableResource getImgResource ()
   {
     return m_aImgResource;

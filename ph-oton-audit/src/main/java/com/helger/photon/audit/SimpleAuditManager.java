@@ -18,6 +18,9 @@ package com.helger.photon.audit;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.ELockType;
 import com.helger.annotation.concurrent.IsLocked;
@@ -38,9 +41,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The class handles audit actions in a very simple way. All actions are synchronously written to a
@@ -66,7 +66,7 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
    *         In case reading failed
    */
   public SimpleAuditManager (@Nullable final String sFilename,
-                             @Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
+                             @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
   {
     super (AuditItem.class, sFilename);
     m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "UserIDProvider");
@@ -75,28 +75,28 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
 
   @Override
   @IsLocked (ELockType.WRITE)
-  protected void onRecoveryCreate (@Nonnull final AuditItem aItem)
+  protected void onRecoveryCreate (@NonNull final AuditItem aItem)
   {
     m_aItems.internalAddItem (aItem);
   }
 
   @Override
   @IsLocked (ELockType.WRITE)
-  protected void onRecoveryUpdate (@Nonnull final AuditItem aElement)
+  protected void onRecoveryUpdate (@NonNull final AuditItem aElement)
   {
     throw new UnsupportedOperationException ();
   }
 
   @Override
   @IsLocked (ELockType.WRITE)
-  protected void onRecoveryDelete (@Nonnull final AuditItem aElement)
+  protected void onRecoveryDelete (@NonNull final AuditItem aElement)
   {
     throw new UnsupportedOperationException ();
   }
 
   @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  @NonNull
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     AuditManager.readFromXML (aDoc, m_aItems::internalAddItem);
     // read-only :)
@@ -114,8 +114,8 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
     return aDoc;
   }
 
-  public void createAuditItem (@Nonnull final EAuditActionType eActionType,
-                               @Nonnull final ESuccess eSuccess,
+  public void createAuditItem (@NonNull final EAuditActionType eActionType,
+                               @NonNull final ESuccess eSuccess,
                                @Nullable final ObjectType aActionObjectType,
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
@@ -141,14 +141,14 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
     return m_aRWLock.readLockedInt (m_aItems::getItemCount);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IAuditItem> getAllAuditItems ()
   {
     return m_aRWLock.readLockedGet (m_aItems::getAllItems);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {

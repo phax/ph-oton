@@ -24,14 +24,14 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A single field for exporting.
@@ -44,13 +44,13 @@ public class ExportRecordField implements IExportRecordField
   private final EExportDataType m_eFieldType;
   private final Object m_aValue;
 
-  protected ExportRecordField (@Nonnull final EExportDataType eFieldType, @Nullable final Object aValue)
+  protected ExportRecordField (@NonNull final EExportDataType eFieldType, @Nullable final Object aValue)
   {
     m_eFieldType = ValueEnforcer.notNull (eFieldType, "FieldType");
     m_aValue = aValue;
   }
 
-  @Nonnull
+  @NonNull
   public EExportDataType getFieldType ()
   {
     return m_eFieldType;
@@ -85,7 +85,7 @@ public class ExportRecordField implements IExportRecordField
     return new ToStringGenerator (this).append ("fieldType", m_eFieldType).append ("value", m_aValue).getToString ();
   }
 
-  @Nonnull
+  @NonNull
   public static EExportDataType autoDetermineType (@Nullable final Object aValue)
   {
     if (aValue != null)
@@ -112,103 +112,103 @@ public class ExportRecordField implements IExportRecordField
     return EExportDataType.TEXT;
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final Object aValue)
   {
     return new ExportRecordField (autoDetermineType (aValue), aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final String sValue)
   {
     return new ExportRecordField (EExportDataType.TEXT, sValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final LocalDate aValue)
   {
     return new ExportRecordField (EExportDataType.DATE, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final LocalTime aValue)
   {
     return new ExportRecordField (EExportDataType.TIME, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final LocalDateTime aValue)
   {
     return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final ZonedDateTime aValue)
   {
     return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final OffsetDateTime aValue)
   {
     return new ExportRecordField (EExportDataType.DATETIME, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (final boolean bValue)
   {
     return create (Boolean.valueOf (bValue));
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final Boolean aValue)
   {
     return new ExportRecordField (EExportDataType.BOOLEAN, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (final int nValue)
   {
     return create (Integer.valueOf (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final Integer aValue)
   {
     return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (final long nValue)
   {
     return create (Long.valueOf (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final Long aValue)
   {
     return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final BigInteger aValue)
   {
     return new ExportRecordField (EExportDataType.INT, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (final double dValue)
   {
     return create (Double.valueOf (dValue));
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final Double aValue)
   {
     return new ExportRecordField (EExportDataType.DOUBLE, aValue);
   }
 
-  @Nonnull
+  @NonNull
   public static ExportRecordField create (@Nullable final BigDecimal aValue)
   {
     return new ExportRecordField (EExportDataType.DOUBLE, aValue);

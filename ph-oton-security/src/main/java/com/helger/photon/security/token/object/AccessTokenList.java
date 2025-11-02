@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -30,9 +33,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.security.token.accesstoken.AccessToken;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * List of {@link AccessToken} objects.
@@ -53,14 +53,14 @@ public class AccessTokenList implements IAccessTokenList
     return aAccessToken != null && !aAccessToken.isRevoked () ? aAccessToken : null;
   }
 
-  public AccessTokenList (@Nonnull @Nonempty final List <AccessToken> aAccessTokens)
+  public AccessTokenList (@NonNull @Nonempty final List <AccessToken> aAccessTokens)
   {
     ValueEnforcer.notEmptyNoNullValue (aAccessTokens, "AccessTokens");
     m_aAccessTokens = new CommonsArrayList <> (aAccessTokens);
     m_aActiveAccessToken = _getIfNotRevoked (CollectionFind.getLastElement (aAccessTokens));
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public ICommonsList <AccessToken> getAllAccessTokens ()
@@ -80,10 +80,10 @@ public class AccessTokenList implements IAccessTokenList
     return m_aActiveAccessToken;
   }
 
-  @Nonnull
-  public EChange revokeActiveAccessToken (@Nonnull @Nonempty final String sRevocationUserID,
-                                          @Nonnull final LocalDateTime aRevocationDT,
-                                          @Nonnull @Nonempty final String sRevocationReason)
+  @NonNull
+  public EChange revokeActiveAccessToken (@NonNull @Nonempty final String sRevocationUserID,
+                                          @NonNull final LocalDateTime aRevocationDT,
+                                          @NonNull @Nonempty final String sRevocationReason)
   {
     if (m_aActiveAccessToken == null)
     {
@@ -96,7 +96,7 @@ public class AccessTokenList implements IAccessTokenList
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public AccessToken createNewAccessToken (@Nullable final String sTokenString)
   {
     if (m_aActiveAccessToken != null)

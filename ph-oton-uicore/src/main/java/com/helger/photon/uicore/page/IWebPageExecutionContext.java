@@ -16,26 +16,26 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.equals.EqualsHelper;
 import com.helger.html.hc.impl.HCNodeList;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.css.CPageParam;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public interface IWebPageExecutionContext extends ILayoutExecutionContext
 {
   /**
    * @return The invoked web page. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IWebPage <? extends IWebPageExecutionContext> getWebPage ();
 
   /**
    * @return The node list to be filled with content. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   HCNodeList getNodeList ();
 
   /**

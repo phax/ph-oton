@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the allowed values for the "inputmode" attribute
@@ -83,12 +83,12 @@ public enum EHCInputMode implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCInputMode (@Nonnull @Nonempty final String sAttrValue)
+  EHCInputMode (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

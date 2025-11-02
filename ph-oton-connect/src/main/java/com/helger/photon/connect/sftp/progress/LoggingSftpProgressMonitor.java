@@ -16,6 +16,7 @@
  */
 package com.helger.photon.connect.sftp.progress;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +25,6 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.jcraft.jsch.SftpProgressMonitor;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link SftpProgressMonitor} that logs progress.
@@ -70,9 +69,9 @@ public class LoggingSftpProgressMonitor implements SftpProgressMonitor
    *         empty.
    */
   @OverrideOnDemand
-  @Nonnull
+  @NonNull
   @Nonempty
-  protected String getLogMessage (@Nonnull final String sOperation, final long nCount, final long nMax, final long nPerc)
+  protected String getLogMessage (@NonNull final String sOperation, final long nCount, final long nMax, final long nPerc)
   {
     return sOperation + " Completed " + nCount + " out of " + nMax + " (" + nPerc + "%).";
   }

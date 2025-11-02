@@ -18,15 +18,15 @@ package com.helger.photon.security.password.constraint;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Password constraint defining the minimum length (incl.)
@@ -63,12 +63,12 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
   }
 
   @Nullable
-  public String getDescription (@Nonnull final Locale aContentLocale)
+  public String getDescription (@NonNull final Locale aContentLocale)
   {
     return EPasswordConstraintText.DESC_MIN_LENGTH.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinLength));
   }
 
-  public void fillMicroElement (@Nonnull final IMicroElement aElement)
+  public void fillMicroElement (@NonNull final IMicroElement aElement)
   {
     aElement.setAttribute (ATTR_MIN_LENGTH, m_nMinLength);
   }

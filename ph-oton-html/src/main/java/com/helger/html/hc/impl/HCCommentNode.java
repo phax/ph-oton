@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroComment;
 import com.helger.xml.microdom.MicroComment;
 import com.helger.xml.serialize.write.XMLEmitter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single CDATA node as HC node.
@@ -46,15 +46,15 @@ public class HCCommentNode extends AbstractHCNode
   /**
    * @return The unescaped comment text. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final String getText ()
   {
     return m_sText;
   }
 
   @Override
-  @Nonnull
-  protected IMicroComment internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroComment internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return new MicroComment (m_sText);
   }

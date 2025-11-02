@@ -18,6 +18,8 @@ package com.helger.photon.core.appid;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.photon.core.locale.GlobalLocaleManager;
@@ -31,8 +33,6 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * XServlet filter responsible for remembering the application ID in the current
  * request
@@ -43,12 +43,12 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
 {
   private final String m_sAppID;
 
-  public XServletFilterAppIDExplicit (@Nonnull @Nonempty final String sAppID)
+  public XServletFilterAppIDExplicit (@NonNull @Nonempty final String sAppID)
   {
     m_sAppID = ValueEnforcer.notEmpty (sAppID, "AppID");
   }
 
-  public static void setStatePerApp (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull final String sAppID)
+  public static void setStatePerApp (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final String sAppID)
   {
     // It's important to create a session here!
     final PhotonSessionState aSessionState = PhotonSessionState.getInstance ();
@@ -140,12 +140,12 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     RequestSettings.setRequestState (aRequestScope, sAppID, new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
   }
 
-  public void beforeRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public void beforeRequest (@NonNull final IRequestWebScope aRequestScope)
   {
     setStatePerApp (aRequestScope, m_sAppID);
   }
 
-  public void afterRequest (@Nonnull final IRequestWebScope aRequestScope)
+  public void afterRequest (@NonNull final IRequestWebScope aRequestScope)
   {
     // empty
   }

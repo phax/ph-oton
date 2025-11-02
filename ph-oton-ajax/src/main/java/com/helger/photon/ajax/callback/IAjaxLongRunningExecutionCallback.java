@@ -16,13 +16,13 @@
  */
 package com.helger.photon.ajax.callback;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.callback.ICallback;
 import com.helger.photon.ajax.IAjaxInvoker;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to be used with the {@link IAjaxInvoker} to get notified
@@ -46,9 +46,9 @@ public interface IAjaxLongRunningExecutionCallback extends ICallback
    * @param nExecutionMillis
    *        The execution time in milliseconds
    */
-  void onLongRunningExecution (@Nonnull IAjaxInvoker aInvoker,
-                               @Nonnull String sFunctionName,
-                               @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                               @Nonnull IAjaxExecutor aAjaxHandler,
+  void onLongRunningExecution (@NonNull IAjaxInvoker aInvoker,
+                               @NonNull String sFunctionName,
+                               @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                               @NonNull IAjaxExecutor aAjaxHandler,
                                @Nonnegative long nExecutionMillis);
 }

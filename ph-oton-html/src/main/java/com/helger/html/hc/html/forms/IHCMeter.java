@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.hc.html.IHCElementWithChildren;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.html.IHCElementWithChildren;
 
 /**
  * Interface for METERs
@@ -31,31 +31,31 @@ public interface IHCMeter <IMPLTYPE extends IHCMeter <IMPLTYPE>> extends IHCElem
 {
   double getValue ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setValue (double dValue);
 
   double getMin ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMin (double dMin);
 
   double getMax ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setMax (double dMax);
 
   double getLow ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setLow (double dLow);
 
   double getHigh ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHigh (double dHigh);
 
   double getOptimum ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setOptimum (double dOptimum);
 }

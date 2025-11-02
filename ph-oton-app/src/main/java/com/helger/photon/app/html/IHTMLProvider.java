@@ -16,10 +16,10 @@
  */
 package com.helger.photon.app.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.html.root.HCHtml;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an HTML creator
@@ -36,6 +36,6 @@ public interface IHTMLProvider
    *        The current request. Never <code>null</code>.
    * @return The created HTML content. May not be <code>null</code>.
    */
-  @Nonnull
-  HCHtml createHTML (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  @NonNull
+  HCHtml createHTML (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 }

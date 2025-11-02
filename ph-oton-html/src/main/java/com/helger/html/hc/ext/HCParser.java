@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +28,6 @@ import com.helger.html.hc.impl.HCTextNode;
 import com.helger.html.parser.XHTMLParser;
 import com.helger.xml.microdom.IMicroContainer;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A special XHTML parser that can convert nodes to {@link IHCNode}s.
  *
@@ -38,7 +37,7 @@ public class HCParser extends XHTMLParser
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (HCParser.class);
 
-  public HCParser (@Nonnull final EHTMLVersion eHTMLVersion)
+  public HCParser (@NonNull final EHTMLVersion eHTMLVersion)
   {
     super (eHTMLVersion);
   }
@@ -53,7 +52,7 @@ public class HCParser extends XHTMLParser
    *         (e.g. an {@link HCTextNode} or an {@link HCDOMWrapper} with an
    *         {@link IMicroContainer} having all the body elements)
    */
-  @Nonnull
+  @NonNull
   public IHCNode convertToXHTMLFragmentOnDemand (@Nullable final String sText)
   {
     if (looksLikeXHTML (sText))

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uicore.page.handler;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract, generic implementation of {@link IWebPageActionHandler}.
@@ -46,7 +46,7 @@ public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <Str
   private final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> m_aUIHandler;
 
   protected AbstractWebPageActionHandler (final boolean bSelectedObjectRequired,
-                                          @Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
+                                          @NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler)
   {
     m_bSelectedObjectRequired = bSelectedObjectRequired;
     m_aUIHandler = ValueEnforcer.notNull (aUIHandler, "UIHandler");
@@ -57,7 +57,7 @@ public abstract class AbstractWebPageActionHandler <DATATYPE extends IHasID <Str
     return m_bSelectedObjectRequired;
   }
 
-  @Nonnull
+  @NonNull
   protected final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> getUIHandler ()
   {
     return m_aUIHandler;

@@ -20,13 +20,13 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.compare.CompareHelper;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.text.compare.ComparatorHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DTOrderSpec
 {
@@ -41,7 +41,7 @@ public class DTOrderSpec
   public DTOrderSpec ()
   {}
 
-  public void setFrom (@Nonnull final DTOrderSpec aOther)
+  public void setFrom (@NonNull final DTOrderSpec aOther)
   {
     m_aComparableExtractor = aOther.m_aComparableExtractor;
     m_bCollating = aOther.m_bCollating;
@@ -66,7 +66,7 @@ public class DTOrderSpec
    * @param <T>
    *        the data type to be used for comparison
    */
-  @Nonnull
+  @NonNull
   public <T extends Comparable <? super T>> DTOrderSpec setComparableExtractor (@Nullable final Function <String, String> aFormatter,
                                                                                 @Nullable final IComparableExtractor <T> aComparableExtractor)
   {
@@ -92,7 +92,7 @@ public class DTOrderSpec
     return m_bCollating;
   }
 
-  @Nonnull
+  @NonNull
   public DTOrderSpec setCollating (final boolean bCollating)
   {
     if (bCollating != m_bCollating)
@@ -110,8 +110,8 @@ public class DTOrderSpec
     return m_aDisplayLocale;
   }
 
-  @Nonnull
-  public DTOrderSpec setDisplayLocale (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public DTOrderSpec setDisplayLocale (@NonNull final Locale aDisplayLocale)
   {
     if (!EqualsHelper.equals (aDisplayLocale, m_aDisplayLocale))
     {
@@ -126,7 +126,7 @@ public class DTOrderSpec
    * @return A Comparator independent of the sort order and without <code>null</code> handling.
    */
   @SuppressWarnings ({ "unchecked", "rawtypes" })
-  @Nonnull
+  @NonNull
   public Comparator <String> getComparator ()
   {
     // Cached version available?

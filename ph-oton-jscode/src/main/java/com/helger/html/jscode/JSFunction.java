@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * JS function declaration
@@ -64,14 +64,14 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    * @param sName
    *        Name of this function
    */
-  public JSFunction (@Nonnull @Nonempty final String sName)
+  public JSFunction (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   public String name ()
   {
     return m_sName;
@@ -84,8 +84,8 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    *        new function name
    * @return this
    */
-  @Nonnull
-  public JSFunction name (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSFunction name (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
@@ -98,7 +98,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    *
    * @return List of parameters of this function. This list is not modifiable.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <JSParam> params ()
   {
@@ -113,8 +113,8 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    *        Name of the parameter being added
    * @return New parameter variable
    */
-  @Nonnull
-  public JSParam param (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSParam param (@NonNull @Nonempty final String sName)
   {
     final JSParam aVar = new JSParam (sName);
     m_aParams.add (aVar);
@@ -133,7 +133,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
     return m_aParams.getAtIndex (nIndex);
   }
 
-  @Nonnull
+  @NonNull
   public JSFunction removeAllParams ()
   {
     m_aParams.clear ();
@@ -145,7 +145,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    *
    * @return Body of function
    */
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -158,7 +158,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
    *
    * @return {@link JSCommentMultiLine} containing JSDocs for this class
    */
-  @Nonnull
+  @NonNull
   public JSCommentMultiLine jsDoc ()
   {
     if (m_aJSDoc == null)
@@ -166,13 +166,13 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
     return m_aJSDoc;
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation invoke ()
   {
     return new JSInvocation (this);
   }
 
-  @Nonnull
+  @NonNull
   public JSAnonymousFunction getAsAnonymousFunction ()
   {
     // No name required for anonymous function
@@ -180,7 +180,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   }
 
   @Override
-  public void declare (@Nonnull final JSFormatter aFormatter)
+  public void declare (@NonNull final JSFormatter aFormatter)
   {
     if (m_aJSDoc != null)
       aFormatter.generatable (m_aJSDoc);

@@ -43,6 +43,7 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.util.thread.ThreadPool;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +58,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.system.SystemProperties;
 import com.helger.io.file.FilenameHelper;
 
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 /**
@@ -108,12 +108,12 @@ public class JettyStarter
   private boolean m_bAllowDirectoryListing = DEFAULT_ALLOW_DIRECTORY_LISTING;
   private String m_sSessionCookieName = DEFAULT_SESSION_COOKIE_NAME;
 
-  public JettyStarter (@Nonnull final Class <?> aAppClass)
+  public JettyStarter (@NonNull final Class <?> aAppClass)
   {
     this (ClassHelper.getClassLocalName (aAppClass));
   }
 
-  public JettyStarter (@Nonnull @Nonempty final String sAppName)
+  public JettyStarter (@NonNull @Nonempty final String sAppName)
   {
     ValueEnforcer.notEmpty (sAppName, "AppName");
     m_sAppName = sAppName;
@@ -129,14 +129,14 @@ public class JettyStarter
     System.setProperty ("log4j2.disable.jmx", "true");
   }
 
-  @Nonnull
+  @NonNull
   public ResourceFactory getResourceFactory ()
   {
     return m_aRF;
   }
 
-  @Nonnull
-  public final JettyStarter setResourceFactory (@Nonnull final ResourceFactory a)
+  @NonNull
+  public final JettyStarter setResourceFactory (@NonNull final ResourceFactory a)
   {
     ValueEnforcer.notNull (a, "ResourceFactory");
     m_aRF = a;
@@ -159,7 +159,7 @@ public class JettyStarter
    *        The port to be used. Must be &gt; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setPort (@Nonnegative final int nPort)
   {
     ValueEnforcer.isGT0 (nPort, "Port");
@@ -180,14 +180,14 @@ public class JettyStarter
    *        <code>true</code> to enable it, <code>false</code> to disable it.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setRunStopMonitor (final boolean bRunStopMonitor)
   {
     m_bRunStopMonitor = bRunStopMonitor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public String getStopKey ()
   {
     return m_sStopKey;
@@ -201,8 +201,8 @@ public class JettyStarter
    *        The stop key to be used. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public final JettyStarter setStopKey (@Nonnull final String sStopKey)
+  @NonNull
+  public final JettyStarter setStopKey (@NonNull final String sStopKey)
   {
     ValueEnforcer.notNull (sStopKey, "StopKey");
     m_sStopKey = sStopKey;
@@ -223,7 +223,7 @@ public class JettyStarter
    *        The stop port to be used. Must be &gt; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setStopPort (@Nonnegative final int nStopPort)
   {
     ValueEnforcer.isGT0 (nStopPort, "StopPort");
@@ -243,8 +243,8 @@ public class JettyStarter
    * @return this for chaining
    * @since 8.3.2
    */
-  @Nonnull
-  public final JettyStarter setStopPort (@Nonnull final IntUnaryOperator aStopPort)
+  @NonNull
+  public final JettyStarter setStopPort (@NonNull final IntUnaryOperator aStopPort)
   {
     ValueEnforcer.notNull (aStopPort, "StopPort");
     m_aStopPort = aStopPort;
@@ -262,14 +262,14 @@ public class JettyStarter
    *        passivation of sessions.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setSpecialSessionMgr (final boolean bSpecialSessionMgr)
   {
     m_bSpecialSessionMgr = bSpecialSessionMgr;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public Resource getResourceBase ()
   {
     return m_aResourceBase;
@@ -283,8 +283,8 @@ public class JettyStarter
    *        The path. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public final JettyStarter setResourceBase (@Nonnull @Nonempty final String sResourceBase)
+  @NonNull
+  public final JettyStarter setResourceBase (@NonNull @Nonempty final String sResourceBase)
   {
     ValueEnforcer.notEmpty (sResourceBase, "ResourceBase");
     return setResourceBase (m_aRF.newResource (sResourceBase));
@@ -298,8 +298,8 @@ public class JettyStarter
    *        The resource. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public final JettyStarter setResourceBase (@Nonnull final Resource aResourceBase)
+  @NonNull
+  public final JettyStarter setResourceBase (@NonNull final Resource aResourceBase)
   {
     ValueEnforcer.notNull (aResourceBase, "ResourceBase");
     m_aResourceBase = aResourceBase;
@@ -320,14 +320,14 @@ public class JettyStarter
    *        web.xml resource. May be <code>null</code>.
    * @return this for chaining.
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setWebXmlResource (@Nullable final String sWebXmlResource)
   {
     m_sWebXmlResource = sWebXmlResource;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getContextPath ()
   {
@@ -343,8 +343,8 @@ public class JettyStarter
    *        slash.
    * @return this for chaining
    */
-  @Nonnull
-  public final JettyStarter setContextPath (@Nonnull @Nonempty final String sContextPath)
+  @NonNull
+  public final JettyStarter setContextPath (@NonNull @Nonempty final String sContextPath)
   {
     ValueEnforcer.notEmpty (sContextPath, "sContextPath");
     m_sContextPath = sContextPath;
@@ -365,7 +365,7 @@ public class JettyStarter
    *        The new container JAR pattern. May be <code>null</code> to use the default.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setContainerIncludeJarPattern (@Nullable final String sContainerIncludeJarPattern)
   {
     m_sContainerIncludeJarPattern = sContainerIncludeJarPattern;
@@ -378,7 +378,7 @@ public class JettyStarter
     return m_sWebInfIncludeJarPattern;
   }
 
-  @Nonnull
+  @NonNull
   public final JettyStarter setWebInfIncludeJarPattern (@Nullable final String sWebInfIncludeJarPattern)
   {
     m_sWebInfIncludeJarPattern = sWebInfIncludeJarPattern;
@@ -399,7 +399,7 @@ public class JettyStarter
    * @return this
    * @since 7.0.6
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setThreadPool (@Nullable final ThreadPool aThreadPool)
   {
     m_aThreadPool = aThreadPool;
@@ -420,7 +420,7 @@ public class JettyStarter
    * @return this
    * @since 8.0.0
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setAllowAnnotationBasedConfig (final boolean bAllowAnnotationBasedConfig)
   {
     m_bAllowAnnotationBasedConfig = bAllowAnnotationBasedConfig;
@@ -440,7 +440,7 @@ public class JettyStarter
    * @return this
    * @since 8.3.7
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setAllowDirectoryListing (final boolean bAllowDirectoryListing)
   {
     m_bAllowDirectoryListing = bAllowDirectoryListing;
@@ -467,7 +467,7 @@ public class JettyStarter
    * @return this for chaining
    * @since 8.1.0
    */
-  @Nonnull
+  @NonNull
   public final JettyStarter setSessionCookieName (@Nullable final String sSessionCookieName)
   {
     m_sSessionCookieName = sSessionCookieName;
@@ -484,7 +484,7 @@ public class JettyStarter
    * @since 8.4.0
    */
   @OverrideOnDemand
-  protected void customizeHttpConfiguration (@Nonnull final HttpConfiguration aHttpConfiguration) throws Exception
+  protected void customizeHttpConfiguration (@NonNull final HttpConfiguration aHttpConfiguration) throws Exception
   {}
 
   /**
@@ -497,7 +497,7 @@ public class JettyStarter
    * @since 8.4.0
    */
   @OverrideOnDemand
-  protected void customizeHttpConnectionFactory (@Nonnull final HttpConnectionFactory aHttpConnectionFactory) throws Exception
+  protected void customizeHttpConnectionFactory (@NonNull final HttpConnectionFactory aHttpConnectionFactory) throws Exception
   {}
 
   /**
@@ -509,7 +509,7 @@ public class JettyStarter
    *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeServerConnector (@Nonnull final ServerConnector aServerConnector) throws Exception
+  protected void customizeServerConnector (@NonNull final ServerConnector aServerConnector) throws Exception
   {}
 
   /**
@@ -521,7 +521,7 @@ public class JettyStarter
    *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeServer (@Nonnull final Server aServer) throws Exception
+  protected void customizeServer (@NonNull final Server aServer) throws Exception
   {}
 
   /**
@@ -533,7 +533,7 @@ public class JettyStarter
    *         in case of error
    */
   @OverrideOnDemand
-  protected void customizeWebAppCtx (@Nonnull final WebAppContext aWebAppCtx) throws Exception
+  protected void customizeWebAppCtx (@NonNull final WebAppContext aWebAppCtx) throws Exception
   {}
 
   /**
@@ -545,8 +545,8 @@ public class JettyStarter
    * @throws Exception
    *         In case of error
    */
-  @Nonnull
-  public WebAppContext createWebAppContext (@Nonnull @Nonempty final String sContextPath) throws Exception
+  @NonNull
+  public WebAppContext createWebAppContext (@NonNull @Nonempty final String sContextPath) throws Exception
   {
     ValueEnforcer.notEmpty (sContextPath, "ContextPath");
     // getTmpDir is e.g. "/tmp"
@@ -632,7 +632,7 @@ public class JettyStarter
    * @throws Exception
    *         in case of error
    */
-  protected void customizeHandlerList (@Nonnull final Handler.Sequence aHandlerList) throws Exception
+  protected void customizeHandlerList (final Handler.@NonNull Sequence aHandlerList) throws Exception
   {}
 
   /**
@@ -645,7 +645,7 @@ public class JettyStarter
    * @since 7.0.2
    */
   @OverrideOnDemand
-  protected void onServerStarted (@Nonnull final Server aServer) throws Exception
+  protected void onServerStarted (@NonNull final Server aServer) throws Exception
   {}
 
   /**
@@ -660,7 +660,7 @@ public class JettyStarter
    * @since 7.0.2
    */
   @OverrideOnDemand
-  protected void onServerStartFailure (@Nonnull final Server aServer, @Nonnull final Throwable t) throws Exception
+  protected void onServerStartFailure (@NonNull final Server aServer, @NonNull final Throwable t) throws Exception
   {}
 
   /**

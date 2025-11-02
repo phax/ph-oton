@@ -19,6 +19,8 @@ package com.helger.photon.exchange.bulkimport;
 import java.util.List;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -30,8 +32,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.photon.exchange.EExchangeFileType;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base class for {@link IBulkImport} implementations.
@@ -45,8 +45,8 @@ public abstract class AbstractBulkImport implements IBulkImport
   private final ICommonsOrderedSet <EExchangeFileType> m_aFileTypes;
 
   protected AbstractBulkImport (@Nonnegative final int nHeaderRowsToSkip,
-                                @Nonnull @Nonempty final List <IHasDisplayText> aColumnNames,
-                                @Nonnull @Nonempty final EExchangeFileType... aFileTypes)
+                                @NonNull @Nonempty final List <IHasDisplayText> aColumnNames,
+                                @NonNull @Nonempty final EExchangeFileType... aFileTypes)
   {
     ValueEnforcer.isGE0 (nHeaderRowsToSkip, "HeaderRowsToSkip");
     ValueEnforcer.notEmptyNoNullValue (aColumnNames, "ColumnNames");
@@ -71,9 +71,9 @@ public abstract class AbstractBulkImport implements IBulkImport
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @Nonempty
-  public final ICommonsList <String> getColumnDescriptions (@Nonnull final Locale aContentLocale)
+  public final ICommonsList <String> getColumnDescriptions (@NonNull final Locale aContentLocale)
   {
     final ICommonsList <String> ret = new CommonsArrayList <> (getColumnCount ());
     for (final IHasDisplayText aColumn : m_aColumnNames)
@@ -82,7 +82,7 @@ public abstract class AbstractBulkImport implements IBulkImport
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public final ICommonsList <EExchangeFileType> getSupportedFileTypes ()

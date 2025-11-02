@@ -18,6 +18,9 @@ package com.helger.photon.security.object.accarea;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.type.ObjectType;
@@ -27,9 +30,6 @@ import com.helger.photon.security.object.StubObject;
 import com.helger.tenancy.accarea.AbstractAccountingArea;
 import com.helger.tenancy.accarea.IAccountingArea;
 import com.helger.tenancy.tenant.ITenant;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IAccountingArea}
@@ -77,13 +77,13 @@ public class AccountingArea extends AbstractAccountingArea
    * @param aDisplayLocale
    *        The display locale to use. May not be <code>null</code>.
    */
-  public AccountingArea (@Nonnull final ITenant aTenant,
-                         @Nonnull @Nonempty final String sDisplayName,
+  public AccountingArea (@NonNull final ITenant aTenant,
+                         @NonNull @Nonempty final String sDisplayName,
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
                          @Nullable final String sCompanyNumber,
                          @Nullable final String sCustomerNumber,
-                         @Nonnull final IPostalAddress aAddress,
+                         @NonNull final IPostalAddress aAddress,
                          @Nullable final String sTelephone,
                          @Nullable final String sFax,
                          @Nullable final String sEmailAddress,
@@ -92,7 +92,7 @@ public class AccountingArea extends AbstractAccountingArea
                          @Nullable final String sOfficeLocation,
                          @Nullable final String sCommercialRegistrationNumber,
                          @Nullable final String sCommercialCourt,
-                         @Nonnull final Locale aDisplayLocale)
+                         @NonNull final Locale aDisplayLocale)
   {
     this (aTenant,
           StubObject.createForCurrentUser (),
@@ -113,14 +113,14 @@ public class AccountingArea extends AbstractAccountingArea
           aDisplayLocale);
   }
 
-  public AccountingArea (@Nonnull final ITenant aTenant,
-                         @Nonnull final StubObject aStubObject,
-                         @Nonnull @Nonempty final String sDisplayName,
+  public AccountingArea (@NonNull final ITenant aTenant,
+                         @NonNull final StubObject aStubObject,
+                         @NonNull @Nonempty final String sDisplayName,
                          @Nullable final String sCompanyType,
                          @Nullable final String sCompanyVATIN,
                          @Nullable final String sCompanyNumber,
                          @Nullable final String sCustomerNumber,
-                         @Nonnull final IPostalAddress aAddress,
+                         @NonNull final IPostalAddress aAddress,
                          @Nullable final String sTelephone,
                          @Nullable final String sFax,
                          @Nullable final String sEmailAddress,
@@ -129,7 +129,7 @@ public class AccountingArea extends AbstractAccountingArea
                          @Nullable final String sOfficeLocation,
                          @Nullable final String sCommercialRegistrationNumber,
                          @Nullable final String sCommercialCourt,
-                         @Nonnull final Locale aDisplayLocale)
+                         @NonNull final Locale aDisplayLocale)
   {
     super (aTenant,
            aStubObject,
@@ -151,7 +151,7 @@ public class AccountingArea extends AbstractAccountingArea
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return OT;

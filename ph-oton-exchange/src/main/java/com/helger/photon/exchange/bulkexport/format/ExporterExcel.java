@@ -23,6 +23,8 @@ import java.util.GregorianCalendar;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.WillClose;
@@ -43,9 +45,6 @@ import com.helger.poi.excel.EExcelVersion;
 import com.helger.poi.excel.WorkbookCreationHelper;
 import com.helger.poi.excel.style.ExcelStyle;
 import com.helger.typeconvert.impl.TypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Export records to Excel workbook.
@@ -70,18 +69,18 @@ public class ExporterExcel implements IExporterFile
   private ExcelStyle m_aStyleDateTime = DEFAULT_STYLE_DATETIME;
   private boolean m_bAutoSizeAllColumns = DEFAULT_AUTOSIZE_ALL_COLUMNS;
 
-  public ExporterExcel (@Nonnull final EExcelVersion eVersion)
+  public ExporterExcel (@NonNull final EExcelVersion eVersion)
   {
     m_eVersion = ValueEnforcer.notNull (eVersion, "Version");
   }
 
-  @Nonnull
+  @NonNull
   public final EExchangeFileType getFileType ()
   {
     return m_eVersion.equals (EExcelVersion.XLS) ? EExchangeFileType.XLS : EExchangeFileType.XLSX;
   }
 
-  @Nonnull
+  @NonNull
   public final EExcelVersion getExcelVersion ()
   {
     return m_eVersion;
@@ -94,7 +93,7 @@ public class ExporterExcel implements IExporterFile
     return m_aStyleBoolean == null ? null : m_aStyleBoolean.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterExcel setStyleBoolean (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleBoolean = aStyle == null ? null : aStyle.getClone ();
@@ -108,7 +107,7 @@ public class ExporterExcel implements IExporterFile
     return m_aStyleInt == null ? null : m_aStyleInt.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterExcel setStyleInt (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleInt = aStyle == null ? null : aStyle.getClone ();
@@ -122,7 +121,7 @@ public class ExporterExcel implements IExporterFile
     return m_aStyleDouble == null ? null : m_aStyleDouble.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterExcel setStyleDouble (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleDouble = aStyle == null ? null : aStyle.getClone ();
@@ -136,50 +135,50 @@ public class ExporterExcel implements IExporterFile
     return m_aStyleText == null ? null : m_aStyleText.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterExcel setStyleText (@Nullable final ExcelStyle aStyle)
   {
     m_aStyleText = aStyle == null ? null : aStyle.getClone ();
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ExcelStyle getStyleDate ()
   {
     return m_aStyleDate.getClone ();
   }
 
-  @Nonnull
-  public final ExporterExcel setStyleDate (@Nonnull final ExcelStyle aStyle)
+  @NonNull
+  public final ExporterExcel setStyleDate (@NonNull final ExcelStyle aStyle)
   {
     m_aStyleDate = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ExcelStyle getStyleTime ()
   {
     return m_aStyleTime.getClone ();
   }
 
-  @Nonnull
-  public final ExporterExcel setStyleTime (@Nonnull final ExcelStyle aStyle)
+  @NonNull
+  public final ExporterExcel setStyleTime (@NonNull final ExcelStyle aStyle)
   {
     m_aStyleTime = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ExcelStyle getStyleDateTime ()
   {
     return m_aStyleDateTime.getClone ();
   }
 
-  @Nonnull
-  public final ExporterExcel setStyleDateTime (@Nonnull final ExcelStyle aStyle)
+  @NonNull
+  public final ExporterExcel setStyleDateTime (@NonNull final ExcelStyle aStyle)
   {
     m_aStyleDateTime = ValueEnforcer.notNull (aStyle, "Style").getClone ();
     return this;
@@ -190,7 +189,7 @@ public class ExporterExcel implements IExporterFile
     return m_bAutoSizeAllColumns;
   }
 
-  @Nonnull
+  @NonNull
   public final ExporterExcel setAutoSizeAllColumns (final boolean bAutoSizeAllColumns)
   {
     m_bAutoSizeAllColumns = bAutoSizeAllColumns;
@@ -210,9 +209,9 @@ public class ExporterExcel implements IExporterFile
    *        The 0-based total index of the row (including header)
    */
   @OverrideOnDemand
-  protected void onAddRow (@Nonnull final WorkbookCreationHelper aWBCH,
-                           @Nonnull final EExportRecordType eRecordType,
-                           @Nonnull final Row aRow,
+  protected void onAddRow (@NonNull final WorkbookCreationHelper aWBCH,
+                           @NonNull final EExportRecordType eRecordType,
+                           @NonNull final Row aRow,
                            @Nonnegative final int nRowIndex)
   {}
 
@@ -231,16 +230,16 @@ public class ExporterExcel implements IExporterFile
    *        The data type of the last cells data.
    */
   @OverrideOnDemand
-  protected void onAddCell (@Nonnull final WorkbookCreationHelper aWBCH,
-                            @Nonnull final EExportRecordType eRecordType,
-                            @Nonnull final Cell aCell,
+  protected void onAddCell (@NonNull final WorkbookCreationHelper aWBCH,
+                            @NonNull final EExportRecordType eRecordType,
+                            @NonNull final Cell aCell,
                             @Nonnegative final int nCellIndex,
-                            @Nonnull final EExportDataType eBaseType)
+                            @NonNull final EExportDataType eBaseType)
   {}
 
-  private void _emitRecord (@Nonnull final WorkbookCreationHelper aWBCH,
-                            @Nonnull final EExportRecordType eRecordType,
-                            @Nonnull final IExportRecord aRecord)
+  private void _emitRecord (@NonNull final WorkbookCreationHelper aWBCH,
+                            @NonNull final EExportRecordType eRecordType,
+                            @NonNull final IExportRecord aRecord)
   {
     final int nRowIndex = aWBCH.getRowCount ();
     final Row aRow = aWBCH.addRow ();
@@ -313,9 +312,9 @@ public class ExporterExcel implements IExporterFile
     }
   }
 
-  @Nonnull
-  public final ESuccess exportRecords (@Nonnull final IExportRecordProvider aProvider,
-                                       @Nonnull @WillClose final OutputStream aOS)
+  @NonNull
+  public final ESuccess exportRecords (@NonNull final IExportRecordProvider aProvider,
+                                       @NonNull @WillClose final OutputStream aOS)
   {
     ValueEnforcer.notNull (aProvider, "Provider");
     ValueEnforcer.notNull (aOS, "OutputStream");

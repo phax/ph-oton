@@ -16,6 +16,9 @@
  */
 package com.helger.photon.core.appid;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class maintains the session state per application ID
@@ -51,7 +51,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    * @return The one and only instance for the current session. Never <code>null</code>.
    * @see #getInstanceIfInstantiated()
    */
-  @Nonnull
+  @NonNull
   public static PhotonSessionState getInstance ()
   {
     return getSessionSingleton (PhotonSessionState.class);
@@ -95,14 +95,14 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
    *        The app ID to get the state for. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public PhotonSessionStatePerApp state (@Nonnull @Nonempty final String sAppID)
+  @NonNull
+  public PhotonSessionStatePerApp state (@NonNull @Nonempty final String sAppID)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     return m_aStateMap.computeIfAbsent (sAppID, k -> new PhotonSessionStatePerApp ());
   }
 
-  @Nonnull
+  @NonNull
   public PhotonSessionStatePerApp stateLastAppID ()
   {
     return state (getLastApplicationID ());

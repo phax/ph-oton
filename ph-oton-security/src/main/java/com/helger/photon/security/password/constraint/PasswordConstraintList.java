@@ -18,6 +18,9 @@ package com.helger.photon.security.password.constraint;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The default implementation of {@link IPasswordConstraintList}.
@@ -44,7 +44,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
   public PasswordConstraintList ()
   {}
 
-  public PasswordConstraintList (@Nonnull final IPasswordConstraintList aOther)
+  public PasswordConstraintList (@NonNull final IPasswordConstraintList aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aConstraints.addAll (aOther.getAllPasswordConstraints ());
@@ -75,7 +75,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
     return m_aConstraints.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IPasswordConstraint> getAllPasswordConstraints ()
   {
@@ -89,8 +89,8 @@ public class PasswordConstraintList implements IPasswordConstraintList
    *        The constraint to be added. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public PasswordConstraintList addConstraint (@Nonnull final IPasswordConstraint aPasswordConstraint)
+  @NonNull
+  public PasswordConstraintList addConstraint (@NonNull final IPasswordConstraint aPasswordConstraint)
   {
     ValueEnforcer.notNull (aPasswordConstraint, "PasswordConstraint");
     m_aConstraints.add (aPasswordConstraint);
@@ -104,7 +104,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
    *        The constraint to be removed. May be <code>null</code>.
    * @return {@link EChange}.
    */
-  @Nonnull
+  @NonNull
   public EChange removeConstraint (@Nullable final IPasswordConstraint aPasswordConstraint)
   {
     if (aPasswordConstraint == null)
@@ -120,10 +120,10 @@ public class PasswordConstraintList implements IPasswordConstraintList
     return true;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getInvalidPasswordDescriptions (@Nullable final String sPlainTextPassword,
-                                                               @Nonnull final Locale aContentLocale)
+                                                               @NonNull final Locale aContentLocale)
   {
     final ICommonsList <String> ret = new CommonsArrayList <> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
@@ -132,9 +132,9 @@ public class PasswordConstraintList implements IPasswordConstraintList
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <String> getAllPasswordConstraintDescriptions (@Nonnull final Locale aContentLocale)
+  public ICommonsList <String> getAllPasswordConstraintDescriptions (@NonNull final Locale aContentLocale)
   {
     final ICommonsList <String> ret = new CommonsArrayList <> ();
     for (final IPasswordConstraint aPasswordConstraint : m_aConstraints)
@@ -142,7 +142,7 @@ public class PasswordConstraintList implements IPasswordConstraintList
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public PasswordConstraintList getClone ()
   {
     return new PasswordConstraintList (this);

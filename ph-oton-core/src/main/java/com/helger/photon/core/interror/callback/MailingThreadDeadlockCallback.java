@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.interror.callback;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +34,6 @@ import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * An implementation if {@link IThreadDeadlockCallback} that sends an internal
  * error mail
@@ -45,8 +44,8 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (MailingThreadDeadlockCallback.class);
 
-  @Nonnull
-  public static String getAsString (@Nonnull final ThreadDeadlockInfo aTDI)
+  @NonNull
+  public static String getAsString (@NonNull final ThreadDeadlockInfo aTDI)
   {
     ValueEnforcer.notNull (aTDI, "TDI");
 
@@ -58,7 +57,7 @@ public class MailingThreadDeadlockCallback implements IThreadDeadlockCallback
     return aTI.toString ();
   }
 
-  public void onDeadlockDetected (@Nonnull @Nonempty final ThreadDeadlockInfo [] aDeadlockedThreads)
+  public void onDeadlockDetected (@NonNull @Nonempty final ThreadDeadlockInfo [] aDeadlockedThreads)
   {
     LOGGER.warn ("Deadlock of " + ArrayHelper.getSize (aDeadlockedThreads) + " threads detected!");
 

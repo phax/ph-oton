@@ -18,10 +18,10 @@ package com.helger.photon.uictrls.autonumeric;
 
 import java.util.Locale;
 
-import com.helger.html.request.IHCRequestField;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Special auto numeric that only takes integers (and not decimal places)
@@ -30,7 +30,7 @@ import jakarta.annotation.Nullable;
  */
 public class HCAutoNumericInt extends AbstractHCAutoNumeric <HCAutoNumericInt>
 {
-  public HCAutoNumericInt (@Nullable final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCAutoNumericInt (@Nullable final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     super (aRF, aDisplayLocale);
     setDecimalPlaces (0);

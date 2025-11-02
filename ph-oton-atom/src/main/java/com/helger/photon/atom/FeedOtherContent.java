@@ -18,6 +18,8 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -27,36 +29,34 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroElement;
 
-import jakarta.annotation.Nonnull;
-
 public class FeedOtherContent extends AbstractFeedElement implements IFeedContent
 {
   private final ICommonsList <Object> m_aChildren = new CommonsArrayList <> ();
   private final String m_sType;
 
-  public FeedOtherContent (@Nonnull @Nonempty final String sType)
+  public FeedOtherContent (@NonNull @Nonempty final String sType)
   {
     ValueEnforcer.notEmpty (sType, "Type");
     m_sType = sType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getType ()
   {
     return m_sType;
   }
 
-  @Nonnull
-  public FeedOtherContent addChild (@Nonnull final String sText)
+  @NonNull
+  public FeedOtherContent addChild (@NonNull final String sText)
   {
     ValueEnforcer.notNull (sText, "Text");
     m_aChildren.add (sText);
     return this;
   }
 
-  @Nonnull
-  public FeedOtherContent addChild (@Nonnull final IMicroNode aNode)
+  @NonNull
+  public FeedOtherContent addChild (@NonNull final IMicroNode aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     m_aChildren.add (aNode);

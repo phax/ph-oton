@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.HC_Target;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.links.EHCReferrerPolicy;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for AREAs
@@ -36,26 +36,26 @@ public interface IHCArea <IMPLTYPE extends IHCArea <IMPLTYPE>> extends IHCElemen
   @Nullable
   String getAlt ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setAlt (@Nullable String sAlt);
 
   @Nullable
   String getCoords ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setCoords (@Nullable String sCoords);
 
   @Nullable
   String getShape ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setShape (@Nullable String sShape);
 
   @Nullable
   ISimpleURL getHref ();
 
-  @Nonnull
-  IMPLTYPE setHref (@Nonnull ISimpleURL aHref);
+  @NonNull
+  IMPLTYPE setHref (@NonNull ISimpleURL aHref);
 
   @Nullable
   HC_Target getTarget ();
@@ -65,10 +65,10 @@ public interface IHCArea <IMPLTYPE extends IHCArea <IMPLTYPE>> extends IHCElemen
     return getTarget () != null;
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setTarget (@Nullable HC_Target aTarget);
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setTargetBlank ()
   {
     return setTarget (HC_Target.BLANK);
@@ -77,24 +77,24 @@ public interface IHCArea <IMPLTYPE extends IHCArea <IMPLTYPE>> extends IHCElemen
   @Nullable
   String getDownload ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setDownload (@Nullable String sDownload);
 
   @Nullable
   ISimpleURL getPing ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setPing (@Nullable ISimpleURL aPing);
 
   @Nullable
   String getRel ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setRel (@Nullable String sRel);
 
   @Nullable
   EHCReferrerPolicy getReferrerPolicy ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setReferrerPolicy (@Nullable EHCReferrerPolicy eReferrerPolicy);
 }

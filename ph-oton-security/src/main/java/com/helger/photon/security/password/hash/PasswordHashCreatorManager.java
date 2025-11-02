@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.password.hash;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +36,6 @@ import com.helger.collection.commons.ICommonsSet;
 import com.helger.security.password.hash.IPasswordHashCreator;
 import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.IPasswordSalt;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages multiple {@link IPasswordHashCreator} instances
@@ -64,7 +63,7 @@ public class PasswordHashCreatorManager
    * @param aPasswordHashCreator
    *        The password hash creator to be registered. May not be <code>null</code>.
    */
-  public void registerPasswordHashCreator (@Nonnull final IPasswordHashCreator aPasswordHashCreator)
+  public void registerPasswordHashCreator (@NonNull final IPasswordHashCreator aPasswordHashCreator)
   {
     ValueEnforcer.notNull (aPasswordHashCreator, "PasswordHashCreator");
 
@@ -112,14 +111,14 @@ public class PasswordHashCreatorManager
     return m_aRWLock.readLockedGet ( () -> m_aPasswordHashCreators.get (sAlgorithmName));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllPasswordHashCreatorAlgorithms ()
   {
     return m_aRWLock.readLockedGet (m_aPasswordHashCreators::copyOfKeySet);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsCollection <IPasswordHashCreator> getAllPasswordHashCreators ()
   {
@@ -134,7 +133,7 @@ public class PasswordHashCreatorManager
    *        The name of the algorithm to use as the default. May neither be <code>null</code> nor
    *        empty.
    */
-  public void setDefaultPasswordHashCreatorAlgorithm (@Nonnull @Nonempty final String sAlgorithm)
+  public void setDefaultPasswordHashCreatorAlgorithm (@NonNull @Nonempty final String sAlgorithm)
   {
     ValueEnforcer.notEmpty (sAlgorithm, "Algorithm");
 
@@ -150,7 +149,7 @@ public class PasswordHashCreatorManager
   /**
    * @return The default {@link IPasswordHashCreator} algorithm to use. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IPasswordHashCreator getDefaultPasswordHashCreator ()
   {
     final IPasswordHashCreator ret = m_aRWLock.readLockedGet ( () -> m_aDefaultPasswordHashCreator);
@@ -162,7 +161,7 @@ public class PasswordHashCreatorManager
   /**
    * @return The default password hash creator algorithm name currently in use.
    */
-  @Nonnull
+  @NonNull
   public String getDefaultPasswordHashCreatorAlgorithmName ()
   {
     return getDefaultPasswordHashCreator ().getAlgorithmName ();
@@ -180,9 +179,9 @@ public class PasswordHashCreatorManager
    * @return The password hash. Never <code>null</code>.
    * @see #getDefaultPasswordHashCreator()
    */
-  @Nonnull
+  @NonNull
   public PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
-                                                     @Nonnull final String sPlainTextPassword)
+                                                     @NonNull final String sPlainTextPassword)
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 
@@ -206,10 +205,10 @@ public class PasswordHashCreatorManager
    * @return The password hash. Never <code>null</code>.
    * @see #getDefaultPasswordHashCreator()
    */
-  @Nonnull
-  public PasswordHash createUserPasswordHash (@Nonnull @Nonempty final String sAlgorithmName,
+  @NonNull
+  public PasswordHash createUserPasswordHash (@NonNull @Nonempty final String sAlgorithmName,
                                               @Nullable final IPasswordSalt aSalt,
-                                              @Nonnull final String sPlainTextPassword)
+                                              @NonNull final String sPlainTextPassword)
   {
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
 

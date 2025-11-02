@@ -18,6 +18,8 @@ package com.helger.photon.core.menu;
 
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +41,6 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
 import com.helger.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 import com.helger.url.provider.IHasSimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Represents a single menu tree
  *
@@ -56,9 +55,9 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   public MenuTree ()
   {}
 
-  @Nonnull
-  protected static <T extends IMenuObject> T internalCreateChildItem (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aParentItem,
-                                                                      @Nonnull final T aMenuObject)
+  @NonNull
+  protected static <T extends IMenuObject> T internalCreateChildItem (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aParentItem,
+                                                                      @NonNull final T aMenuObject)
   {
     if (aParentItem.createChildItem (aMenuObject.getID (), aMenuObject, false) == null)
       throw new IllegalArgumentException ("Failed to add the menu object " +
@@ -67,14 +66,14 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return aMenuObject;
   }
 
-  @Nonnull
-  public IMenuSeparator createRootSeparator (@Nonnull @Nonempty final String sID)
+  @NonNull
+  public IMenuSeparator createRootSeparator (@NonNull @Nonempty final String sID)
   {
     return internalCreateChildItem (getRootItem (), new MenuSeparator (sID));
   }
 
-  @Nonnull
-  public IMenuSeparator createSeparator (@Nonnull final String sParentID, @Nonnull @Nonempty final String sID)
+  @NonNull
+  public IMenuSeparator createSeparator (@NonNull final String sParentID, @NonNull @Nonempty final String sID)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
@@ -82,16 +81,16 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return internalCreateChildItem (aParentItem, new MenuSeparator (sID));
   }
 
-  @Nonnull
-  public IMenuItemPage createRootItem (@Nonnull final String sItemID, @Nonnull final IPage aPage)
+  @NonNull
+  public IMenuItemPage createRootItem (@NonNull final String sItemID, @NonNull final IPage aPage)
   {
     return internalCreateChildItem (getRootItem (), new MenuItemPage (sItemID, aPage));
   }
 
-  @Nonnull
-  public IMenuItemPage createItem (@Nonnull final String sParentID,
-                                   @Nonnull final String sItemID,
-                                   @Nonnull final IPage aPage)
+  @NonNull
+  public IMenuItemPage createItem (@NonNull final String sParentID,
+                                   @NonNull final String sItemID,
+                                   @NonNull final IPage aPage)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
@@ -99,19 +98,19 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return internalCreateChildItem (aParentItem, new MenuItemPage (sItemID, aPage));
   }
 
-  @Nonnull
-  public IMenuItemExternal createRootItem (@Nonnull final String sItemID,
-                                           @Nonnull final IHasSimpleURL aURL,
-                                           @Nonnull final IHasDisplayText aName)
+  @NonNull
+  public IMenuItemExternal createRootItem (@NonNull final String sItemID,
+                                           @NonNull final IHasSimpleURL aURL,
+                                           @NonNull final IHasDisplayText aName)
   {
     return internalCreateChildItem (getRootItem (), new MenuItemExternal (sItemID, aURL, aName));
   }
 
-  @Nonnull
-  public IMenuItemExternal createItem (@Nonnull final String sParentID,
-                                       @Nonnull final String sItemID,
-                                       @Nonnull final IHasSimpleURL aURL,
-                                       @Nonnull final IHasDisplayText aName)
+  @NonNull
+  public IMenuItemExternal createItem (@NonNull final String sParentID,
+                                       @NonNull final String sItemID,
+                                       @NonNull final IHasSimpleURL aURL,
+                                       @NonNull final IHasDisplayText aName)
   {
     final DefaultTreeItemWithID <String, IMenuObject> aParentItem = getItemWithID (sParentID);
     if (aParentItem == null)
@@ -119,8 +118,8 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return internalCreateChildItem (aParentItem, new MenuItemExternal (sItemID, aURL, aName));
   }
 
-  @Nonnull
-  public IMenuItemRedirectToPage createRedirect (@Nonnull final String sItemID, @Nonnull final IMenuItemPage aPage)
+  @NonNull
+  public IMenuItemRedirectToPage createRedirect (@NonNull final String sItemID, @NonNull final IMenuItemPage aPage)
   {
     return internalCreateChildItem (getRootItem (), new MenuItemRedirectToPage (sItemID, aPage));
   }
@@ -149,7 +148,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return m_aDefaultMenuItemIDs.getFirstOrNull ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllDefaultMenuItemIDs ()
   {
@@ -185,7 +184,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return _getDefaultMenuItem (getDefaultMenuItemID ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IMenuItemPage> getAllDefaultMenuItems ()
   {
@@ -206,14 +205,14 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
     return getItemDataWithID (sID);
   }
 
-  public void iterateAllMenuObjects (@Nonnull final Consumer <? super IMenuObject> aCallback)
+  public void iterateAllMenuObjects (@NonNull final Consumer <? super IMenuObject> aCallback)
   {
     ValueEnforcer.notNull (aCallback, "Callback");
 
     TreeVisitor.visitTree (this, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
     {
       @Override
-      public EHierarchyVisitorReturn onItemBeforeChildren (@Nonnull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+      public EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
       {
         aCallback.accept (aItem.getData ());
         return EHierarchyVisitorReturn.CONTINUE;
@@ -222,7 +221,7 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
   }
 
   @Nullable
-  public IMenuItemPage replaceMenuItem (@Nonnull final IPage aNewPage)
+  public IMenuItemPage replaceMenuItem (@NonNull final IPage aNewPage)
   {
     ValueEnforcer.notNull (aNewPage, "NewPage");
 

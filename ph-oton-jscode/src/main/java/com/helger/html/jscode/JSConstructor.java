@@ -16,10 +16,10 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * JS constructor.
@@ -36,13 +36,13 @@ public class JSConstructor extends JSFunction
    * @param aClass
    *        Class containing this constructor
    */
-  public JSConstructor (@Nonnull final JSDefinedClass aClass)
+  public JSConstructor (@NonNull final JSDefinedClass aClass)
   {
     super (aClass.name ());
     m_aClass = aClass;
   }
 
-  @Nonnull
+  @NonNull
   public JSDefinedClass parentClass ()
   {
     return m_aClass;

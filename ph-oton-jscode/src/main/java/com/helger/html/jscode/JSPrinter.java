@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.io.Writer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.WillClose;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingStringWriter;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @Immutable
 public final class JSPrinter
@@ -35,9 +35,9 @@ public final class JSPrinter
   private JSPrinter ()
   {}
 
-  public static void writeGeneratable (@Nonnull @WillClose final Writer aWriter,
+  public static void writeGeneratable (@NonNull @WillClose final Writer aWriter,
                                        @Nullable final IJSWriterSettings aSettings,
-                                       @Nonnull final IJSGeneratable aGeneratable)
+                                       @NonNull final IJSGeneratable aGeneratable)
   {
     ValueEnforcer.notNull (aGeneratable, "Generatable");
     try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
@@ -50,9 +50,9 @@ public final class JSPrinter
     }
   }
 
-  public static void writeDeclaration (@Nonnull @WillClose final Writer aWriter,
+  public static void writeDeclaration (@NonNull @WillClose final Writer aWriter,
                                        @Nullable final IJSWriterSettings aSettings,
-                                       @Nonnull final IJSDeclaration aDeclaration)
+                                       @NonNull final IJSDeclaration aDeclaration)
   {
     ValueEnforcer.notNull (aDeclaration, "Declaration");
     try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
@@ -65,9 +65,9 @@ public final class JSPrinter
     }
   }
 
-  public static void writeStatement (@Nonnull @WillClose final Writer aWriter,
+  public static void writeStatement (@NonNull @WillClose final Writer aWriter,
                                      @Nullable final IJSWriterSettings aSettings,
-                                     @Nonnull final IJSStatement aStatement)
+                                     @NonNull final IJSStatement aStatement)
   {
     ValueEnforcer.notNull (aStatement, "Statement");
     try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
@@ -80,9 +80,9 @@ public final class JSPrinter
     }
   }
 
-  public static void writePackage (@Nonnull @WillClose final Writer aWriter,
+  public static void writePackage (@NonNull @WillClose final Writer aWriter,
                                    @Nullable final IJSWriterSettings aSettings,
-                                   @Nonnull final JSPackage aPackage)
+                                   @NonNull final JSPackage aPackage)
   {
     ValueEnforcer.notNull (aPackage, "Package");
     try (final JSFormatter aFormatter = new JSFormatter (aWriter, aSettings))
@@ -95,32 +95,32 @@ public final class JSPrinter
     }
   }
 
-  @Nonnull
-  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @Nonnull final IJSGeneratable aGeneratable)
+  @NonNull
+  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @NonNull final IJSGeneratable aGeneratable)
   {
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     writeGeneratable (aSW, aSettings, aGeneratable);
     return aSW.getAsString ().trim ();
   }
 
-  @Nonnull
-  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @Nonnull final IJSDeclaration aDecl)
+  @NonNull
+  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @NonNull final IJSDeclaration aDecl)
   {
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     writeDeclaration (aSW, aSettings, aDecl);
     return aSW.getAsString ().trim ();
   }
 
-  @Nonnull
-  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @Nonnull final IJSStatement aStatement)
+  @NonNull
+  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @NonNull final IJSStatement aStatement)
   {
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     writeStatement (aSW, aSettings, aStatement);
     return aSW.getAsString ().trim ();
   }
 
-  @Nonnull
-  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @Nonnull final JSPackage aPackage)
+  @NonNull
+  public static String getAsString (@Nullable final IJSWriterSettings aSettings, @NonNull final JSPackage aPackage)
   {
     ValueEnforcer.notNull (aPackage, "Package");
     if (aPackage.memberCount () == 0)

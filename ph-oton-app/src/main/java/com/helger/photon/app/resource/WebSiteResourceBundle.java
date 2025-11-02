@@ -18,6 +18,9 @@ package com.helger.photon.app.resource;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
@@ -36,9 +39,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.ext.HCConditionalCommentNode;
 import com.helger.mime.IMimeType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This is a bundle of 1-n {@link WebSiteResource} objects that share the same
  * conditional comment and can be bundled with each other.
@@ -56,7 +56,7 @@ public class WebSiteResourceBundle
   private final EWebSiteResourceType m_eResourceType;
   private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
-  public WebSiteResourceBundle (@Nonnull @Nonempty final List <WebSiteResourceWithCondition> aResources,
+  public WebSiteResourceBundle (@NonNull @Nonempty final List <WebSiteResourceWithCondition> aResources,
                                 @Nullable final String sConditionalComment,
                                 final boolean bIsBundlable,
                                 @Nullable final ICSSMediaList aMediaList)
@@ -88,7 +88,7 @@ public class WebSiteResourceBundle
    * @return A list of all bundled resources. Neither <code>null</code> nor
    *         empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public ICommonsList <WebSiteResource> getAllResources ()
@@ -102,7 +102,7 @@ public class WebSiteResourceBundle
     return m_aResources.getAtIndex (nIndex);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public ICommonsList <String> getAllResourcePaths ()
@@ -145,20 +145,20 @@ public class WebSiteResourceBundle
     return m_aMediaList != null;
   }
 
-  @Nonnull
+  @NonNull
   public EWebSiteResourceType getResourceType ()
   {
     return m_eResourceType;
   }
 
-  @Nonnull
+  @NonNull
   public IMimeType getMimeType ()
   {
     return m_eResourceType.getMimeType ();
   }
 
-  @Nonnull
-  public IHCNode getWrapped (@Nonnull final IHCNode aNode)
+  @NonNull
+  public IHCNode getWrapped (@NonNull final IHCNode aNode)
   {
     if (hasConditionalComment ())
       return new HCConditionalCommentNode (m_sConditionalComment, aNode);

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uictrls.prism;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.ext.HCHasCSSClasses;
 import com.helger.html.hc.ext.HCHasCSSStyles;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class PrismPluginLineHighlight implements IPrismPlugin
 {
@@ -31,16 +31,16 @@ public class PrismPluginLineHighlight implements IPrismPlugin
   public PrismPluginLineHighlight ()
   {}
 
-  @Nonnull
+  @NonNull
   public PrismPluginLineHighlight setLine (@Nullable final String s)
   {
     m_sLine = s;
     return this;
   }
 
-  public void applyOnPre (@Nonnull final IMicroElement aPreElement,
-                          @Nonnull final HCHasCSSClasses aPreClasses,
-                          @Nonnull final HCHasCSSStyles aPreStyles)
+  public void applyOnPre (@NonNull final IMicroElement aPreElement,
+                          @NonNull final HCHasCSSClasses aPreClasses,
+                          @NonNull final HCHasCSSStyles aPreStyles)
   {
     if (StringHelper.isNotEmpty (m_sLine))
       aPreElement.setAttribute ("data-line", m_sLine);

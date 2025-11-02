@@ -20,6 +20,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -35,9 +38,6 @@ import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.IHCWrappingNode;
 import com.helger.xml.microdom.IMicroNode;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Abstract implementation of {@link IHCWrappingNode}.
  *
@@ -47,7 +47,7 @@ import jakarta.annotation.Nullable;
 public abstract class AbstractHCWrappingNode extends AbstractHCNode implements IHCWrappingNode
 {
   @Override
-  @Nonnull
+  @NonNull
   public EHCNodeState getNodeState ()
   {
     return getWrappedNode ().getNodeState ();
@@ -56,9 +56,9 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onCustomizeNode (@Nonnull final IHCCustomizer aCustomizer,
-                                  @Nonnull final EHTMLVersion eHTMLVersion,
-                                  @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onCustomizeNode (@NonNull final IHCCustomizer aCustomizer,
+                                  @NonNull final EHTMLVersion eHTMLVersion,
+                                  @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     getWrappedNode ().customizeNode (aCustomizer, eHTMLVersion, aTargetNode);
   }
@@ -66,8 +66,8 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     getWrappedNode ().finalizeNodeState (aConversionSettings, aTargetNode);
@@ -76,7 +76,7 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     getWrappedNode ().consistencyCheck (aConversionSettings);
@@ -85,7 +85,7 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void onRegisterExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
+  protected void onRegisterExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings,
                                               final boolean bForceRegistration)
   {
     getWrappedNode ().registerExternalResources (aConversionSettings, bForceRegistration);
@@ -94,7 +94,7 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return getWrappedNode ().canConvertToMicroNode (aConversionSettings);
   }
@@ -103,13 +103,13 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   @Nullable
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected IMicroNode internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected IMicroNode internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return getWrappedNode ().convertToMicroNode (aConversionSettings);
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return getWrappedNode ().getPlainText ();
@@ -130,21 +130,21 @@ public abstract class AbstractHCWrappingNode extends AbstractHCNode implements I
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Consumer <? super IHCNode> aConsumer)
   {
     getWrappedNode ().forAllChildren (aConsumer);
   }
 
   @Override
-  public final void forAllChildren (@Nonnull final Predicate <? super IHCNode> aFilter, @Nonnull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter, @NonNull final Consumer <? super IHCNode> aConsumer)
   {
     getWrappedNode ().forAllChildren (aFilter, aConsumer);
   }
 
   @Override
-  public final <DSTTYPE> void forAllChildrenMapped (@Nonnull final Predicate <? super IHCNode> aFilter,
-                                                    @Nonnull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
-                                                    @Nonnull final Consumer <? super DSTTYPE> aConsumer)
+  public final <DSTTYPE> void forAllChildrenMapped (@NonNull final Predicate <? super IHCNode> aFilter,
+                                                    @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,
+                                                    @NonNull final Consumer <? super DSTTYPE> aConsumer)
   {
     getWrappedNode ().forAllChildrenMapped (aFilter, aMapper, aConsumer);
   }

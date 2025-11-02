@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.password;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +37,6 @@ import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
 import com.helger.security.password.hash.PasswordHashCreatorSHA512;
 import com.helger.security.password.salt.IPasswordSalt;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Central class for all password related elements.
@@ -80,7 +79,7 @@ public final class GlobalPasswordSettings
   /**
    * @return The current password constraint list. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static IPasswordConstraintList getPasswordConstraintList ()
   {
@@ -93,7 +92,7 @@ public final class GlobalPasswordSettings
    * @param aPasswordConstraintList
    *        The list to be set. May not be <code>null</code>.
    */
-  public static void setPasswordConstraintList (@Nonnull final IPasswordConstraintList aPasswordConstraintList)
+  public static void setPasswordConstraintList (@NonNull final IPasswordConstraintList aPasswordConstraintList)
   {
     ValueEnforcer.notNull (aPasswordConstraintList, "PasswordConstraintList");
 
@@ -114,7 +113,7 @@ public final class GlobalPasswordSettings
   /**
    * @return The central {@link PasswordHashCreatorManager}.
    */
-  @Nonnull
+  @NonNull
   public static PasswordHashCreatorManager getPasswordHashCreatorManager ()
   {
     return PHC_MGR;
@@ -131,9 +130,9 @@ public final class GlobalPasswordSettings
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static PasswordHash createUserDefaultPasswordHash (@Nullable final IPasswordSalt aSalt,
-                                                            @Nonnull final String sPlainTextPassword)
+                                                            @NonNull final String sPlainTextPassword)
   {
     return PHC_MGR.createUserDefaultPasswordHash (aSalt, sPlainTextPassword);
   }
@@ -152,10 +151,10 @@ public final class GlobalPasswordSettings
    *        Plain text password. May not be <code>null</code>.
    * @return The password hash. Never <code>null</code>.
    */
-  @Nonnull
-  public static PasswordHash createUserPasswordHash (@Nonnull @Nonempty final String sAlgorithmName,
+  @NonNull
+  public static PasswordHash createUserPasswordHash (@NonNull @Nonempty final String sAlgorithmName,
                                                      @Nullable final IPasswordSalt aSalt,
-                                                     @Nonnull final String sPlainTextPassword)
+                                                     @NonNull final String sPlainTextPassword)
   {
     return PHC_MGR.createUserPasswordHash (sAlgorithmName, aSalt, sPlainTextPassword);
   }

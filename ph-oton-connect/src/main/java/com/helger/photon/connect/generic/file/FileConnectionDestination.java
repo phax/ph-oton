@@ -18,11 +18,11 @@ package com.helger.photon.connect.generic.file;
 
 import java.io.File;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.EChange;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class FileConnectionDestination implements IFileConnectionDestination
 {
@@ -30,12 +30,12 @@ public final class FileConnectionDestination implements IFileConnectionDestinati
   {}
 
   @Nullable
-  public File openConnection (@Nonnull final IAuthCredentials aCredentials)
+  public File openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     return new File (".");
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection (@Nullable final File aChannel)
   {
     return EChange.UNCHANGED;

@@ -19,12 +19,11 @@ package com.helger.photon.core;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.Test;
 
 import com.helger.io.resource.IReadableResource;
 import com.helger.xml.schema.XMLSchemaCache;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Test class for class {@link CWebSpecs}.
@@ -33,7 +32,7 @@ import jakarta.annotation.Nonnull;
  */
 public final class CWebSpecsTest
 {
-  private void _testXSD (@Nonnull final IReadableResource aXSD)
+  private void _testXSD (@NonNull final IReadableResource aXSD)
   {
     assertNotNull (aXSD);
     assertTrue (aXSD.exists ());

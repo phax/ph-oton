@@ -18,6 +18,9 @@ package com.helger.photon.core.interror.uihandler;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.rt.StackTraceHelper;
@@ -31,9 +34,6 @@ import com.helger.html.hc.html.grouping.HCDiv;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.core.EPhotonCoreText;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The default implementation of {@link IUIInternalErrorHandler}
  *
@@ -43,18 +43,18 @@ public class UIInternalErrorHandler implements IUIInternalErrorHandler
 {
   private final IHCNodeWithChildren <?> m_aParentNode;
 
-  public UIInternalErrorHandler (@Nonnull final IHCNodeWithChildren <?> aParentNode)
+  public UIInternalErrorHandler (@NonNull final IHCNodeWithChildren <?> aParentNode)
   {
     m_aParentNode = ValueEnforcer.notNull (aParentNode, "ParentNode");
   }
 
-  @Nonnull
+  @NonNull
   public IHCNodeWithChildren <?> getParentNode ()
   {
     return m_aParentNode;
   }
 
-  public void onInternalError (@Nullable final Throwable t, @Nonnull final String sErrorID, @Nonnull final Locale aDisplayLocale)
+  public void onInternalError (@Nullable final Throwable t, @NonNull final String sErrorID, @NonNull final Locale aDisplayLocale)
   {
     m_aParentNode.addChild (new HCH1 ().addChild (EPhotonCoreText.INTERNAL_ERROR_TITLE.getDisplayText (aDisplayLocale)));
     m_aParentNode.addChild (new HCDiv ().addChildren (HCExtHelper.nl2brList (EPhotonCoreText.INTERNAL_ERROR_DESCRIPTION.getDisplayTextWithArgs (aDisplayLocale,

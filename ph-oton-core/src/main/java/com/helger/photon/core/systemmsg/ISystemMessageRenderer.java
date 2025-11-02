@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.systemmsg;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract interface for a system message renderer.
@@ -38,5 +38,5 @@ public interface ISystemMessageRenderer extends IHasDisplayText
    * @param aTargetCtrl
    *        The target control to be filled.
    */
-  void renderSystemMessage (@Nonnull @Nonempty String sText, @Nonnull IHCElementWithChildren <?> aTargetCtrl);
+  void renderSystemMessage (@NonNull @Nonempty String sText, @NonNull IHCElementWithChildren <?> aTargetCtrl);
 }

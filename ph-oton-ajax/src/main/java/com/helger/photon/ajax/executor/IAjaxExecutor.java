@@ -18,10 +18,10 @@ package com.helger.photon.ajax.executor;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a single AJAX function handler.
@@ -38,7 +38,7 @@ public interface IAjaxExecutor extends Serializable
    *        The request scope to be used, to extract parameters. Never
    *        <code>null</code>.
    */
-  default void initExecution (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  default void initExecution (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // empty default implementation
   }
@@ -70,6 +70,6 @@ public interface IAjaxExecutor extends Serializable
    * @throws Exception
    *         Any exception if an error occurs.
    */
-  void handleRequest (@Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                      @Nonnull PhotonUnifiedResponse aAjaxResponse) throws Exception;
+  void handleRequest (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                      @NonNull PhotonUnifiedResponse aAjaxResponse) throws Exception;
 }

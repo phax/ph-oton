@@ -18,9 +18,9 @@ package com.helger.photon.atom;
 
 import java.util.Locale;
 
-import com.helger.base.string.StringHelper;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nullable;
+import com.helger.base.string.StringHelper;
 
 /**
  * Abstract implementation of {@link IFeedElement} with a common language

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.config;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.object.accarea.AccountingArea;
 import com.helger.photon.security.object.accarea.AccountingAreaMicroTypeConverter;
@@ -37,8 +39,6 @@ import com.helger.tenancy.tenant.ITenantResolver;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Special micro type converter for this project.
  *
@@ -47,7 +47,7 @@ import jakarta.annotation.Nonnull;
 @IsSPIImplementation
 public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicroTypeConverterRegistrarSPI
 {
-  public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
+  public void registerMicroTypeConverter (@NonNull final IMicroTypeConverterRegistry aRegistry)
   {
     aRegistry.registerMicroElementTypeConverter (AccessToken.class, new AccessTokenMicroTypeConverter ());
     aRegistry.registerMicroElementTypeConverter (Tenant.class, new TenantMicroTypeConverter ());
@@ -58,8 +58,8 @@ public final class MicroTypeConverterRegistrar_ph_oton_security implements IMicr
     aRegistry.registerMicroElementTypeConverter (UserToken.class, new UserTokenMicroTypeConverter ());
   }
 
-  public static void registerSpecialMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry,
-                                                        @Nonnull final ITenantResolver aTenantResolver)
+  public static void registerSpecialMicroTypeConverter (@NonNull final IMicroTypeConverterRegistry aRegistry,
+                                                        @NonNull final ITenantResolver aTenantResolver)
   {
     aRegistry.registerMicroElementTypeConverter (AccountingArea.class, new AccountingAreaMicroTypeConverter (aTenantResolver));
   }

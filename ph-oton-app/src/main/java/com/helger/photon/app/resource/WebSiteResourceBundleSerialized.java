@@ -22,6 +22,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,13 +44,9 @@ import com.helger.photon.io.WebFileIO;
 import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
- * This class combines a {@link WebSiteResourceBundle} with an internal ID and a
- * creation date time. It is so to say the serialized version of a
- * {@link WebSiteResourceBundle}.
+ * This class combines a {@link WebSiteResourceBundle} with an internal ID and a creation date time.
+ * It is so to say the serialized version of a {@link WebSiteResourceBundle}.
  *
  * @author Philip Helger
  */
@@ -63,8 +61,8 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   private final WebSiteResourceBundle m_aBundle;
   private final LocalDateTime m_aCreationDT;
 
-  public WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID,
-                                          @Nonnull final WebSiteResourceBundle aBundle,
+  public WebSiteResourceBundleSerialized (@NonNull @Nonempty final String sBundleID,
+                                          @NonNull final WebSiteResourceBundle aBundle,
                                           final boolean bRegular)
   {
     this (sBundleID, aBundle, PDTFactory.getCurrentLocalDateTime ());
@@ -82,9 +80,9 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
    * @param aCreationDT
    *        Bundle creation data
    */
-  WebSiteResourceBundleSerialized (@Nonnull @Nonempty final String sBundleID,
-                                   @Nonnull final WebSiteResourceBundle aBundle,
-                                   @Nonnull final LocalDateTime aCreationDT)
+  WebSiteResourceBundleSerialized (@NonNull @Nonempty final String sBundleID,
+                                   @NonNull final WebSiteResourceBundle aBundle,
+                                   @NonNull final LocalDateTime aCreationDT)
   {
     m_sBundleID = ValueEnforcer.notEmpty (sBundleID, "BundleID");
     m_aBundle = ValueEnforcer.notNull (aBundle, "Bundle");
@@ -185,21 +183,21 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     }
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getBundleID ()
   {
     return m_sBundleID;
   }
 
-  @Nonnull
+  @NonNull
   public WebSiteResourceBundle getBundle ()
   {
     return m_aBundle;
   }
 
   @Nullable
-  public static FileSystemResource getResource (@Nonnull @Nonempty final String sBundleID)
+  public static FileSystemResource getResource (@NonNull @Nonempty final String sBundleID)
   {
     ValueEnforcer.notEmpty (sBundleID, "BundleID");
     return WebFileIO.getDataIO ().getResource (RESOURCE_BUNDLE_PATH + sBundleID);
@@ -216,20 +214,20 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     return true;
   }
 
-  @Nonnull
+  @NonNull
   public IMimeType getMimeType ()
   {
     return m_aBundle.getMimeType ();
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getCreationDT ()
   {
     return m_aCreationDT;
   }
 
-  @Nonnull
-  public IHCNode createNode (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public IHCNode createNode (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     ISimpleURL aURL = null;
     if (m_aBundle.getResourceCount () == 1 && !m_aBundle.isBundlable ())

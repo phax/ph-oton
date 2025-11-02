@@ -18,6 +18,9 @@ package com.helger.html.js;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -26,9 +29,6 @@ import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents a map from an {@link EJSEvent} to an {@link IHasJSCode}
@@ -51,7 +51,7 @@ public class JSEventMap implements Serializable
    * @param aNewHandler
    *        The new handler to be added. May not be <code>null</code>.
    */
-  public void addHandler (@Nonnull final EJSEvent eJSEvent, @Nonnull final IHasJSCode aNewHandler)
+  public void addHandler (@NonNull final EJSEvent eJSEvent, @NonNull final IHasJSCode aNewHandler)
   {
     ValueEnforcer.notNull (eJSEvent, "JSEvent");
     ValueEnforcer.notNull (aNewHandler, "NewHandler");
@@ -68,7 +68,7 @@ public class JSEventMap implements Serializable
    * @param aNewHandler
    *        The new handler to be added. May not be <code>null</code>.
    */
-  public void prependHandler (@Nonnull final EJSEvent eJSEvent, @Nonnull final IHasJSCode aNewHandler)
+  public void prependHandler (@NonNull final EJSEvent eJSEvent, @NonNull final IHasJSCode aNewHandler)
   {
     ValueEnforcer.notNull (eJSEvent, "JSEvent");
     ValueEnforcer.notNull (aNewHandler, "NewHandler");
@@ -85,7 +85,7 @@ public class JSEventMap implements Serializable
    * @param aNewHandler
    *        The new handler to be added. May not be <code>null</code>.
    */
-  public void setHandler (@Nonnull final EJSEvent eJSEvent, @Nonnull final IHasJSCode aNewHandler)
+  public void setHandler (@NonNull final EJSEvent eJSEvent, @NonNull final IHasJSCode aNewHandler)
   {
     ValueEnforcer.notNull (eJSEvent, "JSEvent");
     ValueEnforcer.notNull (aNewHandler, "NewHandler");
@@ -94,7 +94,7 @@ public class JSEventMap implements Serializable
     m_aEvents.put (eJSEvent, new CollectingJSCodeProvider ().appendFlattened (aNewHandler));
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeHandler (@Nullable final EJSEvent eJSEvent)
   {
     if (eJSEvent == null)
@@ -119,7 +119,7 @@ public class JSEventMap implements Serializable
     return m_aEvents.isEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <EJSEvent, CollectingJSCodeProvider> getAllEventHandler ()
   {
@@ -132,7 +132,7 @@ public class JSEventMap implements Serializable
     return m_aEvents.size ();
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     return m_aEvents.removeAll ();

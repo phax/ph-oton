@@ -18,6 +18,8 @@ package com.helger.photon.core.uistate;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +42,6 @@ import com.helger.scope.IScopeRenewalAware;
 import com.helger.web.scope.session.ISessionWebScopeDontPassivate;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Per session registry for UI control state data.
  *
@@ -64,7 +63,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   public UIStateRegistry ()
   {}
 
-  @Nonnull
+  @NonNull
   public static UIStateRegistry getCurrent ()
   {
     return getSessionSingleton (UIStateRegistry.class);
@@ -151,8 +150,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
    *         {@link EChange#UNCHANGED} if an illegal argument was passed or a control has already
    *         been registered for that ID
    */
-  @Nonnull
-  public EChange registerState (@Nonnull @Nonempty final String sStateID, @Nonnull final IHasUIState aNewState)
+  @NonNull
+  public EChange registerState (@NonNull @Nonempty final String sStateID, @NonNull final IHasUIState aNewState)
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
     ValueEnforcer.notNull (aNewState, "NewState");
@@ -179,8 +178,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
    *        The element to be added to the registry. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public EChange registerState (@Nonnull final IHCElement <?> aNewElement)
+  @NonNull
+  public EChange registerState (@NonNull final IHCElement <?> aNewElement)
   {
     ValueEnforcer.notNull (aNewElement, "NewElement");
     if (aNewElement.hasNoID ())
@@ -189,16 +188,16 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
     return registerState (aNewElement.ensureID ().getID (), aNewElement);
   }
 
-  @Nonnull
-  public EChange registerState (@Nonnull @Nonempty final String sStateID, @Nonnull final IHCNode aNewNode)
+  @NonNull
+  public EChange registerState (@NonNull @Nonempty final String sStateID, @NonNull final IHCNode aNewNode)
   {
     ValueEnforcer.notNull (aNewNode, "NewNode");
 
     return registerState (sStateID, UIStateWrapper.create (OT_HCNODE, aNewNode));
   }
 
-  @Nonnull
-  public EChange removeState (@Nullable final ObjectType aObjectType, @Nonnull @Nonempty final String sStateID)
+  @NonNull
+  public EChange removeState (@Nullable final ObjectType aObjectType, @NonNull @Nonempty final String sStateID)
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
 

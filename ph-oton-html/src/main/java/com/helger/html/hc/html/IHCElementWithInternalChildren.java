@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for elements having children of a certain type.
@@ -46,7 +46,7 @@ public interface IHCElementWithInternalChildren <IMPLTYPE extends IHCElementWith
    * @return <code>true</code> if such an element is contained,
    *         <code>false</code> if not.
    */
-  default boolean recursiveContainsChildWithTagName (@Nonnull @Nonempty final EHTMLElement... aElements)
+  default boolean recursiveContainsChildWithTagName (@NonNull @Nonempty final EHTMLElement... aElements)
   {
     return HCHTMLHelper.recursiveGetFirstChildWithTagName (this, aElements) != null;
   }

@@ -16,9 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
-import com.helger.html.jscode.JSInvocation;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.jscode.JSInvocation;
 
 /**
  * Contains the JS built-in type 'String'
@@ -32,19 +32,19 @@ public class JSTypeString extends JSPrimitiveType
     super ("String");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation fromCharCode ()
   {
     return global ().invoke ("fromCharCode");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation fromCodePoint ()
   {
     return global ().invoke ("fromCodePoint");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation raw ()
   {
     return global ().invoke ("raw");

@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -63,9 +66,6 @@ import com.helger.photon.security.token.user.UserToken;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.user.IUserManager;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link IUserTokenManager} for JDBC backends.
  *
@@ -78,9 +78,9 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   private final IUserManager m_aUserMgr;
   private final CallbackList <IUserTokenModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserTokenManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                               @Nonnull final Function <String, String> aTableNameCustomizer,
-                               @Nonnull final IUserManager aUserMgr)
+  public UserTokenManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                               @NonNull final Function <String, String> aTableNameCustomizer,
+                               @NonNull final IUserManager aUserMgr)
   {
     super (aDBExecSupplier);
     m_sTableName = aTableNameCustomizer.apply ("secusertoken");
@@ -91,21 +91,21 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
    * @return The name of the database table this class is operating on. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTableName ()
   {
     return m_sTableName;
   }
 
-  @Nonnull
+  @NonNull
   public final IUserManager getUserManager ()
   {
     return m_aUserMgr;
   }
 
-  @Nonnull
-  private static IJsonObject _asJson (@Nonnull final IRevocationStatus aStatus)
+  @NonNull
+  private static IJsonObject _asJson (@NonNull final IRevocationStatus aStatus)
   {
     return new JsonObject ().add ("revoked", aStatus.isRevoked ())
                             .addIfNotNull ("userid", aStatus.getRevocationUserID ())
@@ -113,8 +113,8 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                             .addIfNotNull ("reason", aStatus.getRevocationReason ());
   }
 
-  @Nonnull
-  private static IJsonObject _asJson (@Nonnull final IAccessToken aAccessToken)
+  @NonNull
+  private static IJsonObject _asJson (@NonNull final IAccessToken aAccessToken)
   {
     return new JsonObject ().add ("token", aAccessToken.getTokenString ())
                             .add ("notbefore", PDTWebDateHelper.getAsStringXSD (aAccessToken.getNotBefore ()))
@@ -122,15 +122,15 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                             .add ("revocation", _asJson (aAccessToken.getRevocationStatus ()));
   }
 
-  @Nonnull
-  private static String _asString (@Nonnull final IAccessTokenList aTokens)
+  @NonNull
+  private static String _asString (@NonNull final IAccessTokenList aTokens)
   {
     return new JsonArray ().addAllMapped (aTokens.getAllAccessTokens (), UserTokenManagerJDBC::_asJson)
                            .getAsJsonString ();
   }
 
   @Nullable
-  private static AccessToken _parseAccessToken (@Nonnull final IJsonObject aJson)
+  private static AccessToken _parseAccessToken (@NonNull final IJsonObject aJson)
   {
     final IJsonObject aRevocJson = aJson.getAsObject ("revocation");
     final RevocationStatus aRevocationStatus = new RevocationStatus (aRevocJson.getAsBoolean ("revoked"),
@@ -156,7 +156,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return new CommonsArrayList <> (aJson.iteratorObjects (), UserTokenManagerJDBC::_parseAccessToken);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   private ICommonsList <IUserToken> _getAllWhere (@Nullable final String sCondition,
                                                   @Nullable final ConstantPreparedStatementDataProvider aDataProvider)
@@ -206,7 +206,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserToken> getAll ()
   {
@@ -255,15 +255,15 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return true;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserTokenModificationCallback> userTokenModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
-  private ESuccess _internalCreateItem (@Nonnull final UserToken aUserToken)
+  @NonNull
+  private ESuccess _internalCreateItem (@NonNull final UserToken aUserToken)
   {
     final DBExecutor aExecutor = newExecutor ();
     return aExecutor.performInTransaction ( () -> {
@@ -295,7 +295,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   }
 
   @Nullable
-  public UserToken internalCreateUserToken (@Nonnull final UserToken aUserToken, final boolean bRunCallback)
+  public UserToken internalCreateUserToken (@NonNull final UserToken aUserToken, final boolean bRunCallback)
   {
     // Store
     if (_internalCreateItem (aUserToken).isFailure ())
@@ -327,7 +327,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   @Nullable
   public UserToken createUserToken (@Nullable final String sTokenString,
                                     @Nullable final Map <String, String> aCustomAttrs,
-                                    @Nonnull final IUser aUser,
+                                    @NonNull final IUser aUser,
                                     @Nullable final String sDescription)
   {
     // The AccessToken is created internally
@@ -335,7 +335,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return internalCreateUserToken (aUserToken, true);
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserToken (@Nullable final String sUserTokenID,
                                   @Nullable final Map <String, String> aNewCustomAttrs,
                                   @Nullable final String sNewDescription)
@@ -387,7 +387,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUserToken (@Nullable final String sUserTokenID)
   {
     if (StringHelper.isEmpty (sUserTokenID))
@@ -430,11 +430,11 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange createNewAccessToken (@Nullable final String sUserTokenID,
-                                       @Nonnull @Nonempty final String sRevocationUserID,
-                                       @Nonnull final LocalDateTime aRevocationDT,
-                                       @Nonnull @Nonempty final String sRevocationReason,
+                                       @NonNull @Nonempty final String sRevocationUserID,
+                                       @NonNull final LocalDateTime aRevocationDT,
+                                       @NonNull @Nonempty final String sRevocationReason,
                                        @Nullable final String sTokenString)
   {
     if (StringHelper.isEmpty (sUserTokenID))
@@ -504,11 +504,11 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange revokeAccessToken (@Nullable final String sUserTokenID,
-                                    @Nonnull @Nonempty final String sRevocationUserID,
-                                    @Nonnull final LocalDateTime aRevocationDT,
-                                    @Nonnull @Nonempty final String sRevocationReason)
+                                    @NonNull @Nonempty final String sRevocationUserID,
+                                    @NonNull final LocalDateTime aRevocationDT,
+                                    @NonNull @Nonempty final String sRevocationReason)
   {
     if (StringHelper.isEmpty (sUserTokenID))
       return EChange.UNCHANGED;
@@ -579,7 +579,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUserToken> getAllActiveUserTokens ()
   {

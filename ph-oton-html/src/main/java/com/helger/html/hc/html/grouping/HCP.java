@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;P&gt; element
@@ -37,7 +37,7 @@ public class HCP extends AbstractHCElementWithChildren <HCP>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return super.getPlainText () + "\n";

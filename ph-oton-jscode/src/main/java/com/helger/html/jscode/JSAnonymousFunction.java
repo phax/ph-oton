@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -26,9 +29,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An anonymous function (a function without a name)
@@ -104,7 +104,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
    *
    * @return List of parameters of this function. This list is not modifiable.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <JSParam> params ()
   {
@@ -119,8 +119,8 @@ public class JSAnonymousFunction extends AbstractJSExpression
    *        Name of the parameter being added
    * @return New parameter variable
    */
-  @Nonnull
-  public JSParam param (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSParam param (@NonNull @Nonempty final String sName)
   {
     final JSParam aVar = new JSParam (sName);
     m_aParams.add (aVar);
@@ -135,7 +135,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
    * @see #param(String)
    * @since 8.0.3
    */
-  @Nonnull
+  @NonNull
   public JSParam paramRandomName ()
   {
     return param ("v" + GlobalIDFactory.getNewIntID ());
@@ -158,7 +158,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
    *
    * @return Body of function
    */
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -166,7 +166,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
     return m_aBody;
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation invoke ()
   {
     return new JSInvocation (this);

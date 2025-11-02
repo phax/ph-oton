@@ -18,14 +18,14 @@ package com.helger.photon.security.role;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.callback.CallbackList;
 import com.helger.base.state.EChange;
 import com.helger.photon.io.mgr.IPhotonManager;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface to manage the available roles.
@@ -43,7 +43,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
   /**
    * @return The role callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   CallbackList <IRoleModificationCallback> roleModificationCallbacks ();
 
@@ -60,7 +60,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @return The created role. May be <code>null</code> if persisting fails.
    */
   @Nullable
-  IRole createNewRole (@Nonnull @Nonempty String sName, @Nullable String sDescription, @Nullable Map <String, String> aCustomAttrs);
+  IRole createNewRole (@NonNull @Nonempty String sName, @Nullable String sDescription, @Nullable Map <String, String> aCustomAttrs);
 
   /**
    * Create a predefined role.
@@ -76,8 +76,8 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @return The created role. May be <code>null</code> if persisting fails.
    */
   @Nullable
-  IRole createPredefinedRole (@Nonnull @Nonempty String sID,
-                              @Nonnull @Nonempty String sName,
+  IRole createPredefinedRole (@NonNull @Nonempty String sID,
+                              @NonNull @Nonempty String sName,
                               @Nullable String sDescription,
                               @Nullable Map <String, String> aCustomAttrs);
 
@@ -88,7 +88,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
    *        The role ID to be deleted
    * @return {@link EChange#CHANGED} if the passed role ID was found and deleted
    */
-  @Nonnull
+  @NonNull
   EChange deleteRole (@Nullable String sRoleID);
 
   /**
@@ -112,8 +112,8 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @return {@link EChange#CHANGED} if the passed role ID was found, and the
    *         new name is different from the old name of he role
    */
-  @Nonnull
-  EChange renameRole (@Nullable String sRoleID, @Nonnull @Nonempty String sNewName);
+  @NonNull
+  EChange renameRole (@Nullable String sRoleID, @NonNull @Nonempty String sNewName);
 
   /**
    * Change the modifiable data of a user group
@@ -129,9 +129,9 @@ public interface IRoleManager extends IPhotonManager <IRole>
    *        Custom attributes. May be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange setRoleData (@Nullable String sRoleID,
-                       @Nonnull @Nonempty String sNewName,
+                       @NonNull @Nonempty String sNewName,
                        @Nullable String sNewDescription,
                        @Nullable Map <String, String> aNewCustomAttrs);
 }

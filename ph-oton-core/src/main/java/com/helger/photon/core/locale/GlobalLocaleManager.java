@@ -18,6 +18,9 @@ package com.helger.photon.core.locale;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.UsedViaReflection;
@@ -25,9 +28,6 @@ import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages the available locales.
@@ -44,20 +44,20 @@ public final class GlobalLocaleManager extends AbstractGlobalWebSingleton implem
   public GlobalLocaleManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static GlobalLocaleManager getInstance ()
   {
     return getGlobalSingleton (GlobalLocaleManager.class);
   }
 
-  @Nonnull
-  public EChange registerLocale (@Nonnull final Locale aLocale)
+  @NonNull
+  public EChange registerLocale (@NonNull final Locale aLocale)
   {
     return m_aInstance.registerLocale (aLocale);
   }
 
-  @Nonnull
-  public EChange setDefaultLocale (@Nonnull final Locale aDefaultLocale)
+  @NonNull
+  public EChange setDefaultLocale (@NonNull final Locale aDefaultLocale)
   {
     return m_aInstance.setDefaultLocale (aDefaultLocale);
   }
@@ -68,7 +68,7 @@ public final class GlobalLocaleManager extends AbstractGlobalWebSingleton implem
     return m_aInstance.getDefaultLocale ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Locale> getAllAvailableLocales ()
   {

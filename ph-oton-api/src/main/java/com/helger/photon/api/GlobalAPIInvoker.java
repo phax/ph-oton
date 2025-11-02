@@ -16,6 +16,8 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
@@ -23,8 +25,6 @@ import com.helger.annotation.style.VisibleForTesting;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Central API manager. Was reworked in v8.1.4 to clearly separate between
@@ -45,7 +45,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
   public GlobalAPIInvoker ()
   {}
 
-  @Nonnull
+  @NonNull
   public static GlobalAPIInvoker getInstance ()
   {
     return getGlobalSingleton (GlobalAPIInvoker.class);
@@ -62,7 +62,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
     m_aInvoker = new APIInvoker ();
   }
 
-  @Nonnull
+  @NonNull
   public IAPIRegistry getRegistry ()
   {
     return m_aRWLock.readLockedGet ( () -> m_aRegistry);
@@ -76,7 +76,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
    * @param aRegistry
    *        The registry to use. May not be <code>null</code>.
    */
-  public void setRegistry (@Nonnull final IAPIRegistry aRegistry)
+  public void setRegistry (@NonNull final IAPIRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
     if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllAPIDescriptors ().isNotEmpty ()))
@@ -85,7 +85,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
     m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
   }
 
-  @Nonnull
+  @NonNull
   public IAPIInvoker getInvoker ()
   {
     return m_aRWLock.readLockedGet ( () -> m_aInvoker);
@@ -99,7 +99,7 @@ public class GlobalAPIInvoker extends AbstractGlobalWebSingleton
    * @param aInvoker
    *        The invoker to be used. May not be <code>null</code>.
    */
-  public void setInvoker (@Nonnull final IAPIInvoker aInvoker)
+  public void setInvoker (@NonNull final IAPIInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
     m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);

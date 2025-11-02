@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nullable;
 
 /**
  * Encapsulates the request data for a single column

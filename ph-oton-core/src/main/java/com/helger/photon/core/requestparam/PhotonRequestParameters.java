@@ -19,6 +19,8 @@ package com.helger.photon.core.requestparam;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.photon.core.menu.IMenuItemRedirectToPage;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.core.menu.IMenuOperations;
 import com.helger.text.locale.LocaleCache;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Holder for the special ph-oton parameters
@@ -90,7 +89,7 @@ public class PhotonRequestParameters implements Serializable
   }
 
   @Nullable
-  public Locale setLocaleFromString (@Nonnull final ILocaleManager aLocaleMgr, @Nullable final String sDisplayLocale)
+  public Locale setLocaleFromString (@NonNull final ILocaleManager aLocaleMgr, @Nullable final String sDisplayLocale)
   {
     Locale ret = null;
     if (StringHelper.isNotEmpty (sDisplayLocale))
@@ -126,7 +125,7 @@ public class PhotonRequestParameters implements Serializable
   }
 
   @Nullable
-  public IMenuItemPage setMenuItemFromString (@Nonnull final IMenuOperations aTree, @Nullable final String sMenuItemID)
+  public IMenuItemPage setMenuItemFromString (@NonNull final IMenuOperations aTree, @Nullable final String sMenuItemID)
   {
     IMenuItemPage ret = null;
     if (StringHelper.isNotEmpty (sMenuItemID))

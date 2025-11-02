@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Scope of an {@link com.helger.html.hc.html.tabular.HCTH} element.
@@ -39,12 +39,12 @@ public enum EHCTHScope implements IHCHasHTMLAttributeValue
 
   private final String m_sAttrValue;
 
-  EHCTHScope (@Nonnull @Nonempty final String sAttrValue)
+  EHCTHScope (@NonNull @Nonempty final String sAttrValue)
   {
     m_sAttrValue = sAttrValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

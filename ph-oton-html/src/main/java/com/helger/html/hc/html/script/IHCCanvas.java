@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.script;
 
-import com.helger.html.hc.html.IHCElementWithChildren;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.hc.html.IHCElementWithChildren;
 
 /**
  * Interface for CANVASs
@@ -31,11 +31,11 @@ public interface IHCCanvas <IMPLTYPE extends IHCCanvas <IMPLTYPE>> extends IHCEl
 {
   long getHeight ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setHeight (long nHeight);
 
   long getWidth ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setWidth (long nWidth);
 }

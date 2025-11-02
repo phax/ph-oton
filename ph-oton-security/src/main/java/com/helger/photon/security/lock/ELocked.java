@@ -16,7 +16,7 @@
  */
 package com.helger.photon.security.lock;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Locked enumeration
@@ -38,14 +38,14 @@ public enum ELocked implements ILockedIndicator
     return this == NOT_LOCKED;
   }
 
-  @Nonnull
+  @NonNull
   public static ELocked valueOf (final boolean bLocked)
   {
     return bLocked ? LOCKED : NOT_LOCKED;
   }
 
-  @Nonnull
-  public static ELocked valueOf (@Nonnull final ILockedIndicator eLockingIndicator)
+  @NonNull
+  public static ELocked valueOf (@NonNull final ILockedIndicator eLockingIndicator)
   {
     return valueOf (eLockingIndicator.isLocked ());
   }

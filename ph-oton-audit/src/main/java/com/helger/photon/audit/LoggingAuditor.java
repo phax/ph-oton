@@ -18,15 +18,14 @@ package com.helger.photon.audit;
 
 import java.time.format.DateTimeFormatter;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.string.StringHelper;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IAuditor} using SLF4J logging.
@@ -41,12 +40,12 @@ public class LoggingAuditor extends AbstractAuditor
 
   private final String m_sCommonPrefix;
 
-  public LoggingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider)
+  public LoggingAuditor (@NonNull final ICurrentUserIDProvider aUserIDProvider)
   {
     this (aUserIDProvider, "");
   }
 
-  public LoggingAuditor (@Nonnull final ICurrentUserIDProvider aUserIDProvider, @Nullable final String sCommonPrefix)
+  public LoggingAuditor (@NonNull final ICurrentUserIDProvider aUserIDProvider, @Nullable final String sCommonPrefix)
   {
     super (aUserIDProvider);
     m_sCommonPrefix = StringHelper.getNotNull (sCommonPrefix, "");
@@ -56,15 +55,15 @@ public class LoggingAuditor extends AbstractAuditor
    * @return The prefix to be used in all logging lines. Never <code>null</code>
    *         but maybe empty.
    */
-  @Nonnull
+  @NonNull
   public String getCommonPrefix ()
   {
     return m_sCommonPrefix;
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  public static String getDefaultAuditItemString (@Nonnull final IAuditItem aAuditItem)
+  public static String getDefaultAuditItemString (@NonNull final IAuditItem aAuditItem)
   {
     return DateTimeFormatter.ISO_DATE_TIME.format (aAuditItem.getDateTime ()) +
            " " +
@@ -77,15 +76,15 @@ public class LoggingAuditor extends AbstractAuditor
            aAuditItem.getAction ();
   }
 
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected String getAuditItemString (@Nonnull final IAuditItem aAuditItem)
+  protected String getAuditItemString (@NonNull final IAuditItem aAuditItem)
   {
     return m_sCommonPrefix + getDefaultAuditItemString (aAuditItem);
   }
 
   @Override
-  protected void handleAuditItem (@Nonnull final IAuditItem aAuditItem)
+  protected void handleAuditItem (@NonNull final IAuditItem aAuditItem)
   {
     LOGGER.info (getAuditItemString (aAuditItem));
   }

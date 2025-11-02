@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class represents a single unary operator
@@ -36,31 +36,31 @@ public class JSOpUnary extends AbstractJSExpression
   private final IJSExpression m_aExpr;
   private final boolean m_bOpFirst;
 
-  public JSOpUnary (@Nonnull @Nonempty final String sOp, @Nonnull final IJSExpression aExpr)
+  public JSOpUnary (@NonNull @Nonempty final String sOp, @NonNull final IJSExpression aExpr)
   {
     this (sOp, aExpr, true);
   }
 
-  public JSOpUnary (@Nonnull final IJSExpression aExpr, @Nonnull @Nonempty final String sOp)
+  public JSOpUnary (@NonNull final IJSExpression aExpr, @NonNull @Nonempty final String sOp)
   {
     this (sOp, aExpr, false);
   }
 
-  private JSOpUnary (@Nonnull final String sOp, @Nonnull final IJSExpression aExpr, final boolean bOpFirst)
+  private JSOpUnary (@NonNull final String sOp, @NonNull final IJSExpression aExpr, final boolean bOpFirst)
   {
     m_sOp = ValueEnforcer.notEmpty (sOp, "Operator");
     m_aExpr = ValueEnforcer.notNull (aExpr, "Expr");
     m_bOpFirst = bOpFirst;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String operator ()
   {
     return m_sOp;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr ()
   {
     return m_aExpr;
@@ -71,7 +71,7 @@ public class JSOpUnary extends AbstractJSExpression
     return m_bOpFirst;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     if (m_bOpFirst)
       aFormatter.plain (m_sOp).generatable (m_aExpr);

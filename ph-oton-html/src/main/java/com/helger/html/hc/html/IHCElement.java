@@ -18,6 +18,9 @@ package com.helger.html.hc.html;
 
 import java.util.function.Consumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -27,9 +30,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.EHTMLRole;
 import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an HC element
@@ -51,13 +51,13 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   /**
    * @return The contained HTML element. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EHTMLElement getElement ();
 
   /**
    * @return The tag name of this element (without namespace)
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getTagName ();
 
@@ -75,7 +75,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        The new accesskey. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setAccessKey (@Nullable String sAccessKey);
 
   /**
@@ -93,7 +93,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setAutoFocus (boolean bAutoFocus);
 
   /**
@@ -109,7 +109,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        New value. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setContentEditable (@Nullable EHCContentEditable eContentEditable);
 
   /**
@@ -126,7 +126,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        The new direction. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setDirection (@Nullable EHCTextDirection eDirection);
 
   /**
@@ -142,7 +142,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        Value to set. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setDraggable (@Nullable EHCDraggable eDraggable);
 
   /**
@@ -161,7 +161,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setEnterKeyHint (@Nullable String sEnterKeyHint);
 
   /**
@@ -180,7 +180,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setExportParts (@Nullable String sExportParts);
 
   /**
@@ -230,7 +230,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setInputMode (@Nullable EHCInputMode eInputMode);
 
   /**
@@ -247,7 +247,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        The new language. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setLanguage (@Nullable String sLanguage);
 
   /**
@@ -276,7 +276,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setNonce (@Nullable String sNonce);
 
   /**
@@ -295,7 +295,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setPart (@Nullable String sPart);
 
   /**
@@ -314,7 +314,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setSlot (@Nullable String sSlot);
 
   /**
@@ -330,7 +330,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        <code>true</code> to enabled, <code>false</code> otherwise.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setSpellCheck (boolean bSpellCheck);
 
   /**
@@ -352,7 +352,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        won't set a focus when tabbing.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setTabIndex (long nTabIndex);
 
   /**
@@ -369,7 +369,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        The new title. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setTitle (String sTitle);
 
   /**
@@ -393,7 +393,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return The value of the HTML <code>translate</code> attribute. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   ETriState getTranslate ();
 
   /**
@@ -403,7 +403,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        <code>true</code> to translate, <code>false</code> otherwise.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setTranslate (final boolean bTranslate)
   {
     return setTranslate (ETriState.valueOf (bTranslate));
@@ -416,8 +416,8 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        The new translate state. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  IMPLTYPE setTranslate (@Nonnull ETriState eTranslate);
+  @NonNull
+  IMPLTYPE setTranslate (@NonNull ETriState eTranslate);
 
   //////////////////////////////////////////////////
 
@@ -434,7 +434,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        otherwise.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setUnfocusable (boolean bUnfocusable);
 
   /**
@@ -452,7 +452,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *        abstract roles should not be used!
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setRole (@Nullable EHTMLRole eRole);
 
   /**
@@ -460,7 +460,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    *         predefined method binding is available. Used e.g. for "aria-*" and
    *         "data-*" attributes.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   IHCAttrContainer customAttrs ();
 
@@ -474,8 +474,8 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * @return this for chaining
    * @since 8.4.4
    */
-  @Nonnull
-  default IMPLTYPE withCustomAttrs (@Nonnull final Consumer <? super IHCAttrContainer> aConsumer)
+  @NonNull
+  default IMPLTYPE withCustomAttrs (@NonNull final Consumer <? super IHCAttrContainer> aConsumer)
   {
     aConsumer.accept (customAttrs ());
     return thisAsT ();

@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.ajax.executor;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special {@link IAjaxExecutor} that requires an
@@ -41,8 +41,8 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    *        The request scope to use. Never <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  protected abstract LECTYPE createLayoutExecutionContext (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  @NonNull
+  protected abstract LECTYPE createLayoutExecutionContext (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 
   /**
    * This method must be overridden by every handler. It is called with the LEC
@@ -57,10 +57,10 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    *         In case of an error
    */
   @OverrideOnDemand
-  protected abstract void mainHandleRequest (@Nonnull LECTYPE aLEC, @Nonnull PhotonUnifiedResponse aAjaxResponse) throws Exception;
+  protected abstract void mainHandleRequest (@NonNull LECTYPE aLEC, @NonNull PhotonUnifiedResponse aAjaxResponse) throws Exception;
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final LECTYPE aLEC = createLayoutExecutionContext (aRequestScope);
     mainHandleRequest (aLEC, aAjaxResponse);

@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
@@ -31,9 +34,6 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.IXMLWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML conditional comment for IE specific usage. E.g.
@@ -69,7 +69,7 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   private final String m_sCondition;
   private final IHCNode m_aWrappedNode;
 
-  public HCConditionalCommentNode (@Nonnull @Nonempty final String sCondition, @Nonnull final IHCNode aWrappedNode)
+  public HCConditionalCommentNode (@NonNull @Nonempty final String sCondition, @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notEmpty (sCondition, "Condition");
     ValueEnforcer.notNull (aWrappedNode, "WrappedNode");
@@ -84,14 +84,14 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   /**
    * @return The condition for the conditional comment. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCondition ()
   {
     return m_sCondition;
   }
 
-  @Nonnull
+  @NonNull
   public IHCNode getWrappedNode ()
   {
     return m_aWrappedNode;
@@ -99,7 +99,7 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
 
   @Override
   @Nullable
-  protected IMicroNode internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected IMicroNode internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // First convert the contained node to a micro node
     final IMicroNode aWrappedMicroNode = super.internalConvertToMicroNode (aConversionSettings);
@@ -134,278 +134,278 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
                                        .getToString ();
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIE (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIE (@NonNull final IHCNode aWrappedNode)
   {
     return new HCConditionalCommentNode (CONDITION_IF_IE_GENERIC, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion (@Nonnull final Version aVersion,
-                                                                  @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion (@NonNull final Version aVersion,
+                                                                  @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
     return new HCConditionalCommentNode (CONDITION_IF_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion5 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion5 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE5, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion6 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion6 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE6, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion7 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion7 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE7, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion8 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion8 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE8, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion9 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion9 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE9, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion10 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion10 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE10, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEExactVersion11 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEExactVersion11 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEExactVersion (IE11, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIENotVersion (@Nonnull final Version aVersion,
-                                                                @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIENotVersion (@NonNull final Version aVersion,
+                                                                @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
     return new HCConditionalCommentNode (CONDITION_IF_NOT_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion (@Nonnull final Version aVersion,
-                                                                      @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion (@NonNull final Version aVersion,
+                                                                      @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
     return new HCConditionalCommentNode (CONDITION_IF_LT_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion5 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion5 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE5, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion6 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion6 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE6, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion7 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion7 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE7, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion8 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion8 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE8, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion9 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion9 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE9, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion10 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion10 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE10, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerThanVersion11 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerThanVersion11 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerThanVersion (IE11, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion (@Nonnull final Version aVersion,
-                                                                             @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion (@NonNull final Version aVersion,
+                                                                             @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
     return new HCConditionalCommentNode (CONDITION_IF_LTE_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion5 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion5 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE5, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion6 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion6 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE6, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion7 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion7 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE7, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion8 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion8 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE8, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion9 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion9 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE9, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion10 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion10 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE10, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion11 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIELowerOrEqualThanVersion11 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIELowerOrEqualThanVersion (IE11, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion (@Nonnull final Version aVersion,
-                                                                        @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion (@NonNull final Version aVersion,
+                                                                        @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
     return new HCConditionalCommentNode (CONDITION_IF_GT_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion5 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion5 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE5, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion6 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion6 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE6, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion7 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion7 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE7, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion8 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion8 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE8, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion9 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion9 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE9, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion10 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion10 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE10, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterThanVersion11 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterThanVersion11 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterThanVersion (IE11, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion (@Nonnull final Version aVersion,
-                                                                               @Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion (@NonNull final Version aVersion,
+                                                                               @NonNull final IHCNode aWrappedNode)
   {
     ValueEnforcer.notNull (aVersion, "Version");
 
     return new HCConditionalCommentNode (CONDITION_IF_GTE_IE + aVersion.getAsString (), aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion5 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion5 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE5, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion6 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion6 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE6, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion7 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion7 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE7, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion8 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion8 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE8, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion9 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion9 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE9, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion10 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion10 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE10, aWrappedNode);
   }
 
-  @Nonnull
-  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion11 (@Nonnull final IHCNode aWrappedNode)
+  @NonNull
+  public static HCConditionalCommentNode createForIEGreaterOrEqualThanVersion11 (@NonNull final IHCNode aWrappedNode)
   {
     return createForIEGreaterOrEqualThanVersion (IE11, aWrappedNode);
   }
 
   @Nullable
   public static HCConditionalCommentNode getFromStringOrNull (@Nullable final String sCondition,
-                                                              @Nonnull final IHCNode aNode)
+                                                              @NonNull final IHCNode aNode)
   {
     if (StringHelper.isEmpty (sCondition))
       return null;
@@ -423,9 +423,9 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
    *        The HC node to be wrapped. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static HCConditionalCommentNode getAsConditionalCommentNode (@Nonnull @Nonempty final String sCondition,
-                                                                      @Nonnull final IHCNode aNode)
+  @NonNull
+  public static HCConditionalCommentNode getAsConditionalCommentNode (@NonNull @Nonempty final String sCondition,
+                                                                      @NonNull final IHCNode aNode)
   {
     if (aNode instanceof HCConditionalCommentNode)
       return (HCConditionalCommentNode) aNode;

@@ -16,9 +16,9 @@
  */
 package com.helger.photon.exchange.bulkexport;
 
-import com.helger.photon.exchange.EExchangeFileType;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.photon.exchange.EExchangeFileType;
 
 /**
  * A specialized exporter that exports to a file. This interface provides
@@ -31,6 +31,6 @@ public interface IExporterFile extends IExporter
   /**
    * @return The file type for export.
    */
-  @Nonnull
+  @NonNull
   EExchangeFileType getFileType ();
 }

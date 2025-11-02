@@ -18,12 +18,12 @@ package com.helger.html.meta;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class encapsulates a single MetaTag. It consists of a name, a locale and a value. If the
@@ -40,10 +40,10 @@ public class MetaElementValue implements IMetaElementValue
   private final Locale m_aContentLocale;
   private final String m_sContent;
 
-  public MetaElementValue (@Nonnull final EMetaElementType eType,
-                           @Nonnull final String sName,
-                           @Nonnull final Locale aContentLocale,
-                           @Nonnull final String sContent)
+  public MetaElementValue (@NonNull final EMetaElementType eType,
+                           @NonNull final String sName,
+                           @NonNull final Locale aContentLocale,
+                           @NonNull final String sContent)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notNull (sName, "Name");
@@ -56,25 +56,25 @@ public class MetaElementValue implements IMetaElementValue
     m_sContent = sContent;
   }
 
-  @Nonnull
+  @NonNull
   public EMetaElementType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public String getName ()
   {
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public Locale getContentLocale ()
   {
     return m_aContentLocale;
   }
 
-  @Nonnull
+  @NonNull
   public String getContent ()
   {
     return m_sContent;

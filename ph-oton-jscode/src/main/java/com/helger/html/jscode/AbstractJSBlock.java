@@ -16,6 +16,8 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +45,6 @@ import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.json.IJson;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A JS block. It contains a list of statements and declarations.
@@ -89,7 +88,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Name to remove
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public EChange removeByName (final String sName)
   {
     final IJSDeclaration aDecl = m_aDecls.remove (sName);
@@ -99,14 +98,14 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsMap <String, IJSDeclaration> directDeclarations ()
   {
     return m_aDecls;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IJSDeclaration> getAllDeclarations ()
   {
@@ -153,14 +152,14 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return m_aObjs.size ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("speed")
   final ICommonsList <IHasJSCode> directMembers ()
   {
     return m_aObjs;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IHasJSCode> getAllMembers ()
   {
@@ -172,7 +171,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE clear ()
   {
     m_aObjs.clear ();
@@ -188,7 +187,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        The added declaration. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onAddDeclaration (@Nonnull final IJSDeclaration aDeclaration)
+  protected void onAddDeclaration (@NonNull final IJSDeclaration aDeclaration)
   {}
 
   /**
@@ -202,8 +201,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         If another declaration with the same name is already present
    */
-  @Nonnull
-  public final <T extends IJSDeclaration> T addDeclaration (@Nonnull final T aDeclaration)
+  @NonNull
+  public final <T extends IJSDeclaration> T addDeclaration (@NonNull final T aDeclaration)
   {
     ValueEnforcer.notNull (aDeclaration, "Declaration");
 
@@ -218,8 +217,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return aDeclaration;
   }
 
-  @Nonnull
-  public final <T extends IJSStatement> T addStatement (@Nonnull final T aStatement)
+  @NonNull
+  public final <T extends IJSStatement> T addStatement (@NonNull final T aStatement)
   {
     ValueEnforcer.notNull (aStatement, "Statement");
 
@@ -282,8 +281,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @exception JSNameAlreadyExistsException
    *            When the specified class/interface was already created.
    */
-  @Nonnull
-  public JSDefinedClass _class (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSDefinedClass _class (@NonNull @Nonempty final String sName)
   {
     final JSDefinedClass aDefinedClass = new JSDefinedClass (sName);
     return addDeclaration (aDefinedClass);
@@ -294,8 +293,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        The type to be instantiated
    * @return A "new type" invocation object
    */
-  @Nonnull
-  public JSInvocation _new (@Nonnull final AbstractJSType aType)
+  @NonNull
+  public JSInvocation _new (@NonNull final AbstractJSType aType)
   {
     ValueEnforcer.notNull (aType, "Type");
 
@@ -311,8 +310,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @exception JSNameAlreadyExistsException
    *            When the specified class/interface was already created.
    */
-  @Nonnull
-  public JSFunction function (@Nonnull final String sName)
+  @NonNull
+  public JSFunction function (@NonNull final String sName)
   {
     final JSFunction aFunction = new JSFunction (sName);
     return addDeclaration (aFunction);
@@ -327,8 +326,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName)
   {
     return variable (sName, (IJSExpression) null);
   }
@@ -344,8 +343,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final boolean bInitValue)
   {
     return variable (sName, JSExpr.lit (bInitValue));
   }
@@ -361,8 +360,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final char cInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final char cInitValue)
   {
     return variable (sName, JSExpr.lit (cInitValue));
   }
@@ -378,8 +377,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final double dInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final double dInitValue)
   {
     return variable (sName, JSExpr.lit (dInitValue));
   }
@@ -395,8 +394,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final float fInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final float fInitValue)
   {
     return variable (sName, JSExpr.lit (fInitValue));
   }
@@ -412,8 +411,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final int nInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final int nInitValue)
   {
     return variable (sName, JSExpr.lit (nInitValue));
   }
@@ -429,8 +428,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, final long nInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, final long nInitValue)
   {
     return variable (sName, JSExpr.lit (nInitValue));
   }
@@ -446,8 +445,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, @Nullable final String sInitValue)
   {
     return variable (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
   }
@@ -463,8 +462,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSVar variable (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  @NonNull
+  public JSVar variable (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
   {
     final JSVar aVar = new JSVar (sName, aInitExpression);
     return addDeclaration (aVar);
@@ -479,8 +478,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName)
   {
     return let (sName, (IJSExpression) null);
   }
@@ -496,8 +495,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final boolean bInitValue)
   {
     return let (sName, JSExpr.lit (bInitValue));
   }
@@ -513,8 +512,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final char cInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final char cInitValue)
   {
     return let (sName, JSExpr.lit (cInitValue));
   }
@@ -530,8 +529,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final double dInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final double dInitValue)
   {
     return let (sName, JSExpr.lit (dInitValue));
   }
@@ -547,8 +546,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final float fInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final float fInitValue)
   {
     return let (sName, JSExpr.lit (fInitValue));
   }
@@ -564,8 +563,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final int nInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final int nInitValue)
   {
     return let (sName, JSExpr.lit (nInitValue));
   }
@@ -581,8 +580,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, final long nInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, final long nInitValue)
   {
     return let (sName, JSExpr.lit (nInitValue));
   }
@@ -598,8 +597,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, @Nullable final String sInitValue)
   {
     return let (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
   }
@@ -615,8 +614,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSLet let (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  @NonNull
+  public JSLet let (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
   {
     final JSLet aVar = new JSLet (sName, aInitExpression);
     return addDeclaration (aVar);
@@ -631,8 +630,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName)
   {
     return _const (sName, (IJSExpression) null);
   }
@@ -648,8 +647,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final boolean bInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final boolean bInitValue)
   {
     return _const (sName, JSExpr.lit (bInitValue));
   }
@@ -665,8 +664,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final char cInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final char cInitValue)
   {
     return _const (sName, JSExpr.lit (cInitValue));
   }
@@ -682,8 +681,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final double dInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final double dInitValue)
   {
     return _const (sName, JSExpr.lit (dInitValue));
   }
@@ -699,8 +698,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final float fInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final float fInitValue)
   {
     return _const (sName, JSExpr.lit (fInitValue));
   }
@@ -716,8 +715,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final int nInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final int nInitValue)
   {
     return _const (sName, JSExpr.lit (nInitValue));
   }
@@ -733,8 +732,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, final long nInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, final long nInitValue)
   {
     return _const (sName, JSExpr.lit (nInitValue));
   }
@@ -750,8 +749,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, @Nullable final String sInitValue)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, @Nullable final String sInitValue)
   {
     return _const (sName, sInitValue == null ? JSExpr.NULL : JSExpr.lit (sInitValue));
   }
@@ -767,45 +766,45 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * @throws JSNameAlreadyExistsException
    *         if the name is not unique
    */
-  @Nonnull
-  public JSConst _const (@Nonnull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
+  @NonNull
+  public JSConst _const (@NonNull @Nonempty final String sName, @Nullable final IJSExpression aInitExpression)
   {
     final JSConst aVar = new JSConst (sName, aInitExpression);
     return addDeclaration (aVar);
   }
 
-  @Nonnull
-  public JSInvocation invoke (@Nonnull final JSAnonymousFunction aAnonFunction)
+  @NonNull
+  public JSInvocation invoke (@NonNull final JSAnonymousFunction aAnonFunction)
   {
     ValueEnforcer.notNull (aAnonFunction, "AnonFunction");
 
     return addStatement (aAnonFunction.invoke ());
   }
 
-  @Nonnull
-  public JSInvocation invoke (@Nonnull final JSFunction aFunction)
+  @NonNull
+  public JSInvocation invoke (@NonNull final JSFunction aFunction)
   {
     ValueEnforcer.notNull (aFunction, "Function");
 
     return addStatement (aFunction.invoke ());
   }
 
-  @Nonnull
-  public JSInvocation invoke (@Nonnull @Nonempty final String sFunctionName)
+  @NonNull
+  public JSInvocation invoke (@NonNull @Nonempty final String sFunctionName)
   {
     final JSInvocation aInvocation = new JSInvocation (sFunctionName);
     return addStatement (aInvocation);
   }
 
-  @Nonnull
-  public JSInvocation invoke (@Nonnull @Nonempty final String sField, @Nonnull @Nonempty final String sMethodName)
+  @NonNull
+  public JSInvocation invoke (@NonNull @Nonempty final String sField, @NonNull @Nonempty final String sMethodName)
   {
     final JSInvocation aInvocation = JSExpr.ref (sField).invoke (sMethodName);
     return addStatement (aInvocation);
   }
 
-  @Nonnull
-  public JSInvocation invoke (@Nonnull @Nonempty final String sField, @Nonnull final JSMethod aMethod)
+  @NonNull
+  public JSInvocation invoke (@NonNull @Nonempty final String sField, @NonNull final JSMethod aMethod)
   {
     final JSInvocation aInvocation = JSExpr.ref (sField).invoke (aMethod);
     return addStatement (aInvocation);
@@ -821,8 +820,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Name of method to invoke
    * @return Newly generated {@link JSInvocation}
    */
-  @Nonnull
-  public JSInvocation invoke (@Nullable final IJSExpression aExpr, @Nonnull @Nonempty final String sMethod)
+  @NonNull
+  public JSInvocation invoke (@Nullable final IJSExpression aExpr, @NonNull @Nonempty final String sMethod)
   {
     final JSInvocation aInvocation = new JSInvocation (aExpr, sMethod);
     return addStatement (aInvocation);
@@ -838,8 +837,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        JMethod to invoke
    * @return Newly generated {@link JSInvocation}
    */
-  @Nonnull
-  public JSInvocation invoke (@Nullable final IJSExpression aExpr, @Nonnull final JSMethod aMethod)
+  @NonNull
+  public JSInvocation invoke (@Nullable final IJSExpression aExpr, @NonNull final JSMethod aMethod)
   {
     final JSInvocation aInvocation = new JSInvocation (aExpr, aMethod);
     return addStatement (aInvocation);
@@ -854,8 +853,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Method name to invoke
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public JSInvocation staticInvoke (@Nullable final AbstractJSClass aType, @Nonnull final String sMethod)
+  @NonNull
+  public JSInvocation staticInvoke (@Nullable final AbstractJSClass aType, @NonNull final String sMethod)
   {
     final JSInvocation aInvocation = new JSInvocation (aType, sMethod);
     return addStatement (aInvocation);
@@ -870,76 +869,76 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Method to invoke
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public JSInvocation staticInvoke (@Nullable final AbstractJSClass aType, @Nonnull final JSMethod aMethod)
+  @NonNull
+  public JSInvocation staticInvoke (@Nullable final AbstractJSClass aType, @NonNull final JSMethod aMethod)
   {
     final JSInvocation aInvocation = new JSInvocation (aType, aMethod);
     return addStatement (aInvocation);
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final boolean bValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final boolean bValue)
   {
     return assign (aLhs, JSExpr.lit (bValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final char cValue)
   {
     return assign (aLhs, JSExpr.lit (cValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final double dValue)
   {
     return assign (aLhs, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final float fValue)
   {
     return assign (aLhs, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     return assign (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     return assign (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, @NonNull final String sValue)
   {
     return assign (aLhs, sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nullable final IJson aValue)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, @Nullable final IJson aValue)
   {
     return assign (aLhs, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assign (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assign (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (aLhs.assign (aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final char cValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, final char cValue)
   {
     return assignPlus (aLhs, JSExpr.lit (cValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No add with 0
     if (EqualsHelper.equals (dValue, 0))
@@ -949,8 +948,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignPlus (aLhs, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No add with 0
     if (EqualsHelper.equals (fValue, 0))
@@ -960,8 +959,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignPlus (aLhs, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No add with 0
     if (EqualsHelper.equals (nValue, 0))
@@ -971,8 +970,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignPlus (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No add with 0
     if (EqualsHelper.equals (nValue, 0))
@@ -982,21 +981,21 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignPlus (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final String sValue)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, @NonNull final String sValue)
   {
     return assignPlus (aLhs, JSExpr.lit (sValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignPlus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assignPlus (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignPlus (aLhs, aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  @NonNull
+  public IMPLTYPE assignMinus (@NonNull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (dValue, 0))
@@ -1004,8 +1003,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMinus (aLhs, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  @NonNull
+  public IMPLTYPE assignMinus (@NonNull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (fValue, 0))
@@ -1013,8 +1012,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMinus (aLhs, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assignMinus (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (nValue, 0))
@@ -1022,8 +1021,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMinus (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assignMinus (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No subtract with 0
     if (EqualsHelper.equals (nValue, 0))
@@ -1031,15 +1030,15 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMinus (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMinus (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assignMinus (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignMinus (aLhs, aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  @NonNull
+  public IMPLTYPE assignMultiply (@NonNull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (dValue, 1))
@@ -1047,8 +1046,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMultiply (aLhs, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  @NonNull
+  public IMPLTYPE assignMultiply (@NonNull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (fValue, 1))
@@ -1056,8 +1055,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMultiply (aLhs, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assignMultiply (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (nValue, 1))
@@ -1065,8 +1064,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMultiply (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assignMultiply (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No multiply with 1
     if (EqualsHelper.equals (nValue, 1))
@@ -1074,15 +1073,15 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignMultiply (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignMultiply (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assignMultiply (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignMultiply (aLhs, aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final double dValue)
+  @NonNull
+  public IMPLTYPE assignDivide (@NonNull final IJSAssignmentTarget aLhs, final double dValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (dValue, 1))
@@ -1090,8 +1089,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignDivide (aLhs, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final float fValue)
+  @NonNull
+  public IMPLTYPE assignDivide (@NonNull final IJSAssignmentTarget aLhs, final float fValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (fValue, 1))
@@ -1099,8 +1098,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignDivide (aLhs, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assignDivide (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (nValue, 1))
@@ -1108,8 +1107,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignDivide (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assignDivide (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     // No divide by 1
     if (EqualsHelper.equals (nValue, 1))
@@ -1117,55 +1116,55 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return assignDivide (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignDivide (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assignDivide (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignDivide (aLhs, aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final int nValue)
+  @NonNull
+  public IMPLTYPE assignModulo (@NonNull final IJSAssignmentTarget aLhs, final int nValue)
   {
     return assignModulo (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, final long nValue)
+  @NonNull
+  public IMPLTYPE assignModulo (@NonNull final IJSAssignmentTarget aLhs, final long nValue)
   {
     return assignModulo (aLhs, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public IMPLTYPE assignModulo (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE assignModulo (@NonNull final IJSAssignmentTarget aLhs, @NonNull final IJSExpression aExpr)
   {
     addStatement (JSExpr.assignModulo (aLhs, aExpr));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE incrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
+  @NonNull
+  public IMPLTYPE incrPostfix (@NonNull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSIncrPostfix (aLhs));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE incrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
+  @NonNull
+  public IMPLTYPE incrPrefix (@NonNull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSIncrPrefix (aLhs));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE decrPostfix (@Nonnull final IJSAssignmentTarget aLhs)
+  @NonNull
+  public IMPLTYPE decrPostfix (@NonNull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSDecrPostfix (aLhs));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE decrPrefix (@Nonnull final IJSAssignmentTarget aLhs)
+  @NonNull
+  public IMPLTYPE decrPrefix (@NonNull final IJSAssignmentTarget aLhs)
   {
     addStatement (new JSDecrPrefix (aLhs));
     return thisAsT ();
@@ -1176,20 +1175,20 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *
    * @return Newly generated For statement
    */
-  @Nonnull
+  @NonNull
   public JSForLoop _for ()
   {
     return addStatement (new JSForLoop ());
   }
 
-  @Nonnull
-  public JSForIn forIn (@Nonnull final JSLet aVar, @Nonnull final IJSExpression aCollection)
+  @NonNull
+  public JSForIn forIn (@NonNull final JSLet aVar, @NonNull final IJSExpression aCollection)
   {
     return addStatement (new JSForIn (aVar, aCollection));
   }
 
-  @Nonnull
-  public JSForIn forIn (@Nonnull @Nonempty final String sVarName, @Nonnull final IJSExpression aCollection)
+  @NonNull
+  public JSForIn forIn (@NonNull @Nonempty final String sVarName, @NonNull final IJSExpression aCollection)
   {
     return addStatement (new JSForIn (sVarName, aCollection));
   }
@@ -1201,8 +1200,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        The while condition to use
    * @return Newly generated While statement
    */
-  @Nonnull
-  public JSWhileLoop _while (@Nonnull final IJSExpression aTest)
+  @NonNull
+  public JSWhileLoop _while (@NonNull final IJSExpression aTest)
   {
     return addStatement (new JSWhileLoop (aTest));
   }
@@ -1214,8 +1213,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Do test
    * @return Newly generated Do statement
    */
-  @Nonnull
-  public JSDoLoop _do (@Nonnull final IJSExpression aTest)
+  @NonNull
+  public JSDoLoop _do (@NonNull final IJSExpression aTest)
   {
     return addStatement (new JSDoLoop (aTest));
   }
@@ -1227,8 +1226,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        test expression
    * @return Created switch statement
    */
-  @Nonnull
-  public JSSwitch _switch (@Nonnull final IJSExpression aTest)
+  @NonNull
+  public JSSwitch _switch (@NonNull final IJSExpression aTest)
   {
     return addStatement (new JSSwitch (aTest));
   }
@@ -1238,7 +1237,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *
    * @return Newly generated Try statement
    */
-  @Nonnull
+  @NonNull
   public JSTryBlock _try ()
   {
     return addStatement (new JSTryBlock ());
@@ -1251,8 +1250,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        the expression to be deleted. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public IMPLTYPE delete (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE delete (@NonNull final IJSExpression aExpr)
   {
     addStatement (new JSDelete (aExpr));
     return thisAsT ();
@@ -1265,8 +1264,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Throwing expression
    * @return this
    */
-  @Nonnull
-  public IMPLTYPE _throw (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public IMPLTYPE _throw (@NonNull final IJSExpression aExpr)
   {
     addStatement (new JSThrow (aExpr));
     return thisAsT ();
@@ -1275,7 +1274,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   /**
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE debugger ()
   {
     addStatement (new JSDebugger ());
@@ -1290,8 +1289,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        name
    * @return this
    */
-  @Nonnull
-  public JSLabel label (@Nonnull @Nonempty final String sName)
+  @NonNull
+  public JSLabel label (@NonNull @Nonempty final String sName)
   {
     return addStatement (new JSLabel (sName));
   }
@@ -1303,8 +1302,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        {@link IJSExpression} to be tested to determine branching
    * @return Newly generated conditional statement
    */
-  @Nonnull
-  public JSConditional _if (@Nonnull final IJSExpression aTest)
+  @NonNull
+  public JSConditional _if (@NonNull final IJSExpression aTest)
   {
     return addStatement (new JSConditional (aTest));
   }
@@ -1318,8 +1317,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        "then" block content. May be <code>null</code>.
    * @return Newly generated conditional statement
    */
-  @Nonnull
-  public JSConditional _if (@Nonnull final IJSExpression aTest, @Nullable final IHasJSCode aThen)
+  @NonNull
+  public JSConditional _if (@NonNull final IJSExpression aTest, @Nullable final IHasJSCode aThen)
   {
     return addStatement (new JSConditional (aTest, aThen));
   }
@@ -1335,8 +1334,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        "else" block content. May be <code>null</code>.
    * @return Newly generated conditional statement
    */
-  @Nonnull
-  public JSConditional _if (@Nonnull final IJSExpression aTest,
+  @NonNull
+  public JSConditional _if (@NonNull final IJSExpression aTest,
                             @Nullable final IHasJSCode aThen,
                             @Nullable final IHasJSCode aElse)
   {
@@ -1348,55 +1347,55 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return ()
   {
     return _return ((IJSExpression) null);
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final boolean bValue)
   {
     return _return (JSExpr.lit (bValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final char cValue)
   {
     return _return (JSExpr.lit (cValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final double dValue)
   {
     return _return (JSExpr.lit (dValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final float fValue)
   {
     return _return (JSExpr.lit (fValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final int nValue)
   {
     return _return (JSExpr.lit (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (final long nValue)
   {
     return _return (JSExpr.lit (nValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (@Nullable final String sValue)
   {
     return _return (sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (@Nullable final IJson aValue)
   {
     return _return (aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
@@ -1409,7 +1408,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *        Expression to return
    * @return this
    */
-  @Nonnull
+  @NonNull
   public IMPLTYPE _return (@Nullable final IJSExpression aExpr)
   {
     addStatement (new JSReturn (aExpr));
@@ -1421,21 +1420,21 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    *
    * @return The newly created block
    */
-  @Nonnull
+  @NonNull
   public JSBlock block ()
   {
     return addStatement (new JSBlock (false, false));
   }
 
-  @Nonnull
-  public IMPLTYPE comment (@Nonnull final String sComment)
+  @NonNull
+  public IMPLTYPE comment (@NonNull final String sComment)
   {
     addStatement (new JSCommentSingleLine (sComment));
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE add (@Nonnull final IHasJSCode aJSCode)
+  @NonNull
+  public IMPLTYPE add (@NonNull final IHasJSCode aJSCode)
   {
     if (aJSCode instanceof JSPackage)
     {
@@ -1465,8 +1464,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     return thisAsT ();
   }
 
-  @Nonnull
-  public IMPLTYPE add (@Nonnull final IJSStatement aStatement)
+  @NonNull
+  public IMPLTYPE add (@NonNull final IJSStatement aStatement)
   {
     addStatement (aStatement);
     return thisAsT ();

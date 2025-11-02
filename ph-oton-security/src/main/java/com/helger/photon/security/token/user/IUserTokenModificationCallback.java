@@ -16,11 +16,11 @@
  */
 package com.helger.photon.security.token.user;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
 import com.helger.photon.security.token.accesstoken.AccessToken;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface when a user token is created, modified, deleted.
@@ -35,7 +35,7 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param aUserToken
    *        The created user token. Never <code>null</code>.
    */
-  default void onUserTokenCreated (@Nonnull final IUserToken aUserToken)
+  default void onUserTokenCreated (@NonNull final IUserToken aUserToken)
   {}
 
   /**
@@ -44,7 +44,7 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param sUserTokenID
    *        The modified user token ID. Never <code>null</code>.
    */
-  default void onUserTokenUpdated (@Nonnull @Nonempty final String sUserTokenID)
+  default void onUserTokenUpdated (@NonNull @Nonempty final String sUserTokenID)
   {}
 
   /**
@@ -53,7 +53,7 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param sUserTokenID
    *        The deleted user token ID. Never <code>null</code>.
    */
-  default void onUserTokenDeleted (@Nonnull @Nonempty final String sUserTokenID)
+  default void onUserTokenDeleted (@NonNull @Nonempty final String sUserTokenID)
   {}
 
   /**
@@ -64,8 +64,8 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param aAccessToken
    *        The created new access token. Never <code>null</code>.
    */
-  default void onUserTokenCreateAccessToken (@Nonnull @Nonempty final String sUserTokenID,
-                                             @Nonnull final AccessToken aAccessToken)
+  default void onUserTokenCreateAccessToken (@NonNull @Nonempty final String sUserTokenID,
+                                             @NonNull final AccessToken aAccessToken)
   {}
 
   /**
@@ -77,6 +77,6 @@ public interface IUserTokenModificationCallback extends ICallback
    * @param sUserTokenID
    *        The changed user token ID. Never <code>null</code>.
    */
-  default void onUserTokenRevokeAccessToken (@Nonnull @Nonempty final String sUserTokenID)
+  default void onUserTokenRevokeAccessToken (@NonNull @Nonempty final String sUserTokenID)
   {}
 }

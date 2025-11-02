@@ -16,13 +16,13 @@
  */
 package com.helger.html.resource.css;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.css.media.ICSSMediaList;
 import com.helger.html.resource.IHTMLResourceProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base for external CSS provider with all constraints
@@ -46,7 +46,7 @@ public interface ICSSProvider extends IHTMLResourceProvider
    * @return The media list for which this CSS item applies. Never
    *         <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICSSMediaList getMediaList ();
 

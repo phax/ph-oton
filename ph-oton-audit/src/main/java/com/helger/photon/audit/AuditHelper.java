@@ -16,6 +16,9 @@
  */
 package com.helger.photon.audit;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.annotation.style.UnsupportedOperation;
@@ -24,9 +27,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.type.ObjectType;
 import com.helger.photon.audit.mock.MockCurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Simplify system auditing calls.<br>
@@ -52,7 +52,7 @@ public final class AuditHelper
   private AuditHelper ()
   {}
 
-  @Nonnull
+  @NonNull
   public static IAuditor getAuditor ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aAuditor);
@@ -73,7 +73,7 @@ public final class AuditHelper
    * @param aAuditor
    *        The auditor to be set. May not be <code>null</code>.
    */
-  public static void setAuditor (@Nonnull final IAuditor aAuditor)
+  public static void setAuditor (@NonNull final IAuditor aAuditor)
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
@@ -89,12 +89,12 @@ public final class AuditHelper
     setAuditor (DEFAULT_AUDITOR);
   }
 
-  public static void onAuditCreateSuccess (@Nonnull final ObjectType aObjectType)
+  public static void onAuditCreateSuccess (@NonNull final ObjectType aObjectType)
   {
     getAuditor ().onCreateSuccess (aObjectType);
   }
 
-  public static void onAuditCreateSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditCreateSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onCreateSuccess (aObjectType, aArgs);
   }
@@ -103,12 +103,12 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditCreateFailure (@Nonnull final ObjectType aObjectType)
+  public static void onAuditCreateFailure (@NonNull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditCreateFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditCreateFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onCreateFailure (aObjectType, aArgs);
   }
@@ -117,13 +117,13 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditModifySuccess (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
+  public static void onAuditModifySuccess (@NonNull final ObjectType aObjectType, @NonNull final String sWhat)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditModifySuccess (@Nonnull final ObjectType aObjectType,
-                                           @Nonnull final String sWhat,
+  public static void onAuditModifySuccess (@NonNull final ObjectType aObjectType,
+                                           @NonNull final String sWhat,
                                            @Nullable final Object... aArgs)
   {
     getAuditor ().onModifySuccess (aObjectType, sWhat, aArgs);
@@ -133,13 +133,13 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditModifyFailure (@Nonnull final ObjectType aObjectType, @Nonnull final String sWhat)
+  public static void onAuditModifyFailure (@NonNull final ObjectType aObjectType, @NonNull final String sWhat)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditModifyFailure (@Nonnull final ObjectType aObjectType,
-                                           @Nonnull final String sWhat,
+  public static void onAuditModifyFailure (@NonNull final ObjectType aObjectType,
+                                           @NonNull final String sWhat,
                                            @Nullable final Object... aArgs)
   {
     getAuditor ().onModifyFailure (aObjectType, sWhat, aArgs);
@@ -149,12 +149,12 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditDeleteSuccess (@Nonnull final ObjectType aObjectType)
+  public static void onAuditDeleteSuccess (@NonNull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditDeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditDeleteSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onDeleteSuccess (aObjectType, aArgs);
   }
@@ -163,12 +163,12 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditDeleteFailure (@Nonnull final ObjectType aObjectType)
+  public static void onAuditDeleteFailure (@NonNull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditDeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditDeleteFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onDeleteFailure (aObjectType, aArgs);
   }
@@ -177,12 +177,12 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditUndeleteSuccess (@Nonnull final ObjectType aObjectType)
+  public static void onAuditUndeleteSuccess (@NonNull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditUndeleteSuccess (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditUndeleteSuccess (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onUndeleteSuccess (aObjectType, aArgs);
   }
@@ -191,35 +191,35 @@ public final class AuditHelper
   @Deprecated (forRemoval = false)
   @UnsupportedOperation
   @DevelopersNote ("Use the version with parameters!")
-  public static void onAuditUndeleteFailure (@Nonnull final ObjectType aObjectType)
+  public static void onAuditUndeleteFailure (@NonNull final ObjectType aObjectType)
   {
     throw new UnsupportedOperationException ();
   }
 
-  public static void onAuditUndeleteFailure (@Nonnull final ObjectType aObjectType, @Nullable final Object... aArgs)
+  public static void onAuditUndeleteFailure (@NonNull final ObjectType aObjectType, @Nullable final Object... aArgs)
   {
     getAuditor ().onUndeleteFailure (aObjectType, aArgs);
   }
 
-  public static void onAuditExecuteSuccess (@Nonnull final String sWhat, @Nullable final Object... aArgs)
+  public static void onAuditExecuteSuccess (@NonNull final String sWhat, @Nullable final Object... aArgs)
   {
     getAuditor ().onExecuteSuccess (sWhat, aArgs);
   }
 
-  public static void onAuditExecuteFailure (@Nonnull final String sWhat, @Nullable final Object... aArgs)
+  public static void onAuditExecuteFailure (@NonNull final String sWhat, @Nullable final Object... aArgs)
   {
     getAuditor ().onExecuteFailure (sWhat, aArgs);
   }
 
-  public static void onAuditExecuteSuccess (@Nonnull final ObjectType aObjectType,
-                                            @Nonnull final String sWhat,
+  public static void onAuditExecuteSuccess (@NonNull final ObjectType aObjectType,
+                                            @NonNull final String sWhat,
                                             @Nullable final Object... aArgs)
   {
     getAuditor ().onExecuteSuccess (aObjectType, sWhat, aArgs);
   }
 
-  public static void onAuditExecuteFailure (@Nonnull final ObjectType aObjectType,
-                                            @Nonnull final String sWhat,
+  public static void onAuditExecuteFailure (@NonNull final ObjectType aObjectType,
+                                            @NonNull final String sWhat,
                                             @Nullable final Object... aArgs)
   {
     getAuditor ().onExecuteFailure (aObjectType, sWhat, aArgs);

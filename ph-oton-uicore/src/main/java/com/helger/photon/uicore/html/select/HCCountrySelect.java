@@ -19,6 +19,9 @@ package com.helger.photon.uicore.html.select;
 import java.util.Comparator;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.helper.CollectionSort;
@@ -27,9 +30,6 @@ import com.helger.masterdata.locale.DeprecatedLocaleHandler;
 import com.helger.text.compare.ComparatorHelper;
 import com.helger.text.display.IDisplayTextProvider;
 import com.helger.text.locale.country.CountryCache;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Select box for countries
@@ -51,8 +51,8 @@ public class HCCountrySelect extends HCExtSelect
     }
   }
 
-  @Nonnull
-  public static ICommonsList <Locale> getAllCountries (@Nonnull final EWithDeprecated eWithDeprecated)
+  @NonNull
+  public static ICommonsList <Locale> getAllCountries (@NonNull final EWithDeprecated eWithDeprecated)
   {
     final boolean bWithDeprecated = eWithDeprecated.isWithDeprecated ();
     final ICommonsList <Locale> aLocales = new CommonsArrayList <> ();
@@ -62,52 +62,52 @@ public class HCCountrySelect extends HCExtSelect
     return aLocales;
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF, @Nonnull final Locale aDisplayLocale)
+  public HCCountrySelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     this (aRF, aDisplayLocale, EWithDeprecated.DEFAULT);
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final EWithDeprecated eWithDeprecated)
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
+                          @NonNull final EWithDeprecated eWithDeprecated)
   {
     this (aRF, aDisplayLocale, getAllCountries (eWithDeprecated));
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
                           final boolean bAlwaysShowPleaseSelect)
   {
     this (aRF, aDisplayLocale, EWithDeprecated.DEFAULT, bAlwaysShowPleaseSelect);
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final EWithDeprecated eWithDeprecated,
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
+                          @NonNull final EWithDeprecated eWithDeprecated,
                           final boolean bAlwaysShowPleaseSelect)
   {
     this (aRF, aDisplayLocale, getAllCountries (eWithDeprecated), null, bAlwaysShowPleaseSelect);
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Iterable <? extends Locale> aLocales)
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
+                          @NonNull final Iterable <? extends Locale> aLocales)
   {
     this (aRF, aDisplayLocale, aLocales, null);
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Iterable <? extends Locale> aLocales,
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
+                          @NonNull final Iterable <? extends Locale> aLocales,
                           @Nullable final IDisplayTextProvider <Locale> aDisplayTextProvider)
   {
     // Backwards compatibility
     this (aRF, aDisplayLocale, aLocales, aDisplayTextProvider, true);
   }
 
-  public HCCountrySelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aDisplayLocale,
-                          @Nonnull final Iterable <? extends Locale> aLocales,
+  public HCCountrySelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aDisplayLocale,
+                          @NonNull final Iterable <? extends Locale> aLocales,
                           @Nullable final IDisplayTextProvider <Locale> aDisplayTextProvider,
                           final boolean bAlwaysShowPleaseSelect)
   {

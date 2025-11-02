@@ -16,14 +16,13 @@
  */
 package com.helger.photon.ajax.executor;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.base.debug.GlobalDebug;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A dummy AJAX handler that can be invoked to keep the session alive.
@@ -34,8 +33,8 @@ public final class AjaxExecutorKeepAlive implements IAjaxExecutor
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorKeepAlive.class);
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final PhotonUnifiedResponse aAjaxResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     if (GlobalDebug.isDebugMode ())
       LOGGER.info ("AJAX Keep alive!");

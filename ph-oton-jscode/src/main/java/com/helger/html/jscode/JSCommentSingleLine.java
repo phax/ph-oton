@@ -16,14 +16,14 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Single line comments
@@ -34,19 +34,19 @@ public class JSCommentSingleLine extends AbstractJSStatement
 {
   private final String m_sComment;
 
-  public JSCommentSingleLine (@Nonnull final String sComment)
+  public JSCommentSingleLine (@NonNull final String sComment)
   {
     m_sComment = ValueEnforcer.notNull (sComment, "Comment");
   }
 
-  @Nonnull
+  @NonNull
   public String getComment ()
   {
     return m_sComment;
   }
 
   @Override
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     if (aFormatter.getSettings ().isGenerateComments ())
     {

@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +28,6 @@ import com.helger.base.state.ESuccess;
 import com.helger.photon.core.mgr.PhotonBasicManager;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.text.IMultilingualText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract implementation of {@link ILongRunningJob}
@@ -43,8 +42,8 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
   private final String m_sJobID;
   private final IMultilingualText m_aDesc;
 
-  public AbstractLongRunningJobRunnable (@Nonnull @Nonempty final String sJobID,
-                                         @Nonnull final IMultilingualText aJobDesc)
+  public AbstractLongRunningJobRunnable (@NonNull @Nonempty final String sJobID,
+                                         @NonNull final IMultilingualText aJobDesc)
   {
     ValueEnforcer.notEmpty (sJobID, "JobID");
     ValueEnforcer.notNull (aJobDesc, "JobDesc");
@@ -52,14 +51,14 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
     m_aDesc = aJobDesc;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJobID ()
   {
     return m_sJobID;
   }
 
-  @Nonnull
+  @NonNull
   public final IMultilingualText getJobDescription ()
   {
     return m_aDesc;
@@ -79,7 +78,7 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
    * @return The {@link LongRunningJobManager} to be used. May not return
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();

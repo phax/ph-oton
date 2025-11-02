@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.config;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +27,6 @@ import com.helger.base.debug.GlobalDebug;
 import com.helger.base.string.StringHelper;
 import com.helger.url.codec.URLCoder;
 import com.helger.url.codec.URLParameterDecoder;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class performs some consistency checks on HCNodes
@@ -47,7 +46,7 @@ public final class HCConsistencyChecker
   private HCConsistencyChecker ()
   {}
 
-  public static void consistencyError (@Nonnull final String sMsg)
+  public static void consistencyError (@NonNull final String sMsg)
   {
     if (GlobalDebug.isDebugMode ())
       throw new IllegalStateException ("HC Consistency check error: " + sMsg);

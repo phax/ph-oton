@@ -19,15 +19,15 @@ package com.helger.photon.core.appid;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuTree;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Request state
@@ -42,12 +42,12 @@ public final class PhotonRequestState implements Serializable
   private final IMenuItemPage m_aMenuItem;
   private final Locale m_aDisplayLocale;
 
-  public PhotonRequestState (@Nonnull final PhotonSessionStatePerApp aState)
+  public PhotonRequestState (@NonNull final PhotonSessionStatePerApp aState)
   {
     this (aState.getMenuTree (), aState.getMenuItem (), aState.getDisplayLocale ());
   }
 
-  public PhotonRequestState (@Nonnull final PhotonGlobalStatePerApp aState)
+  public PhotonRequestState (@NonNull final PhotonGlobalStatePerApp aState)
   {
     this (aState.getMenuTree (),
           aState.getMenuTree () == null ? null : aState.getMenuTree ().getDefaultMenuItem (),
@@ -56,7 +56,7 @@ public final class PhotonRequestState implements Serializable
 
   public PhotonRequestState (@Nullable final IMenuTree aMenuTree,
                              @Nullable final IMenuItemPage aMenuItem,
-                             @Nonnull final Locale aDisplayLocale)
+                             @NonNull final Locale aDisplayLocale)
   {
     m_aMenuTree = aMenuTree;
     m_aMenuItem = aMenuItem;

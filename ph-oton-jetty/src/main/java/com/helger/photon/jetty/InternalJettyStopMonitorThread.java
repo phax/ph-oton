@@ -24,14 +24,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonnegative;
 import com.helger.base.iface.IThrowingRunnable;
 import com.helger.base.io.stream.StreamHelper;
-
-import jakarta.annotation.Nonnull;
 
 final class InternalJettyStopMonitorThread extends Thread
 {
@@ -45,8 +44,8 @@ final class InternalJettyStopMonitorThread extends Thread
   private final IThrowingRunnable <Exception> m_aAction;
 
   public InternalJettyStopMonitorThread (@Nonnegative final int nPort,
-                                         @Nonnull final String sKey,
-                                         @Nonnull final IThrowingRunnable <Exception> aAction) throws IOException
+                                         @NonNull final String sKey,
+                                         @NonNull final IThrowingRunnable <Exception> aAction) throws IOException
   {
     m_nPort = nPort;
     m_sKey = sKey;

@@ -18,6 +18,8 @@ package com.helger.photon.core.menu.ui;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.css.DefaultCSSClassProvider;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.IHCNode;
@@ -30,8 +32,6 @@ import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.menu.IMenuItemExternal;
 import com.helger.photon.core.menu.IMenuItemPage;
 import com.helger.photon.core.menu.IMenuSeparator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IMenuItemRenderer}
@@ -53,20 +53,20 @@ public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends Abstr
   /** HTML ID prefix for menu items */
   public static final String CSS_ID_PREFIX_MENU_ITEM = "menu_item_";
 
-  public DefaultMenuItemRenderer (@Nonnull final Locale aContentLocale)
+  public DefaultMenuItemRenderer (@NonNull final Locale aContentLocale)
   {
     super (aContentLocale);
   }
 
-  @Nonnull
-  public IHCNode renderSeparator (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final IMenuSeparator aSeparator)
+  @NonNull
+  public IHCNode renderSeparator (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final IMenuSeparator aSeparator)
   {
     return HCEntityNode.newNBSP ();
   }
 
-  @Nonnull
-  public IHCNode renderMenuItemPage (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                     @Nonnull final IMenuItemPage aMenuItem,
+  @NonNull
+  public IHCNode renderMenuItemPage (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                     @NonNull final IMenuItemPage aMenuItem,
                                      final boolean bHasChildren,
                                      final boolean bIsSelected,
                                      final boolean bIsExpanded)
@@ -80,9 +80,9 @@ public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends Abstr
     return aLink;
   }
 
-  @Nonnull
-  public IHCNode renderMenuItemExternal (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                         @Nonnull final IMenuItemExternal aMenuItem,
+  @NonNull
+  public IHCNode renderMenuItemExternal (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                         @NonNull final IMenuItemExternal aMenuItem,
                                          final boolean bHasChildren,
                                          final boolean bIsSelected,
                                          final boolean bIsExpanded)
@@ -98,14 +98,14 @@ public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends Abstr
   }
 
   @Override
-  public void onMenuSeparatorItem (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCLI aLI)
+  public void onMenuSeparatorItem (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCLI aLI)
   {
     aLI.addClass (CSS_CLASS_MENU_SEPARATOR);
   }
 
   @Override
-  public void onMenuItemPageItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                  @Nonnull final HCLI aLI,
+  public void onMenuItemPageItem (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                  @NonNull final HCLI aLI,
                                   final boolean bHasChildren,
                                   final boolean bIsSelected,
                                   final boolean bIsExpanded)
@@ -114,8 +114,8 @@ public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends Abstr
   }
 
   @Override
-  public void onMenuItemExternalItem (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                      @Nonnull final HCLI aLI,
+  public void onMenuItemExternalItem (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                      @NonNull final HCLI aLI,
                                       final boolean bHasChildren,
                                       final boolean bIsSelected,
                                       final boolean bIsExpanded)

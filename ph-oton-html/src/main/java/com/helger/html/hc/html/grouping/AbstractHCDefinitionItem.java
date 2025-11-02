@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base class for DD and DT tags ({@link HCDD} and {@link HCDT})
@@ -32,7 +32,7 @@ public abstract class AbstractHCDefinitionItem <IMPLTYPE extends AbstractHCDefin
                                                AbstractHCElementWithChildren <IMPLTYPE> implements
                                                IHCDefinitionItem <IMPLTYPE>
 {
-  public AbstractHCDefinitionItem (@Nonnull final EHTMLElement aElement)
+  public AbstractHCDefinitionItem (@NonNull final EHTMLElement aElement)
   {
     super (aElement);
   }

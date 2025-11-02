@@ -18,6 +18,9 @@ package com.helger.photon.security.role;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -30,9 +33,6 @@ import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.object.StubObject;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class manages the available roles.
  *
@@ -43,12 +43,12 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
 {
   private final CallbackList <IRoleModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public RoleManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public RoleManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (Role.class, sFilename);
   }
 
-  @Nonnull
+  @NonNull
   public static Role createDefaultRoleAdministrator ()
   {
     return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_ADMINISTRATOR_ID),
@@ -56,7 +56,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
                      (String) null);
   }
 
-  @Nonnull
+  @NonNull
   public static Role createDefaultRoleUser ()
   {
     return new Role (StubObject.createForCurrentUserAndID (CSecurity.ROLE_USER_ID),
@@ -72,14 +72,14 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
       internalCreateItem (createDefaultRoleUser ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IRoleModificationCallback> roleModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  private void _createNewRole (@Nonnull final Role aRole, final boolean bPredefined)
+  private void _createNewRole (@NonNull final Role aRole, final boolean bPredefined)
   {
     // Store
     m_aRWLock.writeLocked ( () -> internalCreateItem (aRole));
@@ -93,8 +93,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     m_aCallbacks.forEach (aCB -> aCB.onRoleCreated (aRole, bPredefined));
   }
 
-  @Nonnull
-  public IRole createNewRole (@Nonnull @Nonempty final String sName,
+  @NonNull
+  public IRole createNewRole (@NonNull @Nonempty final String sName,
                               @Nullable final String sDescription,
                               @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -104,9 +104,9 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return aRole;
   }
 
-  @Nonnull
-  public IRole createPredefinedRole (@Nonnull @Nonempty final String sID,
-                                     @Nonnull @Nonempty final String sName,
+  @NonNull
+  public IRole createPredefinedRole (@NonNull @Nonempty final String sID,
+                                     @NonNull @Nonempty final String sName,
                                      @Nullable final String sDescription,
                                      @Nullable final Map <String, String> aCustomAttrs)
   {
@@ -116,7 +116,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return aRole;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteRole (@Nullable final String sRoleID)
   {
     Role aDeletedRole;
@@ -149,8 +149,8 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return getOfID (sRoleID);
   }
 
-  @Nonnull
-  public EChange renameRole (@Nullable final String sRoleID, @Nonnull @Nonempty final String sNewName)
+  @NonNull
+  public EChange renameRole (@Nullable final String sRoleID, @NonNull @Nonempty final String sNewName)
   {
     // Resolve user group
     final Role aRole = getOfID (sRoleID);
@@ -181,9 +181,9 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange setRoleData (@Nullable final String sRoleID,
-                              @Nonnull @Nonempty final String sNewName,
+                              @NonNull @Nonempty final String sNewName,
                               @Nullable final String sNewDescription,
                               @Nullable final Map <String, String> aNewCustomAttrs)
   {

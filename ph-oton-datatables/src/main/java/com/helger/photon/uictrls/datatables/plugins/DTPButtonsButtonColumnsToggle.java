@@ -16,15 +16,15 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A button collection that provides column visibility control.
@@ -52,27 +52,27 @@ public class DTPButtonsButtonColumnsToggle extends DTPButtonsButton
     setExtend (EDTPButtonsButtonType.COLUMNS_TOGGLE.getName ());
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColumnsToggle setColumns (@Nullable final String sColumns)
   {
     return setColumns (sColumns == null ? null : JSExpr.lit (sColumns));
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColumnsToggle setColumns (@Nullable final IJSExpression aColumns)
   {
     m_aColumns = aColumns;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButtonColumnsToggle setVisibility (final boolean bVisibility)
   {
     return setVisibility (ETriState.valueOf (bVisibility));
   }
 
-  @Nonnull
-  public DTPButtonsButtonColumnsToggle setVisibility (@Nonnull final ETriState eVisibility)
+  @NonNull
+  public DTPButtonsButtonColumnsToggle setVisibility (@NonNull final ETriState eVisibility)
   {
     ValueEnforcer.notNull (eVisibility, "Visibility");
     m_eVisibility = eVisibility;
@@ -80,7 +80,7 @@ public class DTPButtonsButtonColumnsToggle extends DTPButtonsButton
   }
 
   @Override
-  protected void onGetAsJS (@Nonnull final JSAssocArray ret)
+  protected void onGetAsJS (@NonNull final JSAssocArray ret)
   {
     if (m_aColumns != null)
       ret.add ("columns", m_aColumns);
@@ -89,7 +89,7 @@ public class DTPButtonsButtonColumnsToggle extends DTPButtonsButton
   }
 
   @Override
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.registerExternalResources (aConversionSettings);
     EDTPButtonsButtonType.COLUMNS_TOGGLE.registerExternalResources ();

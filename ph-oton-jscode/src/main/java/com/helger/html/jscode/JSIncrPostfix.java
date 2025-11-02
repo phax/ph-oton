@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Postfix increment (x++) statement
@@ -39,18 +39,18 @@ public class JSIncrPostfix extends AbstractJSStatement
    * @param aExpr
    *        expression to be incremented
    */
-  public JSIncrPostfix (@Nonnull final IJSAssignmentTarget aExpr)
+  public JSIncrPostfix (@NonNull final IJSAssignmentTarget aExpr)
   {
     m_aExpr = ValueEnforcer.notNull (aExpr, "Expr");
   }
 
-  @Nonnull
+  @NonNull
   public IJSAssignmentTarget expr ()
   {
     return m_aExpr;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (m_aExpr).plain ("++;").nl ();
   }

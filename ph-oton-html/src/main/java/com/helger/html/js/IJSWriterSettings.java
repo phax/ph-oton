@@ -18,10 +18,10 @@ package com.helger.html.js;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.system.ENewLineMode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Read only interface with all JS writer settings.
@@ -44,7 +44,7 @@ public interface IJSWriterSettings extends Serializable
    * @return The string used for indenting a single level. By default it is 2
    *         spaces.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getIndent ();
 
@@ -52,14 +52,14 @@ public interface IJSWriterSettings extends Serializable
    * @return The newline mode to be used. By default it is the platform specific
    *         new line mode. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   ENewLineMode getNewLineMode ();
 
   /**
    * @return The string representing the new line mode. A shortcut for <code>
    *         {@link #getNewLineMode()}.getText()</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getNewLineString ();
 }

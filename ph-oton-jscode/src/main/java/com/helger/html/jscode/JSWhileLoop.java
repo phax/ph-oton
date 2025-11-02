@@ -16,14 +16,14 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * While statement
@@ -48,18 +48,18 @@ public class JSWhileLoop extends AbstractJSStatement
    * @param aTest
    *        Test expression
    */
-  public JSWhileLoop (@Nonnull final IJSExpression aTest)
+  public JSWhileLoop (@NonNull final IJSExpression aTest)
   {
     m_aTest = ValueEnforcer.notNull (aTest, "Test");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression test ()
   {
     return m_aTest;
   }
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -67,7 +67,7 @@ public class JSWhileLoop extends AbstractJSStatement
     return m_aBody;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     if (JSOp.hasOperator (m_aTest))
       aFormatter.plain ("while").generatable (m_aTest);

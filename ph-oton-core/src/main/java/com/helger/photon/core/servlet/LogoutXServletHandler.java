@@ -18,6 +18,8 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.servlet.response.UnifiedResponse;
@@ -25,7 +27,6 @@ import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpSession;
 
@@ -50,8 +51,8 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
    *         <code>null</code>.
    */
   @OverrideOnDemand
-  @Nonnull
-  protected ISimpleURL getRedirectURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  protected ISimpleURL getRedirectURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     // No need for a session ID upon logout
     return LinkHelper.getHomeLinkWithoutSession ();
@@ -65,7 +66,7 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
    *        The current request scope. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onBeforeSessionInvalidate (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected void onBeforeSessionInvalidate (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {}
 
   /**
@@ -76,11 +77,11 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
    *        The current request scope. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onBeforeRedirect (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  protected void onBeforeRedirect (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {}
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // Get the redirect URL before the session is invalidated, in case the
     // acquisition code requires the current session

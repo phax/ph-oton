@@ -18,6 +18,9 @@ package com.helger.photon.core.appid;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -26,9 +29,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuTree;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Single global state per app
@@ -54,7 +54,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_sServletPath);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getServletPath () throws IllegalStateException
   {
@@ -64,8 +64,8 @@ public final class PhotonGlobalStatePerApp implements Serializable
     return ret;
   }
 
-  @Nonnull
-  public PhotonGlobalStatePerApp setServletPath (@Nonnull @Nonempty final String sServletPath)
+  @NonNull
+  public PhotonGlobalStatePerApp setServletPath (@NonNull @Nonempty final String sServletPath)
   {
     ValueEnforcer.notEmpty (sServletPath, "ApplicationServletPath");
     ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'),
@@ -75,7 +75,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public PhotonGlobalStatePerApp removeServletPath ()
   {
     m_aRWLock.writeLocked ( () -> m_sServletPath = null);
@@ -88,7 +88,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_aMenuTree);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonGlobalStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
     m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);

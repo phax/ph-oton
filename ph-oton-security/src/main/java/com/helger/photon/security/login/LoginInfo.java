@@ -18,6 +18,9 @@ package com.helger.photon.security.login;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -31,9 +34,6 @@ import com.helger.photon.security.user.IUser;
 import com.helger.scope.ISessionScope;
 import com.helger.typeconvert.collection.IStringMap;
 import com.helger.typeconvert.collection.StringMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the information of a single logged in user.
@@ -50,7 +50,7 @@ public final class LoginInfo implements IHasID <String>
   private LocalDateTime m_aLogoutDT;
   private final StringMap m_aAttrs = new StringMap ();
 
-  public LoginInfo (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
+  public LoginInfo (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)
   {
     m_aUser = ValueEnforcer.notNull (aUser, "User");
     m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
@@ -61,7 +61,7 @@ public final class LoginInfo implements IHasID <String>
   /**
    * @return The user to which this login info belongs. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IUser getUser ()
   {
     return m_aUser;
@@ -71,7 +71,7 @@ public final class LoginInfo implements IHasID <String>
    * @return The session scope to which this login info belongs. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public ISessionScope getSessionScope ()
   {
     return m_aSessionScope;
@@ -81,14 +81,14 @@ public final class LoginInfo implements IHasID <String>
    * @return The ID of the user to which this login info belongs. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getUserID ()
   {
     return m_aUser.getID ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -98,7 +98,7 @@ public final class LoginInfo implements IHasID <String>
   /**
    * @return The login data and time. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public LocalDateTime getLoginDT ()
   {
     return m_aLoginDT;
@@ -107,7 +107,7 @@ public final class LoginInfo implements IHasID <String>
   /**
    * @return The last access data and time. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public LocalDateTime getLastAccessDT ()
   {
     return m_aLastAccessDT;
@@ -148,7 +148,7 @@ public final class LoginInfo implements IHasID <String>
     return m_aLogoutDT != null;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public IStringMap attrs ()
   {

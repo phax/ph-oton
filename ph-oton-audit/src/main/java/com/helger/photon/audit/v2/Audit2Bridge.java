@@ -18,6 +18,9 @@ package com.helger.photon.audit.v2;
 
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
 import com.helger.base.type.ObjectType;
@@ -26,9 +29,6 @@ import com.helger.photon.audit.IAuditor;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 import com.helger.photon.audit.v2.pipeline.IAuditEventConsumer;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of V1 {@link IAuditor} in terms of V2 {@link AuditEvent} etc. This class is mainly
@@ -45,9 +45,9 @@ public class Audit2Bridge implements IAuditor
   private final IAuditEventConsumer m_aAuditEventConsumer;
   private final Function <Object, String> m_aToStringConverter;
 
-  public Audit2Bridge (@Nonnull final ICurrentUserIDProvider aCurrentUserIDProvider,
-                       @Nonnull final IAuditEventConsumer aAuditEventConsumer,
-                       @Nonnull final Function <Object, String> aToStringConverter)
+  public Audit2Bridge (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider,
+                       @NonNull final IAuditEventConsumer aAuditEventConsumer,
+                       @NonNull final Function <Object, String> aToStringConverter)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
     ValueEnforcer.notNull (aAuditEventConsumer, "AuditEventConsumer");
@@ -57,21 +57,21 @@ public class Audit2Bridge implements IAuditor
     m_aToStringConverter = aToStringConverter;
   }
 
-  @Nonnull
+  @NonNull
   public final ICurrentUserIDProvider getCurrentUserIDProvider ()
   {
     return m_aCurrentUserIDProvider;
   }
 
-  @Nonnull
+  @NonNull
   public final IAuditEventConsumer getAuditEventConsumer ()
   {
     return m_aAuditEventConsumer;
   }
 
   @Override
-  public void createAuditItem (@Nonnull final EAuditActionType eActionType,
-                               @Nonnull final ESuccess eSuccess,
+  public void createAuditItem (@NonNull final EAuditActionType eActionType,
+                               @NonNull final ESuccess eSuccess,
                                @Nullable final ObjectType aActionObjectType,
                                @Nullable final String sUserAction,
                                @Nullable final Object... aArgs)

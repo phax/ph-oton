@@ -16,11 +16,11 @@
  */
 package com.helger.photon.core.menu;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single menu item.
@@ -51,6 +51,6 @@ public interface IMenuItem extends IMenuObject, IHasDisplayText
    *        The name of the target window. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMenuItem setTarget (@Nullable String sTarget);
 }

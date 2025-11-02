@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -25,8 +27,6 @@ import com.helger.base.state.ETriState;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.trait.IGenericImplTrait;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract chart
@@ -43,13 +43,13 @@ public abstract class AbstractChartV4 <IMPLTYPE extends AbstractChartV4 <IMPLTYP
   private final String m_sType;
   private ETriState m_eAnimations = ETriState.UNDEFINED;
 
-  protected AbstractChartV4 (@Nonnull @Nonempty final String sType)
+  protected AbstractChartV4 (@NonNull @Nonempty final String sType)
   {
     ValueEnforcer.notEmpty (sType, "Type");
     m_sType = sType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getType ()
   {
@@ -61,14 +61,14 @@ public abstract class AbstractChartV4 <IMPLTYPE extends AbstractChartV4 <IMPLTYP
     return m_eAnimations.getAsBooleanValue (true);
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setUseAnimations (final boolean b)
   {
     m_eAnimations = ETriState.valueOf (b);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @OverridingMethodsMustInvokeSuper
   public JSAssocArray getJSOptions ()

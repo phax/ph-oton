@@ -18,13 +18,13 @@ package com.helger.photon.uicore.page;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.sections.HCH1;
 import com.helger.photon.core.page.IPage;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The base interface for a single web page of content.
@@ -38,7 +38,7 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
   /**
    * @return The current CSRF handler. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IWebPageCSRFHandler getCSRFHandler ();
 
   /**
@@ -49,7 +49,7 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
    * @return The header/headline of the page. May be <code>null</code>.
    */
   @Nullable
-  default String getHeaderText (@Nonnull final WPECTYPE aWPEC)
+  default String getHeaderText (@NonNull final WPECTYPE aWPEC)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     return getDisplayText (aDisplayLocale);
@@ -66,7 +66,7 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
    * @return The header/headline of the page. May be <code>null</code>.
    */
   @Nullable
-  default IHCNode getHeaderNode (@Nonnull final WPECTYPE aWPEC)
+  default IHCNode getHeaderNode (@NonNull final WPECTYPE aWPEC)
   {
     final String sHeaderText = getHeaderText (aWPEC);
     if (StringHelper.isEmpty (sHeaderText))
@@ -78,5 +78,5 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
    */
-  void getContent (@Nonnull WPECTYPE aWPEC);
+  void getContent (@NonNull WPECTYPE aWPEC);
 }

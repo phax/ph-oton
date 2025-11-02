@@ -19,6 +19,7 @@ package com.helger.photon.app.html;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +38,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.resource.js.IJSPathProvider;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class keeps track of all the JS files that must be included for a single request, so that
@@ -67,40 +66,40 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   public JSResourceSet ()
   {}
 
-  public JSResourceSet (@Nonnull final JSResourceSet aOther)
+  public JSResourceSet (@NonNull final JSResourceSet aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public JSResourceSet (@Nonnull final Collection <? extends IJSPathProvider> aOther)
+  public JSResourceSet (@NonNull final Collection <? extends IJSPathProvider> aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  public JSResourceSet (@Nonnull final IJSPathProvider... aOther)
+  public JSResourceSet (@NonNull final IJSPathProvider... aOther)
   {
     ValueEnforcer.notEmptyNoNullValue (aOther, "Other");
     for (final IJSPathProvider aItem : aOther)
       addItem (aItem);
   }
 
-  private static void _collectWarn (@Nonnull final String sMsg)
+  private static void _collectWarn (@NonNull final String sMsg)
   {
     LOGGER.warn (sMsg);
   }
 
-  @Nonnull
-  public EChange addItem (@Nonnull final IJSPathProvider aJSPathProvider)
+  @NonNull
+  public EChange addItem (@NonNull final IJSPathProvider aJSPathProvider)
   {
     return addItem (-1, aJSPathProvider);
   }
 
-  @Nonnull
-  public EChange addItem (final int nIndex, @Nonnull final IJSPathProvider aJSPathProvider)
+  @NonNull
+  public EChange addItem (final int nIndex, @NonNull final IJSPathProvider aJSPathProvider)
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
@@ -121,8 +120,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     });
   }
 
-  @Nonnull
-  public EChange addItems (@Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
+  @NonNull
+  public EChange addItems (@NonNull final IWebResourceSet <? extends IJSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
@@ -132,8 +131,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     return ret;
   }
 
-  @Nonnull
-  public EChange addItems (final int nIndex, @Nonnull final IWebResourceSet <? extends IJSPathProvider> aItems)
+  @NonNull
+  public EChange addItems (final int nIndex, @NonNull final IWebResourceSet <? extends IJSPathProvider> aItems)
   {
     ValueEnforcer.notNull (aItems, "Items");
 
@@ -151,8 +150,8 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     return ret;
   }
 
-  @Nonnull
-  public EChange removeItem (@Nonnull final IJSPathProvider aJSPathProvider)
+  @NonNull
+  public EChange removeItem (@NonNull final IJSPathProvider aJSPathProvider)
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
@@ -167,7 +166,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     });
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     return m_aRWLock.writeLockedGet ( () -> {
@@ -182,14 +181,14 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     });
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
     return m_aRWLock.readLockedGet ( () -> new CommonsLinkedHashSet <> (m_aList));
   }
 
-  public void getAllItems (@Nonnull final Collection <? super IJSPathProvider> aTarget)
+  public void getAllItems (@NonNull final Collection <? super IJSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
@@ -213,7 +212,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
     return m_aRWLock.readLockedInt (m_aList::size);
   }
 
-  @Nonnull
+  @NonNull
   public Iterator <IJSPathProvider> iterator ()
   {
     return m_aRWLock.readLockedGet (m_aList::iterator);

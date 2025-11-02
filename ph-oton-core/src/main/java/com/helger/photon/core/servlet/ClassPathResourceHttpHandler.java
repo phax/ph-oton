@@ -16,19 +16,19 @@
  */
 package com.helger.photon.core.servlet;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.io.resource.ClassPathResource;
 import com.helger.io.resource.IReadableResource;
 import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-
 public class ClassPathResourceHttpHandler extends AbstractResourceDeliveryHttpHandler
 {
   @Override
-  @Nonnull
-  protected IReadableResource getResource (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                           @Nonnull final String sFilename)
+  @NonNull
+  protected IReadableResource getResource (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                           @NonNull final String sFilename)
   {
     // URL decode is required because requests contain e.g. "%20"
     final String sFilename1 = URLCoder.urlDecodeOrDefault (sFilename, sFilename);

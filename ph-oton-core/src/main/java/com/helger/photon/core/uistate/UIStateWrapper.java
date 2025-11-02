@@ -18,6 +18,9 @@ package com.helger.photon.core.uistate;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -25,9 +28,6 @@ import com.helger.base.reflection.GenericReflection;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.base.type.IHasObjectType;
 import com.helger.base.type.ObjectType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A special wrapper that wraps an arbitrary object into an {@link IHasUIState} object.
@@ -41,7 +41,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   private final ObjectType m_aObjectType;
   private final T m_aObject;
 
-  public UIStateWrapper (@Nonnull final ObjectType aObjectType, @Nonnull final T aObject)
+  public UIStateWrapper (@NonNull final ObjectType aObjectType, @NonNull final T aObject)
   {
     ValueEnforcer.notNull (aObjectType, "ObjectType");
     ValueEnforcer.notNull (aObject, "Object");
@@ -50,7 +50,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
     m_aObject = aObject;
   }
 
-  @Nonnull
+  @NonNull
   public ObjectType getObjectType ()
   {
     return m_aObjectType;
@@ -59,7 +59,7 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
   /**
    * @return The wrapped object. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public T getObject ()
   {
     return m_aObject;
@@ -97,15 +97,15 @@ public class UIStateWrapper <T extends Serializable> implements IHasUIState
                                        .getToString ();
   }
 
-  @Nonnull
-  public static <T extends Serializable> UIStateWrapper <T> create (@Nonnull final ObjectType aObjectType,
-                                                                    @Nonnull final T aObject)
+  @NonNull
+  public static <T extends Serializable> UIStateWrapper <T> create (@NonNull final ObjectType aObjectType,
+                                                                    @NonNull final T aObject)
   {
     return new UIStateWrapper <> (aObjectType, aObject);
   }
 
-  @Nonnull
-  public static <T extends Serializable & IHasObjectType> UIStateWrapper <T> create (@Nonnull final T aObject)
+  @NonNull
+  public static <T extends Serializable & IHasObjectType> UIStateWrapper <T> create (@NonNull final T aObject)
   {
     return new UIStateWrapper <> (aObject.getObjectType (), aObject);
   }

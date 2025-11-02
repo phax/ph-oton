@@ -16,6 +16,9 @@
  */
 package com.helger.html.resource.js;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
@@ -24,9 +27,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.html.script.EHCScriptLoadingMode;
 import com.helger.html.js.JSFilenameHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An implementation of {@link IJSPathProvider} using constant paths.
@@ -41,11 +41,11 @@ public final class ConstantJSPathProvider implements IJSPathProvider
   private final boolean m_bIsBundlable;
   private final EHCScriptLoadingMode m_eScriptLoadingMode;
 
-  protected ConstantJSPathProvider (@Nonnull @Nonempty final String sPath,
-                                    @Nonnull @Nonempty final String sMinifiedPath,
+  protected ConstantJSPathProvider (@NonNull @Nonempty final String sPath,
+                                    @NonNull @Nonempty final String sMinifiedPath,
                                     @Nullable final String sConditionalComment,
                                     final boolean bIsBundlable,
-                                    @Nonnull final EHCScriptLoadingMode eScriptLoadingMode)
+                                    @NonNull final EHCScriptLoadingMode eScriptLoadingMode)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.isTrue (JSFilenameHelper.isJSFilename (sPath), () -> "'" + sPath + "' is not a valid JS filename");
@@ -60,21 +60,21 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     m_eScriptLoadingMode = eScriptLoadingMode;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPath (final boolean bRegular)
   {
     return bRegular ? m_sPath : m_sMinifiedPath;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPathRegular ()
   {
     return m_sPath;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getJSItemPathMinified ()
   {
@@ -92,7 +92,7 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     return m_bIsBundlable;
   }
 
-  @Nonnull
+  @NonNull
   public EHCScriptLoadingMode getScriptLoadingMode ()
   {
     return m_eScriptLoadingMode;
@@ -150,54 +150,54 @@ public final class ConstantJSPathProvider implements IJSPathProvider
       scriptLoadingMode (EHCScriptLoadingMode.DEFAULT);
     }
 
-    @Nonnull
+    @NonNull
     public Builder path (@Nullable final String s)
     {
       m_sPath = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder minifiedPath (@Nullable final String s)
     {
       m_sMinifiedPath = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder minifiedPathFromPath ()
     {
       return minifiedPath (JSFilenameHelper.getMinifiedJSFilename (m_sPath));
     }
 
-    @Nonnull
+    @NonNull
     public Builder conditionalComment (@Nullable final String s)
     {
       m_sConditionalComment = s;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder bundlable (final boolean b)
     {
       m_bIsBundlable = b;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder scriptLoadingMode (@Nullable final EHCScriptLoadingMode e)
     {
       m_eScriptLoadingMode = e;
       return this;
     }
 
-    @Nonnull
+    @NonNull
     public Builder scriptLoadingAsync ()
     {
       return scriptLoadingMode (EHCScriptLoadingMode.ASYNC);
     }
 
-    @Nonnull
+    @NonNull
     public ConstantJSPathProvider build ()
     {
       return new ConstantJSPathProvider (m_sPath,
@@ -208,7 +208,7 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     }
   }
 
-  @Nonnull
+  @NonNull
   public static Builder builder ()
   {
     return new Builder ();

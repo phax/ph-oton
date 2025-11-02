@@ -18,6 +18,7 @@ package com.helger.html.hc.special;
 
 import static org.junit.Assert.assertEquals;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.Test;
 
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -38,13 +39,11 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.UnparsedJSCodeProvider;
 import com.helger.xml.serialize.write.EXMLSerializeIndent;
 
-import jakarta.annotation.Nonnull;
-
 public final class HCSpecialNodeHandlerTest
 {
   public static final class MockSpecialNodeListHandler implements IHCSpecialNodeListModifier
   {
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     public ICommonsList <? extends IHCNode> modifySpecialNodes (final ICommonsList <? extends IHCNode> aNodes)
     {

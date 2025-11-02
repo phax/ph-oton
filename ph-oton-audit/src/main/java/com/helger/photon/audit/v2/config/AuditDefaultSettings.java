@@ -20,9 +20,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import com.helger.datetime.helper.PDTFactory;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.datetime.helper.PDTFactory;
 
 /**
  * Audit default settings.
@@ -41,7 +41,7 @@ public final class AuditDefaultSettings
    * @return The default ID provider that uses the most significant bits of a
    *         random UUID.
    */
-  @Nonnull
+  @NonNull
   public static ILongSupplier getDefaultAuditEventIDProvider ()
   {
     return ADUIT_EVENT_ID_PROVIDER;
@@ -51,7 +51,7 @@ public final class AuditDefaultSettings
    * @return The default date time provider using
    *         {@link PDTFactory#getCurrentLocalDateTime()}.
    */
-  @Nonnull
+  @NonNull
   public static Supplier <LocalDateTime> getDefaultAuditEventDateTimeProvider ()
   {
     return AUDIT_EVENT_DT_PROVIDER;

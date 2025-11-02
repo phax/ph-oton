@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.special;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -28,9 +31,6 @@ import com.helger.css.media.ICSSMediaList;
 import com.helger.html.resource.css.ConstantCSSCodeProvider;
 import com.helger.html.resource.css.ICSSCodeProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This is a very special list used only to group inline CSS code for correct
  * merging. It maintains the original order and combines only those with the
@@ -40,7 +40,7 @@ import jakarta.annotation.Nullable;
  */
 public class InlineCSSList
 {
-  @Nonnull
+  @NonNull
   public static ICSSMediaList getSafeCSSMediaList (@Nullable final ICSSMediaList aMediaList)
   {
     if (aMediaList != null && !aMediaList.hasNoMediaOrAll ())
@@ -64,7 +64,7 @@ public class InlineCSSList
       m_aMediaList = getSafeCSSMediaList (aMediaList);
     }
 
-    @Nonnull
+    @NonNull
     public ICSSMediaList getMediaList ()
     {
       return m_aMediaList;
@@ -99,29 +99,29 @@ public class InlineCSSList
     private final Key m_aKey;
     private final StringBuilder m_aCSS = new StringBuilder ();
 
-    public Item (@Nonnull final Key aKey)
+    public Item (@NonNull final Key aKey)
     {
       m_aKey = ValueEnforcer.notNull (aKey, "Key");
     }
 
-    void appendCSS (@Nonnull final CharSequence aInlineCSS)
+    void appendCSS (@NonNull final CharSequence aInlineCSS)
     {
       m_aCSS.append (aInlineCSS);
     }
 
-    @Nonnull
+    @NonNull
     Key getKey ()
     {
       return m_aKey;
     }
 
-    @Nonnull
+    @NonNull
     public ICSSMediaList getMediaList ()
     {
       return m_aKey.getMediaList ();
     }
 
-    @Nonnull
+    @NonNull
     public String getCSS ()
     {
       return m_aCSS.toString ();
@@ -139,7 +139,7 @@ public class InlineCSSList
   public InlineCSSList ()
   {}
 
-  public void addInlineCSS (@Nullable final ICSSMediaList aMediaList, @Nonnull final CharSequence aInlineCSS)
+  public void addInlineCSS (@Nullable final ICSSMediaList aMediaList, @NonNull final CharSequence aInlineCSS)
   {
     final Key aKey = new Key (aMediaList);
     final Item aLastItem = m_aItems.getLastOrNull ();
@@ -177,7 +177,7 @@ public class InlineCSSList
     return m_aItems.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ICSSCodeProvider> getAll ()
   {

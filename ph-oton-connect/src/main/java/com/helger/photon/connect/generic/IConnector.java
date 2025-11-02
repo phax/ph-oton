@@ -16,18 +16,18 @@
  */
 package com.helger.photon.connect.generic;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.EChange;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public interface IConnector <HANDLETYPE>
 {
   /**
    * @return The destination of this connector.
    */
-  @Nonnull
+  @NonNull
   IConnectionDestination <HANDLETYPE> getDestination ();
 
   /**
@@ -44,15 +44,15 @@ public interface IConnector <HANDLETYPE>
    *        The credentials to use.
    * @return {@link EChange}
    */
-  @Nonnull
-  EChange openConnection (@Nonnull IAuthCredentials aCredentials);
+  @NonNull
+  EChange openConnection (@NonNull IAuthCredentials aCredentials);
 
   /**
    * A shortcut for {@link IConnectionDestination#closeConnection(Object)}.
    *
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange closeConnection ();
 
   /**

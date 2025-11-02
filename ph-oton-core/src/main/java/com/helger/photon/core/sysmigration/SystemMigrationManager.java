@@ -20,6 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +45,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @ThreadSafe
 public class SystemMigrationManager extends AbstractPhotonSimpleDAO
@@ -88,7 +87,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     return aDoc;
   }
 
-  void internalAdd (@Nonnull final SystemMigrationResult aMigrationResult)
+  void internalAdd (@NonNull final SystemMigrationResult aMigrationResult)
   {
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
@@ -96,7 +95,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     m_aMap.computeIfAbsent (sMigrationID, k -> new CommonsArrayList <> ()).add (aMigrationResult);
   }
 
-  public void addMigrationResult (@Nonnull final SystemMigrationResult aMigrationResult)
+  public void addMigrationResult (@NonNull final SystemMigrationResult aMigrationResult)
   {
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
@@ -117,7 +116,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param sMigrationID
    *        The migration ID to be added. May neither be <code>null</code> nor empty.
    */
-  public void addMigrationResultSuccess (@Nonnull @Nonempty final String sMigrationID)
+  public void addMigrationResultSuccess (@NonNull @Nonempty final String sMigrationID)
   {
     addMigrationResult (SystemMigrationResult.createSuccess (sMigrationID));
   }
@@ -130,19 +129,19 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param sErrorMsg
    *        The error message. May not be <code>null</code>.
    */
-  public void addMigrationResultError (@Nonnull @Nonempty final String sMigrationID, @Nonnull final String sErrorMsg)
+  public void addMigrationResultError (@NonNull @Nonempty final String sMigrationID, @NonNull final String sErrorMsg)
   {
     addMigrationResult (SystemMigrationResult.createFailure (sMigrationID, sErrorMsg));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
     return m_aRWLock.readLockedGet ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
@@ -154,7 +153,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllFailedMigrationResults (@Nullable final String sMigrationID)
   {
@@ -166,7 +165,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
     return getAllMigrationResults (sMigrationID).containsAny (SystemMigrationResult::isSuccess);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllMigrationIDs ()
   {
@@ -182,8 +181,8 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
-  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
-                                           @Nonnull final Runnable aMigrationAction)
+  public void performMigrationIfNecessary (@NonNull @Nonempty final String sMigrationID,
+                                           @NonNull final Runnable aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
@@ -218,8 +217,8 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
    * @param aMigrationAction
    *        The action to be performed. May not be <code>null</code>.
    */
-  public void performMigrationIfNecessary (@Nonnull @Nonempty final String sMigrationID,
-                                           @Nonnull final Supplier <SuccessWithValue <String>> aMigrationAction)
+  public void performMigrationIfNecessary (@NonNull @Nonempty final String sMigrationID,
+                                           @NonNull final Supplier <SuccessWithValue <String>> aMigrationAction)
   {
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");

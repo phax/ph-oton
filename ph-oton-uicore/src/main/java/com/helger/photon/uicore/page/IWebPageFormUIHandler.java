@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.page;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends
                                        IWebPageUIHandler
@@ -43,8 +43,8 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    *        Layout execution context
    * @return A form that links to the current page.
    */
-  @Nonnull
-  default FORM_TYPE createFormSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  @NonNull
+  default FORM_TYPE createFormSelf (@NonNull final ILayoutExecutionContext aLEC)
   {
     return createFormSelf (aLEC, false);
   }
@@ -57,16 +57,16 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    *        <code>false</code> otherwise
    * @return A form that links to the current page.
    */
-  @Nonnull
-  FORM_TYPE createFormSelf (@Nonnull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
+  @NonNull
+  FORM_TYPE createFormSelf (@NonNull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
 
   /**
    * @param aLEC
    *        Layout execution context
    * @return A file upload form that links to the current page.
    */
-  @Nonnull
-  default FORM_TYPE createFormFileUploadSelf (@Nonnull final ILayoutExecutionContext aLEC)
+  @NonNull
+  default FORM_TYPE createFormFileUploadSelf (@NonNull final ILayoutExecutionContext aLEC)
   {
     return createFormFileUploadSelf (aLEC, false);
   }
@@ -79,15 +79,15 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    *        <code>false</code> otherwise
    * @return A file upload form that links to the current page.
    */
-  @Nonnull
-  FORM_TYPE createFormFileUploadSelf (@Nonnull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
+  @NonNull
+  FORM_TYPE createFormFileUploadSelf (@NonNull ILayoutExecutionContext aLEC, boolean bIsFormSubmitted);
 
-  @Nonnull
-  TOOLBAR_TYPE createToolbar (@Nonnull ILayoutExecutionContext aWPEC);
-
-  @Nullable
-  IHCNode createErrorBox (@Nonnull ILayoutExecutionContext aWPEC, @Nullable String sErrorMsg);
+  @NonNull
+  TOOLBAR_TYPE createToolbar (@NonNull ILayoutExecutionContext aWPEC);
 
   @Nullable
-  IHCNode createIncorrectInputBox (@Nonnull ILayoutExecutionContext aWPEC);
+  IHCNode createErrorBox (@NonNull ILayoutExecutionContext aWPEC, @Nullable String sErrorMsg);
+
+  @Nullable
+  IHCNode createIncorrectInputBox (@NonNull ILayoutExecutionContext aWPEC);
 }

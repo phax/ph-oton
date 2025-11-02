@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -34,9 +37,6 @@ import com.helger.html.js.IHasJSCodeWithSettings;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;button&gt; element with type "button"
@@ -88,7 +88,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;
@@ -101,7 +101,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_sForm;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setForm (@Nullable final String sForm)
   {
     m_sForm = sForm;
@@ -120,14 +120,14 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_aFormAction.getActionJS ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormAction (@Nullable final ISimpleURL aAction)
   {
     m_aFormAction.setAction (aAction);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormAction (@Nullable final IHasJSCodeWithSettings aAction)
   {
     m_aFormAction.setAction (aAction);
@@ -140,7 +140,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_aFormEncType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormEncType (@Nullable final IMimeType aFormEncType)
   {
     m_aFormEncType = aFormEncType;
@@ -153,7 +153,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_eFormMethod;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormMethod (@Nullable final EHCFormMethod eFormMethod)
   {
     m_eFormMethod = eFormMethod;
@@ -165,7 +165,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_bFormNoValidate;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormNoValidate (final boolean bFormNoValidate)
   {
     m_bFormNoValidate = bFormNoValidate;
@@ -178,7 +178,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_aFormTarget;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setFormTarget (@Nullable final HC_Target aFormTarget)
   {
     m_aFormTarget = aFormTarget;
@@ -190,21 +190,21 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setName (@Nullable final String sName)
   {
     m_sName = sName;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final EHCButtonType getType ()
   {
     return m_eType;
   }
 
-  @Nonnull
-  public final IMPLTYPE setType (@Nonnull final EHCButtonType eType)
+  @NonNull
+  public final IMPLTYPE setType (@NonNull final EHCButtonType eType)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
     return thisAsT ();
@@ -215,7 +215,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
     return m_sValue;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setValue (@Nullable final String sValue)
   {
     m_sValue = sValue;
@@ -223,7 +223,7 @@ public abstract class AbstractHCButton <IMPLTYPE extends AbstractHCButton <IMPLT
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.onConsistencyCheck (aConversionSettings);
     final IHCElement <?> aChild = HCHTMLHelper.recursiveGetFirstChildWithTagName (this,

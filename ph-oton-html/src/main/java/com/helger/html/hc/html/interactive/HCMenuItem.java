@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.interactive;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -27,9 +30,6 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.grouping.IHCLI;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;MENUITEM&gt; element
@@ -98,7 +98,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_eChecked.isTrue ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setChecked (final boolean bMenuItem)
   {
     m_eChecked = ETriState.valueOf (bMenuItem);
@@ -111,7 +111,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_sCommand;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setCommand (@Nullable final String sCommand)
   {
     m_sCommand = sCommand;
@@ -123,7 +123,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_eDefault.isTrue ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setDefault (final boolean bMenuItem)
   {
     m_eDefault = ETriState.valueOf (bMenuItem);
@@ -135,7 +135,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_eDisabled.isTrue ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setDisabled (final boolean bMenuItem)
   {
     m_eDisabled = ETriState.valueOf (bMenuItem);
@@ -148,7 +148,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_aIcon;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setIcon (@Nullable final ISimpleURL aIcon)
   {
     m_aIcon = aIcon;
@@ -161,7 +161,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_sLabel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setLabel (@Nullable final String sLabel)
   {
     m_sLabel = sLabel;
@@ -174,7 +174,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_sRadioGroup;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setRadioGroup (@Nullable final String sRadioGroup)
   {
     m_sRadioGroup = sRadioGroup;
@@ -187,7 +187,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCMenuItem setType (@Nullable final EHCCommandType eType)
   {
     m_eType = eType;

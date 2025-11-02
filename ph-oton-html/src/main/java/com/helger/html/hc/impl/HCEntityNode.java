@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.impl;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.entity.EHTMLEntity;
@@ -23,8 +25,6 @@ import com.helger.html.entity.IHTMLEntity;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroEntityReference;
 import com.helger.xml.microdom.MicroEntityReference;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an entity reference as HC node.
@@ -36,12 +36,12 @@ public class HCEntityNode extends AbstractHCNode
   private final IHTMLEntity m_aEntity;
   private final String m_sPlainText;
 
-  public HCEntityNode (@Nonnull final EHTMLEntity eEntity)
+  public HCEntityNode (@NonNull final EHTMLEntity eEntity)
   {
     this (eEntity, eEntity.getCharString ());
   }
 
-  public HCEntityNode (@Nonnull final IHTMLEntity aEntity, @Nonnull final String sPlainText)
+  public HCEntityNode (@NonNull final IHTMLEntity aEntity, @NonNull final String sPlainText)
   {
     ValueEnforcer.notNull (aEntity, "Entity");
     ValueEnforcer.notNull (sPlainText, "PlainText");
@@ -49,21 +49,21 @@ public class HCEntityNode extends AbstractHCNode
     m_sPlainText = sPlainText;
   }
 
-  @Nonnull
+  @NonNull
   public IHTMLEntity getEntity ()
   {
     return m_aEntity;
   }
 
   @Override
-  @Nonnull
-  protected IMicroEntityReference internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroEntityReference internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return new MicroEntityReference (m_aEntity.getEntityName ());
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return m_sPlainText;
@@ -75,43 +75,43 @@ public class HCEntityNode extends AbstractHCNode
     return ToStringGenerator.getDerived (super.toString ()).append ("entity", m_aEntity).append ("plainText", m_sPlainText).getToString ();
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newNBSP ()
   {
     return new HCEntityNode (EHTMLEntity.nbsp, " ");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newCopy ()
   {
     return new HCEntityNode (EHTMLEntity.copy, "©");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newEuro ()
   {
     return new HCEntityNode (EHTMLEntity.euro, "€");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newLeftArrow ()
   {
     return new HCEntityNode (EHTMLEntity.larr, "<-");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newRightArrow ()
   {
     return new HCEntityNode (EHTMLEntity.rarr, "->");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newUpArrow ()
   {
     return new HCEntityNode (EHTMLEntity.uarr, "^");
   }
 
-  @Nonnull
+  @NonNull
   public static HCEntityNode newDownArrow ()
   {
     return new HCEntityNode (EHTMLEntity.darr, "v");
@@ -120,7 +120,7 @@ public class HCEntityNode extends AbstractHCNode
   /**
    * @return dash of length "n"
    */
-  @Nonnull
+  @NonNull
   public static HCEntityNode newNDash ()
   {
     return new HCEntityNode (EHTMLEntity.ndash, "-");
@@ -129,7 +129,7 @@ public class HCEntityNode extends AbstractHCNode
   /**
    * @return soft hyphen
    */
-  @Nonnull
+  @NonNull
   public static HCEntityNode newShy ()
   {
     return new HCEntityNode (EHTMLEntity.shy, "");
@@ -138,7 +138,7 @@ public class HCEntityNode extends AbstractHCNode
   /**
    * @return per mille sign
    */
-  @Nonnull
+  @NonNull
   public static HCEntityNode newPerMille ()
   {
     return new HCEntityNode (EHTMLEntity.permil, "‰");
@@ -147,7 +147,7 @@ public class HCEntityNode extends AbstractHCNode
   /**
    * @return "times" sign
    */
-  @Nonnull
+  @NonNull
   public static HCEntityNode times ()
   {
     return new HCEntityNode (EHTMLEntity.times, "x");

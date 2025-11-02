@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,9 +61,6 @@ import com.helger.security.password.hash.PasswordHash;
 import com.helger.security.password.salt.PasswordSalt;
 import com.helger.text.locale.LocaleHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link IUserManager} for JDBC backends.
  *
@@ -74,8 +73,8 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   private final String m_sTableName;
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
-  public UserManagerJDBC (@Nonnull final Supplier <? extends DBExecutor> aDBExecSupplier,
-                          @Nonnull final Function <String, String> aTableNameCustomizer)
+  public UserManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                          @NonNull final Function <String, String> aTableNameCustomizer)
   {
     super (aDBExecSupplier);
     m_sTableName = aTableNameCustomizer.apply ("secuser");
@@ -85,14 +84,14 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
    * @return The name of the database table this class is operating on. Neither <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTableName ()
   {
     return m_sTableName;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   private ICommonsList <IUser> _getAllWhere (@Nullable final String sCondition,
                                              @Nullable final ConstantPreparedStatementDataProvider aDataProvider)
@@ -150,7 +149,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAll ()
   {
@@ -212,15 +211,15 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
       _internalCreateItem (UserManager.createDefaultUserGuest ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final CallbackList <IUserModificationCallback> userModificationCallbacks ()
   {
     return m_aCallbacks;
   }
 
-  @Nonnull
-  private ESuccess _internalCreateItem (@Nonnull final User aUser)
+  @NonNull
+  private ESuccess _internalCreateItem (@NonNull final User aUser)
   {
     final DBExecutor aExecutor = newExecutor ();
     return aExecutor.performInTransaction ( () -> {
@@ -270,7 +269,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public User internalCreateNewUser (@Nonnull final User aUser, final boolean bPredefined, final boolean bRunCallback)
+  public User internalCreateNewUser (@NonNull final User aUser, final boolean bPredefined, final boolean bRunCallback)
   {
     // Store
     if (_internalCreateItem (aUser).isFailure ())
@@ -309,9 +308,9 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public IUser createNewUser (@Nonnull @Nonempty final String sLoginName,
+  public IUser createNewUser (@NonNull @Nonempty final String sLoginName,
                               @Nullable final String sEmailAddress,
-                              @Nonnull final String sPlainTextPassword,
+                              @NonNull final String sPlainTextPassword,
                               @Nullable final String sFirstName,
                               @Nullable final String sLastName,
                               @Nullable final String sDescription,
@@ -342,10 +341,10 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  public IUser createPredefinedUser (@Nonnull @Nonempty final String sID,
-                                     @Nonnull @Nonempty final String sLoginName,
+  public IUser createPredefinedUser (@NonNull @Nonempty final String sID,
+                                     @NonNull @Nonempty final String sLoginName,
                                      @Nullable final String sEmailAddress,
-                                     @Nonnull final String sPlainTextPassword,
+                                     @NonNull final String sPlainTextPassword,
                                      @Nullable final String sFirstName,
                                      @Nullable final String sLastName,
                                      @Nullable final String sDescription,
@@ -469,7 +468,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   }
 
   @Nullable
-  private IUser _getUserOfEmailAddress (@Nonnull @Nonempty final String sEmailAddress, final boolean bIgnoreCase)
+  private IUser _getUserOfEmailAddress (@NonNull @Nonempty final String sEmailAddress, final boolean bIgnoreCase)
   {
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
     newExecutor ().querySingle ("SELECT id, creationdt, creationuserid, lastmoddt, lastmoduserid, deletedt, deleteuserid, attrs," +
@@ -532,7 +531,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return _getUserOfEmailAddress (sEmailAddress, true);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllActiveUsers ()
   {
@@ -551,30 +550,30 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return getActiveUserCount () > 0;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllDisabledUsers ()
   {
     return _getAllWhere ("deletedt IS NULL AND disabled=?", new ConstantPreparedStatementDataProvider (Boolean.TRUE));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllNotDeletedUsers ()
   {
     return _getAllWhere ("deletedt IS NULL", null);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IUser> getAllDeletedUsers ()
   {
     return _getAllWhere ("deletedt IS NOT NULL", null);
   }
 
-  @Nonnull
+  @NonNull
   public EChange setUserData (@Nullable final String sUserID,
-                              @Nonnull @Nonempty final String sNewLoginName,
+                              @NonNull @Nonempty final String sNewLoginName,
                               @Nullable final String sNewEmailAddress,
                               @Nullable final String sNewFirstName,
                               @Nullable final String sNewLastName,
@@ -654,8 +653,8 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  public EChange setUserPassword (@Nullable final String sUserID, @Nonnull final String sNewPlainTextPassword)
+  @NonNull
+  public EChange setUserPassword (@Nullable final String sUserID, @NonNull final String sNewPlainTextPassword)
   {
     if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
@@ -704,7 +703,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserLastLogin (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -738,7 +737,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange updateUserLastFailedLogin (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -774,7 +773,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange deleteUser (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -814,7 +813,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange undeleteUser (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -854,7 +853,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange disableUser (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))
@@ -895,7 +894,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     return EChange.CHANGED;
   }
 
-  @Nonnull
+  @NonNull
   public EChange enableUser (@Nullable final String sUserID)
   {
     if (StringHelper.isEmpty (sUserID))

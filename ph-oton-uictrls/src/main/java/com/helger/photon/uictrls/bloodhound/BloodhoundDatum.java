@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.bloodhound;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -33,8 +35,6 @@ import com.helger.json.IHasJson;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single Bloodhound datum (= data record) with the minimum data elements
@@ -57,7 +57,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
    * @param sValue
    *        Value to display. Must not be <code>null</code>.
    */
-  public BloodhoundDatum (@Nonnull final String sValue)
+  public BloodhoundDatum (@NonNull final String sValue)
   {
     this (sValue, getTokensFromValue (sValue));
   }
@@ -70,7 +70,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
    * @param aTokens
    *        All possible tokens. Must not be <code>null</code>.
    */
-  public BloodhoundDatum (@Nonnull final String sValue, @Nonnull final String... aTokens)
+  public BloodhoundDatum (@NonNull final String sValue, @NonNull final String... aTokens)
   {
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
@@ -86,7 +86,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
    * @param aTokens
    *        All possible tokens. Must not be <code>null</code>.
    */
-  public BloodhoundDatum (@Nonnull final String sValue, @Nonnull final Collection <String> aTokens)
+  public BloodhoundDatum (@NonNull final String sValue, @NonNull final Collection <String> aTokens)
   {
     ValueEnforcer.notNull (sValue, "Value");
     ValueEnforcer.notEmpty (aTokens, "Tokens");
@@ -97,7 +97,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   /**
    * @return The value to display. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final String getValue ()
   {
     return m_sValue;
@@ -106,7 +106,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   /**
    * @return A list of all tokens. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllTokens ()
   {
@@ -116,7 +116,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
   /**
    * @return This object as JSON object representation. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
@@ -125,7 +125,7 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
     return new JsonObject ().add (JSON_VALUE, m_sValue).add (JSON_TOKENS, new JsonArray ().addAll (m_aTokens));
   }
 
-  public int compareTo (@Nonnull final BloodhoundDatum aOther)
+  public int compareTo (@NonNull final BloodhoundDatum aOther)
   {
     return m_sValue.compareTo (aOther.m_sValue);
   }
@@ -160,8 +160,8 @@ public class BloodhoundDatum implements IHasJson, Comparable <BloodhoundDatum>
    *        The value to use. May not be <code>null</code>.
    * @return An array of tokens to use. Never <code>null</code>.
    */
-  @Nonnull
-  public static String [] getTokensFromValue (@Nonnull final String sValue)
+  @NonNull
+  public static String [] getTokensFromValue (@NonNull final String sValue)
   {
     return RegExHelper.getSplitToArray (StringHelper.trim (sValue), "\\W+");
   }

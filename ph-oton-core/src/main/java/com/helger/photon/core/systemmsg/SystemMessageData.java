@@ -18,6 +18,9 @@ package com.helger.photon.core.systemmsg;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -25,9 +28,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * System message data used in {@link SystemMessageManager}.
@@ -45,7 +45,7 @@ public class SystemMessageData implements ISystemMessageData
   public SystemMessageData ()
   {}
 
-  public SystemMessageData (@Nonnull final ESystemMessageType eMessageType, @Nullable final String sMessage)
+  public SystemMessageData (@NonNull final ESystemMessageType eMessageType, @Nullable final String sMessage)
   {
     internalSetMessageType (eMessageType);
     internalSetMessage (sMessage);
@@ -57,7 +57,7 @@ public class SystemMessageData implements ISystemMessageData
     return m_aLastUpdate;
   }
 
-  @Nonnull
+  @NonNull
   public ESystemMessageType getMessageType ()
   {
     return m_eMessageType;
@@ -81,7 +81,7 @@ public class SystemMessageData implements ISystemMessageData
     m_aLastUpdate = aLastUpdate;
   }
 
-  final void internalSetMessageType (@Nonnull final ESystemMessageType eType)
+  final void internalSetMessageType (@NonNull final ESystemMessageType eType)
   {
     ValueEnforcer.notNull (eType, "Type");
     m_eMessageType = eType;
@@ -102,8 +102,8 @@ public class SystemMessageData implements ISystemMessageData
    *        The message text. May be <code>null</code>.
    * @return {@link EChange}
    */
-  @Nonnull
-  public EChange setSystemMessage (@Nonnull final ESystemMessageType eMessageType, @Nullable final String sMessage)
+  @NonNull
+  public EChange setSystemMessage (@NonNull final ESystemMessageType eMessageType, @Nullable final String sMessage)
   {
     ValueEnforcer.notNull (eMessageType, "MessageType");
 

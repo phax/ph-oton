@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A representation of a type in JS.
@@ -36,7 +36,7 @@ public abstract class AbstractJSType implements IJSGeneratable
    *
    * @return Names like "int", "void", "BigInteger".
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public abstract String name ();
 
@@ -45,7 +45,7 @@ public abstract class AbstractJSType implements IJSGeneratable
    *         the name in it. For <code>Number</code> this returns
    *         <code>"Number"</code>
    */
-  @Nonnull
+  @NonNull
   public final JSStringLiteral typeName ()
   {
     return JSExpr.lit (name ());
@@ -54,7 +54,7 @@ public abstract class AbstractJSType implements IJSGeneratable
   /**
    * @return A "new type" invocation object
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public final JSInvocation _new ()
   {
@@ -66,7 +66,7 @@ public abstract class AbstractJSType implements IJSGeneratable
    *        Expressions used as arguments
    * @return A "new type" invocation object
    */
-  @Nonnull
+  @NonNull
   @CodingStyleguideUnaware
   public final JSInvocation _new (@Nullable final IJSExpression... aExprs)
   {
@@ -80,8 +80,8 @@ public abstract class AbstractJSType implements IJSGeneratable
    *        The expression to be casted. May not be <code>null</code>.
    * @return The {@link JSCast} object
    */
-  @Nonnull
-  public JSCast casted (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSCast casted (@NonNull final IJSExpression aExpr)
   {
     return JSExpr.cast (this, aExpr);
   }

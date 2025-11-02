@@ -16,13 +16,12 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Logging instance of {@link IAPIPathAmbiguityResolver}.
@@ -35,7 +34,7 @@ public class LoggingAPIPathAmbiguityResolver implements IAPIPathAmbiguityResolve
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggingAPIPathAmbiguityResolver.class);
 
   @Nullable
-  public InvokableAPIDescriptor apply (@Nonnull final APIPath aPath, @Nonnull final ICommonsList <InvokableAPIDescriptor> aDescriptors)
+  public InvokableAPIDescriptor apply (@NonNull final APIPath aPath, @NonNull final ICommonsList <InvokableAPIDescriptor> aDescriptors)
   {
     if (aDescriptors.isNotEmpty ())
       LOGGER.warn ("Found more than one API descriptor matching path '" + aPath.getPath () + "': " + aDescriptors);

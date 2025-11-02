@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.datatables;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.misc.Since;
 import com.helger.base.name.IHasName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * DataTables pagination type
@@ -39,12 +39,12 @@ public enum EDataTablesPagingType implements IHasName
 
   private final String m_sName;
 
-  EDataTablesPagingType (@Nonnull @Nonempty final String sName)
+  EDataTablesPagingType (@NonNull @Nonempty final String sName)
   {
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

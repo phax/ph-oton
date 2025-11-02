@@ -19,11 +19,11 @@ package com.helger.photon.security.password.constraint;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a single password constraint type.
@@ -51,7 +51,7 @@ public interface IPasswordConstraint extends Serializable
    * @return <code>null</code> if no text is present in the provided locale
    */
   @Nullable
-  String getDescription (@Nonnull Locale aContentLocale);
+  String getDescription (@NonNull Locale aContentLocale);
 
   /**
    * This method is responsible for filling a micro element for serializing the
@@ -60,5 +60,5 @@ public interface IPasswordConstraint extends Serializable
    * @param aElement
    *        The element to be filled. Never <code>null</code>.
    */
-  void fillMicroElement (@Nonnull IMicroElement aElement);
+  void fillMicroElement (@NonNull IMicroElement aElement);
 }

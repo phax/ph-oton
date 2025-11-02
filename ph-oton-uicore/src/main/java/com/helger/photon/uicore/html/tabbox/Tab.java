@@ -18,6 +18,9 @@ package com.helger.photon.uicore.html.tabbox;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.id.factory.GlobalIDFactory;
@@ -26,9 +29,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCNode;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents a single tab within a tab box
@@ -60,7 +60,7 @@ public class Tab implements IHasID <String>, Serializable
     m_bDisabled = bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -72,7 +72,7 @@ public class Tab implements IHasID <String>, Serializable
     return m_bHasGeneratedID;
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getLinkURL ()
   {
     return new SimpleURL ().setAnchor (m_sID);
@@ -84,7 +84,7 @@ public class Tab implements IHasID <String>, Serializable
     return m_aLabel;
   }
 
-  @Nonnull
+  @NonNull
   public Tab setLabel (@Nullable final IHCNode aLabel)
   {
     m_aLabel = aLabel;
@@ -97,7 +97,7 @@ public class Tab implements IHasID <String>, Serializable
     return m_aContent;
   }
 
-  @Nonnull
+  @NonNull
   public Tab setContent (@Nullable final IHCNode aContent)
   {
     m_aContent = aContent;
@@ -109,7 +109,7 @@ public class Tab implements IHasID <String>, Serializable
     return m_bDisabled;
   }
 
-  @Nonnull
+  @NonNull
   public Tab setDisabled (final boolean bDisabled)
   {
     m_bDisabled = bDisabled;

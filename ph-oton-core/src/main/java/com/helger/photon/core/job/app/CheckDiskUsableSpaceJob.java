@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +47,6 @@ import com.helger.smtp.data.EmailData;
 import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
-import jakarta.annotation.Nonnull;
-
 /**
  * Check whether at least x bytes of usable space is present on the file system
  * where the application .
@@ -69,7 +68,7 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@Nonnull final JobDataMap aJobDataMap, @Nonnull final IJobExecutionContext aContext)
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
                                                                                                                  throws JobExecutionException
   {
     final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
@@ -126,8 +125,8 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
    *        notification email is send. Must be &ge; 0.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
-  @Nonnull
-  public static TriggerKey schedule (@Nonnull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
+  @NonNull
+  public static TriggerKey schedule (@NonNull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
                                      @Nonnegative final long nThresholdBytes)
   {
     // Use indirection to ensure initialization order does not matter
@@ -149,10 +148,10 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
    *        checked.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
-  @Nonnull
-  public static TriggerKey schedule (@Nonnull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
+  @NonNull
+  public static TriggerKey schedule (@NonNull final IScheduleBuilder <? extends ITrigger> aScheduleBuilder,
                                      @Nonnegative final long nThresholdBytes,
-                                     @Nonnull final Supplier <File> aPathSupplier)
+                                     @NonNull final Supplier <File> aPathSupplier)
   {
     ValueEnforcer.notNull (aScheduleBuilder, "ScheduleBuilder");
     ValueEnforcer.isGE0 (nThresholdBytes, "ThresholdBytes");

@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.CGlobal;
@@ -25,9 +28,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract base class for table cells. Works for header, body and footer cells.
@@ -44,7 +44,7 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
   private int m_nColspan = CGlobal.ILLEGAL_UINT;
   private int m_nRowspan = CGlobal.ILLEGAL_UINT;
 
-  public AbstractHCCell (@Nonnull final EHTMLElement aElement)
+  public AbstractHCCell (@NonNull final EHTMLElement aElement)
   {
     super (aElement);
   }
@@ -55,7 +55,7 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return m_aParentRow;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE internalSetParentRow (@Nullable final HCRow aParentRow)
   {
     m_aParentRow = aParentRow;
@@ -68,7 +68,7 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return m_nColspan > 1 ? m_nColspan : 1;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setColspan (final int nColspan)
   {
     m_nColspan = nColspan;
@@ -81,7 +81,7 @@ public abstract class AbstractHCCell <IMPLTYPE extends AbstractHCCell <IMPLTYPE>
     return m_nRowspan > 1 ? m_nRowspan : 1;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setRowspan (final int nRowspan)
   {
     m_nRowspan = nRowspan;

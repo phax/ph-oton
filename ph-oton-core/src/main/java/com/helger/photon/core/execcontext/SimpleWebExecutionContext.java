@@ -18,15 +18,15 @@ package com.helger.photon.core.execcontext;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.menu.IMenuTree;
 import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This object is instantiated per page view and contains the current request
@@ -43,14 +43,14 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
   private final IUser m_aLoggedInUser;
   private final boolean m_bIsLoggedInUserAdministrator;
 
-  public SimpleWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
+  public SimpleWebExecutionContext (@NonNull final ISimpleWebExecutionContext aSWEC)
   {
     this (aSWEC.getRequestScope (), aSWEC.getDisplayLocale (), aSWEC.getMenuTree (), aSWEC.getLoggedInUser ());
   }
 
-  public SimpleWebExecutionContext (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final Locale aDisplayLocale,
-                                    @Nonnull final IMenuTree aMenuTree,
+  public SimpleWebExecutionContext (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @NonNull final Locale aDisplayLocale,
+                                    @NonNull final IMenuTree aMenuTree,
                                     @Nullable final IUser aLoggedInUser)
   {
     m_aRequestScope = ValueEnforcer.notNull (aRequestScope, "RequestScope");
@@ -60,19 +60,19 @@ public class SimpleWebExecutionContext implements ISimpleWebExecutionContext
     m_bIsLoggedInUserAdministrator = aLoggedInUser != null && aLoggedInUser.isAdministrator ();
   }
 
-  @Nonnull
+  @NonNull
   public final IRequestWebScopeWithoutResponse getRequestScope ()
   {
     return m_aRequestScope;
   }
 
-  @Nonnull
+  @NonNull
   public final Locale getDisplayLocale ()
   {
     return m_aDisplayLocale;
   }
 
-  @Nonnull
+  @NonNull
   public final IMenuTree getMenuTree ()
   {
     return m_aMenuTree;

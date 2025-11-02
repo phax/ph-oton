@@ -18,6 +18,7 @@ package com.helger.html.css;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
 import com.helger.collection.commons.CommonsConcurrentHashMap;
 import com.helger.collection.commons.ICommonsMap;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link ICSSClassProvider} interface. Uses an internal cache to
@@ -59,7 +58,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
    * @throws RuntimeException
    *         in case of error
    */
-  public static void validateCSSClassName (@Nonnull @Nonempty final String sCSSClass)
+  public static void validateCSSClassName (@NonNull @Nonempty final String sCSSClass)
   {
     ValueEnforcer.notEmpty (sCSSClass, "CSSClass");
     if (sCSSClass.indexOf (' ') >= 0)
@@ -74,13 +73,13 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
       throw new IllegalArgumentException ("The CSS class name '" + sCSSClass + "' may rise problems with IE6!");
   }
 
-  private DefaultCSSClassProvider (@Nonnull @Nonempty final String sCSSClass)
+  private DefaultCSSClassProvider (@NonNull @Nonempty final String sCSSClass)
   {
     validateCSSClassName (sCSSClass);
     m_sCSSClass = sCSSClass;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getCSSClass ()
   {
@@ -113,8 +112,8 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
     return new ToStringGenerator (null).append ("CssClass", m_sCSSClass).getToString ();
   }
 
-  @Nonnull
-  public static DefaultCSSClassProvider create (@Nonnull @Nonempty final String sCSSClass)
+  @NonNull
+  public static DefaultCSSClassProvider create (@NonNull @Nonempty final String sCSSClass)
   {
     return KNOWN.computeIfAbsent (sCSSClass, k -> new DefaultCSSClassProvider (sCSSClass));
   }
@@ -125,7 +124,7 @@ public class DefaultCSSClassProvider implements ICSSClassProvider, Serializable
    * @return A new CSS class with a unique, non-persistent name.
    * @since 8.0.1
    */
-  @Nonnull
+  @NonNull
   public static DefaultCSSClassProvider createUnique ()
   {
     return create ("cssclass" + GlobalIDFactory.getNewIntID ());

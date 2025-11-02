@@ -20,6 +20,8 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.base.string.StringHelper;
 import com.helger.httpclient.HttpClientManager;
@@ -28,9 +30,6 @@ import com.helger.io.file.SimpleFileIO;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Download the DT components from https://www.datatables.net/download/index via the String in the
@@ -43,7 +42,7 @@ public final class InternalDataTablesDownloader
   private InternalDataTablesDownloader ()
   {}
 
-  public static void downloadDataTables (@Nonnull final String sHTML, @Nullable final String sFilenameMustContain)
+  public static void downloadDataTables (@NonNull final String sHTML, @Nullable final String sFilenameMustContain)
                                                                                                                    throws Exception
   {
     try (HttpClientManager hcm = new HttpClientManager ())

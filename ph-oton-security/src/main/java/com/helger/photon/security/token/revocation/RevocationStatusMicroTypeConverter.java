@@ -18,6 +18,9 @@ package com.helger.photon.security.token.revocation;
 
 import java.time.LocalDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringParser;
@@ -25,9 +28,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.convert.IMicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Micro type converter for class {@link RevocationStatus}.
@@ -41,10 +41,10 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
   private static final String ATTR_DT = "rdt";
   private static final String ELEMENT_REASON = "reason";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final RevocationStatus aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final RevocationStatus aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     aElement.setAttribute (ATTR_IS_REVOKED, aValue.isRevoked ());
@@ -55,8 +55,8 @@ public final class RevocationStatusMicroTypeConverter implements IMicroTypeConve
     return aElement;
   }
 
-  @Nonnull
-  public RevocationStatus convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public RevocationStatus convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sIsRevoked = aElement.getAttributeValue (ATTR_IS_REVOKED);
     final boolean bIsRevoked = StringParser.parseBool (sIsRevoked);

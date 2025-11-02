@@ -18,6 +18,8 @@ package com.helger.photon.atom;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * ATOM 1.0 feed source.
@@ -60,39 +59,39 @@ public class FeedSource extends AbstractFeedElement
   public FeedSource ()
   {}
 
-  public final void addAuthor (@Nonnull final FeedPerson aAuthor)
+  public final void addAuthor (@NonNull final FeedPerson aAuthor)
   {
     ValueEnforcer.notNull (aAuthor, "Author");
     m_aAuthors.add (aAuthor);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <FeedPerson> getAuthors ()
   {
     return m_aAuthors.getClone ();
   }
 
-  public final void addCategory (@Nonnull final FeedCategory aCategory)
+  public final void addCategory (@NonNull final FeedCategory aCategory)
   {
     ValueEnforcer.notNull (aCategory, "Category");
     m_aCategories.add (aCategory);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <FeedCategory> getCategories ()
   {
     return m_aCategories.getClone ();
   }
 
-  public final void addContributor (@Nonnull final FeedPerson aContributor)
+  public final void addContributor (@NonNull final FeedPerson aContributor)
   {
     ValueEnforcer.notNull (aContributor, "Contributor");
     m_aContributors.add (aContributor);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <FeedPerson> getContributors ()
   {
@@ -132,13 +131,13 @@ public class FeedSource extends AbstractFeedElement
     return m_sID;
   }
 
-  public final void addLink (@Nonnull final FeedLink aLink)
+  public final void addLink (@NonNull final FeedLink aLink)
   {
     ValueEnforcer.notNull (aLink, "Link");
     m_aLinks.add (aLink);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <FeedLink> getLinks ()
   {
@@ -200,7 +199,7 @@ public class FeedSource extends AbstractFeedElement
     return m_aUpdated;
   }
 
-  protected final void fillElement (@Nonnull final IMicroElement aElement)
+  protected final void fillElement (@NonNull final IMicroElement aElement)
   {
     for (final IFeedElement aAuthor : m_aAuthors)
       aElement.addChild (aAuthor.getAsElement ("author"));
@@ -230,8 +229,8 @@ public class FeedSource extends AbstractFeedElement
       aElement.setAttributeNS (XMLConstants.XML_NS_URI, "lang", getLanguage ());
   }
 
-  @Nonnull
-  public IMicroElement getAsElement (@Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public IMicroElement getAsElement (@NonNull @Nonempty final String sElementName)
   {
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     fillElement (aElement);

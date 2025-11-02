@@ -16,12 +16,12 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;area&gt; element
@@ -33,7 +33,7 @@ public class HCArea extends AbstractHCArea <HCArea>
   public HCArea ()
   {}
 
-  public HCArea (@Nonnull final ISimpleURL aHref)
+  public HCArea (@NonNull final ISimpleURL aHref)
   {
     super (aHref);
   }
@@ -43,7 +43,7 @@ public class HCArea extends AbstractHCArea <HCArea>
    *        The target URL to link to. May be <code>null</code>.
    * @return A new {@link HCArea} - depending on the link.
    */
-  @Nonnull
+  @NonNull
   public static HCArea of (@Nullable final String sHref)
   {
     if (StringHelper.isEmpty (sHref))

@@ -16,6 +16,7 @@
  */
 package com.helger.photon.app;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,6 @@ import com.helger.photon.app.url.IWebURIToURLConverter;
 import com.helger.photon.app.url.StreamOrLocalURIToURLConverter;
 import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Global photon-app settings. It contains the following settings:
@@ -72,31 +71,31 @@ public final class PhotonAppSettings
   private PhotonAppSettings ()
   {}
 
-  @Nonnull
+  @NonNull
   public static IWebURIToURLConverter getURIToURLConverter ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aURIToURLConverter);
   }
 
-  public static void setURIToURLConverter (@Nonnull final IWebURIToURLConverter aURIToURLConverter)
+  public static void setURIToURLConverter (@NonNull final IWebURIToURLConverter aURIToURLConverter)
   {
     ValueEnforcer.notNull (aURIToURLConverter, "URIToURLConverter");
 
     RW_LOCK.writeLocked ( () -> s_aURIToURLConverter = aURIToURLConverter);
   }
 
-  @Nonnull
-  public static ISimpleURL getCSSPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                       @Nonnull final ICSSPathProvider aCSS,
+  @NonNull
+  public static ISimpleURL getCSSPath (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                       @NonNull final ICSSPathProvider aCSS,
                                        final boolean bRegular)
   {
     final String sPath = aCSS.getCSSItemPath (bRegular);
     return getURIToURLConverter ().getAsURL (aRequestScope, sPath);
   }
 
-  @Nonnull
-  public static ISimpleURL getJSPath (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                      @Nonnull final IJSPathProvider aJS,
+  @NonNull
+  public static ISimpleURL getJSPath (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                      @NonNull final IJSPathProvider aJS,
                                       final boolean bRegular)
   {
     final String sPath = aJS.getJSItemPath (bRegular);
@@ -139,14 +138,14 @@ public final class PhotonAppSettings
    * @return The name of the resource bundle servlet without a leading nor a trailing slash. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getResourceBundleServletName ()
   {
     return RW_LOCK.readLockedGet ( () -> s_sResourceBundleServletName);
   }
 
-  public static void setResourceBundleServletName (@Nonnull @Nonempty final String sResourceBundleServletName)
+  public static void setResourceBundleServletName (@NonNull @Nonempty final String sResourceBundleServletName)
   {
     ValueEnforcer.notEmpty (sResourceBundleServletName, "ResourceBundleServletName");
     RW_LOCK.writeLocked ( () -> s_sResourceBundleServletName = sResourceBundleServletName);

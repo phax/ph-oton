@@ -16,15 +16,15 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;ol&gt; element
@@ -43,7 +43,7 @@ public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLT
   private boolean m_bReversed = false;
   private EHCOLType m_eType;
 
-  public AbstractHCOLBase (@Nonnull final Class <ITEMTYPE> aItemClass)
+  public AbstractHCOLBase (@NonNull final Class <ITEMTYPE> aItemClass)
   {
     super (EHTMLElement.OL, aItemClass);
   }
@@ -54,7 +54,7 @@ public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLT
     return m_aStart;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setStart (@Nullable final Integer aStart)
   {
     m_aStart = aStart;
@@ -66,7 +66,7 @@ public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLT
     return m_bReversed;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setReversed (final boolean bReversed)
   {
     m_bReversed = bReversed;
@@ -79,7 +79,7 @@ public abstract class AbstractHCOLBase <IMPLTYPE extends AbstractHCOLBase <IMPLT
     return m_eType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setType (@Nullable final EHCOLType eType)
   {
     m_eType = eType;

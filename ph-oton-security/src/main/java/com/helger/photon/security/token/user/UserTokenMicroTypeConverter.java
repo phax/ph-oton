@@ -16,6 +16,9 @@
  */
 package com.helger.photon.security.token.user;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsArrayList;
@@ -33,9 +36,6 @@ import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 import com.helger.xml.microdom.util.MicroHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Micro type converter for class {@link UserToken}.
  *
@@ -47,10 +47,10 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
   private static final IMicroQName ATTR_USER_ID = new MicroQName ("userid");
   private static final String ELEMENT_DESCRIPTION = "description";
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final UserToken aValue,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final UserToken aValue,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull @Nonempty final String sTagName)
+                                              @NonNull @Nonempty final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aValue, aElement);
@@ -64,8 +64,8 @@ public final class UserTokenMicroTypeConverter extends AbstractBusinessObjectMic
     return aElement;
   }
 
-  @Nonnull
-  public UserToken convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public UserToken convertToNative (@NonNull final IMicroElement aElement)
   {
     final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();
 

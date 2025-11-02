@@ -16,14 +16,14 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x paste part
@@ -40,7 +40,7 @@ public class FineUploader5Paste implements IFineUploader5Part
   public FineUploader5Paste ()
   {}
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getDefaultName ()
   {
@@ -54,8 +54,8 @@ public class FineUploader5Paste implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Paste setDefaultName (@Nonnull @Nonempty final String sDefaultName)
+  @NonNull
+  public FineUploader5Paste setDefaultName (@NonNull @Nonempty final String sDefaultName)
   {
     ValueEnforcer.notEmpty (sDefaultName, "DefaultName");
     m_sPasteDefaultName = sDefaultName;
@@ -75,14 +75,14 @@ public class FineUploader5Paste implements IFineUploader5Part
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Paste setTargetElementID (@Nullable final String sTargetElementID)
   {
     m_sPasteTargetElementID = sTargetElementID;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

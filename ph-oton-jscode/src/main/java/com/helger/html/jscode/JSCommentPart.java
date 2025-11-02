@@ -18,12 +18,12 @@ package com.helger.html.jscode;
 
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A part is a part of a JSDoc comment, and it is a list of values.
@@ -81,7 +81,7 @@ public class JSCommentPart extends CommonsArrayList <Object>
    * @param sIndent
    *        Indentation string to use. May not be <code>null</code>.
    */
-  protected void format (@Nonnull final JSFormatter aFormatter, @Nonnull final String sIndent)
+  protected void format (@NonNull final JSFormatter aFormatter, @NonNull final String sIndent)
   {
     if (!isEmpty ())
       aFormatter.plain (sIndent);
@@ -127,8 +127,8 @@ public class JSCommentPart extends CommonsArrayList <Object>
   /**
    * Escapes the appearance of the comment terminator.
    */
-  @Nonnull
-  private static String _escape (@Nonnull final String sStr)
+  @NonNull
+  private static String _escape (@NonNull final String sStr)
   {
     String ret = sStr;
     while (true)

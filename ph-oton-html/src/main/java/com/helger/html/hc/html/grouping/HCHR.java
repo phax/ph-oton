@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.grouping;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributeValues;
 import com.helger.html.CHTMLAttributes;
@@ -23,8 +25,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElement;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;hr&gt; element
@@ -48,7 +48,7 @@ public class HCHR extends AbstractHCElement <HCHR>
     return m_bNoShade;
   }
 
-  @Nonnull
+  @NonNull
   public final HCHR setNoShade (final boolean bNoShade)
   {
     m_bNoShade = bNoShade;

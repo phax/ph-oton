@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.FakeJS;
 import com.helger.html.hc.html.HC_Target;
@@ -28,9 +31,6 @@ import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
                            IHCElementWithChildren <IMPLTYPE>,
                            IHCHasState <IMPLTYPE>,
@@ -40,7 +40,7 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
   @Nullable
   String getForm ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setForm (@Nullable String sForm);
 
   @Nullable
@@ -49,10 +49,10 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
   @Nullable
   IHasJSCode getFormActionJS ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormAction (@Nullable ISimpleURL aAction);
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormAction (@Nullable IHasJSCodeWithSettings aAction);
 
   @Nullable
@@ -63,7 +63,7 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormEncTypeFileUpload ()
   {
     return setFormEncType (CMimeType.MULTIPART_FORMDATA);
@@ -74,36 +74,36 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormEncTypeTextPlain ()
   {
     return setFormEncType (CMimeType.TEXT_PLAIN);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormEncType (@Nullable IMimeType aFormEncType);
 
   @Nullable
   EHCFormMethod getFormMethod ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormMethod (@Nullable EHCFormMethod eFormMethod);
 
   boolean isFormNoValidate ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormNoValidate (boolean bFormNoValidate);
 
   @Nullable
   HC_Target getFormTarget ();
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE setFormTargetBlank ()
   {
     return setFormTarget (HC_Target.BLANK);
   }
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setFormTarget (@Nullable HC_Target aFormTarget);
 
   /**
@@ -119,14 +119,14 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        The value to set. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setValue (@Nullable String sValue);
 
   /**
    * @return The type of the button (button, submit or reset). Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EHCButtonType getType ();
 
   /**
@@ -136,8 +136,8 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        The new type. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  IMPLTYPE setType (@Nonnull EHCButtonType eType);
+  @NonNull
+  IMPLTYPE setType (@NonNull EHCButtonType eType);
 
   /**
    * Shortcut for <code>setEventHandler(EJSEvent.ONCLICK, aOnClick)</code>
@@ -146,7 +146,7 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        JS event to trigger
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return setEventHandler (EJSEvent.CLICK, aOnClick);
@@ -159,8 +159,8 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        URL to link to
    * @return this
    */
-  @Nonnull
-  default IMPLTYPE setOnClick (@Nonnull final ISimpleURL aURL)
+  @NonNull
+  default IMPLTYPE setOnClick (@NonNull final ISimpleURL aURL)
   {
     return setOnClick (FakeJS.windowLocationHref (aURL));
   }
@@ -172,7 +172,7 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        JS event to trigger
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addOnClick (@Nullable final IHasJSCode aOnClick)
   {
     return addEventHandler (EJSEvent.CLICK, aOnClick);
@@ -185,8 +185,8 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
    *        URL to link to
    * @return this
    */
-  @Nonnull
-  default IMPLTYPE addOnClick (@Nonnull final ISimpleURL aURL)
+  @NonNull
+  default IMPLTYPE addOnClick (@NonNull final ISimpleURL aURL)
   {
     return addOnClick (FakeJS.windowLocationHref (aURL));
   }

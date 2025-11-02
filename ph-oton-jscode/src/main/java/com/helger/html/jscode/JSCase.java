@@ -16,13 +16,13 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Case statement
@@ -54,7 +54,7 @@ public class JSCase extends AbstractJSStatement
    * @param aLabel
    *        May not be <code>null</code>.
    */
-  public JSCase (@Nonnull final IJSExpression aLabel)
+  public JSCase (@NonNull final IJSExpression aLabel)
   {
     this (aLabel, false);
   }
@@ -87,7 +87,7 @@ public class JSCase extends AbstractJSStatement
     return m_aLabel;
   }
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -95,7 +95,7 @@ public class JSCase extends AbstractJSStatement
     return m_aBody;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.indent ();
     if (!m_bIsDefaultCase)

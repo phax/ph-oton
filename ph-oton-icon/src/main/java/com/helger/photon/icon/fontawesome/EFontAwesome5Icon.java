@@ -16,6 +16,9 @@
  */
 package com.helger.photon.icon.fontawesome;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.css.ICSSClassProvider;
@@ -28,9 +31,6 @@ import com.helger.photon.icon.EIconCSSPathProvider;
 import com.helger.photon.uicore.icon.DefaultIcons;
 import com.helger.photon.uicore.icon.EDefaultIcon;
 import com.helger.photon.uicore.icon.IIcon;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Font Awesome icons
@@ -1501,7 +1501,7 @@ public enum EFontAwesome5Icon implements IIcon
   private final ICSSClassProvider m_aCSSClass;
   private final boolean m_bIsBrand;
 
-  EFontAwesome5Icon (@Nonnull final ICSSClassProvider aCSSClass, final boolean bIsBrand)
+  EFontAwesome5Icon (@NonNull final ICSSClassProvider aCSSClass, final boolean bIsBrand)
   {
     m_aCSSClass = aCSSClass;
     m_bIsBrand = bIsBrand;
@@ -1518,8 +1518,8 @@ public enum EFontAwesome5Icon implements IIcon
     return m_bIsBrand;
   }
 
-  @Nonnull
-  public <T extends IHCElement <?>> T applyToNode (@Nonnull final T aElement)
+  @NonNull
+  public <T extends IHCElement <?>> T applyToNode (@NonNull final T aElement)
   {
     if (m_bIsBrand)
       aElement.addClasses (CFontAwesome5CSS.FAB, m_aCSSClass);
@@ -1529,140 +1529,140 @@ public enum EFontAwesome5Icon implements IIcon
     return aElement;
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode ()
   {
     return applyToNode (new HCI ());
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeExtraSmall ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_XS);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeSmall ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_SM);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeLarge ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_LG);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode2x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_2X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode3x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_3X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode4x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_4X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode5x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_5X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode6x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_6X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode7x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_7X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode8x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_8X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode9x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_9X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNode10x ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_10X);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFixedWidth ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_FW);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeListBullet ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_LI);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeSpinning ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_SPIN);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate90 ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_ROTATE_90);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate180 ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_ROTATE_180);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeRotate270 ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_ROTATE_270);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFlipHorz ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_FLIP_HORIZONTAL);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeFlipVert ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_FLIP_VERTICAL);
   }
 
-  @Nonnull
+  @NonNull
   public HCI getAsNodeInverse ()
   {
     return getAsNode ().addClass (CFontAwesome5CSS.FA_INVERSE);
   }
 
-  @Nonnull
-  public static HCSpan createIconStack (@Nonnull final IHCElement <?> aLargeIcon, @Nonnull final IHCElement <?> aSmallIcon)
+  @NonNull
+  public static HCSpan createIconStack (@NonNull final IHCElement <?> aLargeIcon, @NonNull final IHCElement <?> aSmallIcon)
   {
     final HCSpan ret = new HCSpan ().addClasses (CFontAwesome5CSS.FA_STACK, CFontAwesome5CSS.FA_LG);
     ret.addChild (aLargeIcon.addClass (CFontAwesome5CSS.FA_STACK_2X));
@@ -1701,7 +1701,7 @@ public enum EFontAwesome5Icon implements IIcon
     DefaultIcons.set (EDefaultIcon.YES, CHECK);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <ICSSPathProvider> getAllCSSFiles ()
   {
     return new CommonsArrayList <> (EIconCSSPathProvider.FONT_AWESOME5);

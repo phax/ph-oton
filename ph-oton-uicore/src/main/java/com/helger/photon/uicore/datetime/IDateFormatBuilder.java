@@ -20,10 +20,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import com.helger.collection.commons.ICommonsList;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.collection.commons.ICommonsList;
 
 /**
  * Abstract date format builder interface
@@ -36,21 +36,21 @@ public interface IDateFormatBuilder
    * @return A non-<code>null</code> list with {@link EDateTimeFormatToken} and
    *         {@link Character} objects.
    */
-  @Nonnull
+  @NonNull
   ICommonsList <Object> getAllInternalObjects ();
 
-  @Nonnull
+  @NonNull
   String getJSCalendarFormatString ();
 
-  @Nonnull
+  @NonNull
   String getJavaFormatString ();
 
-  @Nonnull
+  @NonNull
   LocalDate getDateFormatted (@Nullable String sDate);
 
-  @Nonnull
+  @NonNull
   LocalTime getTimeFormatted (@Nullable String sTime);
 
-  @Nonnull
+  @NonNull
   LocalDateTime getLocalDateTimeFormatted (@Nullable String sDateTime);
 }

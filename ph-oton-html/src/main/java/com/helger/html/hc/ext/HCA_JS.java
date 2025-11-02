@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.hc.html.FakeJS;
 import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.html.hc.html.textlevel.IHCA;
@@ -24,9 +27,6 @@ import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class HCA_JS extends AbstractHCA <HCA_JS>
 {
@@ -47,26 +47,26 @@ public class HCA_JS extends AbstractHCA <HCA_JS>
     setOnClickReturnFalse (aJSOnClick);
   }
 
-  @Nonnull
+  @NonNull
   public final HCA_JS addOnClickReturnFalse (@Nullable final IHasJSCode aJSOnClick)
   {
     addOnClickReturnFalse (this, aJSOnClick);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCA_JS setOnClickReturnFalse (@Nullable final IHasJSCode aJSOnClick)
   {
     setOnClickReturnFalse (this, aJSOnClick);
     return this;
   }
 
-  public static void addOnClickReturnFalse (@Nonnull final IHCA <?> aLink, @Nullable final IHasJSCode aJSOnClick)
+  public static void addOnClickReturnFalse (@NonNull final IHCA <?> aLink, @Nullable final IHasJSCode aJSOnClick)
   {
     aLink.addOnClick (new CollectingJSCodeProvider (aJSOnClick, FakeJS.RETURN_FALSE));
   }
 
-  public static void setOnClickReturnFalse (@Nonnull final IHCA <?> aLink, @Nullable final IHasJSCode aJSOnClick)
+  public static void setOnClickReturnFalse (@NonNull final IHCA <?> aLink, @Nullable final IHasJSCode aJSOnClick)
   {
     aLink.setOnClick (new CollectingJSCodeProvider (aJSOnClick, FakeJS.RETURN_FALSE));
   }

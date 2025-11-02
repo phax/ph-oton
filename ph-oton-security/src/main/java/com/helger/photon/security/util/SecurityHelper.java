@@ -18,6 +18,8 @@ package com.helger.photon.security.util;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,6 @@ import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.photon.security.usergroup.IUserGroup;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Security utility methods
@@ -105,7 +104,7 @@ public final class SecurityHelper
     return true;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsSet <String> getAllUserRoleIDs (@Nullable final String sUserID)
   {
@@ -116,7 +115,7 @@ public final class SecurityHelper
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsSet <IRole> getAllUserRoles (@Nullable final String sUserID)
   {
@@ -142,7 +141,7 @@ public final class SecurityHelper
    * @return <code>null</code> if no translation is present.
    */
   @Nullable
-  public static String getGuestUserDisplayName (@Nonnull final Locale aDisplayLocale)
+  public static String getGuestUserDisplayName (@NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
@@ -161,7 +160,7 @@ public final class SecurityHelper
    *         an invalid user was provided.
    */
   @Nullable
-  public static String getUserDisplayName (@Nullable final String sUserID, @Nonnull final Locale aDisplayLocale)
+  public static String getUserDisplayName (@Nullable final String sUserID, @NonNull final Locale aDisplayLocale)
   {
     if (StringHelper.isEmpty (sUserID))
       return getGuestUserDisplayName (aDisplayLocale);
@@ -183,7 +182,7 @@ public final class SecurityHelper
    *         of the user.
    */
   @Nullable
-  public static String getUserDisplayName (@Nullable final IUser aUser, @Nonnull final Locale aDisplayLocale)
+  public static String getUserDisplayName (@Nullable final IUser aUser, @NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     if (aUser == null)

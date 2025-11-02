@@ -19,6 +19,9 @@ package com.helger.photon.security.token.accesstoken;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -27,9 +30,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.token.revocation.RevocationStatus;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents a single token. It uniquely belongs to an application token or a user
@@ -59,10 +59,10 @@ public final class AccessToken implements IAccessToken
    * @param aRevocationStatus
    *        The revocation status. May not be <code>null</code>.
    */
-  public AccessToken (@Nonnull @Nonempty final String sTokenString,
-                      @Nonnull final LocalDateTime aNotBefore,
+  public AccessToken (@NonNull @Nonempty final String sTokenString,
+                      @NonNull final LocalDateTime aNotBefore,
                       @Nullable final LocalDateTime aNotAfter,
-                      @Nonnull final RevocationStatus aRevocationStatus)
+                      @NonNull final RevocationStatus aRevocationStatus)
   {
     m_sTokenString = ValueEnforcer.notEmpty (sTokenString, "TokenString");
     m_aNotBefore = ValueEnforcer.notNull (aNotBefore, "NotBefore");
@@ -71,14 +71,14 @@ public final class AccessToken implements IAccessToken
     m_aRevocationStatus = ValueEnforcer.notNull (aRevocationStatus, "RevocationStatus");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getTokenString ()
   {
     return m_sTokenString;
   }
 
-  @Nonnull
+  @NonNull
   public LocalDateTime getNotBefore ()
   {
     return m_aNotBefore;
@@ -90,7 +90,7 @@ public final class AccessToken implements IAccessToken
     return m_aNotAfter;
   }
 
-  public void setNotAfter (@Nonnull final LocalDateTime aNotAfter)
+  public void setNotAfter (@NonNull final LocalDateTime aNotAfter)
   {
     ValueEnforcer.notNull (aNotAfter, "NotAfter");
     if (aNotAfter.isBefore (m_aNotBefore))
@@ -102,7 +102,7 @@ public final class AccessToken implements IAccessToken
     m_aNotAfter = aNotAfter;
   }
 
-  public boolean isValidAt (@Nonnull final LocalDateTime aDT)
+  public boolean isValidAt (@NonNull final LocalDateTime aDT)
   {
     ValueEnforcer.notNull (aDT, "DateTime");
     if (aDT.isBefore (m_aNotBefore))
@@ -112,15 +112,15 @@ public final class AccessToken implements IAccessToken
     return true;
   }
 
-  @Nonnull
+  @NonNull
   public RevocationStatus getRevocationStatus ()
   {
     return m_aRevocationStatus;
   }
 
-  public void markRevoked (@Nonnull @Nonempty final String sRevocationUserID,
-                           @Nonnull final LocalDateTime aRevocationDT,
-                           @Nonnull @Nonempty final String sRevocationReason)
+  public void markRevoked (@NonNull @Nonempty final String sRevocationUserID,
+                           @NonNull final LocalDateTime aRevocationDT,
+                           @NonNull @Nonempty final String sRevocationReason)
   {
     m_aRevocationStatus.markRevoked (sRevocationUserID, aRevocationDT, sRevocationReason);
   }
@@ -132,7 +132,7 @@ public final class AccessToken implements IAccessToken
    * @return A newly created random token of x bytes as a Base64-encoded String. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String createNewTokenString (@Nonnegative final int nBytes)
   {
@@ -150,7 +150,7 @@ public final class AccessToken implements IAccessToken
    *
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static AccessToken createNewAccessTokenValidFromNow ()
   {
     return createAccessTokenValidFromNow (null);
@@ -164,7 +164,7 @@ public final class AccessToken implements IAccessToken
    *        created.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static AccessToken createAccessTokenValidFromNow (@Nullable final String sTokenString)
   {
     // Length 66 so that the Base64 encoding does not add the "==" signs

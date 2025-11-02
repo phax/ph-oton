@@ -18,11 +18,11 @@ package com.helger.photon.ajax;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for an AJAX invoker. It has a set of {@link IAjaxExecutor}
@@ -48,8 +48,8 @@ public interface IAjaxInvoker extends Serializable
    * @throws Exception
    *         In case something goes wrong
    */
-  void invokeFunction (@Nonnull String sFunctionName,
-                       @Nonnull IAjaxExecutor aAjaxExecutor,
-                       @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                       @Nonnull PhotonUnifiedResponse aAjaxResponse) throws Exception;
+  void invokeFunction (@NonNull String sFunctionName,
+                       @NonNull IAjaxExecutor aAjaxExecutor,
+                       @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                       @NonNull PhotonUnifiedResponse aAjaxResponse) throws Exception;
 }

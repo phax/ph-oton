@@ -16,8 +16,8 @@
  */
 package com.helger.html.jquery;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.html.css.ICSSClassProvider;
@@ -39,8 +39,8 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
    *        empty.
    * @return A new jQuery invocation object. Never <code>null</code>.
    */
-  @Nonnull
-  IMPLTYPE jqinvoke (@Nonnull @Nonempty String sMethod);
+  @NonNull
+  IMPLTYPE jqinvoke (@NonNull @Nonempty String sMethod);
 
   /**
    * Adds a CSSClassProvider selector as a string argument.
@@ -49,7 +49,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable ICSSClassProvider aArgument)
   {
     return aArgument == null ? argNull () : arg (aArgument.getCSSClass ());
@@ -62,7 +62,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable IJQuerySelector aArgument)
   {
     return aArgument == null ? argNull () : arg (aArgument.getExpression ());
@@ -75,7 +75,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
    *        value to be added as an argument
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE arg (@Nullable JQuerySelectorList aArgument)
   {
     return aArgument == null ? argNull () : arg (aArgument.getAsExpression ());
@@ -86,7 +86,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
   /**
    * @return The invocation of the jQuery field <code>jquery</code>
    */
-  @Nonnull
+  @NonNull
   default JSFieldRef jquery ()
   {
     return ref ("jquery");
@@ -95,1057 +95,1057 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
   /**
    * @return The invocation of the jQuery field <code>length()</code>
    */
-  @Nonnull
+  @NonNull
   default JSFieldRef length ()
   {
     return ref ("length");
   }
-  @Nonnull
+  @NonNull
   default IMPLTYPE add ()
   {
     return jqinvoke ("add");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE addBack ()
   {
     return jqinvoke ("addBack");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE addClass ()
   {
     return jqinvoke ("addClass");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE after ()
   {
     return jqinvoke ("after");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxComplete ()
   {
     return jqinvoke ("ajaxComplete");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxError ()
   {
     return jqinvoke ("ajaxError");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxSend ()
   {
     return jqinvoke ("ajaxSend");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxStart ()
   {
     return jqinvoke ("ajaxStart");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxStop ()
   {
     return jqinvoke ("ajaxStop");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ajaxSuccess ()
   {
     return jqinvoke ("ajaxSuccess");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE andSelf ()
   {
     return jqinvoke ("andSelf");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE animate ()
   {
     return jqinvoke ("animate");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE append ()
   {
     return jqinvoke ("append");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE appendTo ()
   {
     return jqinvoke ("appendTo");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE attr ()
   {
     return jqinvoke ("attr");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE before ()
   {
     return jqinvoke ("before");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE bind ()
   {
     return jqinvoke ("bind");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE blur ()
   {
     return jqinvoke ("blur");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_add ()
   {
     return jqinvoke ("add");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_disable ()
   {
     return jqinvoke ("disable");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_disabled ()
   {
     return jqinvoke ("disabled");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_empty ()
   {
     return jqinvoke ("empty");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_fire ()
   {
     return jqinvoke ("fire");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_fireWith ()
   {
     return jqinvoke ("fireWith");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_fired ()
   {
     return jqinvoke ("fired");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_has ()
   {
     return jqinvoke ("has");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_lock ()
   {
     return jqinvoke ("lock");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_locked ()
   {
     return jqinvoke ("locked");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE callbacks_remove ()
   {
     return jqinvoke ("remove");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE change ()
   {
     return jqinvoke ("change");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE children ()
   {
     return jqinvoke ("children");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE clearQueue ()
   {
     return jqinvoke ("clearQueue");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE click ()
   {
     return jqinvoke ("click");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE _clone ()
   {
     return jqinvoke ("clone");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE closest ()
   {
     return jqinvoke ("closest");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE contents ()
   {
     return jqinvoke ("contents");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE contextmenu ()
   {
     return jqinvoke ("contextmenu");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE css ()
   {
     return jqinvoke ("css");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE data ()
   {
     return jqinvoke ("data");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE dblclick ()
   {
     return jqinvoke ("dblclick");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_always ()
   {
     return jqinvoke ("always");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_done ()
   {
     return jqinvoke ("done");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_fail ()
   {
     return jqinvoke ("fail");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_isRejected ()
   {
     return jqinvoke ("isRejected");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_isResolved ()
   {
     return jqinvoke ("isResolved");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_notify ()
   {
     return jqinvoke ("notify");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_notifyWith ()
   {
     return jqinvoke ("notifyWith");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_pipe ()
   {
     return jqinvoke ("pipe");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_progress ()
   {
     return jqinvoke ("progress");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_promise ()
   {
     return jqinvoke ("promise");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_reject ()
   {
     return jqinvoke ("reject");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_rejectWith ()
   {
     return jqinvoke ("rejectWith");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_resolve ()
   {
     return jqinvoke ("resolve");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_resolveWith ()
   {
     return jqinvoke ("resolveWith");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_state ()
   {
     return jqinvoke ("state");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE deferred_then ()
   {
     return jqinvoke ("then");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE delay ()
   {
     return jqinvoke ("delay");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE delegate ()
   {
     return jqinvoke ("delegate");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE dequeue ()
   {
     return jqinvoke ("dequeue");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE detach ()
   {
     return jqinvoke ("detach");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE die ()
   {
     return jqinvoke ("die");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE each ()
   {
     return jqinvoke ("each");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE empty ()
   {
     return jqinvoke ("empty");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE end ()
   {
     return jqinvoke ("end");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE _eq ()
   {
     return jqinvoke ("eq");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE error ()
   {
     return jqinvoke ("error");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_isDefaultPrevented ()
   {
     return jqinvoke ("isDefaultPrevented");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_isImmediatePropagationStopped ()
   {
     return jqinvoke ("isImmediatePropagationStopped");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_isPropagationStopped ()
   {
     return jqinvoke ("isPropagationStopped");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_preventDefault ()
   {
     return jqinvoke ("preventDefault");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_stopImmediatePropagation ()
   {
     return jqinvoke ("stopImmediatePropagation");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE event_stopPropagation ()
   {
     return jqinvoke ("stopPropagation");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE fadeIn ()
   {
     return jqinvoke ("fadeIn");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE fadeOut ()
   {
     return jqinvoke ("fadeOut");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE fadeTo ()
   {
     return jqinvoke ("fadeTo");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE fadeToggle ()
   {
     return jqinvoke ("fadeToggle");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE filter ()
   {
     return jqinvoke ("filter");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE find ()
   {
     return jqinvoke ("find");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE finish ()
   {
     return jqinvoke ("finish");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE first ()
   {
     return jqinvoke ("first");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE focus ()
   {
     return jqinvoke ("focus");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE focusin ()
   {
     return jqinvoke ("focusin");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE focusout ()
   {
     return jqinvoke ("focusout");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE get ()
   {
     return jqinvoke ("get");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE has ()
   {
     return jqinvoke ("has");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE hasClass ()
   {
     return jqinvoke ("hasClass");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE height ()
   {
     return jqinvoke ("height");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE hide ()
   {
     return jqinvoke ("hide");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE hover ()
   {
     return jqinvoke ("hover");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE html ()
   {
     return jqinvoke ("html");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE index ()
   {
     return jqinvoke ("index");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE innerHeight ()
   {
     return jqinvoke ("innerHeight");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE innerWidth ()
   {
     return jqinvoke ("innerWidth");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE insertAfter ()
   {
     return jqinvoke ("insertAfter");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE insertBefore ()
   {
     return jqinvoke ("insertBefore");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE is ()
   {
     return jqinvoke ("is");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE keydown ()
   {
     return jqinvoke ("keydown");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE keypress ()
   {
     return jqinvoke ("keypress");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE keyup ()
   {
     return jqinvoke ("keyup");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE last ()
   {
     return jqinvoke ("last");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE live ()
   {
     return jqinvoke ("live");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE load ()
   {
     return jqinvoke ("load");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE map ()
   {
     return jqinvoke ("map");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mousedown ()
   {
     return jqinvoke ("mousedown");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mouseenter ()
   {
     return jqinvoke ("mouseenter");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mouseleave ()
   {
     return jqinvoke ("mouseleave");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mousemove ()
   {
     return jqinvoke ("mousemove");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mouseout ()
   {
     return jqinvoke ("mouseout");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mouseover ()
   {
     return jqinvoke ("mouseover");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE mouseup ()
   {
     return jqinvoke ("mouseup");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE next ()
   {
     return jqinvoke ("next");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE nextAll ()
   {
     return jqinvoke ("nextAll");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE nextUntil ()
   {
     return jqinvoke ("nextUntil");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE _not ()
   {
     return jqinvoke ("not");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE off ()
   {
     return jqinvoke ("off");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE offset ()
   {
     return jqinvoke ("offset");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE offsetParent ()
   {
     return jqinvoke ("offsetParent");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE on ()
   {
     return jqinvoke ("on");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE one ()
   {
     return jqinvoke ("one");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE outerHeight ()
   {
     return jqinvoke ("outerHeight");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE outerWidth ()
   {
     return jqinvoke ("outerWidth");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE parent ()
   {
     return jqinvoke ("parent");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE parents ()
   {
     return jqinvoke ("parents");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE parentsUntil ()
   {
     return jqinvoke ("parentsUntil");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE position ()
   {
     return jqinvoke ("position");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prepend ()
   {
     return jqinvoke ("prepend");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prependTo ()
   {
     return jqinvoke ("prependTo");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prev ()
   {
     return jqinvoke ("prev");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prevAll ()
   {
     return jqinvoke ("prevAll");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prevUntil ()
   {
     return jqinvoke ("prevUntil");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE promise ()
   {
     return jqinvoke ("promise");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE prop ()
   {
     return jqinvoke ("prop");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE pushStack ()
   {
     return jqinvoke ("pushStack");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE queue ()
   {
     return jqinvoke ("queue");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE ready ()
   {
     return jqinvoke ("ready");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE remove ()
   {
     return jqinvoke ("remove");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE removeAttr ()
   {
     return jqinvoke ("removeAttr");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE removeClass ()
   {
     return jqinvoke ("removeClass");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE removeData ()
   {
     return jqinvoke ("removeData");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE removeProp ()
   {
     return jqinvoke ("removeProp");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE replaceAll ()
   {
     return jqinvoke ("replaceAll");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE replaceWith ()
   {
     return jqinvoke ("replaceWith");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE resize ()
   {
     return jqinvoke ("resize");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE scroll ()
   {
     return jqinvoke ("scroll");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE scrollLeft ()
   {
     return jqinvoke ("scrollLeft");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE scrollTop ()
   {
     return jqinvoke ("scrollTop");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE select ()
   {
     return jqinvoke ("select");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE serialize ()
   {
     return jqinvoke ("serialize");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE serializeArray ()
   {
     return jqinvoke ("serializeArray");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE show ()
   {
     return jqinvoke ("show");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE siblings ()
   {
     return jqinvoke ("siblings");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE size ()
   {
     return jqinvoke ("size");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE slice ()
   {
     return jqinvoke ("slice");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE slideDown ()
   {
     return jqinvoke ("slideDown");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE slideToggle ()
   {
     return jqinvoke ("slideToggle");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE slideUp ()
   {
     return jqinvoke ("slideUp");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE stop ()
   {
     return jqinvoke ("stop");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE submit ()
   {
     return jqinvoke ("submit");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE text ()
   {
     return jqinvoke ("text");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE toArray ()
   {
     return jqinvoke ("toArray");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE toggle ()
   {
     return jqinvoke ("toggle");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE toggleClass ()
   {
     return jqinvoke ("toggleClass");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE trigger ()
   {
     return jqinvoke ("trigger");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE triggerHandler ()
   {
     return jqinvoke ("triggerHandler");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE unbind ()
   {
     return jqinvoke ("unbind");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE undelegate ()
   {
     return jqinvoke ("undelegate");
   }
 
   @Deprecated
-  @Nonnull
+  @NonNull
   default IMPLTYPE unload ()
   {
     return jqinvoke ("unload");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE unwrap ()
   {
     return jqinvoke ("unwrap");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE val ()
   {
     return jqinvoke ("val");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE width ()
   {
     return jqinvoke ("width");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE wrap ()
   {
     return jqinvoke ("wrap");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE wrapAll ()
   {
     return jqinvoke ("wrapAll");
   }
 
-  @Nonnull
+  @NonNull
   default IMPLTYPE wrapInner ()
   {
     return jqinvoke ("wrapInner");

@@ -21,6 +21,9 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -36,9 +39,6 @@ import com.helger.datetime.util.PDTIOHelper;
 import com.helger.photon.core.interror.callback.IInternalErrorCallback;
 import com.helger.photon.io.WebFileIO;
 import com.helger.smtp.settings.ISMTPSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Global settings for internal error handling.
@@ -124,14 +124,14 @@ public final class InternalErrorSettings
     RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static ICommonsList <IEmailAddress> getSMTPReceiverAddresses ()
   {
     return RW_LOCK.readLockedGet (EMAIL_SETTINGS::getAllReceiverAddresses);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static InternalErrorEmailSettings getCopyOfEmailSettings ()
   {
@@ -204,7 +204,7 @@ public final class InternalErrorSettings
    * @return The fallback locale to use. Never <code>null</code>.
    * @since 7.0.4
    */
-  @Nonnull
+  @NonNull
   public static Locale getFallbackLocale ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aFallbackLocale);
@@ -217,7 +217,7 @@ public final class InternalErrorSettings
    *        Locale to use. May not be <code>null</code>.
    * @since 7.0.4
    */
-  public static void setFallbackLocale (@Nonnull final Locale aFallbackLocale)
+  public static void setFallbackLocale (@NonNull final Locale aFallbackLocale)
   {
     ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
     RW_LOCK.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
@@ -226,7 +226,7 @@ public final class InternalErrorSettings
   /**
    * @return The current custom internal error callbacks. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public static CallbackList <IInternalErrorCallback> callbacks ()
   {
@@ -237,7 +237,7 @@ public final class InternalErrorSettings
    * @return The provider that defines where to save internal errors to.
    * @since 8.0.3
    */
-  @Nonnull
+  @NonNull
   public static Function <InternalErrorMetadata, File> getStorageFileProvider ()
   {
     return RW_LOCK.readLockedGet ( () -> s_aStorageFileProvider);
@@ -250,7 +250,7 @@ public final class InternalErrorSettings
    *        Storage provider. May not be <code>null</code>
    * @since 8.0.3
    */
-  public static void setStorageFileProvider (@Nonnull final Function <InternalErrorMetadata, File> aStorageFileProvider)
+  public static void setStorageFileProvider (@NonNull final Function <InternalErrorMetadata, File> aStorageFileProvider)
   {
     ValueEnforcer.notNull (aStorageFileProvider, "StorageFileProvider");
     RW_LOCK.writeLocked ( () -> s_aStorageFileProvider = aStorageFileProvider);

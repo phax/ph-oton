@@ -18,6 +18,9 @@ package com.helger.photon.core.smtp;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -40,9 +43,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages {@link NamedSMTPSettings} objects.
@@ -68,7 +68,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     RW_LOCK.writeLocked ( () -> s_bCreateDefaults = bCreateDefaults);
   }
 
-  public NamedSMTPSettingsManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public NamedSMTPSettingsManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (sFilename);
     initialRead ();
@@ -90,7 +90,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected EChange onInit ()
   {
     if (!isCreateDefaults ())
@@ -109,8 +109,8 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   }
 
   @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  @NonNull
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     for (final IMicroElement eNamedSMTPSettings : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addItem (MicroTypeConverter.convertToNative (eNamedSMTPSettings, NamedSMTPSettings.class));
@@ -118,7 +118,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
@@ -128,7 +128,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     return aDoc;
   }
 
-  private void _addItem (@Nonnull final NamedSMTPSettings aNamedSMTPSettings)
+  private void _addItem (@NonNull final NamedSMTPSettings aNamedSMTPSettings)
   {
     final String sUserID = aNamedSMTPSettings.getID ();
     if (m_aMap.containsKey (sUserID))
@@ -151,7 +151,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    * @return A copy of all contained SMTP settings as map from ID to object. Never <code>null</code>
    *         but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, NamedSMTPSettings> getAllSettings ()
   {
@@ -238,8 +238,8 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    *        The main SMTP settings. May not be <code>null</code>.
    * @return The created {@link NamedSMTPSettings} object and never <code>null</code>.
    */
-  @Nonnull
-  public NamedSMTPSettings addSettings (@Nonnull @Nonempty final String sName, @Nonnull final ISMTPSettings aSettings)
+  @NonNull
+  public NamedSMTPSettings addSettings (@NonNull @Nonempty final String sName, @NonNull final ISMTPSettings aSettings)
   {
     final NamedSMTPSettings aNamedSettings = new NamedSMTPSettings (sName, aSettings);
 
@@ -274,8 +274,8 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
    */
   @Nullable
   public EChange updateSettings (@Nullable final String sID,
-                                 @Nonnull @Nonempty final String sName,
-                                 @Nonnull final ISMTPSettings aSettings)
+                                 @NonNull @Nonempty final String sName,
+                                 @NonNull final ISMTPSettings aSettings)
   {
     final NamedSMTPSettings aNamedSettings = getSettings (sID);
     if (aNamedSettings == null)

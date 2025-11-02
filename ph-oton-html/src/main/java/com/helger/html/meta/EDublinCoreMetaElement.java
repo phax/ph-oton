@@ -16,11 +16,11 @@
  */
 package com.helger.html.meta;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * An enumeration with all DublinCore meta tag names.
@@ -55,12 +55,12 @@ public enum EDublinCoreMetaElement implements IMetaElementDeclaration
    */
   private final String m_sScheme;
 
-  EDublinCoreMetaElement (@Nonnull @Nonempty final String sName)
+  EDublinCoreMetaElement (@NonNull @Nonempty final String sName)
   {
     this (sName, null);
   }
 
-  EDublinCoreMetaElement (@Nonnull @Nonempty final String sName, @Nullable final String sScheme)
+  EDublinCoreMetaElement (@NonNull @Nonempty final String sName, @Nullable final String sScheme)
   {
     m_sName = sName;
     m_sScheme = sScheme;
@@ -71,7 +71,7 @@ public enum EDublinCoreMetaElement implements IMetaElementDeclaration
    *
    * @return the meta tag name
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {
@@ -89,7 +89,7 @@ public enum EDublinCoreMetaElement implements IMetaElementDeclaration
     return m_sScheme;
   }
 
-  @Nonnull
+  @NonNull
   public EMetaElementType getType ()
   {
     return EMetaElementType.DOCUMENT_LEVEL;

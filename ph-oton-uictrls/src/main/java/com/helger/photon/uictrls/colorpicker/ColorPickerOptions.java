@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.colorpicker;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -25,9 +28,6 @@ import com.helger.css.utils.ECSSColorName;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class collects all options for the {@link HCColorPicker} class.
@@ -104,7 +104,7 @@ public class ColorPickerOptions
     return m_bRequired;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setRequired (final boolean bRequired)
   {
     m_bRequired = bRequired;
@@ -116,7 +116,7 @@ public class ColorPickerOptions
     return m_bAdjust;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setAdjust (final boolean bAdjust)
   {
     m_bAdjust = bAdjust;
@@ -128,7 +128,7 @@ public class ColorPickerOptions
     return m_bHash;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setHash (final boolean bHash)
   {
     m_bHash = bHash;
@@ -140,7 +140,7 @@ public class ColorPickerOptions
     return m_bCaps;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setCaps (final boolean bCaps)
   {
     m_bCaps = bCaps;
@@ -152,37 +152,37 @@ public class ColorPickerOptions
     return m_bSlider;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setSlider (final boolean bSlider)
   {
     m_bSlider = bSlider;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValueElement ()
   {
     return m_sValueElement;
   }
 
-  @Nonnull
-  public ColorPickerOptions setValueElement (@Nonnull @Nonempty final String sValueElement)
+  @NonNull
+  public ColorPickerOptions setValueElement (@NonNull @Nonempty final String sValueElement)
   {
     ValueEnforcer.notEmpty (sValueElement, "ValueElement");
     m_sValueElement = sValueElement;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getStyleElement ()
   {
     return m_sStyleElement;
   }
 
-  @Nonnull
-  public ColorPickerOptions setStyleElement (@Nonnull @Nonempty final String sStyleElement)
+  @NonNull
+  public ColorPickerOptions setStyleElement (@NonNull @Nonempty final String sStyleElement)
   {
     ValueEnforcer.notEmpty (sStyleElement, "StyleElement");
     m_sStyleElement = sStyleElement;
@@ -195,7 +195,7 @@ public class ColorPickerOptions
     return m_aOnImmediateChange;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setOnImmediateChange (@Nullable final JSAnonymousFunction aOnImmediateChange)
   {
     m_aOnImmediateChange = aOnImmediateChange;
@@ -207,35 +207,35 @@ public class ColorPickerOptions
     return m_bPickerOnFocus;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerOnFocus (final boolean bPickerOnFocus)
   {
     m_bPickerOnFocus = bPickerOnFocus;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EColorPickerMode getPickerMode ()
   {
     return m_ePickerMode;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerMode (@Nonnull final EColorPickerMode ePickerMode)
+  @NonNull
+  public ColorPickerOptions setPickerMode (@NonNull final EColorPickerMode ePickerMode)
   {
     ValueEnforcer.notNull (ePickerMode, "PickerMode");
     m_ePickerMode = ePickerMode;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public EColorPickerPosition getPickerPosition ()
   {
     return m_ePickerPosition;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerPosition (@Nonnull final EColorPickerPosition ePickerPosition)
+  @NonNull
+  public ColorPickerOptions setPickerPosition (@NonNull final EColorPickerPosition ePickerPosition)
   {
     ValueEnforcer.notNull (ePickerPosition, "PickerPosition");
     m_ePickerPosition = ePickerPosition;
@@ -247,7 +247,7 @@ public class ColorPickerOptions
     return m_bPickerSmartPosition;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerSmartPosition (final boolean bPickerSmartPosition)
   {
     m_bPickerSmartPosition = bPickerSmartPosition;
@@ -260,7 +260,7 @@ public class ColorPickerOptions
     return m_nPickerButtonHeight;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerButtonHeight (@Nonnegative final int nPickerButtonHeight)
   {
     ValueEnforcer.isGT0 (nPickerButtonHeight, "PickerButtonHeight");
@@ -273,37 +273,37 @@ public class ColorPickerOptions
     return m_bPickerClosable;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerClosable (final boolean bPickerClosable)
   {
     m_bPickerClosable = bPickerClosable;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPickerCloseText ()
   {
     return m_sPickerCloseText;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerCloseText (@Nonnull @Nonempty final String sPickerCloseText)
+  @NonNull
+  public ColorPickerOptions setPickerCloseText (@NonNull @Nonempty final String sPickerCloseText)
   {
     ValueEnforcer.notEmpty (sPickerCloseText, "PickerCloseText");
     m_sPickerCloseText = sPickerCloseText;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPickerButtonColor ()
   {
     return m_sPickerButtonColor;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerButtonColor (@Nonnull @Nonempty final String sPickerButtonColor)
+  @NonNull
+  public ColorPickerOptions setPickerButtonColor (@NonNull @Nonempty final String sPickerButtonColor)
   {
     ValueEnforcer.notEmpty (sPickerButtonColor, "PickerButtonColor");
     m_sPickerButtonColor = sPickerButtonColor;
@@ -316,7 +316,7 @@ public class ColorPickerOptions
     return m_nPickerFacePx;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerFacePx (@Nonnegative final int nPickerFacePx)
   {
     ValueEnforcer.isGT0 (nPickerFacePx, "PickerFacePx");
@@ -324,15 +324,15 @@ public class ColorPickerOptions
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPickerFaceColor ()
   {
     return m_sPickerFaceColor;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerFaceColor (@Nonnull @Nonempty final String sPickerFaceColor)
+  @NonNull
+  public ColorPickerOptions setPickerFaceColor (@NonNull @Nonempty final String sPickerFaceColor)
   {
     ValueEnforcer.notEmpty (sPickerFaceColor, "PickerFaceColor");
     m_sPickerFaceColor = sPickerFaceColor;
@@ -345,7 +345,7 @@ public class ColorPickerOptions
     return m_nPickerBorderPx;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerBorderPx (@Nonnegative final int nPickerBorderPx)
   {
     ValueEnforcer.isGT0 (nPickerBorderPx, "PickerBorderPx");
@@ -353,15 +353,15 @@ public class ColorPickerOptions
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPickerBorderColor ()
   {
     return m_sPickerBorderColor;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerBorderColor (@Nonnull @Nonempty final String sPickerBorderColor)
+  @NonNull
+  public ColorPickerOptions setPickerBorderColor (@NonNull @Nonempty final String sPickerBorderColor)
   {
     ValueEnforcer.notEmpty (sPickerBorderColor, "PickerBorderColor");
     m_sPickerBorderColor = sPickerBorderColor;
@@ -374,7 +374,7 @@ public class ColorPickerOptions
     return m_nPickerInsetPx;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerInsetPx (@Nonnegative final int nPickerInsetPx)
   {
     ValueEnforcer.isGT0 (nPickerInsetPx, "PickerInsetPx");
@@ -382,15 +382,15 @@ public class ColorPickerOptions
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPickerInsetColor ()
   {
     return m_sPickerInsetColor;
   }
 
-  @Nonnull
-  public ColorPickerOptions setPickerInsetColor (@Nonnull @Nonempty final String sPickerInsetColor)
+  @NonNull
+  public ColorPickerOptions setPickerInsetColor (@NonNull @Nonempty final String sPickerInsetColor)
   {
     ValueEnforcer.notEmpty (sPickerInsetColor, "PickerInsetColor");
     m_sPickerInsetColor = sPickerInsetColor;
@@ -403,7 +403,7 @@ public class ColorPickerOptions
     return m_nPickerZIndex;
   }
 
-  @Nonnull
+  @NonNull
   public ColorPickerOptions setPickerZIndex (@Nonnegative final int nPickerZIndex)
   {
     ValueEnforcer.isGT0 (nPickerZIndex, "PickerZIndex");
@@ -411,7 +411,7 @@ public class ColorPickerOptions
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public JSAssocArray getJSOptions ()
   {

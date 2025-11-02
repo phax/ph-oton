@@ -16,10 +16,10 @@
  */
 package com.helger.photon.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Callback interface to handle thrown but unmapped exception objects from the
@@ -44,8 +44,8 @@ public interface IAPIExceptionCallback extends ICallback
    * @param t
    *        The exception. Never <code>null</code>.
    */
-  void onAPIExecutionException (@Nonnull IAPIInvoker aInvoker,
-                                @Nonnull InvokableAPIDescriptor aInvokableDescriptor,
-                                @Nonnull IRequestWebScopeWithoutResponse aRequestScope,
-                                @Nonnull Throwable t);
+  void onAPIExecutionException (@NonNull IAPIInvoker aInvoker,
+                                @NonNull InvokableAPIDescriptor aInvokableDescriptor,
+                                @NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                @NonNull Throwable t);
 }

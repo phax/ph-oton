@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.script;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -29,9 +32,6 @@ import com.helger.html.hc.html.embedded.EHCCORSSettings;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;script&gt; element. This is the base class for inline
@@ -66,7 +66,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
     return m_sType;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setType (@Nullable final String sType)
   {
     m_sType = sType;
@@ -79,7 +79,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
     return m_sCharset;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
@@ -92,7 +92,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
     return m_eCrossOrigin;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
@@ -105,7 +105,7 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
     return m_sIntegrity;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setIntegrity (@Nullable final String sIntegrity)
   {
     m_sIntegrity = sIntegrity;
@@ -114,8 +114,8 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -124,8 +124,8 @@ public abstract class AbstractHCScript <IMPLTYPE extends AbstractHCScript <IMPLT
   }
 
   @Override
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     if (StringHelper.isNotEmpty (m_sType))

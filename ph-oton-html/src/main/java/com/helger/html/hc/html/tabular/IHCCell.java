@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElementWithChildren;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a table cell.
@@ -43,7 +43,7 @@ public interface IHCCell <IMPLTYPE extends IHCCell <IMPLTYPE>> extends IHCElemen
   @Nonnegative
   int getColspan ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setColspan (@Nonnegative int nColspan);
 
   /**
@@ -52,6 +52,6 @@ public interface IHCCell <IMPLTYPE extends IHCCell <IMPLTYPE>> extends IHCElemen
   @Nonnegative
   int getRowspan ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setRowspan (@Nonnegative int nRowspan);
 }

@@ -16,6 +16,9 @@
  */
 package com.helger.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.AbstractMicroNode;
@@ -23,9 +26,6 @@ import com.helger.xml.microdom.EMicroNodeType;
 import com.helger.xml.microdom.IMicroDocumentType;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.MicroDocumentType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * HTML5 document type representation
@@ -38,19 +38,19 @@ public class HTML5DocumentType extends AbstractMicroNode implements IMicroDocume
   public HTML5DocumentType ()
   {}
 
-  @Nonnull
+  @NonNull
   public EMicroNodeType getType ()
   {
     return EMicroNodeType.DOCUMENT_TYPE;
   }
 
-  @Nonnull
+  @NonNull
   public String getNodeName ()
   {
     return MicroDocumentType.NODE_NAME;
   }
 
-  @Nonnull
+  @NonNull
   public String getQualifiedName ()
   {
     return EHTMLElement.HTML.getElementName ();
@@ -68,13 +68,13 @@ public class HTML5DocumentType extends AbstractMicroNode implements IMicroDocume
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public String getHTMLRepresentation ()
   {
     return "<!DOCTYPE " + getQualifiedName () + ">";
   }
 
-  @Nonnull
+  @NonNull
   public IMicroDocumentType getClone ()
   {
     // Must be a new object because of the potentially assigned parent

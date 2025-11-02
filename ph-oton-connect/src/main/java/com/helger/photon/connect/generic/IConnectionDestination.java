@@ -16,11 +16,11 @@
  */
 package com.helger.photon.connect.generic;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.EChange;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract connection destination.
@@ -49,6 +49,6 @@ public interface IConnectionDestination <HANDLETYPE>
    *        The handle returned from {@link #openConnection(IAuthCredentials)} .
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange closeConnection (HANDLETYPE aHandle);
 }

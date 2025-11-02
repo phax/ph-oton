@@ -16,13 +16,13 @@
  */
 package com.helger.photon.core.smtp;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.smtp.listener.EmailDataTransportEvent;
 import com.helger.smtp.listener.IEmailDataTransportListener;
 import com.helger.smtp.transport.listener.LoggingTransportListener;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link IEmailDataTransportListener} that performs audit
@@ -33,7 +33,7 @@ import jakarta.annotation.Nonnull;
  */
 public class AuditingEmailDataTransportListener implements IEmailDataTransportListener
 {
-  public void messageDelivered (@Nonnull final EmailDataTransportEvent aEvent)
+  public void messageDelivered (@NonNull final EmailDataTransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteSuccess ("email-message-delivered",
                                        aEvent.getEmailData ().getSubject (),
@@ -43,7 +43,7 @@ public class AuditingEmailDataTransportListener implements IEmailDataTransportLi
                                        LoggingTransportListener.getMessageString (aEvent.getMimeMessage ()));
   }
 
-  public void messageNotDelivered (@Nonnull final EmailDataTransportEvent aEvent)
+  public void messageNotDelivered (@NonNull final EmailDataTransportEvent aEvent)
   {
     AuditHelper.onAuditExecuteFailure ("email-message-delivered",
                                        "not-delivered",

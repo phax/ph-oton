@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uictrls.chart;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
@@ -23,8 +25,6 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.css.decl.CSSRGB;
 import com.helger.css.decl.CSSRGBA;
-
-import jakarta.annotation.Nonnull;
 
 @Immutable
 public final class ChartPaletteDefault
@@ -83,16 +83,16 @@ public final class ChartPaletteDefault
    *        Index
    * @return Color with opacity 80%
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getColorString (@Nonnegative final int nIndex)
   {
     return COLORS[nIndex % COLORS.length].getAsString ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  private static String [] _getAllStrings (@Nonnull final CSSRGBA [] aSrc, @Nonnegative final int nMaxEntries)
+  private static String [] _getAllStrings (@NonNull final CSSRGBA [] aSrc, @Nonnegative final int nMaxEntries)
   {
     ValueEnforcer.notNull (aSrc, "Src");
     ValueEnforcer.isGT0 (nMaxEntries, "MaxEntries");
@@ -104,14 +104,14 @@ public final class ChartPaletteDefault
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllColorStrings ()
   {
     return getAllColorStrings (COLORS.length);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllColorStrings (@Nonnegative final int nMaxEntries)
   {
@@ -123,21 +123,21 @@ public final class ChartPaletteDefault
    *        Index
    * @return Color with opacity 20%
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getFillColorString (@Nonnegative final int nIndex)
   {
     return FILL_COLORS[nIndex % FILL_COLORS.length].getAsString ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllFillColorStrings ()
   {
     return getAllFillColorStrings (FILL_COLORS.length);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllFillColorStrings (@Nonnegative final int nMaxEntries)
   {
@@ -149,21 +149,21 @@ public final class ChartPaletteDefault
    *        Index
    * @return Color with opacity 100%
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getHighlightColorString (@Nonnegative final int nIndex)
   {
     return HIGHLIGHT_COLORS[nIndex % HIGHLIGHT_COLORS.length].getAsString ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllHighlightColorStrings ()
   {
     return getAllHighlightColorStrings (HIGHLIGHT_COLORS.length);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public static String [] getAllHighlightColorStrings (@Nonnegative final int nMaxEntries)
   {

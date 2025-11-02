@@ -19,20 +19,20 @@ package com.helger.photon.uicore.html.select;
 import java.util.Comparator;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.text.compare.ComparatorHelper;
 import com.helger.text.display.IDisplayTextProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCLanguageSelect extends HCExtSelect
 {
-  public HCLanguageSelect (@Nonnull final IHCRequestField aRF,
-                           @Nonnull final Locale aDisplayLocale,
-                           @Nonnull final Iterable <? extends Locale> aLocales,
+  public HCLanguageSelect (@NonNull final IHCRequestField aRF,
+                           @NonNull final Locale aDisplayLocale,
+                           @NonNull final Iterable <? extends Locale> aLocales,
                            @Nullable final IDisplayTextProvider <Locale> aDisplayTextProvider,
                            final boolean bAlwaysShowPleaseSelect)
   {
@@ -56,9 +56,9 @@ public class HCLanguageSelect extends HCExtSelect
       addOptionPleaseSelect (aDisplayLocale);
   }
 
-  @Nonnull
-  public static HCLanguageSelect createForApplicationLocales (@Nonnull final IHCRequestField aRF,
-                                                              @Nonnull final Locale aDisplayLocale,
+  @NonNull
+  public static HCLanguageSelect createForApplicationLocales (@NonNull final IHCRequestField aRF,
+                                                              @NonNull final Locale aDisplayLocale,
                                                               final boolean bAlwaysShowPleaseSelect)
   {
     return new HCLanguageSelect (aRF,

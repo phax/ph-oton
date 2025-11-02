@@ -16,6 +16,8 @@
  */
 package com.helger.photon.uicore.js;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.html.hc.IHCNode;
@@ -30,8 +32,6 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
 import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Java JavaScript wrapper for form.js
@@ -49,54 +49,54 @@ public final class JSFormHelper
     PhotonJS.registerJSIncludeForThisRequest (EUICoreJSPathProvider.UICORE_FORM);
   }
 
-  @Nonnull
+  @NonNull
   public static JSRef getFormHelper ()
   {
     return JSExpr.ref ("FormHelper");
   }
 
-  @Nonnull
-  public static JSInvocation updateElementDirect (@Nonnull @Nonempty final String sFieldID, @Nonnull final IHCNode aHCNode)
+  @NonNull
+  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID, @NonNull final IHCNode aHCNode)
   {
     return updateElementDirect (sFieldID, HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
-  @Nonnull
-  public static JSInvocation updateElementDirect (@Nonnull @Nonempty final String sFieldID, @Nonnull final String sHTMLCode)
+  @NonNull
+  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID, @NonNull final String sHTMLCode)
   {
     return getFormHelper ().invoke ("updateElementDirect").arg (sFieldID).arg (sHTMLCode);
   }
 
-  @Nonnull
-  public static JSInvocation updateElementViaAjax (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                   @Nonnull @Nonempty final String sFieldID,
-                                                   @Nonnull final IAjaxFunctionDeclaration aUpdateCallURL)
+  @NonNull
+  public static JSInvocation updateElementViaAjax (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                   @NonNull @Nonempty final String sFieldID,
+                                                   @NonNull final IAjaxFunctionDeclaration aUpdateCallURL)
   {
     return updateElementViaAjax (sFieldID, aUpdateCallURL.getInvocationURI (aRequestScope));
   }
 
-  @Nonnull
-  public static JSInvocation updateElementViaAjax (@Nonnull @Nonempty final String sFieldID, @Nonnull final ISimpleURL aUpdateCallURL)
+  @NonNull
+  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID, @NonNull final ISimpleURL aUpdateCallURL)
   {
     return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsString ());
   }
 
-  @Nonnull
-  public static JSInvocation updateElementViaAjax (@Nonnull @Nonempty final String sFieldID, @Nonnull final String sUpdateCallURI)
+  @NonNull
+  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID, @NonNull final String sUpdateCallURI)
   {
     return getFormHelper ().invoke ("updateElementViaAjax").arg (sFieldID).arg (sUpdateCallURI);
   }
 
   // missing updateElements
 
-  @Nonnull
-  public static JSAssocArray createUpdateParam (@Nonnull @Nonempty final String sFieldID, @Nonnull final IHCNode aHCNode)
+  @NonNull
+  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID, @NonNull final IHCNode aHCNode)
   {
     return new JSAssocArray ().add ("id", sFieldID).add ("html", HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
-  @Nonnull
-  public static JSAssocArray createUpdateParam (@Nonnull @Nonempty final String sFieldID, @Nonnull final ISimpleURL aURL)
+  @NonNull
+  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID, @NonNull final ISimpleURL aURL)
   {
     return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsString ());
   }
@@ -110,8 +110,8 @@ public final class JSFormHelper
    *        list of array[value,text] - nested array!
    * @return the invocation
    */
-  @Nonnull
-  public static JSInvocation setSelectOptions (@Nonnull final IJSExpression aSelector, @Nonnull final IJSExpression aValueList)
+  @NonNull
+  public static JSInvocation setSelectOptions (@NonNull final IJSExpression aSelector, @NonNull final IJSExpression aValueList)
   {
     return getFormHelper ().invoke ("setSelectOptions").arg (aSelector).arg (aValueList);
   }

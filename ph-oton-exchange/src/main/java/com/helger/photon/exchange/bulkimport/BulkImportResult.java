@@ -16,6 +16,8 @@
  */
 package com.helger.photon.exchange.bulkimport;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class represents the results of a bulk import.
@@ -70,12 +69,12 @@ public class BulkImportResult implements ISuccessIndicator
     m_nMaxWarnings = nMaxWarnings;
   }
 
-  public final void registerAdded (@Nonnull final ITypedObject <String> aObj)
+  public final void registerAdded (@NonNull final ITypedObject <String> aObj)
   {
     m_aRWLock.writeLocked ( () -> m_aAdded.put (aObj.getID (), aObj));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <ITypedObject <String>> getAllAdded ()
   {
@@ -88,18 +87,18 @@ public class BulkImportResult implements ISuccessIndicator
     return m_aRWLock.readLockedInt (m_aAdded::size);
   }
 
-  public final boolean containsAdded (@Nonnull final ITypedObject <String> aObj)
+  public final boolean containsAdded (@NonNull final ITypedObject <String> aObj)
   {
     // linear scanning :(
     return m_aRWLock.readLockedBoolean ( () -> m_aAdded.containsKey (aObj.getID ()));
   }
 
-  public final void registerChanged (@Nonnull final ITypedObject <String> aObj)
+  public final void registerChanged (@NonNull final ITypedObject <String> aObj)
   {
     m_aRWLock.writeLocked ( () -> m_aChanged.put (aObj.getID (), aObj));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <ITypedObject <String>> getAllChanged ()
   {
@@ -112,7 +111,7 @@ public class BulkImportResult implements ISuccessIndicator
     return m_aRWLock.readLockedInt (m_aChanged::size);
   }
 
-  public final boolean containsChanged (@Nonnull final ITypedObject <String> aObj)
+  public final boolean containsChanged (@NonNull final ITypedObject <String> aObj)
   {
     // linear scanning :(
     return m_aRWLock.readLockedBoolean ( () -> m_aChanged.containsKey (aObj.getID ()));
@@ -126,7 +125,7 @@ public class BulkImportResult implements ISuccessIndicator
   /**
    * @return All failed IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllFailed ()
   {
@@ -159,7 +158,7 @@ public class BulkImportResult implements ISuccessIndicator
     });
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <String> getAllWarnings ()
   {

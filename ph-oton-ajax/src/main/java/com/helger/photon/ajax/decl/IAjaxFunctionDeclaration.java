@@ -20,15 +20,15 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for all AJAX function declarations
@@ -40,7 +40,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
   /**
    * @return The executor factory to be used. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   Supplier <? extends IAjaxExecutor> getExecutorFactory ();
 
   /**
@@ -64,7 +64,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return The path to the AJAX servlet. Must start with a slash and end with
    *         a slash!
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getAjaxServletPath ();
 
@@ -73,7 +73,7 @@ public interface IAjaxFunctionDeclaration extends IHasName
    *         Neither <code>null</code> nor empty. This is a shortcut for
    *         <code>getAjaxServletPath () + getName ()</code>
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getPathWithoutContext ()
   {
@@ -87,9 +87,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return The URI where the AJAX function can be invoked. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  default String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  default String getInvocationURI (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return LinkHelper.getURIWithContext (aRequestScope, getPathWithoutContext ());
   }
@@ -104,9 +104,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return The URI where the AJAX function can be invoked. Neither
    *         <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  default String getInvocationURI (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+  default String getInvocationURI (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                    @Nullable final Map <String, String> aParams)
   {
     if (aParams == null || aParams.isEmpty ())
@@ -125,8 +125,8 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return The URL where the AJAX function can be invoked. Never
    *         <code>null</code>.
    */
-  @Nonnull
-  default SimpleURL getInvocationURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  default SimpleURL getInvocationURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return LinkHelper.getURLWithContext (aRequestScope, getPathWithoutContext ());
   }
@@ -140,5 +140,5 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * @return <code>true</code> if this AJAX function can be executed,
    *         <code>false</code> otherwise.
    */
-  boolean canExecute (@Nonnull IRequestWebScopeWithoutResponse aRequestScope);
+  boolean canExecute (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 }

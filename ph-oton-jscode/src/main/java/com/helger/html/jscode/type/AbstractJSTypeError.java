@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSInvocation;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base class for the JS built-in '*Error' types
@@ -29,25 +29,25 @@ import jakarta.annotation.Nonnull;
  */
 public abstract class AbstractJSTypeError extends JSPrimitiveType
 {
-  public AbstractJSTypeError (@Nonnull @Nonempty final String sName)
+  public AbstractJSTypeError (@NonNull @Nonempty final String sName)
   {
     super (sName);
   }
 
-  @Nonnull
-  public JSInvocation _new (@Nonnull final String sMsg)
+  @NonNull
+  public JSInvocation _new (@NonNull final String sMsg)
   {
     return _new (JSExpr.lit (sMsg));
   }
 
-  @Nonnull
-  public JSInvocation _new (@Nonnull final String sMsg, @Nonnull final String sFilename)
+  @NonNull
+  public JSInvocation _new (@NonNull final String sMsg, @NonNull final String sFilename)
   {
     return _new (JSExpr.lit (sMsg), JSExpr.lit (sFilename));
   }
 
-  @Nonnull
-  public JSInvocation _new (@Nonnull final String sMsg, @Nonnull final String sFilename, final int nLineNumber)
+  @NonNull
+  public JSInvocation _new (@NonNull final String sMsg, @NonNull final String sFilename, final int nLineNumber)
   {
     return _new (JSExpr.lit (sMsg), JSExpr.lit (sFilename), JSExpr.lit (nLineNumber));
   }

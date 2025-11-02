@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.clone.ICloneable;
 import com.helger.html.EHTMLVersion;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Settings interface that is used to convert HC* nodes to micro nodes, to plain
@@ -37,9 +37,9 @@ public interface IHCConversionSettings extends IHCConversionSettingsToNode, IClo
    *        The new HTML version to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  IHCConversionSettings getClone (@Nonnull EHTMLVersion eHTMLVersion);
+  IHCConversionSettings getClone (@NonNull EHTMLVersion eHTMLVersion);
 
   /**
    * Get a clone of this settings, but with a different HTML version. If the
@@ -50,6 +50,6 @@ public interface IHCConversionSettings extends IHCConversionSettingsToNode, IClo
    *        The new HTML version to use. May not be <code>null</code>.
    * @return this or a clone of this.
    */
-  @Nonnull
-  IHCConversionSettings getCloneIfNecessary (@Nonnull EHTMLVersion eHTMLVersion);
+  @NonNull
+  IHCConversionSettings getCloneIfNecessary (@NonNull EHTMLVersion eHTMLVersion);
 }

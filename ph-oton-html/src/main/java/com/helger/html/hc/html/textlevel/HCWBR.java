@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.textlevel;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElement;
-
-import jakarta.annotation.Nonnull;
 
 public class HCWBR extends AbstractHCElement <HCWBR>
 {
@@ -29,7 +29,7 @@ public class HCWBR extends AbstractHCElement <HCWBR>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getPlainText ()
   {
     return " ";

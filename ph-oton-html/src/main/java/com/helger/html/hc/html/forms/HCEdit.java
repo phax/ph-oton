@@ -16,10 +16,10 @@
  */
 package com.helger.html.hc.html.forms;
 
-import com.helger.html.request.IHCRequestField;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.html.request.IHCRequestField;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "text"
@@ -39,7 +39,7 @@ public class HCEdit extends AbstractHCInput <HCEdit>
     setName (sName);
   }
 
-  public HCEdit (@Nonnull final IHCRequestField aRF)
+  public HCEdit (@NonNull final IHCRequestField aRF)
   {
     this (aRF.getFieldName ());
     setValue (aRF.getRequestValue ());

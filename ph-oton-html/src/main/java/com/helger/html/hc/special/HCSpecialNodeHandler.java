@@ -18,6 +18,8 @@ package com.helger.html.hc.special;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,9 +57,6 @@ import com.helger.html.hc.html.script.IHCScriptInline;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.resource.css.ICSSCodeProvider;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class is used to handle the special nodes (JS and CSS, inline and
  * reference).
@@ -86,7 +85,7 @@ public final class HCSpecialNodeHandler
    * @return <code>true</code> if it is an out-of-band node, <code>false</code>
    *         if not.
    */
-  public static boolean isOutOfBandNode (@Nonnull final IHCNode aHCNode)
+  public static boolean isOutOfBandNode (@NonNull final IHCNode aHCNode)
   {
     ValueEnforcer.notNull (aHCNode, "HCNode");
 
@@ -102,8 +101,8 @@ public final class HCSpecialNodeHandler
     return false;
   }
 
-  private static void _recursiveExtractAndRemoveOutOfBandNodes (@Nonnull final IHCNode aParentElement,
-                                                                @Nonnull final List <IHCNode> aTargetList,
+  private static void _recursiveExtractAndRemoveOutOfBandNodes (@NonNull final IHCNode aParentElement,
+                                                                @NonNull final List <IHCNode> aTargetList,
                                                                 @Nonnegative final int nLevel)
   {
     ValueEnforcer.notNull (aParentElement, "ParentElement");
@@ -155,8 +154,8 @@ public final class HCSpecialNodeHandler
    * @param aTargetList
    *        The target list to be filled. May not be <code>null</code>.
    */
-  public static void recursiveExtractAndRemoveOutOfBandNodes (@Nonnull final IHCNode aParentElement,
-                                                              @Nonnull final List <IHCNode> aTargetList)
+  public static void recursiveExtractAndRemoveOutOfBandNodes (@NonNull final IHCNode aParentElement,
+                                                              @NonNull final List <IHCNode> aTargetList)
   {
     ValueEnforcer.notNull (aParentElement, "ParentElement");
     ValueEnforcer.notNull (aTargetList, "TargetList");
@@ -165,8 +164,8 @@ public final class HCSpecialNodeHandler
     _recursiveExtractAndRemoveOutOfBandNodes (aParentElement, aTargetList, 0);
   }
 
-  @Nonnull
-  public static Iterable <? extends IHCNode> applyModifiers (@Nonnull final Iterable <? extends IHCNode> aNodes)
+  @NonNull
+  public static Iterable <? extends IHCNode> applyModifiers (@NonNull final Iterable <? extends IHCNode> aNodes)
   {
     ValueEnforcer.notNull (aNodes, "Nodes");
 
@@ -228,9 +227,9 @@ public final class HCSpecialNodeHandler
    *         order is at it should be except that JS and CSS and other nodes are
    *         mixed.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aOOBNodes,
+  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@NonNull final Iterable <? extends IHCNode> aOOBNodes,
                                                                      final boolean bKeepOnDocumentReady)
   {
     // Default to the global "on document ready" provider
@@ -259,9 +258,9 @@ public final class HCSpecialNodeHandler
    *         order is at it should be except that JS and CSS and other nodes are
    *         mixed.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@Nonnull final Iterable <? extends IHCNode> aOOBNodes,
+  public static ICommonsList <IHCNode> getMergedInlineCSSAndJSNodes (@NonNull final Iterable <? extends IHCNode> aOOBNodes,
                                                                      @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
     ValueEnforcer.notNull (aOOBNodes, "OOBNodes");
@@ -404,10 +403,10 @@ public final class HCSpecialNodeHandler
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCNode> extractSpecialNodes (@Nonnull final Iterable <? extends IHCNode> aNodes,
-                                                            @Nonnull final AbstractHCSpecialNodes <?> aSpecialNodes)
+  public static ICommonsList <IHCNode> extractSpecialNodes (@NonNull final Iterable <? extends IHCNode> aNodes,
+                                                            @NonNull final AbstractHCSpecialNodes <?> aSpecialNodes)
   {
     ValueEnforcer.notNull (aNodes, "Nodes");
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
@@ -479,8 +478,8 @@ public final class HCSpecialNodeHandler
    *        executed after all other scripts. For AJAX calls, this should be
    *        <code>false</code>.
    */
-  public static void extractSpecialContent (@Nonnull final IHCNode aNode,
-                                            @Nonnull final AbstractHCSpecialNodes <?> aSpecialNodes,
+  public static void extractSpecialContent (@NonNull final IHCNode aNode,
+                                            @NonNull final AbstractHCSpecialNodes <?> aSpecialNodes,
                                             final boolean bKeepOnDocumentReady)
   {
     extractSpecialContent (aNode,
@@ -506,8 +505,8 @@ public final class HCSpecialNodeHandler
    *        ready" callback - alternatively you can provide a custom "on
    *        document ready" provider.
    */
-  public static void extractSpecialContent (@Nonnull final IHCNode aNode,
-                                            @Nonnull final AbstractHCSpecialNodes <?> aSpecialNodes,
+  public static void extractSpecialContent (@NonNull final IHCNode aNode,
+                                            @NonNull final AbstractHCSpecialNodes <?> aSpecialNodes,
                                             @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
     ValueEnforcer.notNull (aNode, "Node");

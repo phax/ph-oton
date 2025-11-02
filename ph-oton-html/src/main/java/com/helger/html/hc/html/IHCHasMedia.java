@@ -16,8 +16,8 @@
  */
 package com.helger.html.hc.html;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public interface IHCHasMedia <IMPLTYPE extends IHCHasMedia <IMPLTYPE>>
 {
@@ -34,6 +34,6 @@ public interface IHCHasMedia <IMPLTYPE extends IHCHasMedia <IMPLTYPE>>
    *        The CSS3 media query to be used. May be <code>null</code>.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE setMedia (String sMediaQuery);
 }

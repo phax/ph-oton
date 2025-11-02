@@ -16,12 +16,12 @@
  */
 package com.helger.html.js.tostring;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Specific JavaScript map type.
@@ -41,20 +41,20 @@ public class JSMapType extends JSType
    */
   private final JSType m_aValueType;
 
-  public JSMapType (@Nonnull final JSType aKeyType, @Nonnull final JSType aValueType)
+  public JSMapType (@NonNull final JSType aKeyType, @NonNull final JSType aValueType)
   {
     super (EJSType.MAP);
     m_aKeyType = ValueEnforcer.notNull (aKeyType, "KeyType");
     m_aValueType = ValueEnforcer.notNull (aValueType, "ValueType");
   }
 
-  @Nonnull
+  @NonNull
   public JSType getKeyType ()
   {
     return m_aKeyType;
   }
 
-  @Nonnull
+  @NonNull
   public JSType getValueType ()
   {
     return m_aValueType;

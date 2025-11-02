@@ -16,9 +16,9 @@
  */
 package com.helger.photon.core.servlet;
 
-import com.helger.photon.core.appid.CApplicationID;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.photon.core.appid.CApplicationID;
 
 /**
  * The servlet to show the public application
@@ -30,7 +30,7 @@ public abstract class AbstractPublicApplicationServlet extends AbstractApplicati
   public static final String SERVLET_DEFAULT_NAME = "public";
   public static final String SERVLET_DEFAULT_PATH = '/' + SERVLET_DEFAULT_NAME;
 
-  protected AbstractPublicApplicationServlet (@Nonnull final AbstractApplicationXServletHandler aHandler)
+  protected AbstractPublicApplicationServlet (@NonNull final AbstractApplicationXServletHandler aHandler)
   {
     super (aHandler, CApplicationID.APP_ID_PUBLIC);
   }

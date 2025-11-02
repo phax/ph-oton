@@ -16,11 +16,11 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.IHCHasName;
 import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCHasState;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for controls like edit, checkbox, radio button, select or text
@@ -38,11 +38,11 @@ public interface IHCControl <IMPLTYPE extends IHCControl <IMPLTYPE>> extends
 {
   boolean isReadOnly ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setReadOnly (boolean bReadOnly);
 
   boolean isRequired ();
 
-  @Nonnull
+  @NonNull
   IMPLTYPE setRequired (boolean bRequired);
 }

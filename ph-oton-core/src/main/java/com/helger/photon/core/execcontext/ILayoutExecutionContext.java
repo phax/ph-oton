@@ -19,6 +19,9 @@ package com.helger.photon.core.execcontext;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.html.hc.IHCNode;
 import com.helger.photon.core.menu.IMenuItemPage;
@@ -27,9 +30,6 @@ import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for a current request context that also has "layout"
@@ -43,21 +43,21 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @return The selected menu item as specified in the constructor. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IMenuItemPage getSelectedMenuItem ();
 
   /**
    * @return The ID of the selected menu item as specified in the constructor.
    *         Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   default String getSelectedMenuItemID ()
   {
     return getSelectedMenuItem ().getID ();
   }
 
-  @Nonnull
+  @NonNull
   default IPage getSelectedPage ()
   {
     final IMenuItemPage aSelectedMenuItem = getSelectedMenuItem ();
@@ -79,7 +79,7 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @return The non-<code>null</code> URL to the current page (selected menu
    *         item) with the passed parameters.
    */
-  @Nonnull
+  @NonNull
   default SimpleURL getSelfHref ()
   {
     return getLinkToMenuItem (getSelectedMenuItemID ());
@@ -95,8 +95,8 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    *         item) with the passed parameters.
    * @since 7.0.2
    */
-  @Nonnull
-  default SimpleURL getSelfHref (@Nonnull final Locale aDisplayLocale)
+  @NonNull
+  default SimpleURL getSelfHref (@NonNull final Locale aDisplayLocale)
   {
     return getLinkToMenuItem (aDisplayLocale, getSelectedMenuItemID ());
   }
@@ -152,7 +152,7 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  default void postRedirectGetInternal (@Nonnull final SimpleURL aTargetURL,
+  default void postRedirectGetInternal (@NonNull final SimpleURL aTargetURL,
                                         @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     postRedirectGet (aTargetURL.add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE), aContent);
@@ -167,7 +167,7 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  default void postRedirectGetExternal (@Nonnull final ISimpleURL aTargetURL) throws ForcedRedirectException
+  default void postRedirectGetExternal (@NonNull final ISimpleURL aTargetURL) throws ForcedRedirectException
   {
     postRedirectGet (aTargetURL, (IHCNode) null);
   }
@@ -190,5 +190,5 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @see #postRedirectGetInternal(SimpleURL, IHCNode)
    * @see #postRedirectGetExternal(ISimpleURL)
    */
-  void postRedirectGet (@Nonnull ISimpleURL aTargetURL, @Nullable IHCNode aContent) throws ForcedRedirectException;
+  void postRedirectGet (@NonNull ISimpleURL aTargetURL, @Nullable IHCNode aContent) throws ForcedRedirectException;
 }

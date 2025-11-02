@@ -21,6 +21,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -39,9 +42,6 @@ import com.helger.smtp.data.EmailAttachmentList;
 import com.helger.smtp.data.IEmailAttachment;
 import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Builder class for internal error triggering. Call all relevant setters and
@@ -123,7 +123,7 @@ public class InternalErrorBuilder
    * @return this for chaining
    * @since 7.0.6
    */
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setSendEmail (final boolean bSendEmail)
   {
     m_bSendEmail = bSendEmail;
@@ -148,7 +148,7 @@ public class InternalErrorBuilder
    * @return this for chaining
    * @since 7.0.6
    */
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setSaveAsXML (final boolean bSaveAsXML)
   {
     m_bSaveAsXML = bSaveAsXML;
@@ -165,13 +165,13 @@ public class InternalErrorBuilder
     return m_bSaveAsXML;
   }
 
-  @Nonnull
-  public final InternalErrorBuilder setUIErrorHandlerFor (@Nonnull final IHCNodeWithChildren <?> aParentNode)
+  @NonNull
+  public final InternalErrorBuilder setUIErrorHandlerFor (@NonNull final IHCNodeWithChildren <?> aParentNode)
   {
     return setUIErrorHandler (new UIInternalErrorHandler (aParentNode));
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setUIErrorHandler (@Nullable final IUIInternalErrorHandler aUIErrorHandler)
   {
     m_aUIErrorHandler = aUIErrorHandler;
@@ -184,7 +184,7 @@ public class InternalErrorBuilder
     return m_aUIErrorHandler;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setThrowable (@Nullable final Throwable t)
   {
     m_aThrowable = t;
@@ -197,7 +197,7 @@ public class InternalErrorBuilder
     return m_aThrowable;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setRequestScope (@Nullable final IRequestWebScopeWithoutResponse aRequestScope)
   {
     m_aRequestScope = aRequestScope;
@@ -210,7 +210,7 @@ public class InternalErrorBuilder
     return m_aRequestScope;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder addErrorMessage (@Nullable final String sErrorMessage)
   {
     return addCustomData (KEY_ERROR_MSG, sErrorMessage);
@@ -222,38 +222,38 @@ public class InternalErrorBuilder
     return m_aCustomData.getOrDefault (KEY_ERROR_MSG, sDefaultValue);
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addCustomData (@Nonnull final String sKey, final boolean bValue)
+  @NonNull
+  public final InternalErrorBuilder addCustomData (@NonNull final String sKey, final boolean bValue)
   {
     return addCustomData (sKey, Boolean.toString (bValue));
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addCustomData (@Nonnull final String sKey, final int nValue)
+  @NonNull
+  public final InternalErrorBuilder addCustomData (@NonNull final String sKey, final int nValue)
   {
     return addCustomData (sKey, Integer.toString (nValue));
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addCustomData (@Nonnull final String sKey, final long nValue)
+  @NonNull
+  public final InternalErrorBuilder addCustomData (@NonNull final String sKey, final long nValue)
   {
     return addCustomData (sKey, Long.toString (nValue));
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addCustomData (@Nonnull final String sKey, @Nonnull final Object aValue)
+  @NonNull
+  public final InternalErrorBuilder addCustomData (@NonNull final String sKey, @NonNull final Object aValue)
   {
     return addCustomData (sKey, String.valueOf (aValue));
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addCustomData (@Nonnull final String sKey, @Nullable final String sValue)
+  @NonNull
+  public final InternalErrorBuilder addCustomData (@NonNull final String sKey, @Nullable final String sValue)
   {
     m_aCustomData.put (sKey, sValue);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder addCustomData (@Nullable final Map <String, String> aCustomData)
   {
     if (aCustomData != null)
@@ -261,27 +261,27 @@ public class InternalErrorBuilder
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setCustomData (@Nullable final Map <String, String> aCustomData)
   {
     m_aCustomData.setAll (aCustomData);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllCustomData ()
   {
     return m_aCustomData.getClone ();
   }
 
-  public void forEachCustomData (@Nonnull final BiConsumer <String, String> aConsumer)
+  public void forEachCustomData (@NonNull final BiConsumer <String, String> aConsumer)
   {
     m_aCustomData.forEach (aConsumer);
   }
 
-  @Nonnull
-  public final InternalErrorBuilder addEmailAttachment (@Nonnull final IEmailAttachment aEmailAttachment)
+  @NonNull
+  public final InternalErrorBuilder addEmailAttachment (@NonNull final IEmailAttachment aEmailAttachment)
   {
     if (m_aEmailAttachments == null)
       m_aEmailAttachments = new EmailAttachmentList ();
@@ -289,21 +289,21 @@ public class InternalErrorBuilder
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setEmailAttachmentList (@Nullable final IEmailAttachmentList aEmailAttachments)
   {
     m_aEmailAttachments = aEmailAttachments == null ? null : new EmailAttachmentList (aEmailAttachments);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public EmailAttachmentList getEmailAttachmentList ()
   {
     return new EmailAttachmentList (m_aEmailAttachments);
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
     m_aDisplayLocale = aDisplayLocale;
@@ -316,7 +316,7 @@ public class InternalErrorBuilder
     return m_aDisplayLocale;
   }
 
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setInvokeCustomExceptionHandler (final boolean bInvokeCustomExceptionHandler)
   {
     m_bInvokeCustomExceptionHandler = bInvokeCustomExceptionHandler;
@@ -337,7 +337,7 @@ public class InternalErrorBuilder
    * @return this for chaining
    * @since 7.0.4
    */
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setAddClassPath (final boolean bAddClassPath)
   {
     m_bAddClassPath = bAddClassPath;
@@ -362,7 +362,7 @@ public class InternalErrorBuilder
    * @return this for chaining
    * @since 7.0.6
    */
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setDuplicateEliminiationCounter (@Nonnegative final int nDuplicateEliminiationCounter)
   {
     ValueEnforcer.isGE0 (nDuplicateEliminiationCounter, "DuplicateEliminiationCounter");
@@ -389,8 +389,8 @@ public class InternalErrorBuilder
    *        The web execution context to use. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public final InternalErrorBuilder setFromWebExecutionContext (@Nonnull final ISimpleWebExecutionContext aSWEC)
+  @NonNull
+  public final InternalErrorBuilder setFromWebExecutionContext (@NonNull final ISimpleWebExecutionContext aSWEC)
   {
     setDisplayLocale (aSWEC.getDisplayLocale ());
     setRequestScope (aSWEC.getRequestScope ());
@@ -405,7 +405,7 @@ public class InternalErrorBuilder
    * @return this for chaining
    * @since 9.3.0
    */
-  @Nonnull
+  @NonNull
   public final InternalErrorBuilder setCustomEmailSettings (@Nullable final InternalErrorEmailSettings aCustomEmailSettings)
   {
     m_aCustomEmailSettings = aCustomEmailSettings;
@@ -417,7 +417,7 @@ public class InternalErrorBuilder
    *
    * @return The created error ID. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String handle ()
   {

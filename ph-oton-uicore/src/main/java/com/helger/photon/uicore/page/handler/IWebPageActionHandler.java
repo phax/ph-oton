@@ -18,11 +18,11 @@ package com.helger.photon.uicore.page.handler;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.id.IHasID;
 import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for handling delete/undelete actions inside an AbstractWebPageForm.
@@ -54,7 +54,7 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
    *         called on the provided object, <code>false</code> otherwise.
    */
-  default boolean canHandleAction (@Nonnull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
+  default boolean canHandleAction (@NonNull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
   {
     return true;
   }
@@ -72,6 +72,6 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    *         list of all objects afterwards, {@link EShowList#DONT_SHOW_LIST} to
    *         not do so.
    */
-  @Nonnull
-  EShowList handleAction (@Nonnull WPECTYPE aWPEC, DATATYPE aSelectedObject);
+  @NonNull
+  EShowList handleAction (@NonNull WPECTYPE aWPEC, DATATYPE aSelectedObject);
 }

@@ -18,14 +18,14 @@ package com.helger.html.hc;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.misc.DevelopersNote;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.trait.IGenericImplTrait;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for HC nodes that have mutable children.
@@ -48,7 +48,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Child to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE addChild (@Nullable CHILDTYPE aNode);
 
   /**
@@ -58,7 +58,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Child to add. May be <code>null</code> in which case the elements stays empty.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE setChild (@Nullable final CHILDTYPE aNode)
   {
     removeAllChildren ();
@@ -72,7 +72,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Child to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE addChildAt (@Nonnegative int nIndex, @Nullable CHILDTYPE aNode);
 
   /**
@@ -94,7 +94,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   @SuppressWarnings ("unchecked")
   default IMPLTYPE addChildren (@Nullable final CHILDTYPE... aChildren)
   {
@@ -111,7 +111,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   @SuppressWarnings ("unchecked")
   default IMPLTYPE addChildrenAt (@Nonnegative final int nIndex, @Nullable final CHILDTYPE... aChildren)
   {
@@ -130,7 +130,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addChildren (@Nullable final Iterable <? extends CHILDTYPE> aChildren)
   {
     if (aChildren != null)
@@ -146,7 +146,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        Children to add. May be <code>null</code> in which case nothing happens.
    * @return this
    */
-  @Nonnull
+  @NonNull
   default IMPLTYPE addChildrenAt (@Nonnegative final int nIndex,
                                   @Nullable final Iterable <? extends CHILDTYPE> aChildren)
   {
@@ -199,7 +199,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        The index to use. Must be &ge; 0.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeChildAt (@Nonnegative int nIndex);
 
   /**
@@ -209,7 +209,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        The node to be removed. May be <code>null</code> in which case nothing happens.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeChild (@Nullable CHILDTYPE aNode);
 
   /**
@@ -217,7 +217,7 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IMPLTYPE removeAllChildren ();
 
   /**
@@ -227,12 +227,12 @@ public interface IHCHasChildrenMutable <IMPLTYPE extends IHCHasChildrenMutable <
    *        The comparator to be used. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  IMPLTYPE sortAllChildren (@Nonnull Comparator <? super CHILDTYPE> aComparator);
+  @NonNull
+  IMPLTYPE sortAllChildren (@NonNull Comparator <? super CHILDTYPE> aComparator);
 
   /**
    * @return A new node list with all contained children. Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   IHCNodeList <?> getAllChildrenAsNodeList ();
 }

@@ -16,14 +16,14 @@
  */
 package com.helger.html.hc.html.tabular;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This is the base class for thead, tbody and tfoot
@@ -38,7 +38,7 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
 {
   private final boolean m_bHeaderOrFooter;
 
-  public AbstractHCTablePart (@Nonnull final EHTMLElement eHTMLElement, final boolean bHeaderOrFooter)
+  public AbstractHCTablePart (@NonNull final EHTMLElement eHTMLElement, final boolean bHeaderOrFooter)
   {
     super (eHTMLElement);
     m_bHeaderOrFooter = bHeaderOrFooter;
@@ -49,7 +49,7 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
     return m_bHeaderOrFooter;
   }
 
-  @Nonnull
+  @NonNull
   public final HCRow addRow ()
   {
     final HCRow aRow = new HCRow (m_bHeaderOrFooter);
@@ -57,7 +57,7 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
     return aRow;
   }
 
-  @Nonnull
+  @NonNull
   public final HCRow addRowAt (@Nonnegative final int nIndex)
   {
     final HCRow aRow = new HCRow (m_bHeaderOrFooter);
@@ -67,7 +67,7 @@ public abstract class AbstractHCTablePart <IMPLTYPE extends AbstractHCTablePart 
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  public boolean canConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public boolean canConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Avoid creating an empty part
     return hasChildren () || hasID () || hasAnyClass () || hasAnyStyle () || customAttrs ().isNotEmpty ();

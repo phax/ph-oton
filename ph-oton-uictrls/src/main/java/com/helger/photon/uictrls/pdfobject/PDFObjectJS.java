@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.pdfobject;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.IJSExpression;
@@ -25,22 +28,19 @@ import com.helger.html.jscode.JSInvocation;
 import com.helger.html.jscode.JSRef;
 import com.helger.url.ISimpleURL;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 @Immutable
 public final class PDFObjectJS
 {
   private PDFObjectJS ()
   {}
 
-  @Nonnull
+  @NonNull
   public static JSRef pdfObject ()
   {
     return JSExpr.ref ("PDFObject");
   }
 
-  @Nonnull
+  @NonNull
   public static JSFieldRef supportsPDFs ()
   {
     return pdfObject ().ref ("supportsPDFs");
@@ -49,15 +49,15 @@ public final class PDFObjectJS
   /**
    * @return The version used
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef pdfobjectversion ()
   {
     return pdfObject ().ref ("pdfobjectversion");
   }
 
-  @Nonnull
-  public static JSInvocation embed (@Nonnull final ISimpleURL aURL,
-                                    @Nonnull final IJSExpression aTarget,
+  @NonNull
+  public static JSInvocation embed (@NonNull final ISimpleURL aURL,
+                                    @NonNull final IJSExpression aTarget,
                                     @Nullable final PDFObjectOptions aOptions)
   {
     ValueEnforcer.notNull (aURL, "URL");

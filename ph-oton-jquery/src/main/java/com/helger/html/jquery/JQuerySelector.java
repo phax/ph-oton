@@ -20,6 +20,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckReturnValue;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
@@ -42,9 +45,6 @@ import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSExpr;
 import com.helger.html.jscode.JSStringLiteral;
 import com.helger.xml.microdom.IMicroQName;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @Immutable
 @CodingStyleguideUnaware
@@ -100,7 +100,7 @@ public final class JQuerySelector implements IJQuerySelector
 
   private final IJSExpression m_aExpr;
 
-  private JQuerySelector (@Nonnull @Nonempty final String sSelectorName, @Nonnull final IJSExpression aSelectorExpr)
+  private JQuerySelector (@NonNull @Nonempty final String sSelectorName, @NonNull final IJSExpression aSelectorExpr)
   {
     // Is used as a literal!!
     this (sSelectorName +
@@ -110,304 +110,304 @@ public final class JQuerySelector implements IJQuerySelector
     ValueEnforcer.notEmpty (sSelectorName, "SelectorName");
   }
 
-  private JQuerySelector (@Nonnull @Nonempty final String sSelectorName)
+  private JQuerySelector (@NonNull @Nonempty final String sSelectorName)
   {
     // Treat as literal!!!
     this (JSExpr.lit (sSelectorName));
     ValueEnforcer.notEmpty (sSelectorName, "SelectorName");
   }
 
-  public JQuerySelector (@Nonnull final IJSExpression aExpr)
+  public JQuerySelector (@NonNull final IJSExpression aExpr)
   {
     m_aExpr = ValueEnforcer.notNull (aExpr, "Expr");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression getExpression ()
   {
     return m_aExpr;
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return m_aExpr.getJSCode (aSettings);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector chain (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector chain (@NonNull final IJQuerySelector aRhsSelector)
   {
     return chain (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector multiple (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector multiple (@NonNull final IJQuerySelector aRhsSelector)
   {
     return multiple (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector child (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector child (@NonNull final IJQuerySelector aRhsSelector)
   {
     return child (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector descendant (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector descendant (@NonNull final IJQuerySelector aRhsSelector)
   {
     return descendant (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector nextAdjacent (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector nextAdjacent (@NonNull final IJQuerySelector aRhsSelector)
   {
     return nextAdjacent (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
-  public IJQuerySelector nextSiblings (@Nonnull final IJQuerySelector aRhsSelector)
+  public IJQuerySelector nextSiblings (@NonNull final IJQuerySelector aRhsSelector)
   {
     return nextSiblings (this, aRhsSelector);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector animated ()
   {
     return chain (this, animated);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector button ()
   {
     return chain (this, button);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector checkbox ()
   {
     return chain (this, checkbox);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector checked ()
   {
     return chain (this, checked);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector disabled ()
   {
     return chain (this, disabled);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector empty ()
   {
     return chain (this, empty);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector enabled ()
   {
     return chain (this, enabled);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector even ()
   {
     return chain (this, even);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector file ()
   {
     return chain (this, file);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector first ()
   {
     return chain (this, first);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector first_child ()
   {
     return chain (this, first_child);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector first_of_type ()
   {
     return chain (this, first_of_type);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector focus ()
   {
     return chain (this, focus);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector header ()
   {
     return chain (this, header);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector hidden ()
   {
     return chain (this, hidden);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector image ()
   {
     return chain (this, image);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector input ()
   {
     return chain (this, input);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector last ()
   {
     return chain (this, last);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector last_child ()
   {
     return chain (this, last_child);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector last_of_type ()
   {
     return chain (this, last_of_type);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector odd ()
   {
     return chain (this, odd);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector only_child ()
   {
     return chain (this, only_child);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector only_of_type ()
   {
     return chain (this, only_of_type);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector parent ()
   {
     return chain (this, parent);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector password ()
   {
     return chain (this, password);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector radio ()
   {
     return chain (this, radio);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector reset ()
   {
     return chain (this, reset);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector root ()
   {
     return chain (this, root);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector selected ()
   {
     return chain (this, selected);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector submit ()
   {
     return chain (this, submit);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector target ()
   {
     return chain (this, target);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector text ()
   {
     return chain (this, text);
   }
 
-  @Nonnull
+  @NonNull
   @CheckReturnValue
   public IJQuerySelector visible ()
   {
     return chain (this, visible);
   }
 
-  @Nonnull
+  @NonNull
   public JQueryInvocation invoke ()
   {
     return JQuery.jQuery (getExpression ());
@@ -428,9 +428,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName*='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContains (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContains (@NonNull final IMicroQName aAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContains (aAttrName.getName (), sAttrValue);
@@ -443,9 +443,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName*='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContains (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContains (@NonNull @Nonempty final String sAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -459,9 +459,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName|='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContainsPrefix (@Nonnull final IMicroQName aAttrName,
-                                                         @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContainsPrefix (@NonNull final IMicroQName aAttrName,
+                                                         @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContainsPrefix (aAttrName.getName (), sAttrValue);
@@ -474,9 +474,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName|='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContainsPrefix (@Nonnull @Nonempty final String sAttrName,
-                                                         @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContainsPrefix (@NonNull @Nonempty final String sAttrName,
+                                                         @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -490,9 +490,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName~='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContainsWord (@Nonnull final IMicroQName aAttrName,
-                                                       @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContainsWord (@NonNull final IMicroQName aAttrName,
+                                                       @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeContainsWord (aAttrName.getName (), sAttrValue);
@@ -505,9 +505,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName~='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeContainsWord (@Nonnull @Nonempty final String sAttrName,
-                                                       @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeContainsWord (@NonNull @Nonempty final String sAttrName,
+                                                       @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -521,9 +521,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName$='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeEndsWith (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeEndsWith (@NonNull final IMicroQName aAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeEndsWith (aAttrName.getName (), sAttrValue);
@@ -536,9 +536,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName$='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeEndsWith (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeEndsWith (@NonNull @Nonempty final String sAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -552,8 +552,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeEquals (@Nonnull final IMicroQName aAttrName, @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeEquals (@NonNull final IMicroQName aAttrName, @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeEquals (aAttrName.getName (), sAttrValue);
@@ -566,9 +566,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeEquals (@Nonnull @Nonempty final String sAttrName,
-                                                 @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeEquals (@NonNull @Nonempty final String sAttrName,
+                                                 @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -580,8 +580,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute name
    * @return <code>[attrName]</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeHas (@Nonnull final IMicroQName aAttrName)
+  @NonNull
+  public static IJQuerySelector attributeHas (@NonNull final IMicroQName aAttrName)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeHas (aAttrName.getName ());
@@ -592,8 +592,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute name
    * @return <code>[attrName]</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeHas (@Nonnull @Nonempty final String sAttrName)
+  @NonNull
+  public static IJQuerySelector attributeHas (@NonNull @Nonempty final String sAttrName)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     return new JQuerySelector ("[" + sAttrName + "]");
@@ -606,9 +606,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName!='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeNotEqual (@Nonnull final IMicroQName aAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeNotEqual (@NonNull final IMicroQName aAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeNotEqual (aAttrName.getName (), sAttrValue);
@@ -621,9 +621,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName!='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeNotEqual (@Nonnull @Nonempty final String sAttrName,
-                                                   @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeNotEqual (@NonNull @Nonempty final String sAttrName,
+                                                   @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -637,9 +637,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName^='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeStartsWith (@Nonnull final IMicroQName aAttrName,
-                                                     @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeStartsWith (@NonNull final IMicroQName aAttrName,
+                                                     @NonNull final String sAttrValue)
   {
     ValueEnforcer.notNull (aAttrName, "AttrName");
     return attributeStartsWith (aAttrName.getName (), sAttrValue);
@@ -652,9 +652,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Attribute value
    * @return <code>[attrName^='attrValue']</code>
    */
-  @Nonnull
-  public static IJQuerySelector attributeStartsWith (@Nonnull @Nonempty final String sAttrName,
-                                                     @Nonnull final String sAttrValue)
+  @NonNull
+  public static IJQuerySelector attributeStartsWith (@NonNull @Nonempty final String sAttrName,
+                                                     @NonNull final String sAttrValue)
   {
     ValueEnforcer.notEmpty (sAttrName, "AttrName");
     ValueEnforcer.notNull (sAttrValue, "AttrValue");
@@ -668,9 +668,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Child selector
    * @return <code>parent &gt; child</code>
    */
-  @Nonnull
-  public static IJQuerySelector child (@Nonnull final IJQuerySelector aParentSelector,
-                                       @Nonnull final IJQuerySelector aChildSelector)
+  @NonNull
+  public static IJQuerySelector child (@NonNull final IJQuerySelector aParentSelector,
+                                       @NonNull final IJQuerySelector aChildSelector)
   {
     ValueEnforcer.notNull (aParentSelector, "ParentSelector");
     ValueEnforcer.notNull (aChildSelector, "ChildSelector");
@@ -686,8 +686,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The CSS class to select
    * @return <code>.class</code>
    */
-  @Nonnull
-  public static IJQuerySelector clazz (@Nonnull final ICSSClassProvider aCSSClass)
+  @NonNull
+  public static IJQuerySelector clazz (@NonNull final ICSSClassProvider aCSSClass)
   {
     ValueEnforcer.notNull (aCSSClass, "CSSClass");
     return new JQuerySelector ('.' + aCSSClass.getCSSClass ());
@@ -699,8 +699,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:contains(text)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector contains (@Nonnull final String sText)
+  @NonNull
+  public static IJQuerySelector contains (@NonNull final String sText)
   {
     return contains (JSExpr.lit (sText));
   }
@@ -711,8 +711,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:contains(text)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector contains (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector contains (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":contains", aExpr);
   }
@@ -724,9 +724,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Descendant selector
    * @return <code>ancestor descendant</code>
    */
-  @Nonnull
-  public static IJQuerySelector descendant (@Nonnull final IJQuerySelector aAncestorSelector,
-                                            @Nonnull final IJQuerySelector aDescendantSelector)
+  @NonNull
+  public static IJQuerySelector descendant (@NonNull final IJQuerySelector aAncestorSelector,
+                                            @NonNull final IJQuerySelector aDescendantSelector)
   {
     ValueEnforcer.notNull (aAncestorSelector, "AncestorSelector");
     ValueEnforcer.notNull (aDescendantSelector, "DescendantSelector");
@@ -742,8 +742,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The HTML element to select
    * @return <code>element</code>
    */
-  @Nonnull
-  public static IJQuerySelector element (@Nonnull final EHTMLElement eHTMLElement)
+  @NonNull
+  public static IJQuerySelector element (@NonNull final EHTMLElement eHTMLElement)
   {
     ValueEnforcer.notNull (eHTMLElement, "HTMLElement");
     return element (eHTMLElement.getElementName ());
@@ -756,81 +756,81 @@ public final class JQuerySelector implements IJQuerySelector
    *        The HTML element to select
    * @return <code>element</code>
    */
-  @Nonnull
-  public static IJQuerySelector element (@Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static IJQuerySelector element (@NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notEmpty (sElementName, "ElementName");
     return new JQuerySelector (sElementName);
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector eq (final int v)
   {
     return eq (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector eq (final long v)
   {
     return eq (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector eq (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector eq (@NonNull final BigInteger v)
   {
     return eq (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector eq (final double v)
   {
     return eq (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector eq (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector eq (@NonNull final BigDecimal v)
   {
     return eq (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector eq (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector eq (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":eq", aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector gt (final int v)
   {
     return gt (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector gt (final long v)
   {
     return gt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector gt (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector gt (@NonNull final BigInteger v)
   {
     return gt (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector gt (final double v)
   {
     return gt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector gt (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector gt (@NonNull final BigDecimal v)
   {
     return gt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector gt (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector gt (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":gt", aExpr);
   }
@@ -843,8 +843,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:has(selector)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector has (@Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public static IJQuerySelector has (@NonNull final IJQuerySelector aSelector)
   {
     return new JQuerySelector (":has", aSelector.getExpression ());
   }
@@ -857,15 +857,15 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:has(expr)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector has (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector has (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":has", aExpr);
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getValidJQueryID (@Nonnull @Nonempty final String sID)
+  public static String getValidJQueryID (@NonNull @Nonempty final String sID)
   {
     ValueEnforcer.notEmpty (sID, "ID");
 
@@ -885,8 +885,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The object with an ID to select
    * @return <code>#id</code>
    */
-  @Nonnull
-  public static IJQuerySelector id (@Nonnull final IHasID <String> aIDProvider)
+  @NonNull
+  public static IJQuerySelector id (@NonNull final IHasID <String> aIDProvider)
   {
     return id (aIDProvider.getID ());
   }
@@ -898,8 +898,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The object with an ID to select
    * @return <code>#id</code>
    */
-  @Nonnull
-  public static IJQuerySelector id (@Nonnull final IHCHasID <?> aElement)
+  @NonNull
+  public static IJQuerySelector id (@NonNull final IHCHasID <?> aElement)
   {
     // Ensure element has an ID
     return id (aElement.ensureID ().getID ());
@@ -912,8 +912,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The ID to select
    * @return <code>#id</code>
    */
-  @Nonnull
-  public static IJQuerySelector id (@Nonnull @Nonempty final String sID)
+  @NonNull
+  public static IJQuerySelector id (@NonNull @Nonempty final String sID)
   {
     final String sMaskedID = getValidJQueryID (sID);
     return new JQuerySelector ('#' + sMaskedID);
@@ -926,8 +926,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        The ID to select
    * @return <code>'#'+id</code>
    */
-  @Nonnull
-  public static IJQuerySelector id (@Nonnull final IJSExpression aID)
+  @NonNull
+  public static IJQuerySelector id (@NonNull final IJSExpression aID)
   {
     return new JQuerySelector (JSExpr.lit ('#').plus (aID));
   }
@@ -940,8 +940,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:lang(language)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector lang (@Nonnull @Nonempty final String sLanguage)
+  @NonNull
+  public static IJQuerySelector lang (@NonNull @Nonempty final String sLanguage)
   {
     return lang (JSExpr.lit (sLanguage));
   }
@@ -954,44 +954,44 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:lang(expr)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector lang (@Nonnull @Nonempty final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector lang (@NonNull @Nonempty final IJSExpression aExpr)
   {
     return new JQuerySelector (":lang", aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector lt (final int v)
   {
     return lt (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector lt (final long v)
   {
     return lt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector lt (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector lt (@NonNull final BigInteger v)
   {
     return lt (JSExpr.lit (v));
   }
 
-  @Nonnull
+  @NonNull
   public static IJQuerySelector lt (final double v)
   {
     return lt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector lt (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector lt (@NonNull final BigDecimal v)
   {
     return lt (JSExpr.lit (v));
   }
 
-  @Nonnull
-  public static IJQuerySelector lt (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector lt (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":lt", aExpr);
   }
@@ -1001,8 +1001,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        the selectors to chaing via ","
    * @return <code>sel, sel, sel, ...</code>
    */
-  @Nonnull
-  public static IJQuerySelector multiple (@Nonnull @Nonempty final IJQuerySelector... aSelectors)
+  @NonNull
+  public static IJQuerySelector multiple (@NonNull @Nonempty final IJQuerySelector... aSelectors)
   {
     final int nSize = ArrayHelper.getSize (aSelectors);
     if (nSize == 0)
@@ -1025,8 +1025,8 @@ public final class JQuerySelector implements IJQuerySelector
    *        the selectors to chaing via ","
    * @return <code>sel, sel, sel, ...</code>
    */
-  @Nonnull
-  public static IJQuerySelector multiple (@Nonnull @Nonempty final List <IJQuerySelector> aSelectors)
+  @NonNull
+  public static IJQuerySelector multiple (@NonNull @Nonempty final List <IJQuerySelector> aSelectors)
   {
     final int nSize = CollectionHelper.getSize (aSelectors);
     if (nSize == 0)
@@ -1052,8 +1052,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>[name=<i>nameAttrValue</i>]</code>
    * @see #attributeEquals(String, String)
    */
-  @Nonnull
-  public static IJQuerySelector nameAttr (@Nonnull @Nonempty final String sNameAttrValue)
+  @NonNull
+  public static IJQuerySelector nameAttr (@NonNull @Nonempty final String sNameAttrValue)
   {
     ValueEnforcer.notEmpty (sNameAttrValue, "NameAttrValue");
     return attributeEquals (CHTMLAttributes.NAME, sNameAttrValue);
@@ -1066,9 +1066,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Next selector
    * @return <code>prev + next</code>
    */
-  @Nonnull
-  public static IJQuerySelector nextAdjacent (@Nonnull final IJQuerySelector aPrevSelector,
-                                              @Nonnull final IJQuerySelector aNextSelector)
+  @NonNull
+  public static IJQuerySelector nextAdjacent (@NonNull final IJQuerySelector aPrevSelector,
+                                              @NonNull final IJQuerySelector aNextSelector)
   {
     ValueEnforcer.notNull (aPrevSelector, "PrevSelector");
     ValueEnforcer.notNull (aNextSelector, "NextSelector");
@@ -1084,9 +1084,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        Siblings selector
    * @return <code>prev ~ siblings</code>
    */
-  @Nonnull
-  public static IJQuerySelector nextSiblings (@Nonnull final IJQuerySelector aPrevSelector,
-                                              @Nonnull final IJQuerySelector aSiblingsSelector)
+  @NonNull
+  public static IJQuerySelector nextSiblings (@NonNull final IJQuerySelector aPrevSelector,
+                                              @NonNull final IJQuerySelector aSiblingsSelector)
   {
     ValueEnforcer.notNull (aPrevSelector, "PrevSelector");
     ValueEnforcer.notNull (aSiblingsSelector, "SiblingsSelector");
@@ -1095,14 +1095,14 @@ public final class JQuerySelector implements IJQuerySelector
                                             .plus (aSiblingsSelector.getExpression ()));
   }
 
-  @Nonnull
-  public static IJQuerySelector not (@Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public static IJQuerySelector not (@NonNull final IJQuerySelector aSelector)
   {
     return not (aSelector.getExpression ());
   }
 
-  @Nonnull
-  public static IJQuerySelector not (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector not (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":not", aExpr);
   }
@@ -1115,7 +1115,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(value)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthChild (final int v)
   {
     return nthChild (JSExpr.lit (v));
@@ -1129,7 +1129,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(value)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthChild (final long v)
   {
     return nthChild (JSExpr.lit (v));
@@ -1143,8 +1143,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(value)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector nthChild (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector nthChild (@NonNull final BigInteger v)
   {
     return nthChild (JSExpr.lit (v));
   }
@@ -1157,7 +1157,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(value)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthChild (final double v)
   {
     return nthChild (JSExpr.lit (v));
@@ -1171,8 +1171,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(value)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector nthChild (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector nthChild (@NonNull final BigDecimal v)
   {
     return nthChild (JSExpr.lit (v));
   }
@@ -1185,8 +1185,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-child(aExpr)</code>
    * @since jQuery 1.1.4
    */
-  @Nonnull
-  public static IJQuerySelector nthChild (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector nthChild (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":nth-child", aExpr);
   }
@@ -1200,7 +1200,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastChild (final int v)
   {
     return nthLastChild (JSExpr.lit (v));
@@ -1215,7 +1215,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastChild (final long v)
   {
     return nthLastChild (JSExpr.lit (v));
@@ -1230,8 +1230,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastChild (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector nthLastChild (@NonNull final BigInteger v)
   {
     return nthLastChild (JSExpr.lit (v));
   }
@@ -1245,7 +1245,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastChild (final double v)
   {
     return nthLastChild (JSExpr.lit (v));
@@ -1260,8 +1260,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastChild (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector nthLastChild (@NonNull final BigDecimal v)
   {
     return nthLastChild (JSExpr.lit (v));
   }
@@ -1275,8 +1275,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-child(aExpr)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastChild (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector nthLastChild (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":nth-last-child", aExpr);
   }
@@ -1290,7 +1290,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastOfType (final int v)
   {
     return nthLastOfType (JSExpr.lit (v));
@@ -1305,7 +1305,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastOfType (final long v)
   {
     return nthLastOfType (JSExpr.lit (v));
@@ -1320,8 +1320,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastOfType (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector nthLastOfType (@NonNull final BigInteger v)
   {
     return nthLastOfType (JSExpr.lit (v));
   }
@@ -1335,7 +1335,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthLastOfType (final double v)
   {
     return nthLastOfType (JSExpr.lit (v));
@@ -1350,8 +1350,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastOfType (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector nthLastOfType (@NonNull final BigDecimal v)
   {
     return nthLastOfType (JSExpr.lit (v));
   }
@@ -1365,8 +1365,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-last-of-type(aExpr)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthLastOfType (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector nthLastOfType (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":nth-last-of-type", aExpr);
   }
@@ -1380,7 +1380,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthOfType (final int v)
   {
     return nthOfType (JSExpr.lit (v));
@@ -1395,7 +1395,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthOfType (final long v)
   {
     return nthOfType (JSExpr.lit (v));
@@ -1410,8 +1410,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthOfType (@Nonnull final BigInteger v)
+  @NonNull
+  public static IJQuerySelector nthOfType (@NonNull final BigInteger v)
   {
     return nthOfType (JSExpr.lit (v));
   }
@@ -1425,7 +1425,7 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
+  @NonNull
   public static IJQuerySelector nthOfType (final double v)
   {
     return nthOfType (JSExpr.lit (v));
@@ -1440,8 +1440,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(value)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthOfType (@Nonnull final BigDecimal v)
+  @NonNull
+  public static IJQuerySelector nthOfType (@NonNull final BigDecimal v)
   {
     return nthOfType (JSExpr.lit (v));
   }
@@ -1455,8 +1455,8 @@ public final class JQuerySelector implements IJQuerySelector
    * @return <code>:nth-of-type(aExpr)</code>
    * @since jQuery 1.9
    */
-  @Nonnull
-  public static IJQuerySelector nthOfType (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static IJQuerySelector nthOfType (@NonNull final IJSExpression aExpr)
   {
     return new JQuerySelector (":nth-of-type", aExpr);
   }
@@ -1470,9 +1470,9 @@ public final class JQuerySelector implements IJQuerySelector
    *        The second selector. May not be <code>null</code>.
    * @return <code>first<i>second</i></code>
    */
-  @Nonnull
-  public static IJQuerySelector chain (@Nonnull final IJQuerySelector aFirstSelector,
-                                       @Nonnull final IJQuerySelector aSecondSelector)
+  @NonNull
+  public static IJQuerySelector chain (@NonNull final IJQuerySelector aFirstSelector,
+                                       @NonNull final IJQuerySelector aSecondSelector)
   {
     ValueEnforcer.notNull (aFirstSelector, "FirstSelector");
     ValueEnforcer.notNull (aSecondSelector, "SecondSelector");

@@ -18,11 +18,11 @@ package com.helger.photon.security.login;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.text.display.IHasDisplayText;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents the different login results.
@@ -54,7 +54,7 @@ public enum ELoginResult implements ICredentialValidationResult
 
   private final IHasDisplayText m_aErrorMsg;
 
-  ELoginResult (@Nonnull final IHasDisplayText aErrorMsg)
+  ELoginResult (@NonNull final IHasDisplayText aErrorMsg)
   {
     m_aErrorMsg = aErrorMsg;
   }
@@ -71,7 +71,7 @@ public enum ELoginResult implements ICredentialValidationResult
   }
 
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return m_aErrorMsg.getDisplayText (aContentLocale);
   }

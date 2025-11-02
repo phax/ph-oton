@@ -16,10 +16,10 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.name.IHasName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * DataTables Responsive plugin type
@@ -33,12 +33,12 @@ public enum EDTPResponsiveType implements IHasName
 
   private final String m_sName;
 
-  EDTPResponsiveType (@Nonnull @Nonempty final String sName)
+  EDTPResponsiveType (@NonNull @Nonempty final String sName)
   {
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

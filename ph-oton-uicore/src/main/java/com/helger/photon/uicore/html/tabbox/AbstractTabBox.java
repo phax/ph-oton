@@ -18,6 +18,8 @@ package com.helger.photon.uicore.html.tabbox;
 
 import java.util.Comparator;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +33,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.hc.impl.AbstractHCNodeList;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represent a single tab box
@@ -58,7 +57,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return m_sActiveTabID;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE setActiveTabID (@Nullable final String sID)
   {
     m_sActiveTabID = sID;
@@ -67,7 +66,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public Tab addTab (@Nullable final String sID,
                      @Nullable final IHCNode aLabel,
                      @Nullable final IHCNode aContent,
@@ -79,8 +78,8 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return aTab;
   }
 
-  @Nonnull
-  public IMPLTYPE addTab (@Nonnull final Tab aTab, final boolean bActive)
+  @NonNull
+  public IMPLTYPE addTab (@NonNull final Tab aTab, final boolean bActive)
   {
     ValueEnforcer.notNull (aTab, "Tab");
 
@@ -92,7 +91,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Tab> getAllTabs ()
   {
@@ -149,7 +148,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return m_aTabs.size ();
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeTab (@Nullable final String sTabID)
   {
     if (m_aTabs.remove (sTabID) == null)
@@ -161,7 +160,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
     return EChange.CHANGED;
   }
 
-  public void sortTabs (@Nonnull final Comparator <? super Tab> aComparator)
+  public void sortTabs (@NonNull final Comparator <? super Tab> aComparator)
   {
     ValueEnforcer.notNull (aComparator, "Comparator");
     m_aTabs.setAll (m_aTabs.getSortedByValue (aComparator));

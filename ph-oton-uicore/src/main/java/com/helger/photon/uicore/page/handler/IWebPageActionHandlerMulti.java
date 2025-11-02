@@ -16,13 +16,13 @@
  */
 package com.helger.photon.uicore.page.handler;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.id.IHasID;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.uicore.page.EShowList;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for handling multi object actions.
@@ -42,9 +42,9 @@ public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, W
    * @return A list of all selected objects. May neither be <code>null</code>
    *         nor empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <DATATYPE> getAllSelectedObjects (@Nonnull WPECTYPE aWPEC);
+  ICommonsList <DATATYPE> getAllSelectedObjects (@NonNull WPECTYPE aWPEC);
 
   /**
    * This is the main entry to action handling. This method is only called if
@@ -56,6 +56,6 @@ public interface IWebPageActionHandlerMulti <DATATYPE extends IHasID <String>, W
    *        Selected objects. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  EShowList handleMultiAction (@Nonnull WPECTYPE aWPEC, @Nonnull ICommonsList <DATATYPE> aSelectedObjects);
+  @NonNull
+  EShowList handleMultiAction (@NonNull WPECTYPE aWPEC, @NonNull ICommonsList <DATATYPE> aSelectedObjects);
 }

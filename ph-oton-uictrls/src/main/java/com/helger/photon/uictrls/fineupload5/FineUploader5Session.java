@@ -18,6 +18,9 @@ package com.helger.photon.uictrls.fineupload5;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.url.ISimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fine Uploader 5.x session part
@@ -46,7 +46,7 @@ public class FineUploader5Session implements IFineUploader5Part
   public FineUploader5Session ()
   {}
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
   {
@@ -61,7 +61,7 @@ public class FineUploader5Session implements IFineUploader5Part
    *        Custom headers to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aSessionCustomHeaders.setAll (aCustomHeaders);
@@ -76,7 +76,7 @@ public class FineUploader5Session implements IFineUploader5Part
    *        Custom headers to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aSessionCustomHeaders.putAllIfNotNull (aCustomHeaders);
@@ -93,8 +93,8 @@ public class FineUploader5Session implements IFineUploader5Part
    *        Custom header value
    * @return this
    */
-  @Nonnull
-  public FineUploader5Session addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5Session addCustomHeader (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -117,7 +117,7 @@ public class FineUploader5Session implements IFineUploader5Part
    *        New value. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session setEndpoint (@Nullable final ISimpleURL aEndpoint)
   {
     ValueEnforcer.notNull (aEndpoint, "Endpoint");
@@ -125,7 +125,7 @@ public class FineUploader5Session implements IFineUploader5Part
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllParams ()
   {
@@ -139,7 +139,7 @@ public class FineUploader5Session implements IFineUploader5Part
    *        New parameters to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session setParams (@Nullable final Map <String, String> aParams)
   {
     m_aSessionParams.setAll (aParams);
@@ -153,7 +153,7 @@ public class FineUploader5Session implements IFineUploader5Part
    *        New parameters to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session addParams (@Nullable final Map <String, String> aParams)
   {
     m_aSessionParams.putAllIfNotNull (aParams);
@@ -169,8 +169,8 @@ public class FineUploader5Session implements IFineUploader5Part
    *        Parameter value
    * @return this
    */
-  @Nonnull
-  public FineUploader5Session addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploader5Session addParam (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -192,14 +192,14 @@ public class FineUploader5Session implements IFineUploader5Part
    *        New value
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public FineUploader5Session setRefreshOnReset (final boolean bRefreshOnReset)
   {
     m_bSessionRefreshOnReset = bRefreshOnReset;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

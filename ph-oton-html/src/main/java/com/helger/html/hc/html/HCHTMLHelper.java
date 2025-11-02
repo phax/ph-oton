@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @Immutable
 public final class HCHTMLHelper
@@ -46,10 +46,10 @@ public final class HCHTMLHelper
    *        The tag names to search. May not be <code>null</code>.
    * @return All elements with the passed element name on any level. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public static ICommonsList <IHCElement <?>> recursiveGetAllChildrenWithTagName (@Nonnull final IHCNode aOwner,
-                                                                                  @Nonnull @Nonempty final EHTMLElement... aElements)
+  public static ICommonsList <IHCElement <?>> recursiveGetAllChildrenWithTagName (@NonNull final IHCNode aOwner,
+                                                                                  @NonNull @Nonempty final EHTMLElement... aElements)
   {
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
@@ -82,8 +82,8 @@ public final class HCHTMLHelper
    *         <code>null</code> if no such element exists.
    */
   @Nullable
-  public static IHCElement <?> recursiveGetFirstChildWithDifferentTagName (@Nonnull final IHCNode aOwner,
-                                                                           @Nonnull @Nonempty final EHTMLElement... aElements)
+  public static IHCElement <?> recursiveGetFirstChildWithDifferentTagName (@NonNull final IHCNode aOwner,
+                                                                           @NonNull @Nonempty final EHTMLElement... aElements)
   {
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
@@ -112,8 +112,8 @@ public final class HCHTMLHelper
     return ret.get ();
   }
 
-  public static boolean recursiveContainsChildWithDifferentTagName (@Nonnull final IHCNode aOwner,
-                                                                    @Nonnull @Nonempty final EHTMLElement... aElements)
+  public static boolean recursiveContainsChildWithDifferentTagName (@NonNull final IHCNode aOwner,
+                                                                    @NonNull @Nonempty final EHTMLElement... aElements)
   {
     return recursiveGetFirstChildWithDifferentTagName (aOwner, aElements) != null;
   }
@@ -129,8 +129,8 @@ public final class HCHTMLHelper
    *         such element exists.
    */
   @Nullable
-  public static IHCElement <?> recursiveGetFirstChildWithTagName (@Nonnull final IHCNode aOwner,
-                                                                  @Nonnull @Nonempty final EHTMLElement... aElements)
+  public static IHCElement <?> recursiveGetFirstChildWithTagName (@NonNull final IHCNode aOwner,
+                                                                  @NonNull @Nonempty final EHTMLElement... aElements)
   {
     ValueEnforcer.notNull (aOwner, "Owner");
     ValueEnforcer.notEmpty (aElements, "Elements");
@@ -153,8 +153,8 @@ public final class HCHTMLHelper
     return ret.get ();
   }
 
-  public static boolean recursiveContainsChildWithTagName (@Nonnull final IHCNode aOwner,
-                                                           @Nonnull @Nonempty final EHTMLElement... aElements)
+  public static boolean recursiveContainsChildWithTagName (@NonNull final IHCNode aOwner,
+                                                           @NonNull @Nonempty final EHTMLElement... aElements)
   {
     return recursiveGetFirstChildWithTagName (aOwner, aElements) != null;
   }

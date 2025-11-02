@@ -18,6 +18,8 @@ package com.helger.photon.tinymce4.type;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -28,8 +30,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.CollectionHelper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-
-import jakarta.annotation.Nonnull;
 
 public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarControlList>
 {
@@ -49,7 +49,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    * @param aList
    *        Separators are denoted by <code>null</code> elements.
    */
-  public TinyMCE4ToolbarControlList (@Nonnull final ETinyMCE4ToolbarControl... aList)
+  public TinyMCE4ToolbarControlList (@NonNull final ETinyMCE4ToolbarControl... aList)
   {
     ValueEnforcer.notNull (aList, "List");
     m_aList = new CommonsArrayList <> (aList);
@@ -61,7 +61,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    * @param aList
    *        Separators are denoted by <code>null</code> elements.
    */
-  public TinyMCE4ToolbarControlList (@Nonnull final List <ETinyMCE4ToolbarControl> aList)
+  public TinyMCE4ToolbarControlList (@NonNull final List <ETinyMCE4ToolbarControl> aList)
   {
     ValueEnforcer.notNull (aList, "List");
     m_aList = new CommonsArrayList <> (aList);
@@ -73,7 +73,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    * @param aOther
    *        Source object to copy from. May not be <code>null</code>.
    */
-  public TinyMCE4ToolbarControlList (@Nonnull final TinyMCE4ToolbarControlList aOther)
+  public TinyMCE4ToolbarControlList (@NonNull final TinyMCE4ToolbarControlList aOther)
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aList = aOther.m_aList.getClone ();
@@ -83,37 +83,37 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
    * @return The default toolbar. Separators are denoted by <code>null</code>
    *         elements. See the respective theme.js file.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ETinyMCE4ToolbarControl> getAllControls ()
   {
     return m_aList.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public TinyMCE4ToolbarControlList addSeparator ()
   {
     m_aList.add (null);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public TinyMCE4ToolbarControlList addSeparator (@Nonnegative final int nIndex)
   {
     m_aList.add (nIndex, null);
     return this;
   }
 
-  @Nonnull
-  public TinyMCE4ToolbarControlList addControl (@Nonnull final ETinyMCE4ToolbarControl eControl)
+  @NonNull
+  public TinyMCE4ToolbarControlList addControl (@NonNull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     m_aList.add (eControl);
     return this;
   }
 
-  @Nonnull
-  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex, @Nonnull final ETinyMCE4ToolbarControl eControl)
+  @NonNull
+  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex, @NonNull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     m_aList.add (nIndex, eControl);
@@ -121,32 +121,32 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   }
 
   @CheckForSigned
-  public int getControlIndex (@Nonnull final ETinyMCE4ToolbarControl eControl)
+  public int getControlIndex (@NonNull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     return m_aList.indexOf (eControl);
   }
 
-  @Nonnull
-  public EChange removeControl (@Nonnull final ETinyMCE4ToolbarControl eControl)
+  @NonNull
+  public EChange removeControl (@NonNull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     return EChange.valueOf (m_aList.remove (eControl));
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAtIndex (@Nonnegative final int nIndex)
   {
     return CollectionHelper.removeAtIndex (m_aList, nIndex);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     return m_aList.removeAll ();
   }
 
-  @Nonnull
+  @NonNull
   public String getAsOptionString ()
   {
     final StringBuilder aSB = new StringBuilder ();
@@ -162,7 +162,7 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
     return aSB.toString ();
   }
 
-  @Nonnull
+  @NonNull
   public TinyMCE4ToolbarControlList getClone ()
   {
     return new TinyMCE4ToolbarControlList (this);

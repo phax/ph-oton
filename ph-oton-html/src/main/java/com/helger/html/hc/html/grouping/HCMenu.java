@@ -16,9 +16,9 @@
  */
 package com.helger.html.hc.html.grouping;
 
-import com.helger.html.EHTMLElement;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.html.EHTMLElement;
 
 /**
  * Represents an HTML &lt;menu&gt; element.
@@ -33,7 +33,7 @@ public class HCMenu extends AbstractHCList <HCMenu, HCLI>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected HCLI createEmptyItem ()
   {
     return new HCLI ();

@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.autonumeric;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
@@ -25,9 +28,6 @@ import com.helger.html.hc.special.SpecialNodeListModifier;
 import com.helger.html.jquery.JQuery;
 import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A special script that initializes the auto numeric. It is a separate class,
@@ -45,22 +45,22 @@ public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
 {
   private final AbstractHCAutoNumeric <?> m_aAutoNumeric;
 
-  @Nonnull
+  @NonNull
   public static IHasJSCode createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
-                                           @Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
+                                           @NonNull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric : JQuery.idRef (aAutoNumeric);
 
     return HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
   }
 
-  public HCAutoNumericJS (@Nonnull final AbstractHCAutoNumeric <?> aAutoNumeric)
+  public HCAutoNumericJS (@NonNull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
     super (createInitCode (null, aAutoNumeric));
     m_aAutoNumeric = aAutoNumeric;
   }
 
-  @Nonnull
+  @NonNull
   public AbstractHCAutoNumeric <?> getAutoNumeric ()
   {
     return m_aAutoNumeric;

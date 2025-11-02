@@ -16,11 +16,11 @@
  */
 package com.helger.photon.uictrls.fineupload5;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Wrapper for Fine Uploader 5.x blobs part
@@ -36,7 +36,7 @@ public class FineUploader5Blobs implements IFineUploader5Part
   public FineUploader5Blobs ()
   {}
 
-  @Nonnull
+  @NonNull
   public String getDefaultName ()
   {
     return m_sBlobsDefaultName;
@@ -49,15 +49,15 @@ public class FineUploader5Blobs implements IFineUploader5Part
    *        New value. May neither be <code>null</code> nor empty.
    * @return this for chaining
    */
-  @Nonnull
-  public FineUploader5Blobs setDefaultName (@Nonnull @Nonempty final String sDefaultName)
+  @NonNull
+  public FineUploader5Blobs setDefaultName (@NonNull @Nonempty final String sDefaultName)
   {
     ValueEnforcer.notEmpty (sDefaultName, "DefaultName");
     m_sBlobsDefaultName = sDefaultName;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSCode ()
   {
     final JSAssocArray aSub = new JSAssocArray ();

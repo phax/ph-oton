@@ -16,11 +16,11 @@
  */
 package com.helger.photon.tinymce4.type;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.photon.app.url.LinkHelper;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 public enum ETinyMCE4ExternalPlugin
 {
@@ -28,20 +28,20 @@ public enum ETinyMCE4ExternalPlugin
 
   private final String m_sValue;
 
-  ETinyMCE4ExternalPlugin (@Nonnull @Nonempty final String sValue)
+  ETinyMCE4ExternalPlugin (@NonNull @Nonempty final String sValue)
   {
     m_sValue = sValue;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPluginName ()
   {
     return m_sValue;
   }
 
-  @Nonnull
-  public TinyMCE4ExternalPlugin getAsExternalPlugin (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public TinyMCE4ExternalPlugin getAsExternalPlugin (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     return new TinyMCE4ExternalPlugin (m_sValue,
                                        LinkHelper.getStreamURL (aRequestScope,

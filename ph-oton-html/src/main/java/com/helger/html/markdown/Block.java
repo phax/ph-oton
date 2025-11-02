@@ -16,9 +16,9 @@
  */
 package com.helger.html.markdown;
 
-import com.helger.annotation.style.CodingStyleguideUnaware;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.style.CodingStyleguideUnaware;
 
 /**
  * This class represents a block of lines.
@@ -250,7 +250,7 @@ final class Block
    * @param aLine
    *        Line to append.
    */
-  public void appendLine (@Nonnull final Line aLine)
+  public void appendLine (@NonNull final Line aLine)
   {
     if (m_aLineTail == null)
     {

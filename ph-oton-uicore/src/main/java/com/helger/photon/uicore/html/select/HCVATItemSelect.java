@@ -20,27 +20,27 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
 
-import jakarta.annotation.Nonnull;
-
 public class HCVATItemSelect extends HCExtSelect
 {
-  public HCVATItemSelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final Locale aCountry,
-                          @Nonnull final Locale aDisplayLocale,
+  public HCVATItemSelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final Locale aCountry,
+                          @NonNull final Locale aDisplayLocale,
                           final boolean bAddEmptyOption)
   {
     this (aRF, VATManager.getDefaultInstance (), aCountry, aDisplayLocale, bAddEmptyOption);
   }
 
-  public HCVATItemSelect (@Nonnull final IHCRequestField aRF,
-                          @Nonnull final VATManager aVATManager,
-                          @Nonnull final Locale aCountry,
-                          @Nonnull final Locale aDisplayLocale,
+  public HCVATItemSelect (@NonNull final IHCRequestField aRF,
+                          @NonNull final VATManager aVATManager,
+                          @NonNull final Locale aCountry,
+                          @NonNull final Locale aDisplayLocale,
                           final boolean bAddEmptyOption)
   {
     super (aRF);

@@ -18,6 +18,9 @@ package com.helger.photon.core.locale;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -26,9 +29,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedSet;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class manages the locales available in the application.
@@ -44,8 +44,8 @@ public class LocaleManager implements ILocaleManager
   public LocaleManager ()
   {}
 
-  @Nonnull
-  public EChange registerLocale (@Nonnull final Locale aLocale)
+  @NonNull
+  public EChange registerLocale (@NonNull final Locale aLocale)
   {
     ValueEnforcer.notNull (aLocale, "Locale");
     if (!m_aLocales.add (aLocale))
@@ -60,8 +60,8 @@ public class LocaleManager implements ILocaleManager
     return EChange.CHANGED;
   }
 
-  @Nonnull
-  public EChange setDefaultLocale (@Nonnull final Locale aDefaultLocale)
+  @NonNull
+  public EChange setDefaultLocale (@NonNull final Locale aDefaultLocale)
   {
     ValueEnforcer.notNull (aDefaultLocale, "DefaultLocale");
     ValueEnforcer.isTrue (m_aLocales.contains (aDefaultLocale),
@@ -81,7 +81,7 @@ public class LocaleManager implements ILocaleManager
     return m_aDefaultLocale;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <Locale> getAllAvailableLocales ()
   {

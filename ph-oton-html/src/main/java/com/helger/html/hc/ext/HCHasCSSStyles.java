@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -29,9 +32,6 @@ import com.helger.css.property.ECSSProperty;
 import com.helger.css.propertyvalue.ICSSValue;
 import com.helger.html.hc.html.IHCHasCSSStyles;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Stand alone implementation of {@link IHCHasCSSStyles}
  *
@@ -42,14 +42,14 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
 {
   private ICommonsOrderedMap <ECSSProperty, ICSSValue> m_aStyles;
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsOrderedMap <ECSSProperty, ICSSValue> getAllStyles ()
   {
     return m_aStyles.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <ICSSValue> getAllStyleValues ()
   {
@@ -82,7 +82,7 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
     return m_aStyles != null && !m_aStyles.isEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   public final HCHasCSSStyles addStyle (@Nullable final ICSSValue aValue)
   {
     if (aValue != null)
@@ -94,15 +94,15 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
     return this;
   }
 
-  @Nonnull
-  public final HCHasCSSStyles removeStyle (@Nonnull final ECSSProperty eProperty)
+  @NonNull
+  public final HCHasCSSStyles removeStyle (@NonNull final ECSSProperty eProperty)
   {
     if (m_aStyles != null)
       m_aStyles.remove (eProperty);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCHasCSSStyles removeAllStyles ()
   {
     m_aStyles.clear ();
@@ -110,7 +110,7 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
   }
 
   @Nullable
-  public final String getAllStylesAsString (@Nonnull final ICSSWriterSettings aCSSSettings)
+  public final String getAllStylesAsString (@NonNull final ICSSWriterSettings aCSSSettings)
   {
     if (m_aStyles == null || m_aStyles.isEmpty ())
       return null;

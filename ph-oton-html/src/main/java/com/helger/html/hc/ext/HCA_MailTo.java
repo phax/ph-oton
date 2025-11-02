@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.ext;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.email.IEmailAddress;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -24,20 +27,17 @@ import com.helger.html.hc.html.textlevel.AbstractHCA;
 import com.helger.url.SimpleURL;
 import com.helger.url.protocol.EURLProtocol;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public class HCA_MailTo extends AbstractHCA <HCA_MailTo>
 {
   private final String m_sEmailAddress;
 
-  public HCA_MailTo (@Nonnull final String sEmailAddress)
+  public HCA_MailTo (@NonNull final String sEmailAddress)
   {
     super (new SimpleURL (EURLProtocol.MAILTO.getProtocol () + sEmailAddress));
     m_sEmailAddress = ValueEnforcer.notNull (sEmailAddress, "Email");
   }
 
-  @Nonnull
+  @NonNull
   public String getEmail ()
   {
     return m_sEmailAddress;

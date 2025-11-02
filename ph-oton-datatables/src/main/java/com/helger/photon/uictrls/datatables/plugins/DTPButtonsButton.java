@@ -16,6 +16,9 @@
  */
 package com.helger.photon.uictrls.datatables.plugins;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ETriState;
@@ -28,9 +31,6 @@ import com.helger.html.jscode.JSAnonymousFunction;
 import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSAtom;
 import com.helger.html.jscode.JSExpr;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public class DTPButtonsButton
 {
@@ -62,104 +62,104 @@ public class DTPButtonsButton
    */
   private IJSExpression m_aText;
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setAction (@Nullable final JSAnonymousFunction aAction)
   {
     m_aAction = aAction;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setAvailable (@Nullable final JSAnonymousFunction aAvailable)
   {
     m_aAvailable = aAvailable;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton addClassName (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     m_aClassNames.addClass (aCSSClassProvider);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton addClassName (@Nullable final ICSSClassProvider... aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton addClassName (@Nullable final Iterable <? extends ICSSClassProvider> aCSSClassProviders)
   {
     m_aClassNames.addClasses (aCSSClassProviders);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setDestroy (@Nullable final JSAnonymousFunction aDestroy)
   {
     m_aDestroy = aDestroy;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setEnabled (final boolean bEnabled)
   {
     return setEnabled (ETriState.valueOf (bEnabled));
   }
 
-  @Nonnull
-  public DTPButtonsButton setEnabled (@Nonnull final ETriState eEnabled)
+  @NonNull
+  public DTPButtonsButton setEnabled (@NonNull final ETriState eEnabled)
   {
     ValueEnforcer.notNull (eEnabled, "Enabled");
     m_eEnabled = eEnabled;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setExtend (@Nullable final String sExtend)
   {
     m_sExtend = sExtend;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setInit (@Nullable final JSAnonymousFunction aInit)
   {
     m_aInit = aInit;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setKey (@Nullable final DTPButtonsButtonKey aKey)
   {
     m_aKey = aKey;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setName (@Nullable final String sName)
   {
     m_sName = sName;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setNamespace (@Nullable final String sNamespace)
   {
     m_sNamespace = sNamespace;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setText (@Nullable final String sText)
   {
     return setText (sText == null ? null : JSExpr.lit (sText));
   }
 
-  @Nonnull
+  @NonNull
   public DTPButtonsButton setText (@Nullable final IJSExpression aText)
   {
     m_aText = aText;
@@ -171,10 +171,10 @@ public class DTPButtonsButton
    *        Associative array to be modified. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void onGetAsJS (@Nonnull final JSAssocArray ret)
+  protected void onGetAsJS (@NonNull final JSAssocArray ret)
   {}
 
-  @Nonnull
+  @NonNull
   public IJSExpression getAsJS ()
   {
     final JSAssocArray ret = new JSAssocArray ();
@@ -219,6 +219,6 @@ public class DTPButtonsButton
    * @param aConversionSettings
    *        Current conversion settings. Never <code>null</code>.
    */
-  public void registerExternalResources (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  public void registerExternalResources (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {}
 }

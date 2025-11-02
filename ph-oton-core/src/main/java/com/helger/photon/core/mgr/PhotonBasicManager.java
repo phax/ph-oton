@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.mgr;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,6 @@ import com.helger.photon.core.sysmigration.SystemMigrationManager;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -67,7 +66,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   {}
 
   @Override
-  protected void onAfterInstantiation (@Nonnull final IScope aScope)
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
   {
     try
     {
@@ -88,37 +87,37 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
     }
   }
 
-  @Nonnull
+  @NonNull
   public static PhotonBasicManager getInstance ()
   {
     return getGlobalSingleton (PhotonBasicManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public static FavoriteManager getFavoriteManager ()
   {
     return getInstance ().m_aFavoriteManager;
   }
 
-  @Nonnull
+  @NonNull
   public static SystemMigrationManager getSystemMigrationMgr ()
   {
     return getInstance ().m_aSystemMigrationMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static SystemMessageManager getSystemMessageMgr ()
   {
     return getInstance ().m_aSystemMessageMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static LongRunningJobResultManager getLongRunningJobResultMgr ()
   {
     return getInstance ().m_aLongRunningJobResultMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static LongRunningJobManager getLongRunningJobMgr ()
   {
     return getInstance ().m_aLongRunningJobMgr;

@@ -16,13 +16,13 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * The type of an {@link com.helger.html.hc.html.forms.AbstractHCInput} element.
@@ -54,13 +54,13 @@ public enum EHCInputType implements IHCHasHTMLAttributeValue
   private final String m_sAttrValue;
   private final boolean m_bHasPlaceholder;
 
-  EHCInputType (@Nonnull @Nonempty final String sAttrValue, final boolean bHasPlaceholder)
+  EHCInputType (@NonNull @Nonempty final String sAttrValue, final boolean bHasPlaceholder)
   {
     m_sAttrValue = sAttrValue;
     m_bHasPlaceholder = bHasPlaceholder;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAttrValue ()
   {

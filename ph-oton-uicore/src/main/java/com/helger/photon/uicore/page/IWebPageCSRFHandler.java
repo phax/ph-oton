@@ -18,11 +18,11 @@ package com.helger.photon.uicore.page;
 
 import java.io.Serializable;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Handle CSRF (Cross Site Request Forgery) issues on an {@link AbstractWebPage}
@@ -47,8 +47,8 @@ public interface IWebPageCSRFHandler extends Serializable
    * @return {@link EContinue#CONTINUE} if CSRF checking is disabled or was
    *         successful.
    */
-  @Nonnull
-  EContinue checkCSRFNonce (@Nonnull IWebPageExecutionContext aWPEC);
+  @NonNull
+  EContinue checkCSRFNonce (@NonNull IWebPageExecutionContext aWPEC);
 
   /**
    * @return The HTML nonce hidden field or <code>null</code> if CSRF prevention

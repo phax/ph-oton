@@ -18,6 +18,8 @@ package com.helger.html.jquery;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
 import com.helger.annotation.Nonempty;
@@ -44,9 +46,6 @@ import com.helger.json.IJson;
 import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.XMLWriter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper around jQuery to allow for easy function calls
@@ -87,7 +86,7 @@ public final class JQuery
   /**
    * @return <code>$</code> or <code>jQuery</code> as a function
    */
-  @Nonnull
+  @NonNull
   public static JSFunction jQueryFunction ()
   {
     return new JSFunction (isUseDollarForJQuery () ? "$" : "jQuery");
@@ -98,8 +97,8 @@ public final class JQuery
    *        Expression to use
    * @return a {@link JQueryInvocation} with an arbitrary expression. <code>$(<i>expr</i>)</code>
    */
-  @Nonnull
-  public static JQueryInvocation jQuery (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JQueryInvocation jQuery (@NonNull final IJSExpression aExpr)
   {
     return new JQueryInvocation (jQueryFunction ()).arg (aExpr);
   }
@@ -109,8 +108,8 @@ public final class JQuery
    *        HTML code to use
    * @return a {@link JQueryInvocation} with an HTML String. <code>$(<i>html</i>)</code>
    */
-  @Nonnull
-  public static JQueryInvocation jQuery (@Nonnull final String sHTML)
+  @NonNull
+  public static JQueryInvocation jQuery (@NonNull final String sHTML)
   {
     return jQuery (JSExpr.lit (sHTML));
   }
@@ -120,8 +119,8 @@ public final class JQuery
    *        HTML code to use
    * @return a {@link JQueryInvocation} with an HTML String. <code>$(<i>html</i>)</code>
    */
-  @Nonnull
-  public static JQueryInvocation jQuery (@Nonnull final IHCNode aHCNode)
+  @NonNull
+  public static JQueryInvocation jQuery (@NonNull final IHCNode aHCNode)
   {
     // Eventually the nonce might make sense here
     return jQuery (HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
@@ -130,7 +129,7 @@ public final class JQuery
   /**
    * @return a {@link JQueryInvocation} with an HTML document element. <code>$(document)</code>
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation jQueryDocument ()
   {
     return jQuery (JSHtml.document ());
@@ -139,7 +138,7 @@ public final class JQuery
   /**
    * @return a {@link JQueryInvocation} with an HTML document element. <code>$(window)</code>
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation jQueryWindow ()
   {
     return jQuery (JSHtml.window ());
@@ -148,7 +147,7 @@ public final class JQuery
   /**
    * @return a {@link JQueryInvocation} with <code>this</code>: <code>$(this)</code>
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation jQueryThis ()
   {
     return jQuery (JSExpr.THIS);
@@ -164,7 +163,7 @@ public final class JQuery
    * @return <code>$.ajax</code>
    * @since 9.3.1
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation ajax (@Nullable final IJSExpression aURL, @Nullable final JSAssocArray aArgs)
   {
     final JQueryInvocation ret = ajax ().arg (aURL != null ? aURL : JSExpr.NULL);
@@ -178,8 +177,8 @@ public final class JQuery
    *        JS code to be evaluated
    * @return <code>$.globalEval</code>
    */
-  @Nonnull
-  public static JQueryInvocation globalEval (@Nonnull final String sEval)
+  @NonNull
+  public static JQueryInvocation globalEval (@NonNull final String sEval)
   {
     return globalEval ().arg (sEval);
   }
@@ -189,80 +188,80 @@ public final class JQuery
    *        JS code to be evaluated
    * @return <code>$.globalEval</code>
    */
-  @Nonnull
-  public static JQueryInvocation globalEval (@Nonnull final IJSExpression aEval)
+  @NonNull
+  public static JQueryInvocation globalEval (@NonNull final IJSExpression aEval)
   {
     return globalEval ().arg (aEval);
   }
 
-  @Nonnull
-  public static JQueryInvocation parseHTML (@Nonnull final Node aHTML)
+  @NonNull
+  public static JQueryInvocation parseHTML (@NonNull final Node aHTML)
   {
     return parseHTML (XMLWriter.getNodeAsString (aHTML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseHTML (@Nonnull final IMicroNode aHTML)
+  @NonNull
+  public static JQueryInvocation parseHTML (@NonNull final IMicroNode aHTML)
   {
     return parseHTML (MicroWriter.getNodeAsString (aHTML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseHTML (@Nonnull final IHCNode aHTML)
+  @NonNull
+  public static JQueryInvocation parseHTML (@NonNull final IHCNode aHTML)
   {
     return parseHTML (HCRenderer.getAsHTMLStringWithoutNamespaces (aHTML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseHTML (@Nonnull final String sHTML)
+  @NonNull
+  public static JQueryInvocation parseHTML (@NonNull final String sHTML)
   {
     return parseHTML (JSExpr.lit (sHTML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseHTML (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JQueryInvocation parseHTML (@NonNull final IJSExpression aExpr)
   {
     return parseHTML ().arg (aExpr);
   }
 
-  @Nonnull
-  public static JQueryInvocation parseJSON (@Nonnull final IJson aJson)
+  @NonNull
+  public static JQueryInvocation parseJSON (@NonNull final IJson aJson)
   {
     return parseJSON (aJson.getAsJsonString ());
   }
 
-  @Nonnull
-  public static JQueryInvocation parseJSON (@Nonnull final String sJSON)
+  @NonNull
+  public static JQueryInvocation parseJSON (@NonNull final String sJSON)
   {
     return parseJSON (JSExpr.lit (sJSON));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseJSON (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JQueryInvocation parseJSON (@NonNull final IJSExpression aExpr)
   {
     return parseJSON ().arg (aExpr);
   }
 
-  @Nonnull
-  public static JQueryInvocation parseXML (@Nonnull final Node aXML)
+  @NonNull
+  public static JQueryInvocation parseXML (@NonNull final Node aXML)
   {
     return parseXML (XMLWriter.getNodeAsString (aXML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseXML (@Nonnull final IMicroNode aXML)
+  @NonNull
+  public static JQueryInvocation parseXML (@NonNull final IMicroNode aXML)
   {
     return parseXML (MicroWriter.getNodeAsString (aXML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseXML (@Nonnull final String sXML)
+  @NonNull
+  public static JQueryInvocation parseXML (@NonNull final String sXML)
   {
     return parseXML (JSExpr.lit (sXML));
   }
 
-  @Nonnull
-  public static JQueryInvocation parseXML (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public static JQueryInvocation parseXML (@NonNull final IJSExpression aExpr)
   {
     return parseXML ().arg (aExpr);
   }
@@ -276,8 +275,8 @@ public final class JQuery
    *        The ID to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed ID: <code>$('#id')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRef (@Nonnull @Nonempty final String sID)
+  @NonNull
+  public static JQueryInvocation idRef (@NonNull @Nonempty final String sID)
   {
     return JQuerySelector.id (sID).invoke ();
   }
@@ -289,8 +288,8 @@ public final class JQuery
    *        The ID to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed ID: <code>$('#'+id)</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRef (@Nonnull final IJSExpression aID)
+  @NonNull
+  public static JQueryInvocation idRef (@NonNull final IJSExpression aID)
   {
     return JQuerySelector.id (aID).invoke ();
   }
@@ -302,8 +301,8 @@ public final class JQuery
    *        The provider that has the ID to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed ID: <code>$('#id')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRef (@Nonnull @Nonempty final IHasID <String> aIDProvider)
+  @NonNull
+  public static JQueryInvocation idRef (@NonNull @Nonempty final IHasID <String> aIDProvider)
   {
     return JQuerySelector.id (aIDProvider).invoke ();
   }
@@ -315,8 +314,8 @@ public final class JQuery
    *        The element that has the ID to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed ID: <code>$('#id')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRef (@Nonnull @Nonempty final IHCHasID <?> aElement)
+  @NonNull
+  public static JQueryInvocation idRef (@NonNull @Nonempty final IHCHasID <?> aElement)
   {
     return JQuerySelector.id (aElement).invoke ();
   }
@@ -328,8 +327,8 @@ public final class JQuery
    *        The IDs to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed IDs: <code>$('#id1,#id2,#id3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRefMultiple (@Nonnull @Nonempty final String... aIDs)
+  @NonNull
+  public static JQueryInvocation idRefMultiple (@NonNull @Nonempty final String... aIDs)
   {
     ValueEnforcer.notEmpty (aIDs, "IDs");
 
@@ -346,9 +345,9 @@ public final class JQuery
    *        The IDs to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed IDs: <code>$('#id1,#id2,#id3')</code>
    */
-  @Nonnull
+  @NonNull
   @SafeVarargs
-  public static JQueryInvocation idRefMultiple (@Nonnull @Nonempty final IHasID <String>... aIDs)
+  public static JQueryInvocation idRefMultiple (@NonNull @Nonempty final IHasID <String>... aIDs)
   {
     ValueEnforcer.notEmptyNoNullValue (aIDs, "IDs");
 
@@ -365,8 +364,8 @@ public final class JQuery
    *        The IDs to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed IDs: <code>$('#id1,#id2,#id3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRefMultiple (@Nonnull @Nonempty final IJSExpression... aIDs)
+  @NonNull
+  public static JQueryInvocation idRefMultiple (@NonNull @Nonempty final IJSExpression... aIDs)
   {
     ValueEnforcer.notEmptyNoNullValue (aIDs, "IDs");
 
@@ -383,8 +382,8 @@ public final class JQuery
    *        The elements to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed IDs: <code>$('#id1,#id2,#id3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRefMultiple (@Nonnull @Nonempty final IHCHasID <?>... aIDs)
+  @NonNull
+  public static JQueryInvocation idRefMultiple (@NonNull @Nonempty final IHCHasID <?>... aIDs)
   {
     ValueEnforcer.notEmptyNoNullValue (aIDs, "IDs");
 
@@ -401,8 +400,8 @@ public final class JQuery
    *        The IDs to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed IDs: <code>$('#id1,#id2,#id3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation idRefMultiple (@Nonnull @Nonempty final Iterable <String> aIDs)
+  @NonNull
+  public static JQueryInvocation idRefMultiple (@NonNull @Nonempty final Iterable <String> aIDs)
   {
     ValueEnforcer.notEmpty (aIDs, "IDs");
 
@@ -419,8 +418,8 @@ public final class JQuery
    *        The class to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed class: <code>$('.class')</code>
    */
-  @Nonnull
-  public static JQueryInvocation classRef (@Nonnull final ICSSClassProvider aCSSClass)
+  @NonNull
+  public static JQueryInvocation classRef (@NonNull final ICSSClassProvider aCSSClass)
   {
     return JQuerySelector.clazz (aCSSClass).invoke ();
   }
@@ -432,8 +431,8 @@ public final class JQuery
    *        The classes to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed classes: <code>$('.class1,.class2,.class3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation classRefMultiple (@Nonnull @Nonempty final ICSSClassProvider... aCSSClasses)
+  @NonNull
+  public static JQueryInvocation classRefMultiple (@NonNull @Nonempty final ICSSClassProvider... aCSSClasses)
   {
     ValueEnforcer.notEmpty (aCSSClasses, "CSSClasses");
 
@@ -450,8 +449,8 @@ public final class JQuery
    *        The classes to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed classes: <code>$('.class1,.class2,.class3')</code>
    */
-  @Nonnull
-  public static JQueryInvocation classRefMultiple (@Nonnull @Nonempty final Iterable <? extends ICSSClassProvider> aCSSClasses)
+  @NonNull
+  public static JQueryInvocation classRefMultiple (@NonNull @Nonempty final Iterable <? extends ICSSClassProvider> aCSSClasses)
   {
     ValueEnforcer.notEmpty (aCSSClasses, "CSSClasses");
 
@@ -468,8 +467,8 @@ public final class JQuery
    *        The HTML element to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element: <code>$('element')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement)
+  @NonNull
+  public static JQueryInvocation elementNameRef (@NonNull final EHTMLElement eElement)
   {
     return JQuerySelector.element (eElement).invoke ();
   }
@@ -481,8 +480,8 @@ public final class JQuery
    *        The HTML element to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element: <code>$('element')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static JQueryInvocation elementNameRef (@NonNull @Nonempty final String sElementName)
   {
     return JQuerySelector.element (sElementName).invoke ();
   }
@@ -498,9 +497,9 @@ public final class JQuery
    * @return A jQuery invocation with the passed element and selector: <code>$('element#id')</code>
    *         or <code>$('element.class')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull final EHTMLElement eElement,
-                                                 @Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public static JQueryInvocation elementNameRef (@NonNull final EHTMLElement eElement,
+                                                 @NonNull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (eElement).chain (aSelector).invoke ();
   }
@@ -516,9 +515,9 @@ public final class JQuery
    * @return A jQuery invocation with the passed element and selector: <code>$('element#id')</code>
    *         or <code>$('element.class')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameRef (@Nonnull @Nonempty final String sElementName,
-                                                 @Nonnull final IJQuerySelector aSelector)
+  @NonNull
+  public static JQueryInvocation elementNameRef (@NonNull @Nonempty final String sElementName,
+                                                 @NonNull final IJQuerySelector aSelector)
   {
     return JQuerySelector.element (sElementName).chain (aSelector).invoke ();
   }
@@ -532,9 +531,9 @@ public final class JQuery
    *        The ID to be appended to the element. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element and ID: <code>$('element#id')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull final EHTMLElement eElement,
-                                                       @Nonnull @Nonempty final String sID)
+  @NonNull
+  public static JQueryInvocation elementNameWithIDRef (@NonNull final EHTMLElement eElement,
+                                                       @NonNull @Nonempty final String sID)
   {
     return elementNameRef (eElement, JQuerySelector.id (sID));
   }
@@ -548,9 +547,9 @@ public final class JQuery
    *        The ID to be appended to the element. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element and ID: <code>$('element#id')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameWithIDRef (@Nonnull @Nonempty final String sElementName,
-                                                       @Nonnull @Nonempty final String sID)
+  @NonNull
+  public static JQueryInvocation elementNameWithIDRef (@NonNull @Nonempty final String sElementName,
+                                                       @NonNull @Nonempty final String sID)
   {
     return elementNameRef (sElementName, JQuerySelector.id (sID));
   }
@@ -564,9 +563,9 @@ public final class JQuery
    *        The class to be appended to the element. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element and class: <code>$('element.class')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameWithClassRef (@Nonnull final EHTMLElement eElement,
-                                                          @Nonnull final ICSSClassProvider aCSSClass)
+  @NonNull
+  public static JQueryInvocation elementNameWithClassRef (@NonNull final EHTMLElement eElement,
+                                                          @NonNull final ICSSClassProvider aCSSClass)
   {
     return elementNameRef (eElement, JQuerySelector.clazz (aCSSClass));
   }
@@ -580,9 +579,9 @@ public final class JQuery
    *        The class to be appended to the element. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element and class: <code>$('element.class')</code>
    */
-  @Nonnull
-  public static JQueryInvocation elementNameWithClassRef (@Nonnull @Nonempty final String sElementName,
-                                                          @Nonnull final ICSSClassProvider aCSSClass)
+  @NonNull
+  public static JQueryInvocation elementNameWithClassRef (@NonNull @Nonempty final String sElementName,
+                                                          @NonNull final ICSSClassProvider aCSSClass)
   {
     return elementNameRef (sElementName, JQuerySelector.clazz (aCSSClass));
   }
@@ -594,8 +593,8 @@ public final class JQuery
    *        The name of the HTML elements to be selected. May not be <code>null</code>.
    * @return A jQuery invocation with the passed element: <code>$('[name=value]')</code>
    */
-  @Nonnull
-  public static JQueryInvocation nameAttrRef (@Nonnull @Nonempty final String sNameAttrValue)
+  @NonNull
+  public static JQueryInvocation nameAttrRef (@NonNull @Nonempty final String sNameAttrValue)
   {
     ValueEnforcer.notEmpty (sNameAttrValue, "NameAttrValue");
     return JQuerySelector.nameAttr (sNameAttrValue).invoke ();
@@ -606,8 +605,8 @@ public final class JQuery
     private final JQueryInvocation m_aInvocation;
     private final JSAnonymousFunction m_aAnonFunction;
 
-    public OnDocumentReadyInvocation (@Nonnull final JQueryInvocation aInvocation,
-                                      @Nonnull final JSAnonymousFunction aAnonFunction)
+    public OnDocumentReadyInvocation (@NonNull final JQueryInvocation aInvocation,
+                                      @NonNull final JSAnonymousFunction aAnonFunction)
     {
       m_aInvocation = aInvocation;
       m_aAnonFunction = aAnonFunction;
@@ -628,7 +627,7 @@ public final class JQuery
    * @return A pair consisting of the invocation and the anonymous function that can be filled with
    *         code to be executed.
    */
-  @Nonnull
+  @NonNull
   public static OnDocumentReadyInvocation onDocumentReady ()
   {
     final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
@@ -643,8 +642,8 @@ public final class JQuery
    *        The statement to be executed on document ready
    * @return The invocation object
    */
-  @Nonnull
-  public static JQueryInvocation onDocumentReady (@Nonnull final IHasJSCode aJSCodeProvider)
+  @NonNull
+  public static JQueryInvocation onDocumentReady (@NonNull final IHasJSCode aJSCodeProvider)
   {
     final JSAnonymousFunction aAnonFunction = new JSAnonymousFunction ();
     aAnonFunction.body ().add (aJSCodeProvider);
@@ -657,7 +656,7 @@ public final class JQuery
    *         return type Callbacks
    * @since jQuery 1.7
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation Callbacks ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "Callbacks");
@@ -668,7 +667,7 @@ public final class JQuery
    *         type Deferred
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation Deferred ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "Deferred");
@@ -678,7 +677,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.ajax()</code> with return
    *         type jqXHR
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation ajax ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "ajax");
@@ -689,7 +688,7 @@ public final class JQuery
    *         return type undefined
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation ajaxPrefilter ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "ajaxPrefilter");
@@ -700,7 +699,7 @@ public final class JQuery
    *         return type
    * @since jQuery 1.1
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation ajaxSetup ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "ajaxSetup");
@@ -711,7 +710,7 @@ public final class JQuery
    *         return type undefined
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation ajaxTransport ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "ajaxTransport");
@@ -722,7 +721,7 @@ public final class JQuery
    *         type Boolean
    * @since jQuery 1.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation contains ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "contains");
@@ -732,7 +731,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.data()</code> with return
    *         type Object
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation data ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "data");
@@ -743,7 +742,7 @@ public final class JQuery
    *         type undefined
    * @since jQuery 1.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation dequeue ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "dequeue");
@@ -753,7 +752,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.each()</code> with return
    *         type Object
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation each ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "each");
@@ -764,7 +763,7 @@ public final class JQuery
    *         type
    * @since jQuery 1.4.1
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation error ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "error");
@@ -774,7 +773,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.extend()</code> with return
    *         type Object
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation extend ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "extend");
@@ -783,7 +782,7 @@ public final class JQuery
   /**
    * @return The reference of the static jQuery field <code>jQuery.fn</code>
    */
-  @Nonnull
+  @NonNull
   public static JSFieldRef fn ()
   {
     return JQueryProperty.jQueryField ().ref ("fn");
@@ -793,7 +792,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.fn.extend()</code> with
    *         return type Object
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation fn_extend ()
   {
     return new JQueryInvocation (fn (), "extend");
@@ -803,7 +802,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.get()</code> with return type
    *         jqXHR
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation get ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "get");
@@ -813,7 +812,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.getJSON()</code> with return
    *         type jqXHR
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation getJSON ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "getJSON");
@@ -823,7 +822,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.getScript()</code> with
    *         return type jqXHR
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation getScript ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "getScript");
@@ -834,7 +833,7 @@ public final class JQuery
    *         return type
    * @since jQuery 1.0.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation globalEval ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "globalEval");
@@ -844,7 +843,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.grep()</code> with return
    *         type Array
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation grep ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "grep");
@@ -855,7 +854,7 @@ public final class JQuery
    *         type Boolean
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation hasData ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "hasData");
@@ -866,7 +865,7 @@ public final class JQuery
    *         return type undefined
    * @since jQuery 1.6
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation holdReady ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "holdReady");
@@ -877,7 +876,7 @@ public final class JQuery
    *         type Number
    * @since jQuery 1.2
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation inArray ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "inArray");
@@ -888,7 +887,7 @@ public final class JQuery
    *         type boolean
    * @since jQuery 1.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isArray ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isArray");
@@ -899,7 +898,7 @@ public final class JQuery
    *         return type Boolean
    * @since jQuery 1.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isEmptyObject ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isEmptyObject");
@@ -910,7 +909,7 @@ public final class JQuery
    *         return type boolean
    * @since jQuery 1.2
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isFunction ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isFunction");
@@ -921,7 +920,7 @@ public final class JQuery
    *         return type Boolean
    * @since jQuery 1.7
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isNumeric ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isNumeric");
@@ -932,7 +931,7 @@ public final class JQuery
    *         return type Boolean
    * @since jQuery 1.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isPlainObject ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isPlainObject");
@@ -943,7 +942,7 @@ public final class JQuery
    *         type boolean
    * @since jQuery 1.4.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isWindow ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isWindow");
@@ -954,7 +953,7 @@ public final class JQuery
    *         type Boolean
    * @since jQuery 1.1.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation isXMLDoc ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "isXMLDoc");
@@ -965,7 +964,7 @@ public final class JQuery
    *         return type Array
    * @since jQuery 1.2
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation makeArray ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "makeArray");
@@ -975,7 +974,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.map()</code> with return type
    *         Array
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation map ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "map");
@@ -985,7 +984,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.merge()</code> with return
    *         type Array
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation merge ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "merge");
@@ -995,7 +994,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.noConflict()</code> with
    *         return type Object
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation noConflict ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "noConflict");
@@ -1006,7 +1005,7 @@ public final class JQuery
    *         type undefined
    * @since jQuery 1.4
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation noop ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "noop");
@@ -1017,7 +1016,7 @@ public final class JQuery
    *         Number
    * @since jQuery 1.4.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation now ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "now");
@@ -1027,7 +1026,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.param()</code> with return
    *         type String
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation param ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "param");
@@ -1038,7 +1037,7 @@ public final class JQuery
    *         return type Array
    * @since jQuery 1.8
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation parseHTML ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "parseHTML");
@@ -1049,7 +1048,7 @@ public final class JQuery
    *         return type Object
    * @since jQuery 1.4.1
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation parseJSON ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "parseJSON");
@@ -1060,7 +1059,7 @@ public final class JQuery
    *         type XMLDocument
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation parseXML ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "parseXML");
@@ -1070,7 +1069,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.post()</code> with return
    *         type jqXHR
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation post ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "post");
@@ -1080,7 +1079,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.proxy()</code> with return
    *         type Function
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation proxy ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "proxy");
@@ -1090,7 +1089,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.queue()</code> with return
    *         type Array or jQuery
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation queue ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "queue");
@@ -1101,7 +1100,7 @@ public final class JQuery
    *         return type jQuery
    * @since jQuery 1.2.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation removeData ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "removeData");
@@ -1111,7 +1110,7 @@ public final class JQuery
    * @return The invocation of the static jQuery function <code>jQuery.trim()</code> with return
    *         type String
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation trim ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "trim");
@@ -1122,7 +1121,7 @@ public final class JQuery
    *         type String
    * @since jQuery 1.4.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation type ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "type");
@@ -1133,7 +1132,7 @@ public final class JQuery
    *         type Array
    * @since jQuery 1.1.3
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation unique ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "unique");
@@ -1144,7 +1143,7 @@ public final class JQuery
    *         type Promise
    * @since jQuery 1.5
    */
-  @Nonnull
+  @NonNull
   public static JQueryInvocation when ()
   {
     return new JQueryInvocation (JQueryProperty.jQueryField (), "when");

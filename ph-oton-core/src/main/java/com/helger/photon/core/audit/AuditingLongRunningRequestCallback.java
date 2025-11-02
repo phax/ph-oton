@@ -16,14 +16,14 @@
  */
 package com.helger.photon.core.audit;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A simple implementation of {@link ILongRunningRequestCallback} simply
@@ -39,8 +39,8 @@ public class AuditingLongRunningRequestCallback implements ILongRunningRequestCa
   public AuditingLongRunningRequestCallback ()
   {}
 
-  public void onLongRunningRequest (@Nonnull @Nonempty final String sUniqueRequestID,
-                                    @Nonnull final IRequestWebScope aRequestScope,
+  public void onLongRunningRequest (@NonNull @Nonempty final String sUniqueRequestID,
+                                    @NonNull final IRequestWebScope aRequestScope,
                                     @Nonnegative final long nRunningMilliseconds)
   {
     AuditHelper.onAuditExecuteSuccess ("long-running-request",

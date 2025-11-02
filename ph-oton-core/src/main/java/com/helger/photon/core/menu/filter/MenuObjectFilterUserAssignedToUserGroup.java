@@ -18,6 +18,9 @@ package com.helger.photon.core.menu.filter;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.core.EPhotonCoreText;
 import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.security.util.SecurityHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This filter matches any menu item if a user is logged in and if the user is
@@ -40,12 +40,12 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
 {
   private final String m_sUserGroupID;
 
-  public MenuObjectFilterUserAssignedToUserGroup (@Nonnull @Nonempty final String sUserGroupID)
+  public MenuObjectFilterUserAssignedToUserGroup (@NonNull @Nonempty final String sUserGroupID)
   {
     m_sUserGroupID = ValueEnforcer.notEmpty (sUserGroupID, "UserGroupID");
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getUserGroupID ()
   {
@@ -54,7 +54,7 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
 
   @Override
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  public String getDisplayText (@NonNull final Locale aContentLocale)
   {
     return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale, m_sUserGroupID);
   }

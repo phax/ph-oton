@@ -16,6 +16,8 @@
  */
 package com.helger.html.hc.html.deprecated;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.CGlobal;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.CHTMLAttributes;
@@ -23,8 +25,6 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.IHCConversionSettingsToNode;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents an HTML &lt;frameset&gt; element
@@ -47,7 +47,7 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     return m_nCols;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrameset setCols (final int nCols)
   {
     m_nCols = nCols;
@@ -59,7 +59,7 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     return m_nRows;
   }
 
-  @Nonnull
+  @NonNull
   public final HCFrameset setRows (final int nRows)
   {
     m_nRows = nRows;

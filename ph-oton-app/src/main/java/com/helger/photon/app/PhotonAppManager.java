@@ -16,6 +16,7 @@
  */
 package com.helger.photon.app;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.photon.app.resource.WebSiteResourceBundleManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -51,7 +50,7 @@ public final class PhotonAppManager extends AbstractGlobalSingleton
   {}
 
   @Override
-  protected void onAfterInstantiation (@Nonnull final IScope aScope)
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
   {
     try
     {
@@ -65,13 +64,13 @@ public final class PhotonAppManager extends AbstractGlobalSingleton
     }
   }
 
-  @Nonnull
+  @NonNull
   public static PhotonAppManager getInstance ()
   {
     return getGlobalSingleton (PhotonAppManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public static WebSiteResourceBundleManager getWebSiteResourceBundleMgr ()
   {
     return getInstance ().m_aWebSiteResourceBundleMgr;

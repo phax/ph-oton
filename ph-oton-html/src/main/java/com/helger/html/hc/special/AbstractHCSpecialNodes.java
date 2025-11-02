@@ -18,6 +18,8 @@ package com.helger.html.hc.special;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +41,6 @@ import com.helger.css.media.ICSSMediaList;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.resource.css.ICSSCodeProvider;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract implementation of {@link IHCSpecialNodes}.
@@ -91,7 +90,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
            m_aInlineJSAfterExternal.isEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   protected ICSSMediaList getSafeCSSMediaList (@Nullable final ICSSMediaList aMediaList)
   {
     if (aMediaList != null && !aMediaList.hasNoMediaOrAll ())
@@ -105,8 +104,8 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return new CSSMediaList ();
   }
 
-  @Nonnull
-  public IMPLTYPE addExternalCSS (@Nullable final ICSSMediaList aMediaList, @Nonnull @Nonempty final String sCSSURI)
+  @NonNull
+  public IMPLTYPE addExternalCSS (@Nullable final ICSSMediaList aMediaList, @NonNull @Nonempty final String sCSSURI)
   {
     ValueEnforcer.notEmpty (sCSSURI, "CSSURI");
 
@@ -123,7 +122,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return !m_aExternalCSSs.isEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> getAllExternalCSSs ()
   {
@@ -133,9 +132,9 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE addInlineCSSBeforeExternal (@Nullable final ICSSMediaList aMediaList,
-                                              @Nonnull final CharSequence aInlineCSS)
+                                              @NonNull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -148,16 +147,16 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return m_aInlineCSSBeforeExternal.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ICSSCodeProvider> getAllInlineCSSBeforeExternal ()
   {
     return m_aInlineCSSBeforeExternal.getAll ();
   }
 
-  @Nonnull
+  @NonNull
   public IMPLTYPE addInlineCSSAfterExternal (@Nullable final ICSSMediaList aMediaList,
-                                             @Nonnull final CharSequence aInlineCSS)
+                                             @NonNull final CharSequence aInlineCSS)
   {
     ValueEnforcer.notNull (aInlineCSS, "InlineCSS");
 
@@ -170,15 +169,15 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return m_aInlineCSSAfterExternal.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ICSSCodeProvider> getAllInlineCSSAfterExternal ()
   {
     return m_aInlineCSSAfterExternal.getAll ();
   }
 
-  @Nonnull
-  public IMPLTYPE addExternalJS (@Nonnull @Nonempty final String sJSURI)
+  @NonNull
+  public IMPLTYPE addExternalJS (@NonNull @Nonempty final String sJSURI)
   {
     ValueEnforcer.notEmpty (sJSURI, "JSURI");
 
@@ -192,15 +191,15 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return m_aExternalJSs.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllExternalJSs ()
   {
     return m_aExternalJSs.getCopyAsList ();
   }
 
-  @Nonnull
-  public IMPLTYPE addInlineJSBeforeExternal (@Nonnull final IHasJSCode aInlineJS)
+  @NonNull
+  public IMPLTYPE addInlineJSBeforeExternal (@NonNull final IHasJSCode aInlineJS)
   {
     ValueEnforcer.notNull (aInlineJS, "InlineJS");
 
@@ -213,15 +212,15 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return m_aInlineJSBeforeExternal.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public CollectingJSCodeProvider getInlineJSBeforeExternal ()
   {
     return m_aInlineJSBeforeExternal.getClone ();
   }
 
-  @Nonnull
-  public IMPLTYPE addInlineJSAfterExternal (@Nonnull final IHasJSCode aInlineJS)
+  @NonNull
+  public IMPLTYPE addInlineJSAfterExternal (@NonNull final IHasJSCode aInlineJS)
   {
     ValueEnforcer.notNull (aInlineJS, "InlineJS");
 
@@ -234,15 +233,15 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
     return m_aInlineJSAfterExternal.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public CollectingJSCodeProvider getInlineJSAfterExternal ()
   {
     return m_aInlineJSAfterExternal.getClone ();
   }
 
-  @Nonnull
-  public IMPLTYPE addAll (@Nonnull final IHCSpecialNodes aSpecialNodes)
+  @NonNull
+  public IMPLTYPE addAll (@NonNull final IHCSpecialNodes aSpecialNodes)
   {
     ValueEnforcer.notNull (aSpecialNodes, "SpecialNodes");
 

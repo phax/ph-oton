@@ -16,6 +16,9 @@
  */
 package com.helger.photon.security.auth;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
@@ -23,9 +26,6 @@ import com.helger.photon.security.token.user.IUserToken;
 import com.helger.photon.security.token.user.IUserTokenManager;
 import com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
@@ -37,13 +37,13 @@ import jakarta.annotation.Nullable;
 @IsSPIImplementation
 public class UserTokenAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
 {
-  public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public boolean supportsCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     return aCredentials instanceof ITokenCredentials;
   }
 
   @Nullable
-  public IUserToken getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public IUserToken getSubjectFromCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     final ITokenCredentials aATC = (ITokenCredentials) aCredentials;
     final IUserTokenManager aUserTokenMgr = PhotonSecurityManager.getUserTokenMgr ();

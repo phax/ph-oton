@@ -20,6 +20,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.OverrideOnDemand;
@@ -35,9 +38,6 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.html.JSHtml;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Wrapper for Fineuploader 3.1.1
@@ -118,14 +118,14 @@ public class FineUploaderBasic
    *        New value
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setDebug (final boolean bDebug)
   {
     m_bDebug = bDebug;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ISimpleURL getEndpoint ()
   {
     return m_aRequestEndpoint;
@@ -141,14 +141,14 @@ public class FineUploaderBasic
    *        The new action URL. May not be <code>null</code>.
    * @return this
    */
-  @Nonnull
-  public FineUploaderBasic setEndpoint (@Nonnull final ISimpleURL aRequestEndpoint)
+  @NonNull
+  public FineUploaderBasic setEndpoint (@NonNull final ISimpleURL aRequestEndpoint)
   {
     m_aRequestEndpoint = ValueEnforcer.notNull (aRequestEndpoint, "RequestEndpoint");
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllParams ()
   {
@@ -162,7 +162,7 @@ public class FineUploaderBasic
    *        New parameters to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.setAll (aParams);
@@ -176,7 +176,7 @@ public class FineUploaderBasic
    *        New parameters to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic addParams (@Nullable final Map <String, String> aParams)
   {
     m_aRequestParams.putAllIfNotNull (aParams);
@@ -192,8 +192,8 @@ public class FineUploaderBasic
    *        Parameter value
    * @return this
    */
-  @Nonnull
-  public FineUploaderBasic addParam (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploaderBasic addParam (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -218,14 +218,14 @@ public class FineUploaderBasic
    *        <code>true</code> to put request params in bodx
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setRequestParamsInBody (final boolean bRequestParamsInBody)
   {
     m_bRequestParamsInBody = bRequestParamsInBody;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, String> getAllCustomHeaders ()
   {
@@ -240,7 +240,7 @@ public class FineUploaderBasic
    *        Custom headers to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.setAll (aCustomHeaders);
@@ -255,7 +255,7 @@ public class FineUploaderBasic
    *        Custom headers to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic addCustomHeaders (@Nullable final Map <String, String> aCustomHeaders)
   {
     m_aRequestCustomHeaders.putAllIfNotNull (aCustomHeaders);
@@ -272,8 +272,8 @@ public class FineUploaderBasic
    *        Custom header value
    * @return this
    */
-  @Nonnull
-  public FineUploaderBasic addCustomHeader (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
+  @NonNull
+  public FineUploaderBasic addCustomHeader (@NonNull @Nonempty final String sKey, @NonNull final String sValue)
   {
     ValueEnforcer.notEmpty (sKey, "Key");
     ValueEnforcer.notNull (sValue, "Value");
@@ -295,7 +295,7 @@ public class FineUploaderBasic
    *        <code>true</code> to force
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setForceMultipart (final boolean bForceMultipart)
   {
     m_bRequestForceMultipart = bForceMultipart;
@@ -317,7 +317,7 @@ public class FineUploaderBasic
    *        Element ID of the button
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setButtonElementID (@Nullable final String sButtonElementID)
   {
     m_sButtonElementID = sButtonElementID;
@@ -337,7 +337,7 @@ public class FineUploaderBasic
    *        <code>true</code> for multiple, <code>false</code> for single
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setMultiple (final boolean bMultiple)
   {
     m_bMultiple = bMultiple;
@@ -357,7 +357,7 @@ public class FineUploaderBasic
    *        Maximum number. Must be &gt; 0.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setMaxConnections (@Nonnegative final int nMaxConnections)
   {
     ValueEnforcer.isGT0 (nMaxConnections, "MaxConnections");
@@ -378,7 +378,7 @@ public class FineUploaderBasic
    *        disable?
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setDisableCancelForFormUploads (final boolean bDisableCancelForFormUploads)
   {
     m_bDisableCancelForFormUploads = bDisableCancelForFormUploads;
@@ -398,14 +398,14 @@ public class FineUploaderBasic
    *        <code>false</code> to disable auto upload
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setAutoUpload (final boolean bAutoUpload)
   {
     m_bAutoUpload = bAutoUpload;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedSet <String> getAllAllowedExtensions ()
   {
@@ -423,7 +423,7 @@ public class FineUploaderBasic
    *        The allowed extensions to be set.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
   {
     m_aValidationAllowedExtensions.setAll (aAllowedExtensions);
@@ -441,7 +441,7 @@ public class FineUploaderBasic
    *        The allowed extensions to be added.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic addAllowedExtensions (@Nullable final Set <String> aAllowedExtensions)
   {
     if (aAllowedExtensions != null)
@@ -460,8 +460,8 @@ public class FineUploaderBasic
    *        The allowed extension to be added. E.g. ("jpeg", "jpg", "gif")
    * @return this
    */
-  @Nonnull
-  public FineUploaderBasic addAllowedExtension (@Nonnull @Nonempty final String sAllowedExtension)
+  @NonNull
+  public FineUploaderBasic addAllowedExtension (@NonNull @Nonempty final String sAllowedExtension)
   {
     ValueEnforcer.notEmpty (sAllowedExtension, "allowedExtension");
     m_aValidationAllowedExtensions.add (sAllowedExtension);
@@ -481,7 +481,7 @@ public class FineUploaderBasic
    *        Size limit. 0 == unlimited
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setSizeLimit (@Nonnegative final int nSizeLimit)
   {
     ValueEnforcer.isGE0 (nSizeLimit, "SizeLimit");
@@ -502,7 +502,7 @@ public class FineUploaderBasic
    *        Minimum size limit. 0 == unlimited
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setMinSizeLimit (@Nonnegative final int nMinSizeLimit)
   {
     ValueEnforcer.isGE0 (nMinSizeLimit, "MinSizeLimit");
@@ -528,14 +528,14 @@ public class FineUploaderBasic
    *        <code>false</code> to not stop
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setStopOnFirstInvalidFile (final boolean bStopOnFirstInvalidFile)
   {
     m_bValidationStopOnFirstInvalidFile = bStopOnFirstInvalidFile;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getInputName ()
   {
@@ -552,8 +552,8 @@ public class FineUploaderBasic
    *        The input name
    * @return this
    */
-  @Nonnull
-  public FineUploaderBasic setInputName (@Nonnull @Nonempty final String sInputName)
+  @NonNull
+  public FineUploaderBasic setInputName (@NonNull @Nonempty final String sInputName)
   {
     ValueEnforcer.notEmpty (sInputName, "InputName");
 
@@ -574,7 +574,7 @@ public class FineUploaderBasic
    *        <code>true</code> or <code>false</code>
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setRetryEnableAuto (final boolean bRetryEnableAuto)
   {
     m_bRetryEnableAuto = bRetryEnableAuto;
@@ -594,7 +594,7 @@ public class FineUploaderBasic
    *        The number of retry attempts.
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setRetryMaxAutoAttempts (final int nRetryMaxAutoAttempts)
   {
     m_nRetryMaxAutoAttempts = nRetryMaxAutoAttempts;
@@ -614,7 +614,7 @@ public class FineUploaderBasic
    *        Number of seconds
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setRetryAutoAttemptDelay (final int nRetryAutoAttemptDelay)
   {
     m_nRetryAutoAttemptDelay = nRetryAutoAttemptDelay;
@@ -634,7 +634,7 @@ public class FineUploaderBasic
    *        property name
    * @return this
    */
-  @Nonnull
+  @NonNull
   public FineUploaderBasic setRetryPreventRetryResponseProperty (@Nullable final String sRetryPreventRetryResponseProperty)
   {
     m_sRetryPreventRetryResponseProperty = sRetryPreventRetryResponseProperty;
@@ -648,7 +648,7 @@ public class FineUploaderBasic
    *        The locale to be used for test resolving. May be <code>null</code> if none passed.
    */
   @OverrideOnDemand
-  protected void extendJSON (@Nonnull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
+  protected void extendJSON (@NonNull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
   {}
 
   /**
@@ -658,10 +658,10 @@ public class FineUploaderBasic
    *        The locale to be used for test resolving
    */
   @OverrideOnDemand
-  protected void extendJSONMessages (@Nonnull final JSAssocArray aMessages, @Nonnull final Locale aDisplayLocale)
+  protected void extendJSONMessages (@NonNull final JSAssocArray aMessages, @NonNull final Locale aDisplayLocale)
   {}
 
-  @Nonnull
+  @NonNull
   public final JSAssocArray getJSON ()
   {
     final JSAssocArray ret = new JSAssocArray ();

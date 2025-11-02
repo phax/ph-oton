@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.mgr;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +29,6 @@ import com.helger.photon.core.smtp.NamedSMTPSettingsManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.smtp.scope.ScopedMailAPI;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The meta system manager encapsulates all managers that are located in this
@@ -61,7 +60,7 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
   {}
 
   @Override
-  protected void onAfterInstantiation (@Nonnull final IScope aScope)
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
   {
     try
     {
@@ -80,25 +79,25 @@ public final class PhotonCoreManager extends AbstractGlobalSingleton
     }
   }
 
-  @Nonnull
+  @NonNull
   public static PhotonCoreManager getInstance ()
   {
     return getGlobalSingleton (PhotonCoreManager.class);
   }
 
-  @Nonnull
+  @NonNull
   public static NamedSMTPSettingsManager getSMTPSettingsMgr ()
   {
     return getInstance ().m_aSMTPSettingsMgr;
   }
 
-  @Nonnull
+  @NonNull
   public static FailedMailQueueWithDAO getFailedMailQueue ()
   {
     return getInstance ().m_aFailedMailQueue;
   }
 
-  @Nonnull
+  @NonNull
   public static GoMappingManager getGoMappingMgr ()
   {
     return getInstance ().m_aGoMappingMgr;

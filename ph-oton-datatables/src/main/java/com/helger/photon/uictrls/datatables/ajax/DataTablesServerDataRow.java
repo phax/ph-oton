@@ -18,6 +18,8 @@ package com.helger.photon.uictrls.datatables.ajax;
 
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +36,6 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
 import com.helger.xml.microdom.IMicroQName;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class holds table rows to be used by the DataTables server side
@@ -55,7 +54,7 @@ public final class DataTablesServerDataRow
   private ICommonsOrderedMap <IMicroQName, String> m_aRowAttr;
   private final ICommonsList <DataTablesServerDataCell> m_aCells;
 
-  public DataTablesServerDataRow (@Nonnull final HCRow aRow)
+  public DataTablesServerDataRow (@NonNull final HCRow aRow)
   {
     if (aRow.hasAnyStyle ())
       LOGGER.warn ("Cell has styles assigned which will be lost: " + aRow.getAllStyles ());
@@ -117,7 +116,7 @@ public final class DataTablesServerDataRow
     return CollectionHelper.isNotEmpty (m_aRowData);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject ("speed")
   public ICommonsOrderedMap <IMicroQName, String> directGetAllRowData ()
   {
@@ -136,14 +135,14 @@ public final class DataTablesServerDataRow
     return m_aRowAttr;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ICommonsList <DataTablesServerDataCell> directGetAllCells ()
   {
     return m_aCells;
   }
 
-  @Nonnull
+  @NonNull
   public DataTablesServerDataCell getCellAtIndex (@Nonnegative final int nIndex)
   {
     return m_aCells.get (nIndex);

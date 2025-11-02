@@ -18,15 +18,15 @@ package com.helger.photon.uicore.html.select;
 
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.name.IHasName;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.html.forms.HCOption;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Select roles a user group should be assigned to
@@ -35,7 +35,7 @@ import jakarta.annotation.Nullable;
  */
 public class HCRoleForUserGroupSelect extends HCExtSelect
 {
-  public HCRoleForUserGroupSelect (@Nonnull final RequestField aRF, @Nullable final Collection <String> aSelectedRoles)
+  public HCRoleForUserGroupSelect (@NonNull final RequestField aRF, @Nullable final Collection <String> aSelectedRoles)
   {
     super (aRF);
     setMultiple (true);

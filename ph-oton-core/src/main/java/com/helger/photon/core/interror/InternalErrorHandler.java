@@ -24,6 +24,8 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,8 +73,6 @@ import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -102,7 +102,7 @@ public final class InternalErrorHandler
    * @return This is either a new persistent int ID or a non-persistent ID together with the
    *         timestamp. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String createNewErrorID ()
   {
@@ -122,22 +122,22 @@ public final class InternalErrorHandler
    *
    * @return The created error ID. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String createNewInternalErrorID ()
   {
     return "internal-error-" + createNewErrorID ();
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  private static String _getThrowableAsString (@Nonnull final Throwable t)
+  private static String _getThrowableAsString (@NonNull final Throwable t)
   {
     return t.getMessage () + " -- " + t.getClass ().getName ();
   }
 
-  @Nonnull
-  private static String _createMailSubject (@Nonnull final InternalErrorMetadata aMetadata)
+  @NonNull
+  private static String _createMailSubject (@NonNull final InternalErrorMetadata aMetadata)
   {
     final StringBuilder aSubject = new StringBuilder ();
     if (GlobalDebug.isDebugMode ())
@@ -152,10 +152,10 @@ public final class InternalErrorHandler
     return aSubject.toString ();
   }
 
-  private static void _sendInternalErrorMailToVendor (@Nonnull final InternalErrorMetadata aMetadata,
-                                                      @Nonnull final ThreadDescriptor aCurrentThreadDescriptor,
+  private static void _sendInternalErrorMailToVendor (@NonNull final InternalErrorMetadata aMetadata,
+                                                      @NonNull final ThreadDescriptor aCurrentThreadDescriptor,
                                                       @Nullable final ThreadDescriptorList aAllThreads,
-                                                      @Nonnull final InternalErrorEmailSettings aEmailSettings,
+                                                      @NonNull final InternalErrorEmailSettings aEmailSettings,
                                                       @Nullable final IEmailAttachmentList aEmailAttachments,
                                                       final boolean bAddClassPath,
                                                       @Nonnegative final int nDuplicateEliminiationCount)
@@ -253,9 +253,9 @@ public final class InternalErrorHandler
     }
   }
 
-  @Nonnull
-  private static ESuccess _saveInternalErrorToXML (@Nonnull final InternalErrorMetadata aMetadata,
-                                                   @Nonnull final ThreadDescriptor aCurrentDescriptor,
+  @NonNull
+  private static ESuccess _saveInternalErrorToXML (@NonNull final InternalErrorMetadata aMetadata,
+                                                   @NonNull final ThreadDescriptor aCurrentDescriptor,
                                                    @Nullable final ThreadDescriptorList aAllThreads,
                                                    @Nullable final IEmailAttachmentList aEmailAttachments)
   {
@@ -300,7 +300,7 @@ public final class InternalErrorHandler
     return MicroWriter.writeToFile (aDoc, aDestFile);
   }
 
-  @Nonnull
+  @NonNull
   public static InternalErrorMetadata fillInternalErrorMetaData (@Nullable final IRequestWebScopeWithoutResponse aProvidedRequestScope,
                                                                  @Nullable final String sErrorID,
                                                                  @Nullable final Map <String, String> aCustomData)
@@ -480,7 +480,7 @@ public final class InternalErrorHandler
                                                     @Nullable final IRequestWebScopeWithoutResponse aRequestScope,
                                                     @Nullable final String sErrorID,
                                                     @Nullable final Map <String, String> aCustomData,
-                                                    @Nonnull final InternalErrorEmailSettings aEmailSettings,
+                                                    @NonNull final InternalErrorEmailSettings aEmailSettings,
                                                     @Nullable final IEmailAttachmentList aEmailAttachments,
                                                     final boolean bAddClassPath,
                                                     @Nonnegative final int nDuplicateEliminiationCount)
@@ -563,7 +563,7 @@ public final class InternalErrorHandler
    *        {@link InternalErrorSettings}. If <code>null</code> the default ones are used.
    * @return The created unique error ID. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   static String handleInternalError (final boolean bSendEmail,
                                      final boolean bSaveAsXML,

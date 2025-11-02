@@ -19,6 +19,8 @@ package com.helger.photon.core.go;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,6 @@ import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Default servlet that performs URL redirects based on {@link GoMappingManager}
  * .
@@ -55,7 +54,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
                                                                                                                   "$ok");
   private final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> m_aMenuTreeSupplier;
 
-  public GoXServletHandler (@Nonnull final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
+  public GoXServletHandler (@NonNull final Function <? super IRequestWebScopeWithoutResponse, ? extends IMenuTree> aMenuTreeSupplier)
   {
     ValueEnforcer.notNull (aMenuTreeSupplier, "MenuTreeSupplier");
     m_aMenuTreeSupplier = aMenuTreeSupplier;
@@ -70,7 +69,7 @@ public class GoXServletHandler implements IXServletSimpleHandler
    */
   @Nullable
   @OverrideOnDemand
-  protected GoMappingItem getResolvedGoMappingItem (@Nonnull final String sKey)
+  protected GoMappingItem getResolvedGoMappingItem (@NonNull final String sKey)
   {
     return PhotonCoreManager.getGoMappingMgr ().getItemOfKey (sKey);
   }
@@ -84,10 +83,10 @@ public class GoXServletHandler implements IXServletSimpleHandler
    *        The key that was searched.
    * @return Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @OverrideOnDemand
-  protected SimpleURL getURLForNonExistingItem (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                                @Nonnull final String sKey)
+  protected SimpleURL getURLForNonExistingItem (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                                @NonNull final String sKey)
   {
     return new SimpleURL (aRequestScope.getFullContextPath ());
   }
@@ -103,13 +102,13 @@ public class GoXServletHandler implements IXServletSimpleHandler
    *        The resolved target URL to be manipulated. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected void modifyResultURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                  @Nonnull final String sKey,
-                                  @Nonnull final SimpleURL aTargetURL)
+  protected void modifyResultURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @NonNull final String sKey,
+                                  @NonNull final SimpleURL aTargetURL)
   {}
 
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws Exception
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // cut the leading "/" and strip of any ";jsessionid="!
     String sKey = aRequestScope.getPathWithinServlet ();

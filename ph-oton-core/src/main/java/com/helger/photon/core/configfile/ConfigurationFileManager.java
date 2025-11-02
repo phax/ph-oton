@@ -16,6 +16,7 @@
  */
 package com.helger.photon.core.configfile;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,6 @@ import com.helger.config.json.source.ConfigurationSourceJson;
 import com.helger.config.source.resource.IConfigurationSourceResource;
 import com.helger.config.source.resource.properties.ConfigurationSourceProperties;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * A non-persisting manager for {@link ConfigurationFile} objects. Needs to be initialized manually
@@ -51,13 +50,13 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
   public ConfigurationFileManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static ConfigurationFileManager getInstance ()
   {
     return getGlobalSingleton (ConfigurationFileManager.class);
   }
 
-  public void registerConfigurationFile (@Nonnull final ConfigurationFile aConfigurationFile)
+  public void registerConfigurationFile (@NonNull final ConfigurationFile aConfigurationFile)
   {
     ValueEnforcer.notNull (aConfigurationFile, "ConfigurationFile");
 
@@ -74,7 +73,7 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
    *        The configuration to use. May not be <code>null</code>.
    * @since 8.2.7
    */
-  public void registerAll (@Nonnull final IConfig aConfig)
+  public void registerAll (@NonNull final IConfig aConfig)
   {
     ValueEnforcer.notNull (aConfig, "Config");
 
@@ -110,7 +109,7 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
     });
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <ConfigurationFile> getAllConfigurationFiles ()
   {

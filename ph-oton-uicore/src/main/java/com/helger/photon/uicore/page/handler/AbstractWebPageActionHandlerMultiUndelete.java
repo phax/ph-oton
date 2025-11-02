@@ -18,6 +18,8 @@ package com.helger.photon.uicore.page.handler;
 
 import java.util.function.BiFunction;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.html.hc.html.forms.IHCForm;
@@ -26,17 +28,15 @@ import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 import com.helger.photon.uicore.page.IWebPageFormUIHandler;
 
-import jakarta.annotation.Nonnull;
-
 public abstract class AbstractWebPageActionHandlerMultiUndelete <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext, FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
                                                                 extends
                                                                 AbstractWebPageActionHandlerMultiWithQuery <DATATYPE, WPECTYPE, FORM_TYPE, TOOLBAR_TYPE>
 {
   public static final String FORM_ID_UNDELETE = "undeleteform";
 
-  public AbstractWebPageActionHandlerMultiUndelete (@Nonnull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
-                                                    @Nonnull @Nonempty final String sFieldName,
-                                                    @Nonnull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
+  public AbstractWebPageActionHandlerMultiUndelete (@NonNull final IWebPageFormUIHandler <FORM_TYPE, TOOLBAR_TYPE> aUIHandler,
+                                                    @NonNull @Nonempty final String sFieldName,
+                                                    @NonNull final BiFunction <WPECTYPE, String, DATATYPE> aResolver)
   {
     super (aUIHandler, sFieldName, aResolver, CPageParam.ACTION_UNDELETE, FORM_ID_UNDELETE);
   }

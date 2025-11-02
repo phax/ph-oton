@@ -21,6 +21,8 @@ import java.io.IOException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +36,6 @@ import com.helger.httpclient.HttpClientSettings;
 import com.helger.httpclient.response.ResponseHandlerJson;
 import com.helger.json.IJson;
 import com.helger.url.SimpleURL;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class ReCaptchaServerSideValidator
 {
@@ -56,10 +55,10 @@ public final class ReCaptchaServerSideValidator
    *        The HTTP client settings. May not be <code>null</code>.
    * @return {@link ESuccess}
    */
-  @Nonnull
-  public static ESuccess check (@Nonnull @Nonempty final String sServerSideKey,
+  @NonNull
+  public static ESuccess check (@NonNull @Nonempty final String sServerSideKey,
                                 @Nullable final String sReCaptchaResponse,
-                                @Nonnull final HttpClientSettings aHCS)
+                                @NonNull final HttpClientSettings aHCS)
   {
     ValueEnforcer.notEmpty (sServerSideKey, "ServerSideKey");
     ValueEnforcer.notNull (aHCS, "HttpClientSettings");

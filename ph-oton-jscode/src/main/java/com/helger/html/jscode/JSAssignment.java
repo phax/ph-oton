@@ -16,14 +16,14 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Assignment statements, which are also expressions.
@@ -36,44 +36,44 @@ public class JSAssignment extends AbstractJSExpression implements IJSStatement
   private final String m_sOp;
   private final IJSExpression m_aRhs;
 
-  public JSAssignment (@Nonnull final IJSAssignmentTarget aLhs, @Nonnull @Nonempty final String sOp, @Nonnull final IJSExpression aRhs)
+  public JSAssignment (@NonNull final IJSAssignmentTarget aLhs, @NonNull @Nonempty final String sOp, @NonNull final IJSExpression aRhs)
   {
     m_aLhs = ValueEnforcer.notNull (aLhs, "Lhs");
     m_sOp = ValueEnforcer.notEmpty (sOp, "Operator");
     m_aRhs = ValueEnforcer.notNull (aRhs, "Rhs");
   }
 
-  @Nonnull
+  @NonNull
   public IJSAssignmentTarget lhs ()
   {
     return m_aLhs;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String operator ()
   {
     return m_sOp;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression rhs ()
   {
     return m_aRhs;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (m_aLhs).plain (m_sOp).generatable (m_aRhs);
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.generatable (this).plain (';').nl ();
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, (IJSStatement) this);

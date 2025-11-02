@@ -16,12 +16,12 @@
  */
 package com.helger.html.jscode.type;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSFieldRef;
 import com.helger.html.jscode.JSInvocation;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Contains the JS built-in type 'Math'
@@ -35,272 +35,272 @@ public class JSTypeMath extends JSPrimitiveType
     super ("Math");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef e ()
   {
     return global ().ref ("E");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef ln2 ()
   {
     return global ().ref ("LN2");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef ln10 ()
   {
     return global ().ref ("LN10");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef log2e ()
   {
     return global ().ref ("LOG2E");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef log10e ()
   {
     return global ().ref ("LOG10E");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef pi ()
   {
     return global ().ref ("PI");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef sqrt1_2 ()
   {
     return global ().ref ("SQRT1_2");
   }
 
-  @Nonnull
+  @NonNull
   public JSFieldRef sqrt2 ()
   {
     return global ().ref ("SQRT2");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation abs ()
   {
     return global ().invoke ("abs");
   }
 
-  @Nonnull
-  public JSInvocation abs (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation abs (@NonNull final IJSExpression aExpr)
   {
     return abs ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation acos ()
   {
     return global ().invoke ("acos");
   }
 
-  @Nonnull
-  public JSInvocation acos (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation acos (@NonNull final IJSExpression aExpr)
   {
     return acos ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation asin ()
   {
     return global ().invoke ("asin");
   }
 
-  @Nonnull
-  public JSInvocation asin (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation asin (@NonNull final IJSExpression aExpr)
   {
     return asin ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation atan ()
   {
     return global ().invoke ("atan");
   }
 
-  @Nonnull
-  public JSInvocation atan (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation atan (@NonNull final IJSExpression aExpr)
   {
     return atan ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation atan2 ()
   {
     return global ().invoke ("atan2");
   }
 
-  @Nonnull
-  public JSInvocation atan2 (@Nonnull final IJSExpression aExprY, @Nonnull final IJSExpression aExprX)
+  @NonNull
+  public JSInvocation atan2 (@NonNull final IJSExpression aExprY, @NonNull final IJSExpression aExprX)
   {
     return atan2 ().arg (aExprY).arg (aExprX);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation ceil ()
   {
     return global ().invoke ("ceil");
   }
 
-  @Nonnull
-  public JSInvocation ceil (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation ceil (@NonNull final IJSExpression aExpr)
   {
     return ceil ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation cos ()
   {
     return global ().invoke ("cos");
   }
 
-  @Nonnull
-  public JSInvocation cos (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation cos (@NonNull final IJSExpression aExpr)
   {
     return cos ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation exp ()
   {
     return global ().invoke ("exp");
   }
 
-  @Nonnull
-  public JSInvocation exp (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation exp (@NonNull final IJSExpression aExpr)
   {
     return exp ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation floor ()
   {
     return global ().invoke ("floor");
   }
 
-  @Nonnull
-  public JSInvocation floor (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation floor (@NonNull final IJSExpression aExpr)
   {
     return floor ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation log ()
   {
     return global ().invoke ("log");
   }
 
-  @Nonnull
-  public JSInvocation log (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation log (@NonNull final IJSExpression aExpr)
   {
     return log ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation max ()
   {
     return global ().invoke ("max");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation max (@Nullable final Iterable <? extends IJSExpression> aExprs)
   {
     return max ().args (aExprs);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation max (@Nullable final IJSExpression... aExprs)
   {
     return max ().args (aExprs);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation min ()
   {
     return global ().invoke ("min");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation min (@Nullable final Iterable <? extends IJSExpression> aExprs)
   {
     return min ().args (aExprs);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation min (@Nullable final IJSExpression... aExprs)
   {
     return min ().args (aExprs);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation pow ()
   {
     return global ().invoke ("pow");
   }
 
-  @Nonnull
-  public JSInvocation pow (@Nonnull final IJSExpression aExprX, @Nonnull final IJSExpression aExprY)
+  @NonNull
+  public JSInvocation pow (@NonNull final IJSExpression aExprX, @NonNull final IJSExpression aExprY)
   {
     return pow ().arg (aExprX).arg (aExprY);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation random ()
   {
     return global ().invoke ("random");
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation round ()
   {
     return global ().invoke ("round");
   }
 
-  @Nonnull
-  public JSInvocation round (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation round (@NonNull final IJSExpression aExpr)
   {
     return round ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation sin ()
   {
     return global ().invoke ("sin");
   }
 
-  @Nonnull
-  public JSInvocation sin (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation sin (@NonNull final IJSExpression aExpr)
   {
     return sin ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation sqrt ()
   {
     return global ().invoke ("sqrt");
   }
 
-  @Nonnull
-  public JSInvocation sqrt (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation sqrt (@NonNull final IJSExpression aExpr)
   {
     return sqrt ().arg (aExpr);
   }
 
-  @Nonnull
+  @NonNull
   public JSInvocation tan ()
   {
     return global ().invoke ("tan");
   }
 
-  @Nonnull
-  public JSInvocation tan (@Nonnull final IJSExpression aExpr)
+  @NonNull
+  public JSInvocation tan (@NonNull final IJSExpression aExpr)
   {
     return tan ().arg (aExpr);
   }

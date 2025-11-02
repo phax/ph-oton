@@ -16,12 +16,12 @@
  */
 package com.helger.photon.uictrls.chart.v4;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.html.jscode.IJSExpression;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Bar chart data set
@@ -38,57 +38,57 @@ public class ChartDataSetPie extends AbstractChartDataSet <ChartDataSetPie>
   public ChartDataSetPie ()
   {}
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBackgroundColor (@Nullable final String sBackgroundColor)
   {
     return setBackgroundColor (_toExpr (sBackgroundColor));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBackgroundColor (@Nullable final String... aBackgroundColors)
   {
     return setBackgroundColor (_toExpr (aBackgroundColors));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBackgroundColor (@Nullable final IJSExpression aBackgroundColor)
   {
     m_aBackgroundColor = aBackgroundColor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderColor (@Nullable final String sBorderColor)
   {
     return setBorderColor (_toExpr (sBorderColor));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderColor (@Nullable final String... aBorderColors)
   {
     return setBorderColor (_toExpr (aBorderColors));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderColor (@Nullable final IJSExpression aBorderColor)
   {
     m_aBorderColor = aBorderColor;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderWidth (final int nBorderWidth)
   {
     return setBorderWidth (Integer.toString (nBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderWidth (@Nullable final String sBorderWidth)
   {
     return setBorderWidth (_toExpr (sBorderWidth));
   }
 
-  @Nonnull
+  @NonNull
   public ChartDataSetPie setBorderWidth (@Nullable final IJSExpression aBorderWidth)
   {
     m_aBorderWidth = aBorderWidth;
@@ -96,7 +96,7 @@ public class ChartDataSetPie extends AbstractChartDataSet <ChartDataSetPie>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public JSAssocArray getJSData ()
   {
     final JSAssocArray ret = super.getJSData ();

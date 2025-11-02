@@ -16,6 +16,8 @@
  */
 package com.helger.photon.security.object;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.state.EChange;
@@ -25,8 +27,6 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Helper class to work with {@link IBusinessObject} implementations.
@@ -39,7 +39,7 @@ public final class BusinessObjectHelper
   private BusinessObjectHelper ()
   {}
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getUserIDOrFallback ()
   {
@@ -52,19 +52,19 @@ public final class BusinessObjectHelper
     return sCurrentUserID;
   }
 
-  public static void setLastModificationNow (@Nonnull final AbstractBusinessObject aObj)
+  public static void setLastModificationNow (@NonNull final AbstractBusinessObject aObj)
   {
     aObj.setLastModification (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }
 
-  @Nonnull
-  public static EChange setDeletionNow (@Nonnull final AbstractBusinessObject aObj)
+  @NonNull
+  public static EChange setDeletionNow (@NonNull final AbstractBusinessObject aObj)
   {
     return aObj.setDeletion (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }
 
-  @Nonnull
-  public static EChange setUndeletionNow (@Nonnull final AbstractBusinessObject aObj)
+  @NonNull
+  public static EChange setUndeletionNow (@NonNull final AbstractBusinessObject aObj)
   {
     return aObj.setUndeletion (PDTFactory.getCurrentLocalDateTime (), getUserIDOrFallback ());
   }

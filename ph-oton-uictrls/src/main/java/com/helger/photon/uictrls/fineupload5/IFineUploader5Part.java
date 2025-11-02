@@ -19,10 +19,10 @@ package com.helger.photon.uictrls.fineupload5;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.html.jscode.JSAssocArray;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for the Fine Uploader configuration parts
@@ -31,12 +31,12 @@ import jakarta.annotation.Nonnull;
  */
 public interface IFineUploader5Part extends Serializable
 {
-  @Nonnull
+  @NonNull
   JSAssocArray getJSCode ();
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  default JSAssocArray getAsJSAA (@Nonnull final Map <String, String> aMap)
+  default JSAssocArray getAsJSAA (@NonNull final Map <String, String> aMap)
   {
     final JSAssocArray ret = new JSAssocArray ();
     for (final Map.Entry <String, String> aEntry : aMap.entrySet ())

@@ -18,12 +18,12 @@ package com.helger.photon.io.dao;
 
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.dao.simple.AbstractSimpleDAO;
 import com.helger.io.relative.FileRelativeIO;
 import com.helger.photon.io.WebFileIO;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()}
@@ -40,7 +40,7 @@ public abstract class AbstractPhotonSimpleDAO extends AbstractSimpleDAO
     super (sFilename != null ? WebFileIO.getDataIO () : FileRelativeIO.createForCurrentDir (), () -> sFilename);
   }
 
-  protected AbstractPhotonSimpleDAO (@Nonnull final Supplier <String> aFilenameProvider)
+  protected AbstractPhotonSimpleDAO (@NonNull final Supplier <String> aFilenameProvider)
   {
     super (WebFileIO.getDataIO (), aFilenameProvider);
   }

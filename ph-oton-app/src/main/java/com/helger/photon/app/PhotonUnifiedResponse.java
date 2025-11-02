@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
 import com.helger.annotation.Nonempty;
@@ -73,8 +75,6 @@ import com.helger.xml.serialize.write.IXMLWriterSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.serialize.write.XMLWriterSettings;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -89,10 +89,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   private IXMLWriterSettings m_aXWS = XMLWriterSettings.DEFAULT_XML_SETTINGS;
   private IJsonWriterSettings m_aJWS = JsonWriterSettings.DEFAULT_SETTINGS;
 
-  public PhotonUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
-                                @Nonnull final EHttpMethod eHttpMethod,
-                                @Nonnull final HttpServletRequest aHttpRequest,
-                                @Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  public PhotonUnifiedResponse (@NonNull final EHttpVersion eHttpVersion,
+                                @NonNull final EHttpMethod eHttpMethod,
+                                @NonNull final HttpServletRequest aHttpRequest,
+                                @NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     super (eHttpVersion, eHttpMethod, aHttpRequest);
     m_aRequestScope = aRequestScope;
@@ -103,37 +103,37 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return m_aRequestScope;
   }
 
-  @Nonnull
+  @NonNull
   public final IXMLWriterSettings getXMLWriterSettings ()
   {
     return m_aXWS;
   }
 
-  public final void setXMLWriterSettings (@Nonnull final IXMLWriterSettings aXWS)
+  public final void setXMLWriterSettings (@NonNull final IXMLWriterSettings aXWS)
   {
     ValueEnforcer.notNull (aXWS, "XWS");
     m_aXWS = aXWS;
   }
 
-  @Nonnull
+  @NonNull
   public final IJsonWriterSettings getJsonWriterSettings ()
   {
     return m_aJWS;
   }
 
-  public final void setJsonWriterSettings (@Nonnull final IJsonWriterSettings aJWS)
+  public final void setJsonWriterSettings (@NonNull final IJsonWriterSettings aJWS)
   {
     ValueEnforcer.notNull (aJWS, "JWS");
     m_aJWS = aJWS;
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse jsonEmpty ()
   {
     return json (null);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse json (@Nullable final IJson aValue)
   {
     // Ensure it is valid JSON
@@ -145,8 +145,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse xml (@Nullable final String sXML, @Nonnull final Charset aCharset)
+  @NonNull
+  public PhotonUnifiedResponse xml (@Nullable final String sXML, @NonNull final Charset aCharset)
   {
     setContentAndCharset (StringHelper.getNotNull (sXML), aCharset);
     setMimeType (new MimeType (CMimeType.APPLICATION_XML).addParameter (CMimeType.PARAMETER_NAME_CHARSET,
@@ -154,8 +154,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse xml (@Nonnull final byte [] aXML, @Nonnull final Charset aCharset)
+  @NonNull
+  public PhotonUnifiedResponse xml (@NonNull final byte [] aXML, @NonNull final Charset aCharset)
   {
     setContent (aXML);
     setCharset (aCharset);
@@ -164,31 +164,31 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode)
   {
     return xml (aNode, m_aXWS);
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
+  @NonNull
+  public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode, @NonNull final IXMLWriterSettings aSettings)
   {
     return xml (aNode == null ? null : MicroWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse xml (@Nullable final Node aNode)
   {
     return xml (aNode, m_aXWS);
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse xml (@Nullable final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
+  @NonNull
+  public PhotonUnifiedResponse xml (@Nullable final Node aNode, @NonNull final IXMLWriterSettings aSettings)
   {
     return xml (aNode == null ? null : XMLWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse text (@Nullable final String sValue)
   {
     setContentAndCharset (StringHelper.getNotNull (sValue), StandardCharsets.UTF_8);
@@ -230,10 +230,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     private HtmlHelper ()
     {}
 
-    @Nonnull
-    public static String getHTMLString (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
+    @NonNull
+    public static String getHTMLString (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                         @Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
-                                        @Nonnull final HCSpecialNodes aSpecialNodes,
+                                        @NonNull final HCSpecialNodes aSpecialNodes,
                                         @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
     {
       ValueEnforcer.notNull (aRequestScope, "RequestScope");
@@ -294,8 +294,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
                                                                     aConversionSettings.getXMLWriterSettings ());
     }
 
-    public static void addCSSAndJS (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                    @Nonnull final HCSpecialNodes aSpecialNodes)
+    public static void addCSSAndJS (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                    @NonNull final HCSpecialNodes aSpecialNodes)
     {
       ValueEnforcer.notNull (aRequestScope, "RequestScope");
 
@@ -311,9 +311,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
         aSpecialNodes.addExternalJS (PhotonAppSettings.getJSPath (aRequestScope, aJS, bRegular).getAsString ());
     }
 
-    @Nonnull
+    @NonNull
     public static IJsonObject getResponseAsJSON (@Nullable final IJsonObject aSuccessValue,
-                                                 @Nonnull final IHCSpecialNodes aSpecialNodes)
+                                                 @NonNull final IHCSpecialNodes aSpecialNodes)
     {
       final IJsonObject aAssocArray = new JsonObject ();
       if (aSuccessValue != null)
@@ -357,7 +357,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   @SuppressWarnings ("unchecked")
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
     return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?>
@@ -367,7 +367,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
                  null);
   }
 
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse html (@Nullable final IHCHasChildrenMutable <?, ? super IHCNode> aNode,
                                      @Nullable final IHCOnDocumentReadyProvider aOnDocumentReadyProvider,
                                      @Nullable final IJsonObject aCustomJson)
@@ -396,7 +396,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *        The node to be rendered. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse htmlSimple (@Nullable final IHCNode aNode)
   {
     if (aNode == null)
@@ -415,7 +415,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createOk ()
   {
     setStatus (HttpServletResponse.SC_OK);
@@ -428,7 +428,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    * @return this for chaining
    * @since 8.1.3
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createAccepted ()
   {
     setStatus (HttpServletResponse.SC_ACCEPTED);
@@ -440,7 +440,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createNoContent ()
   {
     setStatus (HttpServletResponse.SC_NO_CONTENT);
@@ -454,8 +454,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *        The redirect URL. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  public PhotonUnifiedResponse createSeeOther (@Nonnull final ISimpleURL aRedirectTargetURL)
+  @NonNull
+  public PhotonUnifiedResponse createSeeOther (@NonNull final ISimpleURL aRedirectTargetURL)
   {
     ValueEnforcer.notNull (aRedirectTargetURL, "Location");
 
@@ -468,7 +468,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createBadRequest ()
   {
     setStatus (HttpServletResponse.SC_BAD_REQUEST);
@@ -480,7 +480,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createNotFound ()
   {
     setStatus (HttpServletResponse.SC_NOT_FOUND);
@@ -492,7 +492,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createConflict ()
   {
     setStatus (HttpServletResponse.SC_CONFLICT);
@@ -504,7 +504,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createPreconditionFailed ()
   {
     setStatus (HttpServletResponse.SC_PRECONDITION_FAILED);
@@ -516,38 +516,38 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public PhotonUnifiedResponse createInternalServerError ()
   {
     setStatus (HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse setContent (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  @NonNull
+  public PhotonUnifiedResponse setContent (@NonNull final NonBlockingByteArrayOutputStream aBAOS)
   {
     setContent (aBAOS.directGetBuffer (), 0, aBAOS.size ());
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse serialized (@Nonnull final Serializable aObj)
+  @NonNull
+  public PhotonUnifiedResponse serialized (@NonNull final Serializable aObj)
   {
     setContent (SerializationHelper.getSerializedByteArray (aObj));
     setMimeType (CMimeType.APPLICATION_OCTET_STREAM);
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  @NonNull
+  public PhotonUnifiedResponse pdf (@NonNull final NonBlockingByteArrayOutputStream aBAOS)
   {
     setContent (aBAOS);
     setMimeType (CMimeType.APPLICATION_PDF);
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse pdf (@Nonnull final byte [] aData, @Nonnull @Nonempty final String sFilename)
+  @NonNull
+  public PhotonUnifiedResponse pdf (@NonNull final byte [] aData, @NonNull @Nonempty final String sFilename)
   {
     setContent (aData);
     setMimeType (CMimeType.APPLICATION_PDF);
@@ -556,9 +556,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse pdf (@Nonnull final NonBlockingByteArrayOutputStream aBAOS,
-                                    @Nonnull @Nonempty final String sFilename)
+  @NonNull
+  public PhotonUnifiedResponse pdf (@NonNull final NonBlockingByteArrayOutputStream aBAOS,
+                                    @NonNull @Nonempty final String sFilename)
   {
     pdf (aBAOS);
     setContentDispositionFilename (sFilename);
@@ -566,18 +566,18 @@ public class PhotonUnifiedResponse extends UnifiedResponse
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse attachment (@Nonnull @Nonempty final String sFilename)
+  @NonNull
+  public PhotonUnifiedResponse attachment (@NonNull @Nonempty final String sFilename)
   {
     setContentDispositionFilename (sFilename);
     setContentDispositionType (EContentDispositionType.ATTACHMENT);
     return this;
   }
 
-  @Nonnull
-  public PhotonUnifiedResponse binary (@Nonnull final NonBlockingByteArrayOutputStream aBAOS,
-                                       @Nonnull final IMimeType aMimeType,
-                                       @Nonnull @Nonempty final String sFilename)
+  @NonNull
+  public PhotonUnifiedResponse binary (@NonNull final NonBlockingByteArrayOutputStream aBAOS,
+                                       @NonNull final IMimeType aMimeType,
+                                       @NonNull @Nonempty final String sFilename)
   {
     setContent (aBAOS);
     setMimeType (aMimeType);
@@ -591,8 +591,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
    *        The current request scope. May not be <code>null</code>.
    * @return New {@link PhotonUnifiedResponse}. Never <code>null</code>.
    */
-  @Nonnull
-  public static PhotonUnifiedResponse createSimple (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope)
+  @NonNull
+  public static PhotonUnifiedResponse createSimple (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     if (aHttpRequest instanceof MockHttpServletRequest)

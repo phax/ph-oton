@@ -26,6 +26,9 @@ import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -40,9 +43,6 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.js.JSMarshaller;
 import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * array creation and initialization.
@@ -64,7 +64,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return m_bForceQuotingNames;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray setForceQuotingNames (final boolean bForceQuotingNames)
   {
     m_bForceQuotingNames = bForceQuotingNames;
@@ -79,8 +79,8 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
    *        Key to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public final IJSExpression getKey (@Nonnull final String sKey)
+  @NonNull
+  public final IJSExpression getKey (@NonNull final String sKey)
   {
     if (!m_bForceQuotingNames)
     {
@@ -108,81 +108,81 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return m_aExprs != null && m_aExprs.isNotEmpty ();
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final boolean bValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final boolean bValue)
   {
     return add (sKey, JSExpr.lit (bValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final char cValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final char cValue)
   {
     return add (sKey, JSExpr.lit (cValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final double dValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final double dValue)
   {
     return add (sKey, JSExpr.lit (dValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final float fValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final float fValue)
   {
     return add (sKey, JSExpr.lit (fValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final int nValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final int nValue)
   {
     return add (sKey, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, final long nValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, final long nValue)
   {
     return add (sKey, JSExpr.lit (nValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nullable final BigDecimal aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @Nullable final BigDecimal aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.lit (aValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nullable final BigInteger aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @Nullable final BigInteger aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.lit (aValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nullable final String sValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @Nullable final String sValue)
   {
     return add (sKey, sValue == null ? JSExpr.NULL : JSExpr.lit (sValue));
   }
 
-  @Nonnull
-  public JSAssocArray addIfNotNull (@Nonnull final String sKey, @Nullable final String sValue)
+  @NonNull
+  public JSAssocArray addIfNotNull (@NonNull final String sKey, @Nullable final String sValue)
   {
     if (sValue != null)
       return add (sKey, JSExpr.lit (sValue));
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nullable final IJson aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @Nullable final IJson aValue)
   {
     return add (sKey, aValue == null ? JSExpr.NULL : JSExpr.json (aValue));
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nullable final IHCNode aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @Nullable final IHCNode aValue)
   {
     return add (sKey, aValue == null ? null : HCRenderer.getAsHTMLStringWithoutNamespaces (aValue));
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray addAllStrings (@Nullable final Map <String, String> aValues)
   {
     if (aValues != null)
@@ -191,7 +191,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray addAll (@Nullable final Map <String, IJSExpression> aValues)
   {
     if (aValues != null)
@@ -200,60 +200,60 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return this;
   }
 
-  @Nonnull
-  public <T> JSAssocArray addAll (@Nonnull final Iterable <? extends T> aCont,
-                                  @Nonnull final Function <? super T, String> aKeyExtractor,
-                                  @Nonnull final Function <? super T, IJSExpression> aValueExtractor)
+  @NonNull
+  public <T> JSAssocArray addAll (@NonNull final Iterable <? extends T> aCont,
+                                  @NonNull final Function <? super T, String> aKeyExtractor,
+                                  @NonNull final Function <? super T, IJSExpression> aValueExtractor)
   {
     for (final T aObj : aCont)
       add (aKeyExtractor.apply (aObj), aValueExtractor.apply (aObj));
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray add (@Nonnull final String sKey, @Nonnull final IJSExpression aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final String sKey, @NonNull final IJSExpression aValue)
   {
     return add (getKey (sKey), aValue);
   }
 
-  @Nonnull
-  public <T extends IJSExpression> JSAssocArray addIf (@Nonnull final String sKey,
-                                                       @Nonnull final T aValue,
-                                                       @Nonnull final BooleanSupplier aFilter)
+  @NonNull
+  public <T extends IJSExpression> JSAssocArray addIf (@NonNull final String sKey,
+                                                       @NonNull final T aValue,
+                                                       @NonNull final BooleanSupplier aFilter)
   {
     if (aFilter.getAsBoolean ())
       return add (getKey (sKey), aValue);
     return this;
   }
 
-  @Nonnull
-  public <T extends IJSExpression> JSAssocArray addIf (@Nonnull final String sKey,
-                                                       @Nonnull final T aValue,
-                                                       @Nonnull final Predicate <? super T> aFilter)
+  @NonNull
+  public <T extends IJSExpression> JSAssocArray addIf (@NonNull final String sKey,
+                                                       @NonNull final T aValue,
+                                                       @NonNull final Predicate <? super T> aFilter)
   {
     if (aFilter.test (aValue))
       return add (getKey (sKey), aValue);
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray addIf (@Nonnull final String sKey, final int nValue, @Nonnull final IntPredicate aFilter)
+  @NonNull
+  public JSAssocArray addIf (@NonNull final String sKey, final int nValue, @NonNull final IntPredicate aFilter)
   {
     if (aFilter.test (nValue))
       return add (sKey, nValue);
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray addIf (@Nonnull final String sKey, final long nValue, @Nonnull final LongPredicate aFilter)
+  @NonNull
+  public JSAssocArray addIf (@NonNull final String sKey, final long nValue, @NonNull final LongPredicate aFilter)
   {
     if (aFilter.test (nValue))
       return add (sKey, nValue);
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray addIf (@Nonnull final String sKey, final double dValue, @Nonnull final DoublePredicate aFilter)
+  @NonNull
+  public JSAssocArray addIf (@NonNull final String sKey, final double dValue, @NonNull final DoublePredicate aFilter)
   {
     if (aFilter.test (dValue))
       return add (sKey, dValue);
@@ -269,8 +269,8 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
    *        value to use
    * @return this
    */
-  @Nonnull
-  public JSAssocArray add (@Nonnull final IJSExpression aKey, @Nonnull final IJSExpression aValue)
+  @NonNull
+  public JSAssocArray add (@NonNull final IJSExpression aKey, @NonNull final IJSExpression aValue)
   {
     ValueEnforcer.notNull (aKey, "Key");
     ValueEnforcer.notNull (aValue, "Value");
@@ -281,23 +281,23 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray addAll (@Nonnull final IJsonObject aJson)
+  @NonNull
+  public JSAssocArray addAll (@NonNull final IJsonObject aJson)
   {
     for (final Map.Entry <String, IJson> aEntry : aJson)
       add (aEntry.getKey (), JSExpr.json (aEntry.getValue ()));
     return this;
   }
 
-  @Nonnull
-  public JSAssocArray remove (@Nonnull final String sKey)
+  @NonNull
+  public JSAssocArray remove (@NonNull final String sKey)
   {
     if (m_aExprs != null)
       remove (getKey (sKey));
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JSAssocArray remove (@Nullable final IJSExpression aKey)
   {
     if (m_aExprs != null)
@@ -323,7 +323,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
 
   @Nullable
   public IJSExpression computeIfAbsent (@Nullable final String sKey,
-                                        @Nonnull final Function <IJSExpression, IJSExpression> aValueSupplier)
+                                        @NonNull final Function <IJSExpression, IJSExpression> aValueSupplier)
   {
     if (sKey == null)
       return null;
@@ -332,21 +332,21 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
 
   @Nullable
   public IJSExpression computeIfAbsent (@Nullable final IJSExpression aKey,
-                                        @Nonnull final Function <IJSExpression, IJSExpression> aValueSupplier)
+                                        @NonNull final Function <IJSExpression, IJSExpression> aValueSupplier)
   {
     if (m_aExprs == null)
       m_aExprs = new CommonsLinkedHashMap <> ();
     return m_aExprs.computeIfAbsent (aKey, aValueSupplier);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <IJSExpression, IJSExpression> getAll ()
   {
     return new CommonsLinkedHashMap <> (m_aExprs);
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('{');
     if (m_aExprs != null && m_aExprs.isNotEmpty ())

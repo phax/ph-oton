@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.embedded;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.collection.commons.CommonsArrayList;
@@ -28,9 +31,6 @@ import com.helger.html.hc.html.AbstractHCElementWithInternalChildren;
 import com.helger.html.hc.html.IHCMediaElementChild;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaElement <IMPLTYPE>> extends
                                              AbstractHCElementWithInternalChildren <IMPLTYPE, IHCMediaElementChild <?>>
@@ -54,7 +54,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
   private ISimpleURL m_aSrc;
   private EHCCORSSettings m_eCrossOrigin;
 
-  public AbstractHCMediaElement (@Nonnull final EHTMLElement eElement)
+  public AbstractHCMediaElement (@NonNull final EHTMLElement eElement)
   {
     super (eElement);
   }
@@ -64,7 +64,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_bAutoPlay;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAutoPlay (final boolean bAutoPlay)
   {
     m_bAutoPlay = bAutoPlay;
@@ -77,7 +77,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_ePreload;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPreload (@Nullable final EHCPreload ePreload)
   {
     m_ePreload = ePreload;
@@ -89,7 +89,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_bControls;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setControls (final boolean bControls)
   {
     m_bControls = bControls;
@@ -101,7 +101,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_bLoop;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLoop (final boolean bLoop)
   {
     m_bLoop = bLoop;
@@ -113,7 +113,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_bMuted;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setMuted (final boolean bMuted)
   {
     m_bMuted = bMuted;
@@ -126,7 +126,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_aSrc;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSrc (@Nullable final ISimpleURL aSrc)
   {
     m_aSrc = aSrc;
@@ -139,14 +139,14 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return m_eCrossOrigin;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addSource (@Nullable final HCSource aSource)
   {
     if (aSource != null)
@@ -154,7 +154,7 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addTrack (@Nullable final HCTrack aTrack)
   {
     if (aTrack != null)
@@ -163,9 +163,9 @@ public abstract class AbstractHCMediaElement <IMPLTYPE extends AbstractHCMediaEl
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @Nonempty
-  protected ICommonsList <IHCMediaElementChild <?>> getChildrenFormEmitting (@Nonnull @Nonempty final ICommonsList <IHCMediaElementChild <?>> aChildren)
+  protected ICommonsList <IHCMediaElementChild <?>> getChildrenFormEmitting (@NonNull @Nonempty final ICommonsList <IHCMediaElementChild <?>> aChildren)
   {
     final ICommonsList <IHCMediaElementChild <?>> ret = new CommonsArrayList <> (aChildren.size ());
     // <source> must be first

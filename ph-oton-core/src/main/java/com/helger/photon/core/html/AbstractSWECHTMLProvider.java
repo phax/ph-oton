@@ -18,6 +18,8 @@ package com.helger.photon.core.html;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.hc.html.metadata.HCHead;
@@ -31,8 +33,6 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract {@link IHTMLProvider} implementation based on
@@ -55,8 +55,8 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    * @throws ForcedRedirectException
    *         to indicate that the current page should be left.
    */
-  protected abstract void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC,
-                                    @Nonnull final HCHtml aHtml) throws ForcedRedirectException;
+  protected abstract void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                    @NonNull final HCHtml aHtml) throws ForcedRedirectException;
 
   /**
    * Fill the HTML HEAD element.
@@ -68,7 +68,7 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillHead (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
+  protected void fillHead (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCHtml aHtml)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final HCHead aHead = aHtml.head ();
@@ -92,9 +92,9 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    */
   @Override
   @OverrideOnDemand
-  protected void fillHeadAndBody (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                  @Nonnull final HCHtml aHtml,
-                                  @Nonnull final Locale aDisplayLocale)
+  protected void fillHeadAndBody (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                  @NonNull final HCHtml aHtml,
+                                  @NonNull final Locale aDisplayLocale)
   {
     final IMenuTree aMenuTree = RequestSettings.getMenuTree (aRequestScope);
     final IUser aLoggedInUser = LoggedInUserManager.getInstance ().getCurrentUser ();

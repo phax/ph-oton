@@ -16,9 +16,9 @@
  */
 package com.helger.photon.atom;
 
-import com.helger.annotation.Nonempty;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.annotation.Nonempty;
 
 /**
  * Text identification type
@@ -33,12 +33,12 @@ public enum EFeedTextType
 
   private final String m_sType;
 
-  EFeedTextType (@Nonnull @Nonempty final String sType)
+  EFeedTextType (@NonNull @Nonempty final String sType)
   {
     m_sType = sType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getType ()
   {

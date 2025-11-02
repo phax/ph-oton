@@ -16,11 +16,11 @@
  */
 package com.helger.html.markdown;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 public class MarkdownException extends RuntimeException
 {
-  public MarkdownException (@Nonnull final String sMessage)
+  public MarkdownException (@NonNull final String sMessage)
   {
     super (sMessage);
   }

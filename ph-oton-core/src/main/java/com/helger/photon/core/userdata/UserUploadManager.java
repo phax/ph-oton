@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.userdata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +42,6 @@ import com.helger.io.file.FileOperationManager;
 import com.helger.scope.IScope;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * A per-session manager, that handles all the uploaded files while the process to which the files
  * belong is still in process.
@@ -62,14 +61,14 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   public UserUploadManager ()
   {}
 
-  @Nonnull
+  @NonNull
   public static UserUploadManager getInstance ()
   {
     return getSessionSingleton (UserUploadManager.class);
   }
 
-  @Nonnull
-  private static FileIOError _deleteUDO (@Nonnull final TemporaryUserDataObject aUDO)
+  @NonNull
+  private static FileIOError _deleteUDO (@NonNull final TemporaryUserDataObject aUDO)
   {
     LOGGER.info ("Deleting uploaded file " + aUDO);
     final FileIOError aError = FileOperationManager.INSTANCE.deleteFile (aUDO.getAsFile ());
@@ -79,7 +78,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   }
 
   @Override
-  protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction)
   {
     // Delete all unconfirmed files
     for (final TemporaryUserDataObject aUDO : m_aMap.values ())
@@ -98,7 +97,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    *        The user data object to be added. May not be <code>null</code>.
    * @see #confirmUploadedFiles(String...)
    */
-  public void addUploadedFile (@Nonnull @Nonempty final String sFieldName, @Nonnull final TemporaryUserDataObject aUDO)
+  public void addUploadedFile (@NonNull @Nonempty final String sFieldName, @NonNull final TemporaryUserDataObject aUDO)
   {
     ValueEnforcer.notEmpty (sFieldName, "FieldName");
     ValueEnforcer.notNull (aUDO, "UDO");
@@ -125,7 +124,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    *         returned. If a field name is contained more than once, it is returned only once.
    * @see #cancelUploadedFiles(String...)
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsOrderedMap <String, UserDataObject> confirmUploadedFiles (@Nullable final String... aFieldNames)
   {
@@ -187,7 +186,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
    *         removed.
    * @see #confirmUploadedFiles(String...)
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> cancelUploadedFiles (@Nullable final String... aFieldNames)
   {

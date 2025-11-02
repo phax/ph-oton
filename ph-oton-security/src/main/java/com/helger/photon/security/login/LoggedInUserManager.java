@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,6 @@ import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class manages all logged-in users.
  *
@@ -87,7 +86,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
      * @return The instance of the current session. If none exists, an instance is created. Never
      *         <code>null</code>.
      */
-    @Nonnull
+    @NonNull
     private static InternalSessionUserHolder _getInstance ()
     {
       return getSessionSingleton (InternalSessionUserHolder.class);
@@ -108,7 +107,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return getSingletonIfInstantiated (aScope, InternalSessionUserHolder.class);
     }
 
-    private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException, ClassNotFoundException
+    private void readObject (@NonNull final ObjectInputStream aOIS) throws IOException, ClassNotFoundException
     {
       aOIS.defaultReadObject ();
 
@@ -123,7 +122,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       m_aOwningMgr = LoggedInUserManager.getInstance ();
     }
 
-    public void onSessionDidActivate (@Nonnull final ISessionWebScope aSessionScope)
+    public void onSessionDidActivate (@NonNull final ISessionWebScope aSessionScope)
     {
       // Finally remember that the user is logged in
       m_aOwningMgr.internalSessionActivateUser (m_aUser, aSessionScope);
@@ -140,7 +139,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return m_sUserID;
     }
 
-    private void _setUser (@Nonnull final LoggedInUserManager aOwningMgr, @Nonnull final IUser aUser)
+    private void _setUser (@NonNull final LoggedInUserManager aOwningMgr, @NonNull final IUser aUser)
     {
       ValueEnforcer.notNull (aOwningMgr, "OwningMgr");
       ValueEnforcer.notNull (aUser, "User");
@@ -161,7 +160,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     @Override
-    protected void onDestroy (@Nonnull final IScope aScopeInDestruction)
+    protected void onDestroy (@NonNull final IScope aScopeInDestruction)
     {
       // Called when the session is destroyed
       // -> Ensure the user is logged out!
@@ -193,7 +192,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   static final class InternalUserLogoutCallbackUnlockAllObjects implements IUserLogoutCallback
   {
     @Override
-    public void onUserLogout (@Nonnull final LoginInfo aInfo)
+    public void onUserLogout (@NonNull final LoginInfo aInfo)
     {
       final ObjectLockManager aOLMgr = ObjectLockManager.getInstanceIfInstantiated ();
       if (aOLMgr != null)
@@ -225,7 +224,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   /**
    * @return The global instance of this class. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public static LoggedInUserManager getInstance ()
   {
     return getGlobalSingleton (LoggedInUserManager.class);
@@ -234,7 +233,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   /**
    * @return The user login callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserLoginCallback> userLoginCallbacks ()
   {
@@ -244,7 +243,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   /**
    * @return The user logout callback list. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public CallbackList <IUserLogoutCallback> userLogoutCallbacks ()
   {
@@ -275,7 +274,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     m_aRWLock.writeLocked ( () -> m_bAnonymousLogging = bAnonymousLogging);
   }
 
-  @Nonnull
+  @NonNull
   private String _getUserIDLogText (@Nullable final String sUserID)
   {
     if (isAnonymousLogging ())
@@ -283,14 +282,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     return "user '" + sUserID + "'";
   }
 
-  @Nonnull
-  private ELoginResult _onLoginError (@Nonnull @Nonempty final String sUserID, @Nonnull final ELoginResult eLoginResult)
+  @NonNull
+  private ELoginResult _onLoginError (@NonNull @Nonempty final String sUserID, @NonNull final ELoginResult eLoginResult)
   {
     m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLoginError (sUserID, eLoginResult));
     return eLoginResult;
   }
 
-  void internalSessionActivateUser (@Nonnull final IUser aUser, @Nonnull final ISessionScope aSessionScope)
+  void internalSessionActivateUser (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)
   {
     ValueEnforcer.notNull (aUser, "User");
     ValueEnforcer.notNull (aSessionScope, "SessionScope");
@@ -308,7 +307,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *        Plain text password to use. May be <code>null</code>.
    * @return Never <code>null</code> login status.
    */
-  @Nonnull
+  @NonNull
   public ELoginResult loginUser (@Nullable final String sLoginName, @Nullable final String sPlainTextPassword)
   {
     return loginUser (sLoginName, sPlainTextPassword, (Iterable <String>) null);
@@ -325,7 +324,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *        A set of required role IDs, the user needs to have. May be <code>null</code>.
    * @return Never <code>null</code> login status.
    */
-  @Nonnull
+  @NonNull
   public ELoginResult loginUser (@Nullable final String sLoginName,
                                  @Nullable final String sPlainTextPassword,
                                  @Nullable final Iterable <String> aRequiredRoleIDs)
@@ -352,7 +351,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *        A set of required role IDs, the user needs to have. May be <code>null</code>.
    * @return Never <code>null</code> login status.
    */
-  @Nonnull
+  @NonNull
   public ELoginResult loginUser (@Nullable final IUser aUser,
                                  @Nullable final String sPlainTextPassword,
                                  @Nullable final Iterable <String> aRequiredRoleIDs)
@@ -473,7 +472,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *        The user ID to log out
    * @return {@link EChange} if something changed
    */
-  @Nonnull
+  @NonNull
   public EChange logoutUser (@Nullable final String sUserID)
   {
     final LoginInfo aInfo;
@@ -517,7 +516,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    *
    * @return {@link EChange} if something changed
    */
-  @Nonnull
+  @NonNull
   public EChange logoutCurrentUser ()
   {
     return logoutUser (getCurrentUserID ());
@@ -538,7 +537,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   /**
    * @return A non-<code>null</code> but maybe empty set with all currently logged in user IDs.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllLoggedInUserIDs ()
   {
@@ -562,7 +561,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    * @return A non-<code>null</code> but maybe empty collection with the details of all currently
    *         logged in users.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsCollection <LoginInfo> getAllLoginInfos ()
   {

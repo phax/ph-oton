@@ -19,6 +19,9 @@ package com.helger.photon.core.favorites;
 import java.util.Comparator;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.ELockType;
@@ -43,9 +46,6 @@ import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class manages {@link Favorite} objects.
  *
@@ -59,26 +59,26 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   /** Map from user ID to favorites */
   private final ICommonsMap <String, ICommonsList <Favorite>> m_aMap = new CommonsHashMap <> ();
 
-  public FavoriteManager (@Nonnull @Nonempty final String sFilename) throws DAOException
+  public FavoriteManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
     super (Favorite.class, sFilename);
     initialRead ();
   }
 
   @Override
-  protected void onRecoveryCreate (@Nonnull final Favorite aElement)
+  protected void onRecoveryCreate (@NonNull final Favorite aElement)
   {
     _addItem (aElement);
   }
 
   @Override
-  protected void onRecoveryUpdate (@Nonnull final Favorite aElement)
+  protected void onRecoveryUpdate (@NonNull final Favorite aElement)
   {
     _addItem (aElement);
   }
 
   @Override
-  protected void onRecoveryDelete (@Nonnull final Favorite aElement)
+  protected void onRecoveryDelete (@NonNull final Favorite aElement)
   {
     final ICommonsList <Favorite> aList = m_aMap.get (aElement.getUserID ());
     if (aList != null)
@@ -86,8 +86,8 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   }
 
   @Override
-  @Nonnull
-  protected EChange onRead (@Nonnull final IMicroDocument aDoc)
+  @NonNull
+  protected EChange onRead (@NonNull final IMicroDocument aDoc)
   {
     for (final IMicroElement eFavorite : aDoc.getDocumentElement ().getAllChildElements (ELEMENT_ITEM))
       _addItem (MicroTypeConverter.convertToNative (eFavorite, Favorite.class));
@@ -95,7 +95,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   }
 
   @Override
-  @Nonnull
+  @NonNull
   protected IMicroDocument createWriteData ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
@@ -122,7 +122,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   }
 
   @MustBeLocked (ELockType.WRITE)
-  private void _addItem (@Nonnull final Favorite aFavorite)
+  private void _addItem (@NonNull final Favorite aFavorite)
   {
     ValueEnforcer.notNull (aFavorite, "Favorite");
     m_aMap.computeIfAbsent (aFavorite.getUserID (), k -> new CommonsArrayList <> ()).add (aFavorite);
@@ -139,7 +139,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     return m_aRWLock.readLockedBoolean (m_aMap::isEmpty);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllUserIDsWithFavorites ()
   {
@@ -152,14 +152,14 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    * @return A copy of all contained favorite as map from ID to object. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IFavorite> getAllFavoritesOfUser (@Nullable final String sUserID)
   {
     return m_aRWLock.readLockedGet ( () -> new CommonsArrayList <> (m_aMap.get (sUserID)));
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsMap <String, ICommonsList <IFavorite>> getAll ()
   {
@@ -169,7 +169,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IFavorite> getAllFavorites ()
   {
@@ -271,11 +271,11 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
    *        Additional params. May be <code>null</code>.
    * @return The created {@link IFavorite} object and never <code>null</code>.
    */
-  @Nonnull
-  public IFavorite addFavorite (@Nonnull @Nonempty final String sUserID,
-                                @Nonnull @Nonempty final String sApplicationID,
-                                @Nonnull @Nonempty final String sMenuItemID,
-                                @Nonnull @Nonempty final String sDisplayName,
+  @NonNull
+  public IFavorite addFavorite (@NonNull @Nonempty final String sUserID,
+                                @NonNull @Nonempty final String sApplicationID,
+                                @NonNull @Nonempty final String sMenuItemID,
+                                @NonNull @Nonempty final String sDisplayName,
                                 @Nullable final Map <String, String> aAdditionalParams)
   {
     final Favorite aFavorite = new Favorite (sUserID, sApplicationID, sMenuItemID, sDisplayName, aAdditionalParams);
@@ -313,8 +313,8 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public EChange updateFavorite (@Nullable final String sUserID,
                                  @Nullable final String sID,
-                                 @Nonnull @Nonempty final String sMenuItemID,
-                                 @Nonnull @Nonempty final String sDisplayName,
+                                 @NonNull @Nonempty final String sMenuItemID,
+                                 @NonNull @Nonempty final String sDisplayName,
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
     final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet ( () -> m_aMap.get (sUserID));

@@ -16,14 +16,14 @@
  */
 package com.helger.photon.core.userdata;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.file.FilenameHelper;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represents a single web accessible object, that was provided by the user.
@@ -38,7 +38,7 @@ public abstract class AbstractUserDataObject implements IUserDataObject
   private final String m_sPath;
   private final boolean m_bIsTemporary;
 
-  public AbstractUserDataObject (@Nonnull @Nonempty final String sPath, final boolean bIsTemporary)
+  public AbstractUserDataObject (@NonNull @Nonempty final String sPath, final boolean bIsTemporary)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     // Ensure only forward slashes
@@ -46,7 +46,7 @@ public abstract class AbstractUserDataObject implements IUserDataObject
     m_bIsTemporary = bIsTemporary;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getPath ()
   {

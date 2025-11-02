@@ -18,7 +18,7 @@ package com.helger.html.markdown;
 
 import java.util.List;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Block emitter interface. An example for a code block emitter is given below:
@@ -70,5 +70,5 @@ public interface IMarkdownBlockEmitter
    * @param meta
    *        Meta information as a single String (if any) or empty String
    */
-  void emitBlock (@Nonnull MarkdownHCStack out, @Nonnull List <String> lines, @Nonnull String meta);
+  void emitBlock (@NonNull MarkdownHCStack out, @NonNull List <String> lines, @NonNull String meta);
 }

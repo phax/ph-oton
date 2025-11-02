@@ -20,6 +20,8 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +56,6 @@ import com.helger.xml.microdom.serialize.MicroReader;
 import com.helger.xml.microdom.util.MicroHelper;
 import com.helger.xml.serialize.read.SAXReaderDefaultSettings;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 abstract class AbstractCreateJQueryAPIList
 {
   protected static final Logger LOGGER = LoggerFactory.getLogger (AbstractCreateJQueryAPIList.class);
@@ -70,19 +69,19 @@ abstract class AbstractCreateJQueryAPIList
 
     private final String m_sName;
 
-    EAPIType (@Nonnull @Nonempty final String sName)
+    EAPIType (@NonNull @Nonempty final String sName)
     {
       m_sName = sName;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getName ()
     {
       return m_sName;
     }
 
-    @Nonnull
+    @NonNull
     public static EAPIType getFromNameOrThrow (@Nullable final String sName)
     {
       return EnumHelper.getFromNameOrThrow (EAPIType.class, sName);
@@ -91,8 +90,8 @@ abstract class AbstractCreateJQueryAPIList
 
   private static final ICommonsSet <String> FORBIDDEN_NAMES = new CommonsHashSet <> ("true", "false", "switch");
 
-  @Nonnull
-  static String _makeIdentifier (@Nonnull final String sName)
+  @NonNull
+  static String _makeIdentifier (@NonNull final String sName)
   {
     if (FORBIDDEN_NAMES.contains (sName))
       return "_" + sName;
@@ -103,8 +102,8 @@ abstract class AbstractCreateJQueryAPIList
     return sID;
   }
 
-  @Nonnull
-  static String _ucFirst (@Nonnull final String s)
+  @NonNull
+  static String _ucFirst (@NonNull final String s)
   {
     if (s.length () == 1)
       return s.toUpperCase (Locale.US);
@@ -120,8 +119,8 @@ abstract class AbstractCreateJQueryAPIList
     private final boolean m_bIsOptional;
     private final String m_sDescription;
 
-    @Nonnull
-    private static String [] _getJavaTypes (@Nonnull @Nonempty final String sType)
+    @NonNull
+    private static String [] _getJavaTypes (@NonNull @Nonempty final String sType)
     {
       if (sType.equals ("Boolean"))
         return new String [] { "IJSExpression", "boolean" };
@@ -179,8 +178,8 @@ abstract class AbstractCreateJQueryAPIList
       throw new IllegalArgumentException ("Unknown type '" + sType + "'");
     }
 
-    public Argument (@Nonnull @Nonempty final String sName,
-                     @Nonnull @Nonempty final ICommonsList <String> aTypes,
+    public Argument (@NonNull @Nonempty final String sName,
+                     @NonNull @Nonempty final ICommonsList <String> aTypes,
                      final boolean bIsOptional,
                      @Nullable final String sDescription)
     {
@@ -199,14 +198,14 @@ abstract class AbstractCreateJQueryAPIList
       m_sDescription = sDescription;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getName ()
     {
       return m_sName;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getIdentifier ()
     {
@@ -219,13 +218,13 @@ abstract class AbstractCreateJQueryAPIList
       return m_aTypes.size ();
     }
 
-    @Nonnull
+    @NonNull
     public String getTypeAtIndex (@Nonnegative final int nIndex)
     {
       return m_aTypes.get (nIndex);
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     @ReturnsMutableCopy
     public ICommonsList <String> getAllTypes ()
@@ -239,7 +238,7 @@ abstract class AbstractCreateJQueryAPIList
       return m_aJavaTypes.size ();
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     @ReturnsMutableCopy
     public ICommonsOrderedSet <String> getAllJavaTypes ()
@@ -247,7 +246,7 @@ abstract class AbstractCreateJQueryAPIList
       return m_aJavaTypes.getClone ();
     }
 
-    @Nonnull
+    @NonNull
     public String getFirstJavaType ()
     {
       return CollectionFind.getFirstElement (m_aJavaTypes);
@@ -295,18 +294,18 @@ abstract class AbstractCreateJQueryAPIList
     private final Version m_aAdded;
     private final ICommonsList <Argument> m_aArgs = new CommonsArrayList <> ();
 
-    public Signature (@Nonnull final Version aAdded)
+    public Signature (@NonNull final Version aAdded)
     {
       m_aAdded = ValueEnforcer.notNull (aAdded, "Added");
     }
 
-    void addArgument (@Nonnull final Argument aArg)
+    void addArgument (@NonNull final Argument aArg)
     {
       ValueEnforcer.notNull (aArg, "Arg");
       m_aArgs.add (aArg);
     }
 
-    @Nonnull
+    @NonNull
     public Version getAdded ()
     {
       return m_aAdded;
@@ -323,13 +322,13 @@ abstract class AbstractCreateJQueryAPIList
       return m_aArgs.size ();
     }
 
-    @Nonnull
+    @NonNull
     public Argument getArgumentAtIndex (@Nonnegative final int nIndex)
     {
       return m_aArgs.get (nIndex);
     }
 
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     public ICommonsList <Argument> getAllArguments ()
     {
@@ -389,8 +388,8 @@ abstract class AbstractCreateJQueryAPIList
     private final Version m_aRemoved;
     private final ICommonsList <Signature> m_aSignatures = new CommonsArrayList <> ();
 
-    public Entry (@Nonnull final EAPIType eAPIType,
-                  @Nonnull @Nonempty final String sName,
+    public Entry (@NonNull final EAPIType eAPIType,
+                  @NonNull @Nonempty final String sName,
                   @Nullable final String sReturn,
                   @Nullable final Version aDeprecated,
                   @Nullable final Version aRemoved)
@@ -403,12 +402,12 @@ abstract class AbstractCreateJQueryAPIList
       m_aRemoved = aRemoved;
     }
 
-    void addSignature (@Nonnull final Signature aSignature)
+    void addSignature (@NonNull final Signature aSignature)
     {
       m_aSignatures.add (aSignature);
     }
 
-    boolean containsSignature (@Nonnull final Signature aSignature)
+    boolean containsSignature (@NonNull final Signature aSignature)
     {
       final boolean b = m_aSignatures.contains (aSignature);
       if (b && false)
@@ -416,25 +415,25 @@ abstract class AbstractCreateJQueryAPIList
       return b;
     }
 
-    void addSignature (@Nonnegative final int nIndex, @Nonnull final Signature aSignature)
+    void addSignature (@Nonnegative final int nIndex, @NonNull final Signature aSignature)
     {
       m_aSignatures.add (nIndex, aSignature);
     }
 
-    @Nonnull
+    @NonNull
     public EAPIType getAPIType ()
     {
       return m_eAPIType;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getName ()
     {
       return m_sName;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getIdentifier ()
     {
@@ -452,7 +451,7 @@ abstract class AbstractCreateJQueryAPIList
       return m_sReturn;
     }
 
-    @Nonnull
+    @NonNull
     public String getReturnOrVoid ()
     {
       return hasReturn () ? getReturn () : "void";
@@ -486,13 +485,13 @@ abstract class AbstractCreateJQueryAPIList
       return m_aSignatures.size ();
     }
 
-    @Nonnull
+    @NonNull
     public Signature getSignatureAtIndex (@Nonnegative final int nIndex)
     {
       return m_aSignatures.get (nIndex);
     }
 
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     public ICommonsList <Signature> getAllSignatures ()
     {
@@ -505,19 +504,19 @@ abstract class AbstractCreateJQueryAPIList
     }
   }
 
-  @Nonnull
-  protected static String _getAnnotation (@Nonnull final String sJavaType)
+  @NonNull
+  protected static String _getAnnotation (@NonNull final String sJavaType)
   {
     if (sJavaType.equals ("boolean") ||
         sJavaType.equals ("double") ||
         sJavaType.equals ("int") ||
         sJavaType.equals ("long"))
       return "";
-    return "@Nonnull ";
+    return "@NonNull ";
   }
 
-  @Nonnull
-  protected static String _getTestValue (@Nonnull final String sJavaType)
+  @NonNull
+  protected static String _getTestValue (@NonNull final String sJavaType)
   {
     if (sJavaType.equals ("boolean"))
       return "true";
@@ -564,7 +563,7 @@ abstract class AbstractCreateJQueryAPIList
     throw new IllegalArgumentException (sJavaType);
   }
 
-  @Nonnull
+  @NonNull
   public static ICommonsList <Entry> readAllEntries ()
   {
     int nFiles = 0;

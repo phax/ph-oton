@@ -16,6 +16,7 @@
  */
 package com.helger.photon.app.url;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +30,6 @@ import com.helger.io.resource.URLResource;
 import com.helger.photon.io.WebFileIO;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The default implementation of {@link IWebURIToURLConverter} that uses
@@ -55,19 +54,19 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
    *        The String to check. May neither be <code>null</code> nor empty.
    * @return <code>true</code> if the URI starts with '/'
    */
-  public static final boolean isProjectRelativeURI (@Nonnull @Nonempty final String sURI)
+  public static final boolean isProjectRelativeURI (@NonNull @Nonempty final String sURI)
   {
     return StringHelper.startsWith (sURI, '/');
   }
 
-  @Nonnull
-  public IReadableResource getAsResource (@Nonnull @Nonempty final String sURI)
+  @NonNull
+  public IReadableResource getAsResource (@NonNull @Nonempty final String sURI)
   {
     return getAsResourceStatic (sURI);
   }
 
-  @Nonnull
-  public static IReadableResource getAsResourceStatic (@Nonnull @Nonempty final String sURI)
+  @NonNull
+  public static IReadableResource getAsResourceStatic (@NonNull @Nonempty final String sURI)
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
@@ -97,14 +96,14 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     return ret;
   }
 
-  @Nonnull
-  public SimpleURL getAsURL (@Nonnull @Nonempty final String sURI)
+  @NonNull
+  public SimpleURL getAsURL (@NonNull @Nonempty final String sURI)
   {
     return getAsURLStatic (sURI);
   }
 
-  @Nonnull
-  public static SimpleURL getAsURLStatic (@Nonnull @Nonempty final String sURI)
+  @NonNull
+  public static SimpleURL getAsURLStatic (@NonNull @Nonempty final String sURI)
   {
     ValueEnforcer.notEmpty (sURI, "URI");
 
@@ -133,15 +132,15 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
     return ret;
   }
 
-  @Nonnull
-  public SimpleURL getAsURL (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope, @Nonnull @Nonempty final String sURI)
+  @NonNull
+  public SimpleURL getAsURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull @Nonempty final String sURI)
   {
     return getAsURLStatic (aRequestScope, sURI);
   }
 
-  @Nonnull
-  public static SimpleURL getAsURLStatic (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                          @Nonnull @Nonempty final String sURI)
+  @NonNull
+  public static SimpleURL getAsURLStatic (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                          @NonNull @Nonempty final String sURI)
   {
     ValueEnforcer.notNull (aRequestScope, "RequestScope");
     ValueEnforcer.notEmpty (sURI, "URI");

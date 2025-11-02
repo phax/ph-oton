@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.forms;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.hc.IHCConversionSettingsToNode;
@@ -23,9 +26,6 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;input&gt; element with type "checkbox"
@@ -82,7 +82,7 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    * @param aRF
    *        The request field
    */
-  public AbstractHCCheckBox (@Nonnull final IHCRequestFieldBoolean aRF)
+  public AbstractHCCheckBox (@NonNull final IHCRequestFieldBoolean aRF)
   {
     this (aRF.getFieldName (), aRF.isChecked (), DEFAULT_VALUE);
   }
@@ -93,7 +93,7 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    * @param aRF
    *        The request field
    */
-  public AbstractHCCheckBox (@Nonnull final IHCRequestFieldBooleanMultiValue aRF)
+  public AbstractHCCheckBox (@NonNull final IHCRequestFieldBooleanMultiValue aRF)
   {
     this (aRF.getFieldName (), aRF.isChecked (), aRF.getValue ());
   }
@@ -115,7 +115,7 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
    *        avoid.
    * @return This object for chaining
    */
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setEmitHiddenField (final boolean bEmitHiddenField)
   {
     m_bEmitHiddenField = bEmitHiddenField;
@@ -139,8 +139,8 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   }
 
   @Override
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     if (m_bEmitHiddenField)

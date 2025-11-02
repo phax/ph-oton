@@ -20,6 +20,9 @@ import java.util.Map;
 
 import javax.xml.XMLConstants;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
@@ -64,9 +67,6 @@ import com.helger.xml.microdom.IMicroNode;
 import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base class for an HC element.
@@ -166,20 +166,20 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return true;
   }
 
-  protected AbstractHCElement (@Nonnull final EHTMLElement eElement)
+  protected AbstractHCElement (@NonNull final EHTMLElement eElement)
   {
     m_eElement = ValueEnforcer.notNull (eElement, "Element");
     // Always use lowercase element names
     m_sElementName = eElement.getElementName ();
   }
 
-  @Nonnull
+  @NonNull
   public final EHTMLElement getElement ()
   {
     return m_eElement;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getTagName ()
   {
@@ -197,7 +197,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
            m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     if (aCSSClassProvider != null)
@@ -209,7 +209,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
     if (m_aCSSClassProviders != null && aCSSClassProvider != null)
@@ -217,7 +217,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllClasses ()
   {
     if (m_aCSSClassProviders != null)
@@ -225,14 +225,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsOrderedSet <ICSSClassProvider> getAllClasses ()
   {
     return new CommonsLinkedHashSet <> (m_aCSSClassProviders);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsOrderedSet <String> getAllClassNames ()
   {
@@ -285,14 +285,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   // Style stuff
   // =================================
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsOrderedMap <ECSSProperty, ICSSValue> getAllStyles ()
   {
     return new CommonsLinkedHashMap <> (m_aStyles);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <ICSSValue> getAllStyleValues ()
   {
@@ -325,7 +325,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_aStyles != null && m_aStyles.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE addStyle (@Nullable final ICSSValue aValue)
   {
     if (aValue != null)
@@ -337,15 +337,15 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
-  public final IMPLTYPE removeStyle (@Nonnull final ECSSProperty eProperty)
+  @NonNull
+  public final IMPLTYPE removeStyle (@NonNull final ECSSProperty eProperty)
   {
     if (m_aStyles != null)
       m_aStyles.remove (eProperty);
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllStyles ()
   {
     m_aStyles.clear ();
@@ -353,7 +353,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Nullable
-  public final String getAllStylesAsString (@Nonnull final ICSSWriterSettings aCSSSettings)
+  public final String getAllStylesAsString (@NonNull final ICSSWriterSettings aCSSSettings)
   {
     if (m_aStyles == null || m_aStyles.isEmpty ())
       return null;
@@ -386,8 +386,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_aJSEvents != null && m_aJSEvents.containsHandler (eJSEvent);
   }
 
-  @Nonnull
-  public final IMPLTYPE addEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  @NonNull
+  public final IMPLTYPE addEventHandler (@NonNull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
   {
     if (aJSCode != null)
     {
@@ -398,8 +398,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
-  public final IMPLTYPE prependEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  @NonNull
+  public final IMPLTYPE prependEventHandler (@NonNull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
   {
     if (aJSCode != null)
     {
@@ -410,8 +410,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
-  public final IMPLTYPE setEventHandler (@Nonnull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
+  @NonNull
+  public final IMPLTYPE setEventHandler (@NonNull final EJSEvent eJSEvent, @Nullable final IHasJSCode aJSCode)
   {
     if (aJSCode != null)
     {
@@ -425,7 +425,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE removeAllEventHandler (@Nullable final EJSEvent eJSEvent)
   {
     if (m_aJSEvents != null)
@@ -443,7 +443,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sAccessKey;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAccessKey (@Nullable final String sAccessKey)
   {
     m_sAccessKey = sAccessKey;
@@ -455,7 +455,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_bAutoFocus;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setAutoFocus (final boolean bAutoFocus)
   {
     m_bAutoFocus = bAutoFocus;
@@ -468,7 +468,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eContentEditable;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setContentEditable (@Nullable final EHCContentEditable eContentEditable)
   {
     m_eContentEditable = eContentEditable;
@@ -481,7 +481,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eDirection;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDirection (@Nullable final EHCTextDirection eDirection)
   {
     m_eDirection = eDirection;
@@ -494,7 +494,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eDraggable;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setDraggable (@Nullable final EHCDraggable eDraggable)
   {
     m_eDraggable = eDraggable;
@@ -507,7 +507,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sEnterKeyHint;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setEnterKeyHint (@Nullable final String sEnterKeyHint)
   {
     m_sEnterKeyHint = sEnterKeyHint;
@@ -520,7 +520,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sExportParts;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setExportParts (@Nullable final String sExportParts)
   {
     m_sExportParts = sExportParts;
@@ -532,7 +532,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_bHidden;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setHidden (final boolean bHidden)
   {
     m_bHidden = bHidden;
@@ -545,14 +545,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setID (@Nullable final String sID)
   {
     // Check for existing ID
     return setID (sID, false);
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setID (@Nullable final String sID, final boolean bImSureToOverwriteAnExistingID)
   {
     if (!isValidID (sID))
@@ -588,7 +588,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_bInert;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setInert (final boolean bInert)
   {
     m_bInert = bInert;
@@ -601,7 +601,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eInputMode;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setInputMode (final EHCInputMode eInputMode)
   {
     m_eInputMode = eInputMode;
@@ -614,7 +614,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sLanguage;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setLanguage (@Nullable final String sLanguage)
   {
     m_sLanguage = sLanguage;
@@ -627,7 +627,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sNonce;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setNonce (@Nullable final String sNonce)
   {
     m_sNonce = sNonce;
@@ -640,7 +640,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sPart;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setPart (@Nullable final String sPart)
   {
     m_sPart = sPart;
@@ -653,7 +653,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sSlot;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSlot (@Nullable final String sSlot)
   {
     m_sSlot = sSlot;
@@ -665,7 +665,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_bSpellCheck;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setSpellCheck (final boolean bSpellCheck)
   {
     m_bSpellCheck = bSpellCheck;
@@ -678,7 +678,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_nTabIndex;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setTabIndex (final long nTabIndex)
   {
     m_nTabIndex = nTabIndex;
@@ -691,7 +691,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_sTitle;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setTitle (@Nullable final String sTitle)
   {
     m_sTitle = sTitle;
@@ -713,14 +713,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eTranslate.isUndefined ();
   }
 
-  @Nonnull
+  @NonNull
   public final ETriState getTranslate ()
   {
     return m_eTranslate;
   }
 
-  @Nonnull
-  public final IMPLTYPE setTranslate (@Nonnull final ETriState eTranslate)
+  @NonNull
+  public final IMPLTYPE setTranslate (@NonNull final ETriState eTranslate)
   {
     m_eTranslate = ValueEnforcer.notNull (eTranslate, "Translate");
     return thisAsT ();
@@ -736,7 +736,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_eRole;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setRole (@Nullable final EHTMLRole eRole)
   {
     m_eRole = eRole;
@@ -748,14 +748,14 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
     return m_bUnfocusable;
   }
 
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setUnfocusable (final boolean bUnfocusable)
   {
     m_bUnfocusable = bUnfocusable;
     return thisAsT ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final IHCAttrContainer customAttrs ()
   {
@@ -764,8 +764,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
     // Unfocusable?
@@ -774,7 +774,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   @Override
-  protected void onConsistencyCheck (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void onConsistencyCheck (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     final EHTMLVersion eHTMLVersion = aConversionSettings.getHTMLVersion ();
 
@@ -808,8 +808,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    *         <code>null</code>.
    */
   @OverrideOnDemand
-  @Nonnull
-  protected IMicroElement createMicroElement (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  @NonNull
+  protected IMicroElement createMicroElement (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     return new MicroElement (aConversionSettings.getHTMLNamespaceURI (), m_sElementName);
   }
@@ -824,8 +824,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    */
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@Nonnull final IMicroElement aElement,
-                                   @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     final boolean bHTML5 = aConversionSettings.getHTMLVersion ().isAtLeastHTML5 ();
 
@@ -925,8 +925,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    *        The conversion settings to be used
    */
   @OverrideOnDemand
-  protected void finishMicroElement (@Nonnull final IMicroElement eElement,
-                                     @Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected void finishMicroElement (@NonNull final IMicroElement eElement,
+                                     @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {}
 
   /*
@@ -934,9 +934,9 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
    * an IMicroDocument!
    */
   @Override
-  @Nonnull
+  @NonNull
   @OverridingMethodsMustInvokeSuper
-  protected IMicroNode internalConvertToMicroNode (@Nonnull final IHCConversionSettingsToNode aConversionSettings)
+  protected IMicroNode internalConvertToMicroNode (@NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     // Create the element
     final IMicroElement ret = createMicroElement (aConversionSettings);

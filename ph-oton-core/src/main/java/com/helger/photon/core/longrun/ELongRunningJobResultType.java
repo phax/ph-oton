@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the result type of a long running job.
@@ -38,12 +38,12 @@ public enum ELongRunningJobResultType implements IHasID <String>
 
   private final String m_sID;
 
-  ELongRunningJobResultType (@Nonnull @Nonempty final String sID)
+  ELongRunningJobResultType (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

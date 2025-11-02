@@ -16,10 +16,10 @@
  */
 package com.helger.html.js.tostring;
 
-import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
 /**
  * Interface that defines the conversion routines to convert an arbitrary Java
@@ -40,5 +40,5 @@ public interface IJSToStringConverter
    * @return <code>null</code> if the passed object is <code>null</code>.
    */
   @Nullable
-  String objectToJSString (@Nullable Object aObject, @Nonnull JSType aType);
+  String objectToJSString (@Nullable Object aObject, @NonNull JSType aType);
 }

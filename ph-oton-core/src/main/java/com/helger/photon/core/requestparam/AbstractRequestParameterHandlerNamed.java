@@ -16,12 +16,12 @@
  */
 package com.helger.photon.core.requestparam;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base class for {@link IRequestParameterHandler} implementations that support
@@ -54,17 +54,17 @@ public abstract class AbstractRequestParameterHandlerNamed implements IRequestPa
    * @return <code>true</code> if the parameter is valid, <code>false</code>
    *         otherwise.
    */
-  public abstract boolean isValidParameterName (@Nonnull final String sParamName);
+  public abstract boolean isValidParameterName (@NonNull final String sParamName);
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getRequestParamNameLocale ()
   {
     return m_sRequestParamNameLocale;
   }
 
-  @Nonnull
-  public final AbstractRequestParameterHandlerNamed setRequestParamNameLocale (@Nonnull @Nonempty final String sRequestParamNameLocale)
+  @NonNull
+  public final AbstractRequestParameterHandlerNamed setRequestParamNameLocale (@NonNull @Nonempty final String sRequestParamNameLocale)
   {
     ValueEnforcer.notEmpty (sRequestParamNameLocale, "RequestParamNameLocale");
     ValueEnforcer.isTrue (isValidParameterName (sRequestParamNameLocale),
@@ -73,15 +73,15 @@ public abstract class AbstractRequestParameterHandlerNamed implements IRequestPa
     return this;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getRequestParamNameMenuItem ()
   {
     return m_sRequestParamNameMenuItem;
   }
 
-  @Nonnull
-  public final AbstractRequestParameterHandlerNamed setRequestParamNameMenuItem (@Nonnull @Nonempty final String sRequestParamNameMenuItem)
+  @NonNull
+  public final AbstractRequestParameterHandlerNamed setRequestParamNameMenuItem (@NonNull @Nonempty final String sRequestParamNameMenuItem)
   {
     ValueEnforcer.notEmpty (sRequestParamNameMenuItem, "RequestParamNameMenuItem");
     ValueEnforcer.isTrue (isValidParameterName (sRequestParamNameMenuItem),

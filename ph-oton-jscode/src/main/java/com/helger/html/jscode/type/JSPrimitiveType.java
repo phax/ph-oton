@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode.type;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.CodingStyleguideUnaware;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -28,9 +31,6 @@ import com.helger.html.jscode.JSFormatter;
 import com.helger.html.jscode.JSPrinter;
 import com.helger.html.jscode.JSRef;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Contains the JS built-in primitive types
  *
@@ -42,7 +42,7 @@ public abstract class JSPrimitiveType extends AbstractJSType
   private final String m_sName;
   private final JSRef m_aGlobal;
 
-  protected JSPrimitiveType (@Nonnull @Nonempty final String sName)
+  protected JSPrimitiveType (@NonNull @Nonempty final String sName)
   {
     if (!JSMarshaller.isJSIdentifier (sName))
       throw new IllegalArgumentException ("The name '" + sName + "' is not a legal JS identifier!");
@@ -51,25 +51,25 @@ public abstract class JSPrimitiveType extends AbstractJSType
   }
 
   @Override
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String name ()
   {
     return m_sName;
   }
 
-  @Nonnull
+  @NonNull
   public final JSRef global ()
   {
     return m_aGlobal;
   }
 
-  public final void generate (@Nonnull final JSFormatter aFormatter)
+  public final void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain (m_sName);
   }
 
-  @Nonnull
+  @NonNull
   public String getJSCode (@Nullable final IJSWriterSettings aSettings)
   {
     return JSPrinter.getAsString (aSettings, this);

@@ -16,6 +16,9 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
@@ -23,9 +26,6 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.jscode.AbstractJSVariable.EJSVarMode;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * For in Statement
@@ -38,12 +38,12 @@ public class JSForIn extends AbstractJSStatement
   private final IJSExpression m_aCollection;
   private JSBlock m_aBody;
 
-  public JSForIn (@Nonnull @Nonempty final String sVarName, @Nonnull final IJSExpression aCollection)
+  public JSForIn (@NonNull @Nonempty final String sVarName, @NonNull final IJSExpression aCollection)
   {
     this (new JSLet (sVarName), aCollection);
   }
 
-  public JSForIn (@Nonnull final JSLet aLoopVar, @Nonnull final IJSExpression aCollection)
+  public JSForIn (@NonNull final JSLet aLoopVar, @NonNull final IJSExpression aCollection)
   {
     m_aLoopVar = ValueEnforcer.notNull (aLoopVar, "LoopVar");
     m_aCollection = ValueEnforcer.notNull (aCollection, "Collection");
@@ -52,19 +52,19 @@ public class JSForIn extends AbstractJSStatement
   /**
    * @return a reference to the loop variable.
    */
-  @Nonnull
+  @NonNull
   public JSLet variable ()
   {
     return m_aLoopVar;
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression collection ()
   {
     return m_aCollection;
   }
 
-  @Nonnull
+  @NonNull
   public JSBlock body ()
   {
     if (m_aBody == null)
@@ -72,7 +72,7 @@ public class JSForIn extends AbstractJSStatement
     return m_aBody;
   }
 
-  public void state (@Nonnull final JSFormatter aFormatter)
+  public void state (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ("for(")
               .plain (EJSVarMode.LET.getCode ())

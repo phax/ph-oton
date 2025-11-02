@@ -19,6 +19,9 @@ package com.helger.photon.security.user;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.misc.ContainsSoftMigration;
 import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringParser;
@@ -33,9 +36,6 @@ import com.helger.xml.microdom.IMicroQName;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.MicroQName;
 import com.helger.xml.microdom.util.MicroHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTypeConverter <User>
 {
@@ -53,10 +53,10 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
   private static final String ELEMENT_DESCRIPTION = "description";
   private static final IMicroQName ATTR_DISABLED = new MicroQName ("disabled");
 
-  @Nonnull
-  public IMicroElement convertToMicroElement (@Nonnull final User aUser,
+  @NonNull
+  public IMicroElement convertToMicroElement (@NonNull final User aUser,
                                               @Nullable final String sNamespaceURI,
-                                              @Nonnull final String sTagName)
+                                              @NonNull final String sTagName)
   {
     final IMicroElement aElement = new MicroElement (sNamespaceURI, sTagName);
     setObjectFields (aUser, aElement);
@@ -85,8 +85,8 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
   }
 
   @ContainsSoftMigration
-  @Nonnull
-  public User convertToNative (@Nonnull final IMicroElement aElement)
+  @NonNull
+  public User convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sLoginName = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_LOGINNAME);
     final String sEmailAddress = MicroHelper.getChildTextContentTrimmed (aElement, ELEMENT_EMAILADDRESS);

@@ -16,6 +16,9 @@
  */
 package com.helger.html.hc.html.metadata;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -36,9 +39,6 @@ import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.url.ISimpleURL;
 import com.helger.xml.microdom.IMicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Represents an HTML &lt;link&gt; element
@@ -80,7 +80,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aRel;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setRel (@Nullable final IHCLinkType aRel)
   {
     m_aRel = aRel;
@@ -93,7 +93,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aRev;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setRev (@Nullable final IHCLinkType aRev)
   {
     m_aRev = aRev;
@@ -106,7 +106,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aType;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setType (@Nullable final IMimeType aType)
   {
     m_aType = aType;
@@ -119,7 +119,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aHref;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setHref (@Nullable final ISimpleURL aHref)
   {
     m_aHref = aHref;
@@ -132,7 +132,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_sHrefLang;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setHrefLang (@Nullable final String sHrefLang)
   {
     m_sHrefLang = sHrefLang;
@@ -145,7 +145,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_sCharset;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setCharset (@Nullable final String sCharset)
   {
     m_sCharset = sCharset;
@@ -158,14 +158,14 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aMediaList;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setMedia (@Nullable final ICSSMediaList aMediaList)
   {
     m_aMediaList = aMediaList == null ? null : new CSSMediaList (aMediaList);
     return this;
   }
 
-  @Nonnull
+  @NonNull
   private CSSMediaList _ensureMediaListPresent ()
   {
     if (m_aMediaList == null)
@@ -173,15 +173,15 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aMediaList;
   }
 
-  @Nonnull
-  public final HCLink addMedium (@Nonnull final ECSSMedium eMedium)
+  @NonNull
+  public final HCLink addMedium (@NonNull final ECSSMedium eMedium)
   {
     _ensureMediaListPresent ().addMedium (eMedium);
     return this;
   }
 
-  @Nonnull
-  public final HCLink addMedia (@Nonnull final ICSSMediaList aMediaList)
+  @NonNull
+  public final HCLink addMedia (@NonNull final ICSSMediaList aMediaList)
   {
     ValueEnforcer.notNull (aMediaList, "MediaList");
     _ensureMediaListPresent ();
@@ -190,8 +190,8 @@ public class HCLink extends AbstractHCElement <HCLink>
     return this;
   }
 
-  @Nonnull
-  public final HCLink addMedia (@Nonnull final Iterable <ECSSMedium> aMediaList)
+  @NonNull
+  public final HCLink addMedia (@NonNull final Iterable <ECSSMedium> aMediaList)
   {
     ValueEnforcer.notNull (aMediaList, "MediaList");
     _ensureMediaListPresent ();
@@ -200,8 +200,8 @@ public class HCLink extends AbstractHCElement <HCLink>
     return this;
   }
 
-  @Nonnull
-  public final HCLink addMedia (@Nonnull final ECSSMedium... aMediaList)
+  @NonNull
+  public final HCLink addMedia (@NonNull final ECSSMedium... aMediaList)
   {
     ValueEnforcer.notNull (aMediaList, "MediaList");
     _ensureMediaListPresent ();
@@ -210,7 +210,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink removeAllMedia ()
   {
     m_aMediaList = null;
@@ -223,7 +223,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_sSizes;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setSizes (@Nullable final String sSizes)
   {
     m_sSizes = sSizes;
@@ -236,7 +236,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_aCSSPathProvider;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setPathProvider (@Nullable final ICSSPathProvider aCSSPathProvider)
   {
     m_aCSSPathProvider = aCSSPathProvider;
@@ -249,7 +249,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_eCrossOrigin;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setCrossOrigin (@Nullable final EHCCORSSettings eCrossOrigin)
   {
     m_eCrossOrigin = eCrossOrigin;
@@ -262,7 +262,7 @@ public class HCLink extends AbstractHCElement <HCLink>
     return m_sIntegrity;
   }
 
-  @Nonnull
+  @NonNull
   public final HCLink setIntegrity (@Nullable final String sIntegrity)
   {
     m_sIntegrity = sIntegrity;
@@ -271,8 +271,8 @@ public class HCLink extends AbstractHCElement <HCLink>
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void onFinalizeNodeState (@Nonnull final IHCConversionSettingsToNode aConversionSettings,
-                                      @Nonnull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
+  protected void onFinalizeNodeState (@NonNull final IHCConversionSettingsToNode aConversionSettings,
+                                      @NonNull final IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode)
   {
     super.onFinalizeNodeState (aConversionSettings, aTargetNode);
 
@@ -338,8 +338,8 @@ public class HCLink extends AbstractHCElement <HCLink>
    *        The CSS URL to be referenced
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static HCLink createCSSLink (@Nonnull final ISimpleURL aCSSURL)
+  @NonNull
+  public static HCLink createCSSLink (@NonNull final ISimpleURL aCSSURL)
   {
     return new HCLink ().setRel (EHCLinkType.STYLESHEET).setType (CMimeType.TEXT_CSS).setHref (aCSSURL);
   }

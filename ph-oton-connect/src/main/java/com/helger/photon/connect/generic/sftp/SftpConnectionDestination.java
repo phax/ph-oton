@@ -18,6 +18,8 @@ package com.helger.photon.connect.generic.sftp;
 
 import java.util.Properties;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,9 +35,6 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 public final class SftpConnectionDestination implements ISftpConnectionDestination
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (SftpConnectionDestination.class);
@@ -43,17 +42,17 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
   private final String m_sHostname;
   private final int m_nPort;
 
-  public SftpConnectionDestination (@Nonnull final String sHostname)
+  public SftpConnectionDestination (@NonNull final String sHostname)
   {
     this (sHostname, DEFAULT_SFTP_PORT);
   }
 
-  public SftpConnectionDestination (@Nonnull final String sHostname, @Nonnegative final int nPort)
+  public SftpConnectionDestination (@NonNull final String sHostname, @Nonnegative final int nPort)
   {
     this (sHostname, nPort, 2000);
   }
 
-  public SftpConnectionDestination (@Nonnull final String sHostname,
+  public SftpConnectionDestination (@NonNull final String sHostname,
                                     @Nonnegative final int nPort,
                                     @Nonnegative final int nConnectTimeoutMilliSeconds)
   {
@@ -68,7 +67,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     m_nConnectTimeoutMilliSeconds = nConnectTimeoutMilliSeconds;
   }
 
-  @Nonnull
+  @NonNull
   public String getHostname ()
   {
     return m_sHostname;
@@ -81,7 +80,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
   }
 
   @Nullable
-  public ChannelSftp openConnection (@Nonnull final IAuthCredentials aCredentials)
+  public ChannelSftp openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     if (!(aCredentials instanceof IUserNamePasswordCredentials))
       throw new IllegalArgumentException ("Needs to be username/password credentials");
@@ -124,7 +123,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     return null;
   }
 
-  @Nonnull
+  @NonNull
   public EChange closeConnection (@Nullable final ChannelSftp aChannel)
   {
     if (aChannel == null)

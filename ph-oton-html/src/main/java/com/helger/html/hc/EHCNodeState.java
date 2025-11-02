@@ -16,7 +16,7 @@
  */
 package com.helger.html.hc;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This enum represents the internal state of {@link IHCNode} objects.
@@ -51,22 +51,22 @@ public enum EHCNodeState
     return m_nID;
   }
 
-  public boolean isBefore (@Nonnull final EHCNodeState eOther)
+  public boolean isBefore (@NonNull final EHCNodeState eOther)
   {
     return m_nID < eOther.m_nID;
   }
 
-  public boolean isEqualOrBefore (@Nonnull final EHCNodeState eOther)
+  public boolean isEqualOrBefore (@NonNull final EHCNodeState eOther)
   {
     return m_nID <= eOther.m_nID;
   }
 
-  public boolean isAfter (@Nonnull final EHCNodeState eOther)
+  public boolean isAfter (@NonNull final EHCNodeState eOther)
   {
     return m_nID > eOther.m_nID;
   }
 
-  public boolean isEqualOrAfter (@Nonnull final EHCNodeState eOther)
+  public boolean isEqualOrAfter (@NonNull final EHCNodeState eOther)
   {
     return m_nID >= eOther.m_nID;
   }

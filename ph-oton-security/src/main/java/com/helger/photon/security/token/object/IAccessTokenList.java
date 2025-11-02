@@ -18,13 +18,13 @@ package com.helger.photon.security.token.object;
 
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.security.token.accesstoken.IAccessToken;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for an access token list
@@ -38,7 +38,7 @@ public interface IAccessTokenList
    * @return A list of all tokens used by this user. The latest, active token is
    *         always the last one. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   ICommonsList <? extends IAccessToken> getAllAccessTokens ();

@@ -16,11 +16,11 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * RegEx literal.
@@ -38,7 +38,7 @@ public class JSRegExLiteral extends AbstractJSExpression
   private boolean m_bCaseInsensitive = DEFAULT_CASE_INSENSITIVE;
   private boolean m_bMultiLine = DEFAULT_MULTI_LINE;
 
-  public JSRegExLiteral (@Nonnull final String sRegEx)
+  public JSRegExLiteral (@NonNull final String sRegEx)
   {
     m_sRegEx = ValueEnforcer.notNull (sRegEx, "RegEx");
   }
@@ -48,7 +48,7 @@ public class JSRegExLiteral extends AbstractJSExpression
     return m_bGlobal;
   }
 
-  @Nonnull
+  @NonNull
   public JSRegExLiteral global (final boolean bGlobal)
   {
     m_bGlobal = bGlobal;
@@ -60,7 +60,7 @@ public class JSRegExLiteral extends AbstractJSExpression
     return m_bCaseInsensitive;
   }
 
-  @Nonnull
+  @NonNull
   public JSRegExLiteral caseInsensitive (final boolean bCaseInsensitive)
   {
     m_bCaseInsensitive = bCaseInsensitive;
@@ -72,7 +72,7 @@ public class JSRegExLiteral extends AbstractJSExpression
     return m_bMultiLine;
   }
 
-  @Nonnull
+  @NonNull
   public JSRegExLiteral multiLine (final boolean bMultiLine)
   {
     m_bMultiLine = bMultiLine;
@@ -90,13 +90,13 @@ public class JSRegExLiteral extends AbstractJSExpression
    *        value for multi line
    * @return this
    */
-  @Nonnull
+  @NonNull
   public JSRegExLiteral gim (final boolean bGlobal, final boolean bCaseInsensitive, final boolean bMultiLine)
   {
     return global (bGlobal).caseInsensitive (bCaseInsensitive).multiLine (bMultiLine);
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('/').plain (m_sRegEx).plain ('/');
     if (m_bGlobal)

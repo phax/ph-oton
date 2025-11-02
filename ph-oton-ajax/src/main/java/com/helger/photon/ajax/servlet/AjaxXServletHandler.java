@@ -19,6 +19,7 @@ package com.helger.photon.ajax.servlet;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,6 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,19 +78,19 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
     this ( () -> GlobalAjaxInvoker.getInstance ().getRegistry (), () -> GlobalAjaxInvoker.getInstance ().getInvoker ());
   }
 
-  public AjaxXServletHandler (@Nonnull final Supplier <? extends IAjaxRegistry> aRegistryFactory,
-                              @Nonnull final Supplier <? extends IAjaxInvoker> aInvokerFactory)
+  public AjaxXServletHandler (@NonNull final Supplier <? extends IAjaxRegistry> aRegistryFactory,
+                              @NonNull final Supplier <? extends IAjaxInvoker> aInvokerFactory)
   {
     m_aRegistryFactory = ValueEnforcer.notNull (aRegistryFactory, "aRegistryFactory");
     m_aInvokerFactory = ValueEnforcer.notNull (aInvokerFactory, "InvokerFactory");
   }
 
-  @Nonnull
+  @NonNull
   @Override
-  public PhotonUnifiedResponse createUnifiedResponse (@Nonnull final EHttpVersion eHttpVersion,
-                                                      @Nonnull final EHttpMethod eHttpMethod,
-                                                      @Nonnull final HttpServletRequest aHttpRequest,
-                                                      @Nonnull final IRequestWebScope aRequestScope)
+  public PhotonUnifiedResponse createUnifiedResponse (@NonNull final EHttpVersion eHttpVersion,
+                                                      @NonNull final EHttpMethod eHttpMethod,
+                                                      @NonNull final HttpServletRequest aHttpRequest,
+                                                      @NonNull final IRequestWebScope aRequestScope)
   {
     return new PhotonUnifiedResponse (eHttpVersion, eHttpMethod, aHttpRequest, aRequestScope);
   }
@@ -98,8 +98,8 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  public EContinue initRequestState (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                                     @Nonnull final UnifiedResponse aUnifiedResponse)
+  public EContinue initRequestState (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull final UnifiedResponse aUnifiedResponse)
   {
     // cut the leading "/"
     String sFunctionName = aRequestScope.getPathWithinServlet ();
@@ -151,8 +151,8 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
   }
 
   @Override
-  public void handleRequest (@Nonnull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @Nonnull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+  public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.attrs ().getAsString (SCOPE_ATTR_NAME);

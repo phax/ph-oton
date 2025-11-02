@@ -18,6 +18,9 @@ package com.helger.photon.uicore.login;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.css.property.CCSSProperties;
 import com.helger.html.hc.IHCNode;
@@ -41,9 +44,6 @@ import com.helger.security.authentication.credentials.ICredentialValidationResul
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Provide a login screen
  *
@@ -51,7 +51,7 @@ import jakarta.annotation.Nullable;
  */
 public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
 {
-  public SimpleLoginHTMLProvider (final boolean bLoginError, @Nonnull final ICredentialValidationResult aLoginResult)
+  public SimpleLoginHTMLProvider (final boolean bLoginError, @NonNull final ICredentialValidationResult aLoginResult)
   {
     super (bLoginError, aLoginResult);
   }
@@ -90,11 +90,11 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
    *        Display locale to use
    */
   @OverrideOnDemand
-  protected void customizeLoginFields (@Nonnull final HCTable aTable, @Nonnull final Locale aDisplayLocale)
+  protected void customizeLoginFields (@NonNull final HCTable aTable, @NonNull final Locale aDisplayLocale)
   {}
 
   @Override
-  protected void fillBody (@Nonnull final ISimpleWebExecutionContext aSWEC, @Nonnull final HCHtml aHtml)
+  protected void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCHtml aHtml)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = aSWEC.getRequestScope ();
     final Locale aDisplayLocale = aSWEC.getDisplayLocale ();

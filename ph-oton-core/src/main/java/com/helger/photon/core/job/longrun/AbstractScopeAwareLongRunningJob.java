@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.job.longrun;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,6 @@ import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract scope aware long running job.
@@ -54,13 +53,13 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
    *         recommended to deliver "guest" or the like instead.
    */
   @Nullable
-  protected abstract String getCurrentUserID (@Nonnull JobDataMap aJobDataMap);
+  protected abstract String getCurrentUserID (@NonNull JobDataMap aJobDataMap);
 
   /**
    * @return The {@link LongRunningJobManager} to be used. May not return
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   protected static final LongRunningJobManager getLongRunningJobManager ()
   {
     return PhotonBasicManager.getLongRunningJobMgr ();
@@ -68,7 +67,7 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void beforeExecuteInScope (@Nonnull final JobDataMap aJobDataMap, @Nonnull final IJobExecutionContext aContext)
+  protected void beforeExecuteInScope (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
   {
     final String sUserID = getCurrentUserID (aJobDataMap);
 
@@ -81,9 +80,9 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void afterExecuteInScope (@Nonnull final JobDataMap aJobDataMap,
-                                      @Nonnull final IJobExecutionContext aContext,
-                                      @Nonnull final ESuccess eExecSuccess)
+  protected void afterExecuteInScope (@NonNull final JobDataMap aJobDataMap,
+                                      @NonNull final IJobExecutionContext aContext,
+                                      @NonNull final ESuccess eExecSuccess)
   {
     // Get long running job ID from JobDataMap
     final String sLongRunningJobID = aJobDataMap.getAsString (KEY_LONG_RUNNING_JOB_ID);

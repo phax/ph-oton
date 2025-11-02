@@ -16,6 +16,9 @@
  */
 package com.helger.photon.security.auth;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
@@ -24,9 +27,6 @@ import com.helger.photon.security.user.UserManager;
 import com.helger.security.authentication.credentials.IAuthCredentialToSubjectResolverSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
@@ -38,13 +38,13 @@ import jakarta.annotation.Nullable;
 @IsSPIImplementation
 public class UserNameAuthCredentialToSubjectResolverSPI implements IAuthCredentialToSubjectResolverSPI
 {
-  public boolean supportsCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public boolean supportsCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     return aCredentials instanceof IUserNamePasswordCredentials;
   }
 
   @Nullable
-  public IUser getSubjectFromCredentials (@Nonnull final IAuthCredentials aCredentials)
+  public IUser getSubjectFromCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
     final IUserManager aUserMgr = PhotonSecurityManager.getUserMgr ();

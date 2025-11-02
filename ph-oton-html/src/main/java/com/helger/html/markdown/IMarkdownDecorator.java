@@ -16,13 +16,13 @@
  */
 package com.helger.html.markdown;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.html.hc.html.IHCElementWithChildren;
 import com.helger.html.hc.html.embedded.HCImg;
 import com.helger.html.hc.html.grouping.HCLI;
 import com.helger.html.hc.html.textlevel.HCA;
 import com.helger.html.hc.html.textlevel.HCCode;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Decorator interface.
@@ -44,7 +44,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openParagraph (@Nonnull MarkdownHCStack out);
+  void openParagraph (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a paragraph is closed.
@@ -59,7 +59,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeParagraph (@Nonnull MarkdownHCStack out);
+  void closeParagraph (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a blockquote is opened. Default implementation is:
@@ -71,7 +71,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openBlockquote (@Nonnull MarkdownHCStack out);
+  void openBlockquote (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a blockquote is closed.
@@ -86,7 +86,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeBlockquote (@Nonnull MarkdownHCStack out);
+  void closeBlockquote (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a code block is opened.
@@ -101,7 +101,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openCodeBlock (@Nonnull MarkdownHCStack out);
+  void openCodeBlock (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a code block is closed.
@@ -116,7 +116,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeCodeBlock (@Nonnull MarkdownHCStack out);
+  void closeCodeBlock (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a code span is opened.
@@ -132,7 +132,7 @@ public interface IMarkdownDecorator
    *        The StringBuilder to write to.
    * @return code element
    */
-  HCCode openCodeSpan (@Nonnull MarkdownHCStack out);
+  HCCode openCodeSpan (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a code span is closed.
@@ -147,7 +147,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeCodeSpan (@Nonnull MarkdownHCStack out);
+  void closeCodeSpan (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a headline is opened.
@@ -169,8 +169,8 @@ public interface IMarkdownDecorator
    *        Headline level
    * @return Headline element
    */
-  @Nonnull
-  IHCElementWithChildren <?> openHeadline (@Nonnull MarkdownHCStack out, int level);
+  @NonNull
+  IHCElementWithChildren <?> openHeadline (@NonNull MarkdownHCStack out, int level);
 
   /**
    * Called when a headline is closed.
@@ -189,7 +189,7 @@ public interface IMarkdownDecorator
    * @param level
    *        Headline level
    */
-  void closeHeadline (@Nonnull MarkdownHCStack out, int level);
+  void closeHeadline (@NonNull MarkdownHCStack out, int level);
 
   /**
    * Called when a strong span is opened.
@@ -204,7 +204,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openStrong (@Nonnull MarkdownHCStack out);
+  void openStrong (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a strong span is closed.
@@ -219,7 +219,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeStrong (@Nonnull MarkdownHCStack out);
+  void closeStrong (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a strike span is opened.
@@ -234,7 +234,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openStrike (@Nonnull MarkdownHCStack out);
+  void openStrike (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a strike span is closed.
@@ -249,7 +249,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeStrike (@Nonnull MarkdownHCStack out);
+  void closeStrike (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an emphasis span is opened.
@@ -264,7 +264,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openEmphasis (@Nonnull MarkdownHCStack out);
+  void openEmphasis (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an emphasis span is closed.
@@ -279,7 +279,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeEmphasis (@Nonnull MarkdownHCStack out);
+  void closeEmphasis (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a superscript span is opened.
@@ -294,7 +294,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openSuper (@Nonnull MarkdownHCStack out);
+  void openSuper (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a superscript span is closed.
@@ -309,7 +309,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeSuper (@Nonnull MarkdownHCStack out);
+  void closeSuper (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an ordered list is opened.
@@ -324,7 +324,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openOrderedList (@Nonnull MarkdownHCStack out);
+  void openOrderedList (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an ordered list is closed.
@@ -339,7 +339,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeOrderedList (@Nonnull MarkdownHCStack out);
+  void closeOrderedList (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an unordered list is opened.
@@ -354,7 +354,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void openUnorderedList (@Nonnull MarkdownHCStack out);
+  void openUnorderedList (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an unordered list is closed.
@@ -369,7 +369,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeUnorderedList (@Nonnull MarkdownHCStack out);
+  void closeUnorderedList (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a list item is opened.
@@ -388,8 +388,8 @@ public interface IMarkdownDecorator
    *        The StringBuilder to write to.
    * @return List item element
    */
-  @Nonnull
-  HCLI openListItem (@Nonnull MarkdownHCStack out);
+  @NonNull
+  HCLI openListItem (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a list item is closed.
@@ -404,7 +404,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void closeListItem (@Nonnull MarkdownHCStack out);
+  void closeListItem (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a horizontal ruler is encountered.
@@ -419,7 +419,7 @@ public interface IMarkdownDecorator
    * @param out
    *        The StringBuilder to write to.
    */
-  void appendHorizontalRuler (@Nonnull MarkdownHCStack out);
+  void appendHorizontalRuler (@NonNull MarkdownHCStack out);
 
   /**
    * Called when a link is opened.
@@ -438,10 +438,10 @@ public interface IMarkdownDecorator
    *        The stack to write to.
    * @return Link element
    */
-  @Nonnull
-  HCA openLink (@Nonnull MarkdownHCStack out);
+  @NonNull
+  HCA openLink (@NonNull MarkdownHCStack out);
 
-  void closeLink (@Nonnull MarkdownHCStack out);
+  void closeLink (@NonNull MarkdownHCStack out);
 
   /**
    * Called when an image is opened.
@@ -460,6 +460,6 @@ public interface IMarkdownDecorator
    *        The StringBuilder to write to.
    * @return Image element
    */
-  @Nonnull
-  HCImg appendImage (@Nonnull MarkdownHCStack out);
+  @NonNull
+  HCImg appendImage (@NonNull MarkdownHCStack out);
 }

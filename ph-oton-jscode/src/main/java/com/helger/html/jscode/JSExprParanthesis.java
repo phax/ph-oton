@@ -16,28 +16,28 @@
  */
 package com.helger.html.jscode;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 public class JSExprParanthesis extends AbstractJSExpression
 {
   private final IJSExpression m_aExpr;
 
-  public JSExprParanthesis (@Nonnull final IJSExpression aExpr)
+  public JSExprParanthesis (@NonNull final IJSExpression aExpr)
   {
     m_aExpr = ValueEnforcer.notNull (aExpr, "Expr");
   }
 
-  @Nonnull
+  @NonNull
   public IJSExpression expr ()
   {
     return m_aExpr;
   }
 
-  public void generate (@Nonnull final JSFormatter aFormatter)
+  public void generate (@NonNull final JSFormatter aFormatter)
   {
     aFormatter.plain ('(').generatable (m_aExpr).plain (')');
   }

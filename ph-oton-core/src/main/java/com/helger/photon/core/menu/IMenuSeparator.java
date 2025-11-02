@@ -16,8 +16,8 @@
  */
 package com.helger.photon.core.menu;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Interface for a menu item separator.
@@ -29,6 +29,6 @@ public interface IMenuSeparator extends IMenuObject
   /**
    * {@inheritDoc}
    */
-  @Nonnull
+  @NonNull
   IMenuSeparator setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 }

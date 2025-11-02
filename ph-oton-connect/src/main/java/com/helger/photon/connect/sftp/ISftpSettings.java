@@ -16,7 +16,7 @@
  */
 package com.helger.photon.connect.sftp;
 
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base interface for SFTP settings

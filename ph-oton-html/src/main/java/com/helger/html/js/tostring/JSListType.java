@@ -16,12 +16,12 @@
  */
 package com.helger.html.js.tostring;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Specific JavaScript list type.
@@ -36,13 +36,13 @@ public class JSListType extends JSType implements IHasChildJSType
    */
   private final JSType m_aChildType;
 
-  public JSListType (@Nonnull final JSType aChildType)
+  public JSListType (@NonNull final JSType aChildType)
   {
     super (EJSType.LIST);
     m_aChildType = ValueEnforcer.notNull (aChildType, "ChildType");
   }
 
-  @Nonnull
+  @NonNull
   public JSType getChildType ()
   {
     return m_aChildType;
