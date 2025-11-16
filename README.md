@@ -72,8 +72,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.0.3 - work in progress
-* Made sure the `DefaultCSSClassProvider` uses a thread-safe map internally
+v10.1.0 - 2025-11-16
+* Updated to Jetty 12.1.4
+* Updated to ph-commons 12.1.0
+* Using JSpecify annotations
+* Made sure the `DefaultCSSClassProvider` uses a thread-safe Map internally
 
 v10.0.2 - 2025-10-23
 * Updated to Jetty 12.1.3
