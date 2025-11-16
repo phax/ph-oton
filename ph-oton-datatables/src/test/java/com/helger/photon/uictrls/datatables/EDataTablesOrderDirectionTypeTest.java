@@ -27,7 +27,7 @@ import org.junit.Test;
  *
  * @author Philip Helger
  */
-public class EDataTablesOrderDirectionTypeTest
+public final class EDataTablesOrderDirectionTypeTest
 {
   @Test
   public void testBasic ()

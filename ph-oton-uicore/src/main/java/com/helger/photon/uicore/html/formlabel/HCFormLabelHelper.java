@@ -16,8 +16,6 @@
  */
 package com.helger.photon.uicore.html.formlabel;
 
-import java.util.Map;
-
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -28,6 +26,7 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNodeWithChildren;
@@ -46,7 +45,7 @@ public final class HCFormLabelHelper
 
   private static final Logger LOGGER = LoggerFactory.getLogger (HCFormLabelHelper.class);
 
-  private static final Map <ELabelType, String> DEFAULT_SUFFIXES = new CommonsEnumMap <> (ELabelType.class);
+  private static final ICommonsMap <ELabelType, String> DEFAULT_SUFFIXES = new CommonsEnumMap <> (ELabelType.class);
   private static String s_sDefaultLabelEnd;
 
   static
@@ -70,8 +69,7 @@ public final class HCFormLabelHelper
   }
 
   /**
-   * @return The global "label end" string to use. Never <code>null</code> but
-   *         maybe empty.
+   * @return The global "label end" string to use. Never <code>null</code> but maybe empty.
    * @since 8.3.1
    */
   @NonNull
@@ -81,9 +79,8 @@ public final class HCFormLabelHelper
   }
 
   /**
-   * Set the global "label end" literal. By default it is
-   * {@link #DEFAULT_LABEL_END} which is a single colon. This can only be set on
-   * a global scale, so set this initially.
+   * Set the global "label end" literal. By default it is {@link #DEFAULT_LABEL_END} which is a
+   * single colon. This can only be set on a global scale, so set this initially.
    *
    * @param sDefaultLabelEnd
    *        The new label end to be used. May be <code>null</code>.
@@ -110,14 +107,13 @@ public final class HCFormLabelHelper
   }
 
   /**
-   * Change the default suffix string for a certain form label type. This is a
-   * global change and hence should be set on application startup only.
+   * Change the default suffix string for a certain form label type. This is a global change and
+   * hence should be set on application startup only.
    *
    * @param eType
    *        The label type to change. May not be <code>null</code>.
    * @param sValue
-   *        The default suffix string to be used. May be <code>null</code> to
-   *        indicate "none".
+   *        The default suffix string to be used. May be <code>null</code> to indicate "none".
    * @since 8.3.1
    */
   public static void setDefaultSuffixString (@NonNull final ELabelType eType, @Nullable final String sValue)
@@ -131,8 +127,7 @@ public final class HCFormLabelHelper
   }
 
   /**
-   * Build the overall suffix based on the suffix of the label type and
-   * optionally the label end
+   * Build the overall suffix based on the suffix of the label type and optionally the label end
    *
    * @param eType
    *        The label type to use
@@ -171,27 +166,24 @@ public final class HCFormLabelHelper
       // string" and "label end" would be the same string
       return sLabelEnd;
     }
-    if (StringHelper.isNotEmpty (sLabelEnd))
-    {
-      if (StringHelper.endsWith (sPlainText, sLabelEnd))
-      {
-        // The text already ends with "label end" - nothing to do
-      }
-      else
-      {
-        if (_isNoLabelEndNeeded (eType, sPlainText))
-        {
-          // Append suffix only
-          return sSuffixString;
-        }
-        // Append suffix and label end
-        return sSuffixString + sLabelEnd;
-      }
-    }
-    else
+    if (!StringHelper.isNotEmpty (sLabelEnd))
     {
       // Append suffix only (which might be empty), as there is no "label end"
       return sSuffixString;
+    }
+    if (StringHelper.endsWith (sPlainText, sLabelEnd))
+    {
+      // The text already ends with "label end" - nothing to do
+    }
+    else
+    {
+      if (_isNoLabelEndNeeded (eType, sPlainText))
+      {
+        // Append suffix only
+        return sSuffixString;
+      }
+      // Append suffix and label end
+      return sSuffixString + sLabelEnd;
     }
     // Fallback - nothing to append
     return "";

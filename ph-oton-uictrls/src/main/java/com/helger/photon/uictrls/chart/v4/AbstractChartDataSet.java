@@ -44,8 +44,8 @@ import com.helger.html.jscode.JSExpr;
  *        Implementation type
  */
 @NotThreadSafe
-public class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTYPE>> implements
-                                  IGenericImplTrait <IMPLTYPE>
+public abstract class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSet <IMPLTYPE>> implements
+                                           IGenericImplTrait <IMPLTYPE>
 {
   private String m_sLabel;
   private JSArray m_aData;

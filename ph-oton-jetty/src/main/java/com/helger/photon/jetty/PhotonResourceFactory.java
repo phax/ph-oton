@@ -25,10 +25,9 @@ import org.eclipse.jetty.util.resource.PathResourceFactory;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.resource.ResourceFactory;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.base.enforce.ValueEnforcer;
-
-import jakarta.annotation.Nullable;
 
 /**
  * A special Jetty {@link ResourceFactory} that can deal with JAR based URLs.

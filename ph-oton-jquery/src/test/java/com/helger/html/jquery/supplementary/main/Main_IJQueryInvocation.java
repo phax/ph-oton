@@ -74,8 +74,8 @@ public class Main_IJQueryInvocation extends AbstractCreateJQueryAPIList
 
     final StringBuilder aFull = new StringBuilder ("package com.helger.html.jquery;\n" +
                                                    "\n" +
-                                                   "import jakarta.annotation.NonNull;\n" +
-                                                   "import jakarta.annotation.Nullable;\n" +
+                                                   "import org.jspecify.annotations.NonNull;\n" +
+                                                   "import org.jspecify.annotations.Nullable;\n" +
                                                    "\n" +
                                                    "import com.helger.annotation.Nonempty;\n" +
                                                    "import com.helger.html.css.ICSSClassProvider;\n" +
