@@ -148,6 +148,12 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     }
 
     @NonNull
+    public Builder pathAndMinifiedPath (@Nullable final String s)
+    {
+      return path (s).minifiedPath (s);
+    }
+
+    @NonNull
     public Builder minifiedPathFromPath ()
     {
       return minifiedPath (CSSFilenameHelper.getMinifiedCSSFilename (m_sPath));

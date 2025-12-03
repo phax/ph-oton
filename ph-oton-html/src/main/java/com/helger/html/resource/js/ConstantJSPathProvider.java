@@ -165,6 +165,12 @@ public final class ConstantJSPathProvider implements IJSPathProvider
     }
 
     @NonNull
+    public Builder pathAndMinifiedPath (@Nullable final String s)
+    {
+      return path (s).minifiedPath (s);
+    }
+
+    @NonNull
     public Builder minifiedPathFromPath ()
     {
       return minifiedPath (JSFilenameHelper.getMinifiedJSFilename (m_sPath));
