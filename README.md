@@ -72,6 +72,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.1.1 - work in progress
+* Updated to Jetty 12.1.5
+
 v10.1.0 - 2025-11-16
 * Updated to Jetty 12.1.4
 * Updated to ph-commons 12.1.0
