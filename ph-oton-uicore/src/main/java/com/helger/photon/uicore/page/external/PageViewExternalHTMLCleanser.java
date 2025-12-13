@@ -72,14 +72,14 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
   public PageViewExternalHTMLCleanser (@Nullable final EHTMLVersion eHTMLVersion)
   {
     // Cache once
-    m_sServerPrefixPath = ServletContextPathHolder.getContextPath () + "/";
+    m_sServerPrefixPath = ServletContextPathHolder.getContextPath () + '/';
     m_eHTMLVersion = eHTMLVersion;
     m_sNamespaceURI = eHTMLVersion == null ? null : eHTMLVersion.getNamespaceURI ();
   }
 
   /**
-   * @return The server prefix path to be added to read links. May neither be <code>null</code> nor
-   *         empty.
+   * @return The server prefix path to be added to read links. Always ends with a slash. May neither
+   *         be <code>null</code> nor empty.
    * @since 7.0.2
    */
   @NonNull
@@ -217,10 +217,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
       }
     }
     else
-      if (aItem instanceof IMicroElement)
+      if (aItem instanceof final IMicroElement aElement)
       {
-        final IMicroElement aElement = (IMicroElement) aItem;
-
         // Ensure the correct namespace is present
         // Remove namespace URI for HTML5 usage (set to null)
         aElement.setNamespaceURI (m_sNamespaceURI);
@@ -244,7 +242,8 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
           {
             if (linkNeedsContextPath (sPath))
             {
-              sPath = m_sServerPrefixPath + sPath;
+              // Avoid double slash
+              sPath = m_sServerPrefixPath + StringHelper.trimStart (sPath, "/");
               aElement.setAttribute (aLinkAttrName, sPath);
             }
           }
@@ -261,11 +260,10 @@ public class PageViewExternalHTMLCleanser extends DefaultHierarchyVisitorCallbac
         }
       }
       else
-        if (aItem instanceof IMicroText)
+        if (aItem instanceof final IMicroText aText)
         {
           if (m_bCleanTexts)
           {
-            final IMicroText aText = (IMicroText) aItem;
             final String sTextNode = aText.getNodeValue ();
             if (StringHelper.isNotEmpty (sTextNode))
             {
