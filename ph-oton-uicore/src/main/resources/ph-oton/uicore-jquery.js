@@ -97,7 +97,7 @@
 })(jQuery);
 
 // Set a default AJAX error handler
-$(document).ont ("ajaxError", function(_event, jqXHR, ajaxSettings, thrownError) {
+$(document).on ("ajaxError", function(_event, jqXHR, ajaxSettings, thrownError) {
   if (!window.ajaxSetupErrorShown) {
     window.ajaxSetupErrorShown = true;
 
