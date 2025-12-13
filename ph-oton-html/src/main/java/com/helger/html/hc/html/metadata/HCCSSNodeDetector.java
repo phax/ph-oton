@@ -24,8 +24,7 @@ import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNode;
 
 /**
- * This class is used to determine the special nodes (JS and CSS, inline and
- * reference).
+ * This class is used to determine the special nodes (JS and CSS, inline and reference).
  *
  * @author Philip Helger
  */
@@ -43,8 +42,8 @@ public final class HCCSSNodeDetector
    *
    * @param aNode
    *        The node to be checked - may be <code>null</code>.
-   * @return <code>true</code> if the node implements {@link HCStyle} or
-   *         {@link HCLink} (and not a special case).
+   * @return <code>true</code> if the node implements {@link HCStyle} or {@link HCLink} (and not a
+   *         special case).
    */
   public static boolean isCSSNode (@Nullable final IHCNode aNode)
   {
@@ -57,8 +56,8 @@ public final class HCCSSNodeDetector
    *
    * @param aNode
    *        The node to be checked - may be <code>null</code>.
-   * @return <code>true</code> if the node implements {@link HCStyle} or
-   *         {@link HCLink} (and not a special case).
+   * @return <code>true</code> if the node implements {@link HCStyle} or {@link HCLink} (and not a
+   *         special case).
    */
   public static boolean isDirectCSSNode (@Nullable final IHCNode aNode)
   {
@@ -114,6 +113,6 @@ public final class HCCSSNodeDetector
   public static boolean isDirectCSSFileNode (@Nullable final IHCNode aNode)
   {
     // File CSS node?
-    return aNode instanceof HCLink && ((HCLink) aNode).isCSSLink ();
+    return aNode instanceof final HCLink aLink && aLink.isCSSLink ();
   }
 }

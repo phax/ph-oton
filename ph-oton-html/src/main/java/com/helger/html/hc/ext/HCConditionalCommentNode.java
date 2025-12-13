@@ -427,8 +427,8 @@ public class HCConditionalCommentNode extends AbstractHCWrappingNode implements 
   public static HCConditionalCommentNode getAsConditionalCommentNode (@NonNull @Nonempty final String sCondition,
                                                                       @NonNull final IHCNode aNode)
   {
-    if (aNode instanceof HCConditionalCommentNode)
-      return (HCConditionalCommentNode) aNode;
+    if (aNode instanceof final HCConditionalCommentNode aCondNode)
+      return aCondNode;
     return new HCConditionalCommentNode (sCondition, aNode);
   }
 }

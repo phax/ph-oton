@@ -232,8 +232,8 @@ public class HCHtml extends AbstractHCElement <HCHtml>
         if (aChild instanceof IHCScript <?>)
         {
           // Check if this is a special inline script to be emitted before files
-          final boolean bIsInlineBeforeFiles = (aChild instanceof IHCScriptInline <?>) &&
-                                               ((IHCScriptInline <?>) aChild).isEmitBeforeFiles ();
+          final boolean bIsInlineBeforeFiles = aChild instanceof final IHCScriptInline <?> aScriptInline &&
+                                               aScriptInline.isEmitBeforeFiles ();
           if (!bIsInlineBeforeFiles)
           {
             // Remember index to insert before

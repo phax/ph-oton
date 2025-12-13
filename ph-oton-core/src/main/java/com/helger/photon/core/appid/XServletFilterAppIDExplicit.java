@@ -34,8 +34,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
 /**
- * XServlet filter responsible for remembering the application ID in the current
- * request
+ * XServlet filter responsible for remembering the application ID in the current request
  *
  * @author Philip Helger
  */
@@ -48,7 +47,8 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
     m_sAppID = ValueEnforcer.notEmpty (sAppID, "AppID");
   }
 
-  public static void setStatePerApp (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final String sAppID)
+  public static void setStatePerApp (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                     @NonNull final String sAppID)
   {
     // It's important to create a session here!
     final PhotonSessionState aSessionState = PhotonSessionState.getInstance ();
@@ -98,7 +98,8 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
           if (aRootItem.hasChildren ())
           {
             final IMenuItemPage aFirstMenuItem = aRootItem.findFirstChildMapped (aItem -> aItem.getData () instanceof IMenuItemPage &&
-                                                                                          aItem.getData ().matchesDisplayFilter (),
+                                                                                          aItem.getData ()
+                                                                                               .matchesDisplayFilter (),
                                                                                  aItem -> (IMenuItemPage) aItem.getData ());
             if (aFirstMenuItem != null)
               aMenuItem = aFirstMenuItem;
@@ -137,7 +138,9 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
       aAppSessionState.setDisplayLocale (aDisplayLocale);
     }
 
-    RequestSettings.setRequestState (aRequestScope, sAppID, new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
+    RequestSettings.setRequestState (aRequestScope,
+                                     sAppID,
+                                     new PhotonRequestState (aMenuTree, aMenuItem, aDisplayLocale));
   }
 
   public void beforeRequest (@NonNull final IRequestWebScope aRequestScope)

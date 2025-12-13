@@ -67,18 +67,18 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
     return new JsonObject ().add ("success", false).add ("error", sErrorMsg).add ("preventRetry", true);
   }
 
-  private void _post (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final UnifiedResponse aUnifiedResponse)
+  private void _post (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                      @NonNull final UnifiedResponse aUnifiedResponse)
   {
     IJsonObject ret;
 
     final Object aFile = aRequestScope.params ().getValue (PARAM_FILE);
-    if (!(aFile instanceof IFileItem))
+    if (!(aFile instanceof final IFileItem aFileItem))
     {
       ret = createError ("No file passed. Maybe the request is not multipart, put 'multipart/form-data' enctype for your form.");
     }
     else
     {
-      final IFileItem aFileItem = (IFileItem) aFile;
       final String sDirectory = aRequestScope.params ().getAsString (PARAM_DIRECTORY);
       final boolean bDirectoryPresent = StringHelper.isNotEmpty (sDirectory);
       if (bDirectoryPresent && !FilenameHelper.isValidFilenameWithPaths (sDirectory))
@@ -128,7 +128,8 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
         }
       }
     }
-    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON).setContentAndCharset (ret.getAsJsonString (), StandardCharsets.UTF_8);
+    aUnifiedResponse.setMimeType (CMimeType.APPLICATION_JSON)
+                    .setContentAndCharset (ret.getAsJsonString (), StandardCharsets.UTF_8);
   }
 
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,

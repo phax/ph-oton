@@ -279,10 +279,10 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       int nColIndex = 0;
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
-        if (aCol instanceof DTCol)
+        if (aCol instanceof final DTCol aDTCol)
         {
           bHasDTCol = true;
-          aHeaderNodes[nColIndex] = ((DTCol) aCol).getHeaderNode ();
+          aHeaderNodes[nColIndex] = aDTCol.getHeaderNode ();
         }
         nColIndex++;
       }
@@ -880,10 +880,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
         DataTablesColumnDef aColumn;
-        if (aCol instanceof DTCol)
+        if (aCol instanceof final DTCol aDTCol)
         {
           // Copy data from DTColumn
-          final DTCol aDTCol = (DTCol) aCol;
           aColumn = new DataTablesColumnDef (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
             setInitialOrder (new DataTablesOrder ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
@@ -1140,9 +1139,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       // Add client-side date/time formatter
       final EnumSet <EDTColType> aDateTimeTypes = EnumSet.noneOf (EDTColType.class);
       for (final IHCCol <?> aCol : m_aTable.getAllColumns ())
-        if (aCol instanceof DTCol)
+        if (aCol instanceof final DTCol aDTCol)
         {
-          final EDTColType eColType = ((DTCol) aCol).getColType ();
+          final EDTColType eColType = aDTCol.getColType ();
           if (eColType != null && eColType.isDateTimeType ())
             aDateTimeTypes.add (eColType);
         }

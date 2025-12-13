@@ -138,13 +138,13 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
           }
         bHasChildren = bHasDisplayChildren;
       }
-      if (aMenuObj instanceof IMenuSeparator)
+      if (aMenuObj instanceof final IMenuSeparator aMenuSep)
       {
         // separator
-        final IHCNode aHCNode = m_aRenderer.renderSeparator (m_aSWEC, (IMenuSeparator) aMenuObj);
+        final IHCNode aHCNode = m_aRenderer.renderSeparator (m_aSWEC, aMenuSep);
         HCLI aLI;
-        if (aHCNode instanceof HCLI)
-          aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
+        if (aHCNode instanceof final HCLI aExistingLI)
+          aLI = aParent.addAndReturnItem (aExistingLI);
         else
           aLI = aParent.addAndReturnItem (aHCNode);
         m_aRenderer.onMenuSeparatorItem (m_aSWEC, aLI);
@@ -154,34 +154,34 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
       {
         final boolean bExpanded = aExpandedState.booleanValue ();
         final boolean bSelected = aMenuObj.getID ().equals (m_sSelectedItem);
-        if (aMenuObj instanceof IMenuItemPage)
+        if (aMenuObj instanceof final IMenuItemPage aMenuPage)
         {
           // page item
           final IHCNode aHCNode = m_aRenderer.renderMenuItemPage (m_aSWEC,
-                                                                  (IMenuItemPage) aMenuObj,
+                                                                  aMenuPage,
                                                                   bHasChildren,
                                                                   bSelected,
                                                                   bExpanded);
           HCLI aLI;
-          if (aHCNode instanceof HCLI)
-            aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
+          if (aHCNode instanceof final HCLI aExistingLI)
+            aLI = aParent.addAndReturnItem (aExistingLI);
           else
             aLI = aParent.addAndReturnItem (aHCNode);
           m_aRenderer.onMenuItemPageItem (m_aSWEC, aLI, bHasChildren, bSelected, bExpanded);
           m_aMenuItemStack.push (aLI);
         }
         else
-          if (aMenuObj instanceof IMenuItemExternal)
+          if (aMenuObj instanceof final IMenuItemExternal aMenuExternal)
           {
             // external item
             final IHCNode aHCNode = m_aRenderer.renderMenuItemExternal (m_aSWEC,
-                                                                        (IMenuItemExternal) aMenuObj,
+                                                                        aMenuExternal,
                                                                         bHasChildren,
                                                                         bSelected,
                                                                         bExpanded);
             HCLI aLI;
-            if (aHCNode instanceof HCLI)
-              aLI = aParent.addAndReturnItem ((HCLI) aHCNode);
+            if (aHCNode instanceof final HCLI aExistingLI)
+              aLI = aParent.addAndReturnItem (aExistingLI);
             else
               aLI = aParent.addAndReturnItem (aHCNode);
             m_aRenderer.onMenuItemExternalItem (m_aSWEC, aLI, bHasChildren, bSelected, bExpanded);
@@ -220,11 +220,10 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * Render the whole menu
    *
    * @param aLEC
-   *        The current layout execution context. Required for cookie-less
-   *        handling. May not be <code>null</code>.
-   * @param aFactory
-   *        The factory to be used to create nodes of type T. May not be
+   *        The current layout execution context. Required for cookie-less handling. May not be
    *        <code>null</code>.
+   * @param aFactory
+   *        The factory to be used to create nodes of type T. May not be <code>null</code>.
    * @param aRenderer
    *        The renderer to use
    * @return Never <code>null</code>.
@@ -249,11 +248,10 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * Render a part of the menu
    *
    * @param aLEC
-   *        The current layout execution context. Required for cookie-less
-   *        handling. May not be <code>null</code>.
-   * @param aFactory
-   *        The factory to be used to create nodes of type T. May not be
+   *        The current layout execution context. Required for cookie-less handling. May not be
    *        <code>null</code>.
+   * @param aFactory
+   *        The factory to be used to create nodes of type T. May not be <code>null</code>.
    * @param aStartTreeItem
    *        The start tree to iterate
    * @param aRenderer
@@ -281,16 +279,14 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * Render the whole menu
    *
    * @param aLEC
-   *        The current layout execution context. Required for cookie-less
-   *        handling. May not be <code>null</code>.
-   * @param aFactory
-   *        The factory to be used to create nodes of type T. May not be
+   *        The current layout execution context. Required for cookie-less handling. May not be
    *        <code>null</code>.
+   * @param aFactory
+   *        The factory to be used to create nodes of type T. May not be <code>null</code>.
    * @param aRenderer
    *        The renderer to use
    * @param aDisplayMenuItemIDs
-   *        The menu items to display as a map from menu item ID to expanded
-   *        state
+   *        The menu items to display as a map from menu item ID to expanded state
    * @return Never <code>null</code>.
    * @param <T>
    *        HC list type to be instantiated
@@ -308,18 +304,17 @@ public class MenuRendererCallback <T extends IHCList <?, HCLI>> extends
    * Render a part of the menu
    *
    * @param aLEC
-   *        The current layout execution context. Required for cookie-less
-   *        handling. May not be <code>null</code>.
-   * @param aFactory
-   *        The factory to be used to create nodes of type T. May not be
+   *        The current layout execution context. Required for cookie-less handling. May not be
    *        <code>null</code>.
+   * @param aFactory
+   *        The factory to be used to create nodes of type T. May not be <code>null</code>.
    * @param aStartTreeItem
    *        The start tree to iterate. May not be <code>null</code>.
    * @param aRenderer
    *        The renderer to use. May not be <code>null</code>.
    * @param aDisplayMenuItemIDs
-   *        The menu items to display as a map from menu item ID to expanded
-   *        state. May not be <code>null</code>.
+   *        The menu items to display as a map from menu item ID to expanded state. May not be
+   *        <code>null</code>.
    * @return Never <code>null</code>.
    * @param <T>
    *        HC list type to be instantiated

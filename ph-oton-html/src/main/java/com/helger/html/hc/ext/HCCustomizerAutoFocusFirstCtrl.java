@@ -45,9 +45,8 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
     final Wrapper <IHCHasFocus <?>> aFirstCtrl = new Wrapper <> ();
 
     HCHelper.iterateChildrenNoCopy (aStartNode, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCControl <?>)
+      if (aChildNode instanceof final IHCControl <?> aCurCtrl)
       {
-        final IHCControl <?> aCurCtrl = (IHCControl <?>) aChildNode;
         if (aCurCtrl.isAutoFocus ())
         {
           // No need to continue because an existing control already has the

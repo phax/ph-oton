@@ -147,8 +147,8 @@ public final class DataTablesServerData implements IHasUIState
     if (aCustomizer instanceof HCCustomizerAutoFocusFirstCtrl)
       aRealCS.setCustomizer (null);
     else
-      if (aCustomizer instanceof HCCustomizerList)
-        ((HCCustomizerList) aCustomizer).removeAllCustomizersOfClass (HCCustomizerAutoFocusFirstCtrl.class);
+      if (aCustomizer instanceof final HCCustomizerList aCustomizerList)
+        aCustomizerList.removeAllCustomizersOfClass (HCCustomizerAutoFocusFirstCtrl.class);
 
     return aRealCS;
   }

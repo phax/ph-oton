@@ -68,8 +68,8 @@ public class FeedOtherContent extends AbstractFeedElement implements IFeedConten
     final IMicroElement aElement = new MicroElement (CFeed.XMLNS_ATOM, sElementName);
     aElement.setAttribute ("type", m_sType);
     for (final Object aChild : m_aChildren)
-      if (aChild instanceof String)
-        aElement.addText ((String) aChild);
+      if (aChild instanceof final String sChild)
+        aElement.addText (sChild);
       else
         aElement.addChild ((IMicroNode) aChild);
     if (StringHelper.isNotEmpty (getLanguage ()))

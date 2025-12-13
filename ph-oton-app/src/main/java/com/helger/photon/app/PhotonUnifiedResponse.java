@@ -246,9 +246,10 @@ public class PhotonUnifiedResponse extends UnifiedResponse
       final IHCNode aTargetNode;
 
       // Special handling for complete HCHtml objects needed
-      if (aNode instanceof IHCNodeList <?> && aNode.getChildCount () == 1 && aNode.getFirstChild () instanceof HCHtml)
+      if (aNode instanceof IHCNodeList <?> &&
+          aNode.getChildCount () == 1 &&
+          aNode.getFirstChild () instanceof final HCHtml aHtml)
       {
-        final HCHtml aHtml = (HCHtml) aNode.getFirstChild ();
         aTargetNode = aHtml;
 
         // customize, finalize and extract resources

@@ -132,8 +132,8 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
       return null;
 
     // Special handling for UI state wrapper to retrieve the contained object
-    if (aObject instanceof UIStateWrapper <?>)
-      return ((UIStateWrapper <?>) aObject).<T> getCastedObject ();
+    if (aObject instanceof final UIStateWrapper <?> aWrapper)
+      return aWrapper.<T> getCastedObject ();
 
     // Regular cast
     return GenericReflection.uncheckedCast (aObject);

@@ -40,8 +40,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
- * Default servlet that performs URL redirects based on {@link GoMappingManager}
- * .
+ * Default servlet that performs URL redirects based on {@link GoMappingManager} .
  *
  * @author Philip Helger
  */
@@ -140,9 +139,9 @@ public class GoXServletHandler implements IXServletSimpleHandler
                                                                                        aMenuTree);
 
           final IMenuObject aMenuObj = aMenuTree.getItemDataWithID (sTargetMenuItemID);
-          if (aMenuObj instanceof IMenuItemExternal)
+          if (aMenuObj instanceof final IMenuItemExternal aMenuExternal)
           {
-            aTargetURL = new SimpleURL (((IMenuItemExternal) aMenuObj).getURL ());
+            aTargetURL = new SimpleURL (aMenuExternal.getURL ());
           }
         }
       }
@@ -162,11 +161,11 @@ public class GoXServletHandler implements IXServletSimpleHandler
     {
       final String sParamName = aEntry.getKey ();
       final Object aParamValue = aEntry.getValue ();
-      if (aParamValue instanceof String)
-        aTargetURL.add (sParamName, (String) aParamValue);
+      if (aParamValue instanceof final String sValue)
+        aTargetURL.add (sParamName, sValue);
       else
-        if (aParamValue instanceof String [])
-          for (final String sParamValue : (String []) aParamValue)
+        if (aParamValue instanceof final String [] aArrayValue)
+          for (final String sParamValue : aArrayValue)
             aTargetURL.add (sParamName, sParamValue);
     }
     if (LOGGER.isDebugEnabled ())

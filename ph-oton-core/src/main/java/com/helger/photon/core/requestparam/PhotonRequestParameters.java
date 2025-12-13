@@ -135,19 +135,19 @@ public class PhotonRequestParameters implements Serializable
       if (aMenuObject != null)
       {
         // Only internal menu items pointing to a page are valid
-        if (aMenuObject instanceof IMenuItemPage)
+        if (aMenuObject instanceof final IMenuItemPage aMenuPage)
         {
           // Only menu items that can be displayed are valid
           if (aMenuObject.matchesDisplayFilter ())
-            ret = (IMenuItemPage) aMenuObject;
+            ret = aMenuPage;
         }
         else
-          if (aMenuObject instanceof IMenuItemRedirectToPage)
+          if (aMenuObject instanceof final IMenuItemRedirectToPage aMenuRedirect)
           {
             // It's a redirect
             if (aMenuObject.matchesDisplayFilter ())
             {
-              final IMenuItemPage aTarget = ((IMenuItemRedirectToPage) aMenuObject).getTargetMenuItemPage ();
+              final IMenuItemPage aTarget = aMenuRedirect.getTargetMenuItemPage ();
               if (aTarget.matchesDisplayFilter ())
               {
                 ret = aTarget;

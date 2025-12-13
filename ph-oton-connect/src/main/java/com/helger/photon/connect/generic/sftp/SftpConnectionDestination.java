@@ -82,9 +82,8 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
   @Nullable
   public ChannelSftp openConnection (@NonNull final IAuthCredentials aCredentials)
   {
-    if (!(aCredentials instanceof IUserNamePasswordCredentials))
+    if (!(aCredentials instanceof final IUserNamePasswordCredentials aUPC))
       throw new IllegalArgumentException ("Needs to be username/password credentials");
-    final IUserNamePasswordCredentials aUPC = (IUserNamePasswordCredentials) aCredentials;
 
     Session aSession = null;
     Channel aChannel = null;
@@ -96,8 +95,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
       aSession.setPassword (aUPC.getPassword ());
 
       /*
-       * Setup Strict HostKeyChecking to no so we don't get the unknown host key
-       * exception
+       * Setup Strict HostKeyChecking to no so we don't get the unknown host key exception
        */
       final Properties aConfig = new Properties ();
       aConfig.put ("StrictHostKeyChecking", "no");

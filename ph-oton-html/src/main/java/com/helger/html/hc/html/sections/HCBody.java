@@ -51,19 +51,17 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
 
     final ICommonsSet <String> aUsedIDs = new CommonsHashSet <> ();
     HCHelper.iterateTreeNonBreakable (this, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCHasID <?>)
+      if (aChildNode instanceof final IHCHasID <?> aHasID)
       {
-        final IHCHasID <?> aElement = (IHCHasID <?>) aChildNode;
-        final String sID = aElement.getID ();
+        final String sID = aHasID.getID ();
         if (StringHelper.isNotEmpty (sID) && !aUsedIDs.add (sID))
         {
           HCConsistencyChecker.consistencyError ("The ID '" +
                                                  sID +
                                                  "' is used more than once within a single HTML page!" +
-                                                 (aElement instanceof IHCElement <?> ? " The second usage is at an '" +
-                                                                                       ((IHCElement <?>) aElement).getTagName () +
-                                                                                       "' element"
-                                                                                     : ""));
+                                                 (aHasID instanceof final IHCElement <?> aElement ? " The second usage is at an '" +
+                                                                                              aElement.getTagName () +
+                                                                                              "' element" : ""));
         }
       }
     });
@@ -72,7 +70,8 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
   @Override
   @OverrideOnDemand
   @OverridingMethodsMustInvokeSuper
-  protected void fillMicroElement (@NonNull final IMicroElement eHead, @NonNull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement eHead,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (eHead, aConversionSettings);
   }

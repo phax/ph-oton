@@ -78,10 +78,8 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
     ValueEnforcer.notNull (aConfig, "Config");
 
     aConfig.forEachConfigurationValueProvider ( (cvp, prio) -> {
-      if (cvp instanceof IConfigurationSourceResource)
+      if (cvp instanceof final IConfigurationSourceResource aCVP)
       {
-        final IConfigurationSourceResource aCVP = (IConfigurationSourceResource) cvp;
-
         // Find syntax
         final EConfigurationFileSyntax eSHL;
         if (aCVP instanceof ConfigurationSourceJson)

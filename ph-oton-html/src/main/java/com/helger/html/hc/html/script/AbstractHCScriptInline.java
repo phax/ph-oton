@@ -55,8 +55,7 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   private transient String m_sCachedJSCode;
 
   protected AbstractHCScriptInline ()
-  {
-  }
+  {}
 
   protected AbstractHCScriptInline (@NonNull final IHasJSCode aProvider)
   {
@@ -92,8 +91,9 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
     if (m_aJSProvider == null)
       return null;
 
-    if (m_aJSProvider instanceof IHasJSCodeWithSettings)
-      return ((IHasJSCodeWithSettings) m_aJSProvider).getJSCode (aSettings);
+    if (m_aJSProvider instanceof final IHasJSCodeWithSettings aJSWithSettings)
+      return aJSWithSettings.getJSCode (aSettings);
+
     return m_aJSProvider.getJSCode ();
   }
 

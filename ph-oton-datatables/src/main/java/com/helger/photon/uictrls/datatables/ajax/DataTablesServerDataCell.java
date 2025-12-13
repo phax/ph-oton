@@ -45,8 +45,7 @@ import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.serialize.MicroWriter;
 
 /**
- * This class holds table cells to be used by the DataTables server side
- * handling.
+ * This class holds table cells to be used by the DataTables server side handling.
  *
  * @author Philip Helger
  */
@@ -188,8 +187,8 @@ public final class DataTablesServerDataCell
 
         // Create lazy
         // e.g. for initial sorting
-        if (aMicroNode instanceof IMicroNodeWithChildren)
-          ret = ((IMicroNodeWithChildren) aMicroNode).getTextContent ();
+        if (aMicroNode instanceof final IMicroNodeWithChildren aNodeWithChildren)
+          ret = aNodeWithChildren.getTextContent ();
         else
           if (aMicroNode.isText ())
           {

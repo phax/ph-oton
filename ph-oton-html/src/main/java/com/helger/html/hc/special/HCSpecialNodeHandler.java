@@ -58,8 +58,7 @@ import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.resource.css.ICSSCodeProvider;
 
 /**
- * This class is used to handle the special nodes (JS and CSS, inline and
- * reference).
+ * This class is used to handle the special nodes (JS and CSS, inline and reference).
  *
  * @author Philip Helger
  */
@@ -82,8 +81,7 @@ public final class HCSpecialNodeHandler
    *
    * @param aHCNode
    *        The node to be checked. May not be <code>null</code>.
-   * @return <code>true</code> if it is an out-of-band node, <code>false</code>
-   *         if not.
+   * @return <code>true</code> if it is an out-of-band node, <code>false</code> if not.
    */
   public static boolean isOutOfBandNode (@NonNull final IHCNode aHCNode)
   {
@@ -123,13 +121,12 @@ public final class HCSpecialNodeHandler
             LOGGER.info (StringHelper.getRepeated ("  ", nLevel) + "=> is an OOB node!");
 
           aTargetList.add (aChild);
-          if (aParentElement instanceof IHCHasChildrenMutable <?, ?>)
-            ((IHCHasChildrenMutable <?, ?>) aParentElement).removeChildAt (nNodeIndex);
-          else
+          if (!(aParentElement instanceof final IHCHasChildrenMutable <?, ?> aHasChildren))
             throw new IllegalStateException ("Cannot remove out-of-band node from " +
                                              aParentElement +
                                              " at index " +
                                              nNodeIndex);
+          aHasChildren.removeChildAt (nNodeIndex);
         }
         else
         {
@@ -143,14 +140,13 @@ public final class HCSpecialNodeHandler
   }
 
   /**
-   * Extract all out-of-band child nodes for the passed element. Must be called
-   * after the element is finished! All out-of-band nodes are detached from
-   * their parent so that the original node can be reused. Wrapped nodes where
-   * the inner node is an out of band node are also considered and removed.
+   * Extract all out-of-band child nodes for the passed element. Must be called after the element is
+   * finished! All out-of-band nodes are detached from their parent so that the original node can be
+   * reused. Wrapped nodes where the inner node is an out of band node are also considered and
+   * removed.
    *
    * @param aParentElement
-   *        The parent element to extract the nodes from. May not be
-   *        <code>null</code>.
+   *        The parent element to extract the nodes from. May not be <code>null</code>.
    * @param aTargetList
    *        The target list to be filled. May not be <code>null</code>.
    */
@@ -209,23 +205,19 @@ public final class HCSpecialNodeHandler
   }
 
   /**
-   * Merge all inline CSS and JS elements contained in the source nodes into one
-   * script elements
+   * Merge all inline CSS and JS elements contained in the source nodes into one script elements
    *
    * @param aOOBNodes
    *        Source list of out-of-band nodes. May not be <code>null</code>.
    * @param bKeepOnDocumentReady
-   *        if <code>true</code> than all combined document.ready() scripts are
-   *        kept as document.ready() scripts. If <code>false</code> than all
-   *        document.ready() scripts are converted to regular scripts and are
-   *        executed after all other scripts. For AJAX calls, this should be
-   *        <code>false</code>.
-   * @return Target list. JS and CSS and other nodes are mixed. Inline JS and
-   *         CSS that comes before files, is first. Than come the CSS and JS
-   *         external as well as other elements. Finally the inline JS and CSS
-   *         nodes to be emitted after the files are contained. So the resulting
-   *         order is at it should be except that JS and CSS and other nodes are
-   *         mixed.
+   *        if <code>true</code> than all combined document.ready() scripts are kept as
+   *        document.ready() scripts. If <code>false</code> than all document.ready() scripts are
+   *        converted to regular scripts and are executed after all other scripts. For AJAX calls,
+   *        this should be <code>false</code>.
+   * @return Target list. JS and CSS and other nodes are mixed. Inline JS and CSS that comes before
+   *         files, is first. Than come the CSS and JS external as well as other elements. Finally
+   *         the inline JS and CSS nodes to be emitted after the files are contained. So the
+   *         resulting order is at it should be except that JS and CSS and other nodes are mixed.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -238,25 +230,20 @@ public final class HCSpecialNodeHandler
   }
 
   /**
-   * Merge all inline CSS and JS elements contained in the source nodes into one
-   * script elements
+   * Merge all inline CSS and JS elements contained in the source nodes into one script elements
    *
    * @param aOOBNodes
    *        Source list of out-of-band nodes. May not be <code>null</code>.
    * @param aOnDocumentReadyProvider
-   *        if not <code>null</code> than all combined document.ready() scripts
-   *        are kept as document.ready() scripts using this provider. If
-   *        <code>null</code> than all document.ready() scripts are converted to
-   *        regular scripts and are executed after all other scripts. For AJAX
-   *        calls, this should be <code>null</code> as there is no "document
-   *        ready" callback - alternatively you can provide a custom "on
-   *        document ready" provider.
-   * @return Target list. JS and CSS and other nodes are mixed. Inline JS and
-   *         CSS that comes before files, is first. Than come the CSS and JS
-   *         external as well as other elements. Finally the inline JS and CSS
-   *         nodes to be emitted after the files are contained. So the resulting
-   *         order is at it should be except that JS and CSS and other nodes are
-   *         mixed.
+   *        if not <code>null</code> than all combined document.ready() scripts are kept as
+   *        document.ready() scripts using this provider. If <code>null</code> than all
+   *        document.ready() scripts are converted to regular scripts and are executed after all
+   *        other scripts. For AJAX calls, this should be <code>null</code> as there is no "document
+   *        ready" callback - alternatively you can provide a custom "on document ready" provider.
+   * @return Target list. JS and CSS and other nodes are mixed. Inline JS and CSS that comes before
+   *         files, is first. Than come the CSS and JS external as well as other elements. Finally
+   *         the inline JS and CSS nodes to be emitted after the files are contained. So the
+   *         resulting order is at it should be except that JS and CSS and other nodes are mixed.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -287,12 +274,11 @@ public final class HCSpecialNodeHandler
       {
         // Check HCScriptInlineOnDocumentReady first, because it is a subclass
         // of IHCScriptInline
-        if (aNode instanceof HCScriptInlineOnDocumentReady)
+        if (aNode instanceof final HCScriptInlineOnDocumentReady aScript)
         {
           // Inline JS (on document ready)
-          final HCScriptInlineOnDocumentReady aScript = (HCScriptInlineOnDocumentReady) aNode;
-          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter
-                                       : aJSOnDocumentReadyBefore).appendFlattened (aScript.getOnDocumentReadyCode ());
+          (aScript.isEmitAfterFiles () ? aJSOnDocumentReadyAfter : aJSOnDocumentReadyBefore).appendFlattened (aScript
+                                                                                                                     .getOnDocumentReadyCode ());
 
           // Assume the same nonce for all
           if (sScriptNonce == null)
@@ -302,8 +288,8 @@ public final class HCSpecialNodeHandler
         {
           // Inline JS (plain)
           final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
-          (aScript.isEmitAfterFiles () ? aJSInlineAfter
-                                       : aJSInlineBefore).appendFlattened (aScript.getJSCodeProvider ());
+          (aScript.isEmitAfterFiles () ? aJSInlineAfter : aJSInlineBefore).appendFlattened (aScript
+                                                                                                   .getJSCodeProvider ());
 
           // Assume the same nonce for all
           if (sScriptNonce == null)
@@ -463,20 +449,18 @@ public final class HCSpecialNodeHandler
   }
 
   /**
-   * Extract all out-of-band nodes of the source node, merge JS and CSS and
-   * finally extract all special nodes into the passed object.
+   * Extract all out-of-band nodes of the source node, merge JS and CSS and finally extract all
+   * special nodes into the passed object.
    *
    * @param aNode
    *        Source node. May not be <code>null</code>.
    * @param aSpecialNodes
-   *        Target special node object to be filled. May not be
-   *        <code>null</code>.
+   *        Target special node object to be filled. May not be <code>null</code>.
    * @param bKeepOnDocumentReady
-   *        if <code>true</code> than all combined document.ready() scripts are
-   *        kept as document.ready() scripts. If <code>false</code> than all
-   *        document.ready() scripts are converted to regular scripts and are
-   *        executed after all other scripts. For AJAX calls, this should be
-   *        <code>false</code>.
+   *        if <code>true</code> than all combined document.ready() scripts are kept as
+   *        document.ready() scripts. If <code>false</code> than all document.ready() scripts are
+   *        converted to regular scripts and are executed after all other scripts. For AJAX calls,
+   *        this should be <code>false</code>.
    */
   public static void extractSpecialContent (@NonNull final IHCNode aNode,
                                             @NonNull final AbstractHCSpecialNodes <?> aSpecialNodes,
@@ -488,22 +472,19 @@ public final class HCSpecialNodeHandler
   }
 
   /**
-   * Extract all out-of-band nodes of the source node, merge JS and CSS and
-   * finally extract all special nodes into the passed object.
+   * Extract all out-of-band nodes of the source node, merge JS and CSS and finally extract all
+   * special nodes into the passed object.
    *
    * @param aNode
    *        Source node. May not be <code>null</code>.
    * @param aSpecialNodes
-   *        Target special node object to be filled. May not be
-   *        <code>null</code>.
+   *        Target special node object to be filled. May not be <code>null</code>.
    * @param aOnDocumentReadyProvider
-   *        if not <code>null</code> than all combined document.ready() scripts
-   *        are kept as document.ready() scripts using this provider. If
-   *        <code>null</code> than all document.ready() scripts are converted to
-   *        regular scripts and are executed after all other scripts. For AJAX
-   *        calls, this should be <code>null</code> as there is no "document
-   *        ready" callback - alternatively you can provide a custom "on
-   *        document ready" provider.
+   *        if not <code>null</code> than all combined document.ready() scripts are kept as
+   *        document.ready() scripts using this provider. If <code>null</code> than all
+   *        document.ready() scripts are converted to regular scripts and are executed after all
+   *        other scripts. For AJAX calls, this should be <code>null</code> as there is no "document
+   *        ready" callback - alternatively you can provide a custom "on document ready" provider.
    */
   public static void extractSpecialContent (@NonNull final IHCNode aNode,
                                             @NonNull final AbstractHCSpecialNodes <?> aSpecialNodes,

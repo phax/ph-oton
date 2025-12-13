@@ -56,9 +56,8 @@ public final class HCHTMLHelper
 
     final ICommonsList <IHCElement <?>> ret = new CommonsArrayList <> ();
     HCHelper.iterateChildrenNonBreakable (aOwner, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCElement <?>)
+      if (aChildNode instanceof final IHCElement <?> aCurrentElement)
       {
-        final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
         final String sCurrentTagName = aCurrentElement.getTagName ();
         for (final EHTMLElement aElement : aElements)
           if (sCurrentTagName.equalsIgnoreCase (aElement.getElementName ()))
@@ -90,9 +89,8 @@ public final class HCHTMLHelper
 
     final Wrapper <IHCElement <?>> ret = new Wrapper <> ();
     HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCElement <?>)
+      if (aChildNode instanceof final IHCElement <?> aCurrentElement)
       {
-        final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
         final String sCurrentTagName = aCurrentElement.getTagName ();
         boolean bFound = false;
         for (final EHTMLElement aElement : aElements)
@@ -137,9 +135,8 @@ public final class HCHTMLHelper
 
     final Wrapper <IHCElement <?>> ret = new Wrapper <> ();
     HCHelper.iterateChildrenNoCopy (aOwner, (aParentNode, aChildNode) -> {
-      if (aChildNode instanceof IHCElement <?>)
+      if (aChildNode instanceof final IHCElement <?> aCurrentElement)
       {
-        final IHCElement <?> aCurrentElement = (IHCElement <?>) aChildNode;
         final String sCurrentTagName = aCurrentElement.getTagName ();
         for (final EHTMLElement aElement : aElements)
           if (sCurrentTagName.equalsIgnoreCase (aElement.getElementName ()))

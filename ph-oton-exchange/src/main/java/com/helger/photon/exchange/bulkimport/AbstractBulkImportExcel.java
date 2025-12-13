@@ -109,12 +109,12 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
     final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)
       return null;
-    if (aValue instanceof Integer)
-      return (Integer) aValue;
+    if (aValue instanceof final Integer aInt)
+      return aInt;
 
     Integer ret = null;
-    if (aValue instanceof String)
-      ret = StringParser.parseIntObj ((String) aValue);
+    if (aValue instanceof final String sValue)
+      ret = StringParser.parseIntObj (sValue);
 
     if (ret == null)
       aRes.addWarning (EText.MSG_ERR_NO_INT.getDisplayTextWithArgs (aDisplayLocale,
@@ -149,13 +149,12 @@ public abstract class AbstractBulkImportExcel extends AbstractBulkImport
     final Object aValue = ExcelReadHelper.getCellValueObject (aCell);
     if (aValue == null)
       return ETriState.UNDEFINED;
-    if (!(aValue instanceof Boolean))
-    {
-      aRes.addWarning (EText.MSG_ERR_NO_BOOLEAN.getDisplayTextWithArgs (aDisplayLocale,
-                                                                        Integer.toString (nRowIndex),
-                                                                        Integer.toString (aCell.getColumnIndex ())));
-      return ETriState.UNDEFINED;
-    }
-    return ETriState.valueOf ((Boolean) aValue);
+    if (aValue instanceof final Boolean aBoolean)
+      return ETriState.valueOf (aBoolean);
+
+    aRes.addWarning (EText.MSG_ERR_NO_BOOLEAN.getDisplayTextWithArgs (aDisplayLocale,
+                                                                      Integer.toString (nRowIndex),
+                                                                      Integer.toString (aCell.getColumnIndex ())));
+    return ETriState.UNDEFINED;
   }
 }

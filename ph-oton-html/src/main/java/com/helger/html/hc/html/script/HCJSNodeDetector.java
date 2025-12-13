@@ -24,8 +24,7 @@ import com.helger.html.hc.HCHelper;
 import com.helger.html.hc.IHCNode;
 
 /**
- * This class is used to determine the special nodes (JS and CSS, inline and
- * reference).
+ * This class is used to determine the special nodes (JS and CSS, inline and reference).
  *
  * @author Philip Helger
  */
@@ -87,9 +86,8 @@ public final class HCJSNodeDetector
   public static boolean isDirectJSInlineNode (@Nullable final IHCNode aNode)
   {
     // Inline JS node?
-    if (aNode instanceof IHCScriptInline <?>)
+    if (aNode instanceof final IHCScriptInline <?> aScript)
     {
-      final IHCScriptInline <?> aScript = (IHCScriptInline <?>) aNode;
       if (IHCScript.TYPE_MODULE.equals (aScript.getType ()))
       {
         // Modules may not be merged

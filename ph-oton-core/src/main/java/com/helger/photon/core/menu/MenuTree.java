@@ -165,8 +165,8 @@ public class MenuTree extends DefaultTreeWithGlobalUniqueID <String, IMenuObject
       if (aTreeItem != null)
       {
         final IMenuObject aMenuItem = aTreeItem.getData ();
-        if (aMenuItem instanceof IMenuItemPage)
-          return (IMenuItemPage) aMenuItem;
+        if (aMenuItem instanceof final IMenuItemPage aMenuPage)
+          return aMenuPage;
         LOGGER.warn ("The default menu object ID '" +
                      sMenuItemID +
                      "' does not resolve to an IMenuItemPage but to " +

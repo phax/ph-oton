@@ -40,21 +40,20 @@ public final class HCCtrlHelper
   {}
 
   /**
-   * Find the first instance of {@link IHCControl} that is either the passed
-   * element or a child of the passed element.
+   * Find the first instance of {@link IHCControl} that is either the passed element or a child of
+   * the passed element.
    *
    * @param aNode
    *        The source node to start searching. May be <code>null</code>.
-   * @return <code>null</code> if no {@link IHCControl} can be found below the
-   *         passed node.
+   * @return <code>null</code> if no {@link IHCControl} can be found below the passed node.
    */
   @Nullable
   public static IHCControl <?> getFirstHCControl (@Nullable final IHCNode aNode)
   {
     if (aNode != null)
     {
-      if (aNode instanceof IHCControl <?>)
-        return (IHCControl <?>) aNode;
+      if (aNode instanceof final IHCControl <?> aCtrl)
+        return aCtrl;
 
       if (aNode.hasChildren ())
         for (final IHCNode aChild : aNode.getAllChildren ())
@@ -69,22 +68,22 @@ public final class HCCtrlHelper
   }
 
   /**
-   * Recursively determine all {@link IHCControl} elements from and incl. the
-   * passed node
+   * Recursively determine all {@link IHCControl} elements from and incl. the passed node
    *
    * @param aNode
    *        The start node. May be <code>null</code>.
    * @param aConsumer
    *        The consumer to be invoked. May not be <code>null</code>.
    */
-  public static void getAllHCControls (@Nullable final IHCNode aNode, @NonNull final Consumer <? super IHCControl <?>> aConsumer)
+  public static void getAllHCControls (@Nullable final IHCNode aNode,
+                                       @NonNull final Consumer <? super IHCControl <?>> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
     if (aNode != null)
     {
-      if (aNode instanceof IHCControl <?>)
-        aConsumer.accept ((IHCControl <?>) aNode);
+      if (aNode instanceof final IHCControl <?> aCtrl)
+        aConsumer.accept (aCtrl);
 
       // E.g. HCNodeList
       aNode.forAllChildren (aChild -> getAllHCControls (aChild, aConsumer));
@@ -92,13 +91,11 @@ public final class HCCtrlHelper
   }
 
   /**
-   * Recursively determine all {@link IHCControl} elements from and incl. the
-   * passed node
+   * Recursively determine all {@link IHCControl} elements from and incl. the passed node
    *
    * @param aNode
    *        The start node. May be <code>null</code>.
-   * @return The filled list with all controls. Never <code>null</code> but
-   *         maybe empty.
+   * @return The filled list with all controls. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -110,8 +107,7 @@ public final class HCCtrlHelper
   }
 
   /**
-   * Recursively determine all {@link IHCControl} elements from and incl. the
-   * passed nodes
+   * Recursively determine all {@link IHCControl} elements from and incl. the passed nodes
    *
    * @param aNodes
    *        The start nodes. May be <code>null</code>.
@@ -129,13 +125,11 @@ public final class HCCtrlHelper
   }
 
   /**
-   * Recursively determine all {@link IHCControl} elements from and incl. the
-   * passed nodes
+   * Recursively determine all {@link IHCControl} elements from and incl. the passed nodes
    *
    * @param aNodes
    *        The start nodes. May be <code>null</code>.
-   * @return The filled list with all controls. Never <code>null</code> but
-   *         maybe empty.
+   * @return The filled list with all controls. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy

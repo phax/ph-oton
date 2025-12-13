@@ -294,8 +294,8 @@ public abstract class AbstractHCSelect <IMPLTYPE extends AbstractHCSelect <IMPLT
     return m_aOptions.containsAny (HCOptGroup.class::isInstance);
   }
 
-  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof HCOption &&
-                                                                       ((HCOption) x).isSelected ();
+  private static final Predicate <IHCNode> PRED_SELECTED_OPTION = x -> x instanceof final HCOption aOption &&
+                                                                       aOption.isSelected ();
 
   @NonNull
   @ReturnsMutableCopy

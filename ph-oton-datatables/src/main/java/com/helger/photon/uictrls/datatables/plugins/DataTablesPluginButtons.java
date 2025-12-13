@@ -121,8 +121,8 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     {
       final JSArray aButtons = new JSArray ();
       for (final Object aObj : m_aButtons)
-        if (aObj instanceof String)
-          aButtons.add ((String) aObj);
+        if (aObj instanceof final String sObj)
+          aButtons.add (sObj);
         else
           aButtons.add (((DTPButtonsButton) aObj).getAsJS ());
       ret.add (PLUGIN_NAME, aButtons);
@@ -153,7 +153,7 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
     PhotonJS.registerJSIncludeForThisRequest (EDataTablesJSPathProvider.DATATABLES_BUTTONS);
     PhotonCSS.registerCSSIncludeForThisRequest (EDataTablesCSSPathProvider.DATATABLES_BUTTONS);
     for (final Object aObj : m_aButtons)
-      if (aObj instanceof DTPButtonsButton)
-        ((DTPButtonsButton) aObj).registerExternalResources (aConversionSettings);
+      if (aObj instanceof final DTPButtonsButton aButton)
+        aButton.registerExternalResources (aConversionSettings);
   }
 }
