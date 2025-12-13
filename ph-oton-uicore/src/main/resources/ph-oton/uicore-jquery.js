@@ -97,6 +97,8 @@
 })(jQuery);
 
 // Set a default AJAX error handler
+// To disable this global handler on a page, use this code:
+// $(document).off ("ajaxError");
 $(document).on ("ajaxError", function(_event, jqXHR, ajaxSettings, thrownError) {
   if (!window.ajaxSetupErrorShown) {
     window.ajaxSetupErrorShown = true;
