@@ -624,10 +624,10 @@ public class JettyStarter
   }
 
   /**
-   * Customize the {@link Handler.Sequence}
+   * Customize the {@link org.eclipse.jetty.server.Handler.Sequence}
    *
    * @param aHandlerList
-   *        The {@link Handler.Sequence}. Never <code>null</code>.
+   *        The {@link org.eclipse.jetty.server.Handler.Sequence}. Never <code>null</code>.
    * @throws Exception
    *         in case of error
    */
