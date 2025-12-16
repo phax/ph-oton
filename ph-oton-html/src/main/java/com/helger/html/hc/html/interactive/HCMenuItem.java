@@ -88,16 +88,19 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
   /**
    * Create a new MENUITEM element
    */
+  @Deprecated
   public HCMenuItem ()
   {
     super (EHTMLElement.MENUITEM);
   }
 
+  @Deprecated
   public final boolean isChecked ()
   {
     return m_eChecked.isTrue ();
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setChecked (final boolean bMenuItem)
   {
@@ -105,12 +108,14 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getCommand ()
   {
     return m_sCommand;
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setCommand (@Nullable final String sCommand)
   {
@@ -118,11 +123,13 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   public final boolean isDefault ()
   {
     return m_eDefault.isTrue ();
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setDefault (final boolean bMenuItem)
   {
@@ -130,11 +137,13 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   public final boolean isDisabled ()
   {
     return m_eDisabled.isTrue ();
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setDisabled (final boolean bMenuItem)
   {
@@ -142,12 +151,14 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final ISimpleURL getIcon ()
   {
     return m_aIcon;
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setIcon (@Nullable final ISimpleURL aIcon)
   {
@@ -155,12 +166,14 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getLabel ()
   {
     return m_sLabel;
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setLabel (@Nullable final String sLabel)
   {
@@ -168,12 +181,14 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getRadioGroup ()
   {
     return m_sRadioGroup;
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setRadioGroup (@Nullable final String sRadioGroup)
   {
@@ -181,12 +196,14 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final EHCCommandType getType ()
   {
     return m_eType;
   }
 
+  @Deprecated
   @NonNull
   public final HCMenuItem setType (@Nullable final EHCCommandType eType)
   {
@@ -194,6 +211,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
     return this;
   }
 
+  @Deprecated
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -209,7 +227,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
       aElement.setAttribute (CHTMLAttributes.DISABLED, m_eDisabled.isTrue () ? CHTMLAttributeValues.DISABLED : null);
     if (m_aIcon != null)
       aElement.setAttribute (CHTMLAttributes.ICON,
-                             m_aIcon.getAsStringWithEncodedParameters (aConversionSettings.getCharset ()));
+                             m_aIcon.getWithCharset (aConversionSettings.getCharset ()).getAsString ());
     if (StringHelper.isNotEmpty (m_sLabel))
       aElement.setAttribute (CHTMLAttributes.LABEL, m_sLabel);
     if (StringHelper.isNotEmpty (m_sRadioGroup))
@@ -218,6 +236,7 @@ public class HCMenuItem extends AbstractHCElementWithChildren <HCMenuItem> imple
       aElement.setAttribute (CHTMLAttributes.TYPE, m_eType.getAttrValue ());
   }
 
+  @Deprecated
   @Override
   public String toString ()
   {

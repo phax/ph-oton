@@ -30,6 +30,7 @@ public class HCNoBR extends AbstractHCElementWithChildren <HCNoBR>
   /**
    * Create a new NOBR element
    */
+  @Deprecated
   public HCNoBR ()
   {
     super (EHTMLElement.NOBR);

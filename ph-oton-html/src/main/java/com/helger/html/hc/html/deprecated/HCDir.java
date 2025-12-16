@@ -27,6 +27,7 @@ import com.helger.html.hc.html.grouping.AbstractHCListLI;
 @Deprecated (forRemoval = false)
 public class HCDir extends AbstractHCListLI <HCDir>
 {
+  @Deprecated
   public HCDir ()
   {
     super (EHTMLElement.DIR);

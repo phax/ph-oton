@@ -30,6 +30,7 @@ public class HCFont extends AbstractHCElementWithChildren <HCFont>
   /**
    * Create a new FONT element
    */
+  @Deprecated
   public HCFont ()
   {
     super (EHTMLElement.FONT);

@@ -30,6 +30,7 @@ public class HCCenter extends AbstractHCElementWithChildren <HCCenter>
   /**
    * Create a new CENTER element
    */
+  @Deprecated
   public HCCenter ()
   {
     super (EHTMLElement.CENTER);

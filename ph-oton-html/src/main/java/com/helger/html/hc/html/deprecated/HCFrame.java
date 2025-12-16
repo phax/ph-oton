@@ -39,8 +39,10 @@ import com.helger.xml.microdom.IMicroElement;
 public class HCFrame extends AbstractHCElement <HCFrame>
 {
   /** By default a frame border is visible */
+  @Deprecated
   public static final boolean DEFAULT_FRAME_BORDER = true;
   /** By default resize is allowed */
+  @Deprecated
   public static final boolean DEFAULT_NO_RESIZE = false;
 
   private boolean m_bFrameBorder = DEFAULT_FRAME_BORDER;
@@ -52,22 +54,26 @@ public class HCFrame extends AbstractHCElement <HCFrame>
   private EHCScrolling m_eScrolling;
   private String m_sSrc;
 
+  @Deprecated
   public HCFrame ()
   {
     super (EHTMLElement.FRAME);
   }
 
+  @Deprecated
   public HCFrame (@Nullable final String sName)
   {
     this ();
     setName (sName);
   }
 
+  @Deprecated
   public final boolean isFrameBorder ()
   {
     return m_bFrameBorder;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setFrameBorder (final boolean bFrameBorder)
   {
@@ -75,12 +81,14 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getLongDesc ()
   {
     return m_sLongDesc;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setLongDesc (@Nullable final String sLongDesc)
   {
@@ -88,11 +96,13 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   public final int getMarginWidth ()
   {
     return m_nMarginWidth;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setMarginWidth (final int nMarginWidth)
   {
@@ -100,11 +110,13 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   public final int getMarginHeight ()
   {
     return m_nMarginHeight;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setMarginHeight (final int nMarginHeight)
   {
@@ -112,12 +124,14 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getName ()
   {
     return m_sName;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setName (@Nullable final String sName)
   {
@@ -125,11 +139,13 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   public final boolean isNoResize ()
   {
     return m_bNoResize;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setNoResize (final boolean bNoResize)
   {
@@ -137,12 +153,14 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final EHCScrolling getScrolling ()
   {
     return m_eScrolling;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setScrolling (@Nullable final EHCScrolling eScrolling)
   {
@@ -150,12 +168,14 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   @Nullable
   public final String getSrc ()
   {
     return m_sSrc;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrame setSrc (@Nullable final String sSrc)
   {
@@ -163,6 +183,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
     return this;
   }
 
+  @Deprecated
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -184,6 +205,7 @@ public class HCFrame extends AbstractHCElement <HCFrame>
       aElement.setAttribute (CHTMLAttributes.SRC, m_sSrc);
   }
 
+  @Deprecated
   @Override
   public String toString ()
   {

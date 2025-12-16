@@ -37,16 +37,19 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
   private int m_nCols = CGlobal.ILLEGAL_UINT;
   private int m_nRows = CGlobal.ILLEGAL_UINT;
 
+  @Deprecated
   public HCFrameset ()
   {
     super (EHTMLElement.FRAMESET);
   }
 
+  @Deprecated
   public final int getCols ()
   {
     return m_nCols;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrameset setCols (final int nCols)
   {
@@ -54,11 +57,13 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     return this;
   }
 
+  @Deprecated
   public final int getRows ()
   {
     return m_nRows;
   }
 
+  @Deprecated
   @NonNull
   public final HCFrameset setRows (final int nRows)
   {
@@ -66,6 +71,7 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
     return this;
   }
 
+  @Deprecated
   @Override
   protected void fillMicroElement (final IMicroElement aElement, final IHCConversionSettingsToNode aConversionSettings)
   {
@@ -76,6 +82,7 @@ public class HCFrameset extends AbstractHCElementWithChildren <HCFrameset>
       aElement.setAttribute (CHTMLAttributes.ROWS, m_nRows);
   }
 
+  @Deprecated
   @Override
   public String toString ()
   {
