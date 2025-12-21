@@ -131,7 +131,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final boolean... aCont)
+  public JSArray addAll (final boolean @NonNull... aCont)
   {
     for (final boolean bValue : aCont)
       add (bValue);
@@ -139,7 +139,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final char... aCont)
+  public JSArray addAll (final char @NonNull... aCont)
   {
     for (final char cValue : aCont)
       add (cValue);
@@ -147,7 +147,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final double... aCont)
+  public JSArray addAll (final double @NonNull... aCont)
   {
     for (final double dValue : aCont)
       add (dValue);
@@ -155,7 +155,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final float... aCont)
+  public JSArray addAll (final float @NonNull... aCont)
   {
     for (final float fValue : aCont)
       add (fValue);
@@ -163,7 +163,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final int... aCont)
+  public JSArray addAll (final int @NonNull... aCont)
   {
     for (final int nValue : aCont)
       add (nValue);
@@ -171,7 +171,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final long... aCont)
+  public JSArray addAll (final long @NonNull... aCont)
   {
     for (final long nValue : aCont)
       add (nValue);
@@ -179,7 +179,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final BigDecimal... aCont)
+  public JSArray addAll (@Nullable final BigDecimal @NonNull... aCont)
   {
     for (final BigDecimal aValue : aCont)
       add (aValue);
@@ -187,7 +187,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final BigInteger... aCont)
+  public JSArray addAll (@Nullable final BigInteger @NonNull... aCont)
   {
     for (final BigInteger aValue : aCont)
       add (aValue);
@@ -195,7 +195,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final String... aCont)
+  public JSArray addAll (@Nullable final String @NonNull... aCont)
   {
     for (final String sValue : aCont)
       add (sValue);
@@ -203,7 +203,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAll (@NonNull final Iterable <String> aCont)
+  public JSArray addAll (@NonNull final Iterable <@Nullable String> aCont)
   {
     for (final String sValue : aCont)
       add (sValue);
@@ -211,7 +211,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAllExpr (@NonNull final IJSExpression... aCont)
+  public JSArray addAllExpr (@NonNull final IJSExpression @NonNull... aCont)
   {
     for (final IJSExpression aExpr : aCont)
       add (aExpr);
@@ -219,7 +219,7 @@ public class JSArray extends AbstractJSExpression implements IHasSize
   }
 
   @NonNull
-  public JSArray addAllExpr (@NonNull final Iterable <? extends IJSExpression> aCont)
+  public JSArray addAllExpr (@NonNull final Iterable <@NonNull ? extends IJSExpression> aCont)
   {
     for (final IJSExpression aExpr : aCont)
       add (aExpr);

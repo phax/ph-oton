@@ -95,20 +95,21 @@ public class DTCol extends AbstractHCCol <DTCol>
     m_aOrderSpec.setDisplayLocale (aDisplayLocale);
     switch (eColType)
     {
-      case BOOLEAN:
-        m_aOrderSpec.setCollating (false);
-        break;
-      case DATE:
+      case BOOLEAN -> m_aOrderSpec.setCollating (false);
+      case DATE ->
+      {
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorDate (aDisplayLocale));
         m_aOrderSpec.setCollating (false);
-        break;
-      case DATETIME:
+      }
+      case DATETIME ->
+      {
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorDateTime (aDisplayLocale));
         m_aOrderSpec.setCollating (false);
-        break;
-      case DOUBLE:
+      }
+      case DOUBLE ->
+      {
         /*
          * Ensure that columns without text are sorted consistently compared to the ones with
          * non-numeric content
@@ -116,12 +117,14 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorBigDecimal (aDisplayLocale));
         m_aOrderSpec.setCollating (false);
-        break;
-      case DURATION:
+      }
+      case DURATION ->
+      {
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorDuration ());
         m_aOrderSpec.setCollating (false);
-        break;
-      case INT:
+      }
+      case INT ->
+      {
         /*
          * Ensure that columns without text are sorted consistently compared to the ones with
          * non-numeric content
@@ -129,27 +132,31 @@ public class DTCol extends AbstractHCCol <DTCol>
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorBigInteger (aDisplayLocale));
         m_aOrderSpec.setCollating (false);
-        break;
-      case TEXT:
+      }
+      case TEXT ->
+      {
         m_aOrderSpec.setComparableExtractor (aFormatter, x -> x);
         m_aOrderSpec.setCollating (true);
-        break;
-      case TIME:
+      }
+      case TIME ->
+      {
         addClass (CUICoreCSS.CSS_CLASS_RIGHT);
         m_aOrderSpec.setComparableExtractor (aFormatter, ComparatorDT.getExtractorTime (aDisplayLocale));
         m_aOrderSpec.setCollating (false);
-        break;
-      case VERSION:
+      }
+      case VERSION ->
+      {
         m_aOrderSpec.setComparableExtractor (aFormatter, Version::parse);
         m_aOrderSpec.setCollating (false);
-        break;
-      case XML:
+      }
+      case XML ->
+      {
         setOrderable (false);
         m_aOrderSpec.setCollating (false);
-        break;
-      default:
-        throw new IllegalArgumentException ("Unsupported base type provided: " + eColType);
+      }
+      default -> throw new IllegalArgumentException ("Unsupported base type provided: " + eColType);
     }
+    ;
     return this;
   }
 
@@ -249,9 +256,8 @@ public class DTCol extends AbstractHCCol <DTCol>
     return this;
   }
 
-  @Nullable
   @ReturnsMutableCopy
-  public int [] getDataSort ()
+  public int @Nullable [] getDataSort ()
   {
     return ArrayHelper.getCopy (m_aDataSort);
   }
@@ -264,7 +270,7 @@ public class DTCol extends AbstractHCCol <DTCol>
    * @return this
    */
   @NonNull
-  public DTCol setDataSort (@Nullable final int... aDataSort)
+  public DTCol setDataSort (final int @Nullable... aDataSort)
   {
     m_aDataSort = ArrayHelper.getCopy (aDataSort);
     return this;

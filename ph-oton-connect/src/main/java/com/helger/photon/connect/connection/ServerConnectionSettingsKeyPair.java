@@ -27,13 +27,13 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * Default implementation of the {@link IServerConnectionSettingsKeyPair}
- * interface.
+ * Default implementation of the {@link IServerConnectionSettingsKeyPair} interface.
  *
  * @author philip
  */
 @Immutable
-public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSettings implements IServerConnectionSettingsKeyPair
+public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSettings implements
+                                             IServerConnectionSettingsKeyPair
 {
   private final byte [] m_aPrivateKeyBytes;
   private final byte [] m_aPublicKeyBytes;
@@ -43,9 +43,9 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
                                           @Nonnegative final int nPort,
                                           final int nConnectionTimeoutMillis,
                                           @NonNull @Nonempty final String sUserName,
-                                          @NonNull @Nonempty final byte [] aPrivateKeyBytes,
-                                          @NonNull @Nonempty final byte [] aPublicKeyBytes,
-                                          @NonNull final byte [] aKeyPairPassphrase)
+                                          final byte @NonNull @Nonempty [] aPrivateKeyBytes,
+                                          final byte @NonNull @Nonempty [] aPublicKeyBytes,
+                                          final byte @NonNull [] aKeyPairPassphrase)
   {
     super (sIP, nPort, nConnectionTimeoutMillis, sUserName);
 
@@ -54,25 +54,20 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
     m_aKeyPairPassphrase = ArrayHelper.getCopy (ValueEnforcer.notNull (aKeyPairPassphrase, "KeyPairPassphrase"));
   }
 
-  @NonNull
-  @Nonempty
   @ReturnsMutableCopy
-  public byte [] getPrivateKey ()
+  public byte @NonNull @Nonempty [] getPrivateKey ()
   {
     return ArrayHelper.getCopy (m_aPrivateKeyBytes);
   }
 
-  @NonNull
-  @Nonempty
   @ReturnsMutableCopy
-  public byte [] getPublicKey ()
+  public byte @NonNull @Nonempty [] getPublicKey ()
   {
     return ArrayHelper.getCopy (m_aPublicKeyBytes);
   }
 
-  @NonNull
   @ReturnsMutableCopy
-  public byte [] getKeyPairPassphrase ()
+  public byte @NonNull [] getKeyPairPassphrase ()
   {
     return ArrayHelper.getCopy (m_aKeyPairPassphrase);
   }

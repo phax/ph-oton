@@ -74,14 +74,14 @@ public abstract class AbstractChartDataSet <IMPLTYPE extends AbstractChartDataSe
   }
 
   @NonNull
-  public IMPLTYPE setData (@Nullable final int... aData)
+  public IMPLTYPE setData (final int @Nullable... aData)
   {
     m_aData = new JSArray ().addAll (aData);
     return thisAsT ();
   }
 
   @NonNull
-  public IMPLTYPE setData (@Nullable final double... aData)
+  public IMPLTYPE setData (final double @Nullable... aData)
   {
     m_aData = new JSArray ().addAll (aData);
     return thisAsT ();

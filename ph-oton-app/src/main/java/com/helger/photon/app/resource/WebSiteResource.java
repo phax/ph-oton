@@ -192,7 +192,27 @@ public class WebSiteResource
 
     return switch (m_eResourceType)
     {
-      case JS -> /* Read JS as UTF-8 and return it as one, global block */ /* Don't prefix with "(function(){" and don't suffix with "})();" as */ /* this has undesired side effects such that global functions are not */ /* available etc. */ /* In case of an error, fix the relevant JS file instead. */ StreamHelper.getAllBytesAsString (m_aResource, m_aCharset);
+      case JS -> /* Read JS as UTF-8 and return it as one, global block */ /*
+                                                                            * Don't prefix with
+                                                                            * "(function(){" and
+                                                                            * don't suffix with
+                                                                            * "})();" as
+                                                                            */ /*
+                                                                                * this has undesired
+                                                                                * side effects such
+                                                                                * that global
+                                                                                * functions are not
+                                                                                */ /*
+                                                                                    * available etc.
+                                                                                    */ /*
+                                                                                        * In case of
+                                                                                        * an error,
+                                                                                        * fix the
+                                                                                        * relevant
+                                                                                        * JS file
+                                                                                        * instead.
+                                                                                        */ StreamHelper.getAllBytesAsString (m_aResource,
+                                                                                                                             m_aCharset);
       case CSS ->
       {
         // Remove the filename from the path
@@ -221,9 +241,8 @@ public class WebSiteResource
     return aURL.toExternalForm ();
   }
 
-  @NonNull
   @ReturnsMutableCopy
-  public byte [] getContentHashBytes ()
+  public byte @NonNull [] getContentHashBytes ()
   {
     return ArrayHelper.getCopy (m_aContentHash);
   }

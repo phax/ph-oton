@@ -33,12 +33,12 @@ public class HCTextNode extends AbstractHCTextNode <HCTextNode>
     setText (sText);
   }
 
-  public HCTextNode (@NonNull final char [] aChars)
+  public HCTextNode (final char @NonNull [] aChars)
   {
     setText (aChars);
   }
 
-  public HCTextNode (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  public HCTextNode (final char @NonNull [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     setText (aChars, nOfs, nLen);
   }
@@ -65,7 +65,7 @@ public class HCTextNode extends AbstractHCTextNode <HCTextNode>
   }
 
   @Nullable
-  public static HCTextNode createOnDemand (@Nullable final char [] aText)
+  public static HCTextNode createOnDemand (final char @Nullable [] aText)
   {
     return aText == null ? null : new HCTextNode (aText);
   }

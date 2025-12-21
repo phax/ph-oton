@@ -602,7 +602,7 @@ public interface IHCTrait
   }
 
   @NonNull
-  default HCTextNode text (@Nullable final char [] a)
+  default HCTextNode text (final char @Nullable [] a)
   {
     return HCTextNode.createOnDemand (a);
   }

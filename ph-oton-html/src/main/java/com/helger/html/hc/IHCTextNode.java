@@ -42,14 +42,14 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
   IMPLTYPE setText (@Nullable String sText);
 
   @NonNull
-  default IMPLTYPE setText (@NonNull final char [] aChars)
+  default IMPLTYPE setText (final char @NonNull [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return setText (new String (aChars));
   }
 
   @NonNull
-  default IMPLTYPE setText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  default IMPLTYPE setText (final char @NonNull [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return setText (new String (aChars, nOfs, nLen));
@@ -59,14 +59,14 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
   IMPLTYPE prependText (@Nullable String sText);
 
   @NonNull
-  default IMPLTYPE prependText (@NonNull final char [] aChars)
+  default IMPLTYPE prependText (final char @NonNull [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return prependText (new String (aChars));
   }
 
   @NonNull
-  default IMPLTYPE prependText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  default IMPLTYPE prependText (final char @NonNull [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return prependText (new String (aChars, nOfs, nLen));
@@ -76,36 +76,33 @@ public interface IHCTextNode <IMPLTYPE extends IHCTextNode <IMPLTYPE>> extends I
   IMPLTYPE addText (@Nullable String sText);
 
   @NonNull
-  default IMPLTYPE addText (@NonNull final char [] aChars)
+  default IMPLTYPE addText (final char @NonNull [] aChars)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return addText (new String (aChars));
   }
 
   @NonNull
-  default IMPLTYPE addText (@NonNull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  default IMPLTYPE addText (final char @NonNull [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (aChars, "Chars");
     return addText (new String (aChars, nOfs, nLen));
   }
 
   /**
-   * Enable or disable XML escaping in the final document. By default all text
-   * is escaped ({@link com.helger.xml.microdom.MicroText#DEFAULT_ESCAPE}), but
-   * for certain special cases (like script elements in HTML), XML escaping must
-   * be disabled.
+   * Enable or disable XML escaping in the final document. By default all text is escaped
+   * ({@link com.helger.xml.microdom.MicroText#DEFAULT_ESCAPE}), but for certain special cases (like
+   * script elements in HTML), XML escaping must be disabled.
    *
    * @param bEscape
-   *        <code>true</code> to enable escaping (default), <code>false</code>
-   *        to disable it
+   *        <code>true</code> to enable escaping (default), <code>false</code> to disable it
    * @return this
    */
   @NonNull
   IMPLTYPE setEscape (boolean bEscape);
 
   /**
-   * @return <code>true</code> if XML escaping is enabled, <code>false</code> if
-   *         it is disabled
+   * @return <code>true</code> if XML escaping is enabled, <code>false</code> if it is disabled
    */
   boolean isEscape ();
 }

@@ -22,8 +22,8 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 
 /**
- * Interface having all required fields required for connecting to a server via
- * private and public key.
+ * Interface having all required fields required for connecting to a server via private and public
+ * key.
  *
  * @author philip
  */
@@ -32,23 +32,20 @@ public interface IServerConnectionSettingsKeyPair extends IBaseServerConnectionS
   /**
    * @return Private key bytes. Neither <code>null</code> nor empty.
    */
-  @NonNull
   @Nonempty
   @ReturnsMutableCopy
-  byte [] getPrivateKey ();
+  byte @NonNull [] getPrivateKey ();
 
   /**
    * @return Public key bytes. Neither <code>null</code> nor empty.
    */
-  @NonNull
   @Nonempty
   @ReturnsMutableCopy
-  byte [] getPublicKey ();
+  byte @NonNull [] getPublicKey ();
 
   /**
    * @return The pass phrase to be used to access the key pair.
    */
-  @NonNull
   @ReturnsMutableCopy
-  byte [] getKeyPairPassphrase ();
+  byte @NonNull [] getKeyPairPassphrase ();
 }

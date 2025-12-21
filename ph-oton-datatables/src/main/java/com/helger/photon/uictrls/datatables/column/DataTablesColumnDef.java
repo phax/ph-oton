@@ -59,13 +59,12 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
   /** Class to assign to each cell in the column. */
   private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
   /**
-   * Add padding to the text content used when calculating the optimal with for
-   * a table.
+   * Add padding to the text content used when calculating the optimal with for a table.
    */
   private String m_sContentPadding;
   /**
-   * Cell created callback to allow DOM manipulation. function createdCell(cell,
-   * cellData, rowData, rowIndex, colIndex)
+   * Cell created callback to allow DOM manipulation. function createdCell(cell, cellData, rowData,
+   * rowIndex, colIndex)
    */
   private JSAnonymousFunction m_aCreatedCell;
   /** Set the data source for the column from the rows data object / array. */
@@ -105,7 +104,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     m_aOrderSpec = new DTOrderSpec ();
   }
 
-  public DataTablesColumnDef (@NonNull @Nonempty final int... aTargets)
+  public DataTablesColumnDef (final int @NonNull @Nonempty... aTargets)
   {
     ValueEnforcer.notEmpty (aTargets, "Targets");
     for (final int nTarget : aTargets)
@@ -136,10 +135,8 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     m_aOrderSpec = aDTColumn.getOrderSpec ();
   }
 
-  @NonNull
-  @Nonempty
   @ReturnsMutableCopy
-  public int [] getAllTargets ()
+  public int @NonNull @Nonempty [] getAllTargets ()
   {
     return ArrayHelper.getCopy (m_aTargets);
   }
@@ -310,9 +307,8 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
     return this;
   }
 
-  @Nullable
   @ReturnsMutableCopy
-  public int [] getOrderData ()
+  public int @Nullable [] getOrderData ()
   {
     return ArrayHelper.getCopy (m_aOrderData);
   }
@@ -325,7 +321,7 @@ public class DataTablesColumnDef implements IHCHasCSSClasses <DataTablesColumnDe
    * @return this
    */
   @NonNull
-  public DataTablesColumnDef setOrderData (@Nullable final int... aOrderData)
+  public DataTablesColumnDef setOrderData (final int @Nullable... aOrderData)
   {
     m_aOrderData = ArrayHelper.getCopy (aOrderData);
     return this;

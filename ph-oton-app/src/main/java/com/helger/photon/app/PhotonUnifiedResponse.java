@@ -155,7 +155,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   @NonNull
-  public PhotonUnifiedResponse xml (@NonNull final byte [] aXML, @NonNull final Charset aCharset)
+  public PhotonUnifiedResponse xml (final byte @NonNull [] aXML, @NonNull final Charset aCharset)
   {
     setContent (aXML);
     setCharset (aCharset);
@@ -548,7 +548,7 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   }
 
   @NonNull
-  public PhotonUnifiedResponse pdf (@NonNull final byte [] aData, @NonNull @Nonempty final String sFilename)
+  public PhotonUnifiedResponse pdf (final byte @NonNull [] aData, @NonNull @Nonempty final String sFilename)
   {
     setContent (aData);
     setMimeType (CMimeType.APPLICATION_PDF);
