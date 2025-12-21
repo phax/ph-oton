@@ -48,7 +48,9 @@ public final class InternalDataTablesDownloader
     try (HttpClientManager hcm = new HttpClientManager ())
     {
       final IMicroDocument doc = MicroReader.readMicroXML ("<a>" +
-                                                           sHTML.replace ("stylesheet\">", "stylesheet\"/>") +
+                                                           sHTML.replace ("stylesheet\">", "stylesheet\"/>")
+                                                                .replace ("crossorigin=\"anonymous\">\n",
+                                                                          "crossorigin=\"anonymous\" />\n") +
                                                            "</a>");
       for (final IMicroElement e : doc.getDocumentElement ().getAllChildElements ())
       {
@@ -90,23 +92,29 @@ public final class InternalDataTablesDownloader
         // Regular
         HttpGet aGet = new HttpGet (sURL);
         byte [] aBytes = hcm.execute (aGet, new ResponseHandlerByteArray ());
-        SimpleFileIO.writeFile (new File ("src\\main\\resources\\external\\datatables",
-                                          sPlugin + "-" + sVersion + "/" + (bIsJS ? "js" : "css") + "/" + sFilename),
-                                aBytes);
+        final File fTarget = new File ("src/main/resources/external/datatables",
+                                       sPlugin + "-" + sVersion + "/" + (bIsJS ? "js" : "css") + "/" + sFilename);
+        if (SimpleFileIO.writeFile (fTarget, aBytes).isSuccess ())
+          if (false)
+            System.out.println ("  Wrote to " + fTarget.getAbsolutePath ());
 
         // Minified
         final String sMinifiedURL = sURL.replace (".css", ".min.css").replace (".js", ".min.js");
         final String sMinifiedFilename = sFilename.replace (".css", ".min.css").replace (".js", ".min.js");
         aGet = new HttpGet (sMinifiedURL);
         aBytes = hcm.execute (aGet, new ResponseHandlerByteArray ());
-        SimpleFileIO.writeFile (new File ("src\\main\\resources\\external\\datatables",
+
+        final File fTargetMin = new File ("src/main/resources/external/datatables",
                                           sPlugin +
-                                                                                        "-" +
-                                                                                        sVersion +
-                                                                                        "/" +
-                                                                                        (bIsJS ? "js" : "css") +
-                                                                                        "/" +
-                                                                                        sMinifiedFilename), aBytes);
+                                                                                    "-" +
+                                                                                    sVersion +
+                                                                                    "/" +
+                                                                                    (bIsJS ? "js" : "css") +
+                                                                                    "/" +
+                                                                                    sMinifiedFilename);
+        if (SimpleFileIO.writeFile (fTargetMin, aBytes).isSuccess ())
+          if (false)
+            System.out.println ("  Wrote to " + fTargetMin.getAbsolutePath ());
       }
     }
   }

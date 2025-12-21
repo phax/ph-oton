@@ -1,0 +1,4 @@
+/* Overwrite the padding:0 in bootstrap for this */
+pre.prismjs code {
+  padding: 2px;
+}

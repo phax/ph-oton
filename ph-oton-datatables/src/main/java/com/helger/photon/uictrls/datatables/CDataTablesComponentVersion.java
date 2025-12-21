@@ -26,24 +26,25 @@ import com.helger.annotation.concurrent.Immutable;
 @Immutable
 public final class CDataTablesComponentVersion
 {
-  public static final String DT = "2.2.1";
-  public static final String AUTO_FILL = "2.7.0";
-  public static final String BUTTONS = "3.2.0";
-  public static final String COL_REORDER = "2.0.4";
-  public static final String DATETIME = "1.5.5";
-  public static final String FIXED_COLUMNS = "5.0.4";
-  public static final String FIXED_HEADER = "4.0.1";
+  public static final String DT = "2.3.5";
+  public static final String AUTO_FILL = "2.7.1";
+  public static final String BUTTONS = "3.2.5";
+  public static final String COL_REORDER = "2.1.2";
+  public static final String COLUMN_CONTROL = "1.1.1";
+  public static final String DATETIME = "1.6.2";
+  public static final String FIXED_COLUMNS = "5.0.5";
+  public static final String FIXED_HEADER = "4.0.5";
   public static final String JS_ZIP = "3.10.1";
-  public static final String KEY_TABLE = "2.12.1";
+  public static final String KEY_TABLE = "2.12.2";
   public static final String PDF_MAKE = "0.2.7";
-  public static final String RESPONSIVE = "3.0.3";
-  public static final String ROW_GROUP = "1.5.1";
+  public static final String RESPONSIVE = "3.0.7";
+  public static final String ROW_GROUP = "1.6.0";
   public static final String ROW_REORDER = "1.5.0";
   public static final String SCROLLER = "2.4.3";
-  public static final String SEARCH_BUILDER = "1.8.1";
-  public static final String SEARCH_PANES = "2.3.3";
-  public static final String SELECT = "3.0.0";
-  public static final String STATE_RESTORE = "1.4.1";
+  public static final String SEARCH_BUILDER = "1.8.4";
+  public static final String SEARCH_PANES = "2.3.5";
+  public static final String SELECT = "3.1.3";
+  public static final String STATE_RESTORE = "1.4.3";
 
   private CDataTablesComponentVersion ()
   {}

@@ -28,10 +28,11 @@ public class MainDataTablesDownloader
 {
   public static void main (final String [] args) throws Exception
   {
-    // 3 runs:
+    // 4 runs:
     // 1. Run with default styling
     // 2. Run with Bootstrap4 styling
-    // 3. Run with Bootstrap3 styling (in other project)
+    // 3. Run with Bootstrap5 styling
+    // 4. Run with Bootstrap3 styling (in other project)
     final String sHTML = "<link href=\"https://cdn.datatables.net/2.3.5/css/dataTables.dataTables.css\" rel=\"stylesheet\" integrity=\"sha384-Mw5guIRycD83x5DtxfWszikU1vklt1UrSxQqUQUm4fsj8LtCk2Sb0mSD8kEpmf7U\" crossorigin=\"anonymous\">\n" +
                          "<link href=\"https://cdn.datatables.net/autofill/2.7.1/css/autoFill.dataTables.css\" rel=\"stylesheet\" integrity=\"sha384-E6sscKUdgP7JGCEj86QHu7cOS5MObIXILQbbjaJhmk/OCtH71GIJwE7fbl2TWcWf\" crossorigin=\"anonymous\">\n" +
                          "<link href=\"https://cdn.datatables.net/buttons/3.2.5/css/buttons.dataTables.css\" rel=\"stylesheet\" integrity=\"sha384-tsSOpW74BV1og7WBDDvGDHNfy+fzoOsmcdjpy79NlzdeffYarxQKgsOK2HK/9jeF\" crossorigin=\"anonymous\">\n" +

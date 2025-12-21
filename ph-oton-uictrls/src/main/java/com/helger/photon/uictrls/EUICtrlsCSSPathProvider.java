@@ -44,6 +44,8 @@ public enum EUICtrlsCSSPathProvider implements ICSSPathProvider
   JSCOLOR ("external/jscolor/1.4.4ph/jscolor.css"),
   PRISMJS ("external/prismjs/1.3.0/prism.css"),
   PRISMJS_BOOTSTRAP3 ("external/prismjs/prism-bootstrap3.css"),
+  PRISMJS_BOOTSTRAP4 ("external/prismjs/prism-bootstrap4.css"),
+  PRISMJS_BOOTSTRAP5 ("external/prismjs/prism-bootstrap5.css"),
   SELECT2 ("external/select2/4.0.13/css/select2.css"),
   SELECT2_BOOTSTRAP4 ("external/select2-bootstrap4-theme/1.5.2/select2-bootstrap4.css"),
   SELECT2_BOOTSTRAP5 ("external/select2-bootstrap5-theme/1.3.0/select2-bootstrap-5-theme.css"),
