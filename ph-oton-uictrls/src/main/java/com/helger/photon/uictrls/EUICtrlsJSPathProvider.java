@@ -45,7 +45,7 @@ public enum EUICtrlsJSPathProvider implements IJSPathProvider
   HANDLEBARS_4 ("external/handlebars/4.1.2/handlebars.runtime-v4.1.2.js"),
   JSCOLOR ("external/jscolor/1.4.4ph/jscolor.js"),
   PDFOBJECT2 ("external/pdfobject/2.2.8/pdfobject.js"),
-  PRISMJS ("external/prismjs/1.2.1/prism.js"),
+  PRISMJS ("external/prismjs/1.3.0/prism.js"),
   SELECT2 ("external/select2/4.0.13/js/select2.js"),
   SELECT2_LOCALE ("external/select2/4.0.13/js/i18n/{0}.js", false),
   /** https://github.com/twitter/typeahead.js/ */
