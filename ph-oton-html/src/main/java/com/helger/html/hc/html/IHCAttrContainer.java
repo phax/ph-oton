@@ -349,4 +349,10 @@ public interface IHCAttrContainer extends IAttributeContainer <IMicroQName, Stri
   {
     return putIn (CHTMLAttributes.ARIA_REQUIRED, Boolean.toString (bIsRequired));
   }
+
+  @NonNull
+  default EChange setAriaCurrent (@Nullable final String sCurrent)
+  {
+    return putIn (CHTMLAttributes.ARIA_CURRENT, sCurrent);
+  }
 }

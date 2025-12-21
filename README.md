@@ -72,6 +72,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.1.2 - work in progress
+* Added `IHCAttrContainer.setAriaCurrent`
+
 v10.1.1 - 2025-12-14
 * Updated to Jetty 12.1.5
 * Extended API of `ConstantCSSPathProvider` and `ConstantJSPathProvider`
