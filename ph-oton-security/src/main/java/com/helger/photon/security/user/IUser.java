@@ -40,9 +40,8 @@ import com.helger.text.IHasDescription;
 public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
 {
   /**
-   * The maximum string length of the user ID. Must be 20 and not 45, because of
-   * the creationuserid etc. fields. (don't blame yourself if you don't
-   * understand the connex here ;-) )
+   * The maximum string length of the user ID. Must be 20 and not 45, because of the creationuserid
+   * etc. fields. (don't blame yourself if you don't understand the connex here ;-) )
    *
    * @since 8.3.7
    */
@@ -71,8 +70,8 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
 
   /**
    * @return <code>true</code> if the user has the ID
-   *         {@link com.helger.photon.security.CSecurity#USER_ADMINISTRATOR_ID}
-   *         , <code>false</code> otherwise
+   *         {@link com.helger.photon.security.CSecurity#USER_ADMINISTRATOR_ID} , <code>false</code>
+   *         otherwise
    */
   boolean isAdministrator ();
 
@@ -90,6 +89,11 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
    */
   @Nullable
   String getEmailAddress ();
+
+  default boolean hasEmailAddress ()
+  {
+    return StringHelper.isNotEmpty (getEmailAddress ());
+  }
 
   /**
    * @return The hashed password of the user. Never <code>null</code>.
@@ -120,8 +124,8 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   }
 
   /**
-   * @return The display name of the user. May be empty if both first and last
-   *         name are empty but never <code>null</code>.
+   * @return The display name of the user. May be empty if both first and last name are empty but
+   *         never <code>null</code>.
    */
   @NonNull
   default String getDisplayName ()
@@ -136,8 +140,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   Locale getDesiredLocale ();
 
   /**
-   * @return The desired locale of the user as a String. May be
-   *         <code>null</code>.
+   * @return The desired locale of the user as a String. May be <code>null</code>.
    * @since 8.3.2
    */
   @Nullable
@@ -148,8 +151,8 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   }
 
   /**
-   * @return The date time when the user last logged in. May be
-   *         <code>null</code> if the user never logged in.
+   * @return The date time when the user last logged in. May be <code>null</code> if the user never
+   *         logged in.
    * @since 2.4.2
    */
   @Nullable
@@ -170,8 +173,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   int getConsecutiveFailedLoginCount ();
 
   /**
-   * @return <code>true</code> if this user is enabled, <code>false</code> if it
-   *         is disabled
+   * @return <code>true</code> if this user is enabled, <code>false</code> if it is disabled
    * @see #isDisabled()
    */
   default boolean isEnabled ()
@@ -180,8 +182,7 @@ public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
   }
 
   /**
-   * @return <code>true</code> if this user is disabled, <code>false</code> if
-   *         it is enabled
+   * @return <code>true</code> if this user is disabled, <code>false</code> if it is enabled
    * @see #isEnabled()
    */
   boolean isDisabled ();
