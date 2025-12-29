@@ -113,57 +113,58 @@ final class MarkdownHCStack
     final IHCNode aParent = m_aStack.peek ();
 
     // Handle special cases
-    if (aParent instanceof IHCList <?, ?> && aNode instanceof HCLI)
-      ((IHCList <?, ?>) aParent).addItem (aNode);
+    if (aParent instanceof final IHCList <?, ?> aParentList && aNode instanceof HCLI)
+      aParentList.addItem (aNode);
     else
-      if (aParent instanceof IHCMediaElement <?> && aNode instanceof IHCMediaElementChild <?>)
-        ((IHCMediaElement <?>) aParent).addChild ((IHCMediaElementChild <?>) aNode);
+      if (aParent instanceof final IHCMediaElement <?> aParentMedia &&
+          aNode instanceof final IHCMediaElementChild <?> aMediaChild)
+        aParentMedia.addChild (aMediaChild);
       else
-        if (aParent instanceof HCColGroup && aNode instanceof HCCol)
-          ((HCColGroup) aParent).addChild ((HCCol) aNode);
+        if (aParent instanceof final HCColGroup aParentColGroup && aNode instanceof final HCCol aCol)
+          aParentColGroup.addChild (aCol);
         else
-          if (aParent instanceof HCDL && aNode instanceof IHCDefinitionItem <?>)
-            ((HCDL) aParent).addChild ((IHCDefinitionItem <?>) aNode);
+          if (aParent instanceof final HCDL aParentDL && aNode instanceof final IHCDefinitionItem <?> aItem)
+            aParentDL.addChild (aItem);
           else
-            if (aParent instanceof HCOptGroup && aNode instanceof HCOption)
-              ((HCOptGroup) aParent).addChild ((HCOption) aNode);
+            if (aParent instanceof final HCOptGroup aParentOptGroup && aNode instanceof final HCOption aOption)
+              aParentOptGroup.addChild (aOption);
             else
-              if (aParent instanceof HCOption && aNode instanceof HCTextNode)
-                ((HCOption) aParent).addChild ((HCTextNode) aNode);
+              if (aParent instanceof final HCOption aParentOption && aNode instanceof final HCTextNode aTextNode)
+                aParentOption.addChild (aTextNode);
               else
-                if (aParent instanceof IHCTable <?>)
+                if (aParent instanceof final IHCTable <?> aParentTable)
                 {
-                  if (aNode instanceof HCTHead)
-                    ((IHCTable <?>) aParent).setHead ((HCTHead) aNode);
+                  if (aNode instanceof final HCTHead aHead)
+                    aParentTable.setHead (aHead);
                   else
-                    if (aNode instanceof HCTBody)
-                      ((IHCTable <?>) aParent).setBody ((HCTBody) aNode);
+                    if (aNode instanceof final HCTBody aBody)
+                      aParentTable.setBody (aBody);
                     else
-                      if (aNode instanceof HCTFoot)
-                        ((IHCTable <?>) aParent).setFoot ((HCTFoot) aNode);
+                      if (aNode instanceof final HCTFoot aFoot)
+                        aParentTable.setFoot (aFoot);
                       else
-                        if (aNode instanceof HCRow)
-                          ((IHCTable <?>) aParent).addBodyRow ((HCRow) aNode);
+                        if (aNode instanceof final HCRow aRow)
+                          aParentTable.addBodyRow (aRow);
                         else
                           throw new MarkdownException ("Cannot add node " + aNode + " to " + aParent);
                 }
                 else
-                  if (aParent instanceof IHCTablePart <?> && aNode instanceof HCRow)
-                    ((IHCTablePart <?>) aParent).addChild ((HCRow) aNode);
+                  if (aParent instanceof final IHCTablePart <?> aParentTablePart && aNode instanceof final HCRow aRow)
+                    aParentTablePart.addChild (aRow);
                   else
-                    if (aParent instanceof HCRow && aNode instanceof IHCCell <?>)
-                      ((HCRow) aParent).addCell (aNode);
+                    if (aParent instanceof final HCRow aParentRow && aNode instanceof final IHCCell <?> aCell)
+                      aParentRow.addChild (aCell);
                     else
-                      if (aParent instanceof HCRuby && aNode instanceof IHCRubyChild <?>)
-                        ((HCRuby) aParent).addChild ((IHCRubyChild <?>) aNode);
+                      if (aParent instanceof final HCRuby aParentRuby && aNode instanceof final IHCRubyChild <?> aRubyChild)
+                        aParentRuby.addChild (aRubyChild);
                       else
-                        if (aParent instanceof IHCNodeWithChildren <?>)
+                        if (aParent instanceof final IHCNodeWithChildren <?> aRealParent)
                         {
-                          final IHCNodeWithChildren <?> aRealParent = ((IHCNodeWithChildren <?>) aParent);
-                          if (aNode instanceof HCTextNode && aRealParent.getLastChild () instanceof HCTextNode)
+                          if (aNode instanceof final HCTextNode aTextNode &&
+                              aRealParent.getLastChild () instanceof final HCTextNode aParentLastTextNode)
                           {
                             // Append
-                            ((HCTextNode) aRealParent.getLastChild ()).addText (((HCTextNode) aNode).getText ());
+                            aParentLastTextNode.addText (aTextNode.getText ());
                           }
                           else
                           {
@@ -172,21 +173,19 @@ final class MarkdownHCStack
                           }
                         }
                         else
-                          if (aParent instanceof AbstractHCScriptInline <?> && aNode instanceof IHCTextNode <?>)
+                          if (aParent instanceof final AbstractHCScriptInline <?> aParentScript &&
+                              aNode instanceof final IHCTextNode <?> aTextNode)
                           {
-                            final AbstractHCScriptInline <?> aRealParent = ((AbstractHCScriptInline <?>) aParent);
-
-                            if (aRealParent.getJSCodeProvider () instanceof UnparsedJSCodeProvider)
+                            if (aParentScript.getJSCodeProvider () instanceof final UnparsedJSCodeProvider aUnparsed)
                             {
                               // Append
-                              final String sOld = ((UnparsedJSCodeProvider) aRealParent.getJSCodeProvider ()).getJSCode ();
-                              aRealParent.setJSCodeProvider (new UnparsedJSCodeProvider (sOld +
-                                                                                         ((IHCTextNode <?>) aNode).getText ()));
+                              aParentScript.setJSCodeProvider (new UnparsedJSCodeProvider (aUnparsed.getJSCode () +
+                                                                                         aTextNode.getText ()));
                             }
                             else
                             {
                               // Set
-                              aRealParent.setJSCodeProvider (new UnparsedJSCodeProvider (((IHCTextNode <?>) aNode).getText ()));
+                              aParentScript.setJSCodeProvider (new UnparsedJSCodeProvider (aTextNode.getText ()));
                             }
                           }
                           else

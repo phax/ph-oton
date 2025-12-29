@@ -46,14 +46,14 @@ public class JQuerySelectorList implements IHasJSCodeWithSettings
     addSelector (aSelector);
   }
 
-  public JQuerySelectorList (@Nullable final IJQuerySelector... aSelectors)
+  public JQuerySelectorList (@NonNull final IJQuerySelector @Nullable... aSelectors)
   {
     if (aSelectors != null)
       for (final IJQuerySelector aSelector : aSelectors)
         addSelector (aSelector);
   }
 
-  public JQuerySelectorList (@Nullable final Iterable <? extends IJQuerySelector> aSelectors)
+  public JQuerySelectorList (@Nullable final Iterable <@NonNull ? extends IJQuerySelector> aSelectors)
   {
     if (aSelectors != null)
       for (final IJQuerySelector aSelector : aSelectors)

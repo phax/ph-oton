@@ -25,8 +25,7 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * Implementation of {@link IHasJSCode} that takes an arbitrary string from any
- * sources
+ * Implementation of {@link IHasJSCode} that takes an arbitrary string from any sources
  *
  * @author Philip Helger
  */
@@ -70,6 +69,6 @@ public class UnparsedJSCodeProvider implements IHasJSCode
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("jsCode", m_sJSCode).getToString ();
+    return new ToStringGenerator (this).append ("JSCode", m_sJSCode).getToString ();
   }
 }

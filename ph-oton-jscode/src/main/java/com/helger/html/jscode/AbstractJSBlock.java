@@ -44,6 +44,7 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.html.js.CollectingJSCodeProvider;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.IHasJSCodeWithSettings;
+import com.helger.html.js.PhotonInternalUnparsedJS;
 import com.helger.json.IJson;
 
 /**
@@ -138,8 +139,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   }
 
   /**
-   * @return <code>true</code> if this block is empty and does not contain any
-   *         statement.
+   * @return <code>true</code> if this block is empty and does not contain any statement.
    */
   public boolean isEmpty ()
   {
@@ -228,9 +228,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   }
 
   /**
-   * Gets the current position to which new statements will be inserted. For
-   * example if the value is 0, newly created instructions will be inserted at
-   * the very beginning of the block.
+   * Gets the current position to which new statements will be inserted. For example if the value is
+   * 0, newly created instructions will be inserted at the very beginning of the block.
    *
    * @return The current position
    * @see #pos(int)
@@ -814,8 +813,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * Creates an invocation statement and adds it to this block.
    *
    * @param aExpr
-   *        JExpression evaluating to the class or object upon which the named
-   *        method will be invoked
+   *        JExpression evaluating to the class or object upon which the named method will be
+   *        invoked
    * @param sMethod
    *        Name of method to invoke
    * @return Newly generated {@link JSInvocation}
@@ -831,8 +830,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
    * Creates an invocation statement and adds it to this block.
    *
    * @param aExpr
-   *        JExpression evaluating to the class or object upon which the method
-   *        will be invoked
+   *        JExpression evaluating to the class or object upon which the method will be invoked
    * @param aMethod
    *        JMethod to invoke
    * @return Newly generated {@link JSInvocation}
@@ -1282,8 +1280,8 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   }
 
   /**
-   * Create a label, which can be referenced from <code>continue</code> and
-   * <code>break</code> statements.
+   * Create a label, which can be referenced from <code>continue</code> and <code>break</code>
+   * statements.
    *
    * @param sName
    *        name
@@ -1452,7 +1450,7 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
       else
       {
         if (GlobalDebug.isDebugMode ())
-          if (!(aJSCode instanceof IHasJSCodeWithSettings))
+          if (!(aJSCode instanceof IHasJSCodeWithSettings) && !(aJSCode instanceof PhotonInternalUnparsedJS))
             LOGGER.warn ("Adding unspecified IHasJSCode of type " +
                          aJSCode.getClass ().getName () +
                          " to " +
@@ -1491,9 +1489,9 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIf ("objs", m_aObjs, CollectionHelper::isNotEmpty)
-                                       .appendIf ("decls", m_aDecls, CollectionHelper::isNotEmpty)
-                                       .append ("pos", m_nPos)
+    return new ToStringGenerator (this).appendIf ("Objs", m_aObjs, CollectionHelper::isNotEmpty)
+                                       .appendIf ("Decls", m_aDecls, CollectionHelper::isNotEmpty)
+                                       .append ("Pos", m_nPos)
                                        .getToString ();
   }
 }

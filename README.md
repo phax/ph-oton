@@ -76,6 +76,7 @@ v10.1.2 - work in progress
 * Added `IHCAttrContainer.setAria(Current|Disabled)`
 * Updated to prism.js 1.3.0
 * Updated to Datatables 2.3.5 + current plugins
+* Added new internal class `PhotonInternalUnparsedJS`
 
 v10.1.1 - 2025-12-14
 * Updated to Jetty 12.1.5

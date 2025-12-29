@@ -23,14 +23,19 @@ import com.helger.html.hc.IHCHasID;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.js.IHasJSCode;
 import com.helger.html.js.JSMarshaller;
-import com.helger.html.js.UnparsedJSCodeProvider;
+import com.helger.html.js.PhotonInternalUnparsedJS;
 import com.helger.url.ISimpleURL;
 
+/**
+ * This class only exists, so that ph-oton-html can be used without requiring ph-oton-jscode module
+ *
+ * @author Philip Helger
+ */
 @Immutable
 public final class FakeJS
 {
-  public static final IHasJSCode JS_BLUR = new UnparsedJSCodeProvider ("blur();");
-  public static final IHasJSCode RETURN_FALSE = new UnparsedJSCodeProvider ("return false;");
+  public static final IHasJSCode JS_BLUR = new PhotonInternalUnparsedJS ("blur();");
+  public static final IHasJSCode RETURN_FALSE = new PhotonInternalUnparsedJS ("return false;");
 
   private FakeJS ()
   {}
@@ -38,17 +43,17 @@ public final class FakeJS
   @NonNull
   public static IHasJSCode focus (@NonNull final IHCHasID <?> aElement)
   {
-    return new UnparsedJSCodeProvider ("document.getElementById('" +
-                                       JSMarshaller.javaScriptEscape (aElement.ensureID ().getID ()) +
-                                       "').focus();");
+    return new PhotonInternalUnparsedJS ("document.getElementById('" +
+                                         JSMarshaller.javaScriptEscape (aElement.ensureID ().getID ()) +
+                                         "').focus();");
   }
 
   @NonNull
   public static IHasJSCode windowLocationHref (@NonNull final ISimpleURL aURL)
   {
-    return new UnparsedJSCodeProvider ("window.location.href='" +
-                                       JSMarshaller.javaScriptEscape (aURL.getWithCharset (HCSettings.getHTMLCharset ())
-                                                                          .getAsString ()) +
-                                       "';");
+    return new PhotonInternalUnparsedJS ("window.location.href='" +
+                                         JSMarshaller.javaScriptEscape (aURL.getWithCharset (HCSettings.getHTMLCharset ())
+                                                                            .getAsString ()) +
+                                         "';");
   }
 }

@@ -23,11 +23,10 @@ import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.html.EHTMLVersion;
 import com.helger.html.hc.config.HCSettings;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
-import com.helger.html.js.UnparsedJSCodeProvider;
+import com.helger.html.js.PhotonInternalUnparsedJS;
 
 /**
- * A JUnit test rule that ensures that optimized HTML, CSS and JS output is
- * created.
+ * A JUnit test rule that ensures that optimized HTML, CSS and JS output is created.
  *
  * @author Philip Helger
  * @since 4.7.0
@@ -49,9 +48,9 @@ public class HCTestRuleOptimized extends ExternalResource
     HCSettings.setDefaultHTMLVersion (EHTMLVersion.XHTML11);
     HCSettings.getMutableConversionSettings ().setToOptimized ();
     m_aOld = HCSettings.getOnDocumentReadyProvider ();
-    HCSettings.setOnDocumentReadyProvider (aJSCodeProvider -> new UnparsedJSCodeProvider ("$(document).ready(function(){" +
-                                                                                          aJSCodeProvider.getJSCode () +
-                                                                                          "});"));
+    HCSettings.setOnDocumentReadyProvider (aJSCodeProvider -> new PhotonInternalUnparsedJS ("$(document).ready(function(){" +
+                                                                                            aJSCodeProvider.getJSCode () +
+                                                                                            "});"));
   }
 
   @Override
