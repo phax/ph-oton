@@ -78,7 +78,7 @@ v10.1.2 - 2026-01-10
 * Updated to Datatables 2.3.5 + current plugins
 * Added new internal class `PhotonInternalUnparsedJS`
 * Fixed an error that `MarkdownProcessor` created nested `<td>` elements
-* Fixed some inconsistencies with DBExecutor usage in `UserGroupManagerJDBC`
+* Made sure `UserGroupManagerJDBC` works with a single DB connection
 
 v10.1.1 - 2025-12-14
 * Updated to Jetty 12.1.5
