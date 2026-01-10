@@ -581,9 +581,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
-      newExecutor ().querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
-                                  new ConstantPreparedStatementDataProvider (sUserGroupID),
-                                  aDBResult::set);
+      aExecutor.querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
+                             new ConstantPreparedStatementDataProvider (sUserGroupID),
+                             aDBResult::set);
       ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ().getAsString (0));
       if (aAssignedIDs == null)
         aAssignedIDs = new CommonsHashSet <> ();
@@ -648,9 +648,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
-      newExecutor ().querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
-                                  new ConstantPreparedStatementDataProvider (sUserGroupID),
-                                  aDBResult::set);
+      aExecutor.querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
+                             new ConstantPreparedStatementDataProvider (sUserGroupID),
+                             aDBResult::set);
       final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
                                                                                                   .getAsString (0));
 
@@ -711,7 +711,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final DBExecutor aExecutor = newExecutor ();
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get all existing assignments
-      final ICommonsList <DBResultRow> aRows = newExecutor ().queryAll ("SELECT id, userids FROM " + m_sTableName);
+      final ICommonsList <DBResultRow> aRows = aExecutor.queryAll ("SELECT id, userids FROM " + m_sTableName);
       for (final DBResultRow aRow : aRows)
       {
         final String sUserGroupID = aRow.getAsString (0);
@@ -793,9 +793,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
-      newExecutor ().querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
-                                  new ConstantPreparedStatementDataProvider (sUserGroupID),
-                                  aDBResult::set);
+      aExecutor.querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
+                             new ConstantPreparedStatementDataProvider (sUserGroupID),
+                             aDBResult::set);
       ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ().getAsString (0));
       if (aAssignedIDs == null)
         aAssignedIDs = new CommonsHashSet <> ();
@@ -860,9 +860,9 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
-      newExecutor ().querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
-                                  new ConstantPreparedStatementDataProvider (sUserGroupID),
-                                  aDBResult::set);
+      aExecutor.querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
+                             new ConstantPreparedStatementDataProvider (sUserGroupID),
+                             aDBResult::set);
       final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
                                                                                                   .getAsString (0));
 
@@ -923,7 +923,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final DBExecutor aExecutor = newExecutor ();
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       // Get all existing assignments
-      final ICommonsList <DBResultRow> aRows = newExecutor ().queryAll ("SELECT id, roleids FROM " + m_sTableName);
+      final ICommonsList <DBResultRow> aRows = aExecutor.queryAll ("SELECT id, roleids FROM " + m_sTableName);
       for (final DBResultRow aRow : aRows)
       {
         final String sUserGroupID = aRow.getAsString (0);
