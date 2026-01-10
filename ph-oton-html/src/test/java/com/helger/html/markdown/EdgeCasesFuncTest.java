@@ -74,15 +74,15 @@ public final class EdgeCasesFuncTest
     assertEquals ("", p.process ("").getAsHTMLString ());
     assertEquals ("", p.process ("  ").getAsHTMLString ());
     assertEquals ("", p.process ((String) null).getAsHTMLString ());
-    assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
+    assertEquals ("<p>First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.</p>",
                   p.process ("First line<table><tr><td>Block level</td></tr></table>.").getAsHTMLString ());
-    assertEquals ("<p>First line<table><tbody><tr><td><td>Block level</td></td></tr></tbody></table>.</p>",
+    assertEquals ("<p>First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.</p>",
                   p.process ("First line<table><tbody><tr><td>Block level</td></tr></tbody></table>.")
                    .getAsHTMLString ());
-    assertEquals ("<p>First line<table><thead><tr><td><td>Block level</td></td></tr></thead></table>.</p>",
+    assertEquals ("<p>First line<table><thead><tr><td>Block level</td></tr></thead></table>.</p>",
                   p.process ("First line<table><thead><tr><td>Block level</td></tr></thead></table>.")
                    .getAsHTMLString ());
-    assertEquals ("<p>First line<table><tfoot><tr><td><td>Block level</td></td></tr></tfoot></table>.</p>",
+    assertEquals ("<p>First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.</p>",
                   p.process ("First line<table><tfoot><tr><td>Block level</td></tr></tfoot></table>.")
                    .getAsHTMLString ());
     assertEquals ("<p>First line *unclosed</p>", p.process ("First line *unclosed").getAsHTMLString ());
@@ -117,8 +117,7 @@ public final class EdgeCasesFuncTest
     final String sMD = "![an *image*](/images/an_image_with_underscores.jpg \"An_image_title\")";
 
     final String processed = new MarkdownProcessor ().process (sMD).getAsHTMLString ();
-    String output = "<p><img title=\"An_image_title\" src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
-    output = "<p><img src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
+    final String output = "<p><img src=\"/images/an_image_with_underscores.jpg\" alt=\"an *image*\" /></p>";
     // According to WCAG title should not be set if title is there
     assertEquals (output, processed);
   }
