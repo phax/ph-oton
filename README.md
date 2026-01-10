@@ -72,11 +72,12 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.1.2 - work in progress
+v10.1.2 - 2026-01-10
 * Added `IHCAttrContainer.setAria(Current|Disabled)`
 * Updated to prism.js 1.3.0
 * Updated to Datatables 2.3.5 + current plugins
 * Added new internal class `PhotonInternalUnparsedJS`
+* Fixed an error that `MarkdownProcessor` created nested `<td>` elements
 * Fixed some inconsistencies with DBExecutor usage in `UserGroupManagerJDBC`
 
 v10.1.1 - 2025-12-14
