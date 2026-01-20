@@ -156,7 +156,6 @@ public class DTCol extends AbstractHCCol <DTCol>
       }
       default -> throw new IllegalArgumentException ("Unsupported base type provided: " + eColType);
     }
-    ;
     return this;
   }
 
