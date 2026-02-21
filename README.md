@@ -82,8 +82,8 @@ v10.2.0 - work in progress
 * Extracted the interface `ISystemMigrationManager` and provided an SQL backend via `SystemMigrationManagerJDBC`
 * Moved the class `SystemMigrationManager` into package `com.helger.photon.mgrs.sysmigration`
 * Created new class `PhotonCMSManager` and moved access to the `FavoriteManager` there
-* Extracted interface `ISystemMessageManager`
-* Extracted interface `ILongRunningJobResultManager`
+* Extracted interface `ISystemMessageManager` and provided an SQL backend via `SystemMessageManagerJDBC`
+* Extracted interface `ILongRunningJobResultManager` and provided an SQL backend via `LongRunningJobResultManagerJDBC`
 * Moved class `PhotonBasicManager` to the new submodule `ph-oton-mgrs`
 
 v10.1.2 - 2026-01-10
