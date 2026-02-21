@@ -1,7 +1,9 @@
 # ph-oton
 
+<!-- ph-badge-start -->
 [![Maven Central](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)
-[![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-parent-pom/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-parent-pom)
+[![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-api/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-api)
+<!-- ph-badge-end -->
 
 This set of Java libraries forms a package to build Java web applications.
 
@@ -18,13 +20,15 @@ Contained subprojects are:
 * ph-oton-security - security elements (user, user groups, roles etc.)
 * ph-oton-exchange - data exchange (import and export)
 * ph-oton-connect - connectivity modules
+* ph-oton-mgrs - basic managers (since 10.2.0; previously in ph-oton-core)
 * ph-oton-core - basic web stuff
 * ph-oton-uicore - basic web UI stuff
 * ph-oton-icon - icon library
 * ph-oton-tinymce4 - TinyMCE4 wrapper
 * ph-oton-datatables- Datatables.net wrapper
 * ph-oton-uictrls - misc web UI controls
-* ph-oton-jetty - wrapper for Jetty to simply use as main 
+* ph-oton-jetty - wrapper for Jetty to simply use as main
+* ph-oton-jdbc - provides certain JDBC-based manager implementations (since 8.4.2)
 
 # Requirements
 
