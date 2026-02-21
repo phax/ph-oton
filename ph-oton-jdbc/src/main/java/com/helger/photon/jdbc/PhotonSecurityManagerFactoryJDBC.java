@@ -57,7 +57,7 @@ public class PhotonSecurityManagerFactoryJDBC implements PhotonSecurityManager.I
   }
 
   @NonNull
-  public IAuditManager createAuditManager () throws Exception
+  public IAuditManager createAuditMgr () throws Exception
   {
     return new AuditManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }

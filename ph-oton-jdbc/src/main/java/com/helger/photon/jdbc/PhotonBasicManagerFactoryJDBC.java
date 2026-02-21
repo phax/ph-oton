@@ -30,7 +30,7 @@ import com.helger.photon.mgrs.PhotonBasicManager;
 import com.helger.photon.mgrs.PhotonBasicManager.IFactory;
 import com.helger.photon.mgrs.longrun.ILongRunningJobResultManager;
 import com.helger.photon.mgrs.sysmigration.ISystemMigrationManager;
-import com.helger.photon.mgrs.systemmsg.ISystemMessageManager;
+import com.helger.photon.mgrs.sysmsg.ISystemMessageManager;
 
 /**
  * An implementation of {@link IFactory} for JDBC based managers.
@@ -53,17 +53,17 @@ public class PhotonBasicManagerFactoryJDBC implements PhotonBasicManager.IFactor
   }
 
   @NonNull
-  public ISystemMigrationManager createSystemMigrationManager () throws Exception
+  public ISystemMigrationManager createSystemMigrationMgr () throws Exception
   {
     return new SystemMigrationManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
-  public @NonNull ISystemMessageManager createSystemMessageManager () throws Exception
+  public @NonNull ISystemMessageManager createSystemMessageMgr () throws Exception
   {
     return new SystemMessageManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
-  public @NonNull ILongRunningJobResultManager createLongRunningJobResultManager () throws Exception
+  public @NonNull ILongRunningJobResultManager createLongRunningJobResultMgr () throws Exception
   {
     return new LongRunningJobResultManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }

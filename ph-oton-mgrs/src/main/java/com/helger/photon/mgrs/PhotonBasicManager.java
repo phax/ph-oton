@@ -33,8 +33,8 @@ import com.helger.photon.mgrs.longrun.LongRunningJobManager;
 import com.helger.photon.mgrs.longrun.LongRunningJobResultManager;
 import com.helger.photon.mgrs.sysmigration.ISystemMigrationManager;
 import com.helger.photon.mgrs.sysmigration.SystemMigrationManager;
-import com.helger.photon.mgrs.systemmsg.ISystemMessageManager;
-import com.helger.photon.mgrs.systemmsg.SystemMessageManager;
+import com.helger.photon.mgrs.sysmsg.ISystemMessageManager;
+import com.helger.photon.mgrs.sysmsg.SystemMessageManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
@@ -66,7 +66,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
      *         In case of error
      */
     @NonNull
-    ISystemMigrationManager createSystemMigrationManager () throws Exception;
+    ISystemMigrationManager createSystemMigrationMgr () throws Exception;
 
     /**
      * @return A new instance of {@link ISystemMessageManager}.
@@ -74,7 +74,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
      *         In case of error
      */
     @NonNull
-    ISystemMessageManager createSystemMessageManager () throws Exception;
+    ISystemMessageManager createSystemMessageMgr () throws Exception;
 
     /**
      * @return A new instance of {@link ILongRunningJobResultManager}.
@@ -82,7 +82,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
      *         In case of error
      */
     @NonNull
-    ILongRunningJobResultManager createLongRunningJobResultManager () throws Exception;
+    ILongRunningJobResultManager createLongRunningJobResultMgr () throws Exception;
   }
 
   /**
@@ -98,17 +98,17 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
     public static final String SYSTEM_MESSAGE_XML = "systemmessage.xml";
     public static final String LONG_RUNNING_JOB_RESULTS_XML = "long-running-job-results.xml";
 
-    public @NonNull ISystemMigrationManager createSystemMigrationManager () throws DAOException
+    public @NonNull ISystemMigrationManager createSystemMigrationMgr () throws DAOException
     {
       return new SystemMigrationManager (SYSTEM_MIGRATIONS_XML);
     }
 
-    public @NonNull ISystemMessageManager createSystemMessageManager () throws DAOException
+    public @NonNull ISystemMessageManager createSystemMessageMgr () throws DAOException
     {
       return new SystemMessageManager (SYSTEM_MESSAGE_XML);
     }
 
-    public @NonNull ILongRunningJobResultManager createLongRunningJobResultManager () throws DAOException
+    public @NonNull ILongRunningJobResultManager createLongRunningJobResultMgr () throws DAOException
     {
       return new LongRunningJobResultManager (LONG_RUNNING_JOB_RESULTS_XML);
     }
@@ -176,10 +176,10 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   {
     try
     {
-      m_aSystemMigrationMgr = s_aFactory.createSystemMigrationManager ();
-      m_aSystemMessageMgr = s_aFactory.createSystemMessageManager ();
+      m_aSystemMigrationMgr = s_aFactory.createSystemMigrationMgr ();
+      m_aSystemMessageMgr = s_aFactory.createSystemMessageMgr ();
 
-      m_aLongRunningJobResultMgr = s_aFactory.createLongRunningJobResultManager ();
+      m_aLongRunningJobResultMgr = s_aFactory.createLongRunningJobResultMgr ();
       m_aLongRunningJobMgr = new LongRunningJobManager (m_aLongRunningJobResultMgr);
 
       INITED.set (true);

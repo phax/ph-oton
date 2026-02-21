@@ -14,25 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.mgrs.systemmsg;
+package com.helger.photon.mgrs.sysmsg;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.base.state.EChange;
+import com.helger.annotation.Nonempty;
+import com.helger.base.string.StringHelper;
 
 /**
- * Base interface for system message manager.
+ * System message data read-only interface.
  *
  * @author Philip Helger
- * @since 10.2.0
+ * @since 7.0.5
  */
-public interface ISystemMessageManager
+public interface ISystemMessageData extends Serializable
 {
   /**
-   * @return The date and time when the system message was last modified. May be <code>null</code>.
+   * @return The date and time when the system message was last modified. May be
+   *         <code>null</code>.
    */
   @Nullable
   LocalDateTime getLastUpdateDT ();
@@ -44,17 +47,27 @@ public interface ISystemMessageManager
   ESystemMessageType getMessageType ();
 
   /**
+   * @return The ID of the type of system message. Never <code>null</code>.
+   */
+  @NonNull
+  @Nonempty
+  default String getMessageTypeID ()
+  {
+    return getMessageType ().getID ();
+  }
+
+  /**
    * @return The system message text itself. May be <code>null</code>.
    */
   @Nullable
-  String getSystemMessage ();
+  String getMessage ();
 
   /**
-   * @return <code>true</code> if a system message text is available, <code>false</code> if not.
+   * @return <code>true</code> if a system message text is available,
+   *         <code>false</code> if not.
    */
-  boolean hasSystemMessage ();
-
-  @NonNull
-  EChange setSystemMessage (@NonNull ESystemMessageType eMessageType, @Nullable String sMessage);
-
+  default boolean hasMessage ()
+  {
+    return StringHelper.isNotEmpty (getMessage ());
+  }
 }

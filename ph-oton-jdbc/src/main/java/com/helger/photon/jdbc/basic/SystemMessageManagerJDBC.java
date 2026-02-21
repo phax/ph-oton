@@ -33,9 +33,9 @@ import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.executor.DBResultRow;
 import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
 import com.helger.photon.audit.AuditHelper;
-import com.helger.photon.mgrs.systemmsg.ESystemMessageType;
-import com.helger.photon.mgrs.systemmsg.ISystemMessageManager;
-import com.helger.photon.mgrs.systemmsg.SystemMessageData;
+import com.helger.photon.mgrs.sysmsg.ESystemMessageType;
+import com.helger.photon.mgrs.sysmsg.ISystemMessageManager;
+import com.helger.photon.mgrs.sysmsg.SystemMessageData;
 
 /**
  * A JDBC based implementation of the {@link ISystemMessageManager} interface.

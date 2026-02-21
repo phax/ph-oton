@@ -21,7 +21,7 @@ import java.util.Locale;
 import org.jspecify.annotations.NonNull;
 
 import com.helger.photon.core.form.RequestField;
-import com.helger.photon.mgrs.systemmsg.ESystemMessageType;
+import com.helger.photon.mgrs.sysmsg.ESystemMessageType;
 
 public class HCSystemMessageTypeSelect extends HCExtSelect
 {

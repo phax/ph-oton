@@ -79,7 +79,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      * @since 8.3.2
      */
     @NonNull
-    IAuditManager createAuditManager () throws Exception;
+    IAuditManager createAuditMgr () throws Exception;
 
     /**
      * @return A new instance of {@link IUserManager}
@@ -138,7 +138,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     public static final String FILENAME_USERTOKENS_XML = "usertokens.xml";
 
     @NonNull
-    public IAuditManager createAuditManager () throws DAOException
+    public IAuditManager createAuditMgr () throws DAOException
     {
       return new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
     }
@@ -255,7 +255,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   {
     try
     {
-      m_aAuditMgr = s_aFactory.createAuditManager ();
+      m_aAuditMgr = s_aFactory.createAuditMgr ();
       AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
       AuditHelper.onAuditExecuteSuccess ("audit-initialized");
 
