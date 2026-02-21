@@ -49,7 +49,7 @@
 
  */
 
-package com.helger.html.markdown;
+package com.helger.photon.markdown;
 
 import static org.junit.Assert.assertEquals;
 
@@ -76,7 +76,7 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsCollection;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.mock.HCTestRuleOptimized;
-import com.helger.html.markdown.MarkdownConfiguration.Builder;
+import com.helger.photon.markdown.MarkdownConfiguration.Builder;
 import com.helger.io.resource.ClassPathResource;
 
 @RunWith (Parameterized.class)

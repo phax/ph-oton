@@ -24,13 +24,13 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>10.2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-uicore</artifactId>
+  <artifactId>ph-oton-markdown</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-oton-uicore</name>
-  <description>ph-oton UI core</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-uicore</url>
+  <name>ph-oton-markdown</name>
+  <description>Markdown to HTML processor based on the ph-oton HC model</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-markdown</url>
   <inceptionYear>2014</inceptionYear>
-  
+
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -56,25 +56,9 @@
   <dependencies>
     <dependency>
       <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-html</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-markdown</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-jscode</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.web</groupId>
-      <artifactId>ph-httpclient</artifactId>
-    </dependency>
-    
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -90,43 +74,10 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.photon.uicore</Automatic-Module-Name>
-            <Export-Package>com.helger.photon.uicore.*</Export-Package>
+            <Automatic-Module-Name>com.helger.photon.markdown</Automatic-Module-Name>
+            <Export-Package>com.helger.photon.markdown.*</Export-Package>
             <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-jscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>jscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCreation>false</forceCreation>
-          <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.helger.maven</groupId>
-        <artifactId>ph-csscompress-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>csscompress</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <forceCompress>false</forceCompress>
-          <removeUnnecessaryCode>true</removeUnnecessaryCode>
-          <quoteURLs>true</quoteURLs>
-          <verbose>true</verbose>
-          <sourceDirectory>${basedir}/src/main/resources/ph-oton</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>

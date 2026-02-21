@@ -49,7 +49,7 @@
 
  */
 
-package com.helger.html.markdown;
+package com.helger.photon.markdown;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

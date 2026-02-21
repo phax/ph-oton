@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.markdown;
+package com.helger.photon.markdown;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

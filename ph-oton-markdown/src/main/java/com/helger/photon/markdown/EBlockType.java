@@ -14,25 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.markdown;
-
-import org.jspecify.annotations.NonNull;
+package com.helger.photon.markdown;
 
 /**
- * An interface for emitting span elements. Currently only used for special
- * links.
+ * Block type enum.
  *
- * @author René Jeschke (rene_jeschke@yahoo.de)
+ * @author René Jeschke &lt;rene_jeschke@yahoo.de&gt
  */
-public interface IMarkdownSpanEmitter
+enum EBlockType
 {
-  /**
-   * Emits a span element.
-   *
-   * @param out
-   *        The StringBuilder to append to.
-   * @param content
-   *        The span's content.
-   */
-  void emitSpan (@NonNull MarkdownHCStack out, @NonNull MarkdownHCStack content);
+  /** Unspecified. Used for root block and list items without paragraphs. */
+  NONE,
+  /** A block quote. */
+  BLOCKQUOTE,
+  /** A code block. */
+  CODE,
+  /** A fenced code block. */
+  FENCED_CODE,
+  /** A headline. */
+  HEADLINE,
+  /** A list item. */
+  LIST_ITEM,
+  /** An ordered list. */
+  ORDERED_LIST,
+  /** A paragraph. */
+  PARAGRAPH,
+  /** A horizontal ruler. */
+  RULER,
+  /** An unordered list. */
+  UNORDERED_LIST,
+  /** A XML block. */
+  XML,
+  /** A XML comment block. */
+  XML_COMMENT,
+  /** A plugin block. */
+  PLUGIN
 }

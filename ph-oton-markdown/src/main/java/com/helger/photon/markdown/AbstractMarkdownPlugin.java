@@ -14,38 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.markdown;
+package com.helger.photon.markdown;
 
-/**
- * Line type enumeration.
- *
- * @author René Jeschke &lt;rene_jeschke@yahoo.de&gt
- */
-enum ELineType
+import java.util.List;
+import java.util.Map;
+
+import org.jspecify.annotations.NonNull;
+
+public abstract class AbstractMarkdownPlugin
 {
-  /** Empty line. */
-  EMPTY,
-  /** Undefined content. */
-  OTHER,
-  /** A markdown headline. */
-  HEADLINE,
-  HEADLINE1,
-  HEADLINE2,
-  /** A code block line. */
-  CODE,
-  /** A list. */
-  ULIST,
-  OLIST,
-  /** A block quote. */
-  BQUOTE,
-  /** A horizontal ruler. */
-  HR,
-  /** Start of a XML block. */
-  XML,
-  /** XML comment. */
-  XML_COMMENT,
-  /** Fenced code block start/end */
-  FENCED_CODE,
-  /** plugin block */
-  PLUGIN
+  protected String m_sPluginID;
+
+  public AbstractMarkdownPlugin (@NonNull final String sPluginID)
+  {
+    m_sPluginID = sPluginID;
+  }
+
+  @NonNull
+  public String getPluginID ()
+  {
+    return m_sPluginID;
+  }
+
+  public abstract void emit (final MarkdownHCStack out, final List <String> lines, final Map <String, String> params);
 }

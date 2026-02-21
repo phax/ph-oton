@@ -14,14 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.markdown;
+package com.helger.photon.markdown;
 
-import org.jspecify.annotations.NonNull;
+import org.junit.Test;
 
-public class MarkdownException extends RuntimeException
+import com.helger.unittestext.SPITestHelper;
+
+/**
+ * Test if all SPI definitions are valid.
+ *
+ * @author Philip Helger
+ */
+public final class SPITest
 {
-  public MarkdownException (@NonNull final String sMessage)
+  @Test
+  public void testBasic () throws Exception
   {
-    super (sMessage);
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

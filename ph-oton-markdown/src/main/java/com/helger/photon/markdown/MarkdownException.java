@@ -14,27 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.html.markdown;
-
-import java.util.List;
-import java.util.Map;
+package com.helger.photon.markdown;
 
 import org.jspecify.annotations.NonNull;
 
-public abstract class AbstractMarkdownPlugin
+public class MarkdownException extends RuntimeException
 {
-  protected String m_sPluginID;
-
-  public AbstractMarkdownPlugin (@NonNull final String sPluginID)
+  public MarkdownException (@NonNull final String sMessage)
   {
-    m_sPluginID = sPluginID;
+    super (sMessage);
   }
-
-  @NonNull
-  public String getPluginID ()
-  {
-    return m_sPluginID;
-  }
-
-  public abstract void emit (final MarkdownHCStack out, final List <String> lines, final Map <String, String> params);
 }

@@ -152,6 +152,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger.photon</groupId>
+        <artifactId>ph-oton-markdown</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-jscode</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -290,6 +295,7 @@
   
   <modules>
     <module>ph-oton-html</module>
+    <module>ph-oton-markdown</module>
     <module>ph-oton-jscode</module>
     <module>ph-oton-jquery</module>
     <module>ph-oton-atom</module>

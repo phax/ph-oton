@@ -9,6 +9,7 @@ This set of Java libraries forms a package to build Java web applications.
 
 Contained subprojects are:
 * ph-oton-html - Java wrapper for all HTML elements and attributes
+* ph-oton-markdown - Java wrapper for Markdown processing (since 10.2.0; previously in ph-oton-html)
 * ph-oton-jscode - a Java code model to build structured JS code
 * ph-oton-jquery - an extension to ph-html-jscode to also support jQuery
 * ph-oton-atom - ATOM newsfeed stuff
@@ -76,9 +77,10 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.2.0 - work in progress
+v10.2.0 - 2026-02-21
 * Updated to Jetty 12.1.6
 * Extracted new submodule `ph-oton-mgrs`
+* Extracted new submodule `ph-oton-markdown` for Markdown handling
 * Extracted the interface `ISystemMigrationManager` and provided an SQL backend via `SystemMigrationManagerJDBC`
 * Moved the class `SystemMigrationManager` into package `com.helger.photon.mgrs.sysmigration`
 * Created new class `PhotonCMSManager` and moved access to the `FavoriteManager` there
