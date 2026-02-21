@@ -37,7 +37,12 @@ Contained subprojects are:
 * Application server requirements:
     * At least Tomcat 10.1.x (JakartaEE 10)
     * Jetty 12.x with AnnotationConfiguration enabled
-      
+    
+Note: actual frontend bindings were moved to separate projects:
+* Bootstrap v3: https://github.com/phax/ph-oton-bootstrap3
+* Bootstrap v4: https://github.com/phax/ph-oton-bootstrap4
+* Bootstrap v5: https://github.com/phax/ph-oton-bootstrap5 (work in progress)
+
 ## Maven usage
 
 Replace `x.y.z` with the effective version number.
@@ -55,23 +60,6 @@ Replace `x.y.z` with the effective version number.
     </dependencies>
   </dependencyManagement>
 ```
-
-Note: prior to v8.2.5 the Maven groupId was `com.helger`.
-
-### Bootstrap 4
-
-To use Bootstrap 4 front end use:
-
-```xml
-  <dependencies>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-bootstrap4-stub</artifactId>
-    </dependency>
-  </dependencies>
-```
-
-See the submodule `ph-oton-bootstrap4-demo` for a working example project with Bootstrap 4 UI.
 
 Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
