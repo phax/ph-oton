@@ -75,7 +75,7 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
                                                               " (migration_id, execution_dt, success, error_msg)" +
-                                                              " VALUES (?, ?, ?, ?, ?)",
+                                                              " VALUES (?, ?, ?, ?)",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (aMigrationResult.getID (),
                                                                                                                                            ISystemMigrationManager.MIGRATION_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.toTimestamp (aMigrationResult.getExecutionDateTime ()),
