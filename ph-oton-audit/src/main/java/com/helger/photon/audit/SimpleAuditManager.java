@@ -25,6 +25,7 @@ import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.ELockType;
 import com.helger.annotation.concurrent.IsLocked;
 import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.misc.ChangeNextMajorRelease;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -49,6 +50,7 @@ import com.helger.xml.microdom.convert.MicroTypeConverter;
  * @author Philip Helger
  */
 @ThreadSafe
+@ChangeNextMajorRelease ("Rename to AuditManagerXML")
 public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> implements IAuditor
 {
   private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
