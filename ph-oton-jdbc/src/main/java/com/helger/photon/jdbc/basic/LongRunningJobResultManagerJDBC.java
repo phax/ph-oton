@@ -44,6 +44,7 @@ import com.helger.xml.microdom.serialize.MicroWriter;
  * A JDBC based implementation of the {@link ILongRunningJobResultManager} interface.
  *
  * @author Philip Helger
+ * @since 10.2.0
  */
 public class LongRunningJobResultManagerJDBC extends AbstractJDBCEnabledManager implements ILongRunningJobResultManager
 {

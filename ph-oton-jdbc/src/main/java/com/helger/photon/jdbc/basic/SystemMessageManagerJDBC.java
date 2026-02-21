@@ -41,6 +41,7 @@ import com.helger.photon.mgrs.systemmsg.SystemMessageData;
  * A JDBC based implementation of the {@link ISystemMessageManager} interface.
  *
  * @author Philip Helger
+ * @since 10.2.0
  */
 public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager implements ISystemMessageManager
 {
