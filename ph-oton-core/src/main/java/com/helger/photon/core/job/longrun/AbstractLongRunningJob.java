@@ -23,10 +23,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.base.state.ESuccess;
-import com.helger.photon.core.longrun.ILongRunningJob;
-import com.helger.photon.core.longrun.LongRunningJobManager;
-import com.helger.photon.core.longrun.LongRunningJobResult;
-import com.helger.photon.core.mgr.PhotonBasicManager;
+import com.helger.photon.mgrs.PhotonBasicManager;
+import com.helger.photon.mgrs.longrun.ILongRunningJob;
+import com.helger.photon.mgrs.longrun.LongRunningJobManager;
+import com.helger.photon.mgrs.longrun.LongRunningJobResult;
 import com.helger.quartz.IJobExecutionContext;
 import com.helger.quartz.JobDataMap;
 import com.helger.schedule.job.AbstractJob;

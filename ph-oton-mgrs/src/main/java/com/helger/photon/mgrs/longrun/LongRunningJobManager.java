@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.longrun;
+package com.helger.photon.mgrs.longrun;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -42,9 +42,9 @@ public final class LongRunningJobManager
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, LongRunningJobData> m_aRunningJobs = new CommonsHashMap <> ();
-  private final LongRunningJobResultManager m_aResultMgr;
+  private final ILongRunningJobResultManager m_aResultMgr;
 
-  public LongRunningJobManager (@NonNull final LongRunningJobResultManager aResultMgr)
+  public LongRunningJobManager (@NonNull final ILongRunningJobResultManager aResultMgr)
   {
     m_aResultMgr = ValueEnforcer.notNull (aResultMgr, "ResultMgr");
   }

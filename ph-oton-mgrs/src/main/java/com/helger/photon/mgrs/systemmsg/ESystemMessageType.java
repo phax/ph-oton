@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.systemmsg;
+package com.helger.photon.mgrs.systemmsg;
 
 import java.util.Locale;
 
@@ -24,7 +24,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-import com.helger.photon.core.EPhotonCoreText;
+import com.helger.photon.mgrs.EPhotonManagersText;
 import com.helger.text.display.IHasDisplayText;
 
 /**
@@ -34,17 +34,17 @@ import com.helger.text.display.IHasDisplayText;
  */
 public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
 {
-  INFO ("i", EPhotonCoreText.SYSTEM_MESSAGE_TYPE_INFO),
-  WARNING ("w", EPhotonCoreText.SYSTEM_MESSAGE_TYPE_WARNING),
-  ERROR ("e", EPhotonCoreText.SYSTEM_MESSAGE_TYPE_ERROR),
-  SUCCESS ("s", EPhotonCoreText.SYSTEM_MESSAGE_TYPE_SUCCESS);
+  INFO ("i", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_INFO),
+  WARNING ("w", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_WARNING),
+  ERROR ("e", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_ERROR),
+  SUCCESS ("s", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_SUCCESS);
 
   public static final ESystemMessageType DEFAULT = INFO;
 
   private final String m_sID;
-  private final EPhotonCoreText m_eText;
+  private final EPhotonManagersText m_eText;
 
-  ESystemMessageType (@NonNull @Nonempty final String sID, @NonNull final EPhotonCoreText aText)
+  ESystemMessageType (@NonNull @Nonempty final String sID, @NonNull final EPhotonManagersText aText)
   {
     m_sID = sID;
     m_eText = aText;

@@ -14,19 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.longrun;
+package com.helger.photon.mgrs.longrun;
+
+import java.util.function.Supplier;
 
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonempty;
-import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
-import com.helger.photon.core.mgr.PhotonBasicManager;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.mgrs.PhotonBasicManager;
 import com.helger.text.IMultilingualText;
 
 /**
@@ -41,14 +40,18 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
 
   private final String m_sJobID;
   private final IMultilingualText m_aDesc;
+  private final Supplier <String> m_aCurrentUserIDProvider;
 
   public AbstractLongRunningJobRunnable (@NonNull @Nonempty final String sJobID,
-                                         @NonNull final IMultilingualText aJobDesc)
+                                         @NonNull final IMultilingualText aJobDesc,
+                                         @NonNull final Supplier <String> aCurrentUserIDProvider)
   {
     ValueEnforcer.notEmpty (sJobID, "JobID");
     ValueEnforcer.notNull (aJobDesc, "JobDesc");
+    ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
     m_sJobID = sJobID;
     m_aDesc = aJobDesc;
+    m_aCurrentUserIDProvider = aCurrentUserIDProvider;
   }
 
   @NonNull
@@ -65,18 +68,7 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
   }
 
   /**
-   * @return The current user ID. May be <code>null</code>.
-   */
-  @Nullable
-  @OverrideOnDemand
-  protected String getCurrentUserID ()
-  {
-    return LoggedInUserManager.getInstance ().getCurrentUserID ();
-  }
-
-  /**
-   * @return The {@link LongRunningJobManager} to be used. May not return
-   *         <code>null</code>.
+   * @return The {@link LongRunningJobManager} to be used. May not return <code>null</code>.
    */
   @NonNull
   protected static final LongRunningJobManager getLongRunningJobManager ()
@@ -86,7 +78,7 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
 
   public void run ()
   {
-    final String sUserID = getCurrentUserID ();
+    final String sUserID = m_aCurrentUserIDProvider.get ();
 
     // Remember that a long running job is starting
     final String sLongRunningJobID = getLongRunningJobManager ().onStartJob (this, sUserID);

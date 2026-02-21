@@ -41,7 +41,7 @@ import com.helger.photon.api.IAPIExceptionCallback;
 import com.helger.photon.api.IAPIInvoker;
 import com.helger.photon.api.InvokableAPIDescriptor;
 import com.helger.photon.core.interror.InternalErrorHandler;
-import com.helger.photon.core.longrun.ILongRunningJob;
+import com.helger.photon.mgrs.longrun.ILongRunningJob;
 import com.helger.quartz.IJob;
 import com.helger.schedule.job.AbstractJob;
 import com.helger.schedule.job.IJobExceptionCallback;

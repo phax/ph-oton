@@ -42,12 +42,6 @@ public enum EPhotonCoreText implements IHasDisplayTextWithArgs
                                              "a user is assigned to user group {0}"),
   MENU_OBJECT_FILTER_USER_HAS_ROLE ("ein Benutzer hat die Rolle {0}", "a user has role {0}"),
 
-  // System messages
-  SYSTEM_MESSAGE_TYPE_INFO ("Information", "Information"),
-  SYSTEM_MESSAGE_TYPE_WARNING ("Warnung", "Warning"),
-  SYSTEM_MESSAGE_TYPE_ERROR ("Fehler", "Error"),
-  SYSTEM_MESSAGE_TYPE_SUCCESS ("Erfolg", "Success"),
-
   // Misc texts
   PAGE_HELP_TITLE ("Hilfe zu ''{0}'' anzeigen", "Show help for ''{0}''"),
   DOWNLOAD ("Download", "Download"),

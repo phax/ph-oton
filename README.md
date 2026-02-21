@@ -77,6 +77,10 @@ v10.2.0 - work in progress
 * Extracted new submodule `ph-oton-mgrs`
 * Extracted the interface `ISystemMigrationManager` and provided an SQL backend via `SystemMigrationManagerJDBC`
 * Moved the class `SystemMigrationManager` into package `com.helger.photon.mgrs.sysmigration`
+* Created new class `PhotonCMSManager` and moved access to the `FavoriteManager` there
+* Extracted interface `ISystemMessageManager`
+* Extracted interface `ILongRunningJobResultManager`
+* Moved class `PhotonBasicManager` to the new submodule `ph-oton-mgrs`
 
 v10.1.2 - 2026-01-10
 * Added `IHCAttrContainer.setAria(Current|Disabled)`

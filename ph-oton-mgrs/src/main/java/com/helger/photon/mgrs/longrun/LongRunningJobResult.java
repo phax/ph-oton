@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.longrun;
+package com.helger.photon.mgrs.longrun;
 
 import java.io.File;
 
@@ -25,8 +25,6 @@ import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.rt.StackTraceHelper;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.html.hc.IHCNode;
-import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.json.serialize.JsonWriter;
 import com.helger.url.ISimpleURL;
@@ -100,21 +98,15 @@ public class LongRunningJobResult
   @NonNull
   public String getAsString ()
   {
-    switch (m_eType)
+    return switch (m_eType)
     {
-      case FILE:
-        return getResultFile ().getAbsolutePath ();
-      case XML:
-        return MicroWriter.getNodeAsString (getResultXML ());
-      case TEXT:
-        return getResultText ();
-      case LINK:
-        return getResultLink ().getAsString ();
-      case JSON:
-        return new JsonWriter ().writeAsString (getResultJson ());
-      default:
-        throw new IllegalStateException ("Unhandled type: " + m_eType);
-    }
+      case FILE -> getResultFile ().getAbsolutePath ();
+      case XML -> MicroWriter.getNodeAsString (getResultXML ());
+      case TEXT -> getResultText ();
+      case LINK -> getResultLink ().getAsString ();
+      case JSON -> new JsonWriter ().writeAsString (getResultJson ());
+      default -> throw new IllegalStateException ("Unhandled type: " + m_eType);
+    };
   }
 
   @Override
@@ -135,11 +127,11 @@ public class LongRunningJobResult
     return new LongRunningJobResult (ELongRunningJobResultType.XML, aResult);
   }
 
-  @NonNull
-  public static LongRunningJobResult createXML (@NonNull final IHCNode aResult)
-  {
-    return createXML (HCRenderer.getAsNode (aResult));
-  }
+  // @NonNull
+  // public static LongRunningJobResult createXML (@NonNull final IHCNode aResult)
+  // {
+  // return createXML (HCRenderer.getAsNode (aResult));
+  // }
 
   @NonNull
   public static LongRunningJobResult createText (@NonNull final String sResult)
@@ -150,8 +142,7 @@ public class LongRunningJobResult
   @NonNull
   public static LongRunningJobResult createExceptionText (@NonNull final Throwable t)
   {
-    return createText (t.getClass ()
-                        .getName () +
+    return createText (t.getClass ().getName () +
                        " -  " +
                        t.getMessage () +
                        "\n" +

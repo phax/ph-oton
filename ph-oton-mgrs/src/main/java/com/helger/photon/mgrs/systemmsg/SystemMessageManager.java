@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.systemmsg;
+package com.helger.photon.mgrs.systemmsg;
 
 import java.time.LocalDateTime;
 
@@ -39,7 +39,7 @@ import com.helger.xml.microdom.util.MicroHelper;
  *
  * @author Philip Helger
  */
-public final class SystemMessageManager extends AbstractPhotonSimpleDAO
+public final class SystemMessageManager extends AbstractPhotonSimpleDAO implements ISystemMessageManager
 {
   private static final String ELEMENT_SYSTEM_MESSAGE = "systemmessage";
   private static final String ATTR_LAST_UPDATE = "lastupdate";
@@ -99,38 +99,24 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO
     return ret;
   }
 
-  /**
-   * @return The date and time when the system message was last modified. May be
-   *         <code>null</code>.
-   */
   @Nullable
   public LocalDateTime getLastUpdateDT ()
   {
     return m_aRWLock.readLockedGet (m_aData::getLastUpdateDT);
   }
 
-  /**
-   * @return The type of system message. Never <code>null</code>.
-   */
   @NonNull
   public ESystemMessageType getMessageType ()
   {
     return m_aRWLock.readLockedGet (m_aData::getMessageType);
   }
 
-  /**
-   * @return The system message text itself. May be <code>null</code>.
-   */
   @Nullable
   public String getSystemMessage ()
   {
     return m_aRWLock.readLockedGet (m_aData::getMessage);
   }
 
-  /**
-   * @return <code>true</code> if a system message text is available,
-   *         <code>false</code> if not.
-   */
   public boolean hasSystemMessage ()
   {
     return m_aRWLock.readLockedBoolean (m_aData::hasMessage);

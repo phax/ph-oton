@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.longrun;
+package com.helger.photon.mgrs.longrun;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -29,6 +29,8 @@ import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
 
 @ThreadSafe
 public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <LongRunningJobData, LongRunningJobData>
+                                         implements
+                                         ILongRunningJobResultManager
 {
   public LongRunningJobResultManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
@@ -46,7 +48,7 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
 
   @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <? extends LongRunningJobData> getAllJobResults ()
+  public ICommonsList <LongRunningJobData> getAllJobResults ()
   {
     return getAll ();
   }

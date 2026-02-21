@@ -14,21 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.uicore.html.select;
-
-import java.util.Locale;
+package com.helger.photon.mgrs.longrun;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
-import com.helger.photon.core.form.RequestField;
-import com.helger.photon.mgrs.systemmsg.ESystemMessageType;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.collection.commons.ICommonsList;
 
-public class HCSystemMessageTypeSelect extends HCExtSelect
+/**
+ * Base interface for a long running job result manager
+ *
+ * @author Philip Helger
+ * @since 10.2.0
+ */
+public interface ILongRunningJobResultManager
 {
-  public HCSystemMessageTypeSelect (@NonNull final RequestField aRF, @NonNull final Locale aDisplayLocale)
-  {
-    super (aRF);
-    for (final ESystemMessageType e : ESystemMessageType.values ())
-      addOption (e.getID (), e.getDisplayText (aDisplayLocale));
-  }
+  void addResult (@NonNull final LongRunningJobData aJobData);
+
+  @NonNull
+  @ReturnsMutableCopy
+  ICommonsList <LongRunningJobData> getAllJobResults ();
+
+  @Nullable
+  LongRunningJobData getJobResultOfID (@Nullable final String sJobResultID);
 }
