@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.photon</groupId>
     <artifactId>ph-oton-parent-pom</artifactId>
-    <version>10.1.3-SNAPSHOT</version>
+    <version>10.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-jquery</artifactId>
   <packaging>bundle</packaging>
