@@ -34,19 +34,20 @@ import com.helger.text.display.IHasDisplayText;
  */
 public enum ESystemMessageType implements IHasID <String>, IHasDisplayText
 {
-  INFO ("i", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_INFO),
-  WARNING ("w", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_WARNING),
-  ERROR ("e", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_ERROR),
-  SUCCESS ("s", EPhotonManagersText.SYSTEM_MESSAGE_TYPE_SUCCESS);
+  INFO ('i', EPhotonManagersText.SYSTEM_MESSAGE_TYPE_INFO),
+  WARNING ('w', EPhotonManagersText.SYSTEM_MESSAGE_TYPE_WARNING),
+  ERROR ('e', EPhotonManagersText.SYSTEM_MESSAGE_TYPE_ERROR),
+  SUCCESS ('s', EPhotonManagersText.SYSTEM_MESSAGE_TYPE_SUCCESS);
 
   public static final ESystemMessageType DEFAULT = INFO;
 
   private final String m_sID;
   private final EPhotonManagersText m_eText;
 
-  ESystemMessageType (@NonNull @Nonempty final String sID, @NonNull final EPhotonManagersText aText)
+  ESystemMessageType (@NonNull @Nonempty final char cID, @NonNull final EPhotonManagersText aText)
   {
-    m_sID = sID;
+    // ID must be one char, because the JDBC model is designed this way
+    m_sID = Character.toString (cID);
     m_eText = aText;
   }
 
