@@ -69,6 +69,7 @@ import com.helger.text.locale.LocaleHelper;
 public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implements IUserManager
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (UserManagerJDBC.class);
+  private static final boolean DEFAULT_DISABLED = false;
 
   private final String m_sTableName;
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
@@ -144,7 +145,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                            aRow.getAsLocalDateTime (17),
                            aRow.getAsInt (18, 0),
                            aRow.getAsInt (19, 0),
-                           aRow.getAsBoolean (20, false)));
+                           aRow.getAsBoolean (20, DEFAULT_DISABLED)));
       }
     return ret;
   }
@@ -418,7 +419,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                      aRow.getAsLocalDateTime (16),
                      aRow.getAsInt (17, 0),
                      aRow.getAsInt (18, 0),
-                     aRow.getAsBoolean (19, false));
+                     aRow.getAsBoolean (19, DEFAULT_DISABLED));
   }
 
   @Nullable
@@ -464,7 +465,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                      aRow.getAsLocalDateTime (16),
                      aRow.getAsInt (17, 0),
                      aRow.getAsInt (18, 0),
-                     aRow.getAsBoolean (19, false));
+                     aRow.getAsBoolean (19, DEFAULT_DISABLED));
   }
 
   @Nullable
@@ -510,7 +511,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                      aRow.getAsLocalDateTime (16),
                      aRow.getAsInt (17, 0),
                      aRow.getAsInt (18, 0),
-                     aRow.getAsBoolean (19, false));
+                     aRow.getAsBoolean (19, DEFAULT_DISABLED));
   }
 
   @Nullable
