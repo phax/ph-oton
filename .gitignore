@@ -6,6 +6,7 @@
 hs_err_*.log
 zz
 
+.claude/
 .idea/
 .settings/ 
 target/

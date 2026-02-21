@@ -23,15 +23,14 @@ import org.jspecify.annotations.NonNull;
 
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.db.jdbc.executor.DBExecutor;
-import com.helger.photon.jdbc.sysmigration.SystemMigrationManagerJDBC;
+import com.helger.photon.jdbc.basic.LongRunningJobResultManagerJDBC;
+import com.helger.photon.jdbc.basic.SystemMessageManagerJDBC;
+import com.helger.photon.jdbc.basic.SystemMigrationManagerJDBC;
 import com.helger.photon.mgrs.PhotonBasicManager;
+import com.helger.photon.mgrs.PhotonBasicManager.IFactory;
 import com.helger.photon.mgrs.longrun.ILongRunningJobResultManager;
-import com.helger.photon.mgrs.longrun.LongRunningJobResultManager;
 import com.helger.photon.mgrs.sysmigration.ISystemMigrationManager;
 import com.helger.photon.mgrs.systemmsg.ISystemMessageManager;
-import com.helger.photon.mgrs.systemmsg.SystemMessageManager;
-import com.helger.photon.security.mgr.PhotonSecurityManager;
-import com.helger.photon.security.mgr.PhotonSecurityManager.IFactory;
 
 /**
  * An implementation of {@link IFactory} for JDBC based managers.
@@ -61,12 +60,12 @@ public class PhotonBasicManagerFactoryJDBC implements PhotonBasicManager.IFactor
 
   public @NonNull ISystemMessageManager createSystemMessageManager () throws Exception
   {
-    return new SystemMessageManager (PhotonBasicManager.FactoryXML.SYSTEM_MESSAGE_XML);
+    return new SystemMessageManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
   public @NonNull ILongRunningJobResultManager createLongRunningJobResultManager () throws Exception
   {
-    return new LongRunningJobResultManager (PhotonBasicManager.FactoryXML.LONG_RUNNING_JOB_RESULTS_XML);
+    return new LongRunningJobResultManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
   }
 
   /**
@@ -84,7 +83,7 @@ public class PhotonBasicManagerFactoryJDBC implements PhotonBasicManager.IFactor
 
     // Required for unit tests, to set it again and again and again
     if (false)
-      if (PhotonSecurityManager.isAlreadyInitialized ())
+      if (PhotonBasicManager.isAlreadyInitialized ())
         throw new IllegalStateException ("PhotonBasicManager is already initialized - call this method earlier");
 
     // First set the factory
