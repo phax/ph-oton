@@ -25,7 +25,6 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.state.ESuccess;
 import com.helger.base.state.SuccessWithValue;
 import com.helger.collection.commons.CommonsArrayList;
@@ -75,10 +74,9 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
-                                                              " (id, migration_id, execution_dt, success, error_msg)" +
+                                                              " (migration_id, execution_dt, success, error_msg)" +
                                                               " VALUES (?, ?, ?, ?, ?)",
-                                                              new ConstantPreparedStatementDataProvider (GlobalIDFactory.getNewStringID (),
-                                                                                                         DBValueHelper.getTrimmedToLength (aMigrationResult.getID (),
+                                                              new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (aMigrationResult.getID (),
                                                                                                                                            ISystemMigrationManager.MIGRATION_ID_MAX_LENGTH),
                                                                                                          DBValueHelper.toTimestamp (aMigrationResult.getExecutionDateTime ()),
                                                                                                          Boolean.valueOf (aMigrationResult.isSuccess ()),
@@ -113,10 +111,10 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
                                                                           new ConstantPreparedStatementDataProvider (sMigrationID));
     if (aDBResult != null)
       for (final DBResultRow aRow : aDBResult)
-        ret.add (SystemMigrationResult.ofAll (aRow.getAsString (0),
-                                              aRow.getAsLocalDateTime (1),
-                                              aRow.getAsBoolean (2),
-                                              aRow.getAsString (3)));
+        ret.add (new SystemMigrationResult (aRow.getAsString (0),
+                                            aRow.getAsLocalDateTime (1),
+                                            aRow.getAsBoolean (2),
+                                            aRow.getAsString (3)));
     return ret;
   }
 
@@ -129,10 +127,10 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
                                                                           m_sTableName);
     if (aDBResult != null)
       for (final DBResultRow aRow : aDBResult)
-        ret.add (SystemMigrationResult.ofAll (aRow.getAsString (0),
-                                              aRow.getAsLocalDateTime (1),
-                                              aRow.getAsBoolean (2),
-                                              aRow.getAsString (3)));
+        ret.add (new SystemMigrationResult (aRow.getAsString (0),
+                                            aRow.getAsLocalDateTime (1),
+                                            aRow.getAsBoolean (2),
+                                            aRow.getAsString (3)));
     return ret;
   }
 
@@ -152,10 +150,10 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
                                                                                                                      Boolean.FALSE));
     if (aDBResult != null)
       for (final DBResultRow aRow : aDBResult)
-        ret.add (SystemMigrationResult.ofAll (aRow.getAsString (0),
-                                              aRow.getAsLocalDateTime (1),
-                                              aRow.getAsBoolean (2),
-                                              aRow.getAsString (3)));
+        ret.add (new SystemMigrationResult (aRow.getAsString (0),
+                                            aRow.getAsLocalDateTime (1),
+                                            aRow.getAsBoolean (2),
+                                            aRow.getAsString (3)));
     return ret;
   }
 

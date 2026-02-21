@@ -49,10 +49,22 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   private final boolean m_bSuccess;
   private final String m_sErrorMessage;
 
-  protected SystemMigrationResult (@NonNull @Nonempty final String sMigrationID,
-                                   @NonNull final LocalDateTime aExecutionDT,
-                                   final boolean bSuccess,
-                                   @Nullable final String sErrorMessage)
+  /**
+   * Constructor only for serialization.
+   *
+   * @param sMigrationID
+   *        Migration ID. May neither be <code>null</code> nor empty.
+   * @param aExecutionDT
+   *        The execution date time. May not be <code>null</code>.
+   * @param bSuccess
+   *        <code>true</code> if the execution was successful
+   * @param sErrorMessage
+   *        An optional error message that occurred. May be <code>null</code>.
+   */
+  public SystemMigrationResult (@NonNull @Nonempty final String sMigrationID,
+                                @NonNull final LocalDateTime aExecutionDT,
+                                final boolean bSuccess,
+                                @Nullable final String sErrorMessage)
   {
     m_sMigrationID = ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     m_aExecutionDT = ValueEnforcer.notNull (aExecutionDT, "ExecutionDT");
@@ -139,14 +151,5 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
                                                      @NonNull final String sErrorMsg)
   {
     return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
-  }
-
-  @NonNull
-  public static SystemMigrationResult ofAll (@NonNull @Nonempty final String sMigrationID,
-                                             @NonNull final LocalDateTime aExecutionDT,
-                                             final boolean bSuccess,
-                                             @Nullable final String sErrorMessage)
-  {
-    return new SystemMigrationResult (sMigrationID, aExecutionDT, bSuccess, sErrorMessage);
   }
 }
