@@ -31,6 +31,7 @@ import com.helger.base.id.IHasID;
 import com.helger.base.state.ISuccessIndicator;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.type.ObjectType;
 import com.helger.datetime.helper.PDTFactory;
 
 /**
@@ -41,6 +42,8 @@ import com.helger.datetime.helper.PDTFactory;
 @Immutable
 public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator, Serializable
 {
+  public static final ObjectType OT = new ObjectType ("systemmigrationresult");
+
   private final String m_sMigrationID;
   private final LocalDateTime m_aExecutionDT;
   private final boolean m_bSuccess;
@@ -118,10 +121,10 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sMigrationID)
-                                       .append ("executionDT", m_aExecutionDT)
-                                       .append ("success", m_bSuccess)
-                                       .append ("errorMsg", m_sErrorMessage)
+    return new ToStringGenerator (this).append ("MigrationID", m_sMigrationID)
+                                       .append ("ExecutionDT", m_aExecutionDT)
+                                       .append ("Success", m_bSuccess)
+                                       .append ("ErrorMsg", m_sErrorMessage)
                                        .getToString ();
   }
 
@@ -132,8 +135,18 @@ public class SystemMigrationResult implements IHasID <String>, ISuccessIndicator
   }
 
   @NonNull
-  public static SystemMigrationResult createFailure (@NonNull @Nonempty final String sMigrationID, @NonNull final String sErrorMsg)
+  public static SystemMigrationResult createFailure (@NonNull @Nonempty final String sMigrationID,
+                                                     @NonNull final String sErrorMsg)
   {
     return new SystemMigrationResult (sMigrationID, PDTFactory.getCurrentLocalDateTime (), false, sErrorMsg);
+  }
+
+  @NonNull
+  public static SystemMigrationResult ofAll (@NonNull @Nonempty final String sMigrationID,
+                                             @NonNull final LocalDateTime aExecutionDT,
+                                             final boolean bSuccess,
+                                             @Nullable final String sErrorMessage)
+  {
+    return new SystemMigrationResult (sMigrationID, aExecutionDT, bSuccess, sErrorMessage);
   }
 }

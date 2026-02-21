@@ -72,8 +72,10 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.1.3 - work in progress
+v10.2.0 - work in progress
 * Updated to Jetty 12.1.6
+* Extracted new submodule `ph-oton-mgrs`
+* Extracted the interface `ISystemMigrationManager` and provided an SQL backend via `SystemMigrationManagerJDBC`
 
 v10.1.2 - 2026-01-10
 * Added `IHCAttrContainer.setAria(Current|Disabled)`

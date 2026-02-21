@@ -207,6 +207,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger.photon</groupId>
+        <artifactId>ph-oton-mgrs</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.photon</groupId>
         <artifactId>ph-oton-core</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -296,6 +301,7 @@
     <module>ph-oton-security</module>
     <module>ph-oton-exchange</module>
     <module>ph-oton-connect</module>
+    <module>ph-oton-mgrs</module>
     <module>ph-oton-core</module>
     <module>ph-oton-uicore</module>
     <module>ph-oton-icon</module>

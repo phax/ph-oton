@@ -21,25 +21,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.exception.InitializationException;
+import com.helger.base.functional.IThrowingSupplier;
 import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.photon.core.favorites.FavoriteManager;
 import com.helger.photon.core.longrun.LongRunningJobManager;
 import com.helger.photon.core.longrun.LongRunningJobResultManager;
+import com.helger.photon.core.sysmigration.ISystemMigrationManager;
 import com.helger.photon.core.sysmigration.SystemMigrationManager;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
- * The meta system manager encapsulates all managers that are located in this
- * project. Currently the contained managers are:
+ * The meta system manager encapsulates all managers that are located in this project. Currently the
+ * contained managers are:
  * <ul>
  * <li>{@link FavoriteManager}</li>
  * <li>{@link LongRunningJobManager}</li>
  * <li>{@link LongRunningJobResultManager}</li>
  * <li>{@link SystemMessageManager}</li>
- * <li>{@link SystemMigrationManager}</li>
+ * <li>{@link ISystemMigrationManager}</li>
  * </ul>
  *
  * @author Philip Helger
@@ -54,11 +57,21 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhotonBasicManager.class);
 
+  private static IThrowingSupplier <? extends ISystemMigrationManager, Exception> s_aSystemMigrationMgrFactory = () -> new SystemMigrationManager (SYSTEM_MIGRATIONS_XML);
+
   private FavoriteManager m_aFavoriteManager;
   private LongRunningJobManager m_aLongRunningJobMgr;
   private LongRunningJobResultManager m_aLongRunningJobResultMgr;
   private SystemMessageManager m_aSystemMessageMgr;
-  private SystemMigrationManager m_aSystemMigrationMgr;
+  private ISystemMigrationManager m_aSystemMigrationMgr;
+
+  public static void setSystemMigrationMgrFactory (@NonNull final IThrowingSupplier <? extends ISystemMigrationManager, Exception> aFactory)
+  {
+    ValueEnforcer.notNull (aFactory, "Factory");
+    if (isGlobalSingletonInstantiated (PhotonBasicManager.class))
+      throw new IllegalStateException ("Too late to set the SystemMigrationManager factory - the surrounding singleton is already instaniated");
+    s_aSystemMigrationMgrFactory = aFactory;
+  }
 
   @Deprecated (forRemoval = false)
   @UsedViaReflection
@@ -71,9 +84,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
     try
     {
       m_aFavoriteManager = new FavoriteManager (FAVORITES_XML);
-
-      m_aSystemMigrationMgr = new SystemMigrationManager (SYSTEM_MIGRATIONS_XML);
-
+      m_aSystemMigrationMgr = s_aSystemMigrationMgrFactory.get ();
       m_aSystemMessageMgr = new SystemMessageManager (SYSTEM_MESSAGE_XML);
 
       m_aLongRunningJobResultMgr = new LongRunningJobResultManager (LONG_RUNNING_JOB_RESULTS_XML);
@@ -100,7 +111,7 @@ public final class PhotonBasicManager extends AbstractGlobalSingleton
   }
 
   @NonNull
-  public static SystemMigrationManager getSystemMigrationMgr ()
+  public static ISystemMigrationManager getSystemMigrationMgr ()
   {
     return getInstance ().m_aSystemMigrationMgr;
   }

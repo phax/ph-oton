@@ -22,17 +22,15 @@ import java.util.function.Supplier;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.misc.ChangeNextMajorRelease;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
 import com.helger.base.state.SuccessWithValue;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.base.type.ObjectType;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsList;
@@ -47,11 +45,9 @@ import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.convert.MicroTypeConverter;
 
 @ThreadSafe
-public class SystemMigrationManager extends AbstractPhotonSimpleDAO
+@ChangeNextMajorRelease ("Rename to SystemMigrationManagerXML")
+public class SystemMigrationManager extends AbstractPhotonSimpleDAO implements ISystemMigrationManager
 {
-  public static final ObjectType OT_SYSTEM_MIGRATION_RESULT = new ObjectType ("systemmigrationresult");
-
-  private static final Logger LOGGER = LoggerFactory.getLogger (SystemMigrationManager.class);
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULTS = "systemmigrationresults";
   private static final String ELEMENT_SYSTEM_MIGRATION_RESULT = "systemmigrationresult";
 
@@ -81,8 +77,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
                                                                       .values ())
     {
       for (final SystemMigrationResult aMigrationResult : aMigrationResults)
-        eRoot.addChild (MicroTypeConverter.convertToMicroElement (aMigrationResult,
-                                                                     ELEMENT_SYSTEM_MIGRATION_RESULT));
+        eRoot.addChild (MicroTypeConverter.convertToMicroElement (aMigrationResult, ELEMENT_SYSTEM_MIGRATION_RESULT));
     }
     return aDoc;
   }
@@ -104,34 +99,10 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
       markAsChanged ();
     });
 
-    AuditHelper.onAuditCreateSuccess (OT_SYSTEM_MIGRATION_RESULT,
+    AuditHelper.onAuditCreateSuccess (SystemMigrationResult.OT,
                                       aMigrationResult.getID (),
                                       Boolean.valueOf (aMigrationResult.isSuccess ()),
                                       aMigrationResult.getErrorMessage ());
-  }
-
-  /**
-   * Mark the specified migration as success.
-   *
-   * @param sMigrationID
-   *        The migration ID to be added. May neither be <code>null</code> nor empty.
-   */
-  public void addMigrationResultSuccess (@NonNull @Nonempty final String sMigrationID)
-  {
-    addMigrationResult (SystemMigrationResult.createSuccess (sMigrationID));
-  }
-
-  /**
-   * Mark the specified migration as failed.
-   *
-   * @param sMigrationID
-   *        The migration ID to be added. May neither be <code>null</code> nor empty.
-   * @param sErrorMsg
-   *        The error message. May not be <code>null</code>.
-   */
-  public void addMigrationResultError (@NonNull @Nonempty final String sMigrationID, @NonNull final String sErrorMsg)
-  {
-    addMigrationResult (SystemMigrationResult.createFailure (sMigrationID, sErrorMsg));
   }
 
   @NonNull
@@ -184,29 +155,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   public void performMigrationIfNecessary (@NonNull @Nonempty final String sMigrationID,
                                            @NonNull final Runnable aMigrationAction)
   {
-    ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
-    ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
-
-    if (!wasMigrationExecutedSuccessfully (sMigrationID))
-    {
-      try
-      {
-        LOGGER.info ("Performing migration '" + sMigrationID + "'");
-
-        // Invoke the callback
-        aMigrationAction.run ();
-
-        LOGGER.info ("Finished performing migration '" + sMigrationID + "'");
-
-        // Always assume success
-        addMigrationResultSuccess (sMigrationID);
-      }
-      catch (final RuntimeException ex)
-      {
-        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
-        addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
-      }
-    }
+    SystemMigrationHelper.performMigrationIfNecessary (this, sMigrationID, aMigrationAction);
   }
 
   /**
@@ -220,40 +169,12 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO
   public void performMigrationIfNecessary (@NonNull @Nonempty final String sMigrationID,
                                            @NonNull final Supplier <SuccessWithValue <String>> aMigrationAction)
   {
-    ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
-    ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
-
-    if (!wasMigrationExecutedSuccessfully (sMigrationID))
-    {
-      try
-      {
-        LOGGER.info ("Performing migration '" + sMigrationID + "'");
-
-        // Invoke the callback
-        final SuccessWithValue <String> ret = aMigrationAction.get ();
-
-        LOGGER.info ("Finished performing migration '" +
-                     sMigrationID +
-                     "' with status " +
-                     (ret.isSuccess () ? "success" : "error"));
-
-        // Success or error
-        if (ret.isSuccess ())
-          addMigrationResultSuccess (sMigrationID);
-        else
-          addMigrationResultError (sMigrationID, ret.get ());
-      }
-      catch (final RuntimeException ex)
-      {
-        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
-        addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
-      }
-    }
+    SystemMigrationHelper.performMigrationIfNecessary (this, sMigrationID, aMigrationAction);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("map", m_aMap).getToString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
   }
 }

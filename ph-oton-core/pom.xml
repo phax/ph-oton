@@ -105,6 +105,10 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-security</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.photon</groupId>
+      <artifactId>ph-oton-mgrs</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>com.helger.photon</groupId>
