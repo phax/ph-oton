@@ -26,10 +26,10 @@ import com.helger.photon.core.longrun.LongRunningJobData;
 import com.helger.photon.core.longrun.LongRunningJobDataMicroTypeConverter;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.photon.core.smtp.NamedSMTPSettingsMicroTypeConverter;
-import com.helger.photon.core.sysmigration.SystemMigrationResult;
-import com.helger.photon.core.sysmigration.SystemMigrationResultMicroTypeConverter;
 import com.helger.photon.core.userdata.UserDataObject;
 import com.helger.photon.core.userdata.UserDataObjectMicroTypeConverter;
+import com.helger.photon.mgrs.sysmigration.SystemMigrationResult;
+import com.helger.photon.mgrs.sysmigration.SystemMigrationResultMicroTypeConverter;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.helger.xml.microdom.convert.IMicroTypeConverterRegistry;
 

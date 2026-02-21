@@ -28,9 +28,9 @@ import com.helger.base.lang.clazz.ClassHelper;
 import com.helger.photon.core.favorites.FavoriteManager;
 import com.helger.photon.core.longrun.LongRunningJobManager;
 import com.helger.photon.core.longrun.LongRunningJobResultManager;
-import com.helger.photon.core.sysmigration.ISystemMigrationManager;
-import com.helger.photon.core.sysmigration.SystemMigrationManager;
 import com.helger.photon.core.systemmsg.SystemMessageManager;
+import com.helger.photon.mgrs.sysmigration.ISystemMigrationManager;
+import com.helger.photon.mgrs.sysmigration.SystemMigrationManager;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 

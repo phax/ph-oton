@@ -38,9 +38,9 @@ import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.executor.DBResultRow;
 import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
 import com.helger.photon.audit.AuditHelper;
-import com.helger.photon.core.sysmigration.ISystemMigrationManager;
-import com.helger.photon.core.sysmigration.SystemMigrationHelper;
-import com.helger.photon.core.sysmigration.SystemMigrationResult;
+import com.helger.photon.mgrs.sysmigration.ISystemMigrationManager;
+import com.helger.photon.mgrs.sysmigration.SystemMigrationHelper;
+import com.helger.photon.mgrs.sysmigration.SystemMigrationResult;
 
 /**
  * A JDBC based implementation of the {@link ISystemMigrationManager} interface.

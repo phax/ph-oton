@@ -1,4 +1,4 @@
-package com.helger.photon.core.sysmigration;
+package com.helger.photon.mgrs.sysmigration;
 
 import java.util.function.Supplier;
 
