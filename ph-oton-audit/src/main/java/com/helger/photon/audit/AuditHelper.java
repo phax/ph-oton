@@ -26,7 +26,6 @@ import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.type.ObjectType;
-import com.helger.photon.audit.mock.MockCurrentUserIDProvider;
 
 /**
  * Simplify system auditing calls.<br>
@@ -42,8 +41,7 @@ public final class AuditHelper
 {
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (new MockCurrentUserIDProvider (null),
-                                                                      "!DEFAULT-AUDITOR! ");
+  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor ( () -> "dummyUserID", "!DEFAULT-AUDITOR! ");
 
   // This is the default dummy auditor that should be replaced with something
   // meaningful!
