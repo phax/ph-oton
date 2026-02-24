@@ -52,32 +52,32 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public abstract class AbstractLoginManager
 {
   /**
-   * Attribute name for the LoginInfo attribute that holds the remote address of
-   * the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the remote address of the last request.
+   * Type: String.
    */
   public static final String LOGIN_INFO_REMOTE_ADDRESS = "remote-address";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the remote host of
-   * the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the remote host of the last request.
+   * Type: String.
    */
   public static final String LOGIN_INFO_REMOTE_HOST = "remote-host";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the URI (without the
-   * query string) of the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the URI (without the query string) of the
+   * last request. Type: String.
    */
   public static final String LOGIN_INFO_REQUEST_URI = "request-uri";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the query string of
-   * the last request. Type: String.
+   * Attribute name for the LoginInfo attribute that holds the query string of the last request.
+   * Type: String.
    */
   public static final String LOGIN_INFO_QUERY_STRING = "query-string";
 
   /**
-   * Attribute name for the LoginInfo attribute that holds the number of
-   * requests in this session. Type: int.
+   * Attribute name for the LoginInfo attribute that holds the number of requests in this session.
+   * Type: int.
    *
    * @since 2.1.12
    */
@@ -86,8 +86,8 @@ public abstract class AbstractLoginManager
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLoginManager.class);
 
   /**
-   * A list of all role IDs that the user must have so that he can login! May be
-   * <code>null</code> to indicate that any valid user can login.
+   * A list of all role IDs that the user must have so that he can login! May be <code>null</code>
+   * to indicate that any valid user can login.
    */
   private ICommonsSet <String> m_aRequiredRoleIDs;
 
@@ -112,8 +112,7 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * @return The duration to wait, in case of a failed login. Never
-   *         <code>null</code>.
+   * @return The duration to wait, in case of a failed login. Never <code>null</code>.
    * @since v8.4.1
    */
   @NonNull
@@ -123,10 +122,9 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Set the duration to wait in case of a failed login. The waiting time is
-   * multiplied with the number of consecutive failed logins of a user. So for
-   * the first failed login the duration is x1, for the second consecutive
-   * failed login the duration is x2 etc.
+   * Set the duration to wait in case of a failed login. The waiting time is multiplied with the
+   * number of consecutive failed logins of a user. So for the first failed login the duration is
+   * x1, for the second consecutive failed login the duration is x2 etc.
    *
    * @param aFailedLoginWaitTime
    *        The failed login waiting time. May not be <code>null</code>.
@@ -143,8 +141,7 @@ public abstract class AbstractLoginManager
    * @param bShowLoginError
    *        If <code>true</code> an error occurred in a previous login action
    * @param aLoginResult
-   *        The login result - only relevant in case of a login error. Never
-   *        <code>null</code>.
+   *        The login result - only relevant in case of a login error. Never <code>null</code>.
    * @return Never <code>null</code>.
    */
   @OverrideOnDemand
@@ -211,8 +208,8 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Modify the passed {@link LoginInfo} object with details of the passed
-   * request scope. This method is called for every request!
+   * Modify the passed {@link LoginInfo} object with details of the passed request scope. This
+   * method is called for every request!
    *
    * @param aLoginInfo
    *        Login Info. Never <code>null</code>.
@@ -220,7 +217,7 @@ public abstract class AbstractLoginManager
    *        The current request scope.
    * @param bLoggedInInThisRequest
    *        <code>true</code> if the user just logged in with this request.
-   *        Added in 3.4.0.
+   * @since v3.4.0.
    */
   @OverrideOnDemand
   protected void modifyLoginInfo (@NonNull final LoginInfo aLoginInfo,
@@ -238,8 +235,8 @@ public abstract class AbstractLoginManager
   }
 
   /**
-   * Get the redirect URL to which the user should be redirected after a
-   * successful login. This should be an absolute URL.
+   * Get the redirect URL to which the user should be redirected after a successful login. This
+   * should be an absolute URL.
    *
    * @param aRequestScope
    *        The current request scope.
@@ -261,9 +258,8 @@ public abstract class AbstractLoginManager
    *        Request scope
    * @param aUnifiedResponse
    *        Response
-   * @return {@link EContinue#BREAK} to indicate that no user is logged in and
-   *         therefore the login screen should be shown,
-   *         {@link EContinue#CONTINUE} if a user is correctly logged in.
+   * @return {@link EContinue#BREAK} to indicate that no user is logged in and therefore the login
+   *         screen should be shown, {@link EContinue#CONTINUE} if a user is correctly logged in.
    */
   @NonNull
   public final EContinue checkUserAndShowLogin (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -293,6 +289,10 @@ public abstract class AbstractLoginManager
         aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
         if (aLoginResult.isSuccess ())
         {
+          // Prevent session fixation attack (CWE-384) by regenerating the
+          // session ID after successful authentication
+          aRequestScope.getRequest ().changeSessionId ();
+
           // Credentials are valid - implies that the user was resolved
           // correctly
           sSessionUserID = aUser.getID ();
