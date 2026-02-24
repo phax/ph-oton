@@ -65,6 +65,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.2.1 - work in progress
+* Extracted class `AbstractHCExtSelect`
+
 v10.2.0 - 2026-02-21
 * Updated to Jetty 12.1.6
 * Extracted new submodule `ph-oton-mgrs`
