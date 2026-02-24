@@ -23,7 +23,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.photon.core.form.RequestField;
 import com.helger.photon.mgrs.sysmsg.ESystemMessageType;
 
-public class HCSystemMessageTypeSelect extends HCExtSelect
+public class HCSystemMessageTypeSelect extends AbstractHCExtSelect <HCSystemMessageTypeSelect>
 {
   public HCSystemMessageTypeSelect (@NonNull final RequestField aRF, @NonNull final Locale aDisplayLocale)
   {

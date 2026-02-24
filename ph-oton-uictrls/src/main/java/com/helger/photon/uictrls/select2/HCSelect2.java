@@ -32,11 +32,11 @@ import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uicore.EUICoreJSPathProvider;
-import com.helger.photon.uicore.html.select.HCExtSelect;
+import com.helger.photon.uicore.html.select.AbstractHCExtSelect;
 import com.helger.photon.uictrls.EUICtrlsCSSPathProvider;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
-public class HCSelect2 extends HCExtSelect
+public class HCSelect2 extends AbstractHCExtSelect <HCSelect2>
 {
   public HCSelect2 (@NonNull final IHCRequestField aRF)
   {
@@ -51,8 +51,8 @@ public class HCSelect2 extends HCExtSelect
   }
 
   /**
-   * @return The invocation options to be used. May be <code>null</code> or
-   *         empty to indicate that no further options are needed.
+   * @return The invocation options to be used. May be <code>null</code> or empty to indicate that
+   *         no further options are needed.
    * @since 8.0.2
    */
   @Nullable

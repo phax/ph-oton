@@ -24,14 +24,16 @@ import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.ESalutation;
 
-public class HCSalutationSelect extends HCExtSelect
+public class HCSalutationSelect extends AbstractHCExtSelect <HCSalutationSelect>
 {
   public HCSalutationSelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
     this (aRF, aDisplayLocale, true);
   }
 
-  public HCSalutationSelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale, final boolean bAddOptionPleaseSelect)
+  public HCSalutationSelect (@NonNull final IHCRequestField aRF,
+                             @NonNull final Locale aDisplayLocale,
+                             final boolean bAddOptionPleaseSelect)
   {
     this (aRF, aDisplayLocale, bAddOptionPleaseSelect, ESalutation.values ());
   }

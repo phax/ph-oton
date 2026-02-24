@@ -31,9 +31,11 @@ import com.helger.html.request.IHCRequestField;
  *
  * @author Philip Helger
  */
-public class HCCharsetSelect extends HCExtSelect
+public class HCCharsetSelect extends AbstractHCExtSelect <HCCharsetSelect>
 {
-  public HCCharsetSelect (@NonNull final IHCRequestField aRF, final boolean bOnlyRegistered, @NonNull final Locale aDisplayLocale)
+  public HCCharsetSelect (@NonNull final IHCRequestField aRF,
+                          final boolean bOnlyRegistered,
+                          @NonNull final Locale aDisplayLocale)
   {
     this (aRF, x -> x.isRegistered () || !bOnlyRegistered, aDisplayLocale);
   }

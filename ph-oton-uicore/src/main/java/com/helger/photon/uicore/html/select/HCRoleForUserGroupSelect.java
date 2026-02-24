@@ -33,7 +33,7 @@ import com.helger.photon.security.role.IRole;
  *
  * @author Philip Helger
  */
-public class HCRoleForUserGroupSelect extends HCExtSelect
+public class HCRoleForUserGroupSelect extends AbstractHCExtSelect <HCRoleForUserGroupSelect>
 {
   public HCRoleForUserGroupSelect (@NonNull final RequestField aRF, @Nullable final Collection <String> aSelectedRoles)
   {

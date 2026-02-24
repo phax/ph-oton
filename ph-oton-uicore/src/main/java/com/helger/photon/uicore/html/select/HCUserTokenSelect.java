@@ -28,7 +28,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.user.IUserToken;
 import com.helger.text.compare.ComparatorHelper;
 
-public class HCUserTokenSelect extends HCExtSelect
+public class HCUserTokenSelect extends AbstractHCExtSelect <HCUserTokenSelect>
 {
   public HCUserTokenSelect (@NonNull final IHCRequestField aRF,
                             @NonNull final Locale aDisplayLocale,

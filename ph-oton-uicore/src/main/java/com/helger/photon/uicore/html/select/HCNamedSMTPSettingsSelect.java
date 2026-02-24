@@ -25,7 +25,7 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.photon.core.smtp.NamedSMTPSettings;
 import com.helger.smtp.settings.ISMTPSettings;
 
-public class HCNamedSMTPSettingsSelect extends HCExtSelect
+public class HCNamedSMTPSettingsSelect extends AbstractHCExtSelect <HCNamedSMTPSettingsSelect>
 {
   public HCNamedSMTPSettingsSelect (@NonNull final IHCRequestField aRF,
                                     @NonNull final List <NamedSMTPSettings> aSettings,
@@ -40,7 +40,12 @@ public class HCNamedSMTPSettingsSelect extends HCExtSelect
       if (aSMTP.hasUserName ())
         sUserName = aSMTP.getUserName () + "@";
       addOption (aCurObject.getID (),
-                 aCurObject.getName () + " (" + sUserName + aSMTP.getHostName () + (aSMTP.hasPort () ? ":" + aSMTP.getPort () : "") + ")");
+                 aCurObject.getName () +
+                                      " (" +
+                                      sUserName +
+                                      aSMTP.getHostName () +
+                                      (aSMTP.hasPort () ? ":" + aSMTP.getPort () : "") +
+                                      ")");
     }
 
     addOptionPleaseSelect (aDisplayLocale);

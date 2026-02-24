@@ -30,7 +30,7 @@ import com.helger.masterdata.currency.ECurrency;
  *
  * @author Philip Helger
  */
-public class HCCurrencySelect extends HCExtSelect
+public class HCCurrencySelect extends AbstractHCExtSelect <HCCurrencySelect>
 {
   public HCCurrencySelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {
@@ -49,7 +49,10 @@ public class HCCurrencySelect extends HCExtSelect
     // For all supported currencies
     for (final ECurrency eCurrency : aCurrencies)
     {
-      final String sDisplayText = CurrencyHelper.getCurrencySymbol (eCurrency) + " (" + eCurrency.getDisplayText (aDisplayLocale) + ')';
+      final String sDisplayText = CurrencyHelper.getCurrencySymbol (eCurrency) +
+                                  " (" +
+                                  eCurrency.getDisplayText (aDisplayLocale) +
+                                  ')';
       addOption (eCurrency.getID (), sDisplayText);
     }
   }

@@ -23,7 +23,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.person.EGender;
 
-public class HCGenderSelect extends HCExtSelect
+public class HCGenderSelect extends AbstractHCExtSelect <HCGenderSelect>
 {
   public HCGenderSelect (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {

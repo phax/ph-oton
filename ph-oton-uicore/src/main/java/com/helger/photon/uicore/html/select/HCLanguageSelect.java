@@ -28,7 +28,7 @@ import com.helger.photon.core.locale.GlobalLocaleManager;
 import com.helger.text.compare.ComparatorHelper;
 import com.helger.text.display.IDisplayTextProvider;
 
-public class HCLanguageSelect extends HCExtSelect
+public class HCLanguageSelect extends AbstractHCExtSelect <HCLanguageSelect>
 {
   public HCLanguageSelect (@NonNull final IHCRequestField aRF,
                            @NonNull final Locale aDisplayLocale,

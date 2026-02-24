@@ -27,7 +27,7 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.vat.IVATItem;
 import com.helger.masterdata.vat.VATManager;
 
-public class HCVATItemSelect extends HCExtSelect
+public class HCVATItemSelect extends AbstractHCExtSelect <HCVATItemSelect>
 {
   public HCVATItemSelect (@NonNull final IHCRequestField aRF,
                           @NonNull final Locale aCountry,

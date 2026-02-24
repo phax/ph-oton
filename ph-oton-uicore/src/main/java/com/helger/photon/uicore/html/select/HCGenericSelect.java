@@ -29,7 +29,7 @@ import com.helger.collection.helper.CollectionSort;
 import com.helger.html.request.IHCRequestField;
 import com.helger.text.display.IDisplayTextProvider;
 
-public class HCGenericSelect <T extends IHasID <String>> extends HCExtSelect
+public class HCGenericSelect <T extends IHasID <String>> extends AbstractHCExtSelect <HCGenericSelect <T>>
 {
   public HCGenericSelect (@NonNull final IHCRequestField aRF,
                           @NonNull final Collection <? extends T> aElements,

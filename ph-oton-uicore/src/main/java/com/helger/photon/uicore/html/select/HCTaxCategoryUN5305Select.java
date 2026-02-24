@@ -23,7 +23,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.tax.ETaxCategoryUN5305;
 
-public class HCTaxCategoryUN5305Select extends HCExtSelect
+public class HCTaxCategoryUN5305Select extends AbstractHCExtSelect <HCTaxCategoryUN5305Select>
 {
   public HCTaxCategoryUN5305Select (@NonNull final IHCRequestField aRF, @NonNull final Locale aDisplayLocale)
   {

@@ -21,7 +21,7 @@ import java.util.Locale;
 import com.helger.html.request.IHCRequestField;
 import com.helger.masterdata.trade.EIncoterm;
 
-public class HCIncotermSelect extends HCExtSelect
+public class HCIncotermSelect extends AbstractHCExtSelect <HCIncotermSelect>
 {
   public HCIncotermSelect (final IHCRequestField aRF, final Locale aDisplayLocale)
   {

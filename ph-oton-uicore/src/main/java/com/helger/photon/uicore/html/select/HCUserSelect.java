@@ -34,7 +34,7 @@ import com.helger.text.compare.ComparatorHelper;
  *
  * @author Philip Helger
  */
-public class HCUserSelect extends HCExtSelect
+public class HCUserSelect extends AbstractHCExtSelect <HCUserSelect>
 {
   public static final Function <? super IUser, String> DEFAULT_DISPLAY_TEXT_PROVIDER = aUser -> aUser.getDisplayName () +
                                                                                                 " (" +

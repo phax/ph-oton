@@ -36,7 +36,7 @@ import com.helger.text.locale.country.CountryCache;
  *
  * @author Philip Helger
  */
-public class HCCountrySelect extends HCExtSelect
+public class HCCountrySelect extends AbstractHCExtSelect <HCCountrySelect>
 {
   public enum EWithDeprecated
   {
