@@ -19,12 +19,14 @@ package com.helger.photon.connect.sftp;
 import java.util.Properties;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
 import com.helger.photon.connect.connection.IBaseServerConnectionSettings;
 import com.helger.photon.connect.connection.IServerConnectionSettingsKeyPair;
 import com.helger.photon.connect.connection.IServerConnectionSettingsPassword;
@@ -82,11 +84,15 @@ public final class JSchSessionFactory
   }
 
   @NonNull
-  public static Session createSession (@NonNull final IServerConnectionSettingsPassword aSettings) throws JSchException
+  public static Session createSession (@Nullable final String sKnownHostsPath,
+                                       @NonNull final IServerConnectionSettingsPassword aSettings) throws JSchException
   {
     ValueEnforcer.notNull (aSettings, "Settings");
 
     final JSch aJSch = new JSch ();
+
+    if (StringHelper.isNotEmpty (sKnownHostsPath))
+      aJSch.setKnownHosts (sKnownHostsPath);
 
     // Create session
     final Session aSession = _createSession (aJSch, aSettings);
@@ -103,11 +109,15 @@ public final class JSchSessionFactory
   }
 
   @NonNull
-  public static Session createSession (@NonNull final IServerConnectionSettingsKeyPair aSettings) throws JSchException
+  public static Session createSession (@Nullable final String sKnownHostsPath,
+                                       @NonNull final IServerConnectionSettingsKeyPair aSettings) throws JSchException
   {
     ValueEnforcer.notNull (aSettings, "Settings");
 
     final JSch aJSch = new JSch ();
+
+    if (StringHelper.isNotEmpty (sKnownHostsPath))
+      aJSch.setKnownHosts (sKnownHostsPath);
 
     // key pair
     aJSch.addIdentity (aSettings.getUserName (),

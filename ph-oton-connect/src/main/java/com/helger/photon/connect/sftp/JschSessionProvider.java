@@ -30,8 +30,8 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
 /**
- * Special JSch session provider. It differentiates between username/password
- * auth and public key auth. Based on {@link ISftpSettingsHost}.
+ * Special JSch session provider. It differentiates between username/password auth and public key
+ * auth. Based on {@link ISftpSettingsHost}.
  *
  * @author Philip Helger
  * @since 9.2.9
@@ -52,7 +52,8 @@ public class JschSessionProvider implements IJSchSessionProvider
     if (m_aSFTPSettings.hasServerPassword ())
     {
       // Password based
-      return JSchSessionFactory.createSession (new ServerConnectionSettingsPassword (m_aSFTPSettings.getServerHost (),
+      return JSchSessionFactory.createSession (m_aSFTPSettings.getKnownHostsPath (),
+                                               new ServerConnectionSettingsPassword (m_aSFTPSettings.getServerHost (),
                                                                                      m_aSFTPSettings.getServerPort (),
                                                                                      m_aSFTPSettings.getConnectionTimeoutMillis (),
                                                                                      m_aSFTPSettings.getServerUserName (),
@@ -74,7 +75,8 @@ public class JschSessionProvider implements IJSchSessionProvider
     if (aPublicKey == null)
       throw new JSchException ("Failed to read public key from '" + sKeyPairPublicKeyFile + "'");
 
-    return JSchSessionFactory.createSession (new ServerConnectionSettingsKeyPair (m_aSFTPSettings.getServerHost (),
+    return JSchSessionFactory.createSession (m_aSFTPSettings.getKnownHostsPath (),
+                                             new ServerConnectionSettingsKeyPair (m_aSFTPSettings.getServerHost (),
                                                                                   m_aSFTPSettings.getServerPort (),
                                                                                   m_aSFTPSettings.getConnectionTimeoutMillis (),
                                                                                   m_aSFTPSettings.getServerUserName (),
