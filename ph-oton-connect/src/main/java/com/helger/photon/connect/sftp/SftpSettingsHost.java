@@ -44,6 +44,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
   private final String m_sKeyPairPrivateKeyFile;
   private final String m_sKeyPairPublicKeyFile;
   private final String m_sKeyPairPassphrase;
+  private final String m_sKnownHostsPath;
   private final int m_nMaxParallelConnections;
 
   // Status vars
@@ -59,6 +60,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
           aHost.getKeyPairPrivateKeyFile (),
           aHost.getKeyPairPublicKeyFile (),
           aHost.getKeyPairPassphrase (),
+          aHost.getKnownHostsPath (),
           aHost.getMaximumParallelConnections ());
   }
 
@@ -70,6 +72,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
                            @Nullable final String sKeyPairPrivateKeyFile,
                            @Nullable final String sKeyPairPublicKeyFile,
                            @Nullable final String sKeyPairPassphrase,
+                           @Nullable final String sKnownHostsPath,
                            @Nonnegative final int nMaxParallelConnections)
   {
     ValueEnforcer.notEmpty (sServerHost, "ServerHost");
@@ -81,10 +84,11 @@ public class SftpSettingsHost implements ISftpSettingsHost
     m_nConnectionTimeoutMillis = nConnectionTimeoutMillis;
     m_sServerUserName = sServerUserName;
     m_sServerPassword = sServerPassword;
-    m_nMaxParallelConnections = nMaxParallelConnections;
     m_sKeyPairPrivateKeyFile = sKeyPairPrivateKeyFile;
     m_sKeyPairPublicKeyFile = sKeyPairPublicKeyFile;
     m_sKeyPairPassphrase = sKeyPairPassphrase;
+    m_sKnownHostsPath = sKnownHostsPath;
+    m_nMaxParallelConnections = nMaxParallelConnections;
   }
 
   @NonNull
@@ -136,6 +140,12 @@ public class SftpSettingsHost implements ISftpSettingsHost
     return m_sKeyPairPassphrase;
   }
 
+  @Nullable
+  public String getKnownHostsPath ()
+  {
+    return m_sKnownHostsPath;
+  }
+
   @Nonnegative
   public int getMaximumParallelConnections ()
   {
@@ -170,6 +180,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
                                        .appendIfNotNull ("KeyPairPrivateKeyFile", m_sKeyPairPrivateKeyFile)
                                        .appendIfNotNull ("KeyPairPublicKeyFile", m_sKeyPairPublicKeyFile)
                                        .appendPassword ("KeyPairPassphrase")
+                                       .appendIfNotNull ("KnownHostsPath", m_sKnownHostsPath)
                                        .append ("MaxParallelConnections", m_nMaxParallelConnections)
                                        .getToString ();
   }
@@ -196,6 +207,8 @@ public class SftpSettingsHost implements ISftpSettingsHost
     final String sKeyPairPublicKeyFile = aConfig.getAsString (sConfigPrefix + ".keypair.publickeypath");
     final String sKeyPairPassphrase = aConfig.getAsString (sConfigPrefix + ".keypair.passphrase");
 
+    final String sKnownHostsPath = aConfig.getAsString (sConfigPrefix + ".knownhostspath");
+
     final int nMaxParallelConnections = aConfig.getAsInt (sConfigPrefix + ".maxconnections",
                                                           ISftpSettingsHost.DEFAULT_MAX_CONNECTIONS);
 
@@ -207,6 +220,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
                                  sKeyPairPrivateKeyFile,
                                  sKeyPairPublicKeyFile,
                                  sKeyPairPassphrase,
+                                 sKnownHostsPath,
                                  nMaxParallelConnections);
   }
 }

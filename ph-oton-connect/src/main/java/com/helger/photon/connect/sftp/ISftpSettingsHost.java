@@ -48,8 +48,8 @@ public interface ISftpSettingsHost extends IHasDisplayName
   String getServerHost ();
 
   /**
-   * @return The network port number to use. Must be &gt; 0. The default value
-   *         should be {@link #DEFAULT_PORT}.
+   * @return The network port number to use. Must be &gt; 0. The default value should be
+   *         {@link #DEFAULT_PORT}.
    */
   @Nonnegative
   int getServerPort ();
@@ -61,8 +61,7 @@ public interface ISftpSettingsHost extends IHasDisplayName
   int getConnectionTimeoutMillis ();
 
   /**
-   * @return The user name for connecting to the server. May be
-   *         <code>null</code>.
+   * @return The user name for connecting to the server. May be <code>null</code>.
    */
   @Nullable
   String getServerUserName ();
@@ -76,15 +75,13 @@ public interface ISftpSettingsHost extends IHasDisplayName
   }
 
   /**
-   * @return The plain password used to connect to the server. May be
-   *         <code>null</code>.
+   * @return The plain password used to connect to the server. May be <code>null</code>.
    */
   @Nullable
   String getServerPassword ();
 
   /**
-   * @return <code>true</code> if a password is used, <code>false</code> if
-   *         key-pairs are used
+   * @return <code>true</code> if a password is used, <code>false</code> if key-pairs are used
    */
   default boolean hasServerPassword ()
   {
@@ -104,16 +101,22 @@ public interface ISftpSettingsHost extends IHasDisplayName
   String getKeyPairPublicKeyFile ();
 
   /**
-   * @return The pass phrase used to encode the PPK key. You should only use
-   *         ASCII characters at the moment because the encoding of the pass
-   *         phrase is unclear
+   * @return The pass phrase used to encode the PPK key. You should only use ASCII characters at the
+   *         moment because the encoding of the pass phrase is unclear
    */
   @Nullable
   String getKeyPairPassphrase ();
 
   /**
-   * @return The maximum number of parallel connections to this server. Must be
-   *         &gt; 0.
+   * @return The path to the SSH known_hosts file for host key verification. May be
+   *         <code>null</code> if host key checking is not required.
+   * @since 10.2.1
+   */
+  @Nullable
+  String getKnownHostsPath ();
+
+  /**
+   * @return The maximum number of parallel connections to this server. Must be &gt; 0.
    */
   @Nonnegative
   int getMaximumParallelConnections ();
