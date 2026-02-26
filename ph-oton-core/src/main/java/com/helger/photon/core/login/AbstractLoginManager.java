@@ -33,6 +33,7 @@ import com.helger.base.state.EContinue;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
+import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.security.login.ELoginResult;
@@ -289,14 +290,17 @@ public abstract class AbstractLoginManager
         aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
         if (aLoginResult.isSuccess ())
         {
-          // Prevent session fixation attack (CWE-384) by regenerating the
-          // session ID after successful authentication
-          aRequestScope.getRequest ().changeSessionId ();
-
           // Credentials are valid - implies that the user was resolved
           // correctly
           sSessionUserID = aUser.getID ();
           bLoggedInInThisRequest = true;
+
+          // Prevent session fixation attack (CWE-384) by regenerating the
+          // session ID after successful authentication
+          aRequestScope.getRequest ().changeSessionId ();
+
+          // Update CSRF nonce in the same go
+          CSRFSessionManager.getInstance ().generateNewNonce ();
         }
         else
         {
