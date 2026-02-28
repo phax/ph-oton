@@ -69,6 +69,7 @@ v10.2.1 - work in progress
 * Extracted class `AbstractHCExtSelect`
 * Change HTTP session ID after successful login. See [#28](https://github.com/phax/ph-oton/issues/28) - thx @andreasa-winenet
 * Added `ISftpSettingsHost.getKnownHostsPath ()`
+* Added class `SftpMaxParallelRunner`
 
 v10.2.0 - 2026-02-21
 * Updated to Jetty 12.1.6
