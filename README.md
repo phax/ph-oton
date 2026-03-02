@@ -65,7 +65,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.2.1 - work in progress
+v10.2.1 - 2026-03-02
 * Extracted class `AbstractHCExtSelect`
 * Change HTTP session ID after successful login. See [#28](https://github.com/phax/ph-oton/issues/28) - thx @andreasa-winenet
 * Added `ISftpSettingsHost.getKnownHostsPath ()`
