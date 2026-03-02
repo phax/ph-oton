@@ -41,9 +41,13 @@ import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.scope.mgr.ScopeSessionManager;
 import com.helger.security.authentication.credentials.ICredentialValidationResult;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.web.scope.ISessionWebScope;
+import com.helger.web.scope.mgr.WebScopeManager;
+import com.helger.web.scope.mgr.WebScopeSessionManager;
 
 /**
  * Handle the application login process. This class requires a separate UI.
@@ -297,7 +301,17 @@ public abstract class AbstractLoginManager
 
           // Prevent session fixation attack (CWE-384) by regenerating the
           // session ID after successful authentication
+          final String sOldSessionID = aRequestScope.getSessionID ();
           aRequestScope.getRequest ().changeSessionId ();
+
+          // Important to copy objects from session to new session as well
+          final ISessionWebScope aOldSession = WebScopeSessionManager.getSessionWebScopeOfID (sOldSessionID);
+          final ISessionWebScope aNewSession = WebScopeManager.onSessionBegin (aRequestScope.getSession (false));
+          aNewSession.attrs ().putAll (aOldSession.attrs ());
+          // Remove all to avoid destroying contained managers
+          aOldSession.attrs ().removeAll ();
+          // Gracefully remove the old session
+          ScopeSessionManager.getInstance ().onScopeEnd (aOldSession);
 
           // Update CSRF nonce in the same go
           CSRFSessionManager.getInstance ().generateNewNonce ();
