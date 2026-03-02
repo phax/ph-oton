@@ -65,6 +65,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.2.2 - 2026-03-02
+* Fixed a regression on login, that killed the web-scope management
+
 v10.2.1 - 2026-03-02
 * Extracted class `AbstractHCExtSelect`
 * Change HTTP session ID after successful login. See [#28](https://github.com/phax/ph-oton/issues/28) - thx @andreasa-winenet
