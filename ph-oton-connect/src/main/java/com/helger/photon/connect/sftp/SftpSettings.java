@@ -35,6 +35,13 @@ public class SftpSettings extends SftpSettingsHost implements ISftpSettings
   private final String m_sServerDirUpload;
   private final String m_sServerDirDownload;
 
+  protected SftpSettings (@NonNull final ISftpSettings aSettings)
+  {
+    super (aSettings);
+    m_sServerDirUpload = aSettings.getServerDirectoryUpload ();
+    m_sServerDirDownload = aSettings.getServerDirectoryDownload ();
+  }
+
   protected SftpSettings (@NonNull final ISftpSettingsHost aHost,
                           @Nullable final String sServerDirUpload,
                           @Nullable final String sServerDirDownload)
