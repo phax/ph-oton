@@ -61,4 +61,17 @@ public final class EHTMLEntityTest
     assertEquals ("p&amp;h", EHTMLEntity.htmlEscape ("p&h"));
     assertEquals ("&auml;&amp;&ouml;", EHTMLEntity.htmlEscape ("ä&ö"));
   }
+
+  @Test
+  public void testHtmlUnescape ()
+  {
+    assertNull (EHTMLEntity.htmlUnescape (null));
+    assertEquals ("", EHTMLEntity.htmlUnescape (""));
+    assertEquals ("abc", EHTMLEntity.htmlUnescape ("abc"));
+    assertEquals ("abcäöü", EHTMLEntity.htmlUnescape ("abc&auml;&ouml;&uuml;"));
+    assertEquals ("äöüäöü", EHTMLEntity.htmlUnescape ("&auml;&ouml;&uuml;&auml;&ouml;&uuml;"));
+    assertEquals ("äöüÄÖÜ", EHTMLEntity.htmlUnescape ("&auml;&ouml;&uuml;&Auml;&Ouml;&Uuml;"));
+    assertEquals ("p&h", EHTMLEntity.htmlUnescape ("p&amp;h"));
+    assertEquals ("ä&ö", EHTMLEntity.htmlUnescape ("&auml;&amp;&ouml;"));
+  }
 }
