@@ -53,7 +53,7 @@ public final class HTMLEntityResolver implements EntityResolver
     if (m_aResolveMap.containsKey (sPublicID))
       throw new IllegalArgumentException ("Passed public id '" + sPublicID + "' is already contained!");
 
-    final InputStream aIS = ClassPathResource.getInputStream (sFilePath);
+    final InputStream aIS = ClassPathResource.getInputStream (sFilePath, HTMLEntityResolver.class.getClassLoader ());
     if (aIS == null)
       throw new IllegalArgumentException ("The passed resource " + sFilePath + " does not exist!");
 
