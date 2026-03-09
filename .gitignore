@@ -1,4 +1,5 @@
-.classpath 
+.classpath
+.DS_Store 
 .factorypath
 .pmd
 .project 
