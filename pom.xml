@@ -71,7 +71,7 @@
     <commons-compress.version>1.28.0</commons-compress.version>
     <log4j.version>2.25.3</log4j.version>
     <jetty.version>12.1.7</jetty.version>
-    <ph-commons.version>12.1.4</ph-commons.version>
+    <ph-commons.version>12.1.5</ph-commons.version>
     <ph-db.version>8.1.2</ph-db.version>
     <ph-poi.version>7.1.0</ph-poi.version>
   </properties>
@@ -140,7 +140,7 @@
       <dependency>
         <groupId>com.helger.web</groupId>
         <artifactId>ph-web-parent-pom</artifactId>
-        <version>11.2.3</version>
+        <version>11.2.4</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
