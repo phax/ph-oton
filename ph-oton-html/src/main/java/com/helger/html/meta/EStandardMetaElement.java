@@ -34,22 +34,29 @@ public enum EStandardMetaElement implements IMetaElementDeclaration
 {
   // Source: http://vancouver-webpages.com/META/metatags.detail.html
   CONTENT_TYPE (CHttpHeader.CONTENT_TYPE, true),
-  CONTENT_SCRIPT_TYPE (CHttpHeader.CONTENT_SCRIPT_TYPE, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  CONTENT_SCRIPT_TYPE(CHttpHeader.CONTENT_SCRIPT_TYPE, true),
   CONTENT_SECURITY_POLICY (CHttpHeader.CONTENT_SECURITY_POLICY, true),
-  CONTENT_STYLE_TYPE (CHttpHeader.CONTENT_STYLE_TYPE, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  CONTENT_STYLE_TYPE(CHttpHeader.CONTENT_STYLE_TYPE, true),
   CONTENT_DISPOSITION (CHttpHeader.CONTENT_DISPOSITION, true),
   EXPIRES (CHttpHeader.EXPIRES, true),
-  PRAGMA (CHttpHeader.PRAGMA, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  PRAGMA(CHttpHeader.PRAGMA, true),
   DEFAULT_STYLE (CHttpHeader.DEFAULT_STYLE, true),
   CONTENT_LANGUAGE (CHttpHeader.CONTENT_LANGUAGE, true),
   REFRESH (CHttpHeader.REFRESH, true),
-  WINDOW_TARGET (CHttpHeader.WINDOW_TARGET, true),
-  EXT_CACHE (CHttpHeader.EXT_CACHE, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  WINDOW_TARGET(CHttpHeader.WINDOW_TARGET, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  EXT_CACHE(CHttpHeader.EXT_CACHE, true),
   SET_COOKIE (CHttpHeader.SET_COOKIE, true),
-  PICS_LABEL (CHttpHeader.PICS_LABEL, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  PICS_LABEL(CHttpHeader.PICS_LABEL, true),
   CACHE_CONTROL (CHttpHeader.CACHE_CONTROL, true),
   VARY (CHttpHeader.VARY, true),
-  X_UA_COMPATIBLE (CHttpHeader.X_UA_COMPATIBLE, true),
+  @Deprecated (forRemoval = false, since = "10.2.3")
+  X_UA_COMPATIBLE(CHttpHeader.X_UA_COMPATIBLE, true),
   // Non HTTP equiv:
   DESCRIPTION ("Description", false),
   KEYWORDS ("Keywords", false),
