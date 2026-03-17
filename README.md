@@ -1,8 +1,8 @@
 # ph-oton
 
 <!-- ph-badge-start -->
-[![Maven Central](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)](https://img.shields.io/maven-central/v/com.helger.photon/ph-oton-parent-pom)
-[![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-api/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-api)
+[![Sonatype Central](https://maven-badges.sml.io/sonatype-central/com.helger.photon/ph-oton-parent-pom/badge.svg)](https://maven-badges.sml.io/sonatype-central/com.helger.photon/ph-oton-parent-pom/)
+[![javadoc](https://javadoc.io/badge2/com.helger.photon/ph-oton-html/javadoc.svg)](https://javadoc.io/doc/com.helger.photon/ph-oton-html)
 <!-- ph-badge-end -->
 
 This set of Java libraries forms a package to build Java web applications.
