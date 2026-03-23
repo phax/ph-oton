@@ -67,7 +67,7 @@
     <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
     <m2e.jpa.activation>false</m2e.jpa.activation>
     <m2e.jsf.activation>false</m2e.jsf.activation>
-    <commons-net.version>3.12.0</commons-net.version>
+    <commons-net.version>3.13.0</commons-net.version>
     <commons-compress.version>1.28.0</commons-compress.version>
     <log4j.version>2.25.3</log4j.version>
     <jetty.version>12.1.7</jetty.version>
