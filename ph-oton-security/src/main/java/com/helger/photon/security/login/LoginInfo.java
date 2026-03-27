@@ -52,8 +52,11 @@ public final class LoginInfo implements IHasID <String>
 
   public LoginInfo (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)
   {
-    m_aUser = ValueEnforcer.notNull (aUser, "User");
-    m_aSessionScope = ValueEnforcer.notNull (aSessionScope, "SessionScope");
+    ValueEnforcer.notNull (aUser, "User");
+    ValueEnforcer.notNull (aSessionScope, "SessionScope");
+
+    m_aUser = aUser;
+    m_aSessionScope = aSessionScope;
     m_aLoginDT = PDTFactory.getCurrentLocalDateTime ();
     m_aLastAccessDT = m_aLoginDT;
   }
@@ -68,8 +71,7 @@ public final class LoginInfo implements IHasID <String>
   }
 
   /**
-   * @return The session scope to which this login info belongs. Never
-   *         <code>null</code>.
+   * @return The session scope to which this login info belongs. Never <code>null</code>.
    */
   @NonNull
   public ISessionScope getSessionScope ()
@@ -78,8 +80,8 @@ public final class LoginInfo implements IHasID <String>
   }
 
   /**
-   * @return The ID of the user to which this login info belongs. Neither
-   *         <code>null</code> nor empty.
+   * @return The ID of the user to which this login info belongs. Neither <code>null</code> nor
+   *         empty.
    */
   @NonNull
   @Nonempty
@@ -122,8 +124,8 @@ public final class LoginInfo implements IHasID <String>
   }
 
   /**
-   * @return The date and time when the user logged out. Is <code>null</code>
-   *         when the user is still logged in :)
+   * @return The date and time when the user logged out. Is <code>null</code> when the user is still
+   *         logged in :)
    */
   @Nullable
   public LocalDateTime getLogoutDT ()
@@ -140,8 +142,7 @@ public final class LoginInfo implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this LoginInfo refers to an already logged out
-   *         user.
+   * @return <code>true</code> if this LoginInfo refers to an already logged out user.
    */
   public boolean isLogout ()
   {
