@@ -70,7 +70,7 @@
     <log4j.version>2.25.4</log4j.version>
     
     <ph-commons.version>12.2.0</ph-commons.version>
-    <ph-db.version>8.2.0</ph-db.version>
+    <ph-db.version>8.2.1</ph-db.version>
     <ph-poi.version>7.1.0</ph-poi.version>
   </properties>
 
