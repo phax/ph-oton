@@ -179,7 +179,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     @Override
     public String toString ()
     {
-      return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).getToString ();
+      return ToStringGenerator.getDerived (super.toString ()).append ("UserID", m_sUserID).getToString ();
     }
   }
 
@@ -414,24 +414,21 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       if (m_aLoggedInUsers.containsKey (sUserID))
       {
         // The user is already logged in
-        if (isLogoutAlreadyLoggedInUser ())
-        {
-          // Explicitly log out
-          logoutUser (sUserID);
-
-          // Just a short check
-          if (m_aLoggedInUsers.containsKey (sUserID))
-            throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
-
-          AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
-          bLoggedOutUser = true;
-        }
-        else
+        if (!isLogoutAlreadyLoggedInUser ())
         {
           // Error: user already logged in
           AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
           return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
         }
+        // Explicitly log out
+        logoutUser (sUserID);
+
+        // Just a short check
+        if (m_aLoggedInUsers.containsKey (sUserID))
+          throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
+
+        AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
+        bLoggedOutUser = true;
       }
       // Update user in session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
@@ -463,6 +460,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
 
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
+  }
+
+  public void onSessionChangeAfterLogin (@NonNull final ISessionWebScope aOldSession,
+                                         @NonNull final ISessionWebScope aNewSession)
+  {
+    // TODO
   }
 
   /**
@@ -628,10 +631,11 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("loggedInUsers", m_aLoggedInUsers)
-                            .append ("userLoginCallbacks", m_aUserLoginCallbacks)
-                            .append ("userLogoutCallbacks", m_aUserLogoutCallbacks)
-                            .append ("logoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("LoggedInUsers", m_aLoggedInUsers)
+                            .append ("UserLoginCallbacks", m_aUserLoginCallbacks)
+                            .append ("UserLogoutCallbacks", m_aUserLogoutCallbacks)
+                            .append ("LogoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("AnonymousLogging", m_bAnonymousLogging)
                             .getToString ();
   }
 }
