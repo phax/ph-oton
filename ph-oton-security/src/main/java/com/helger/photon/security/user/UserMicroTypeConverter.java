@@ -27,7 +27,7 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringParser;
 import com.helger.photon.security.object.AbstractBusinessObjectMicroTypeConverter;
 import com.helger.security.password.hash.PasswordHash;
-import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_1000_48;
+import com.helger.security.password.hash.PasswordHashCreatorPBKDF2_SHA256_100000_48;
 import com.helger.security.password.salt.IPasswordSalt;
 import com.helger.security.password.salt.PasswordSalt;
 import com.helger.text.locale.LocaleCache;
@@ -95,7 +95,7 @@ public final class UserMicroTypeConverter extends AbstractBusinessObjectMicroTyp
     if (sPasswordHashAlgorithm == null)
     {
       // migration to Default algorithm
-      sPasswordHashAlgorithm = PasswordHashCreatorPBKDF2_SHA256_1000_48.ALGORITHM;
+      sPasswordHashAlgorithm = PasswordHashCreatorPBKDF2_SHA256_100000_48.ALGORITHM;
     }
     final String sSalt = ePasswordHash.getAttributeValue (ATTR_SALT);
     final IPasswordSalt aSalt = PasswordSalt.createFromStringMaybe (sSalt);
