@@ -25,12 +25,11 @@
     <version>10.2.3-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-jquery</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>ph-oton-jquery</name>
   <description>Java library encapsulate the dynamic creation of JQuery based JS</description>
   <url>https://github.com/phax/ph-oton/ph-oton-jquery</url>
   <inceptionYear>2014</inceptionYear>
-  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -38,12 +37,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
   <organization>
     <name>Philip Helger</name>
     <url>https://www.helger.com</url>
   </organization>
-  
   <developers>
     <developer>
       <id>philip</id>
@@ -52,7 +49,6 @@
       <url>https://www.helger.com</url>
     </developer>
   </developers>
-  
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
@@ -70,14 +66,12 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-jscode</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
   <build>
     <pluginManagement>
       <plugins>
@@ -99,21 +93,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Automatic-Module-Name>com.helger.photon.html.jquery</Automatic-Module-Name>
-            <Export-Package>com.helger.html.jquery.*</Export-Package>
-            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.html.hc.config.IHCSettingsProviderSPI</Provide-Capability>
-          </instructions>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>

@@ -25,7 +25,7 @@
     <version>10.2.3-SNAPSHOT</version>
   </parent>
   <artifactId>ph-oton-core</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>ph-oton-core</name>
   <description>ph-oton core</description>
   <url>https://github.com/phax/ph-oton/ph-oton-core</url>
@@ -37,12 +37,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
   <organization>
     <name>Philip Helger</name>
     <url>https://www.helger.com</url>
   </organization>
-  
   <developers>
     <developer>
       <id>philip</id>
@@ -51,7 +49,6 @@
       <url>https://www.helger.com</url>
     </developer>
   </developers>
-  
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
@@ -109,7 +106,6 @@
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-mgrs</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-atom</artifactId>
@@ -120,14 +116,12 @@
       <artifactId>junit</artifactId>
       <optional>true</optional>
     </dependency>
-    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
   <build>
     <resources>
       <resource>
@@ -145,24 +139,5 @@
         </excludes>
       </resource>
     </resources>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Automatic-Module-Name>com.helger.photon.core</Automatic-Module-Name>
-            <Export-Package>com.helger.photon.core.*</Export-Package>
-            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.xml.microdom.convert.IMicroTypeConverterRegistrarSPI</Provide-Capability>
-            <!-- The latter one has precedence -->
-            <Include-Resource>{maven-resources},ph-oton-version.properties=target/classes/ph-oton-version.properties</Include-Resource>
-          </instructions>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
