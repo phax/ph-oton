@@ -67,6 +67,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 v10.2.3 - work in progress
 * Updated to Jetty 12.1.7
+* Removed OSGI bundling
 
 v10.2.2 - 2026-03-02
 * Fixed a regression on login, that killed the web-scope management
