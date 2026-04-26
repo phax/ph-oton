@@ -126,27 +126,6 @@ public class PasswordHashCreatorManager
   }
 
   /**
-   * Set the default password hash creator algorithm. A matching {@link IPasswordHashCreator} object
-   * must be registered previously using {@link #registerPasswordHashCreator(IPasswordHashCreator)}.
-   *
-   * @param sAlgorithm
-   *        The name of the algorithm to use as the default. May neither be <code>null</code> nor
-   *        empty.
-   */
-  public void setDefaultPasswordHashCreatorAlgorithm (@NonNull @Nonempty final String sAlgorithm)
-  {
-    ValueEnforcer.notEmpty (sAlgorithm, "Algorithm");
-
-    m_aRWLock.writeLocked ( () -> {
-      final IPasswordHashCreator aPHC = m_aPasswordHashCreators.get (sAlgorithm);
-      if (aPHC == null)
-        throw new IllegalArgumentException ("No PasswordHashCreator registered for algorithm '" + sAlgorithm + "'");
-      m_aDefaultPasswordHashCreator = aPHC;
-    });
-    LOGGER.info ("Default PasswordHashCreator algorithm set to '" + sAlgorithm + "'");
-  }
-
-  /**
    * @return The default {@link IPasswordHashCreator} algorithm to use. Never <code>null</code>.
    */
   @NonNull
@@ -165,6 +144,27 @@ public class PasswordHashCreatorManager
   public String getDefaultPasswordHashCreatorAlgorithmName ()
   {
     return getDefaultPasswordHashCreator ().getAlgorithmName ();
+  }
+
+  /**
+   * Set the default password hash creator algorithm. A matching {@link IPasswordHashCreator} object
+   * must be registered previously using {@link #registerPasswordHashCreator(IPasswordHashCreator)}.
+   *
+   * @param sAlgorithm
+   *        The name of the algorithm to use as the default. May neither be <code>null</code> nor
+   *        empty.
+   */
+  public void setDefaultPasswordHashCreatorAlgorithm (@NonNull @Nonempty final String sAlgorithm)
+  {
+    ValueEnforcer.notEmpty (sAlgorithm, "Algorithm");
+
+    m_aRWLock.writeLocked ( () -> {
+      final IPasswordHashCreator aPHC = m_aPasswordHashCreators.get (sAlgorithm);
+      if (aPHC == null)
+        throw new IllegalArgumentException ("No PasswordHashCreator registered for algorithm '" + sAlgorithm + "'");
+      m_aDefaultPasswordHashCreator = aPHC;
+    });
+    LOGGER.info ("Default PasswordHashCreator algorithm set to '" + sAlgorithm + "'");
   }
 
   /**

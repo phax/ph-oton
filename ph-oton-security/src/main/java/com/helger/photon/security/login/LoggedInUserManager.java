@@ -406,6 +406,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                    sDefaultPasswordHashAlgorithmName +
                    "'");
     }
+
     boolean bLoggedOutUser = false;
     LoginInfo aInfo;
     m_aRWLock.writeLock ().lock ();
@@ -414,24 +415,21 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       if (m_aLoggedInUsers.containsKey (sUserID))
       {
         // The user is already logged in
-        if (isLogoutAlreadyLoggedInUser ())
-        {
-          // Explicitly log out
-          logoutUser (sUserID);
-
-          // Just a short check
-          if (m_aLoggedInUsers.containsKey (sUserID))
-            throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
-
-          AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
-          bLoggedOutUser = true;
-        }
-        else
+        if (!isLogoutAlreadyLoggedInUser ())
         {
           // Error: user already logged in
           AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
           return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
         }
+        // Explicitly log out
+        logoutUser (sUserID);
+
+        // Just a short check
+        if (m_aLoggedInUsers.containsKey (sUserID))
+          throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
+
+        AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
+        bLoggedOutUser = true;
       }
       // Update user in session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();

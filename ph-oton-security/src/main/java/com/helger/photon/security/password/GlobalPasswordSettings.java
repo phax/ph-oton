@@ -45,7 +45,7 @@ import com.helger.security.password.salt.IPasswordSalt;
  * @author Philip Helger
  */
 @ThreadSafe
-@SuppressWarnings ("deprecation")
+@SuppressWarnings ({ "deprecation", "removal" })
 public final class GlobalPasswordSettings
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (GlobalPasswordSettings.class);
