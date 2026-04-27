@@ -26,7 +26,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.type.ObjectType;
 import com.helger.datetime.helper.PDTFactory;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
 
@@ -87,7 +87,7 @@ public final class StubObject extends AbstractBusinessObject
   @NonNull
   public static StubObject createForCurrentUser ()
   {
-    return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID ());
+    return createForUser (GlobalUserIDProvider.getCurrentUserID ());
   }
 
   /**
@@ -100,7 +100,7 @@ public final class StubObject extends AbstractBusinessObject
   @NonNull
   public static StubObject createForCurrentUser (@Nullable final Map <String, String> aCustomAttrs)
   {
-    return createForUser (LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
+    return createForUser (GlobalUserIDProvider.getCurrentUserID (), aCustomAttrs);
   }
 
   /**
@@ -142,7 +142,7 @@ public final class StubObject extends AbstractBusinessObject
   @NonNull
   public static StubObject createForCurrentUserAndID (@NonNull @Nonempty final String sID)
   {
-    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), null);
+    return new StubObject (sID, GlobalUserIDProvider.getCurrentUserID (), null);
   }
 
   /**
@@ -158,6 +158,6 @@ public final class StubObject extends AbstractBusinessObject
   public static StubObject createForCurrentUserAndID (@NonNull @Nonempty final String sID,
                                                       @Nullable final Map <String, String> aCustomAttrs)
   {
-    return new StubObject (sID, LoggedInUserManager.getInstance ().getCurrentUserID (), aCustomAttrs);
+    return new StubObject (sID, GlobalUserIDProvider.getCurrentUserID (), aCustomAttrs);
   }
 }

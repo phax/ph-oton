@@ -82,7 +82,7 @@ public final class LoggedInUserStorage
   @NonNull
   public static File getUserdataDirectory ()
   {
-    final String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
+    final String sCurrentUserID = GlobalUserIDProvider.getCurrentUserID ();
     return getUserdataDirectory (sCurrentUserID);
   }
 

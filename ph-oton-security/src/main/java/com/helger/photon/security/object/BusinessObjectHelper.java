@@ -23,7 +23,7 @@ import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
 import com.helger.datetime.helper.PDTFactory;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.tenancy.AbstractBusinessObject;
 import com.helger.tenancy.IBusinessObject;
@@ -43,7 +43,7 @@ public final class BusinessObjectHelper
   @Nonempty
   public static String getUserIDOrFallback ()
   {
-    String sCurrentUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
+    String sCurrentUserID = GlobalUserIDProvider.getCurrentUserID ();
     if (StringHelper.isEmpty (sCurrentUserID))
     {
       // No user is logged in- use the internal guest user ID

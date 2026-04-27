@@ -37,7 +37,7 @@ import com.helger.photon.core.execcontext.ISimpleWebExecutionContext;
 import com.helger.photon.core.interror.uihandler.IUIInternalErrorHandler;
 import com.helger.photon.core.interror.uihandler.UIInternalErrorHandler;
 import com.helger.photon.io.WebFileIO;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.smtp.data.EmailAttachmentList;
 import com.helger.smtp.data.IEmailAttachment;
 import com.helger.smtp.data.IEmailAttachmentList;
@@ -106,7 +106,7 @@ public class InternalErrorBuilder
     // User ID
     try
     {
-      addCustomData ("User", LoggedInUserManager.getInstance ().getCurrentUserID ());
+      addCustomData ("User", GlobalUserIDProvider.getCurrentUserID ());
     }
     catch (final Exception ex2)
     {

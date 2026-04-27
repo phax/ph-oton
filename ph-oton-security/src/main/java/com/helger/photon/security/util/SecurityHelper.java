@@ -33,7 +33,7 @@ import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.security.ESecurityUIText;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.role.IRole;
 import com.helger.photon.security.role.IRoleManager;
@@ -58,7 +58,7 @@ public final class SecurityHelper
 
   public static boolean isCurrentUserAssignedToUserGroup (@Nullable final String sUserGroupID)
   {
-    final String sUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
+    final String sUserID = GlobalUserIDProvider.getCurrentUserID ();
     if (sUserID == null)
     {
       // No user logged in
@@ -69,7 +69,7 @@ public final class SecurityHelper
 
   public static boolean hasCurrentUserRole (@Nullable final String sRoleID)
   {
-    final String sUserID = LoggedInUserManager.getInstance ().getCurrentUserID ();
+    final String sUserID = GlobalUserIDProvider.getCurrentUserID ();
     if (sUserID == null)
     {
       // No user logged in
