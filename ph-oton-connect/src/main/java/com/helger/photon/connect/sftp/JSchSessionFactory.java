@@ -16,6 +16,7 @@
  */
 package com.helger.photon.connect.sftp;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import org.jspecify.annotations.NonNull;
@@ -96,7 +97,7 @@ public final class JSchSessionFactory
 
     // Create session
     final Session aSession = _createSession (aJSch, aSettings);
-    aSession.setPassword (aSettings.getPassword ());
+    aSession.setPassword (aSettings.getPassword ().getBytes (StandardCharsets.UTF_8));
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Created new session " + _debugSession (aSession));

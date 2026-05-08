@@ -16,6 +16,7 @@
  */
 package com.helger.photon.connect.generic.sftp;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import org.jspecify.annotations.NonNull;
@@ -92,7 +93,8 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
       final JSch jsch = new JSch ();
 
       aSession = jsch.getSession (aUPC.getUserName (), m_sHostname, m_nPort);
-      aSession.setPassword (aUPC.getPassword ());
+      if (aUPC.getPassword () != null)
+        aSession.setPassword (aUPC.getPassword ().getBytes (StandardCharsets.UTF_8));
 
       /*
        * Setup Strict HostKeyChecking to no so we don't get the unknown host key exception
