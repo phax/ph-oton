@@ -28,7 +28,7 @@ public final class PhotonAppConfig
   public static final IThirdPartyModule LOG4J2 = new ThirdPartyModule ("Apache Log4j 2",
                                                                        "Apache",
                                                                        ELicense.APACHE2,
-                                                                       new Version (2, 25, 3),
+                                                                       new Version (2, 26, 0),
                                                                        "https://logging.apache.org/log4j/2.x/");
 
   private PhotonAppConfig ()

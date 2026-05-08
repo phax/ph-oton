@@ -66,7 +66,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 v10.2.3 - work in progress
-* Updated to Jetty 12.1.8
+* Updated to Jetty 12.1.9
 * Updated the default security algorithm to a new PBKDF version
 * Removed OSGI bundling
 
