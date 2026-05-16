@@ -310,6 +310,7 @@ public abstract class AbstractLoginManager
           aNewSession.attrs ().putAll (aOldSession.attrs ());
           // Remove all to avoid destroying contained managers
           aOldSession.attrs ().removeAll ();
+          aLoggedInUserManager.onSessionChangeAfterLogin (aOldSession, aNewSession);
           // Gracefully remove the old session
           ScopeSessionManager.getInstance ().onScopeEnd (aOldSession);
 

@@ -179,7 +179,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     @Override
     public String toString ()
     {
-      return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).getToString ();
+      return ToStringGenerator.getDerived (super.toString ()).append ("UserID", m_sUserID).getToString ();
     }
   }
 
@@ -463,6 +463,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
   }
 
+  public void onSessionChangeAfterLogin (@NonNull final ISessionWebScope aOldSession,
+                                         @NonNull final ISessionWebScope aNewSession)
+  {
+    // TODO
+  }
+
   /**
    * Manually log out the specified user
    *
@@ -626,10 +632,11 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("loggedInUsers", m_aLoggedInUsers)
-                            .append ("userLoginCallbacks", m_aUserLoginCallbacks)
-                            .append ("userLogoutCallbacks", m_aUserLogoutCallbacks)
-                            .append ("logoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("LoggedInUsers", m_aLoggedInUsers)
+                            .append ("UserLoginCallbacks", m_aUserLoginCallbacks)
+                            .append ("UserLogoutCallbacks", m_aUserLogoutCallbacks)
+                            .append ("LogoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("AnonymousLogging", m_bAnonymousLogging)
                             .getToString ();
   }
 }
