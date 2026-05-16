@@ -463,10 +463,29 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
   }
 
+  /**
+   * Invoked from the login flow after the HTTP session ID has been regenerated to mitigate session
+   * fixation. Any {@link LoginInfo} that still references the previous session scope is updated to
+   * point at the new one, so that subsequent {@link #logoutUser(String)} calls find the
+   * {@link InternalSessionUserHolder} in the correct scope.
+   *
+   * @param aOldSession
+   *        The previous session scope. Never <code>null</code>.
+   * @param aNewSession
+   *        The new session scope that replaced the old one. Never <code>null</code>.
+   */
   public void onSessionChangeAfterLogin (@NonNull final ISessionWebScope aOldSession,
                                          @NonNull final ISessionWebScope aNewSession)
   {
-    // TODO
+    ValueEnforcer.notNull (aOldSession, "OldSession");
+    ValueEnforcer.notNull (aNewSession, "NewSession");
+
+    final String sOldID = aOldSession.getID ();
+    m_aRWLock.writeLocked ( () -> {
+      for (final LoginInfo aInfo : m_aLoggedInUsers.values ())
+        if (aInfo.getSessionScope ().getID ().equals (sOldID))
+          aInfo.internalSetSessionScope (aNewSession);
+    });
   }
 
   /**
