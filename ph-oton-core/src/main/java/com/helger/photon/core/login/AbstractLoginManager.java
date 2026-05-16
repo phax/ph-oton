@@ -19,6 +19,7 @@ package com.helger.photon.core.login;
 import java.time.Duration;
 import java.util.Collection;
 
+import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -312,6 +313,12 @@ public abstract class AbstractLoginManager
           aOldSession.attrs ().removeAll ();
           // Gracefully remove the old session
           ScopeSessionManager.getInstance ().onScopeEnd (aOldSession);
+
+          for (final Object aValue : aNewSession.attrs ().values ()) {
+            if (aValue instanceof ISessionWebScopeActivationHandler) {
+              ((ISessionWebScopeActivationHandler) aValue).onSessionDidActivate(aNewSession);
+            }
+          }
 
           // Update CSRF nonce in the same go
           CSRFSessionManager.getInstance ().generateNewNonce ();
