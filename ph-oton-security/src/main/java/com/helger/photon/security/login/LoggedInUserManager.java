@@ -179,7 +179,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     @Override
     public String toString ()
     {
-      return ToStringGenerator.getDerived (super.toString ()).append ("userID", m_sUserID).getToString ();
+      return ToStringGenerator.getDerived (super.toString ()).append ("UserID", m_sUserID).getToString ();
     }
   }
 
@@ -464,6 +464,31 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
+   * Invoked from the login flow after the HTTP session ID has been regenerated to mitigate session
+   * fixation. Any {@link LoginInfo} that still references the previous session scope is updated to
+   * point at the new one, so that subsequent {@link #logoutUser(String)} calls find the
+   * {@link InternalSessionUserHolder} in the correct scope.
+   *
+   * @param aOldSession
+   *        The previous session scope. Never <code>null</code>.
+   * @param aNewSession
+   *        The new session scope that replaced the old one. Never <code>null</code>.
+   */
+  public void onSessionChangeAfterLogin (@NonNull final ISessionWebScope aOldSession,
+                                         @NonNull final ISessionWebScope aNewSession)
+  {
+    ValueEnforcer.notNull (aOldSession, "OldSession");
+    ValueEnforcer.notNull (aNewSession, "NewSession");
+
+    final String sOldID = aOldSession.getID ();
+    m_aRWLock.writeLocked ( () -> {
+      for (final LoginInfo aInfo : m_aLoggedInUsers.values ())
+        if (aInfo.getSessionScope ().getID ().equals (sOldID))
+          aInfo.internalSetSessionScope (aNewSession);
+    });
+  }
+
+  /**
    * Manually log out the specified user
    *
    * @param sUserID
@@ -626,10 +651,11 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("loggedInUsers", m_aLoggedInUsers)
-                            .append ("userLoginCallbacks", m_aUserLoginCallbacks)
-                            .append ("userLogoutCallbacks", m_aUserLogoutCallbacks)
-                            .append ("logoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("LoggedInUsers", m_aLoggedInUsers)
+                            .append ("UserLoginCallbacks", m_aUserLoginCallbacks)
+                            .append ("UserLogoutCallbacks", m_aUserLogoutCallbacks)
+                            .append ("LogoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
+                            .append ("AnonymousLogging", m_bAnonymousLogging)
                             .getToString ();
   }
 }

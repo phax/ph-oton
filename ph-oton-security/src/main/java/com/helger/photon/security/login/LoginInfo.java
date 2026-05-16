@@ -44,7 +44,7 @@ import com.helger.typeconvert.collection.StringMap;
 public final class LoginInfo implements IHasID <String>
 {
   private final IUser m_aUser;
-  private final ISessionScope m_aSessionScope;
+  private ISessionScope m_aSessionScope;
   private final LocalDateTime m_aLoginDT;
   private LocalDateTime m_aLastAccessDT;
   private LocalDateTime m_aLogoutDT;
@@ -77,6 +77,12 @@ public final class LoginInfo implements IHasID <String>
   public ISessionScope getSessionScope ()
   {
     return m_aSessionScope;
+  }
+
+  void internalSetSessionScope (@NonNull final ISessionScope aSessionScope)
+  {
+    ValueEnforcer.notNull (aSessionScope, "SessionScope");
+    m_aSessionScope = aSessionScope;
   }
 
   /**
