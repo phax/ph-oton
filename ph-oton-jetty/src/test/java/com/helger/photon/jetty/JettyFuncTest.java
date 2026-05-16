@@ -17,11 +17,9 @@
 package com.helger.photon.jetty;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.net.URI;
 import java.nio.file.FileSystem;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.util.Collections;
 
@@ -43,18 +41,12 @@ public final class JettyFuncTest
   public void testResourcesManual () throws Exception
   {
     final MountedPathResourceFactory aRF = new MountedPathResourceFactory ();
+
     // Make sure to pick a resource that is provided in a JAR file
     final URI aURI = new ClassPathResource (ClassHelper.getPathFromClass (CGlobal.class) + ".class",
                                             CGlobal.class.getClassLoader ()).getAsURL ().toURI ();
-    try
-    {
-      aRF.newResource (aURI);
-      fail ();
-    }
-    catch (final FileSystemNotFoundException ex)
-    {
-      // Expected
-    }
+    // Seems to work since Jetty 12.1.9
+    assertNotNull (aRF.newResource (aURI));
 
     // Explicitly load as file system
     try (final FileSystem aFS = FileSystems.newFileSystem (aURI, Collections.emptyMap ()))
