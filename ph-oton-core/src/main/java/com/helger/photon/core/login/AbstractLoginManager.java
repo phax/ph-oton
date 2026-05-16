@@ -169,6 +169,58 @@ public abstract class AbstractLoginManager
   }
 
   /**
+   * Check whether the current request carries a second-factor submission.
+   *
+   * @param aRequestScope
+   *        The current request scope.
+   * @return <code>true</code> if the request is a second-factor verification submission.
+   * @since 10.2.3
+   */
+  @OverrideOnDemand
+  protected boolean isSecondFactorInProgress (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return CLogin.REQUEST_ACTION_VALIDATE_SECOND_FACTOR.equals (aRequestScope.params ()
+                                                                             .getAsString (CLogin.REQUEST_PARAM_ACTION));
+  }
+
+  /**
+   * Read the submitted second-factor code from the request.
+   *
+   * @param aRequestScope
+   *        The current request scope.
+   * @return The trimmed code, or <code>null</code> if not present.
+   * @since 10.2.3
+   */
+  @Nullable
+  @OverrideOnDemand
+  protected String getSecondFactorCode (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    return aRequestScope.params ().getAsString (CLogin.REQUEST_ATTR_SECOND_FACTOR_CODE);
+  }
+
+  /**
+   * Create the HTML code used to render the second-factor screen. The default implementation falls
+   * back to {@link #createLoginScreen(boolean, ICredentialValidationResult)} — applications that
+   * enable second-factor authentication should override this with a screen that asks for the TOTP /
+   * recovery code only.
+   *
+   * @param bShowError
+   *        <code>true</code> if a previous second-factor submission was rejected.
+   * @param aLoginResult
+   *        The login result; typically {@link ELoginResult#SECOND_FACTOR_REQUIRED} or
+   *        {@link ELoginResult#INVALID_SECOND_FACTOR}.
+   * @return Never <code>null</code>.
+   * @since 10.2.3
+   */
+  @NonNull
+  @OverrideOnDemand
+  protected IHTMLProvider createSecondFactorScreen (final boolean bShowError,
+                                                    @NonNull final ICredentialValidationResult aLoginResult)
+  {
+    return createLoginScreen (bShowError, aLoginResult);
+  }
+
+  /**
    * Get the current login name
    *
    * @param aRequestScope
@@ -257,6 +309,30 @@ public abstract class AbstractLoginManager
   }
 
   /**
+   * Regenerate the HTTP session ID after a successful authentication step, migrate session
+   * attributes to the new scope, notify {@link LoggedInUserManager} of the change, end the old
+   * scope, and rotate the CSRF nonce. Mitigates session fixation (CWE-384).
+   */
+  private static void _rotateSessionAfterLogin (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    final LoggedInUserManager aLoggedInUserManager = LoggedInUserManager.getInstance ();
+    final String sOldSessionID = aRequestScope.getSessionID ();
+    aRequestScope.getRequest ().changeSessionId ();
+
+    final ISessionWebScope aOldSession = WebScopeSessionManager.getSessionWebScopeOfID (sOldSessionID);
+    final ISessionWebScope aNewSession = WebScopeManager.onSessionBegin (aRequestScope.getSession (false));
+    aNewSession.attrs ().putAll (aOldSession.attrs ());
+    // Remove all to avoid destroying contained managers
+    aOldSession.attrs ().removeAll ();
+    aLoggedInUserManager.onSessionChangeAfterLogin (aOldSession, aNewSession);
+    // Gracefully remove the old session
+    ScopeSessionManager.getInstance ().onScopeEnd (aOldSession);
+
+    // Update CSRF nonce in the same go
+    CSRFSessionManager.getInstance ().generateNewNonce ();
+  }
+
+  /**
    * Main login routine.
    *
    * @param aRequestScope
@@ -277,73 +353,98 @@ public abstract class AbstractLoginManager
     {
       // No user currently logged in -> start login
       boolean bShowLoginError = false;
-      ICredentialValidationResult aLoginResult = ELoginResult.SUCCESS;
+      boolean bShowSecondFactor = false;
+      ELoginResult aLoginResult = ELoginResult.SUCCESS;
 
-      // Is the special login-check action present?
-      if (isLoginInProgress (aRequestScope))
+      if (isSecondFactorInProgress (aRequestScope))
       {
-        // Login screen was already shown
-        // -> Check request parameters
-        final String sLoginName = getLoginName (aRequestScope);
-        final String sPassword = getPassword (aRequestScope);
-
-        // Resolve user - may be null
-        final IUser aUser = getUserOfLoginName (sLoginName);
-
-        // Try main login
-        aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
+        // Second-factor submission
+        final String sCode = getSecondFactorCode (aRequestScope);
+        aLoginResult = aLoggedInUserManager.loginUserSecondFactor (sCode);
         if (aLoginResult.isSuccess ())
         {
-          // Credentials are valid - implies that the user was resolved
-          // correctly
-          sSessionUserID = aUser.getID ();
-          bLoggedInInThisRequest = true;
-
-          // Prevent session fixation attack (CWE-384) by regenerating the
-          // session ID after successful authentication
-          final String sOldSessionID = aRequestScope.getSessionID ();
-          aRequestScope.getRequest ().changeSessionId ();
-
-          // Important to copy objects from session to new session as well
-          final ISessionWebScope aOldSession = WebScopeSessionManager.getSessionWebScopeOfID (sOldSessionID);
-          final ISessionWebScope aNewSession = WebScopeManager.onSessionBegin (aRequestScope.getSession (false));
-          aNewSession.attrs ().putAll (aOldSession.attrs ());
-          // Remove all to avoid destroying contained managers
-          aOldSession.attrs ().removeAll ();
-          aLoggedInUserManager.onSessionChangeAfterLogin (aOldSession, aNewSession);
-          // Gracefully remove the old session
-          ScopeSessionManager.getInstance ().onScopeEnd (aOldSession);
-
-          // Update CSRF nonce in the same go
-          CSRFSessionManager.getInstance ().generateNewNonce ();
+          sSessionUserID = aLoggedInUserManager.getCurrentUserID ();
+          bLoggedInInThisRequest = sSessionUserID != null;
+          if (bLoggedInInThisRequest)
+            _rotateSessionAfterLogin (aRequestScope);
         }
         else
-        {
-          // Credentials are invalid
-          if (GlobalDebug.isDebugMode ())
-            LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
-
-          // Anyway show the error message only if at least some credential
-          // values are passed
-          bShowLoginError = StringHelper.isNotEmpty (sLoginName) || StringHelper.isNotEmpty (sPassword);
-          if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+          if (aLoginResult == ELoginResult.INVALID_SECOND_FACTOR)
           {
-            // Every failed login increases the time
-            final long nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
-            final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
-
-            if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
-
-            ThreadHelper.sleep (aRealWaitDuration);
+            // Keep them on the 2FA screen with an error
+            bShowSecondFactor = true;
+            if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+              ThreadHelper.sleep (m_aFailedLoginWaitTime);
           }
-        }
+          else
+          {
+            // No pending or expired — fall back to login screen
+            bShowLoginError = true;
+          }
       }
+      else
+        if (isLoginInProgress (aRequestScope))
+        {
+          // Login screen was already shown -> Check request parameters
+          final String sLoginName = getLoginName (aRequestScope);
+          final String sPassword = getPassword (aRequestScope);
+
+          // Resolve user - may be null
+          final IUser aUser = getUserOfLoginName (sLoginName);
+
+          // Try main login
+          aLoginResult = aLoggedInUserManager.loginUser (aUser, sPassword, m_aRequiredRoleIDs);
+          if (aLoginResult.isSuccess ())
+          {
+            // Credentials are valid - implies that the user was resolved correctly
+            sSessionUserID = aUser.getID ();
+            bLoggedInInThisRequest = true;
+            _rotateSessionAfterLogin (aRequestScope);
+          }
+          else
+            if (aLoginResult.isPendingSecondFactor ())
+            {
+              // Primary credentials are good — defer to the 2FA screen
+              bShowSecondFactor = true;
+            }
+            else
+            {
+              // Credentials are invalid
+              if (GlobalDebug.isDebugMode ())
+                LOGGER.warn ("Login of '" + sLoginName + "' failed because " + aLoginResult);
+
+              // Anyway show the error message only if at least some credential
+              // values are passed
+              bShowLoginError = StringHelper.isNotEmpty (sLoginName) || StringHelper.isNotEmpty (sPassword);
+              if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+              {
+                // Every failed login increases the time
+                final long nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
+                final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
+
+                if (LOGGER.isDebugEnabled ())
+                  LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
+
+                ThreadHelper.sleep (aRealWaitDuration);
+              }
+            }
+        }
+        else
+          if (aLoggedInUserManager.getCurrentPendingSecondFactorUserID () != null)
+          {
+            // Session has a pending 2FA (e.g. user reloaded the page) — show 2FA screen
+            bShowSecondFactor = true;
+            aLoginResult = ELoginResult.SECOND_FACTOR_REQUIRED;
+          }
+
       if (sSessionUserID == null)
       {
-        // Show login screen as no user is in the session
-        final IHTMLProvider aLoginScreenProvider = createLoginScreen (bShowLoginError, aLoginResult);
-        PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aLoginScreenProvider);
+        // Show the appropriate screen as no user is in the session
+        final IHTMLProvider aProvider = bShowSecondFactor ? createSecondFactorScreen (aLoginResult ==
+                                                                                      ELoginResult.INVALID_SECOND_FACTOR,
+                                                                                      aLoginResult)
+                                                          : createLoginScreen (bShowLoginError, aLoginResult);
+        PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aProvider);
       }
     }
     // Update details
