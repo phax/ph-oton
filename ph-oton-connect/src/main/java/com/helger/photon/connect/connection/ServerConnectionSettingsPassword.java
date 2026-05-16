@@ -16,7 +16,10 @@
  */
 package com.helger.photon.connect.connection;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -25,23 +28,37 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * Default implementation of the {@link IServerConnectionSettingsPassword}
- * interface.
+ * Default implementation of the {@link IServerConnectionSettingsPassword} interface.
  *
  * @author philip
  */
 @Immutable
-public class ServerConnectionSettingsPassword extends AbstractServerConnectionSettings implements IServerConnectionSettingsPassword
+public class ServerConnectionSettingsPassword extends AbstractServerConnectionSettings implements
+                                              IServerConnectionSettingsPassword
 {
   private final String m_sPassword;
 
+  @Deprecated (forRemoval = true, since = "10.2.3")
   public ServerConnectionSettingsPassword (@NonNull @Nonempty final String sIP,
                                            @Nonnegative final int nPort,
                                            final int nConnectionTimeoutMillis,
                                            @NonNull @Nonempty final String sUserName,
                                            @NonNull final String sPassword)
   {
-    super (sIP, nPort, nConnectionTimeoutMillis, sUserName);
+    this (sIP,
+          nPort,
+          nConnectionTimeoutMillis < 0 ? null : Duration.ofMillis (nConnectionTimeoutMillis),
+          sUserName,
+          sPassword);
+  }
+
+  public ServerConnectionSettingsPassword (@NonNull @Nonempty final String sIP,
+                                           @Nonnegative final int nPort,
+                                           @Nullable final Duration aConnectionTimeout,
+                                           @NonNull @Nonempty final String sUserName,
+                                           @NonNull final String sPassword)
+  {
+    super (sIP, nPort, aConnectionTimeout, sUserName);
 
     ValueEnforcer.notNull (sPassword, "Password");
     m_sPassword = sPassword;
@@ -56,6 +73,6 @@ public class ServerConnectionSettingsPassword extends AbstractServerConnectionSe
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).appendPassword ("password").getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).appendPassword ("Password").getToString ();
   }
 }

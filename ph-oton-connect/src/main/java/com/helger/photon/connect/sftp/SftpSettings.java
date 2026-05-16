@@ -32,6 +32,9 @@ import com.helger.config.IConfig;
  */
 public class SftpSettings extends SftpSettingsHost implements ISftpSettings
 {
+  public static final String CONFIG_SUFFIX_UPLOAD_DIR = ".uploaddir";
+  public static final String CONFIG_SUFFIX_DOWNLOAD_DIR = ".downloaddir";
+
   private final String m_sServerDirUpload;
   private final String m_sServerDirDownload;
 
@@ -83,8 +86,8 @@ public class SftpSettings extends SftpSettingsHost implements ISftpSettings
     if (aHost == null)
       return null;
 
-    final String sServerDirUpload = aConfig.getAsString (sConfigPrefix + ".uploaddir");
-    final String sServerDirDownload = aConfig.getAsString (sConfigPrefix + ".downloaddir");
+    final String sServerDirUpload = aConfig.getAsString (sConfigPrefix + CONFIG_SUFFIX_UPLOAD_DIR);
+    final String sServerDirDownload = aConfig.getAsString (sConfigPrefix + CONFIG_SUFFIX_DOWNLOAD_DIR);
 
     return new SftpSettings (aHost, sServerDirUpload, sServerDirDownload);
   }

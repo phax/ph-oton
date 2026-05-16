@@ -84,7 +84,7 @@ public final class SftpMaxParallelRunner
     try
     {
       final JschSessionProvider aSessionProvider = new JschSessionProvider (aSFTPSettings);
-      return ChannelSftpRunner.execute (aSessionProvider, aSFTPSettings.getConnectionTimeoutMillis (), aRunnable);
+      return ChannelSftpRunner.execute (aSessionProvider, aSFTPSettings.getConnectionTimeout (), aRunnable);
     }
     finally
     {

@@ -17,6 +17,7 @@
 package com.helger.photon.connect.sftp;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.jspecify.annotations.NonNull;
@@ -72,8 +73,9 @@ public final class JSchSessionFactory
                                                aSettings.getServerAddress (),
                                                aSettings.getServerPort ());
     // Set timeout in session
-    if (aSettings.getConnectionTimeoutMillis () >= 0)
-      aSession.setTimeout (aSettings.getConnectionTimeoutMillis ());
+    final Duration aConnectionTimeout = aSettings.getConnectionTimeout ();
+    if (aConnectionTimeout != null && !aConnectionTimeout.isNegative ())
+      aSession.setTimeout (Math.toIntExact (aConnectionTimeout.toMillis ()));
 
     // Setup Strict HostKeyChecking to no so we don't get the
     // unknown host key exception

@@ -16,15 +16,17 @@
  */
 package com.helger.photon.connect.connection;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
- * Interface having the basic fields required for connecting to a server via
- * SSH.
+ * Interface having the basic fields required for connecting to a server via SSH.
  *
  * @author philip
  */
@@ -51,9 +53,23 @@ public interface IBaseServerConnectionSettings extends IAuthCredentials
   String getUserName ();
 
   /**
-   * @return The connection timeout in milliseconds. Values &lt; 0 are ignored,
-   *         0 means infinite and all values &gt; 0 are the respective milli
-   *         seconds.
+   * @return The connection timeout. A <code>null</code> value or a negative duration are ignored,
+   *         {@link Duration#ZERO} means infinite, and any positive duration is applied to the
+   *         underlying connection.
+   * @since 10.2.3
    */
-  int getConnectionTimeoutMillis ();
+  @Nullable
+  Duration getConnectionTimeout ();
+
+  /**
+   * @return The connection timeout in milliseconds. Values &lt; 0 are ignored, 0 means infinite and
+   *         all values &gt; 0 are the respective milli seconds.
+   * @deprecated Use {@link #getConnectionTimeout()} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.2.3")
+  default int getConnectionTimeoutMillis ()
+  {
+    final Duration aDuration = getConnectionTimeout ();
+    return aDuration == null ? -1 : Math.toIntExact (aDuration.toMillis ());
+  }
 }

@@ -16,7 +16,10 @@
  */
 package com.helger.photon.connect.connection;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -39,6 +42,7 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
   private final byte [] m_aPublicKeyBytes;
   private final byte [] m_aKeyPairPassphrase;
 
+  @Deprecated (forRemoval = true, since = "10.2.3")
   public ServerConnectionSettingsKeyPair (@NonNull @Nonempty final String sIP,
                                           @Nonnegative final int nPort,
                                           final int nConnectionTimeoutMillis,
@@ -47,7 +51,24 @@ public class ServerConnectionSettingsKeyPair extends AbstractServerConnectionSet
                                           final byte @NonNull @Nonempty [] aPublicKeyBytes,
                                           final byte @NonNull [] aKeyPairPassphrase)
   {
-    super (sIP, nPort, nConnectionTimeoutMillis, sUserName);
+    this (sIP,
+          nPort,
+          nConnectionTimeoutMillis < 0 ? null : Duration.ofMillis (nConnectionTimeoutMillis),
+          sUserName,
+          aPrivateKeyBytes,
+          aPublicKeyBytes,
+          aKeyPairPassphrase);
+  }
+
+  public ServerConnectionSettingsKeyPair (@NonNull @Nonempty final String sIP,
+                                          @Nonnegative final int nPort,
+                                          @Nullable final Duration aConnectionTimeout,
+                                          @NonNull @Nonempty final String sUserName,
+                                          final byte @NonNull @Nonempty [] aPrivateKeyBytes,
+                                          final byte @NonNull @Nonempty [] aPublicKeyBytes,
+                                          final byte @NonNull [] aKeyPairPassphrase)
+  {
+    super (sIP, nPort, aConnectionTimeout, sUserName);
 
     m_aPrivateKeyBytes = ArrayHelper.getCopy (ValueEnforcer.notEmpty (aPrivateKeyBytes, "PrivateKeyBytes"));
     m_aPublicKeyBytes = ArrayHelper.getCopy (ValueEnforcer.notEmpty (aPublicKeyBytes, "PublicKeyBytes"));

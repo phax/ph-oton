@@ -65,10 +65,18 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.2.3 - work in progress
+v10.2.3 - 2026-05-16
+* Updated to ph-commons 12.2.5
+* Updated to ph-db 8.4.0
 * Updated to Jetty 12.1.9
-* Updated the default security algorithm to a new PBKDF version
+* Updated the default password hash algorithm to `PBKDF2_SHA256_100000_48`
 * Removed OSGI bundling
+* Added class `GlobalUserIDProvider` to provide an application wide current user ID. See [#31](https://github.com/phax/ph-oton/issues/31)
+* Storing the new session scope in `LoginInfo` after session ID renewal on login
+* Added method `EHTMLEntity.htmlUnescape (String)`
+* Added an additional constructor to `SftpSettings`
+* SFTP connection settings now expose the connection timeout as `java.time.Duration getConnectionTimeout ()`. The new configuration key `*.connectiontimeout` accepts duration strings (e.g. `10s`, `1m 30s`) parsed via `IConfig.getAsConfigDuration`. The previous `int getConnectionTimeoutMillis ()` API and `*.connectiontimeoutms` configuration key remain available and are marked `@Deprecated (forRemoval = true)`
+* Deprecated old entries in `EStandardMetaElement`
 
 v10.2.2 - 2026-03-02
 * Fixed a regression on login, that killed the web-scope management

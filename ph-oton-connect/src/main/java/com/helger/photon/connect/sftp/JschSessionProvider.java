@@ -55,7 +55,7 @@ public class JschSessionProvider implements IJSchSessionProvider
       return JSchSessionFactory.createSession (m_aSFTPSettings.getKnownHostsPath (),
                                                new ServerConnectionSettingsPassword (m_aSFTPSettings.getServerHost (),
                                                                                      m_aSFTPSettings.getServerPort (),
-                                                                                     m_aSFTPSettings.getConnectionTimeoutMillis (),
+                                                                                     m_aSFTPSettings.getConnectionTimeout (),
                                                                                      m_aSFTPSettings.getServerUserName (),
                                                                                      m_aSFTPSettings.getServerPassword ()));
     }
@@ -78,7 +78,7 @@ public class JschSessionProvider implements IJSchSessionProvider
     return JSchSessionFactory.createSession (m_aSFTPSettings.getKnownHostsPath (),
                                              new ServerConnectionSettingsKeyPair (m_aSFTPSettings.getServerHost (),
                                                                                   m_aSFTPSettings.getServerPort (),
-                                                                                  m_aSFTPSettings.getConnectionTimeoutMillis (),
+                                                                                  m_aSFTPSettings.getConnectionTimeout (),
                                                                                   m_aSFTPSettings.getServerUserName (),
                                                                                   aPrivateKey,
                                                                                   aPublicKey,

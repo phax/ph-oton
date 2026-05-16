@@ -16,7 +16,10 @@
  */
 package com.helger.photon.connect.connection;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
@@ -26,8 +29,7 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.network.port.NetworkPortHelper;
 
 /**
- * Default abstract implementation of the {@link IBaseServerConnectionSettings}
- * interface.
+ * Default abstract implementation of the {@link IBaseServerConnectionSettings} interface.
  *
  * @author philip
  */
@@ -36,12 +38,21 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
 {
   private final String m_sAddress;
   private final int m_nPort;
-  private final int m_nConnectionTimeoutMillis;
+  private final Duration m_aConnectionTimeout;
   private final String m_sUserName;
 
+  @Deprecated (forRemoval = true, since = "10.2.3")
   public AbstractServerConnectionSettings (@NonNull @Nonempty final String sIP,
                                            @Nonnegative final int nPort,
                                            final int nConnectionTimeoutMillis,
+                                           @NonNull @Nonempty final String sUserName)
+  {
+    this (sIP, nPort, nConnectionTimeoutMillis < 0 ? null : Duration.ofMillis (nConnectionTimeoutMillis), sUserName);
+  }
+
+  public AbstractServerConnectionSettings (@NonNull @Nonempty final String sIP,
+                                           @Nonnegative final int nPort,
+                                           @Nullable final Duration aConnectionTimeout,
                                            @NonNull @Nonempty final String sUserName)
   {
     ValueEnforcer.notEmpty (sIP, "Address");
@@ -51,7 +62,7 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
 
     m_sAddress = sIP;
     m_nPort = nPort;
-    m_nConnectionTimeoutMillis = nConnectionTimeoutMillis;
+    m_aConnectionTimeout = aConnectionTimeout;
     m_sUserName = sUserName;
   }
 
@@ -68,9 +79,10 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
     return m_nPort;
   }
 
-  public int getConnectionTimeoutMillis ()
+  @Nullable
+  public Duration getConnectionTimeout ()
   {
-    return m_nConnectionTimeoutMillis;
+    return m_aConnectionTimeout;
   }
 
   @NonNull
@@ -86,7 +98,7 @@ public abstract class AbstractServerConnectionSettings implements IBaseServerCon
     return new ToStringGenerator (this).append ("Address", m_sAddress)
                                        .append ("Port", m_nPort)
                                        .append ("Username", m_sUserName)
-                                       .append ("ConnectionTimeoutMillis", m_nConnectionTimeoutMillis)
+                                       .appendIfNotNull ("ConnectionTimeout", m_aConnectionTimeout)
                                        .getToString ();
   }
 }

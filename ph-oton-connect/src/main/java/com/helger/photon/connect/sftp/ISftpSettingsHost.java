@@ -16,6 +16,8 @@
  */
 package com.helger.photon.connect.sftp;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -36,6 +38,12 @@ public interface ISftpSettingsHost extends IHasDisplayName
 {
   int DEFAULT_PORT = DefaultNetworkPorts.TCP_22_ssh.getPort ();
 
+  Duration DEFAULT_CONNECTION_TIMEOUT = Duration.ofSeconds (10);
+
+  /**
+   * @deprecated Use {@link #DEFAULT_CONNECTION_TIMEOUT} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.2.3")
   int DEFAULT_CONNECTION_TIMEOUT_MS = 10 * (int) CGlobal.MILLISECONDS_PER_SECOND;
 
   int DEFAULT_MAX_CONNECTIONS = 4;
@@ -55,10 +63,24 @@ public interface ISftpSettingsHost extends IHasDisplayName
   int getServerPort ();
 
   /**
-   * @return Connection timeout milliseconds. All values &le; 0 means no timeout
+   * @return The connection timeout. A <code>null</code> value or a negative duration means "no
+   *         timeout"; {@link Duration#ZERO} means infinite. The default value should be
+   *         {@link #DEFAULT_CONNECTION_TIMEOUT}.
+   * @since 10.2.3
    */
-  @Nonnegative
-  int getConnectionTimeoutMillis ();
+  @Nullable
+  Duration getConnectionTimeout ();
+
+  /**
+   * @return Connection timeout milliseconds. All values &le; 0 means no timeout.
+   * @deprecated Use {@link #getConnectionTimeout()} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.2.3")
+  default int getConnectionTimeoutMillis ()
+  {
+    final Duration aDuration = getConnectionTimeout ();
+    return aDuration == null ? -1 : Math.toIntExact (aDuration.toMillis ());
+  }
 
   /**
    * @return The user name for connecting to the server. May be <code>null</code>.
