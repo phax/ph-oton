@@ -50,7 +50,13 @@ public enum ELoginResult implements ICredentialValidationResult
   /** Another user is already logged in this session */
   SESSION_ALREADY_HAS_USER (ELoginResultText.SESSION_ALREADY_HAS_USER),
   /** No such token */
-  TOKEN_NOT_EXISTING (ELoginResultText.TOKEN_NOT_EXISTING);
+  TOKEN_NOT_EXISTING (ELoginResultText.TOKEN_NOT_EXISTING),
+  /** Primary credentials are valid but a second factor (e.g. TOTP) is still required */
+  SECOND_FACTOR_REQUIRED (ELoginResultText.SECOND_FACTOR_REQUIRED),
+  /** The submitted second-factor code was rejected */
+  INVALID_SECOND_FACTOR (ELoginResultText.INVALID_SECOND_FACTOR),
+  /** No pending second-factor verification was found for this session */
+  NO_PENDING_SECOND_FACTOR (ELoginResultText.NO_PENDING_SECOND_FACTOR);
 
   private final IHasDisplayText m_aErrorMsg;
 
@@ -62,6 +68,16 @@ public enum ELoginResult implements ICredentialValidationResult
   public boolean isSuccess ()
   {
     return this == SUCCESS || this == SUCCESS_WITH_LOGOUT;
+  }
+
+  /**
+   * @return <code>true</code> if primary credentials were accepted but a second factor still needs
+   *         to be supplied. This is neither a success nor a failure outcome.
+   * @since 10.2.3
+   */
+  public boolean isPendingSecondFactor ()
+  {
+    return this == SECOND_FACTOR_REQUIRED;
   }
 
   public boolean hasMessage ()

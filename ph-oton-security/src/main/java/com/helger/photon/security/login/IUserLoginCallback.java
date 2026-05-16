@@ -48,4 +48,25 @@ public interface IUserLoginCallback extends ICallback
    */
   default void onUserLoginError (@NonNull @Nonempty final String sUserID, @NonNull final ELoginResult eLoginResult)
   {}
+
+  /**
+   * Called when a user has passed primary credential validation but must still provide a second
+   * factor. The user is not yet considered logged in at this point.
+   *
+   * @param sUserID
+   *        The ID of the user awaiting second-factor verification. Never <code>null</code>.
+   * @since 10.2.3
+   */
+  default void onUserSecondFactorRequired (@NonNull @Nonempty final String sUserID)
+  {}
+
+  /**
+   * Called when a submitted second-factor code was rejected.
+   *
+   * @param sUserID
+   *        The ID of the user whose code was rejected. Never <code>null</code>.
+   * @since 10.2.3
+   */
+  default void onUserSecondFactorFailed (@NonNull @Nonempty final String sUserID)
+  {}
 }

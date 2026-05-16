@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2021-2026 Philip Helger (www.helger.com)
+    Copyright (C) 2014-2026 Philip Helger (www.helger.com)
     philip[at]helger[dot]com
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +24,12 @@
     <artifactId>ph-oton-parent-pom</artifactId>
     <version>10.2.3-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-oton-jdbc</artifactId>
+  <artifactId>ph-oton-security-totp</artifactId>
   <packaging>jar</packaging>
-  <name>ph-oton-jdbc</name>
-  <description>Adds reusable SQL functionality using JDBC access for ph-oton components</description>
-  <url>https://github.com/phax/ph-oton/ph-oton-jdbc</url>
-  <inceptionYear>2021</inceptionYear>
+  <name>ph-oton-security-totp</name>
+  <description>ph-oton TOTP-based second-factor authentication for ph-oton-security</description>
+  <url>https://github.com/phax/ph-oton/ph-oton-security-totp</url>
+  <inceptionYear>2026</inceptionYear>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -51,46 +51,28 @@
   </developers>
   <dependencies>
     <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-audit</artifactId>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-totp</artifactId>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.helger.photon</groupId>
       <artifactId>ph-oton-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-security-totp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.photon</groupId>
-      <artifactId>ph-oton-mgrs</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger.db</groupId>
-      <artifactId>ph-db-jdbc</artifactId>
-      <version>${ph-db.version}</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.helger.photon</groupId>
+      <artifactId>ph-oton-app</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <source>8</source>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

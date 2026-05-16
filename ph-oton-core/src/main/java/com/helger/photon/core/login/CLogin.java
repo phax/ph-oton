@@ -38,6 +38,12 @@ public final class CLogin
   public static final String REQUEST_ATTR_USERID = "userid";
   /** The name of the field that contains the password for the login. */
   public static final String REQUEST_ATTR_PASSWORD = "password";
+  /**
+   * The name of the field that carries the second-factor code (TOTP or recovery).
+   *
+   * @since 10.2.3
+   */
+  public static final String REQUEST_ATTR_SECOND_FACTOR_CODE = "secondfactor";
   /** The name of the hidden field to be used in login. */
   public static final String REQUEST_PARAM_ACTION = "login-action";
   /**
@@ -46,6 +52,13 @@ public final class CLogin
    * {@link #REQUEST_PARAM_ACTION}
    */
   public static final String REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS = "validate-login-credentials";
+  /**
+   * The action value submitted by the second-factor form. The name of the field must be
+   * {@link #REQUEST_PARAM_ACTION}.
+   *
+   * @since 10.2.3
+   */
+  public static final String REQUEST_ACTION_VALIDATE_SECOND_FACTOR = "validate-second-factor";
 
   private CLogin ()
   {}

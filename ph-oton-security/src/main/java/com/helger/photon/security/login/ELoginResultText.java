@@ -44,7 +44,12 @@ public enum ELoginResultText implements IHasDisplayText
   INVALID_PASSWORD ("Das Passwort ist ungültig.", "Invalid password provided."),
   USER_ALREADY_LOGGED_IN ("Der Benutzer ist bereits angemeldet.", "The user is already logged in."),
   SESSION_ALREADY_HAS_USER ("Es ist bereits ein anderer Benutzer angemeldet.", "Another user is already logged in."),
-  TOKEN_NOT_EXISTING ("Der Zugriffstoken ist ungültig.", "The access token does not exist.");
+  TOKEN_NOT_EXISTING ("Der Zugriffstoken ist ungültig.", "The access token does not exist."),
+  SECOND_FACTOR_REQUIRED ("Bitte den zweiten Faktor eingeben, um die Anmeldung abzuschließen.",
+                          "Please enter the second factor to complete the login."),
+  INVALID_SECOND_FACTOR ("Der eingegebene zweite Faktor ist ungültig.", "The provided second factor is invalid."),
+  NO_PENDING_SECOND_FACTOR ("Es liegt keine offene zweite-Faktor-Anmeldung vor.",
+                            "There is no pending second-factor login.");
 
   private final IMultilingualText m_aTP;
 

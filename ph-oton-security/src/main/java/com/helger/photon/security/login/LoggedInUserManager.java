@@ -27,7 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.ELockType;
 import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.MustBeLocked;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -184,6 +186,78 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   }
 
   /**
+   * Per-session holder that remembers a login which passed primary credential validation but has
+   * not yet completed second-factor verification. This is an internal class and should not be used
+   * from the outside.
+   *
+   * @author Philip Helger
+   */
+  public static final class InternalSessionPendingLoginHolder extends AbstractSessionWebSingleton
+  {
+    private String m_sUserID;
+    private boolean m_bLoggedOutPriorSession;
+    private long m_nValidUntilMillis;
+
+    @Deprecated (forRemoval = false)
+    @UsedViaReflection
+    public InternalSessionPendingLoginHolder ()
+    {}
+
+    @NonNull
+    private static InternalSessionPendingLoginHolder _getInstance ()
+    {
+      return getSessionSingleton (InternalSessionPendingLoginHolder.class);
+    }
+
+    @Nullable
+    private static InternalSessionPendingLoginHolder _getInstanceIfInstantiated ()
+    {
+      return getSessionSingletonIfInstantiated (InternalSessionPendingLoginHolder.class);
+    }
+
+    private void _setPending (@NonNull @Nonempty final String sUserID,
+                              final boolean bLoggedOutPriorSession,
+                              final long nValidUntilMillis)
+    {
+      m_sUserID = sUserID;
+      m_bLoggedOutPriorSession = bLoggedOutPriorSession;
+      m_nValidUntilMillis = nValidUntilMillis;
+    }
+
+    private void _reset ()
+    {
+      m_sUserID = null;
+      m_bLoggedOutPriorSession = false;
+      m_nValidUntilMillis = 0;
+    }
+
+    @Nullable
+    private String _getUserID ()
+    {
+      return m_sUserID;
+    }
+
+    private boolean _isLoggedOutPriorSession ()
+    {
+      return m_bLoggedOutPriorSession;
+    }
+
+    private boolean _isStillValid ()
+    {
+      return m_sUserID != null && System.currentTimeMillis () <= m_nValidUntilMillis;
+    }
+
+    @Override
+    public String toString ()
+    {
+      return ToStringGenerator.getDerived (super.toString ())
+                              .appendIfNotNull ("userID", m_sUserID)
+                              .append ("validUntilMillis", m_nValidUntilMillis)
+                              .getToString ();
+    }
+  }
+
+  /**
    * Special logout callback that is executed every time a user logs out. It removes all objects
    * from the {@link ObjectLockManager}.
    *
@@ -202,6 +276,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   public static final boolean DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER = false;
   public static final boolean DEFAULT_ANONYMOUS_LOGGING = false;
+  /** Default lifetime of a pending second-factor login: 5 minutes. */
+  public static final Duration DEFAULT_PENDING_SECOND_FACTOR_TTL = Duration.ofMinutes (5);
 
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserManager.class);
 
@@ -212,6 +288,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
   private boolean m_bAnonymousLogging = DEFAULT_ANONYMOUS_LOGGING;
+  private ILoggedInUserSecondFactorPolicy m_aSecondFactorPolicy;
+  private ILoggedInUserSecondFactorVerifier m_aSecondFactorVerifier;
+  private Duration m_aPendingSecondFactorTTL = DEFAULT_PENDING_SECOND_FACTOR_TTL;
 
   @Deprecated (forRemoval = false)
   @UsedViaReflection
@@ -272,6 +351,77 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public void setAnonymousLogging (final boolean bAnonymousLogging)
   {
     m_aRWLock.writeLocked ( () -> m_bAnonymousLogging = bAnonymousLogging);
+  }
+
+  /**
+   * @return The currently registered second-factor policy or <code>null</code> if none is
+   *         registered. When <code>null</code>, second-factor authentication is disabled.
+   * @since 10.2.3
+   */
+  @Nullable
+  public ILoggedInUserSecondFactorPolicy getSecondFactorPolicy ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aSecondFactorPolicy);
+  }
+
+  /**
+   * Register the policy that decides whether a given user requires a second factor.
+   *
+   * @param aPolicy
+   *        The policy. May be <code>null</code> to disable second-factor authentication.
+   * @since 10.2.3
+   */
+  public void setSecondFactorPolicy (@Nullable final ILoggedInUserSecondFactorPolicy aPolicy)
+  {
+    m_aRWLock.writeLocked ( () -> m_aSecondFactorPolicy = aPolicy);
+  }
+
+  /**
+   * @return The currently registered second-factor verifier or <code>null</code> if none is
+   *         registered.
+   * @since 10.2.3
+   */
+  @Nullable
+  public ILoggedInUserSecondFactorVerifier getSecondFactorVerifier ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aSecondFactorVerifier);
+  }
+
+  /**
+   * Register the verifier used by {@link #loginUserSecondFactor(String)} to validate submitted
+   * second-factor codes.
+   *
+   * @param aVerifier
+   *        The verifier. May be <code>null</code>.
+   * @since 10.2.3
+   */
+  public void setSecondFactorVerifier (@Nullable final ILoggedInUserSecondFactorVerifier aVerifier)
+  {
+    m_aRWLock.writeLocked ( () -> m_aSecondFactorVerifier = aVerifier);
+  }
+
+  /**
+   * @return The maximum lifetime of a pending second-factor login. Never <code>null</code>.
+   * @since 10.2.3
+   */
+  @NonNull
+  public Duration getPendingSecondFactorTTL ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aPendingSecondFactorTTL);
+  }
+
+  /**
+   * Configure how long a pending second-factor login remains valid after the password step.
+   *
+   * @param aTTL
+   *        The TTL. Neither <code>null</code> nor negative.
+   * @since 10.2.3
+   */
+  public void setPendingSecondFactorTTL (@NonNull final Duration aTTL)
+  {
+    ValueEnforcer.notNull (aTTL, "TTL");
+    ValueEnforcer.isFalse (aTTL.isNegative (), "TTL must not be negative");
+    m_aRWLock.writeLocked ( () -> m_aPendingSecondFactorTTL = aTTL);
   }
 
   @NonNull
@@ -337,6 +487,45 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       return ELoginResult.USER_NOT_EXISTING;
     }
     return loginUser (aUser, sPlainTextPassword, aRequiredRoleIDs);
+  }
+
+  /**
+   * Install the user in the current session as fully logged in. Must be called while holding the
+   * write lock.
+   *
+   * @return A non-<code>null</code> {@link ELoginResult} if installation failed (the caller must
+   *         return that result), or <code>null</code> on success — in which case logging and
+   *         callback have already been performed.
+   */
+  @Nullable
+  @MustBeLocked (ELockType.WRITE)
+  private ELoginResult _installLoggedInUserLocked (@NonNull final IUser aUser)
+  {
+    final String sUserID = aUser.getID ();
+    final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
+    if (aSUH._hasUser ())
+    {
+      // This session already has a user
+      LOGGER.warn ("The session user holder already has the user ID '" +
+                   aSUH._getUserID () +
+                   "' so the new ID '" +
+                   sUserID +
+                   "' will not be set!");
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
+      return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
+    }
+    final LoginInfo aInfo = new LoginInfo (aUser, ScopeManager.getSessionScope ());
+    m_aLoggedInUsers.put (sUserID, aInfo);
+    aSUH._setUser (this, aUser);
+
+    LOGGER.info ("Logged in " +
+                 _getUserIDLogText (sUserID) +
+                 (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
+    AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
+
+    // Execute callback as the very last action
+    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
+    return null;
   }
 
   /**
@@ -408,7 +597,6 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     boolean bLoggedOutUser = false;
-    LoginInfo aInfo;
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -431,35 +619,28 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
         bLoggedOutUser = true;
       }
-      // Update user in session
-      final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
-      if (aSUH._hasUser ())
+
+      // Second-factor gate (if a policy is registered)
+      if (m_aSecondFactorPolicy != null && m_aSecondFactorPolicy.isSecondFactorRequired (sUserID))
       {
-        // This session already has a user
-        LOGGER.warn ("The session user holder already has the user ID '" +
-                     aSUH._getUserID () +
-                     "' so the new ID '" +
-                     sUserID +
-                     "' will not be set!");
-        AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
-        return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
+        // Park as pending; the session user holder stays empty until 2FA succeeds
+        final InternalSessionPendingLoginHolder aPending = InternalSessionPendingLoginHolder._getInstance ();
+        final long nValidUntil = System.currentTimeMillis () + m_aPendingSecondFactorTTL.toMillis ();
+        aPending._setPending (sUserID, bLoggedOutUser, nValidUntil);
+        AuditHelper.onAuditExecuteSuccess ("login-2fa-required", sUserID);
+        LOGGER.info ("Primary credentials valid for " + _getUserIDLogText (sUserID) + "; awaiting second factor");
+        m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserSecondFactorRequired (sUserID));
+        return ELoginResult.SECOND_FACTOR_REQUIRED;
       }
-      aInfo = new LoginInfo (aUser, ScopeManager.getSessionScope ());
-      m_aLoggedInUsers.put (sUserID, aInfo);
-      aSUH._setUser (this, aUser);
+
+      final ELoginResult eInstall = _installLoggedInUserLocked (aUser);
+      if (eInstall != null)
+        return eInstall;
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    LOGGER.info ("Logged in " +
-                 _getUserIDLogText (sUserID) +
-                 (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
-    AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
-
-    // Execute callback as the very last action
-    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
-
     return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
   }
 
@@ -486,6 +667,108 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
         if (aInfo.getSessionScope ().getID ().equals (sOldID))
           aInfo.internalSetSessionScope (aNewSession);
     });
+  }
+
+  /**
+   * Complete a previously parked pending login by verifying the user-supplied second-factor code.
+   * The pending state is read from the current session.
+   *
+   * @param sCode
+   *        The submitted code (TOTP or single-use recovery code). May be <code>null</code>.
+   * @return The final login result. {@link ELoginResult#NO_PENDING_SECOND_FACTOR} if no pending
+   *         login exists or it expired; {@link ELoginResult#INVALID_SECOND_FACTOR} if the code was
+   *         rejected; {@link ELoginResult#SUCCESS} / {@link ELoginResult#SUCCESS_WITH_LOGOUT} on
+   *         success.
+   * @since 10.2.3
+   */
+  @NonNull
+  public ELoginResult loginUserSecondFactor (@Nullable final String sCode)
+  {
+    final InternalSessionPendingLoginHolder aPending = InternalSessionPendingLoginHolder._getInstanceIfInstantiated ();
+    if (aPending == null || !aPending._isStillValid ())
+    {
+      if (aPending != null)
+        aPending._reset ();
+      AuditHelper.onAuditExecuteFailure ("login-2fa", "no-pending-or-expired");
+      return ELoginResult.NO_PENDING_SECOND_FACTOR;
+    }
+
+    final String sUserID = aPending._getUserID ();
+    final boolean bLoggedOutPrior = aPending._isLoggedOutPriorSession ();
+
+    if (sCode == null || sCode.isEmpty () || m_aSecondFactorVerifier == null)
+    {
+      AuditHelper.onAuditExecuteFailure ("login-2fa",
+                                         sUserID,
+                                         sCode == null || sCode.isEmpty () ? "empty-code" : "no-verifier");
+      m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserSecondFactorFailed (sUserID));
+      return _onLoginError (sUserID, ELoginResult.INVALID_SECOND_FACTOR);
+    }
+
+    if (!m_aSecondFactorVerifier.verify (sUserID, sCode))
+    {
+      AuditHelper.onAuditExecuteFailure ("login-2fa", sUserID, "invalid-code");
+      m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserSecondFactorFailed (sUserID));
+      return _onLoginError (sUserID, ELoginResult.INVALID_SECOND_FACTOR);
+    }
+
+    // Code accepted — resolve user and finalize login
+    final IUser aUser = PhotonSecurityManager.getUserMgr ().getUserOfID (sUserID);
+    if (aUser == null || aUser.isDeleted () || aUser.isDisabled ())
+    {
+      aPending._reset ();
+      AuditHelper.onAuditExecuteFailure ("login-2fa", sUserID, "user-not-active-anymore");
+      return _onLoginError (sUserID,
+                            aUser == null ? ELoginResult.USER_NOT_EXISTING : aUser.isDeleted ()
+                                                                                                ? ELoginResult.USER_IS_DELETED
+                                                                                                : ELoginResult.USER_IS_DISABLED);
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      aPending._reset ();
+      final ELoginResult eInstall = _installLoggedInUserLocked (aUser);
+      if (eInstall != null)
+        return eInstall;
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    AuditHelper.onAuditExecuteSuccess ("login-2fa-success", sUserID);
+    return bLoggedOutPrior ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
+  }
+
+  /**
+   * @return The ID of the user currently awaiting second-factor verification in this session, or
+   *         <code>null</code> if there is no such pending login.
+   * @since 10.2.3
+   */
+  @Nullable
+  public String getCurrentPendingSecondFactorUserID ()
+  {
+    final InternalSessionPendingLoginHolder aPending = InternalSessionPendingLoginHolder._getInstanceIfInstantiated ();
+    return aPending != null && aPending._isStillValid () ? aPending._getUserID () : null;
+  }
+
+  /**
+   * Discard any pending second-factor login state in the current session.
+   *
+   * @return {@link EChange#CHANGED} if a pending state was discarded, {@link EChange#UNCHANGED}
+   *         otherwise.
+   * @since 10.2.3
+   */
+  @NonNull
+  public EChange cancelPendingSecondFactor ()
+  {
+    final InternalSessionPendingLoginHolder aPending = InternalSessionPendingLoginHolder._getInstanceIfInstantiated ();
+    if (aPending == null || aPending._getUserID () == null)
+      return EChange.UNCHANGED;
+    final String sUserID = aPending._getUserID ();
+    aPending._reset ();
+    AuditHelper.onAuditExecuteSuccess ("login-2fa-cancel", sUserID);
+    return EChange.CHANGED;
   }
 
   /**
@@ -656,6 +939,9 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                             .append ("UserLogoutCallbacks", m_aUserLogoutCallbacks)
                             .append ("LogoutAlreadyLoggedInUser", m_bLogoutAlreadyLoggedInUser)
                             .append ("AnonymousLogging", m_bAnonymousLogging)
+                            .appendIfNotNull ("SecondFactorPolicy", m_aSecondFactorPolicy)
+                            .appendIfNotNull ("SecondFactorVerifier", m_aSecondFactorVerifier)
+                            .append ("PendingSecondFactorTTL", m_aPendingSecondFactorTTL)
                             .getToString ();
   }
 }
