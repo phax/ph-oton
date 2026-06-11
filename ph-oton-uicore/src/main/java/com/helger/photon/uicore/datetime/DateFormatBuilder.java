@@ -29,11 +29,10 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
-import com.helger.base.CGlobal;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.cache.impl.Cache;
+import com.helger.cache.impl.ProviderCache;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsList;
@@ -210,34 +209,34 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     }
   }
 
-  private static final class PatternCache extends Cache <String, DateFormatBuilder>
+  private static final ProviderCache <String, DateFormatBuilder> CACHE;
+  static
   {
-    public PatternCache ()
-    {
-      super (sJavaPattern -> {
-        ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
+    CACHE = ProviderCache.<String, DateFormatBuilder> builder ()
+                         .name ("DateFormatBuilder.PatternCache")
+                         .valueProvider (sJavaPattern -> {
+                           ValueEnforcer.notNull (sJavaPattern, "JavaPattern");
 
-        // Do parsing
-        final DateFormatBuilder aDFB = new DateFormatBuilder ();
-        final Searcher aSearcher = new Searcher (sJavaPattern);
-        while (aSearcher.hasMore ())
-        {
-          final EDateTimeFormatToken eToken = aSearcher.getNextToken ();
-          if (eToken != null)
-            aDFB.append (eToken);
-          else
-          {
-            // It's not a token -> use a single char and check for the next
-            // token
-            aDFB.append (aSearcher.getNextChar ());
-          }
-        }
-        return aDFB;
-      }, CGlobal.ILLEGAL_UINT, "DateFormatBuilder.PatternCache");
-    }
+                           // Do parsing
+                           final DateFormatBuilder aDFB = new DateFormatBuilder ();
+                           final Searcher aSearcher = new Searcher (sJavaPattern);
+                           while (aSearcher.hasMore ())
+                           {
+                             final EDateTimeFormatToken eToken = aSearcher.getNextToken ();
+                             if (eToken != null)
+                               aDFB.append (eToken);
+                             else
+                             {
+                               /*
+                                * It's not a token -> use a single char and check for the next token
+                                */
+                               aDFB.append (aSearcher.getNextChar ());
+                             }
+                           }
+                           return aDFB;
+                         })
+                         .build ();
   }
-
-  private static final PatternCache CACHE = new PatternCache ();
 
   @NonNull
   public static IDateFormatBuilder fromJavaPattern (@NonNull final String sJavaPattern)
