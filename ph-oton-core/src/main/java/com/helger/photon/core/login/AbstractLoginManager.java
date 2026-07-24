@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.VisibleForTesting;
 import com.helger.base.concurrent.ThreadHelper;
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.enforce.ValueEnforcer;
@@ -33,6 +34,7 @@ import com.helger.base.state.EContinue;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
+import com.helger.http.CHttpHeader;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
@@ -88,6 +90,14 @@ public abstract class AbstractLoginManager
    */
   public static final String LOGIN_INFO_REQUEST_COUNT = "request-count";
 
+  /**
+   * The name of the de-facto standard HTTP header that contains the original client IP address when
+   * running behind a reverse proxy.
+   *
+   * @since 10.2.4
+   */
+  public static final String HTTP_HEADER_X_FORWARDED_FOR = "X-Forwarded-For";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLoginManager.class);
 
   /**
@@ -100,6 +110,11 @@ public abstract class AbstractLoginManager
    * The duration to wait after a failed login try.
    */
   private Duration m_aFailedLoginWaitTime = Duration.ZERO;
+
+  /**
+   * Per-IP failed login counter, used to throttle failed logins where no user could be resolved.
+   */
+  private final LoginThrottlePerIP m_aFailedLoginPerIP = new LoginThrottlePerIP ();
 
   protected AbstractLoginManager ()
   {}
@@ -138,6 +153,148 @@ public abstract class AbstractLoginManager
   {
     ValueEnforcer.notNull (aFailedLoginWaitTime, "FailedLoginWaitTime");
     m_aFailedLoginWaitTime = aFailedLoginWaitTime;
+  }
+
+  /**
+   * @return The per-IP failed login throttle. Used to throttle failed logins where no user could be
+   *         resolved, based on the calling IP address. Never <code>null</code>. Use this to
+   *         configure e.g. the time-to-live of the per-IP counters.
+   * @since 10.2.0
+   */
+  @NonNull
+  public final LoginThrottlePerIP getFailedLoginPerIP ()
+  {
+    return m_aFailedLoginPerIP;
+  }
+
+  /**
+   * Get the remote IP address of the caller, used as the key for the per-IP failed login throttle
+   * (see {@link #getFailedLoginPerIP()}). The following sources are tried in order until a
+   * non-empty value is found:
+   * <ol>
+   * <li>the de-facto standard <code>X-Forwarded-For</code> HTTP header (left-most entry),</li>
+   * <li>the standardized RFC 7239 <code>Forwarded</code> HTTP header (first <code>for</code>
+   * parameter),</li>
+   * <li>the transport level remote address
+   * ({@link IRequestWebScopeWithoutResponse#getRemoteAddr()}).</li>
+   * </ol>
+   * <b>Security note:</b> the <code>X-Forwarded-For</code> and <code>Forwarded</code> headers are
+   * supplied by the client and can be forged. They are only trustworthy when the application runs
+   * behind a reverse proxy that overwrites (not appends to) any client-supplied values. When the
+   * application is directly reachable this method should be overridden to only return
+   * {@link IRequestWebScopeWithoutResponse#getRemoteAddr()}, otherwise an attacker can bypass the
+   * per-IP throttle by rotating the forwarded headers.
+   *
+   * @param aRequestScope
+   *        The current request scope. Never <code>null</code>.
+   * @return The remote IP address, or <code>null</code> if it cannot be determined. In the latter
+   *         case no per-IP throttling takes place.
+   * @since 10.2.4
+   */
+  @Nullable
+  @OverrideOnDemand
+  protected String getRemoteAddressForThrottling (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
+  {
+    // 1. Prefer the de-facto standard "X-Forwarded-For" header
+    String sIP = getFirstIPFromXForwardedForValue (aRequestScope.headers ()
+                                                                .getFirstHeaderValue (HTTP_HEADER_X_FORWARDED_FOR));
+    if (StringHelper.isEmpty (sIP))
+    {
+      // 2. Fall back to the standardized RFC 7239 "Forwarded" header
+      sIP = getFirstIPFromForwardedValue (aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.FORWARDED));
+      if (StringHelper.isEmpty (sIP))
+      {
+        // 3. Finally fall back to the transport level remote address
+        sIP = aRequestScope.getRemoteAddr ();
+      }
+    }
+    return sIP;
+  }
+
+  /**
+   * Extract the original client IP address from the value of an <code>X-Forwarded-For</code> HTTP
+   * header. The header contains a comma separated list of IP addresses where the left-most entry is
+   * the original client.
+   *
+   * @param sHeaderValue
+   *        The raw header value. May be <code>null</code>.
+   * @return The extracted IP address or <code>null</code> if none could be extracted.
+   * @since 10.2.4
+   */
+  @Nullable
+  @VisibleForTesting
+  static String getFirstIPFromXForwardedForValue (@Nullable final String sHeaderValue)
+  {
+    if (StringHelper.isEmpty (sHeaderValue))
+      return null;
+
+    // Left-most entry is the original client
+    String sIP = sHeaderValue;
+    final int nComma = sIP.indexOf (',');
+    if (nComma >= 0)
+      sIP = sIP.substring (0, nComma);
+    sIP = sIP.trim ();
+    return StringHelper.isEmpty (sIP) ? null : sIP;
+  }
+
+  /**
+   * Extract the original client IP address from the value of an RFC 7239 <code>Forwarded</code>
+   * HTTP header. Only the first forwarded element (the original client) and its <code>for</code>
+   * parameter are considered. Surrounding quotes, IPv6 brackets and an optional port are removed.
+   *
+   * @param sHeaderValue
+   *        The raw header value. May be <code>null</code>.
+   * @return The extracted IP address or <code>null</code> if none could be extracted.
+   * @since 10.2.4
+   */
+  @Nullable
+  @VisibleForTesting
+  static String getFirstIPFromForwardedValue (@Nullable final String sHeaderValue)
+  {
+    if (StringHelper.isEmpty (sHeaderValue))
+      return null;
+
+    // The first forwarded element (separated by ',') refers to the original client
+    String sFirstElement = sHeaderValue;
+    final int nComma = sFirstElement.indexOf (',');
+    if (nComma >= 0)
+      sFirstElement = sFirstElement.substring (0, nComma);
+
+    // Find the "for=" parameter (parameters are separated by ';')
+    String sFor = null;
+    for (final String sParam : StringHelper.getExploded (';', sFirstElement))
+    {
+      final String sTrimmed = sParam.trim ();
+      if (StringHelper.startsWithIgnoreCase (sTrimmed, "for="))
+      {
+        sFor = sTrimmed.substring (4).trim ();
+        break;
+      }
+    }
+    if (StringHelper.isEmpty (sFor))
+      return null;
+
+    // Remove optional surrounding double quotes
+    if (sFor.length () >= 2 && sFor.charAt (0) == '"' && sFor.charAt (sFor.length () - 1) == '"')
+      sFor = sFor.substring (1, sFor.length () - 1).trim ();
+
+    // Ignore obfuscated / unknown identifiers (RFC 7239 allows "unknown" and "_"-prefixed tokens)
+    if (StringHelper.isEmpty (sFor) || sFor.charAt (0) == '_' || sFor.equalsIgnoreCase ("unknown"))
+      return null;
+
+    // IPv6 addresses are enclosed in square brackets, optionally followed by a port
+    if (sFor.charAt (0) == '[')
+    {
+      final int nEnd = sFor.indexOf (']');
+      return nEnd > 1 ? sFor.substring (1, nEnd) : null;
+    }
+
+    // IPv4 address, optionally followed by ":port"
+    final int nColon = sFor.indexOf (':');
+    if (nColon >= 0)
+      sFor = sFor.substring (0, nColon);
+    sFor = sFor.trim ();
+    return StringHelper.isEmpty (sFor) ? null : sFor;
   }
 
   /**
@@ -316,6 +473,9 @@ public abstract class AbstractLoginManager
 
           // Update CSRF nonce in the same go
           CSRFSessionManager.getInstance ().generateNewNonce ();
+
+          // Successful login - remove the per-IP failed login counter
+          m_aFailedLoginPerIP.onSuccessfulLogin (getRemoteAddressForThrottling (aRequestScope));
         }
         else
         {
@@ -326,16 +486,34 @@ public abstract class AbstractLoginManager
           // Anyway show the error message only if at least some credential
           // values are passed
           bShowLoginError = StringHelper.isNotEmpty (sLoginName) || StringHelper.isNotEmpty (sPassword);
-          if (aUser != null && m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
+          if (m_aFailedLoginWaitTime.compareTo (Duration.ZERO) > 0)
           {
             // Every failed login increases the time
-            final long nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
-            final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
+            long nMultiplier = 0L;
+            if (aUser != null)
+            {
+              // Known user - throttle based on the user's consecutive failed login count
+              nMultiplier = Math.max (aUser.getConsecutiveFailedLoginCount (), 1L);
+            }
+            else
+              if (bShowLoginError)
+              {
+                // Unknown user - throttle based on the calling IP address (e.g. username
+                // enumeration or blind brute force). Only if some credentials were provided.
+                final String sIP = getRemoteAddressForThrottling (aRequestScope);
+                if (StringHelper.isNotEmpty (sIP))
+                  nMultiplier = m_aFailedLoginPerIP.onFailedLogin (sIP);
+              }
 
-            if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
+            if (nMultiplier > 0)
+            {
+              final Duration aRealWaitDuration = m_aFailedLoginWaitTime.multipliedBy (nMultiplier);
 
-            ThreadHelper.sleep (aRealWaitDuration);
+              if (LOGGER.isDebugEnabled ())
+                LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
+
+              ThreadHelper.sleep (aRealWaitDuration);
+            }
           }
         }
       }
