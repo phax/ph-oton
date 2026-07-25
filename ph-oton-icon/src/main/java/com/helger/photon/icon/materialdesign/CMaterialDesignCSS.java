@@ -26,15 +26,24 @@ import com.helger.html.css.ICSSClassProvider;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated (forRemoval = true, since = "12.3.0")
 public final class CMaterialDesignCSS
 {
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MATERIAL_ICONS = DefaultCSSClassProvider.create ("material-icons");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_18 = DefaultCSSClassProvider.create ("md-18");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_24 = DefaultCSSClassProvider.create ("md-24");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_36 = DefaultCSSClassProvider.create ("md-36");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_48 = DefaultCSSClassProvider.create ("md-48");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_DARK = DefaultCSSClassProvider.create ("md-dark");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_LIGHT = DefaultCSSClassProvider.create ("md-light");
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static final ICSSClassProvider MD_INACTIVE = DefaultCSSClassProvider.create ("md-inactive");
 
   private CMaterialDesignCSS ()

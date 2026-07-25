@@ -26,7 +26,7 @@ Contained subprojects are:
 * ph-oton-mgrs - basic managers (since 10.2.0; previously in ph-oton-core)
 * ph-oton-core - basic web stuff
 * ph-oton-uicore - basic web UI stuff
-* ph-oton-icon - icon library
+* ph-oton-icon - icon library. **Deprecated for removal** - the icon libraries moved to the separate project https://github.com/phax/ph-oton-icon (Maven group `com.helger.photon.icon`)
 * ph-oton-tinymce4 - TinyMCE4 wrapper
 * ph-oton-datatables- Datatables.net wrapper
 * ph-oton-uictrls - misc web UI controls
@@ -68,6 +68,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 v10.2.4 - work in progress
+* Deprecated submodule `ph-oton-icon` for removal - the icon libraries moved to the separate project https://github.com/phax/ph-oton-icon (Maven group `com.helger.photon.icon`)
 * Updated to Jetty 12.1.10
 
 v10.2.3 - 2026-05-16
