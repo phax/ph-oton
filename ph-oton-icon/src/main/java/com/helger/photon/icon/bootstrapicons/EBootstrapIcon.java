@@ -39,6 +39,7 @@ import com.helger.photon.uicore.icon.IIcon;
  * @since 8.3.1
  */
 @Deprecated (forRemoval = true, since = "12.3.0")
+@SuppressWarnings ("removal")
 public enum EBootstrapIcon implements IIcon
 {
   @Deprecated (forRemoval = true, since = "12.3.0")

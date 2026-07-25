@@ -28,6 +28,7 @@ import com.helger.io.resource.IReadableResource;
  *
  * @author Philip Helger
  */
+@SuppressWarnings ("removal")
 public final class EIconCSSPathProviderTest
 {
   @Test

@@ -36,6 +36,7 @@ import com.helger.css.reader.CSSReaderSettings;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.photon.icon.EIconCSSPathProvider;
 
+@SuppressWarnings ("removal")
 public class MainExtractBootstrapIconCSSClasses
 {
   @NonNull
@@ -61,9 +62,8 @@ public class MainExtractBootstrapIconCSSClasses
       {
         final ICommonsList <ICSSSelectorMember> aMembers = aSelector.getAllMembers ();
         for (final ICSSSelectorMember aMember : aMembers)
-          if (aMember instanceof CSSSelectorSimpleMember)
+          if (aMember instanceof final CSSSelectorSimpleMember aSM)
           {
-            final CSSSelectorSimpleMember aSM = (CSSSelectorSimpleMember) aMember;
             if (aSM.isClass ())
               aClasses.add (aSM.getValue ());
             else

@@ -38,6 +38,7 @@ import com.helger.photon.uicore.icon.IIcon;
  * @author Philip Helger
  */
 @Deprecated (forRemoval = true, since = "12.3.0")
+@SuppressWarnings ("removal")
 public enum EFontAwesome5Icon implements IIcon
 {
   @Deprecated (forRemoval = true, since = "12.3.0")
