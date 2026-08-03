@@ -52,7 +52,7 @@ import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.interror.uihandler.IUIInternalErrorHandler;
 import com.helger.scope.mgr.ScopeSessionManager;
-import com.helger.servlet.ServletHelper;
+import com.helger.servlet.SafeHttpServletRequest;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.request.RequestLogger;
 import com.helger.smtp.data.EEmailType;
@@ -166,8 +166,8 @@ public final class InternalErrorHandler
     {
       // Check if an internal error was already sent for this stack trace
       // Init with -1 so that it gets send the first time
-      final MutableInt aMI = RW_LOCK.writeLockedGet ( () -> INT_ERR_CACHE.computeIfAbsent (sThrowableStackTrace,
-                                                                                           k -> new MutableInt (-1)));
+      final MutableInt aMI = RW_LOCK.writeLockedGet (() -> INT_ERR_CACHE.computeIfAbsent (sThrowableStackTrace,
+                                                                                          k -> new MutableInt (-1)));
       aMI.inc ();
 
       // Send only every Nth invocation!
@@ -208,10 +208,10 @@ public final class InternalErrorHandler
 
       // Main error thread dump
       final String sSeparator = "\n---------------------------------------------------------------\n";
-      StringBuilder sMailBody = new StringBuilder ().append (aMetadata.getAsString ())
-                                                    .append (sSeparator)
-                                                    .append (aCurrentThreadDescriptor.getAsString ())
-                                                    .append (sSeparator);
+      final StringBuilder sMailBody = new StringBuilder ().append (aMetadata.getAsString ())
+                                                          .append (sSeparator)
+                                                          .append (aCurrentThreadDescriptor.getAsString ())
+                                                          .append (sSeparator);
       if (aAllThreads != null)
       {
         // Add dump of all threads
@@ -322,7 +322,7 @@ public final class InternalErrorHandler
 
     // Custom data
     if (aCustomData != null)
-      for (final Map.Entry <String, String> aEntry : aCustomData.entrySet ())
+      for (final var aEntry : aCustomData.entrySet ())
         aMetadata.addField ("[Custom] " + aEntry.getKey (), aEntry.getValue ());
 
     // Get request scope if none is provided
@@ -363,15 +363,11 @@ public final class InternalErrorHandler
       }
 
       // Add all request attributes
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.attrs ()
-                                                                  .getSortedByKey (Comparator.naturalOrder ())
-                                                                  .entrySet ())
+      for (final var aEntry : aRequestScope.attrs ().getSortedByKey (Comparator.naturalOrder ()).entrySet ())
         aMetadata.addField ("[Request Attr] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
 
       // Add all request params
-      for (final Map.Entry <String, Object> aEntry : aRequestScope.params ()
-                                                                  .getSortedByKey (Comparator.naturalOrder ())
-                                                                  .entrySet ())
+      for (final var aEntry : aRequestScope.params ().getSortedByKey (Comparator.naturalOrder ()).entrySet ())
         aMetadata.addField ("[Request Param] " + aEntry.getKey (), String.valueOf (aEntry.getValue ()));
     }
     else
@@ -430,44 +426,20 @@ public final class InternalErrorHandler
     if (aRequestScope != null)
     {
       final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
-      try
-      {
-        for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
-          aMetadata.addRequestField (aEntry.getKey (), aEntry.getValue ());
-      }
-      catch (final Exception ex2)
-      {
-        LOGGER.error ("Failed to get request fields from " + aHttpRequest, ex2);
-      }
-      try
-      {
-        RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader (aMetadata::addRequestHeader, true);
-      }
-      catch (final Exception ex2)
-      {
-        LOGGER.error ("Failed to get request headers from " + aHttpRequest, ex2);
-      }
-      try
-      {
-        for (final Map.Entry <String, String> aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
-          aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
-      }
-      catch (final Exception ex2)
-      {
-        LOGGER.error ("Failed to get request parameters from " + aHttpRequest, ex2);
-      }
+      final SafeHttpServletRequest aSafeHttpRequest = SafeHttpServletRequest.wrap (aHttpRequest);
 
-      try
-      {
-        final Cookie [] aCookies = ServletHelper.getRequestCookies (aHttpRequest);
-        if (aCookies != null)
-          for (final Cookie aCookie : aCookies)
-            aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());
-      }
-      catch (final Exception ex2)
-      {
-        LOGGER.error ("Failed to get request cookies from " + aHttpRequest, ex2);
-      }
+      for (final var aEntry : RequestLogger.getRequestFieldMap (aHttpRequest).entrySet ())
+        aMetadata.addRequestField (aEntry.getKey (), aEntry.getValue ());
+
+      RequestHelper.getRequestHeaderMap (aHttpRequest).forEachSingleHeader (aMetadata::addRequestHeader, true);
+
+      for (final var aEntry : RequestLogger.getRequestParameterMap (aHttpRequest).entrySet ())
+        aMetadata.addRequestParameter (aEntry.getKey (), aEntry.getValue ());
+
+      final Cookie [] aCookies = aSafeHttpRequest.getCookies ();
+      if (aCookies != null)
+        for (final Cookie aCookie : aCookies)
+          aMetadata.addRequestCookie (aCookie.getName (), aCookie.getValue ());
     }
     else
       aMetadata.addField ("HttpServletRequest", "RequestScope does not contain an HttpServletRequest");

@@ -22,7 +22,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.http.CHttpHeader;
-import com.helger.servlet.ServletHelper;
+import com.helger.servlet.SafeHttpServletRequest;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
@@ -32,8 +32,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * An error handler that redirects to a certain error path with some special URL
- * parameters.
+ * An error handler that redirects to a certain error path with some special URL parameters.
  *
  * @author Philip Helger
  */
@@ -65,18 +64,17 @@ public class ErrorXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                              @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
-    final HttpServletRequest aRequest = aRequestScope.getRequest ();
+    final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
+    final SafeHttpServletRequest aSafeHttpRequest = SafeHttpServletRequest.wrap (aHttpRequest);
+
     final SimpleURL aURL = new SimpleURL (aRequestScope.getContextPath () + m_sServletPath);
     aURL.add (PARAM_HTTP_ERROR, true);
     aURL.addIfNotNull (PARAM_HTTP_STATUS_CODE,
-                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
-                                                                                    RequestDispatcher.ERROR_STATUS_CODE)));
+                       StringHelper.getToString (aSafeHttpRequest.getAttribute (RequestDispatcher.ERROR_STATUS_CODE)));
     aURL.addIfNotNull (PARAM_HTTP_STATUS_MESSAGE,
-                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
-                                                                                    RequestDispatcher.ERROR_MESSAGE)));
+                       StringHelper.getToString (aSafeHttpRequest.getAttribute (RequestDispatcher.ERROR_MESSAGE)));
     aURL.addIfNotNull (PARAM_HTTP_REQUEST_URI,
-                       StringHelper.getToString (ServletHelper.getRequestAttribute (aRequest,
-                                                                                    RequestDispatcher.ERROR_REQUEST_URI)));
+                       StringHelper.getToString (aSafeHttpRequest.getAttribute (RequestDispatcher.ERROR_REQUEST_URI)));
     aURL.addIfNotNull (PARAM_HTTP_REFERRER, aRequestScope.headers ().getFirstHeaderValue (CHttpHeader.REFERER));
     aUnifiedResponse.setRedirect (aURL);
   }

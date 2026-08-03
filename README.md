@@ -67,6 +67,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.3.1 - work in progress
+* Requires at least ph-web 11.4.3
+
 v10.3.0 - 2026-07-25
 * Updated to Jetty 12.1.10
 * Deprecated submodule `ph-oton-icon` for removal - the icon libraries moved to the separate project https://github.com/phax/ph-oton-icon (Maven group `com.helger.photon.icon`)
