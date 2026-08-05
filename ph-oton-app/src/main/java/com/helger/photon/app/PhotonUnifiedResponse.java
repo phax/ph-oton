@@ -62,6 +62,7 @@ import com.helger.mime.MimeType;
 import com.helger.photon.app.html.PhotonCSS;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.app.html.PhotonJS;
+import com.helger.servlet.SafeHttpServletRequest;
 import com.helger.servlet.mock.MockHttpServletRequest;
 import com.helger.servlet.request.RequestHelper;
 import com.helger.servlet.response.EContentDispositionType;
@@ -596,7 +597,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   public static PhotonUnifiedResponse createSimple (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
-    if (aHttpRequest instanceof MockHttpServletRequest)
+    if (aHttpRequest instanceof MockHttpServletRequest ||
+        (aHttpRequest instanceof final SafeHttpServletRequest aSHSR && aSHSR.getRequest () instanceof MockHttpServletRequest))
     {
       // No version and no method present
       return new PhotonUnifiedResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);
