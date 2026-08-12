@@ -67,7 +67,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.3.1 - work in progress
+v10.3.1 - 2026-08-12
 * Requires at least ph-web 11.4.3
 * Updated to ph-masterdata 8.2.0
 
