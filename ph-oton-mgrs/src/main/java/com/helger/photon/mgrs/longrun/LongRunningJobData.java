@@ -160,9 +160,8 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   }
 
   /**
-   * @return The technical success indicator, whether the scheduled job ran
-   *         without an exception. Is {@link ETriState#UNDEFINED} if the result
-   *         is not yet known. Never <code>null</code>.
+   * @return The technical success indicator, whether the scheduled job ran without an exception. Is
+   *         {@link ETriState#UNDEFINED} if the result is not yet known. Never <code>null</code>.
    */
   @NonNull
   public ETriState getExecutionSuccess ()
@@ -190,6 +189,5 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
                                        .append ("execSucces", m_eExecSuccess)
                                        .append ("result", m_aResult)
                                        .getToString ();
-
   }
 }

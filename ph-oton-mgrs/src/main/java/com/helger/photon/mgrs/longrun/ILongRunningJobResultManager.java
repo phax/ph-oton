@@ -49,7 +49,7 @@ public interface ILongRunningJobResultManager
    *        The ID of the job result to be deleted. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if the job result was deleted, {@link EChange#UNCHANGED} if no
    *         such job result exists.
-   * @since 10.3.2
+   * @since 10.4.0
    */
   @NonNull
   EChange deleteResult (@Nullable String sJobResultID);

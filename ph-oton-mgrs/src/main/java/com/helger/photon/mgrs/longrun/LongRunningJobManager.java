@@ -67,7 +67,7 @@ public final class LongRunningJobManager
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
     final LongRunningJobData aJobData = new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID);
-    m_aRWLock.writeLocked ( () -> m_aRunningJobs.put (sJobID, aJobData));
+    m_aRWLock.writeLocked (() -> m_aRunningJobs.put (sJobID, aJobData));
     return sJobID;
   }
 
@@ -92,7 +92,7 @@ public final class LongRunningJobManager
     ValueEnforcer.notNull (aResult, "Result");
 
     // Remove from running job list
-    final LongRunningJobData aJobData = m_aRWLock.writeLockedGet ( () -> {
+    final LongRunningJobData aJobData = m_aRWLock.writeLockedGet (() -> {
       final LongRunningJobData ret = m_aRunningJobs.remove (sJobID);
       if (ret == null)
         throw new IllegalArgumentException ("Illegal job ID '" + sJobID + "' passed!");

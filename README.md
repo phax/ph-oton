@@ -67,7 +67,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.3.2 - work in progress
+v10.4.0 - work in progress
 * Added the new method `ILongRunningJobResultManager.deleteResult (String)` incl. the implementations in `LongRunningJobResultManager` (XML backend) and `LongRunningJobResultManagerJDBC` (SQL backend).
   Previously long running job results could only be added and read, but never be removed - for results of type `FILE` that meant, that the referenced files piled up without any way to clean them up from the application.
   Note: deleting a job result does not delete a possibly referenced result file on disk.

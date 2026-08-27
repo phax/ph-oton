@@ -44,7 +44,7 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
     if (!aJobData.isEnded ())
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aJobData));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aJobData));
   }
 
   @NonNull
@@ -66,6 +66,6 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
     if (sJobResultID == null)
       return EChange.UNCHANGED;
 
-    return m_aRWLock.writeLockedGet ( () -> EChange.valueOf (internalDeleteItem (sJobResultID) != null));
+    return m_aRWLock.writeLockedGet (() -> EChange.valueOf (internalDeleteItem (sJobResultID) != null));
   }
 }
