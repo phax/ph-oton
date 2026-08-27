@@ -67,6 +67,13 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.3.2 - work in progress
+* Added the new method `ILongRunningJobResultManager.deleteResult (String)` incl. the implementations in `LongRunningJobResultManager` (XML backend) and `LongRunningJobResultManagerJDBC` (SQL backend).
+  Previously long running job results could only be added and read, but never be removed - for results of type `FILE` that meant, that the referenced files piled up without any way to clean them up from the application.
+  Note: deleting a job result does not delete a possibly referenced result file on disk.
+  Custom implementations of `ILongRunningJobResultManager` need to implement the new method.
+* Added the new enum entry `EWebPageText.PAGE_NAME_APPINFO_LONG_RUNNING_JOBS`
+
 v10.3.1 - 2026-08-12
 * Requires at least ph-web 11.4.3
 * Updated to ph-masterdata 8.2.0

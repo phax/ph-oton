@@ -23,6 +23,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.dao.DAOException;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
@@ -57,5 +58,14 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
   public LongRunningJobData getJobResultOfID (@Nullable final String sJobResultID)
   {
     return getOfID (sJobResultID);
+  }
+
+  @NonNull
+  public EChange deleteResult (@Nullable final String sJobResultID)
+  {
+    if (sJobResultID == null)
+      return EChange.UNCHANGED;
+
+    return m_aRWLock.writeLockedGet ( () -> EChange.valueOf (internalDeleteItem (sJobResultID) != null));
   }
 }

@@ -20,6 +20,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 
 /**
@@ -38,4 +39,18 @@ public interface ILongRunningJobResultManager
 
   @Nullable
   LongRunningJobData getJobResultOfID (@Nullable final String sJobResultID);
+
+  /**
+   * Delete the job result with the provided ID. Note: if the job result refers to an external
+   * resource - like a {@link ELongRunningJobResultType#FILE} - that resource is not touched by this
+   * method and must be deleted separately.
+   *
+   * @param sJobResultID
+   *        The ID of the job result to be deleted. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the job result was deleted, {@link EChange#UNCHANGED} if no
+   *         such job result exists.
+   * @since 10.3.2
+   */
+  @NonNull
+  EChange deleteResult (@Nullable String sJobResultID);
 }
