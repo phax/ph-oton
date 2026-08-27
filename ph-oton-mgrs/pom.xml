@@ -55,6 +55,10 @@
       <artifactId>ph-oton-audit</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger.telemetry</groupId>
+      <artifactId>ph-telemetry</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

@@ -73,6 +73,12 @@ v10.4.0 - work in progress
   Note: deleting a job result does not delete a possibly referenced result file on disk.
   Custom implementations of `ILongRunningJobResultManager` need to implement the new method.
 * Added the new enum entry `EWebPageText.PAGE_NAME_APPINFO_LONG_RUNNING_JOBS`
+* Integrated [ph-telemetry](https://github.com/phax/ph-telemetry) 1.0.1 into `LongRunningJobManager` - submodule `ph-oton-mgrs` now depends on `com.helger.telemetry:ph-telemetry`.
+  Every long running job execution is now covered by the span `photon.longrunningjob.execute` (started in `onStartJob`, closed in `onEndJob`), and the instruments `photon.longrunningjob.started`, `photon.longrunningjob.ended`, `photon.longrunningjob.running` and `photon.longrunningjob.duration` are emitted.
+  Emission goes through the vendor neutral ph-telemetry facades only - without a registered `ITelemetryTracerSPI` / `ITelemetryMeterSPI` everything degrades to cheap no-ops, so no observability backend is required.
+* Added the new classes `CLongRunningJobTelemetry` (the constant span, metric and attribute names) and `LongRunningJobMetrics` (the metric instruments), so that applications can reference the literally same names in dashboards, alerting rules and tests
+* Added the new method `LongRunningJobData.getJobID ()` returning the ID of the job *type* as provided by `ILongRunningJob.getJobID ()` - as opposed to `getID ()` which is the unique ID of a single job execution. It is not persisted and therefore `null` for job results read back from an `ILongRunningJobResultManager`
+* **Breaking API change**: the public constructor `LongRunningJobData (String, IMultilingualText, String)` was changed to `LongRunningJobData (String, String, IMultilingualText, String)` - the new second parameter is the job type ID
 
 v10.3.1 - 2026-08-12
 * Requires at least ph-web 11.4.3

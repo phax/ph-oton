@@ -66,7 +66,14 @@ public final class LongRunningJobManager
 
     // Create a new unique in-memory ID
     final String sJobID = GlobalIDFactory.getNewStringID ();
-    final LongRunningJobData aJobData = new LongRunningJobData (sJobID, aJob.getJobDescription (), sStartingUserID);
+    final LongRunningJobData aJobData = new LongRunningJobData (sJobID,
+                                                                aJob.getJobID (),
+                                                                aJob.getJobDescription (),
+                                                                sStartingUserID);
+
+    // Start the telemetry span before the job data is published to other threads
+    LongRunningJobTelemetry.onJobStart (aJobData);
+
     m_aRWLock.writeLocked (() -> m_aRunningJobs.put (sJobID, aJobData));
     return sJobID;
   }
@@ -102,8 +109,16 @@ public final class LongRunningJobManager
       return ret;
     });
 
-    // Remember it
-    m_aResultMgr.addResult (aJobData);
+    try
+    {
+      // Remember it
+      m_aResultMgr.addResult (aJobData);
+    }
+    finally
+    {
+      // Emit the metrics and close the telemetry span opened in onStartJob
+      LongRunningJobTelemetry.onJobEnd (aJobData, eExecSuccess, aResult);
+    }
   }
 
   @Nonnegative
