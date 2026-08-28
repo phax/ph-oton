@@ -38,27 +38,27 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLongRunningJobRunnable.class);
 
-  private final String m_sJobID;
+  private final String m_sJobType;
   private final IMultilingualText m_aDesc;
   private final Supplier <String> m_aCurrentUserIDProvider;
 
-  public AbstractLongRunningJobRunnable (@NonNull @Nonempty final String sJobID,
+  public AbstractLongRunningJobRunnable (@NonNull @Nonempty final String sJobType,
                                          @NonNull final IMultilingualText aJobDesc,
                                          @NonNull final Supplier <String> aCurrentUserIDProvider)
   {
-    ValueEnforcer.notEmpty (sJobID, "JobID");
+    ValueEnforcer.notEmpty (sJobType, "JobType");
     ValueEnforcer.notNull (aJobDesc, "JobDesc");
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    m_sJobID = sJobID;
+    m_sJobType = sJobType;
     m_aDesc = aJobDesc;
     m_aCurrentUserIDProvider = aCurrentUserIDProvider;
   }
 
   @NonNull
   @Nonempty
-  public String getJobID ()
+  public final String getJobType ()
   {
-    return m_sJobID;
+    return m_sJobType;
   }
 
   @NonNull
@@ -83,8 +83,8 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
     // Remember that a long running job is starting
     final String sLongRunningJobID = getLongRunningJobManager ().onStartJob (this, sUserID);
 
-    LOGGER.info ("Starting long running job '" +
-                 m_sJobID +
+    LOGGER.info ("Starting long running job of type '" +
+                 m_sJobType +
                  "' as user '" +
                  sUserID +
                  "' with unique ID '" +

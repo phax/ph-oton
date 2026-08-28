@@ -16,6 +16,9 @@
  */
 package com.helger.photon.mgrs.longrun;
 
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -45,6 +48,27 @@ public class LongRunningJobResultManager extends AbstractPhotonMapBasedWALDAO <L
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
     m_aRWLock.writeLocked (() -> internalCreateItem (aJobData));
+  }
+
+  @Nullable
+  private static Predicate <LongRunningJobData> _getJobTypeFilter (@Nullable final String sJobType)
+  {
+    if (sJobType == null)
+      return null;
+    return x -> sJobType.equals (x.getJobType ());
+  }
+
+  public void forEachJobResult (@Nullable final String sJobType,
+                                @NonNull final Consumer <? super LongRunningJobData> aConsumer)
+  {
+    findAll (_getJobTypeFilter (sJobType), aConsumer);
+  }
+
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <LongRunningJobData> getAllJobResults (@Nullable final String sJobType)
+  {
+    return getAll (_getJobTypeFilter (sJobType));
   }
 
   @NonNull

@@ -51,7 +51,9 @@ final class LongRunningJobTelemetry
   @NonNull
   private static TelemetryAttributes _getJobAttrs (@NonNull final LongRunningJobData aJobData)
   {
-    return TelemetryAttributes.builder ().put (CLongRunningJobTelemetry.ATTR_JOB_ID, aJobData.getJobID ()).build ();
+    return TelemetryAttributes.builder ()
+                              .put (CLongRunningJobTelemetry.ATTR_JOB_TYPE, aJobData.getJobType ())
+                              .build ();
   }
 
   /**
@@ -67,8 +69,8 @@ final class LongRunningJobTelemetry
     final ITelemetrySpan aSpan = Telemetry.startSpan (CLongRunningJobTelemetry.SPAN_EXECUTE,
                                                       ETelemetrySpanKind.INTERNAL);
     aSpan.setAttribute (CLongRunningJobTelemetry.ATTR_JOB_EXECUTION_ID, aJobData.getID ());
-    if (aJobData.getJobID () != null)
-      aSpan.setAttribute (CLongRunningJobTelemetry.ATTR_JOB_ID, aJobData.getJobID ());
+    if (aJobData.getJobType () != null)
+      aSpan.setAttribute (CLongRunningJobTelemetry.ATTR_JOB_TYPE, aJobData.getJobType ());
     if (aJobData.getStartingUserID () != null)
       aSpan.setAttribute (CLongRunningJobTelemetry.ATTR_JOB_USER_ID, aJobData.getStartingUserID ());
     aJobData.setTelemetrySpan (aSpan);
@@ -101,8 +103,8 @@ final class LongRunningJobTelemetry
 
     LongRunningJobMetrics.JOBS_ENDED.add (1,
                                           TelemetryAttributes.builder ()
-                                                             .put (CLongRunningJobTelemetry.ATTR_JOB_ID,
-                                                                   aJobData.getJobID ())
+                                                             .put (CLongRunningJobTelemetry.ATTR_JOB_TYPE,
+                                                                   aJobData.getJobType ())
                                                              .put (CLongRunningJobTelemetry.ATTR_JOB_SUCCESS, bSuccess)
                                                              .put (CLongRunningJobTelemetry.ATTR_JOB_RESULT_TYPE,
                                                                    sResultTypeID)
@@ -110,8 +112,8 @@ final class LongRunningJobTelemetry
 
     LongRunningJobMetrics.JOB_DURATION.record (aJobData.getDuration ().toMillis (),
                                                TelemetryAttributes.builder ()
-                                                                  .put (CLongRunningJobTelemetry.ATTR_JOB_ID,
-                                                                        aJobData.getJobID ())
+                                                                  .put (CLongRunningJobTelemetry.ATTR_JOB_TYPE,
+                                                                        aJobData.getJobType ())
                                                                   .put (CLongRunningJobTelemetry.ATTR_JOB_SUCCESS,
                                                                         bSuccess)
                                                                   .build ());

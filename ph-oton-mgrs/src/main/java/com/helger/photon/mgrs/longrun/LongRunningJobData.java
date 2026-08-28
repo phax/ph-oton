@@ -45,7 +45,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   private final String m_sID;
 
   // Initial job data
-  private final String m_sJobID;
+  private final String m_sJobType;
   private final IMultilingualText m_aJobDescription;
   private final LocalDateTime m_aStartDateTime;
   private final String m_sStartingUserID;
@@ -61,12 +61,12 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   private transient Thread m_aTelemetrySpanThread;
 
   public LongRunningJobData (@NonNull @Nonempty final String sID,
-                             @Nullable final String sJobID,
+                             @Nullable final String sJobType,
                              @NonNull final IMultilingualText aJobDescription,
                              @Nullable final String sStartingUserID)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_sJobID = sJobID;
+    m_sJobType = sJobType;
     m_aJobDescription = ValueEnforcer.notNull (aJobDescription, "JobDescription");
     m_aStartDateTime = PDTFactory.getCurrentLocalDateTime ();
     m_sStartingUserID = sStartingUserID;
@@ -74,6 +74,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   }
 
   LongRunningJobData (@NonNull @Nonempty final String sID,
+                      @Nullable final String sJobType,
                       @NonNull final LocalDateTime aStartDateTime,
                       @NonNull final LocalDateTime aEndDateTime,
                       @NonNull final ETriState eExecSuccess,
@@ -82,8 +83,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
                       @NonNull final LongRunningJobResult aResult)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    // The job type ID is not persisted
-    m_sJobID = null;
+    m_sJobType = sJobType;
     m_aStartDateTime = ValueEnforcer.notNull (aStartDateTime, "StartDateTime");
     m_aEndDateTime = ValueEnforcer.notNull (aEndDateTime, "EndDateTime");
     m_eExecSuccess = ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
@@ -100,17 +100,15 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   }
 
   /**
-   * @return The ID of the underlying job <em>type</em> as returned by
-   *         {@link ILongRunningJob#getJobID()} - as opposed to {@link #getID()} which is the unique
-   *         ID of this single job execution. This value is not persisted, so it is only available
-   *         for jobs that are currently running and <code>null</code> for job results that were read
-   *         back from an {@link ILongRunningJobResultManager}.
+   * @return The type of the underlying job as returned by {@link ILongRunningJob#getJobType()}.
+   *         This value is persisted, but it is <code>null</code> for job results that were written
+   *         before v10.4.0 and therefore don't contain a job type at all.
    * @since 10.4.0
    */
   @Nullable
-  public String getJobID ()
+  public String getJobType ()
   {
-    return m_sJobID;
+    return m_sJobType;
   }
 
   /**
@@ -240,7 +238,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .append ("jobID", m_sJobID)
+                                       .append ("jobType", m_sJobType)
                                        .append ("jobDescription", m_aJobDescription)
                                        .append ("startDateTime", m_aStartDateTime)
                                        .append ("startingUserID", m_sStartingUserID)

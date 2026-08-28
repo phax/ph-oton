@@ -16,24 +16,24 @@
  */
 package com.helger.photon.jdbc.basic;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.state.EChange;
 import com.helger.base.state.ESuccess;
-import com.helger.collection.commons.CommonsArrayList;
-import com.helger.collection.commons.ICommonsList;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
+import com.helger.db.jdbc.callback.IResultSetRowCallback;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.executor.DBResultRow;
 import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
+import com.helger.photon.mgrs.longrun.ILongRunningJob;
 import com.helger.photon.mgrs.longrun.ILongRunningJobResultManager;
 import com.helger.photon.mgrs.longrun.LongRunningJobData;
 import com.helger.photon.mgrs.longrun.LongRunningJobDataMicroTypeConverter;
@@ -95,9 +95,11 @@ public class LongRunningJobResultManagerJDBC extends AbstractJDBCEnabledManager 
     final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
-                                                              " (id, start_dt, job_data) VALUES (?, ?, ?)",
+                                                              " (id, job_type, start_dt, job_data) VALUES (?, ?, ?, ?)",
                                                               new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (aJobData.getID (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
+                                                                                                         DBValueHelper.getTrimmedToLength (aJobData.getJobType (),
+                                                                                                                                           ILongRunningJob.JOB_TYPE_MAX_LENGTH),
                                                                                                          DBValueHelper.toTimestamp (aJobData.getStartDateTime ()),
                                                                                                          _serialize (aJobData)));
       if (nCreated != 1)
@@ -110,22 +112,26 @@ public class LongRunningJobResultManagerJDBC extends AbstractJDBCEnabledManager 
                                        "' into the database");
   }
 
-  @NonNull
-  @ReturnsMutableCopy
-  public ICommonsList <LongRunningJobData> getAllJobResults ()
+  public void forEachJobResult (@Nullable final String sJobType,
+                                @NonNull final Consumer <? super LongRunningJobData> aConsumer)
   {
-    final ICommonsList <LongRunningJobData> ret = new CommonsArrayList <> ();
-    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT job_data FROM " +
-                                                                          m_sTableName +
-                                                                          " ORDER BY start_dt ASC");
-    if (aDBResult != null)
-      for (final DBResultRow aRow : aDBResult)
-      {
-        final LongRunningJobData aJobData = _deserialize (aRow.getAsString (0));
-        if (aJobData != null)
-          ret.add (aJobData);
-      }
-    return ret;
+    ValueEnforcer.notNull (aConsumer, "Consumer");
+
+    // Deserialize and consume row by row, so that never more than a single job result needs to be
+    // kept in memory
+    final IResultSetRowCallback aRowCallback = aRow -> {
+      final LongRunningJobData aJobData = _deserialize (aRow.getAsString (0));
+      if (aJobData != null)
+        aConsumer.accept (aJobData);
+    };
+
+    if (sJobType == null)
+      newExecutor ().queryAll ("SELECT job_data FROM " + m_sTableName + " ORDER BY start_dt ASC", aRowCallback);
+    else
+      newExecutor ().queryAll ("SELECT job_data FROM " + m_sTableName + " WHERE job_type=? ORDER BY start_dt ASC",
+                               new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sJobType,
+                                                                                                            ILongRunningJob.JOB_TYPE_MAX_LENGTH)),
+                               aRowCallback);
   }
 
   @Nullable

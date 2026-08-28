@@ -64,10 +64,10 @@ public final class LongRunningJobManager
   {
     ValueEnforcer.notNull (aJob, "Job");
 
-    // Create a new unique in-memory ID
-    final String sJobID = GlobalIDFactory.getNewStringID ();
+    // Create a new unique ID
+    final String sJobID = GlobalIDFactory.getNewPersistentStringID ();
     final LongRunningJobData aJobData = new LongRunningJobData (sJobID,
-                                                                aJob.getJobID (),
+                                                                aJob.getJobType (),
                                                                 aJob.getJobDescription (),
                                                                 sStartingUserID);
 

@@ -49,10 +49,10 @@ public final class CLongRunningJobTelemetry
 
   // === attribute keys ===
   /**
-   * The ID of the job <em>type</em> as returned by {@link ILongRunningJob#getJobID()}. This is the
-   * low cardinality dimension to group metrics by. May be absent, if the job type ID is unknown.
+   * The type of the job as returned by {@link ILongRunningJob#getJobType()}. This is the low
+   * cardinality dimension to group metrics by. May be absent, if the job type is unknown.
    */
-  public static final String ATTR_JOB_ID = "photon.job.id";
+  public static final String ATTR_JOB_TYPE = "photon.job.type";
   /**
    * The unique ID of a single job <em>execution</em> as returned by
    * {@link LongRunningJobData#getID()}. Only used as a span attribute - never as a metric attribute,

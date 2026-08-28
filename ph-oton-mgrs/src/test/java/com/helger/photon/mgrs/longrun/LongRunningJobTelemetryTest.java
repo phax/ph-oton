@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 import java.util.function.LongSupplier;
 
 import org.jspecify.annotations.NonNull;
@@ -34,7 +35,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.annotation.Nonempty;
-import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.id.factory.MemoryStaticIntIDFactory;
 import com.helger.base.state.EChange;
 import com.helger.base.state.ESuccess;
 import com.helger.collection.commons.CommonsArrayList;
@@ -62,7 +64,7 @@ import com.helger.text.ReadOnlyMultilingualText;
  */
 public final class LongRunningJobTelemetryTest
 {
-  private static final String JOB_ID = "unit-test-job";
+  private static final String JOB_TYPE = "unit-test";
 
   /** A span that only records what was set on it. */
   private static final class CapturingSpan implements ITelemetrySpan
@@ -241,11 +243,12 @@ public final class LongRunningJobTelemetryTest
       m_aResults.add (aJobData);
     }
 
-    @NonNull
-    @ReturnsMutableCopy
-    public ICommonsList <LongRunningJobData> getAllJobResults ()
+    public void forEachJobResult (@Nullable final String sJobType,
+                                  @NonNull final Consumer <? super LongRunningJobData> aConsumer)
     {
-      return m_aResults.getClone ();
+      for (final LongRunningJobData aJobData : m_aResults)
+        if (sJobType == null || sJobType.equals (aJobData.getJobType ()))
+          aConsumer.accept (aJobData);
     }
 
     @Nullable
@@ -266,9 +269,9 @@ public final class LongRunningJobTelemetryTest
   {
     @NonNull
     @Nonempty
-    public String getJobID ()
+    public String getJobType ()
     {
-      return JOB_ID;
+      return JOB_TYPE;
     }
 
     @NonNull
@@ -294,6 +297,9 @@ public final class LongRunningJobTelemetryTest
     // resolved once in its static initializer
     Telemetry.install (TRACER);
     TelemetryMetrics.install (METER);
+
+    // LongRunningJobManager.onStartJob creates a persistent ID
+    GlobalIDFactory.setPersistentIntIDFactory (new MemoryStaticIntIDFactory ());
   }
 
   @AfterClass
@@ -301,6 +307,7 @@ public final class LongRunningJobTelemetryTest
   {
     Telemetry.install (null);
     TelemetryMetrics.install (null);
+    GlobalIDFactory.setPersistentIntIDFactory (null);
   }
 
   @Before
@@ -332,14 +339,14 @@ public final class LongRunningJobTelemetryTest
     assertEquals (ETelemetrySpanKind.INTERNAL, aSpan.m_eKind);
     assertFalse (aSpan.m_bClosed);
     assertEquals (sExecutionID, aSpan.m_aAttrs.get (CLongRunningJobTelemetry.ATTR_JOB_EXECUTION_ID));
-    assertEquals (JOB_ID, aSpan.m_aAttrs.get (CLongRunningJobTelemetry.ATTR_JOB_ID));
+    assertEquals (JOB_TYPE, aSpan.m_aAttrs.get (CLongRunningJobTelemetry.ATTR_JOB_TYPE));
     assertEquals ("user-4711", aSpan.m_aAttrs.get (CLongRunningJobTelemetry.ATTR_JOB_USER_ID));
 
     // The start metrics were emitted
     final Measurement aStarted = _findMeasurement (CLongRunningJobTelemetry.METRIC_JOBS_STARTED);
     assertNotNull (aStarted);
     assertEquals (1, (int) aStarted.dValue ());
-    assertEquals (JOB_ID, aStarted.aAttrs ().get (CLongRunningJobTelemetry.ATTR_JOB_ID));
+    assertEquals (JOB_TYPE, aStarted.aAttrs ().get (CLongRunningJobTelemetry.ATTR_JOB_TYPE));
 
     final Measurement aRunningUp = _findMeasurement (CLongRunningJobTelemetry.METRIC_JOBS_RUNNING);
     assertNotNull (aRunningUp);
@@ -370,7 +377,7 @@ public final class LongRunningJobTelemetryTest
       if (aMeasurement.sInstrument ().equals (CLongRunningJobTelemetry.METRIC_JOBS_RUNNING))
       {
         dRunning += aMeasurement.dValue ();
-        assertEquals (JOB_ID, aMeasurement.aAttrs ().get (CLongRunningJobTelemetry.ATTR_JOB_ID));
+        assertEquals (JOB_TYPE, aMeasurement.aAttrs ().get (CLongRunningJobTelemetry.ATTR_JOB_TYPE));
         assertEquals (1, aMeasurement.aAttrs ().size ());
       }
     assertEquals (0, (int) dRunning);
@@ -401,7 +408,7 @@ public final class LongRunningJobTelemetryTest
   }
 
   @Test
-  public void testJobTypeIDIsNotPersisted ()
+  public void testJobTypeIsPersisted ()
   {
     final MockResultManager aResultMgr = new MockResultManager ();
     final LongRunningJobManager aMgr = new LongRunningJobManager (aResultMgr);
@@ -412,17 +419,48 @@ public final class LongRunningJobTelemetryTest
 
     final LongRunningJobData aJobData = aResultMgr.getJobResultOfID (sExecutionID);
     assertNotNull (aJobData);
-    // In memory the job type ID is present ...
-    assertEquals (JOB_ID, aJobData.getJobID ());
+    // In memory the job type is present ...
+    assertEquals (JOB_TYPE, aJobData.getJobType ());
     // ... but the span reference is released again
     assertNull (aJobData.getTelemetrySpan ());
 
-    // ... and it is not part of the persisted representation
+    // ... and it survives the persistence round trip together with the unique execution ID
     final LongRunningJobData aReadBack = new LongRunningJobDataMicroTypeConverter ().convertToNative (new LongRunningJobDataMicroTypeConverter ().convertToMicroElement (aJobData,
                                                                                                                                                                         null,
                                                                                                                                                                         "job"));
     assertNotNull (aReadBack);
     assertEquals (sExecutionID, aReadBack.getID ());
-    assertNull (aReadBack.getJobID ());
+    assertEquals (JOB_TYPE, aReadBack.getJobType ());
+  }
+
+  @Test
+  public void testFilterJobResultsByJobType ()
+  {
+    final MockResultManager aResultMgr = new MockResultManager ();
+    final LongRunningJobManager aMgr = new LongRunningJobManager (aResultMgr);
+    final MockJob aJob = new MockJob ();
+
+    final String sExecutionID = aMgr.onStartJob (aJob, "user-4711");
+    aMgr.onEndJob (sExecutionID, ESuccess.SUCCESS, aJob.createLongRunningJobResult ());
+
+    // A job result without a job type - as it is read back from a pre v10.4.0 persistence layer
+    final LongRunningJobData aLegacy = new LongRunningJobData ("no-type-id",
+                                                               null,
+                                                               new ReadOnlyMultilingualText (Locale.ENGLISH,
+                                                                                             "Legacy job"),
+                                                               "user-4711");
+    aLegacy.onJobEnd (ESuccess.SUCCESS, LongRunningJobResult.createText ("legacy"));
+    aResultMgr.addResult (aLegacy);
+
+    // No filter - everything is returned
+    assertEquals (2, aResultMgr.getAllJobResults ().size ());
+
+    // Matching filter
+    final ICommonsList <LongRunningJobData> aMatching = aResultMgr.getAllJobResults (JOB_TYPE);
+    assertEquals (1, aMatching.size ());
+    assertEquals (sExecutionID, aMatching.getFirstOrNull ().getID ());
+
+    // Non-matching filter - job results without a job type never match
+    assertTrue (aResultMgr.getAllJobResults ("something-else").isEmpty ());
   }
 }

@@ -41,6 +41,7 @@ import com.helger.xml.microdom.serialize.MicroReader;
 public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeConverter <LongRunningJobData>
 {
   private static final String ATTR_ID = "id";
+  private static final String ATTR_JOBTYPE = "jobtype";
   private static final String ATTR_STARTDT = "startdt";
   private static final String ATTR_ENDDT = "enddt";
   private static final String ATTR_EXECSUCCESS = "execsuccess";
@@ -56,6 +57,7 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   {
     final IMicroElement eJobData = new MicroElement (sNamespaceURI, sTagName);
     eJobData.setAttribute (ATTR_ID, aValue.getID ());
+    eJobData.setAttribute (ATTR_JOBTYPE, aValue.getJobType ());
 
     // Description
     eJobData.addChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (),
@@ -79,6 +81,8 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
   public LongRunningJobData convertToNative (@NonNull final IMicroElement aElement)
   {
     final String sID = aElement.getAttributeValue (ATTR_ID);
+    // Is null for job results written before v10.4.0
+    final String sJobType = aElement.getAttributeValue (ATTR_JOBTYPE);
     final IMultilingualText aJobDescription = MicroTypeConverter.convertToNative (aElement.getFirstChildElement (ELEMENT_DESCRIPTION),
                                                                                   ReadOnlyMultilingualText.class);
     final LocalDateTime aStartDateTime = aElement.getAttributeValueWithConversion (ATTR_STARTDT, LocalDateTime.class);
@@ -100,6 +104,7 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
       default -> throw new IllegalStateException ("Unknown type: " + eResultType);
     };
     return new LongRunningJobData (sID,
+                                   sJobType,
                                    aStartDateTime,
                                    aEndDateTime,
                                    eExecSuccess,

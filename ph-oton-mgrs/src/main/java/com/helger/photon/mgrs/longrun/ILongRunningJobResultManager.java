@@ -16,11 +16,14 @@
  */
 package com.helger.photon.mgrs.longrun;
 
+import java.util.function.Consumer;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 
 /**
@@ -33,9 +36,49 @@ public interface ILongRunningJobResultManager
 {
   void addResult (@NonNull final LongRunningJobData aJobData);
 
+  /**
+   * Invoke the provided consumer for each job result, without keeping all job results in memory at
+   * once. Note: depending on the implementation, the consumer may be invoked while an internal lock
+   * is held, so it should be as short as possible and it may not modify this manager.
+   *
+   * @param sJobType
+   *        The job type to filter for, as returned by {@link LongRunningJobData#getJobType()}. If
+   *        this is <code>null</code>, all job results are returned. Job results without a job type
+   *        never match a non-<code>null</code> filter.
+   * @param aConsumer
+   *        The consumer to be invoked for each matching job result. May not be <code>null</code>.
+   * @since 10.4.0
+   */
+  void forEachJobResult (@Nullable String sJobType, @NonNull Consumer <? super LongRunningJobData> aConsumer);
+
+  /**
+   * Get all job results of the provided job type.
+   *
+   * @param sJobType
+   *        The job type to filter for, as returned by {@link LongRunningJobData#getJobType()}. If
+   *        this is <code>null</code>, all job results are returned. Job results without a job type
+   *        never match a non-<code>null</code> filter.
+   * @return A non-<code>null</code> but maybe empty list of all matching job results.
+   * @since 10.4.0
+   */
   @NonNull
   @ReturnsMutableCopy
-  ICommonsList <LongRunningJobData> getAllJobResults ();
+  default ICommonsList <LongRunningJobData> getAllJobResults (@Nullable final String sJobType)
+  {
+    final ICommonsList <LongRunningJobData> ret = new CommonsArrayList <> ();
+    forEachJobResult (sJobType, ret::add);
+    return ret;
+  }
+
+  /**
+   * @return A non-<code>null</code> but maybe empty list of all job results.
+   */
+  @NonNull
+  @ReturnsMutableCopy
+  default ICommonsList <LongRunningJobData> getAllJobResults ()
+  {
+    return getAllJobResults ((String) null);
+  }
 
   @Nullable
   LongRunningJobData getJobResultOfID (@Nullable final String sJobResultID);
