@@ -127,7 +127,10 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
         aSW.stop ();
         CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
-    }, m_aES);
+    }, m_aES).exceptionally (ex -> {
+      LOGGER.error ("Unexpected exception in ph-oton runner '" + sActionName + "'", ex);
+      return null;
+    });
   }
 
   @NonNull
@@ -150,7 +153,10 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
         aSW.stop ();
         CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
-    }, m_aES);
+    }, m_aES).exceptionally (ex -> {
+      LOGGER.error ("Unexpected exception in ph-oton runner '" + sActionName + "'", ex);
+      return null;
+    });
   }
 
   @NonNull
@@ -173,7 +179,10 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
         aSW.stop ();
         CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
-    }, m_aES);
+    }, m_aES).exceptionally (ex -> {
+      LOGGER.error ("Unexpected exception in ph-oton supplier '" + sActionName + "'", ex);
+      return null;
+    });
   }
 
   @NonNull
@@ -197,6 +206,9 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
         aSW.stop ();
         CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
       }
-    }, m_aES);
+    }, m_aES).exceptionally (ex -> {
+      LOGGER.error ("Unexpected exception in ph-oton supplier '" + sActionName + "'", ex);
+      return null;
+    });
   }
 }

@@ -80,6 +80,7 @@ v10.4.0 - work in progress
 * Added the new classes `CLongRunningJobTelemetry` (the constant span, metric and attribute names) and `LongRunningJobMetrics` (the metric instruments), so that applications can reference the literally same names in dashboards, alerting rules and tests
 * Added the new method `LongRunningJobData.getJobID ()` returning the ID of the job *type* as provided by `ILongRunningJob.getJobID ()` - as opposed to `getID ()` which is the unique ID of a single job execution. It is not persisted and therefore `null` for job results read back from an `ILongRunningJobResultManager`
 * **Breaking API change**: the public constructor `LongRunningJobData (String, IMultilingualText, String)` was changed to `LongRunningJobData (String, String, IMultilingualText, String)` - the new second parameter is the job type ID
+* All `CompletableFuture` instances created by `PhotonWorkerPool` (`run`, `runThrowing`, `supply` and `supplyThrowing`) now have an `exceptionally` handler that logs otherwise unnoticed asynchronous failures (e.g. `Error`s or rejected executions). Previously such exceptions were only contained in the returned future and were silently lost if the caller never evaluated it.
 
 v10.3.1 - 2026-08-12
 * Requires at least ph-web 11.4.3
