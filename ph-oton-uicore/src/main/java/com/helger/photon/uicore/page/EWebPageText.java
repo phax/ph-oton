@@ -74,6 +74,7 @@ public enum EWebPageText implements IHasDisplayTextWithArgs
   PAGE_NAME_APPINFO_API ("APIs", "APIs"),
   PAGE_NAME_APPINFO_CONFIG_FILES ("Konfigurationsdateien", "Configuration Files"),
   PAGE_NAME_APPINFO_GO ("Go Mappings", "Go Mappings"),
+  PAGE_NAME_APPINFO_LONG_RUNNING_JOBS ("Lang laufende Jobs", "Long running jobs"),
   PAGE_NAME_APPINFO_PATH_MAPPER ("AppID-Pfad-Mapping", "AppID Path Mapping"),
   PAGE_NAME_APPINFO_SCHEDULER ("Geplante Tasks", "Scheduled Actions"),
   PAGE_NAME_APPINFO_GLOBAL_SCOPE ("Globaler Scope", "Global Scope"),

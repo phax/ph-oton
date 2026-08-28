@@ -25,6 +25,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
+import com.helger.base.state.EChange;
 import com.helger.base.state.ESuccess;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
@@ -141,5 +142,16 @@ public class LongRunningJobResultManagerJDBC extends AbstractJDBCEnabledManager 
       return null;
 
     return _deserialize (aDBResult.get ().getAsString (0));
+  }
+
+  @NonNull
+  public EChange deleteResult (@Nullable final String sJobResultID)
+  {
+    if (sJobResultID == null)
+      return EChange.UNCHANGED;
+
+    final long nDeleted = newExecutor ().insertOrUpdateOrDelete ("DELETE FROM " + m_sTableName + " WHERE id=?",
+                                                                 new ConstantPreparedStatementDataProvider (sJobResultID));
+    return EChange.valueOf (nDeleted > 0);
   }
 }

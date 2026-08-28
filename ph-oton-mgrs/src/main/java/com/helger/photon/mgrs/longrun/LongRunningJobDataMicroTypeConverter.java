@@ -59,8 +59,8 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
 
     // Description
     eJobData.addChild (MicroTypeConverter.convertToMicroElement (aValue.getJobDescription (),
-                                                                    sNamespaceURI,
-                                                                    ELEMENT_DESCRIPTION));
+                                                                 sNamespaceURI,
+                                                                 ELEMENT_DESCRIPTION));
 
     eJobData.setAttributeWithConversion (ATTR_STARTDT, aValue.getStartDateTime ());
     eJobData.setAttribute (ATTR_STARTINGUSERID, aValue.getStartingUserID ());
@@ -90,28 +90,15 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
     final IMicroElement eResult = aElement.getFirstChildElement (ELEMENT_RESULT);
     final ELongRunningJobResultType eResultType = ELongRunningJobResultType.getFromIDOrNull (eResult.getAttributeValue (ATTR_TYPE));
     final String sResultText = eResult.getTextContent ();
-    LongRunningJobResult aResult;
-    switch (eResultType)
+    final LongRunningJobResult aResult = switch (eResultType)
     {
-      case FILE:
-        aResult = LongRunningJobResult.createFile (new File (sResultText));
-        break;
-      case XML:
-        aResult = LongRunningJobResult.createXML (MicroReader.readMicroXML (sResultText));
-        break;
-      case TEXT:
-        aResult = LongRunningJobResult.createText (sResultText);
-        break;
-      case LINK:
-        aResult = LongRunningJobResult.createLink (new SimpleURL (sResultText));
-        break;
-      case JSON:
-        aResult = LongRunningJobResult.createJson (JsonReader.readFromString (sResultText));
-        break;
-      default:
-        throw new IllegalStateException ("Unknown type: " + eResultType);
-    }
-
+      case FILE -> LongRunningJobResult.createFile (new File (sResultText));
+      case XML -> LongRunningJobResult.createXML (MicroReader.readMicroXML (sResultText));
+      case TEXT -> LongRunningJobResult.createText (sResultText);
+      case LINK -> LongRunningJobResult.createLink (new SimpleURL (sResultText));
+      case JSON -> LongRunningJobResult.createJson (JsonReader.readFromString (sResultText));
+      default -> throw new IllegalStateException ("Unknown type: " + eResultType);
+    };
     return new LongRunningJobData (sID,
                                    aStartDateTime,
                                    aEndDateTime,

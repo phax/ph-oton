@@ -61,6 +61,6 @@ public final class ObjectLockManager extends AbstractGlobalSingleton
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("mgr", m_aMgr).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("Mgr", m_aMgr).getToString ();
   }
 }

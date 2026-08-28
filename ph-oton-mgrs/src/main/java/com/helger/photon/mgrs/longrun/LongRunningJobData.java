@@ -31,6 +31,7 @@ import com.helger.base.state.ESuccess;
 import com.helger.base.state.ETriState;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
+import com.helger.telemetry.ITelemetrySpan;
 import com.helger.text.IMultilingualText;
 
 /**
@@ -44,6 +45,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   private final String m_sID;
 
   // Initial job data
+  private final String m_sJobID;
   private final IMultilingualText m_aJobDescription;
   private final LocalDateTime m_aStartDateTime;
   private final String m_sStartingUserID;
@@ -53,11 +55,18 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   private ETriState m_eExecSuccess;
   private LongRunningJobResult m_aResult;
 
-  public LongRunningJobData (@NonNull @Nonempty final String sJobID,
+  // Telemetry state - only relevant as long as the job is running and therefore neither serialized
+  // nor persisted
+  private transient ITelemetrySpan m_aTelemetrySpan;
+  private transient Thread m_aTelemetrySpanThread;
+
+  public LongRunningJobData (@NonNull @Nonempty final String sID,
+                             @Nullable final String sJobID,
                              @NonNull final IMultilingualText aJobDescription,
                              @Nullable final String sStartingUserID)
   {
-    m_sID = ValueEnforcer.notEmpty (sJobID, "JobID");
+    m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    m_sJobID = sJobID;
     m_aJobDescription = ValueEnforcer.notNull (aJobDescription, "JobDescription");
     m_aStartDateTime = PDTFactory.getCurrentLocalDateTime ();
     m_sStartingUserID = sStartingUserID;
@@ -73,6 +82,8 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
                       @NonNull final LongRunningJobResult aResult)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    // The job type ID is not persisted
+    m_sJobID = null;
     m_aStartDateTime = ValueEnforcer.notNull (aStartDateTime, "StartDateTime");
     m_aEndDateTime = ValueEnforcer.notNull (aEndDateTime, "EndDateTime");
     m_eExecSuccess = ValueEnforcer.notNull (eExecSuccess, "ExecSuccess");
@@ -86,6 +97,20 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   public String getID ()
   {
     return m_sID;
+  }
+
+  /**
+   * @return The ID of the underlying job <em>type</em> as returned by
+   *         {@link ILongRunningJob#getJobID()} - as opposed to {@link #getID()} which is the unique
+   *         ID of this single job execution. This value is not persisted, so it is only available
+   *         for jobs that are currently running and <code>null</code> for job results that were read
+   *         back from an {@link ILongRunningJobResultManager}.
+   * @since 10.4.0
+   */
+  @Nullable
+  public String getJobID ()
+  {
+    return m_sJobID;
   }
 
   /**
@@ -113,6 +138,39 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   public String getStartingUserID ()
   {
     return m_sStartingUserID;
+  }
+
+  /**
+   * Remember the telemetry span that covers this job execution, together with the thread that
+   * created it. The span is created in
+   * {@link LongRunningJobManager#onStartJob(ILongRunningJob, String)} and must be closed again when
+   * the job ends.
+   *
+   * @param aSpan
+   *        The span to remember. May be <code>null</code>.
+   */
+  void setTelemetrySpan (@Nullable final ITelemetrySpan aSpan)
+  {
+    m_aTelemetrySpan = aSpan;
+    m_aTelemetrySpanThread = aSpan == null ? null : Thread.currentThread ();
+  }
+
+  /**
+   * @return The telemetry span that covers this job execution. May be <code>null</code>.
+   */
+  @Nullable
+  ITelemetrySpan getTelemetrySpan ()
+  {
+    return m_aTelemetrySpan;
+  }
+
+  /**
+   * @return The thread on which the telemetry span was created. May be <code>null</code>.
+   */
+  @Nullable
+  Thread getTelemetrySpanThread ()
+  {
+    return m_aTelemetrySpanThread;
   }
 
   void onJobEnd (@NonNull final ESuccess eExecSuccess, @NonNull final LongRunningJobResult aResult)
@@ -160,9 +218,8 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   }
 
   /**
-   * @return The technical success indicator, whether the scheduled job ran
-   *         without an exception. Is {@link ETriState#UNDEFINED} if the result
-   *         is not yet known. Never <code>null</code>.
+   * @return The technical success indicator, whether the scheduled job ran without an exception. Is
+   *         {@link ETriState#UNDEFINED} if the result is not yet known. Never <code>null</code>.
    */
   @NonNull
   public ETriState getExecutionSuccess ()
@@ -183,6 +240,7 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
+                                       .append ("jobID", m_sJobID)
                                        .append ("jobDescription", m_aJobDescription)
                                        .append ("startDateTime", m_aStartDateTime)
                                        .append ("startingUserID", m_sStartingUserID)
@@ -190,6 +248,5 @@ public final class LongRunningJobData implements IHasID <String>, Serializable
                                        .append ("execSucces", m_eExecSuccess)
                                        .append ("result", m_aResult)
                                        .getToString ();
-
   }
 }
