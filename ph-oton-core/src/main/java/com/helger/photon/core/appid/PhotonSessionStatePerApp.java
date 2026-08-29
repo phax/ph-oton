@@ -48,45 +48,45 @@ public final class PhotonSessionStatePerApp implements Serializable
   @Nullable
   public IMenuTree getMenuTree ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aMenuTree);
+    return m_aRWLock.readLockedGet (() -> m_aMenuTree);
   }
 
   @NonNull
   public PhotonSessionStatePerApp setMenuTree (@Nullable final IMenuTree aMenuTree)
   {
-    m_aRWLock.writeLocked ( () -> m_aMenuTree = aMenuTree);
+    m_aRWLock.writeLocked (() -> m_aMenuTree = aMenuTree);
     return this;
   }
 
   @Nullable
   public IMenuItemPage getMenuItem ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aMenuItem);
+    return m_aRWLock.readLockedGet (() -> m_aMenuItem);
   }
 
   @NonNull
   public PhotonSessionStatePerApp setMenuItem (@Nullable final IMenuItemPage aMenuItem)
   {
-    m_aRWLock.writeLocked ( () -> m_aMenuItem = aMenuItem);
+    m_aRWLock.writeLocked (() -> m_aMenuItem = aMenuItem);
     return this;
   }
 
   @Nullable
   public Locale getDisplayLocale ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aDisplayLocale);
+    return m_aRWLock.readLockedGet (() -> m_aDisplayLocale);
   }
 
   @NonNull
   public PhotonSessionStatePerApp setDisplayLocale (@Nullable final Locale aDisplayLocale)
   {
-    m_aRWLock.writeLocked ( () -> m_aDisplayLocale = aDisplayLocale);
+    m_aRWLock.writeLocked (() -> m_aDisplayLocale = aDisplayLocale);
     return this;
   }
 
   public boolean isNotEmpty ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_aMenuTree != null || m_aMenuItem != null || m_aDisplayLocale != null);
+    return m_aRWLock.readLockedBoolean (() -> m_aMenuTree != null || m_aMenuItem != null || m_aDisplayLocale != null);
   }
 
   @Override

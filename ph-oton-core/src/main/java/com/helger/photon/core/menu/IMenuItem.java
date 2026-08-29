@@ -36,8 +36,7 @@ public interface IMenuItem extends IMenuObject, IHasDisplayText
   String getTarget ();
 
   /**
-   * @return <code>true</code> if an explicit target is defined,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if an explicit target is defined, <code>false</code> otherwise.
    */
   default boolean hasTarget ()
   {

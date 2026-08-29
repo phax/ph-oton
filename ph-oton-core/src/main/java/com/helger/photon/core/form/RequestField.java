@@ -26,8 +26,7 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.RequestFieldData;
 
 /**
- * Default implementation of a request field with a name and an optional default
- * value.
+ * Default implementation of a request field with a name and an optional default value.
  * 
  * @author Philip Helger
  */
@@ -37,8 +36,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * Copy constructor
    *
    * @param aRF
-   *        The request field to copy the values from. May not be
-   *        <code>null</code>.
+   *        The request field to copy the values from. May not be <code>null</code>.
    */
   public RequestField (@NonNull final RequestFieldData aRF)
   {
@@ -62,8 +60,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param sDefaultValue
-   *        The default value to use, if no value is present in the request
-   *        scope.
+   *        The default value to use, if no value is present in the request scope.
    */
   public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
   {
@@ -76,8 +73,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param aDefaultValue
-   *        The default value to be used. Is converted to a String. May be
-   *        <code>null</code>.
+   *        The default value to be used. Is converted to a String. May be <code>null</code>.
    */
   public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final BigDecimal aDefaultValue)
   {
@@ -103,8 +99,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param aDefaultValue
-   *        The default value to be used. Is converted to a String. May be
-   *        <code>null</code>.
+   *        The default value to be used. Is converted to a String. May be <code>null</code>.
    */
   public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final Integer aDefaultValue)
   {
@@ -130,8 +125,7 @@ public class RequestField extends RequestFieldData implements IHCRequestField
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param aDefaultValue
-   *        The default value to be used. Is converted to a String. May be
-   *        <code>null</code>.
+   *        The default value to be used. Is converted to a String. May be <code>null</code>.
    */
   public RequestField (@NonNull @Nonempty final String sFieldName, @Nullable final Long aDefaultValue)
   {

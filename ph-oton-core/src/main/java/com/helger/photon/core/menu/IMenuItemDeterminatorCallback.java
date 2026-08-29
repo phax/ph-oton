@@ -28,19 +28,18 @@ import com.helger.tree.withid.DefaultTreeItemWithID;
  *
  * @author Philip Helger
  */
-public interface IMenuItemDeterminatorCallback extends IHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
+public interface IMenuItemDeterminatorCallback extends
+                                               IHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>>
 {
   /**
-   * @return The menu tree on which this item determinator works. Never
-   *         <code>null</code>.
+   * @return The menu tree on which this item determinator works. Never <code>null</code>.
    */
   @NonNull
   IMenuTree getMenuTree ();
 
   /**
-   * @return A map with all items to be displayed, where the key is the menu
-   *         item ID and the value is the expansion state of the item (and never
-   *         <code>null</code>).
+   * @return A map with all items to be displayed, where the key is the menu item ID and the value
+   *         is the expansion state of the item (and never <code>null</code>).
    */
   @NonNull
   @ReturnsMutableCopy

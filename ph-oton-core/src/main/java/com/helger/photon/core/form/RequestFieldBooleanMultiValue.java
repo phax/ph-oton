@@ -25,8 +25,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 
 /**
- * Special request field specially for check boxes where the same field name can
- * be used with different values.
+ * Special request field specially for check boxes where the same field name can be used with
+ * different values.
  *
  * @author Philip Helger
  */

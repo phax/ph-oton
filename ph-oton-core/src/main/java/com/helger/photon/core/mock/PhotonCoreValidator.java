@@ -40,8 +40,8 @@ public final class PhotonCoreValidator
   {}
 
   /**
-   * Validate the content of the <code>web.xml</code> file. It checks if all
-   * referenced classes are loadable!
+   * Validate the content of the <code>web.xml</code> file. It checks if all referenced classes are
+   * loadable!
    *
    * @throws Exception
    *         In case of an error.

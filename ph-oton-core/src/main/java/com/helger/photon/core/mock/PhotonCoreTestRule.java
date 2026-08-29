@@ -34,10 +34,9 @@ import com.helger.web.scope.mock.MockServletRequestListenerScopeAware;
 import com.helger.web.scope.mock.WebScopeTestRule;
 
 /**
- * A JUnit test rule that is suitable for all ph-oton projects. It is optimized
- * for the use within Java libraries. For the use within Java web applications
- * using {@link PhotonCoreWebAppTestRule} is preferred, since the correct
- * resource base path is used.
+ * A JUnit test rule that is suitable for all ph-oton projects. It is optimized for the use within
+ * Java libraries. For the use within Java web applications using {@link PhotonCoreWebAppTestRule}
+ * is preferred, since the correct resource base path is used.
  *
  * @author Philip Helger
  */
@@ -46,8 +45,7 @@ public class PhotonCoreTestRule extends WebScopeTestRule
   public static final File RESOURCE_BASE_FILE = new File ("target/test-classes").getAbsoluteFile ();
 
   /**
-   * @return The default Servlet Context init parameters to be used. Never
-   *         <code>null</code>.
+   * @return The default Servlet Context init parameters to be used. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -86,6 +84,9 @@ public class PhotonCoreTestRule extends WebScopeTestRule
     // Use the special resource base path
     // Use default resource provider
     // This is, where all the ServletContext Listeners are invoked
-    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
+    return MockServletContext.create (sContextPath,
+                                      RESOURCE_BASE_FILE.getAbsolutePath (),
+                                      (IReadableResourceProvider) null,
+                                      aInitParams);
   }
 }

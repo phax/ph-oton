@@ -30,8 +30,8 @@ import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.security.util.SecurityHelper;
 
 /**
- * This filter matches any menu item if a user is logged in and if the user is
- * assigned to the specified user group ID.
+ * This filter matches any menu item if a user is logged in and if the user is assigned to the
+ * specified user group ID.
  *
  * @author Philip Helger
  */
@@ -56,7 +56,8 @@ public class MenuObjectFilterUserAssignedToUserGroup extends AbstractMenuObjectF
   @Nullable
   public String getDisplayText (@NonNull final Locale aContentLocale)
   {
-    return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale, m_sUserGroupID);
+    return EPhotonCoreText.MENU_OBJECT_FILTER_USER_ASSIGNED_TO_GROUP.getDisplayTextWithArgs (aContentLocale,
+                                                                                             m_sUserGroupID);
   }
 
   public boolean test (@Nullable final IMenuObject aValue)

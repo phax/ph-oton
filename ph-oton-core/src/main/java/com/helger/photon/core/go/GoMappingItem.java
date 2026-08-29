@@ -48,7 +48,10 @@ public class GoMappingItem implements Serializable
                         @NonNull @Nonempty final String sTargetURL,
                         final boolean bIsEditable)
   {
-    this (sKey, bIsInternal, bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL), bIsEditable);
+    this (sKey,
+          bIsInternal,
+          bIsInternal ? LinkHelper.getURLWithContext (sTargetURL) : new SimpleURL (sTargetURL),
+          bIsEditable);
   }
 
   public GoMappingItem (@NonNull @Nonempty final String sKey,
@@ -63,8 +66,8 @@ public class GoMappingItem implements Serializable
   }
 
   /**
-   * @return The URL key, under which the item is reachable. May neither be
-   *         <code>null</code> nor empty.
+   * @return The URL key, under which the item is reachable. May neither be <code>null</code> nor
+   *         empty.
    */
   @NonNull
   @Nonempty
@@ -74,8 +77,8 @@ public class GoMappingItem implements Serializable
   }
 
   /**
-   * @return <code>true</code> if this is an internal URL, <code>false</code> if
-   *         it is an external URL
+   * @return <code>true</code> if this is an internal URL, <code>false</code> if it is an external
+   *         URL
    */
   public boolean isInternal ()
   {
@@ -83,8 +86,7 @@ public class GoMappingItem implements Serializable
   }
 
   /**
-   * @return The target URL which should be invoked. May not be
-   *         <code>null</code>.
+   * @return The target URL which should be invoked. May not be <code>null</code>.
    */
   @NonNull
   public ISimpleURL getTargetURLReadonly ()
@@ -93,8 +95,7 @@ public class GoMappingItem implements Serializable
   }
 
   /**
-   * @return The target URL which should be invoked. May not be
-   *         <code>null</code>.
+   * @return The target URL which should be invoked. May not be <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -104,8 +105,7 @@ public class GoMappingItem implements Serializable
   }
 
   /**
-   * @return The target URL which should be invoked as a string. May not be
-   *         <code>null</code>.
+   * @return The target URL which should be invoked as a string. May not be <code>null</code>.
    */
   @NonNull
   public String getTargetURLAsString ()
@@ -143,7 +143,11 @@ public class GoMappingItem implements Serializable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sKey).append (m_bIsInternal).append (m_aTargetURL).append (m_bIsEditable).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sKey)
+                                       .append (m_bIsInternal)
+                                       .append (m_aTargetURL)
+                                       .append (m_bIsEditable)
+                                       .getHashCode ();
   }
 
   @Override

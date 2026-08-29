@@ -37,10 +37,8 @@ public interface IPage extends IHasID <String>, IHasDisplayText
    * Get the description of the page in the passed locale.
    *
    * @param aContentLocale
-   *        The content locale to get the description from. May not be
-   *        <code>null</code>.
-   * @return <code>null</code> if no description text in the specified locale is
-   *         available.
+   *        The content locale to get the description from. May not be <code>null</code>.
+   * @return <code>null</code> if no description text in the specified locale is available.
    */
   @Nullable
   String getDescription (@NonNull Locale aContentLocale);

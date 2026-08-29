@@ -101,8 +101,7 @@ public class RequestFieldDate extends RequestField
   }
 
   /**
-   * @return The locale as specified in the constructor. Never
-   *         <code>null</code>.
+   * @return The locale as specified in the constructor. Never <code>null</code>.
    */
   @NonNull
   public final Locale getDisplayLocale ()
@@ -134,19 +133,22 @@ public class RequestFieldDate extends RequestField
   }
 
   @NonNull
-  public static RequestFieldDate createLocalDateNow (@NonNull @Nonempty final String sFieldName, @NonNull final Locale aDisplayLocale)
+  public static RequestFieldDate createLocalDateNow (@NonNull @Nonempty final String sFieldName,
+                                                     @NonNull final Locale aDisplayLocale)
   {
     return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDate (), aDisplayLocale);
   }
 
   @NonNull
-  public static RequestFieldDate createLocalDateTimeNow (@NonNull @Nonempty final String sFieldName, @NonNull final Locale aDisplayLocale)
+  public static RequestFieldDate createLocalDateTimeNow (@NonNull @Nonempty final String sFieldName,
+                                                         @NonNull final Locale aDisplayLocale)
   {
     return new RequestFieldDate (sFieldName, PDTFactory.getCurrentLocalDateTime (), aDisplayLocale);
   }
 
   @NonNull
-  public static RequestFieldDate createDateTimeNow (@NonNull @Nonempty final String sFieldName, @NonNull final Locale aDisplayLocale)
+  public static RequestFieldDate createDateTimeNow (@NonNull @Nonempty final String sFieldName,
+                                                    @NonNull final Locale aDisplayLocale)
   {
     return new RequestFieldDate (sFieldName, PDTFactory.getCurrentZonedDateTime (), aDisplayLocale);
   }

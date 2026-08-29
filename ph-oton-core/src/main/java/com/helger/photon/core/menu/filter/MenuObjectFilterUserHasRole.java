@@ -30,8 +30,8 @@ import com.helger.photon.core.menu.IMenuObject;
 import com.helger.photon.security.util.SecurityHelper;
 
 /**
- * This filter checks that a user is logged in, and that the logged in user is
- * assigned to the specified role.
+ * This filter checks that a user is logged in, and that the logged in user is assigned to the
+ * specified role.
  *
  * @author Philip Helger
  */

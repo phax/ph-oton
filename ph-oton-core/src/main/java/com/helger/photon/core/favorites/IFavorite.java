@@ -51,8 +51,8 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
   String getMenuItemID ();
 
   /**
-   * @return The additional optional parameters of this favorite. May be empty
-   *         but never be <code>null</code>.
+   * @return The additional optional parameters of this favorite. May be empty but never be
+   *         <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -65,9 +65,10 @@ public interface IFavorite extends IHasID <String>, IHasDisplayName, Serializabl
    *        Menu item ID
    * @param aAdditionalParams
    *        Additional params. May be <code>null</code>.
-   * @return <code>true</code> if the passed favourite has the same application
-   *         ID, menuitem ID and additional params, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the passed favourite has the same application ID, menuitem ID and
+   *         additional params, <code>false</code> otherwise.
    */
-  boolean hasSameContent (@Nullable String sAppID, @Nullable String sMenuItemID, @Nullable Map <String, String> aAdditionalParams);
+  boolean hasSameContent (@Nullable String sAppID,
+                          @Nullable String sMenuItemID,
+                          @Nullable Map <String, String> aAdditionalParams);
 }

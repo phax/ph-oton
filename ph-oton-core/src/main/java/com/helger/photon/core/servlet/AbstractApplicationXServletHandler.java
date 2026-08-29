@@ -48,7 +48,8 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   {}
 
   @OverrideOnDemand
-  protected void invokeInternalErrorHandler (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull final Throwable t)
+  protected void invokeInternalErrorHandler (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                                             @NonNull final Throwable t)
   {
     // Send internal error mail if needed
     new InternalErrorBuilder ().setThrowable (t)
@@ -79,8 +80,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
   /**
    * @param aRequestScope
    *        The request scope
-   * @return The HTML provider that creates the content. May not be
-   *         <code>null</code>.
+   * @return The HTML provider that creates the content. May not be <code>null</code>.
    */
   @NonNull
   protected abstract IHTMLProvider createHTMLProvider (@NonNull final IRequestWebScopeWithoutResponse aRequestScope);

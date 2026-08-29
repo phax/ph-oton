@@ -24,8 +24,8 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * Base class for {@link IRequestParameterHandler} implementations that support
- * special parameter names
+ * Base class for {@link IRequestParameterHandler} implementations that support special parameter
+ * names
  *
  * @author Philip Helger
  * @since 7.0.2
@@ -46,13 +46,11 @@ public abstract class AbstractRequestParameterHandlerNamed implements IRequestPa
   {}
 
   /**
-   * Check if the passed parameter name is valid according to the rules of this
-   * parameter handler.
+   * Check if the passed parameter name is valid according to the rules of this parameter handler.
    *
    * @param sParamName
    *        The parameter name to check. May not be <code>null</code>.
-   * @return <code>true</code> if the parameter is valid, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the parameter is valid, <code>false</code> otherwise.
    */
   public abstract boolean isValidParameterName (@NonNull final String sParamName);
 

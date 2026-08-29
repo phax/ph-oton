@@ -54,8 +54,7 @@ import com.helger.xservlet.requesttrack.RequestTracker;
 import com.helger.xservlet.requesttrack.TrackedRequest;
 
 /**
- * A base class for a central error callback that handles all kind of errors and
- * exceptions
+ * A base class for a central error callback that handles all kind of errors and exceptions
  *
  * @author Philip Helger
  */
@@ -74,14 +73,11 @@ public abstract class AbstractErrorCallback implements
    * Implement this method to handle all errors in a similar way.
    *
    * @param t
-   *        The exception that occurred. Maybe <code>null</code> if no exception
-   *        occurred.
+   *        The exception that occurred. Maybe <code>null</code> if no exception occurred.
    * @param aRequestScope
-   *        The request scope in which the error occurred. May be
-   *        <code>null</code>.
+   *        The request scope in which the error occurred. May be <code>null</code>.
    * @param sErrorCode
-   *        The unique error code for this error. Neither <code>null</code> nor
-   *        empty.
+   *        The unique error code for this error. Neither <code>null</code> nor empty.
    * @param aCustomAttrs
    *        Optional custom attributes to be emitted. May be <code>null</code>.
    */
@@ -111,13 +107,19 @@ public abstract class AbstractErrorCallback implements
     onError (t, aRequestScope, sErrorCode, new StringMap ().add ("api-path", aDescriptor.getPath ()));
   }
 
-  public void onDAOReadException (@NonNull final Throwable t, final boolean bInit, @Nullable final IReadableResource aRes)
+  public void onDAOReadException (@NonNull final Throwable t,
+                                  final boolean bInit,
+                                  @Nullable final IReadableResource aRes)
   {
-    final String sErrorCode = "DAO " + (bInit ? "init" : "read") + " error" + (aRes == null ? "" : " for " + aRes.getPath ());
+    final String sErrorCode = "DAO " +
+                              (bInit ? "init" : "read") +
+                              " error" +
+                              (aRes == null ? "" : " for " + aRes.getPath ());
     onError (t,
              null,
              sErrorCode,
-             new StringMap ().add ("action", bInit ? "init" : "read").add ("path", aRes == null ? null : aRes.getPath ()));
+             new StringMap ().add ("action", bInit ? "init" : "read")
+                             .add ("path", aRes == null ? null : aRes.getPath ()));
   }
 
   public void onDAOWriteException (@NonNull final Throwable t,
@@ -125,10 +127,15 @@ public abstract class AbstractErrorCallback implements
                                    @NonNull final CharSequence aFileContent)
   {
     final String sErrorCode = "DAO write error for " + aRes.getPath () + " with " + aFileContent.length () + " chars";
-    onError (t, null, sErrorCode, new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
+    onError (t,
+             null,
+             sErrorCode,
+             new StringMap ().add ("action", "write").add ("path", aRes.getPath ()).add ("content", aFileContent));
   }
 
-  public void onScheduledJobException (@NonNull final Throwable t, @Nullable final String sJobClassName, @NonNull final IJob aJob)
+  public void onScheduledJobException (@NonNull final Throwable t,
+                                       @Nullable final String sJobClassName,
+                                       @NonNull final IJob aJob)
   {
     onError (t,
              (IRequestWebScopeWithoutResponse) null,
@@ -153,7 +160,8 @@ public abstract class AbstractErrorCallback implements
     }
   }
 
-  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @NonNull @Nonempty final List <TrackedRequest> aRequests)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
+                                         @NonNull @Nonempty final List <TrackedRequest> aRequests)
   {
     final StringBuilder aURLs = new StringBuilder ();
     for (final TrackedRequest aRequest : aRequests)
@@ -185,8 +193,7 @@ public abstract class AbstractErrorCallback implements
    * <li>ApplicationAPIManager - exception handler</li>
    * <li>AbstractDAO - read and write exception handler</li>
    * <li>AbstractJob - exception callback</li>
-   * <li>RequestTracker - long running requests and parallel running
-   * requests</li>
+   * <li>RequestTracker - long running requests and parallel running requests</li>
    * </ul>
    *
    * @param aCallback

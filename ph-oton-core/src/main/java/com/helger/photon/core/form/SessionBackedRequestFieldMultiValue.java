@@ -25,7 +25,8 @@ import com.helger.annotation.Nonempty;
 import com.helger.html.request.IHCRequestFieldMultiValue;
 import com.helger.web.scope.util.SessionBackedRequestFieldDataMultiValue;
 
-public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFieldDataMultiValue implements IHCRequestFieldMultiValue
+public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFieldDataMultiValue implements
+                                                 IHCRequestFieldMultiValue
 {
   /**
    * Create a new request field that has no default value
@@ -44,8 +45,7 @@ public class SessionBackedRequestFieldMultiValue extends SessionBackedRequestFie
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param aDefaultValues
-   *        The default values to use, if no value is present in the request
-   *        scope.
+   *        The default values to use, if no value is present in the request scope.
    */
   public SessionBackedRequestFieldMultiValue (@NonNull @Nonempty final String sFieldName,
                                               @Nullable final Collection <String> aDefaultValues)

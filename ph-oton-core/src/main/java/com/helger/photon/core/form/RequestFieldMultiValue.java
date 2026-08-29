@@ -31,8 +31,7 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    * Copy constructor
    *
    * @param aRF
-   *        The request field to copy the values from. May not be
-   *        <code>null</code>.
+   *        The request field to copy the values from. May not be <code>null</code>.
    */
   public RequestFieldMultiValue (@NonNull final RequestFieldDataMultiValue aRF)
   {
@@ -56,10 +55,10 @@ public class RequestFieldMultiValue extends RequestFieldDataMultiValue implement
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param aDefaultValues
-   *        The default values to use, if no value is present in the request
-   *        scope.
+   *        The default values to use, if no value is present in the request scope.
    */
-  public RequestFieldMultiValue (@NonNull @Nonempty final String sFieldName, @Nullable final Collection <String> aDefaultValues)
+  public RequestFieldMultiValue (@NonNull @Nonempty final String sFieldName,
+                                 @Nullable final Collection <String> aDefaultValues)
   {
     super (sFieldName, aDefaultValues);
   }

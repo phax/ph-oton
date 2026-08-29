@@ -25,8 +25,8 @@ import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Special {@link IAjaxExecutor} that requires an
- * {@link ILayoutExecutionContext} object to be present.
+ * Special {@link IAjaxExecutor} that requires an {@link ILayoutExecutionContext} object to be
+ * present.
  *
  * @author Philip Helger
  * @param <LECTYPE>
@@ -45,8 +45,7 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
   protected abstract LECTYPE createLayoutExecutionContext (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 
   /**
-   * This method must be overridden by every handler. It is called with the LEC
-   * created by
+   * This method must be overridden by every handler. It is called with the LEC created by
    * {@link #createLayoutExecutionContext(IRequestWebScopeWithoutResponse)}
    *
    * @param aLEC
@@ -57,7 +56,8 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    *         In case of an error
    */
   @OverrideOnDemand
-  protected abstract void mainHandleRequest (@NonNull LECTYPE aLEC, @NonNull PhotonUnifiedResponse aAjaxResponse) throws Exception;
+  protected abstract void mainHandleRequest (@NonNull LECTYPE aLEC, @NonNull PhotonUnifiedResponse aAjaxResponse)
+                                                                                                                  throws Exception;
 
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                              @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception

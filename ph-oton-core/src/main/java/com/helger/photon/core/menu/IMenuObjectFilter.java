@@ -27,8 +27,8 @@ import com.helger.base.string.StringHelper;
 import com.helger.text.display.IHasDisplayText;
 
 /**
- * Special menu item filter to determine the visibility of a menu item. If
- * consists of the filtering and provides an optional descriptive text.
+ * Special menu item filter to determine the visibility of a menu item. If consists of the filtering
+ * and provides an optional descriptive text.
  *
  * @author Philip Helger
  */
@@ -57,7 +57,9 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
       @Override
       public String getDisplayText (@NonNull final Locale aContentLocale)
       {
-        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale), " + ", aOther.getDisplayText (aContentLocale));
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
+                                                     " + ",
+                                                     aOther.getDisplayText (aContentLocale));
       }
     };
   }

@@ -88,7 +88,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
     if (StringHelper.isEmpty (sStateID))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> {
+    return m_aRWLock.readLockedGet (() -> {
       IHasUIState ret = null;
 
       // Get mapping for requested ObjectType
@@ -160,7 +160,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
     if (aOT == null)
       throw new IllegalStateException ("Object has no typeID: " + aNewState);
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       final Map <String, IHasUIState> aMap = m_aMap.computeIfAbsent (aOT, k -> new CommonsHashMap <> ());
 
       if (LOGGER.isDebugEnabled () && aMap.containsKey (sStateID))
@@ -201,7 +201,7 @@ public final class UIStateRegistry extends AbstractSessionWebSingleton implement
   {
     ValueEnforcer.notEmpty (sStateID, "StateID");
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       final ICommonsMap <String, IHasUIState> aMap = m_aMap.get (aObjectType);
       if (aMap == null)
         return EChange.UNCHANGED;

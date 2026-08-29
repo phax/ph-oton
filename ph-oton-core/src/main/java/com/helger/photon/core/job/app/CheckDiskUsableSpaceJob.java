@@ -48,8 +48,8 @@ import com.helger.smtp.scope.ScopedMailAPI;
 import com.helger.web.scope.util.AbstractScopeAwareJob;
 
 /**
- * Check whether at least x bytes of usable space is present on the file system
- * where the application .
+ * Check whether at least x bytes of usable space is present on the file system where the
+ * application .
  *
  * @author philip
  */
@@ -117,12 +117,11 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
    * Call this method to schedule the check disk usage job to run.
    *
    * @param aScheduleBuilder
-   *        The schedule builder to be used. May not be <code>null</code>.
-   *        Example:
+   *        The schedule builder to be used. May not be <code>null</code>. Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
    * @param nThresholdBytes
-   *        If &le; than this number of bytes are free on the drive, an internal
-   *        notification email is send. Must be &ge; 0.
+   *        If &le; than this number of bytes are free on the drive, an internal notification email
+   *        is send. Must be &ge; 0.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @NonNull
@@ -137,15 +136,13 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
    * Call this method to schedule the check disk usage job to run.
    *
    * @param aScheduleBuilder
-   *        The schedule builder to be used. May not be <code>null</code>.
-   *        Example:
+   *        The schedule builder to be used. May not be <code>null</code>. Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (60)</code>
    * @param nThresholdBytes
-   *        If &le; than this number of bytes are free on the drive, an internal
-   *        notification email is send. Must be &ge; 0.
+   *        If &le; than this number of bytes are free on the drive, an internal notification email
+   *        is send. Must be &ge; 0.
    * @param aPathSupplier
-   *        The serializable supplier for the path where the size should be
-   *        checked.
+   *        The serializable supplier for the path where the size should be checked.
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
   @NonNull

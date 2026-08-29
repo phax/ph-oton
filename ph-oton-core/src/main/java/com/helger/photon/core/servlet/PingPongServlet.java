@@ -20,8 +20,8 @@ import com.helger.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
- * A simple availability-check servlet that responds with a "pong" text message.
- * Usually this servlet should be called "ping".
+ * A simple availability-check servlet that responds with a "pong" text message. Usually this
+ * servlet should be called "ping".
  *
  * @author Philip Helger
  */

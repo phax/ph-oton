@@ -48,14 +48,15 @@ public abstract class AbstractNewsfeedAjaxExecutor implements IAjaxExecutor, IHa
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractNewsfeedAjaxExecutor.class);
   private static final IMutableStatisticsHandlerKeyedCounter STATS_HDL_EXECUTE = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
-                                                                                                                            "$EXECUTE");
+                                                                                                                           "$EXECUTE");
   private static final IMutableStatisticsHandlerKeyedCounter STATS_HDL_ERROR = StatisticsManager.getKeyedCounterHandler (AbstractNewsfeedAjaxExecutor.class.getName () +
-                                                                                                                          "$ERROR");
+                                                                                                                         "$ERROR");
 
   private final IHasDisplayText m_aDisplayText;
   private final String m_sFeedID;
 
-  public AbstractNewsfeedAjaxExecutor (@NonNull final IHasDisplayText aDisplayText, @NonNull @Nonempty final String sFeedID)
+  public AbstractNewsfeedAjaxExecutor (@NonNull final IHasDisplayText aDisplayText,
+                                       @NonNull @Nonempty final String sFeedID)
   {
     ValueEnforcer.notNull (aDisplayText, "DisplayText");
     ValueEnforcer.notNull (sFeedID, "FeedID");

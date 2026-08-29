@@ -48,16 +48,16 @@ public interface IMenuObject extends IHasID <String>, Serializable
    * Set a new display filter for this menu object.
    *
    * @param aDisplayFilter
-   *        The new display filter to set. Maybe <code>null</code> to indicate
-   *        that no filter is required.
+   *        The new display filter to set. Maybe <code>null</code> to indicate that no filter is
+   *        required.
    * @return this
    */
   @NonNull
   IMenuObject setDisplayFilter (@Nullable IMenuObjectFilter aDisplayFilter);
 
   /**
-   * @return <code>true</code> if either no display filter is installed, or if
-   *         the installed filter matches, <code>false</code> otherwise.
+   * @return <code>true</code> if either no display filter is installed, or if the installed filter
+   *         matches, <code>false</code> otherwise.
    */
   default boolean matchesDisplayFilter ()
   {

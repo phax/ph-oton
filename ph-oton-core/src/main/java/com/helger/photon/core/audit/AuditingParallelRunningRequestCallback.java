@@ -30,8 +30,7 @@ import com.helger.xservlet.requesttrack.IParallelRunningRequestCallback;
 import com.helger.xservlet.requesttrack.TrackedRequest;
 
 /**
- * A simple implementation of {@link IParallelRunningRequestCallback} simply
- * auditing such events.
+ * A simple implementation of {@link IParallelRunningRequestCallback} simply auditing such events.
  *
  * @author Philip Helger
  * @since 4.0.0
@@ -43,7 +42,8 @@ public class AuditingParallelRunningRequestCallback implements IParallelRunningR
   public AuditingParallelRunningRequestCallback ()
   {}
 
-  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests, @NonNull @Nonempty final List <TrackedRequest> aRequests)
+  public void onParallelRunningRequests (@Nonnegative final int nParallelRequests,
+                                         @NonNull @Nonempty final List <TrackedRequest> aRequests)
   {
     final ICommonsList <String> aURLs = new CommonsArrayList <> ();
     for (final TrackedRequest aRequest : aRequests)

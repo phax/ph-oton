@@ -52,8 +52,8 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@NonNull final JobDataMap aJobDataMap,
-                            @NonNull final IJobExecutionContext aContext) throws JobExecutionException
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
+                                                                                                                 throws JobExecutionException
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Checking for dead locks");
@@ -67,8 +67,7 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
    * Call this method to schedule the deadlock detection job.
    *
    * @param aScheduleBuilder
-   *        The schedule builder to be used. May not be <code>null</code>.
-   *        Example:
+   *        The schedule builder to be used. May not be <code>null</code>. Example:
    *        <code>SimpleScheduleBuilder.repeatMinutelyForever (2)</code>
    * @return The created trigger key for further usage. Never <code>null</code>.
    */
@@ -81,7 +80,9 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
 
     return GlobalQuartzScheduler.getInstance ()
                                 .scheduleJob (CheckThreadDeadlockJob.class.getName (),
-                                              JDK8TriggerBuilder.newTrigger ().startNow ().withSchedule (aScheduleBuilder),
+                                              JDK8TriggerBuilder.newTrigger ()
+                                                                .startNow ()
+                                                                .withSchedule (aScheduleBuilder),
                                               CheckThreadDeadlockJob.class,
                                               aJobDataMap);
   }

@@ -35,8 +35,7 @@ import com.helger.xml.util.thread.ThreadDescriptor;
 import com.helger.xml.util.thread.ThreadDescriptorList;
 
 /**
- * An implementation if {@link IThreadDeadlockCallback} that sends an internal
- * error mail
+ * An implementation if {@link IThreadDeadlockCallback} that sends an internal error mail
  *
  * @author Philip Helger
  */

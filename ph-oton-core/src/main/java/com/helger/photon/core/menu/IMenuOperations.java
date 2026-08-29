@@ -34,8 +34,8 @@ import com.helger.url.provider.ConstantHasSimpleURL;
 import com.helger.url.provider.IHasSimpleURL;
 
 /**
- * Contains all the menu-specific menu operations. This is not meant to be
- * publicly used. The {@link IMenuTree} should be used instead.
+ * Contains all the menu-specific menu operations. This is not meant to be publicly used. The
+ * {@link IMenuTree} should be used instead.
  *
  * @author philip
  */
@@ -66,8 +66,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item separator at root level
    *
    * @param sID
-   *        Separator ID to be used. Must be unique. May neither be
-   *        <code>null</code> nor empty!
+   *        Separator ID to be used. Must be unique. May neither be <code>null</code> nor empty!
    * @return The created menu item separator object. Never <code>null</code>.
    * @since 8.0.1
    */
@@ -78,8 +77,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item separator as a child of the passed menu item
    *
    * @param sParentID
-   *        The parent menu item ID to append the separator to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the separator to. May not be <code>null</code>.
    * @return The created menu item separator object. Never <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
@@ -94,8 +92,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item separator as a child of the passed menu item
    *
    * @param aParent
-   *        The parent menu item to append the separator to. May not be
-   *        <code>null</code>.
+   *        The parent menu item to append the separator to. May not be <code>null</code>.
    * @return The created menu item separator object. Never <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
@@ -111,11 +108,9 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item separator as a child of the passed menu item
    *
    * @param sParentID
-   *        The parent menu item ID to append the separator to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the separator to. May not be <code>null</code>.
    * @param sID
-   *        Separator ID to be used. Must be unique. May neither be
-   *        <code>null</code> nor empty!
+   *        Separator ID to be used. Must be unique. May neither be <code>null</code> nor empty!
    * @return The created menu item separator object. Never <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
@@ -128,11 +123,9 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item separator as a child of the passed menu item
    *
    * @param aParent
-   *        The parent menu item to append the separator to. May not be
-   *        <code>null</code>.
+   *        The parent menu item to append the separator to. May not be <code>null</code>.
    * @param sID
-   *        Separator ID to be used. Must be unique. May neither be
-   *        <code>null</code> nor empty!
+   *        Separator ID to be used. Must be unique. May neither be <code>null</code> nor empty!
    * @return The created menu item separator object. Never <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
@@ -162,8 +155,8 @@ public interface IMenuOperations extends Serializable
    *
    * @param aPage
    *        The referenced page. May not be <code>null</code>.
-   * @return The created menu item object. The ID of the menu item is the ID of
-   *         the page. Never <code>null</code>.
+   * @return The created menu item object. The ID of the menu item is the ID of the page. Never
+   *         <code>null</code>.
    */
   @NonNull
   default IMenuItemPage createRootItem (@NonNull final IPage aPage)
@@ -176,8 +169,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param sParentID
-   *        The parent menu item ID to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the item to. May not be <code>null</code>.
    * @param sItemID
    *        The new menu item ID. May not be <code>null</code>.
    * @param aPage
@@ -193,12 +185,11 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param sParentID
-   *        The parent menu item ID to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the item to. May not be <code>null</code>.
    * @param aPage
    *        The referenced page. May not be <code>null</code>.
-   * @return The created menu item object. The ID of the menu item is the ID of
-   *         the page. Never <code>null</code>.
+   * @return The created menu item object. The ID of the menu item is the ID of the page. Never
+   *         <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
@@ -213,12 +204,11 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param aParent
-   *        The parent menu item to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item to append the item to. May not be <code>null</code>.
    * @param aPage
    *        The referenced page. May not be <code>null</code>.
-   * @return The created menu item object. The ID of the menu item is the ID of
-   *         the page. Never <code>null</code>.
+   * @return The created menu item object. The ID of the menu item is the ID of the page. Never
+   *         <code>null</code>.
    * @throws IllegalArgumentException
    *         If the passed parent menu item could not be resolved
    */
@@ -260,14 +250,15 @@ public interface IMenuOperations extends Serializable
    * @return The created menu item object. Never <code>null</code>.
    */
   @NonNull
-  IMenuItemExternal createRootItem (@NonNull String sItemID, @NonNull IHasSimpleURL aURL, @NonNull IHasDisplayText aName);
+  IMenuItemExternal createRootItem (@NonNull String sItemID,
+                                    @NonNull IHasSimpleURL aURL,
+                                    @NonNull IHasDisplayText aName);
 
   /**
    * Append a new menu item below the specified parent.
    *
    * @param aParent
-   *        The parent menu item to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item to append the item to. May not be <code>null</code>.
    * @param sItemID
    *        The new menu item ID. May not be <code>null</code>.
    * @param aURL
@@ -291,8 +282,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param aParent
-   *        The parent menu item to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item to append the item to. May not be <code>null</code>.
    * @param sItemID
    *        The new menu item ID. May not be <code>null</code>.
    * @param aURL
@@ -317,8 +307,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param sParentID
-   *        The parent menu item ID to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the item to. May not be <code>null</code>.
    * @param sItemID
    *        The new menu item ID. May not be <code>null</code>.
    * @param aURL
@@ -342,8 +331,7 @@ public interface IMenuOperations extends Serializable
    * Append a new menu item below the specified parent.
    *
    * @param sParentID
-   *        The parent menu item ID to append the item to. May not be
-   *        <code>null</code>.
+   *        The parent menu item ID to append the item to. May not be <code>null</code>.
    * @param sItemID
    *        The new menu item ID. May not be <code>null</code>.
    * @param aURL
@@ -364,8 +352,8 @@ public interface IMenuOperations extends Serializable
    * Create a new redirect from the passed ID to the specified menu item.
    *
    * @param sItemID
-   *        The ID to be used for this redirect. May not be <code>null</code>.
-   *        If this is a random ID, than you don't need a redirect ;-)
+   *        The ID to be used for this redirect. May not be <code>null</code>. If this is a random
+   *        ID, than you don't need a redirect ;-)
    * @param aPage
    *        The page to redirect to. May not be <code>null</code>.
    * @return The created menu item. Never <code>null</code>.
@@ -375,8 +363,8 @@ public interface IMenuOperations extends Serializable
 
   /**
    * Set the default menu item. This is a shortcut for
-   * <code>setDefaultMenuItemIDs (new String[]{sDefaultMenuItemID});</code> .
-   * The passed menu item ID must resolve to an {@link IMenuItemPage} object.
+   * <code>setDefaultMenuItemIDs (new String[]{sDefaultMenuItemID});</code> . The passed menu item
+   * ID must resolve to an {@link IMenuItemPage} object.
    *
    * @param sDefaultMenuItemID
    *        The default menu item to be set. May be <code>null</code>.
@@ -384,22 +372,22 @@ public interface IMenuOperations extends Serializable
   void setDefaultMenuItemID (@Nullable String sDefaultMenuItemID);
 
   /**
-   * Set the default menu items in the priority order. The passed menu item IDs
-   * must resolve to {@link IMenuItemPage} objects.
+   * Set the default menu items in the priority order. The passed menu item IDs must resolve to
+   * {@link IMenuItemPage} objects.
    *
    * @param aDefaultMenuItemIDs
-   *        The default menu items to be set. May be <code>null</code>. This
-   *        array may not contain any <code>null</code> entries.
+   *        The default menu items to be set. May be <code>null</code>. This array may not contain
+   *        any <code>null</code> entries.
    */
   void setDefaultMenuItemIDs (@Nullable String... aDefaultMenuItemIDs);
 
   /**
-   * Set the default menu items in the priority order. The passed menu item IDs
-   * must resolve to {@link IMenuItemPage} objects.
+   * Set the default menu items in the priority order. The passed menu item IDs must resolve to
+   * {@link IMenuItemPage} objects.
    *
    * @param aDefaultMenuItemIDs
-   *        The default menu items to be set. May be <code>null</code>. This
-   *        list may not contain any <code>null</code> entries.
+   *        The default menu items to be set. May be <code>null</code>. This list may not contain
+   *        any <code>null</code> entries.
    */
   void setDefaultMenuItemIDs (@Nullable Iterable <String> aDefaultMenuItemIDs);
 
@@ -413,19 +401,17 @@ public interface IMenuOperations extends Serializable
   String getDefaultMenuItemID ();
 
   /**
-   * @return The default menu item IDs. May not be <code>null</code> but may be
-   *         empty.
+   * @return The default menu item IDs. May not be <code>null</code> but may be empty.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsList <String> getAllDefaultMenuItemIDs ();
 
   /**
-   * Get the default menu item object. Similar to
-   * <code>getAllDefaultMenuItems().get(0)</code>.
+   * Get the default menu item object. Similar to <code>getAllDefaultMenuItems().get(0)</code>.
    *
-   * @return <code>null</code> if either no default menu item is present, or the
-   *         default menu item ID could not be resolved to a menu item
+   * @return <code>null</code> if either no default menu item is present, or the default menu item
+   *         ID could not be resolved to a menu item
    */
   @Nullable
   IMenuItemPage getDefaultMenuItem ();
@@ -434,8 +420,7 @@ public interface IMenuOperations extends Serializable
    * Get the default menu item objects in the correct order.
    *
    * @return The list of all default menu items, in the order as specified by
-   *         {@link #setDefaultMenuItemIDs(Iterable)}. Never <code>null</code>
-   *         but may be empty.
+   *         {@link #setDefaultMenuItemIDs(Iterable)}. Never <code>null</code> but may be empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -455,20 +440,18 @@ public interface IMenuOperations extends Serializable
    * Iterate all menu objects and invoke the supplied callback.
    *
    * @param aCallback
-   *        The callback to be supplied for each menu object. May not be
-   *        <code>null</code>.
+   *        The callback to be supplied for each menu object. May not be <code>null</code>.
    */
   void iterateAllMenuObjects (@NonNull Consumer <? super IMenuObject> aCallback);
 
   /**
-   * Replace an eventually existing menu item with the new one. The ID of the
-   * passed page is used to determine the ID of the menu item to be replaced.
-   * The new menu item will be a {@link MenuItemPage} object.
+   * Replace an eventually existing menu item with the new one. The ID of the passed page is used to
+   * determine the ID of the menu item to be replaced. The new menu item will be a
+   * {@link MenuItemPage} object.
    *
    * @param aNewPage
    *        The page to be used instead of the existing menu item
-   * @return The create menu item or <code>null</code> if no such menu item
-   *         exists.
+   * @return The create menu item or <code>null</code> if no such menu item exists.
    */
   @Nullable
   IMenuItemPage replaceMenuItem (@NonNull IPage aNewPage);

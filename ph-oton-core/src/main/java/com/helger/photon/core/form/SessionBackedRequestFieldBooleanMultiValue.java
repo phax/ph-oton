@@ -25,13 +25,14 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
 
 /**
- * Special session backed request field specially for check boxes where the same
- * field name can be used with different values.
+ * Special session backed request field specially for check boxes where the same field name can be
+ * used with different values.
  *
  * @author Philip Helger
  * @since 8.2.4
  */
-public class SessionBackedRequestFieldBooleanMultiValue extends SessionBackedRequestField implements IHCRequestFieldBooleanMultiValue
+public class SessionBackedRequestFieldBooleanMultiValue extends SessionBackedRequestField implements
+                                                        IHCRequestFieldBooleanMultiValue
 {
   private final String m_sValue;
   private final boolean m_bDefaultValue;

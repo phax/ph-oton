@@ -35,9 +35,9 @@ import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * An implementation of {@link IRequestParameterHandler} that takes the request
- * parameters from the URL path in the fixed order locale than menu item. It
- * build URLs in the form <code>basePath/<i>locale</i>/<i>menuItem</i></code>
+ * An implementation of {@link IRequestParameterHandler} that takes the request parameters from the
+ * URL path in the fixed order locale than menu item. It build URLs in the form
+ * <code>basePath/<i>locale</i>/<i>menuItem</i></code>
  *
  * @author Philip Helger
  * @since 7.0.2
@@ -54,7 +54,8 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
   {}
 
   @NonNull
-  protected PhotonRequestParameters getParametersFromPath (@NonNull final String sPath, @NonNull final IMenuTree aMenuTree)
+  protected PhotonRequestParameters getParametersFromPath (@NonNull final String sPath,
+                                                           @NonNull final IMenuTree aMenuTree)
   {
     // Use paths for standard menu items
     final PhotonRequestParameters ret = new PhotonRequestParameters ();
@@ -85,7 +86,8 @@ public class RequestParameterHandlerURLPathOrdered implements IRequestParameterH
 
   @NonNull
   @ReturnsMutableCopy
-  public PhotonRequestParameters getParametersFromURL (@NonNull final ISimpleURL aURL, @NonNull final IMenuTree aMenuTree)
+  public PhotonRequestParameters getParametersFromURL (@NonNull final ISimpleURL aURL,
+                                                       @NonNull final IMenuTree aMenuTree)
   {
     return getParametersFromPath (aURL.getPath (), aMenuTree);
   }

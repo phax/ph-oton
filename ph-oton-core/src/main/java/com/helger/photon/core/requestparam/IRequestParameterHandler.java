@@ -48,14 +48,14 @@ public interface IRequestParameterHandler extends Serializable
    */
   @NonNull
   @ReturnsMutableCopy
-  PhotonRequestParameters getParametersFromRequest (@NonNull IRequestWebScopeWithoutResponse aRequestScope, @NonNull IMenuTree aMenuTree);
+  PhotonRequestParameters getParametersFromRequest (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                                    @NonNull IMenuTree aMenuTree);
 
   /**
    * Get all request parameters from the provided URL.
    *
    * @param aURL
-   *        The URL to extract the parameters from. May not be
-   *        <code>null</code>.
+   *        The URL to extract the parameters from. May not be <code>null</code>.
    * @param aMenuTree
    *        Relevant menu tree. May not be <code>null</code>.
    * @return A non-<code>null</code> list of all parameters.
@@ -65,14 +65,12 @@ public interface IRequestParameterHandler extends Serializable
   PhotonRequestParameters getParametersFromURL (@NonNull ISimpleURL aURL, @NonNull IMenuTree aMenuTree);
 
   /**
-   * Build a URL based on the passed base path and an optional list of
-   * parameters.
+   * Build a URL based on the passed base path and an optional list of parameters.
    *
    * @param aRequestScope
    *        Current request scope. May be <code>null</code>.
    * @param sBasePath
-   *        The base path to use. May not be <code>null</code> and must NOT end
-   *        with a "/".
+   *        The base path to use. May not be <code>null</code> and must NOT end with a "/".
    * @param aDisplayLocale
    *        The display locale to use. May be <code>null</code>.
    * @param sMenuItemID

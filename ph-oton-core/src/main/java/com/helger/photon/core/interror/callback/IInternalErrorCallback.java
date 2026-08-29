@@ -35,19 +35,16 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public interface IInternalErrorCallback extends ICallback
 {
   /**
-   * Called when an exception occurred. You may not re-throw the exception from
-   * in here!
+   * Called when an exception occurred. You may not re-throw the exception from in here!
    *
    * @param t
    *        The exception. May be <code>null</code>.
    * @param aRequestScope
-   *        The request scope in which the error occurred. May be
-   *        <code>null</code>.
+   *        The request scope in which the error occurred. May be <code>null</code>.
    * @param sErrorID
    *        The created internal error ID. Neither <code>null</code> nor empty.
    * @param aDisplayLocale
-   *        The display locale for further handling if required. Never
-   *        <code>null</code>.
+   *        The display locale for further handling if required. Never <code>null</code>.
    */
   void onInternalError (@Nullable Throwable t,
                         @Nullable IRequestWebScopeWithoutResponse aRequestScope,

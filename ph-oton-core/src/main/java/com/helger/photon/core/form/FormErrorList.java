@@ -25,8 +25,7 @@ import com.helger.diagnostics.error.SingleError;
 import com.helger.diagnostics.error.list.ErrorList;
 
 /**
- * Special error list for form errors. Basically an {@link ErrorList} with
- * sanity methods.
+ * Special error list for form errors. Basically an {@link ErrorList} with sanity methods.
  *
  * @author Philip Helger
  */
@@ -44,8 +43,8 @@ public class FormErrorList extends ErrorList
    * Add a field specific information message.
    *
    * @param sFieldName
-   *        The field name for which the message is to be recorded. May neither
-   *        be <code>null</code> nor empty.
+   *        The field name for which the message is to be recorded. May neither be <code>null</code>
+   *        nor empty.
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */
@@ -58,8 +57,8 @@ public class FormErrorList extends ErrorList
    * Add a field specific warning message.
    *
    * @param sFieldName
-   *        The field name for which the message is to be recorded. May neither
-   *        be <code>null</code> nor empty.
+   *        The field name for which the message is to be recorded. May neither be <code>null</code>
+   *        nor empty.
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */
@@ -72,8 +71,8 @@ public class FormErrorList extends ErrorList
    * Add a field specific error message.
    *
    * @param sFieldName
-   *        The field name for which the message is to be recorded. May neither
-   *        be <code>null</code> nor empty.
+   *        The field name for which the message is to be recorded. May neither be <code>null</code>
+   *        nor empty.
    * @param sText
    *        The text to use. May neither be <code>null</code> nor empty.
    */

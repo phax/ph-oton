@@ -31,8 +31,8 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.smtp.scope.ScopedMailAPI;
 
 /**
- * The meta system manager encapsulates all managers that are located in this
- * project. Currently the contained managers are:
+ * The meta system manager encapsulates all managers that are located in this project. Currently the
+ * contained managers are:
  * <ul>
  * <li>{@link FailedMailQueueWithDAO}</li>
  * <li>{@link GoMappingManager}</li>

@@ -32,8 +32,7 @@ import com.helger.tree.util.TreeVisitor;
 import com.helger.tree.withid.DefaultTreeItemWithID;
 
 /**
- * Determine all menu items to show, depending on the currently selected menu
- * item.
+ * Determine all menu items to show, depending on the currently selected menu item.
  *
  * @author Philip Helger
  */
@@ -140,8 +139,8 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   }
 
   /**
-   * @return A map with all items to be displayed, where the key is the menu
-   *         item ID and the value is the expansion state of the item.
+   * @return A map with all items to be displayed, where the key is the menu item ID and the value
+   *         is the expansion state of the item.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -169,13 +168,12 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
   }
 
   /**
-   * Get all menu items without usage a separate
-   * {@link MenuItemDeterminatorCallback} instance.
+   * Get all menu items without usage a separate {@link MenuItemDeterminatorCallback} instance.
    *
    * @param aMenuTree
    *        The menu tree to get all items from. May not be <code>null</code>.
-   * @return A non-<code>null</code> map with all menu item IDs as keys and the
-   *         "expansion state" as the value.
+   * @return A non-<code>null</code> map with all menu item IDs as keys and the "expansion state" as
+   *         the value.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -184,15 +182,16 @@ public class MenuItemDeterminatorCallback extends AbstractMenuItemDeterminatorCa
     ValueEnforcer.notNull (aMenuTree, "MenuTree");
 
     final ICommonsMap <String, Boolean> ret = new CommonsHashMap <> ();
-    TreeVisitor.visitTree (aMenuTree, new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
-    {
-      @Override
-      public EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
-      {
-        ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
-        return EHierarchyVisitorReturn.CONTINUE;
-      }
-    });
+    TreeVisitor.visitTree (aMenuTree,
+                           new DefaultHierarchyVisitorCallback <DefaultTreeItemWithID <String, IMenuObject>> ()
+                           {
+                             @Override
+                             public EHierarchyVisitorReturn onItemBeforeChildren (@NonNull final DefaultTreeItemWithID <String, IMenuObject> aItem)
+                             {
+                               ret.put (aItem.getID (), Boolean.valueOf (aItem.hasChildren ()));
+                               return EHierarchyVisitorReturn.CONTINUE;
+                             }
+                           });
     return ret;
   }
 }

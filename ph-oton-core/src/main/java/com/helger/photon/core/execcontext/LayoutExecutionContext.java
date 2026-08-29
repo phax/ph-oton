@@ -36,10 +36,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
- * This object is instantiated per page view and contains the current request
- * scope, the display locale, the selected menu item and a set of custom
- * attributes. In addition to the base class {@link SimpleWebExecutionContext}
- * the selected menu item is added.
+ * This object is instantiated per page view and contains the current request scope, the display
+ * locale, the selected menu item and a set of custom attributes. In addition to the base class
+ * {@link SimpleWebExecutionContext} the selected menu item is added.
  *
  * @author Philip Helger
  */
@@ -54,7 +53,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     this (aLEC, aLEC.getSelectedMenuItem ());
   }
 
-  public LayoutExecutionContext (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final IMenuItemPage aSelectedMenuItem)
+  public LayoutExecutionContext (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                 @NonNull final IMenuItemPage aSelectedMenuItem)
   {
     super (aSWEC);
     m_aSelectedMenuItem = ValueEnforcer.notNull (aSelectedMenuItem, "SelectedMenuItem");
@@ -79,7 +79,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ret.getClone ();
   }
 
-  public final void postRedirectGet (@NonNull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent) throws ForcedRedirectException
+  public final void postRedirectGet (@NonNull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent)
+                                                                                                             throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);
@@ -88,7 +89,9 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("selectedMenuItem", m_aSelectedMenuItem).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("selectedMenuItem", m_aSelectedMenuItem)
+                            .getToString ();
   }
 
   @NonNull
@@ -102,6 +105,9 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     final IMenuItemPage aMenuItem = RequestSettings.getMenuItem (aRequestScope);
 
     // Since no menu item is selected, use the default menu item
-    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree, aLoggedInUser), aMenuItem);
+    return new LayoutExecutionContext (new SimpleWebExecutionContext (aRequestScope,
+                                                                      aDisplayLocale,
+                                                                      aMenuTree,
+                                                                      aLoggedInUser), aMenuItem);
   }
 }

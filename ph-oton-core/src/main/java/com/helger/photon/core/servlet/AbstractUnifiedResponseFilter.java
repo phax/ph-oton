@@ -34,8 +34,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Abstract base class for a filter performing actions via
- * {@link UnifiedResponse}.
+ * Abstract base class for a filter performing actions via {@link UnifiedResponse}.
  *
  * @author Philip Helger
  * @since 3.7.0
@@ -49,15 +48,13 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
    * Overwrite this method to fill your response.
    *
    * @param aRequestScope
-   *        The request scope to use. There is no direct access to the
-   *        {@link HttpServletResponse}. Everything must be handled with the
-   *        unified response! Never <code>null</code>.
+   *        The request scope to use. There is no direct access to the {@link HttpServletResponse}.
+   *        Everything must be handled with the unified response! Never <code>null</code>.
    * @param aUnifiedResponse
    *        The response object to be filled. Never <code>null</code>.
-   * @return If {@link EContinue#BREAK} is returned, the content of the unified
-   *         response is rendered to the HTTP servlet response and the filter
-   *         chain stops. On {@link EContinue#CONTINUE} the content of the
-   *         unified response is discarded and the filter chain continues as
+   * @return If {@link EContinue#BREAK} is returned, the content of the unified response is rendered
+   *         to the HTTP servlet response and the filter chain stops. On {@link EContinue#CONTINUE}
+   *         the content of the unified response is discarded and the filter chain continues as
    *         normal.
    * @throws ServletException
    *         In case of an error
@@ -70,7 +67,8 @@ public abstract class AbstractUnifiedResponseFilter extends AbstractScopeAwareFi
   @NonNull
   protected final EContinue doHttpFilter (@NonNull final HttpServletRequest aHttpRequest,
                                           @NonNull final HttpServletResponse aHttpResponse,
-                                          @NonNull final IRequestWebScope aRequestScope) throws IOException, ServletException
+                                          @NonNull final IRequestWebScope aRequestScope) throws IOException,
+                                                                                         ServletException
   {
     // Check HTTP version
     final EHttpVersion eHTTPVersion = RequestHelper.getHttpVersion (aHttpRequest);

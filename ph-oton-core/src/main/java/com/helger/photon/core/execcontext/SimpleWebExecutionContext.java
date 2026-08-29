@@ -29,8 +29,8 @@ import com.helger.photon.security.user.IUser;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * This object is instantiated per page view and contains the current request
- * scope, the display locale and a set of custom attributes.
+ * This object is instantiated per page view and contains the current request scope, the display
+ * locale and a set of custom attributes.
  *
  * @author Philip Helger
  */

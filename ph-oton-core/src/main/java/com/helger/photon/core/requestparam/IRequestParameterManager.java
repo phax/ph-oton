@@ -50,8 +50,7 @@ public interface IRequestParameterManager
   void setParameterHandler (@NonNull IRequestParameterHandler aRequestParameterHdl);
 
   /**
-   * Get the link to the provided menu item, extracting the application ID from
-   * the request.
+   * Get the link to the provided menu item, extracting the application ID from the request.
    *
    * @param aRequestScope
    *        The current request scope.
@@ -59,31 +58,33 @@ public interface IRequestParameterManager
    *        The display locale currently in use.
    * @param sMenuItemID
    *        The selected menu item. May not be <code>null</code>.
-   * @return A server absolute URL but without hostname and port. E.g. like
-   *         this: <code>/context/public/locale/menuitemid</code>.
+   * @return A server absolute URL but without hostname and port. E.g. like this:
+   *         <code>/context/public/locale/menuitemid</code>.
    */
   @NonNull
   default SimpleURL getLinkToMenuItem (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                        @NonNull final Locale aDisplayLocale,
                                        @NonNull final String sMenuItemID)
   {
-    return getLinkToMenuItem (RequestSettings.getApplicationID (aRequestScope), aRequestScope, aDisplayLocale, sMenuItemID);
+    return getLinkToMenuItem (RequestSettings.getApplicationID (aRequestScope),
+                              aRequestScope,
+                              aDisplayLocale,
+                              sMenuItemID);
   }
 
   /**
    * Get the link to the provided menu item.
    *
    * @param sAppID
-   *        The photon application ID to use. May neither be <code>null</code>
-   *        nor empty.
+   *        The photon application ID to use. May neither be <code>null</code> nor empty.
    * @param aRequestScope
    *        The current request scope.
    * @param aDisplayLocale
    *        The display locale currently in use.
    * @param sMenuItemID
    *        The selected menu item. May not be <code>null</code>.
-   * @return A server absolute URL but without hostname and port. E.g. like
-   *         this: <code>/context/public/locale/menuitemid</code>.
+   * @return A server absolute URL but without hostname and port. E.g. like this:
+   *         <code>/context/public/locale/menuitemid</code>.
    */
   @NonNull
   SimpleURL getLinkToMenuItem (@NonNull @Nonempty String sAppID,
@@ -98,8 +99,8 @@ public interface IRequestParameterManager
    *        The URL to extract from. May be <code>null</code>.
    * @param aMenuTree
    *        The menu tree to match against. May not be <code>null</code>.
-   * @return <code>null</code> if either the URL was <code>null</code> or if no
-   *         matching menu item was found in the URL.
+   * @return <code>null</code> if either the URL was <code>null</code> or if no matching menu item
+   *         was found in the URL.
    */
   @Nullable
   default String getMenuItemFromURL (@Nullable final ISimpleURL aURL, @NonNull final IMenuTree aMenuTree)
@@ -116,8 +117,8 @@ public interface IRequestParameterManager
    *        The URL to extract from. May be <code>null</code>.
    * @param aMenuTree
    *        The menu tree to match against. May not be <code>null</code>.
-   * @return <code>null</code> if either the URl was <code>null</code> or if no
-   *         locale was found in the URL.
+   * @return <code>null</code> if either the URl was <code>null</code> or if no locale was found in
+   *         the URL.
    */
   @Nullable
   default String getLocaleFromURL (@Nullable final ISimpleURL aURL, @NonNull final IMenuTree aMenuTree)

@@ -26,10 +26,9 @@ import com.helger.io.resourceprovider.IReadableResourceProvider;
 import com.helger.servlet.mock.MockServletContext;
 
 /**
- * A JUnit test rule that is suitable for all ph-oton projects. It is optimized
- * for the use within Java web application. For the use within Java libraries
- * using {@link PhotonCoreTestRule} is preferred, since the correct resource
- * base path is used.
+ * A JUnit test rule that is suitable for all ph-oton projects. It is optimized for the use within
+ * Java web application. For the use within Java libraries using {@link PhotonCoreTestRule} is
+ * preferred, since the correct resource base path is used.
  *
  * @author Philip Helger
  */
@@ -45,6 +44,9 @@ public class PhotonCoreWebAppTestRule extends PhotonCoreTestRule
   {
     // Use the special resource base path
     // Use default resource provider
-    return MockServletContext.create (sContextPath, RESOURCE_BASE_FILE.getAbsolutePath (), (IReadableResourceProvider) null, aInitParams);
+    return MockServletContext.create (sContextPath,
+                                      RESOURCE_BASE_FILE.getAbsolutePath (),
+                                      (IReadableResourceProvider) null,
+                                      aInitParams);
   }
 }

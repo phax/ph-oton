@@ -42,22 +42,22 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractScopeAwareLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "scope.longrunning.job.id";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                        "scope.longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.
    *
    * @param aJobDataMap
    *        The current job data map. Never <code>null</code>.
-   * @return The user ID to be used. May be <code>null</code> but it is
-   *         recommended to deliver "guest" or the like instead.
+   * @return The user ID to be used. May be <code>null</code> but it is recommended to deliver
+   *         "guest" or the like instead.
    */
   @Nullable
   protected abstract String getCurrentUserID (@NonNull JobDataMap aJobDataMap);
 
   /**
-   * @return The {@link LongRunningJobManager} to be used. May not return
-   *         <code>null</code>.
+   * @return The {@link LongRunningJobManager} to be used. May not return <code>null</code>.
    */
   @NonNull
   protected static final LongRunningJobManager getLongRunningJobManager ()
@@ -67,7 +67,8 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
 
   @Override
   @OverridingMethodsMustInvokeSuper
-  protected void beforeExecuteInScope (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
+  protected void beforeExecuteInScope (@NonNull final JobDataMap aJobDataMap,
+                                       @NonNull final IJobExecutionContext aContext)
   {
     final String sUserID = getCurrentUserID (aJobDataMap);
 
@@ -109,7 +110,9 @@ public abstract class AbstractScopeAwareLongRunningJob extends AbstractScopeAwar
       triggerCustomExceptionHandler (ex, getClass ().getName (), this);
 
       // Mark the long running job as failed
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createExceptionText (ex));
+      getLongRunningJobManager ().onEndJob (sLongRunningJobID,
+                                            ESuccess.FAILURE,
+                                            LongRunningJobResult.createExceptionText (ex));
     }
   }
 }

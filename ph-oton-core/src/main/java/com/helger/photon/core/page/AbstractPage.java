@@ -67,8 +67,7 @@ public abstract class AbstractPage implements IPage
    * @param sID
    *        The unique page ID. May not be <code>null</code>.
    * @param sName
-   *        The constant (non-translatable) name of the page. May not be
-   *        <code>null</code>.
+   *        The constant (non-translatable) name of the page. May not be <code>null</code>.
    */
   public AbstractPage (@NonNull @Nonempty final String sID, @NonNull final String sName)
   {
@@ -81,13 +80,13 @@ public abstract class AbstractPage implements IPage
    * @param sID
    *        The unique page ID. May not be <code>null</code>.
    * @param sName
-   *        The constant (non-translatable) name of the page. May not be
-   *        <code>null</code>.
+   *        The constant (non-translatable) name of the page. May not be <code>null</code>.
    * @param sDescription
-   *        The constant (non-translatable) description of the page. May be
-   *        <code>null</code>.
+   *        The constant (non-translatable) description of the page. May be <code>null</code>.
    */
-  public AbstractPage (@NonNull @Nonempty final String sID, @NonNull final String sName, @Nullable final String sDescription)
+  public AbstractPage (@NonNull @Nonempty final String sID,
+                       @NonNull final String sName,
+                       @Nullable final String sDescription)
   {
     this (sID, getAsMLT (sName), getAsMLT (sDescription));
   }
@@ -146,8 +145,7 @@ public abstract class AbstractPage implements IPage
   }
 
   /**
-   * @return The complete name of the page in all available locales. Never
-   *         <code>null</code>.
+   * @return The complete name of the page in all available locales. Never <code>null</code>.
    */
   @NonNull
   public final IMultilingualText getName ()
@@ -176,8 +174,8 @@ public abstract class AbstractPage implements IPage
   }
 
   /**
-   * @return The complete description of the page in all available locales. May
-   *         be <code>null</code>.
+   * @return The complete description of the page in all available locales. May be
+   *         <code>null</code>.
    */
   @Nullable
   public final IMultilingualText getDescription ()

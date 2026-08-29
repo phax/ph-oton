@@ -61,12 +61,11 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   @Nullable
   public String getDefaultApplicationID ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_sDefaultApplicationID);
+    return m_aRWLock.readLockedGet (() -> m_sDefaultApplicationID);
   }
 
   /**
-   * @return <code>true</code> if a default application ID is present,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if a default application ID is present, <code>false</code> otherwise.
    * @since 8.0.3
    */
   public boolean hasDefaultApplicationID ()
@@ -84,7 +83,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   @NonNull
   public PhotonGlobalState setDefaultApplicationID (@Nullable final String sDefaultApplicationID)
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (!EqualsHelper.equals (m_sDefaultApplicationID, sDefaultApplicationID))
       {
         m_sDefaultApplicationID = sDefaultApplicationID;
@@ -134,7 +133,7 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   public static ICommonsMap <String, String> getAppIDToServletPathMap ()
   {
     final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
-    getInstance ().m_aStateMap.forEach ( (sAppID, aState) -> ret.put (sAppID, aState.getServletPath ()));
+    getInstance ().m_aStateMap.forEach ((sAppID, aState) -> ret.put (sAppID, aState.getServletPath ()));
     return ret;
   }
 }

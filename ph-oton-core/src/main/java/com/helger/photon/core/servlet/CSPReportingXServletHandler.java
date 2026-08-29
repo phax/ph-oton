@@ -225,8 +225,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
         final String sBlockedURI = aReport.getBlockedURI ();
         final boolean bIsDuplicate = isFilterDuplicates () &&
-          StringHelper.isNotEmpty (sBlockedURI) &&
-          rememberBlockedURL (sBlockedURI);
+                                     StringHelper.isNotEmpty (sBlockedURI) &&
+                                     rememberBlockedURL (sBlockedURI);
         if (bIsDuplicate)
         {
           // Avoid too many reports

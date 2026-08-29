@@ -32,11 +32,10 @@ import com.helger.web.scope.IRequestParamContainer;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Interface with the simple web execution context. It consist of a request
- * scope (servlet request etc.), a display locale (determined from URL, session
- * or a default), a menu tree (determined from the application ID in the URL,
- * the session or the default application ID) and the currently logged in user
- * (which may be optional).
+ * Interface with the simple web execution context. It consist of a request scope (servlet request
+ * etc.), a display locale (determined from URL, session or a default), a menu tree (determined from
+ * the application ID in the URL, the session or the default application ID) and the currently
+ * logged in user (which may be optional).
  *
  * @author Philip Helger
  */
@@ -67,15 +66,13 @@ public interface ISimpleWebExecutionContext
   }
 
   /**
-   * @return The current display locale. Based on the locale of the request
-   *         manager.
+   * @return The current display locale. Based on the locale of the request manager.
    */
   @NonNull
   Locale getDisplayLocale ();
 
   /**
-   * @return The current menu tree. Based on the menu tree of the request
-   *         manager.
+   * @return The current menu tree. Based on the menu tree of the request manager.
    */
   @NonNull
   IMenuTree getMenuTree ();
@@ -99,8 +96,8 @@ public interface ISimpleWebExecutionContext
   }
 
   /**
-   * @return <code>true</code> if a user is logged in, and if the current user
-   *         is the special "Administrator" user. This is a shortcut to
+   * @return <code>true</code> if a user is logged in, and if the current user is the special
+   *         "Administrator" user. This is a shortcut to
    *         <code>getLoggedInUser() != null &amp;&amp; getLoggedInUser().isAdmin()</code>
    * @since 8.1.3
    */
@@ -110,17 +107,17 @@ public interface ISimpleWebExecutionContext
    * Check if the currently logged in user has the specified role.
    *
    * @param sRoleID
-   *        The role ID to check. May be <code>null</code> but that would make
-   *        no sense.
-   * @return <code>true</code> if a user is logged in and if it has the role,
-   *         <code>false</code> otherwise.
+   *        The role ID to check. May be <code>null</code> but that would make no sense.
+   * @return <code>true</code> if a user is logged in and if it has the role, <code>false</code>
+   *         otherwise.
    * @since 8.1.3
    */
   default boolean hasLoggedInUserRole (@Nullable final String sRoleID)
   {
     final String sLoggedInUserID = getLoggedInUserID ();
     return sLoggedInUserID != null &&
-           PhotonSecurityManager.getUserGroupMgr ().containsAnyUserGroupWithAssignedUserAndRole (sLoggedInUserID, sRoleID);
+           PhotonSecurityManager.getUserGroupMgr ()
+                                .containsAnyUserGroupWithAssignedUserAndRole (sLoggedInUserID, sRoleID);
   }
 
   /**
@@ -153,13 +150,11 @@ public interface ISimpleWebExecutionContext
   }
 
   /**
-   * Get the URL to the specified menu item in the passed application. This is
-   * helpful when linking between different applications. The current locale is
-   * used.
+   * Get the URL to the specified menu item in the passed application. This is helpful when linking
+   * between different applications. The current locale is used.
    *
    * @param sAppID
-   *        The application ID to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The application ID to use. May neither be <code>null</code> nor empty.
    * @param sMenuItemID
    *        The ID of the menu item to link to. May not be <code>null</code>.
    * @return The non-<code>null</code> URL to the specified menu item.
@@ -171,13 +166,11 @@ public interface ISimpleWebExecutionContext
   }
 
   /**
-   * Get the URL to the specified menu item in the passed application using the
-   * specified locale. This is helpful when linking between different
-   * applications.
+   * Get the URL to the specified menu item in the passed application using the specified locale.
+   * This is helpful when linking between different applications.
    *
    * @param sAppID
-   *        The application ID to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The application ID to use. May neither be <code>null</code> nor empty.
    * @param aDisplayLocale
    *        Specific display locale to be used. May not be <code>null</code>.
    * @param sMenuItemID
@@ -190,6 +183,7 @@ public interface ISimpleWebExecutionContext
                                        @NonNull final Locale aDisplayLocale,
                                        @NonNull final String sMenuItemID)
   {
-    return RequestParameterManager.getInstance ().getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
+    return RequestParameterManager.getInstance ()
+                                  .getLinkToMenuItem (sAppID, getRequestScope (), aDisplayLocale, sMenuItemID);
   }
 }

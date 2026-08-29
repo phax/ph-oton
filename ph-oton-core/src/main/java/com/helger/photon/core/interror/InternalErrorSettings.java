@@ -89,7 +89,7 @@ public final class InternalErrorSettings
 
   public static void setSMTPSettings (@Nullable final ISMTPSettings aSMTPSettings)
   {
-    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setSMTPSettings (aSMTPSettings));
+    RW_LOCK.writeLocked (() -> EMAIL_SETTINGS.setSMTPSettings (aSMTPSettings));
   }
 
   @Nullable
@@ -100,7 +100,7 @@ public final class InternalErrorSettings
 
   public static void setSMTPSenderAddress (@Nullable final IEmailAddress aSenderAddress)
   {
-    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setSenderAddress (aSenderAddress));
+    RW_LOCK.writeLocked (() -> EMAIL_SETTINGS.setSenderAddress (aSenderAddress));
   }
 
   @Nullable
@@ -111,17 +111,17 @@ public final class InternalErrorSettings
 
   public static void setSMTPReceiverAddress (@Nullable final IEmailAddress aReceiverAddress)
   {
-    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddress (aReceiverAddress));
+    RW_LOCK.writeLocked (() -> EMAIL_SETTINGS.setReceiverAddress (aReceiverAddress));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final Iterable <? extends IEmailAddress> aReceiverAddresses)
   {
-    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
+    RW_LOCK.writeLocked (() -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
   }
 
   public static void setSMTPReceiverAddresses (@Nullable final IEmailAddress... aReceiverAddresses)
   {
-    RW_LOCK.writeLocked ( () -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
+    RW_LOCK.writeLocked (() -> EMAIL_SETTINGS.setReceiverAddresses (aReceiverAddresses));
   }
 
   @NonNull
@@ -148,7 +148,7 @@ public final class InternalErrorSettings
    */
   public static void setDumpAllThreads (final boolean bEnableDumpAllThreads)
   {
-    RW_LOCK.writeLocked ( () -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
+    RW_LOCK.writeLocked (() -> s_bEnableDumpAllThreads = bEnableDumpAllThreads);
   }
 
   /**
@@ -157,7 +157,7 @@ public final class InternalErrorSettings
    */
   public static boolean isDumpAllThreads ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bEnableDumpAllThreads);
+    return RW_LOCK.readLockedBoolean (() -> s_bEnableDumpAllThreads);
   }
 
   /**
@@ -169,7 +169,7 @@ public final class InternalErrorSettings
    */
   public static void setSendEmail (final boolean bSendEmail)
   {
-    RW_LOCK.writeLocked ( () -> s_bSendEmail = bSendEmail);
+    RW_LOCK.writeLocked (() -> s_bSendEmail = bSendEmail);
   }
 
   /**
@@ -178,7 +178,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSendEmail ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bSendEmail);
+    return RW_LOCK.readLockedBoolean (() -> s_bSendEmail);
   }
 
   /**
@@ -189,7 +189,7 @@ public final class InternalErrorSettings
    */
   public static void setSaveAsXML (final boolean bSaveAsXML)
   {
-    RW_LOCK.writeLocked ( () -> s_bSaveAsXML = bSaveAsXML);
+    RW_LOCK.writeLocked (() -> s_bSaveAsXML = bSaveAsXML);
   }
 
   /**
@@ -197,7 +197,7 @@ public final class InternalErrorSettings
    */
   public static boolean isSaveAsXML ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bSaveAsXML);
+    return RW_LOCK.readLockedBoolean (() -> s_bSaveAsXML);
   }
 
   /**
@@ -207,7 +207,7 @@ public final class InternalErrorSettings
   @NonNull
   public static Locale getFallbackLocale ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aFallbackLocale);
+    return RW_LOCK.readLockedGet (() -> s_aFallbackLocale);
   }
 
   /**
@@ -220,7 +220,7 @@ public final class InternalErrorSettings
   public static void setFallbackLocale (@NonNull final Locale aFallbackLocale)
   {
     ValueEnforcer.notNull (aFallbackLocale, "FallbackLocale");
-    RW_LOCK.writeLocked ( () -> s_aFallbackLocale = aFallbackLocale);
+    RW_LOCK.writeLocked (() -> s_aFallbackLocale = aFallbackLocale);
   }
 
   /**
@@ -240,7 +240,7 @@ public final class InternalErrorSettings
   @NonNull
   public static Function <InternalErrorMetadata, File> getStorageFileProvider ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aStorageFileProvider);
+    return RW_LOCK.readLockedGet (() -> s_aStorageFileProvider);
   }
 
   /**
@@ -253,7 +253,7 @@ public final class InternalErrorSettings
   public static void setStorageFileProvider (@NonNull final Function <InternalErrorMetadata, File> aStorageFileProvider)
   {
     ValueEnforcer.notNull (aStorageFileProvider, "StorageFileProvider");
-    RW_LOCK.writeLocked ( () -> s_aStorageFileProvider = aStorageFileProvider);
+    RW_LOCK.writeLocked (() -> s_aStorageFileProvider = aStorageFileProvider);
   }
 
   /**

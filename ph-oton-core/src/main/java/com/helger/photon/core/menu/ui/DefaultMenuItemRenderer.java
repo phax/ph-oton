@@ -59,7 +59,8 @@ public class DefaultMenuItemRenderer <T extends IHCList <?, HCLI>> extends Abstr
   }
 
   @NonNull
-  public IHCNode renderSeparator (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final IMenuSeparator aSeparator)
+  public IHCNode renderSeparator (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                  @NonNull final IMenuSeparator aSeparator)
   {
     return HCEntityNode.newNBSP ();
   }

@@ -501,7 +501,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
   {
     // Set persistent ID provider: file based
     GlobalIDFactory.setPersistentLongIDFactory (new WebIOLongIDFactory (ID_FILENAME));
-    GlobalIDFactory.setPersistentIntIDFactory ( () -> (int) GlobalIDFactory.getNewPersistentLongID ());
+    GlobalIDFactory.setPersistentIntIDFactory (() -> (int) GlobalIDFactory.getNewPersistentLongID ());
   }
 
   /**

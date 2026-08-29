@@ -24,8 +24,7 @@ import com.helger.html.request.IHCRequestField;
 import com.helger.web.scope.util.SessionBackedRequestFieldData;
 
 /**
- * Default implementation of a request field with a name and an optional default
- * value.
+ * Default implementation of a request field with a name and an optional default value.
  *
  * @author Philip Helger
  */
@@ -48,8 +47,7 @@ public class SessionBackedRequestField extends SessionBackedRequestFieldData imp
    * @param sFieldName
    *        The field name to use. May neither be <code>null</code> nor empty.
    * @param sDefaultValue
-   *        The default value to use, if no value is present in the request
-   *        scope.
+   *        The default value to use, if no value is present in the request scope.
    */
   public SessionBackedRequestField (@NonNull @Nonempty final String sFieldName, @Nullable final String sDefaultValue)
   {

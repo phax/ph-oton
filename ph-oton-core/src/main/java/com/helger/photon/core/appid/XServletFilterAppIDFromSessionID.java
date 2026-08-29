@@ -26,8 +26,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.filter.IXServletHighLevelFilter;
 
 /**
- * XServlet filter responsible for remembering the application ID in the current
- * request based on the existing session data
+ * XServlet filter responsible for remembering the application ID in the current request based on
+ * the existing session data
  *
  * @author Philip Helger
  */

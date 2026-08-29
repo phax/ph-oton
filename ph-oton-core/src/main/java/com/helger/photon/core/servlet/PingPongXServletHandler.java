@@ -32,8 +32,8 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 import jakarta.servlet.ServletException;
 
 /**
- * A simple availability-check servlet that responds with a "pong" text message.
- * Usually this servlet should be called "ping".
+ * A simple availability-check servlet that responds with a "pong" text message. Usually this
+ * servlet should be called "ping".
  *
  * @author Philip Helger
  */
@@ -57,7 +57,9 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                              @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException
   {
-    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET).setMimeType (RESPONSE_MIMETYPE).disableCaching ();
+    aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET)
+                    .setMimeType (RESPONSE_MIMETYPE)
+                    .disableCaching ();
     STATS_PING_PONG.increment ();
   }
 }

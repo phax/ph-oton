@@ -22,8 +22,7 @@ import com.helger.photon.core.appid.XServletFilterAppIDFromSessionID;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
- * Default servlet that performs URL redirects based on {@link GoMappingManager}
- * .
+ * Default servlet that performs URL redirects based on {@link GoMappingManager} .
  *
  * @author Philip Helger
  */

@@ -24,9 +24,8 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.style.UnsupportedOperation;
 
 /**
- * A special menu item that is just a link to an existing other menu item.
- * Basically this is used to change the URL of an existing menu item without
- * breaking links.
+ * A special menu item that is just a link to an existing other menu item. Basically this is used to
+ * change the URL of an existing menu item without breaking links.
  *
  * @author Philip Helger
  * @since 8.2.2
@@ -34,8 +33,7 @@ import com.helger.annotation.style.UnsupportedOperation;
 public interface IMenuItemRedirectToPage extends IMenuItem
 {
   /**
-   * @return The target page to which this item links. May not be
-   *         <code>null</code>.
+   * @return The target page to which this item links. May not be <code>null</code>.
    */
   @NonNull
   IMenuItemPage getTargetMenuItemPage ();

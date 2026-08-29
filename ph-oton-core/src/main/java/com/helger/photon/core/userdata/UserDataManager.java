@@ -42,8 +42,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public final class UserDataManager
 {
   /**
-   * The default user data path, relative to a URL context and the servlet
-   * context directory.
+   * The default user data path, relative to a URL context and the servlet context directory.
    */
   public static final String DEFAULT_USER_DATA_PATH = "/user";
 
@@ -57,44 +56,43 @@ public final class UserDataManager
   {}
 
   /**
-   * Set the user data path, relative to the URL context and relative to the
-   * servlet context directory.
+   * Set the user data path, relative to the URL context and relative to the servlet context
+   * directory.
    *
    * @param sUserDataPath
-   *        The path to be set. May neither be <code>null</code> nor empty and
-   *        must start with a "/" character.
+   *        The path to be set. May neither be <code>null</code> nor empty and must start with a "/"
+   *        character.
    */
   public static void setUserDataPath (@NonNull @Nonempty final String sUserDataPath)
   {
     ValueEnforcer.isTrue (StringHelper.getLength (sUserDataPath) >= 2, "userDataPath is too short");
     ValueEnforcer.isTrue (StringHelper.startsWith (sUserDataPath, '/'), "userDataPath must start with a slash");
 
-    RW_LOCK.writeLocked ( () -> s_sUserDataPath = sUserDataPath);
+    RW_LOCK.writeLocked (() -> s_sUserDataPath = sUserDataPath);
 
     LOGGER.info ("Changed global user data path to '" + sUserDataPath + "'");
   }
 
   /**
-   * Get the base path, where all user objects reside. It is relative to the URL
-   * context and relative to the servlet context directory.
+   * Get the base path, where all user objects reside. It is relative to the URL context and
+   * relative to the servlet context directory.
    *
-   * @return The current user data path. Always starting with a "/", but without
-   *         any context information. By default the return value is
-   *         {@value #DEFAULT_USER_DATA_PATH}.
+   * @return The current user data path. Always starting with a "/", but without any context
+   *         information. By default the return value is {@value #DEFAULT_USER_DATA_PATH}.
    */
   @NonNull
   @Nonempty
   public static String getUserDataPath ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_sUserDataPath);
+    return RW_LOCK.readLockedGet (() -> s_sUserDataPath);
   }
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return Context and user data path. Always starting with a "/". E.g.
-   *         <code>/user</code> or <code>/context/user</code>
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return Context and user data path. Always starting with a "/". E.g. <code>/user</code> or
+   *         <code>/context/user</code>
    */
   @NonNull
   @Nonempty
@@ -107,15 +105,13 @@ public final class UserDataManager
    * Get the URL to the passed UDO object.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param aUDO
    *        The UDO object to get the URL from.
-   * @return The path to the user data object as an URL, including the context
-   *         path. Always starting with a "/". E.g.
-   *         <code>/context/user/file.txt</code> if this object points to
-   *         <code>/file.txt</code> and the user data path is <code>/user</code>
-   *         .
+   * @return The path to the user data object as an URL, including the context path. Always starting
+   *         with a "/". E.g. <code>/context/user/file.txt</code> if this object points to
+   *         <code>/file.txt</code> and the user data path is <code>/user</code> .
    */
   @NonNull
   @Nonempty
@@ -131,14 +127,13 @@ public final class UserDataManager
    * Get the URL to the passed UDO object.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param aUDO
    *        The UDO object to get the URL from.
-   * @return The URL to the user data object, including the context path. Always
-   *         starting with a "/". E.g. <code>/context/user/file.txt</code> if
-   *         this object points to <code>/file.txt</code> and the user data path
-   *         is <code>/user</code> .
+   * @return The URL to the user data object, including the context path. Always starting with a
+   *         "/". E.g. <code>/context/user/file.txt</code> if this object points to
+   *         <code>/file.txt</code> and the user data path is <code>/user</code> .
    */
   @NonNull
   @Nonempty
@@ -168,8 +163,8 @@ public final class UserDataManager
    *
    * @param aUDO
    *        The UDO object to get the resource from.
-   * @return The matching file system resource. No check is performed, whether
-   *         the resource exists or not!
+   * @return The matching file system resource. No check is performed, whether the resource exists
+   *         or not!
    */
   @NonNull
   public static FileSystemResource getResource (@NonNull final IUserDataObject aUDO)
@@ -184,8 +179,7 @@ public final class UserDataManager
    *
    * @param aUDO
    *        The UDO object to get the resource from.
-   * @return The matching File. No check is performed, whether the file exists
-   *         or not!
+   * @return The matching File. No check is performed, whether the file exists or not!
    */
   @NonNull
   public static File getFile (@NonNull final IUserDataObject aUDO)

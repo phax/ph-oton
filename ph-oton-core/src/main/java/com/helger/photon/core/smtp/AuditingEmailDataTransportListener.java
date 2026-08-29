@@ -25,9 +25,8 @@ import com.helger.smtp.listener.IEmailDataTransportListener;
 import com.helger.smtp.transport.listener.LoggingTransportListener;
 
 /**
- * An implementation of {@link IEmailDataTransportListener} that performs audit
- * calls for successfully delivered, not delivered and partially delivered
- * messages.
+ * An implementation of {@link IEmailDataTransportListener} that performs audit calls for
+ * successfully delivered, not delivered and partially delivered messages.
  *
  * @author Philip Helger
  */

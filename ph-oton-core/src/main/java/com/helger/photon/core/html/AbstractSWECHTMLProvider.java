@@ -35,8 +35,7 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
- * Abstract {@link IHTMLProvider} implementation based on
- * {@link SimpleWebExecutionContext}.
+ * Abstract {@link IHTMLProvider} implementation based on {@link SimpleWebExecutionContext}.
  *
  * @author Philip Helger
  */
@@ -55,8 +54,8 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    * @throws ForcedRedirectException
    *         to indicate that the current page should be left.
    */
-  protected abstract void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC,
-                                    @NonNull final HCHtml aHtml) throws ForcedRedirectException;
+  protected abstract void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCHtml aHtml)
+                                                                                                                  throws ForcedRedirectException;
 
   /**
    * Fill the HTML HEAD element.
@@ -78,10 +77,9 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
   }
 
   /**
-   * Overridable method to fill head and body. The default implementation uses
-   * an {@link SimpleWebExecutionContext} which in turn requires a menu tree to
-   * be present. If you have an application without a menu tree, override this
-   * method.
+   * Overridable method to fill head and body. The default implementation uses an
+   * {@link SimpleWebExecutionContext} which in turn requires a menu tree to be present. If you have
+   * an application without a menu tree, override this method.
    *
    * @param aRequestScope
    *        Current request scope
@@ -100,7 +98,10 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
     final IUser aLoggedInUser = LoggedInUserManager.getInstance ().getCurrentUser ();
 
     // Build the execution scope
-    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope, aDisplayLocale, aMenuTree, aLoggedInUser);
+    final ISimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (aRequestScope,
+                                                                            aDisplayLocale,
+                                                                            aMenuTree,
+                                                                            aLoggedInUser);
 
     // fill body
     fillBody (aSWEC, aHtml);

@@ -41,9 +41,8 @@ public final class CLogin
   /** The name of the hidden field to be used in login. */
   public static final String REQUEST_PARAM_ACTION = "login-action";
   /**
-   * The action value to be passed in a hidden field to ensure that user name
-   * and password are checked. The name of the field must be
-   * {@link #REQUEST_PARAM_ACTION}
+   * The action value to be passed in a hidden field to ensure that user name and password are
+   * checked. The name of the field must be {@link #REQUEST_PARAM_ACTION}
    */
   public static final String REQUEST_ACTION_VALIDATE_LOGIN_CREDENTIALS = "validate-login-credentials";
 

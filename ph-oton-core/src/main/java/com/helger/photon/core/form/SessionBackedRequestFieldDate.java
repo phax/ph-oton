@@ -62,7 +62,8 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
    * @param aDisplayLocale
    *        Display locale to use.
    */
-  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName, @NonNull final Locale aDisplayLocale)
+  public SessionBackedRequestFieldDate (@NonNull @Nonempty final String sFieldName,
+                                        @NonNull final Locale aDisplayLocale)
   {
     this (sFieldName, (String) null, aDisplayLocale);
   }
@@ -103,8 +104,7 @@ public class SessionBackedRequestFieldDate extends SessionBackedRequestFieldData
   }
 
   /**
-   * @return The locale as specified in the constructor. Never
-   *         <code>null</code>.
+   * @return The locale as specified in the constructor. Never <code>null</code>.
    */
   @NonNull
   public final Locale getDisplayLocale ()

@@ -101,6 +101,8 @@ public class LocaleManager implements ILocaleManager
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Locales", m_aLocales).append ("DefaultLocale", m_aDefaultLocale).getToString ();
+    return new ToStringGenerator (this).append ("Locales", m_aLocales)
+                                       .append ("DefaultLocale", m_aDefaultLocale)
+                                       .getToString ();
   }
 }

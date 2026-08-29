@@ -32,23 +32,22 @@ import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.xservlet.forcedredirect.ForcedRedirectManager;
 
 /**
- * Base interface for a current request context that also has "layout"
- * information, meaning the currently selected menu item.
+ * Base interface for a current request context that also has "layout" information, meaning the
+ * currently selected menu item.
  *
  * @author Philip Helger
  */
 public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
 {
   /**
-   * @return The selected menu item as specified in the constructor. Never
-   *         <code>null</code>.
+   * @return The selected menu item as specified in the constructor. Never <code>null</code>.
    */
   @NonNull
   IMenuItemPage getSelectedMenuItem ();
 
   /**
-   * @return The ID of the selected menu item as specified in the constructor.
-   *         Neither <code>null</code> nor empty.
+   * @return The ID of the selected menu item as specified in the constructor. Neither
+   *         <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -76,8 +75,8 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   /**
    * Get the URL to the current page in the current locale.
    *
-   * @return The non-<code>null</code> URL to the current page (selected menu
-   *         item) with the passed parameters.
+   * @return The non-<code>null</code> URL to the current page (selected menu item) with the passed
+   *         parameters.
    */
   @NonNull
   default SimpleURL getSelfHref ()
@@ -89,10 +88,9 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * Get the URL to the current page in the specified locale.
    *
    * @param aDisplayLocale
-   *        The specific display locale to be used. May not be
-   *        <code>null</code>.
-   * @return The non-<code>null</code> URL to the current page (selected menu
-   *         item) with the passed parameters.
+   *        The specific display locale to be used. May not be <code>null</code>.
+   * @return The non-<code>null</code> URL to the current page (selected menu item) with the passed
+   *         parameters.
    * @since 7.0.2
    */
   @NonNull
@@ -102,13 +100,12 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   }
 
   /**
-   * Throw a {@link ForcedRedirectException} with the self href of the current
-   * layout context. This immediately stops the request and sends a HTTP
-   * redirect to the client.
+   * Throw a {@link ForcedRedirectException} with the self href of the current layout context. This
+   * immediately stops the request and sends a HTTP redirect to the client.
    *
    * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
+   *        The content to be displayed next time the page is rendered via GET. May be
+   *        <code>null</code>.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
@@ -118,16 +115,14 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   }
 
   /**
-   * Throw a {@link ForcedRedirectException} with the self href of the current
-   * layout context. This immediately stops the request and sends a HTTP
-   * redirect to the client.
+   * Throw a {@link ForcedRedirectException} with the self href of the current layout context. This
+   * immediately stops the request and sends a HTTP redirect to the client.
    *
    * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
+   *        The content to be displayed next time the page is rendered via GET. May be
+   *        <code>null</code>.
    * @param aAdditionalParameters
-   *        Additional parameters to be added to the request. May be
-   *        <code>null</code> or empty.
+   *        Additional parameters to be added to the request. May be <code>null</code> or empty.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
@@ -135,32 +130,33 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
                                         @Nullable final Map <String, String> aAdditionalParameters) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
-    postRedirectGet (getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE).addAll (aAdditionalParameters), aContent);
+    postRedirectGet (getSelfHref ().add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE)
+                                   .addAll (aAdditionalParameters), aContent);
   }
 
   /**
-   * Throw a {@link ForcedRedirectException} with the provided internal URL and
-   * the passed content. This immediately stops the request and sends a HTTP
-   * redirect to the client. Important: this only works for application internal
-   * URLs, because external URLs will not have access to the provided content.
+   * Throw a {@link ForcedRedirectException} with the provided internal URL and the passed content.
+   * This immediately stops the request and sends a HTTP redirect to the client. Important: this
+   * only works for application internal URLs, because external URLs will not have access to the
+   * provided content.
    *
    * @param aTargetURL
    *        The target URL to redirect to via GET. May be <code>null</code>.
    * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
+   *        The content to be displayed next time the page is rendered via GET. May be
+   *        <code>null</code>.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  default void postRedirectGetInternal (@NonNull final SimpleURL aTargetURL,
-                                        @Nullable final IHCNode aContent) throws ForcedRedirectException
+  default void postRedirectGetInternal (@NonNull final SimpleURL aTargetURL, @Nullable final IHCNode aContent)
+                                                                                                               throws ForcedRedirectException
   {
     postRedirectGet (aTargetURL.add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE), aContent);
   }
 
   /**
-   * Throw a {@link ForcedRedirectException} with the passed URL. This
-   * immediately stops the request and sends a HTTP redirect to the client.
+   * Throw a {@link ForcedRedirectException} with the passed URL. This immediately stops the request
+   * and sends a HTTP redirect to the client.
    *
    * @param aTargetURL
    *        The target URL to redirect to via GET. May be <code>null</code>.
@@ -173,16 +169,15 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
   }
 
   /**
-   * Throw a {@link ForcedRedirectException} with the provided URL and the
-   * passed content. This immediately stops the request and sends a HTTP
-   * redirect to the client. This method should not be called explicitly.
-   * Instead the "external" or "internal" PRG methods should be called.
+   * Throw a {@link ForcedRedirectException} with the provided URL and the passed content. This
+   * immediately stops the request and sends a HTTP redirect to the client. This method should not
+   * be called explicitly. Instead the "external" or "internal" PRG methods should be called.
    *
    * @param aTargetURL
    *        The target URL to redirect to via GET. May be <code>null</code>.
    * @param aContent
-   *        The content to be displayed next time the page is rendered via GET.
-   *        May be <code>null</code>.
+   *        The content to be displayed next time the page is rendered via GET. May be
+   *        <code>null</code>.
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    * @see #postRedirectGetInternal(IHCNode)

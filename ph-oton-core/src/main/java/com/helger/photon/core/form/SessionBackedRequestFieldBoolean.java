@@ -25,8 +25,7 @@ import com.helger.html.request.IHCRequestFieldBoolean;
 import com.helger.web.scope.IRequestParamContainer;
 
 /**
- * Special session backed request field specially for check boxes with a fixed
- * value.
+ * Special session backed request field specially for check boxes with a fixed value.
  *
  * @author Philip Helger
  * @since 8.2.4

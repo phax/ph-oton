@@ -77,7 +77,7 @@ public final class ConfigurationFileManager extends AbstractGlobalSingleton
   {
     ValueEnforcer.notNull (aConfig, "Config");
 
-    aConfig.forEachConfigurationValueProvider ( (cvp, prio) -> {
+    aConfig.forEachConfigurationValueProvider ((cvp, prio) -> {
       if (cvp instanceof final IConfigurationSourceResource aCVP)
       {
         // Find syntax

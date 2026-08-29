@@ -93,8 +93,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
   }
 
   /**
-   * @return The optional description of this configuration file. May be
-   *         <code>null</code>.
+   * @return The optional description of this configuration file. May be <code>null</code>.
    */
   @Nullable
   public final String getDescription ()
@@ -106,8 +105,7 @@ public class ConfigurationFile implements IHasID <String>, IHasDescription
    * Set the description to use.
    *
    * @param sDescription
-   *        The description for this configuration file. May be
-   *        <code>null</code>.
+   *        The description for this configuration file. May be <code>null</code>.
    * @return this
    */
   @NonNull

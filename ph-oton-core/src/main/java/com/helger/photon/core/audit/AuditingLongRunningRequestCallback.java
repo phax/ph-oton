@@ -26,8 +26,7 @@ import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.requesttrack.ILongRunningRequestCallback;
 
 /**
- * A simple implementation of {@link ILongRunningRequestCallback} simply
- * auditing such events.
+ * A simple implementation of {@link ILongRunningRequestCallback} simply auditing such events.
  *
  * @author Philip Helger
  * @since 4.0.0

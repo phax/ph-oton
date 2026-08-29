@@ -44,9 +44,8 @@ import com.helger.xml.util.mime.MimeTypeInfoManager;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Simple servlet to forward requests to pages normally not visible to the
- * Web-Server. It simply reads the content of a file and passes it to an output
- * stream.
+ * Simple servlet to forward requests to pages normally not visible to the Web-Server. It simply
+ * reads the content of a file and passes it to an output stream.
  *
  * @author Philip Helger
  * @since 3.7.0
@@ -62,7 +61,8 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
                                                                                                                    "$notfound");
   private final IMutableStatisticsHandlerKeyedCounter m_aStatsMIMEType = StatisticsManager.getKeyedCounterHandler (getClass ().getName () +
                                                                                                                    "$mimetype");
-  private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "stream.resource";
+  private static final String REQUEST_ATTR_OBJECT_DELIVERY_RESOURCE = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                                      "stream.resource";
 
   protected AbstractResourceDeliveryHttpHandler ()
   {}
@@ -77,7 +77,8 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
    * @return The non-<code>null</code> resource provider.
    */
   @NonNull
-  protected abstract IReadableResource getResource (@NonNull IRequestWebScopeWithoutResponse aRequestScope, @NonNull String sFilename);
+  protected abstract IReadableResource getResource (@NonNull IRequestWebScopeWithoutResponse aRequestScope,
+                                                    @NonNull String sFilename);
 
   @Override
   @OverridingMethodsMustInvokeSuper
@@ -128,15 +129,13 @@ public abstract class AbstractResourceDeliveryHttpHandler extends AbstractObject
   }
 
   /**
-   * Check if the object allows for HTTP caching (by setting the appropriate
-   * HTTP headers)
+   * Check if the object allows for HTTP caching (by setting the appropriate HTTP headers)
    *
    * @param aRequestScope
    *        Request scope
    * @param sFilename
    *        request file name
-   * @return <code>true</code> if the file allows for caching,
-   *         <code>false</code> if not
+   * @return <code>true</code> if the file allows for caching, <code>false</code> if not
    */
   @OverrideOnDemand
   protected boolean objectsAllowsForHTTPCaching (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,

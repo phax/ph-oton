@@ -42,8 +42,8 @@ public final class NamedSMTPSettingsMicroTypeConverter implements IMicroTypeConv
     eSMTPSettings.setAttribute (ATTR_ID, aNamedSMTPSettings.getID ());
     eSMTPSettings.addElementNS (sNamespaceURI, ELEMENT_NAME).addText (aNamedSMTPSettings.getName ());
     eSMTPSettings.addChild (MicroTypeConverter.convertToMicroElement (aNamedSMTPSettings.getSMTPSettings (),
-                                                                         sNamespaceURI,
-                                                                         ELEMENT_SMTPSETTINGS));
+                                                                      sNamespaceURI,
+                                                                      ELEMENT_SMTPSETTINGS));
     return eSMTPSettings;
   }
 

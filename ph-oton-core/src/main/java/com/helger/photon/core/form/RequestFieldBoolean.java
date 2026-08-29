@@ -39,8 +39,7 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
   private final boolean m_bDefaultValue;
 
   /**
-   * Constructor using either {@link #VALUE_CHECKED} or
-   * {@link #VALUE_UNCHECKED}.
+   * Constructor using either {@link #VALUE_CHECKED} or {@link #VALUE_UNCHECKED}.
    *
    * @param sFieldName
    *        Name of the field.
@@ -58,8 +57,8 @@ public class RequestFieldBoolean extends RequestField implements IHCRequestField
   /**
    * @param bValue
    *        the boolean value
-   * @return The string parameter value to be used for the passed parameter.
-   *         Neither <code>null</code> nor empty.
+   * @return The string parameter value to be used for the passed parameter. Neither
+   *         <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty

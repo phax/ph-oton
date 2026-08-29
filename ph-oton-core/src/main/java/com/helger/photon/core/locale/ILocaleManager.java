@@ -53,8 +53,7 @@ public interface ILocaleManager
   EChange setDefaultLocale (@NonNull Locale aDefaultLocale);
 
   /**
-   * @return The application default locale. May be <code>null</code> if non is
-   *         defined
+   * @return The application default locale. May be <code>null</code> if non is defined
    */
   @Nullable
   Locale getDefaultLocale ();
@@ -67,8 +66,7 @@ public interface ILocaleManager
   ICommonsList <Locale> getAllAvailableLocales ();
 
   /**
-   * @return <code>true</code> if at least one locale is present,
-   *         <code>false</code> otherwise
+   * @return <code>true</code> if at least one locale is present, <code>false</code> otherwise
    */
   boolean hasLocales ();
 
@@ -77,8 +75,7 @@ public interface ILocaleManager
    *
    * @param aLocale
    *        The locale to check
-   * @return <code>true</code> if the passed locale is supported,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the passed locale is supported, <code>false</code> otherwise.
    */
   boolean isSupportedLocale (@Nullable Locale aLocale);
 }

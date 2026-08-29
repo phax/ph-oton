@@ -41,14 +41,12 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
   {}
 
   /**
-   * Get the redirection URL. This method is invoked BEFORE an eventual log-out
-   * happens!
+   * Get the redirection URL. This method is invoked BEFORE an eventual log-out happens!
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return The URL to redirect to, after this servlet was invoked. May not be
-   *         <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return The URL to redirect to, after this servlet was invoked. May not be <code>null</code>.
    */
   @OverrideOnDemand
   @NonNull
@@ -59,8 +57,8 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
   }
 
   /**
-   * Optional callback to be invoked before the session (if present) is
-   * invalidated. May not throw any exception!
+   * Optional callback to be invoked before the session (if present) is invalidated. May not throw
+   * any exception!
    *
    * @param aRequestScope
    *        The current request scope. Never <code>null</code>.
@@ -70,8 +68,7 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
   {}
 
   /**
-   * Optional callback to be invoked before the redirect happens. May not throw
-   * any exception!
+   * Optional callback to be invoked before the redirect happens. May not throw any exception!
    *
    * @param aRequestScope
    *        The current request scope. Never <code>null</code>.

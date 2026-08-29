@@ -102,7 +102,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     ValueEnforcer.notEmpty (sFieldName, "FieldName");
     ValueEnforcer.notNull (aUDO, "UDO");
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       // Remove an eventually existing old UDO with the same filename - avoid
       // bloating the list
       final TemporaryUserDataObject aOldUDO = m_aMap.remove (sFieldName);
@@ -131,7 +131,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     final ICommonsOrderedMap <String, UserDataObject> ret = new CommonsLinkedHashMap <> ();
     if (aFieldNames != null)
     {
-      m_aRWLock.writeLocked ( () -> {
+      m_aRWLock.writeLocked (() -> {
         for (final String sFieldName : aFieldNames)
         {
           // Remove an eventually existing old UDO
@@ -160,7 +160,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
   @Nullable
   public UserDataObject confirmUploadedFile (@Nullable final String sFieldName)
   {
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       if (StringHelper.isNotEmpty (sFieldName))
       {
         // Remove an eventually existing old UDO
@@ -193,7 +193,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     final ICommonsList <String> ret = new CommonsArrayList <> ();
     if (ArrayHelper.isNotEmpty (aFieldNames))
     {
-      m_aRWLock.writeLocked ( () -> {
+      m_aRWLock.writeLocked (() -> {
         for (final String sFieldName : aFieldNames)
         {
           final TemporaryUserDataObject aUDO = m_aMap.remove (sFieldName);
@@ -221,7 +221,7 @@ public final class UserUploadManager extends AbstractSessionWebSingleton
     if (StringHelper.isEmpty (sFieldName))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> m_aMap.get (sFieldName));
+    return m_aRWLock.readLockedGet (() -> m_aMap.get (sFieldName));
   }
 
   /**

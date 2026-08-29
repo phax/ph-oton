@@ -20,8 +20,7 @@ import com.helger.http.EHttpMethod;
 import com.helger.xservlet.AbstractXServlet;
 
 /**
- * A simple default implementation of a CSP (Content Security Policy) reporting
- * servlet.
+ * A simple default implementation of a CSP (Content Security Policy) reporting servlet.
  *
  * @author Philip Helger
  */

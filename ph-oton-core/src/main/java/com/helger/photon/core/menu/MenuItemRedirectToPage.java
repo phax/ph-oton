@@ -31,7 +31,8 @@ import com.helger.base.tostring.ToStringGenerator;
  * @since 8.2.2
  */
 @NotThreadSafe
-public class MenuItemRedirectToPage extends AbstractMenuObject <MenuItemRedirectToPage> implements IMenuItemRedirectToPage
+public class MenuItemRedirectToPage extends AbstractMenuObject <MenuItemRedirectToPage> implements
+                                    IMenuItemRedirectToPage
 {
   private final IMenuItemPage m_aMenuItemPage;
 

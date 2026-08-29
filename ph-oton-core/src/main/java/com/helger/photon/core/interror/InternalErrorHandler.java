@@ -581,8 +581,8 @@ public final class InternalErrorHandler
                                     aRequestScope,
                                     sErrorID,
                                     aCustomData,
-                                    aCustomEmailSettings != null ? aCustomEmailSettings : InternalErrorSettings
-                                                                                                               .getCopyOfEmailSettings (),
+                                    aCustomEmailSettings != null ? aCustomEmailSettings
+                                                                 : InternalErrorSettings.getCopyOfEmailSettings (),
                                     aEmailAttachments,
                                     bAddClassPath,
                                     nDuplicateEliminiationCounter);

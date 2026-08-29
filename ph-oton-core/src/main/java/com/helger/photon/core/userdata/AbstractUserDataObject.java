@@ -26,9 +26,9 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.file.FilenameHelper;
 
 /**
- * Represents a single web accessible object, that was provided by the user.
- * Think of this as a file descriptor. A {@link AbstractUserDataObject} always
- * resides on the file system and can be accessed by regular file IO.
+ * Represents a single web accessible object, that was provided by the user. Think of this as a file
+ * descriptor. A {@link AbstractUserDataObject} always resides on the file system and can be
+ * accessed by regular file IO.
  *
  * @author Philip Helger
  */

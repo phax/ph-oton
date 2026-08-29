@@ -44,8 +44,8 @@ import com.helger.smtp.data.IEmailAttachmentList;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Builder class for internal error triggering. Call all relevant setters and
- * call {@link #handle()} at the end to trigger the internal error.
+ * Builder class for internal error triggering. Call all relevant setters and call {@link #handle()}
+ * at the end to trigger the internal error.
  *
  * @author Philip Helger
  * @see InternalErrorHandler
@@ -54,8 +54,8 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public class InternalErrorBuilder
 {
   /**
-   * By default the class path entries are not added, because the Tomcat
-   * classpath is not very interesting.
+   * By default the class path entries are not added, because the Tomcat classpath is not very
+   * interesting.
    *
    * @since 7.0.4
    */
@@ -65,8 +65,7 @@ public class InternalErrorBuilder
    */
   public static final boolean DEFAULT_INVOKE_CUSTOM_EXCEPTION_HANDLER = true;
   /**
-   * By default only ever 100th internal errors with the same stack trace is
-   * send be email.
+   * By default only ever 100th internal errors with the same stack trace is send be email.
    *
    * @since 7.0.6
    */
@@ -131,8 +130,8 @@ public class InternalErrorBuilder
   }
 
   /**
-   * @return <code>true</code> if the internal error should be send by email
-   *         (default), or <code>false</code> if it should not.
+   * @return <code>true</code> if the internal error should be send by email (default), or
+   *         <code>false</code> if it should not.
    * @since 7.0.6
    */
   public boolean isSendEmail ()
@@ -156,8 +155,8 @@ public class InternalErrorBuilder
   }
 
   /**
-   * @return <code>true</code> if the internal error should also be saved as XML
-   *         (default), or <code>false</code> if it should not.
+   * @return <code>true</code> if the internal error should also be saved as XML (default), or
+   *         <code>false</code> if it should not.
    * @since 7.0.6
    */
   public boolean isSaveAsXML ()
@@ -332,8 +331,7 @@ public class InternalErrorBuilder
    * Add the class path to the internal errors?
    *
    * @param bAddClassPath
-   *        <code>true</code> to add the class path entries, <code>false</code>
-   *        to not do it.
+   *        <code>true</code> to add the class path entries, <code>false</code> to not do it.
    * @return this for chaining
    * @since 7.0.4
    */
@@ -345,8 +343,8 @@ public class InternalErrorBuilder
   }
 
   /**
-   * @return <code>true</code> if the class path should be added to the internal
-   *         error (default), or <code>false</code> if it should not.
+   * @return <code>true</code> if the class path should be added to the internal error (default), or
+   *         <code>false</code> if it should not.
    */
   public boolean isAddClassPath ()
   {
@@ -357,8 +355,8 @@ public class InternalErrorBuilder
    * Set the duplicate elimination counter.
    *
    * @param nDuplicateEliminiationCounter
-   *        The value to set. Must be &ge; 0. Pass 0 to disable any duplicate
-   *        elimination and send all errors by email.
+   *        The value to set. Must be &ge; 0. Pass 0 to disable any duplicate elimination and send
+   *        all errors by email.
    * @return this for chaining
    * @since 7.0.6
    */
@@ -382,8 +380,7 @@ public class InternalErrorBuilder
   }
 
   /**
-   * Shortcut for setting display locale and request scope at once from a web
-   * execution context
+   * Shortcut for setting display locale and request scope at once from a web execution context
    *
    * @param aSWEC
    *        The web execution context to use. May not be <code>null</code>.

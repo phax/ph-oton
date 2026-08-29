@@ -23,9 +23,8 @@ import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 import com.helger.xservlet.handler.specific.RedirectToServletXServletHandler;
 
 /**
- * An {@link IXServletSimpleHandler} that does the necessary redirect for a ROOT
- * servlet. This handler should be registered for all action HTTP methods (GET,
- * POST, PUT, DELETE and PATCH).
+ * An {@link IXServletSimpleHandler} that does the necessary redirect for a ROOT servlet. This
+ * handler should be registered for all action HTTP methods (GET, POST, PUT, DELETE and PATCH).
  *
  * @author Philip Helger
  */
@@ -35,8 +34,8 @@ public class RootXServletHandler extends RedirectToServletXServletHandler
    * Constructor.
    *
    * @param sServletPath
-   *        The servlet path (relative to the current context) to redirect to.
-   *        Must start with a slash ("/").
+   *        The servlet path (relative to the current context) to redirect to. Must start with a
+   *        slash ("/").
    */
   public RootXServletHandler (@NonNull @Nonempty final String sServletPath)
   {

@@ -60,12 +60,12 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
 
   public static boolean isCreateDefaults ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bCreateDefaults);
+    return RW_LOCK.readLockedBoolean (() -> s_bCreateDefaults);
   }
 
   public static void setCreateDefaults (final boolean bCreateDefaults)
   {
-    RW_LOCK.writeLocked ( () -> s_bCreateDefaults = bCreateDefaults);
+    RW_LOCK.writeLocked (() -> s_bCreateDefaults = bCreateDefaults);
   }
 
   public NamedSMTPSettingsManager (@NonNull @Nonempty final String sFilename) throws DAOException
@@ -83,7 +83,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   @Override
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLockedThrowing ( () -> {
+    m_aRWLock.writeLockedThrowing (() -> {
       m_aMap.clear ();
       initialRead ();
     });
@@ -170,7 +170,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     if (StringHelper.isEmpty (sID))
       return false;
 
-    return m_aRWLock.readLockedBoolean ( () -> m_aMap.containsKey (sID));
+    return m_aRWLock.readLockedBoolean (() -> m_aMap.containsKey (sID));
   }
 
   /**
@@ -186,7 +186,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     if (StringHelper.isEmpty (sID))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> m_aMap.get (sID));
+    return m_aRWLock.readLockedGet (() -> m_aMap.get (sID));
   }
 
   /**
@@ -225,8 +225,8 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
     if (StringHelper.isEmpty (sName))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> CollectionFind.findFirst (m_aMap.values (),
-                                                                     x -> x.getName ().equals (sName)));
+    return m_aRWLock.readLockedGet (() -> CollectionFind.findFirst (m_aMap.values (),
+                                                                    x -> x.getName ().equals (sName)));
   }
 
   /**
@@ -243,7 +243,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   {
     final NamedSMTPSettings aNamedSettings = new NamedSMTPSettings (sName, aSettings);
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       _addItem (aNamedSettings);
       markAsChanged ();
     });
@@ -322,7 +322,7 @@ public class NamedSMTPSettingsManager extends AbstractPhotonSimpleDAO implements
   @Nullable
   public EChange removeSettings (@Nullable final String sID)
   {
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       final EChange eChange = EChange.valueOf (m_aMap.remove (sID) != null);
       if (eChange.isChanged ())
       {

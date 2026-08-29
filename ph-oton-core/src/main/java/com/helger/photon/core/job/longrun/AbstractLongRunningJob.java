@@ -42,15 +42,16 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractLongRunningJob.class);
 
   /** Predefined key into the job data map */
-  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL + "longrunning.job.id";
+  private static final String KEY_LONG_RUNNING_JOB_ID = ScopeManager.SCOPE_ATTRIBUTE_PREFIX_INTERNAL +
+                                                        "longrunning.job.id";
 
   /**
    * Get the ID of the current user who executes the job.
    *
    * @param aJobDataMap
    *        The current job data map. Never <code>null</code>.
-   * @return The user ID to be used. May be <code>null</code> but it is
-   *         recommended to deliver "guest" or the like instead.
+   * @return The user ID to be used. May be <code>null</code> but it is recommended to deliver
+   *         "guest" or the like instead.
    */
   @Nullable
   protected abstract String getCurrentUserID (@NonNull JobDataMap aJobDataMap);
@@ -107,7 +108,9 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
       triggerCustomExceptionHandler (ex, getClass ().getName (), this);
 
       // Mark the long running job as failed
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.FAILURE, LongRunningJobResult.createExceptionText (ex));
+      getLongRunningJobManager ().onEndJob (sLongRunningJobID,
+                                            ESuccess.FAILURE,
+                                            LongRunningJobResult.createExceptionText (ex));
     }
 
     super.afterExecute (aJobDataMap, aContext, eExecSuccess);

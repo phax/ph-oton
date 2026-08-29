@@ -28,9 +28,9 @@ import com.helger.url.SimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Represents a single web accessible object, that was provided by the user.
- * Think of this as a file descriptor. A {@link IUserDataObject} lies directly
- * within a web application and can be accessed by regular file IO.
+ * Represents a single web accessible object, that was provided by the user. Think of this as a file
+ * descriptor. A {@link IUserDataObject} lies directly within a web application and can be accessed
+ * by regular file IO.
  *
  * @author Philip Helger
  */
@@ -38,27 +38,25 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public interface IUserDataObject extends Serializable
 {
   /**
-   * @return The path of the object, relative to the user data directory. Always
-   *         starting with a "/". This method does not contain any server
-   *         specific context path!
+   * @return The path of the object, relative to the user data directory. Always starting with a
+   *         "/". This method does not contain any server specific context path!
    */
   @NonNull
   @Nonempty
   String getPath ();
 
   /**
-   * @return <code>true</code> if this user data object is temporary,
-   *         <code>false</code> if it is used in production.
+   * @return <code>true</code> if this user data object is temporary, <code>false</code> if it is
+   *         used in production.
    */
   boolean isTemporary ();
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return The path to the user data object as an URL, including the context
-   *         path. Always starting with a "/". E.g.
-   *         <code>/context/user/file.txt</code> if this object points to
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return The path to the user data object as an URL, including the context path. Always starting
+   *         with a "/". E.g. <code>/context/user/file.txt</code> if this object points to
    *         <code>/file.txt</code>.
    */
   @NonNull
@@ -70,11 +68,10 @@ public interface IUserDataObject extends Serializable
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return The path to the user data object as an URL, including the context
-   *         path. Always starting with a "/". E.g.
-   *         <code>/context/user/file.txt</code> if this object points to
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return The path to the user data object as an URL, including the context path. Always starting
+   *         with a "/". E.g. <code>/context/user/file.txt</code> if this object points to
    *         <code>/file.txt</code>.
    */
   @NonNull
@@ -84,8 +81,8 @@ public interface IUserDataObject extends Serializable
   }
 
   /**
-   * @return The file system resource underlying this object. Never
-   *         <code>null</code> but potentially not existing.
+   * @return The file system resource underlying this object. Never <code>null</code> but
+   *         potentially not existing.
    */
   @NonNull
   default FileSystemResource getAsResource ()
@@ -96,8 +93,7 @@ public interface IUserDataObject extends Serializable
   /**
    * Get the File of this UDO object.
    *
-   * @return The matching File. No check is performed, whether the file exists
-   *         or not!
+   * @return The matching File. No check is performed, whether the file exists or not!
    */
   @NonNull
   default File getAsFile ()
@@ -106,15 +102,14 @@ public interface IUserDataObject extends Serializable
   }
 
   /**
-   * Create a clone of this object but for a different path. This is a utility
-   * method to easily "change" the path of a UDO independent of the
-   * implementation.
+   * Create a clone of this object but for a different path. This is a utility method to easily
+   * "change" the path of a UDO independent of the implementation.
    *
    * @param sPath
    *        The new path to use. May neither be <code>null</code> nor empty.
-   * @return A new user data object which has the same temporary state as the
-   *         original. An implementation may chose to return <code>this</code>
-   *         if the path is identical to the path of this UDO.
+   * @return A new user data object which has the same temporary state as the original. An
+   *         implementation may chose to return <code>this</code> if the path is identical to the
+   *         path of this UDO.
    */
   @NonNull
   IUserDataObject getCloneWithDifferentPath (@NonNull @Nonempty String sPath);
