@@ -16,6 +16,8 @@
  */
 package com.helger.photon.core.csp;
 
+import java.util.Locale;
+
 import org.jspecify.annotations.NonNull;
 
 import com.helger.base.string.StringHelper;
@@ -53,10 +55,12 @@ public interface ICSPReportClassifier
     // Everything up to the first ':' is the scheme. If there is no ':' at all, the whole value is
     // taken as the scheme, which is the browser truncation case (e.g. the bare string "resource")
     final int nColonIdx = sSourceFile.indexOf (':');
-    final String sScheme = (nColonIdx < 0 ? sSourceFile : sSourceFile.substring (0, nColonIdx)).toLowerCase (java.util.Locale.ROOT);
+    final String sScheme = (nColonIdx < 0 ? sSourceFile : sSourceFile.substring (0, nColonIdx)).toLowerCase (
+                                                                                                             Locale.ROOT);
 
     if ("http".equals (sScheme) || "https".equals (sScheme))
       return ECSPReportClassification.GENUINE;
+
     return ECSPReportClassification.LIKELY_NOISE;
   };
 

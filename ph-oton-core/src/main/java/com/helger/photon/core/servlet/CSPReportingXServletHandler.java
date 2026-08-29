@@ -18,7 +18,6 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -105,7 +104,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
    */
   public final boolean isFilterDuplicates ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bFilterDuplicates);
+    return m_aRWLock.readLockedBoolean (() -> m_bFilterDuplicates);
   }
 
   /**
@@ -116,7 +115,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
    */
   public final void setFilterDuplicates (final boolean bFilterDuplicates)
   {
-    m_aRWLock.writeLocked ( () -> m_bFilterDuplicates = bFilterDuplicates);
+    m_aRWLock.writeLocked (() -> m_bFilterDuplicates = bFilterDuplicates);
   }
 
   /**
@@ -127,7 +126,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
   @NonNull
   public final ICSPReportClassifier getClassifier ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aClassifier);
+    return m_aRWLock.readLockedGet (() -> m_aClassifier);
   }
 
   /**
@@ -141,14 +140,14 @@ public class CSPReportingXServletHandler implements IXServletHandler
   public final void setClassifier (@NonNull final ICSPReportClassifier aClassifier)
   {
     ValueEnforcer.notNull (aClassifier, "Classifier");
-    m_aRWLock.writeLocked ( () -> m_aClassifier = aClassifier);
+    m_aRWLock.writeLocked (() -> m_aClassifier = aClassifier);
   }
 
   @IsLocked (ELockType.WRITE)
   protected final boolean rememberBlockedURL (@NonNull @Nonempty final String sBlockedURI)
   {
     ValueEnforcer.notEmpty (sBlockedURI, "BlockedURI");
-    return m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
+    return m_aRWLock.writeLockedBoolean (() -> !m_aBlockedURIs.add (sBlockedURI));
   }
 
   /**
@@ -226,8 +225,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
 
         final String sBlockedURI = aReport.getBlockedURI ();
         final boolean bIsDuplicate = isFilterDuplicates () &&
-                                     StringHelper.isNotEmpty (sBlockedURI) &&
-                                     rememberBlockedURL (sBlockedURI);
+          StringHelper.isNotEmpty (sBlockedURI) &&
+          rememberBlockedURL (sBlockedURI);
         if (bIsDuplicate)
         {
           // Avoid too many reports
@@ -250,8 +249,8 @@ public class CSPReportingXServletHandler implements IXServletHandler
     for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().entrySet ())
     {
       final Object aValue = aEntry.getValue ();
-      if (aValue instanceof String)
-        ret.put (aEntry.getKey (), (String) aValue);
+      if (aValue instanceof final String sValue)
+        ret.put (aEntry.getKey (), sValue);
     }
     return ret;
   }

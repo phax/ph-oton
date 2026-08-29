@@ -24,8 +24,7 @@ import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 
 /**
- * The classification of a received CSP report, as determined by an
- * {@link ICSPReportClassifier}.
+ * The classification of a received CSP report, as determined by an {@link ICSPReportClassifier}.
  *
  * @author Philip Helger
  * @since 10.4.0

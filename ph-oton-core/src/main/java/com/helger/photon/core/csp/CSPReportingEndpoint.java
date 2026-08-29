@@ -146,7 +146,7 @@ public class CSPReportingEndpoint
     for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
       if (StringHelper.isNotEmpty (aEntry.getKey ()) && StringHelper.isNotEmpty (aEntry.getValue ()))
         aURL.add (aEntry.getKey (), aEntry.getValue ());
-    return aURL.getAsStringWithEncodedParameters ();
+    return aURL.getAsString ();
   }
 
   @Override

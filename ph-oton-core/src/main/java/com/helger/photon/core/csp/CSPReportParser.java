@@ -17,6 +17,7 @@
 package com.helger.photon.core.csp;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -78,7 +79,7 @@ public final class CSPReportParser
       return null;
     final int nSemicolonIdx = sContentType.indexOf (';');
     final String sMimeType = nSemicolonIdx < 0 ? sContentType : sContentType.substring (0, nSemicolonIdx);
-    return sMimeType.trim ().toLowerCase (java.util.Locale.ROOT);
+    return sMimeType.trim ().toLowerCase (Locale.ROOT);
   }
 
   /**
@@ -135,8 +136,8 @@ public final class CSPReportParser
    *        The remote address of the request. May be <code>null</code>.
    * @param aReceiptDT
    *        The date and time of receipt. May not be <code>null</code>.
-   * @return A non-<code>null</code> but maybe empty list of the contained reports. Empty if the body
-   *         could not be parsed or contained no CSP violation at all.
+   * @return A non-<code>null</code> but maybe empty list of the contained reports. Empty if the
+   *         body could not be parsed or contained no CSP violation at all.
    */
   @NonNull
   @ReturnsMutableCopy
