@@ -22,6 +22,8 @@ import java.util.List;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.base.string.StringHelper;
 import com.helger.httpclient.HttpClientManager;
@@ -39,6 +41,8 @@ import com.helger.xml.microdom.serialize.MicroReader;
  */
 public final class InternalDataTablesDownloader
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (InternalDataTablesDownloader.class);
+
   private InternalDataTablesDownloader ()
   {}
 
@@ -56,7 +60,14 @@ public final class InternalDataTablesDownloader
       {
         String sURL = e.getAttributeValue ("href");
         if (sURL == null)
+        {
           sURL = e.getAttributeValue ("src");
+          if (sURL == null)
+          {
+            LOGGER.warn ("Neither href nor src on " + e);
+            continue;
+          }
+        }
         sURL = sURL.replace (".min.css", ".css").replace (".min.js", ".js");
 
         if (sURL.startsWith ("https://cdnjs.cloudflare.com"))
@@ -64,7 +75,7 @@ public final class InternalDataTablesDownloader
 
         final boolean bIsJS = sURL.endsWith (".js");
 
-        System.out.println (sURL);
+        LOGGER.info (sURL);
 
         final List <String> parts = StringHelper.getExploded ('/',
                                                               StringHelper.trimStart (sURL,
@@ -85,7 +96,7 @@ public final class InternalDataTablesDownloader
 
         if (sFilenameMustContain != null && !sFilename.contains (sFilenameMustContain))
         {
-          System.out.println ("  Ignoring '" + sFilename + "'");
+          LOGGER.info ("  Ignoring '" + sFilename + "'");
           continue;
         }
 
@@ -96,7 +107,7 @@ public final class InternalDataTablesDownloader
                                        sPlugin + "-" + sVersion + "/" + (bIsJS ? "js" : "css") + "/" + sFilename);
         if (SimpleFileIO.writeFile (fTarget, aBytes).isSuccess ())
           if (false)
-            System.out.println ("  Wrote to " + fTarget.getAbsolutePath ());
+            LOGGER.info ("  Wrote to " + fTarget.getAbsolutePath ());
 
         // Minified
         final String sMinifiedURL = sURL.replace (".css", ".min.css").replace (".js", ".min.js");
@@ -114,8 +125,9 @@ public final class InternalDataTablesDownloader
                                                                                     sMinifiedFilename);
         if (SimpleFileIO.writeFile (fTargetMin, aBytes).isSuccess ())
           if (false)
-            System.out.println ("  Wrote to " + fTargetMin.getAbsolutePath ());
+            LOGGER.info ("  Wrote to " + fTargetMin.getAbsolutePath ());
       }
     }
+    LOGGER.info ("done");
   }
 }

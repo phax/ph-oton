@@ -42,6 +42,12 @@ public enum EDataTablesCSSPathProvider implements ICSSPathProvider
   DATATABLES_COL_REORDER ("external/datatables/colreorder-" +
                           CDataTablesComponentVersion.COL_REORDER +
                           "/css/colReorder.dataTables.css"),
+  DATATABLES_COLUMN_CONTROL ("external/datatables/columncontrol-" +
+                             CDataTablesComponentVersion.COLUMN_CONTROL +
+                             "/css/columnControl.dataTables.css"),
+  DATATABLES_DATE_TIME ("external/datatables/datetime-" +
+                        CDataTablesComponentVersion.DATETIME +
+                        "/css/dataTables.dateTime.css"),
   DATATABLES_FIXED_COLUMNS ("external/datatables/fixedcolumns-" +
                             CDataTablesComponentVersion.FIXED_COLUMNS +
                             "/css/fixedColumns.dataTables.css"),
@@ -63,6 +69,9 @@ public enum EDataTablesCSSPathProvider implements ICSSPathProvider
   DATATABLES_SCROLLER ("external/datatables/scroller-" +
                        CDataTablesComponentVersion.SCROLLER +
                        "/css/scroller.dataTables.css"),
+  DATATABLES_SEARCH_BUILDER ("external/datatables/searchbuilder-" +
+                             CDataTablesComponentVersion.SEARCH_BUILDER +
+                             "/css/searchBuilder.dataTables.css"),
   DATATABLES_SELECT ("external/datatables/select-" + CDataTablesComponentVersion.SELECT + "/css/select.dataTables.css"),
 
   DATATABLES_SEARCH_HIGHLIGHT ("ph-oton/searchHighlight/dataTables.searchHighlight.css"),

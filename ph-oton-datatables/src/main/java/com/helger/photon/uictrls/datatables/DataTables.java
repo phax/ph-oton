@@ -92,7 +92,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public static final boolean DEFAULT_AUTOWIDTH = true;
   public static final boolean DEFAULT_DEFER_RENDER = false;
   public static final boolean DEFAULT_INFO = true;
-  public static final boolean DEFAULT_JQUERY_UI = false;
   public static final boolean DEFAULT_LENGTH_CHANGE = true;
   public static final boolean DEFAULT_ORDERING = true;
   public static final boolean DEFAULT_PAGING = true;
@@ -125,7 +124,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   private boolean m_bAutoWidth = DEFAULT_AUTOWIDTH;
   private boolean m_bDeferRender = DEFAULT_DEFER_RENDER;
   private boolean m_bInfo = DEFAULT_INFO;
-  private boolean m_bJQueryUI = DEFAULT_JQUERY_UI;
   private boolean m_bLengthChange = DEFAULT_LENGTH_CHANGE;
   private boolean m_bOrdering = DEFAULT_ORDERING;
   private boolean m_bPaging = DEFAULT_PAGING;
@@ -385,18 +383,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setInfo (final boolean bInfo)
   {
     m_bInfo = bInfo;
-    return this;
-  }
-
-  public boolean isJQueryUI ()
-  {
-    return m_bJQueryUI;
-  }
-
-  @NonNull
-  public DataTables setJQueryUI (final boolean bJQueryUI)
-  {
-    m_bJQueryUI = bJQueryUI;
     return this;
   }
 
@@ -1213,8 +1199,6 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
       aJSParams.add ("deferRender", m_bDeferRender);
     if (m_bInfo != DEFAULT_INFO)
       aJSParams.add ("info", m_bInfo);
-    if (m_bJQueryUI != DEFAULT_JQUERY_UI)
-      aJSParams.add ("jQueryUI", m_bJQueryUI);
     if (m_bLengthChange != DEFAULT_LENGTH_CHANGE)
       aJSParams.add ("lengthChange", m_bLengthChange);
     if (m_bOrdering != DEFAULT_ORDERING)

@@ -38,18 +38,15 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
   DATATABLES_BUTTONS ("external/datatables/buttons-" +
                       CDataTablesComponentVersion.BUTTONS +
                       "/js/dataTables.buttons.js"),
-  DATATABLES_BUTTONS_COLVIS ("external/datatables/buttons-" +
-                             CDataTablesComponentVersion.BUTTONS +
-                             "/js/buttons.colVis.js"),
-  DATATABLES_BUTTONS_HTML5 ("external/datatables/buttons-" +
-                            CDataTablesComponentVersion.BUTTONS +
-                            "/js/buttons.html5.js"),
-  DATATABLES_BUTTONS_PRINT ("external/datatables/buttons-" +
-                            CDataTablesComponentVersion.BUTTONS +
-                            "/js/buttons.print.js"),
   DATATABLES_COL_REORDER ("external/datatables/colreorder-" +
                           CDataTablesComponentVersion.COL_REORDER +
                           "/js/dataTables.colReorder.js"),
+  DATATABLES_COLUMN_CONTROL ("external/datatables/columncontrol-" +
+                             CDataTablesComponentVersion.COLUMN_CONTROL +
+                             "/js/dataTables.columnControl.js"),
+  DATATABLES_DATE_TIME ("external/datatables/datetime-" +
+                        CDataTablesComponentVersion.DATETIME +
+                        "/js/dataTables.dateTime.js"),
   DATATABLES_FIXED_COLUMNS ("external/datatables/fixedcolumns-" +
                             CDataTablesComponentVersion.FIXED_COLUMNS +
                             "/js/dataTables.fixedColumns.js"),
@@ -71,6 +68,9 @@ public enum EDataTablesJSPathProvider implements IJSPathProvider
   DATATABLES_SCROLLER ("external/datatables/scroller-" +
                        CDataTablesComponentVersion.SCROLLER +
                        "/js/dataTables.scroller.js"),
+  DATATABLES_SEARCH_BUILDER ("external/datatables/searchbuilder-" +
+                             CDataTablesComponentVersion.SEARCH_BUILDER +
+                             "/js/dataTables.searchBuilder.js"),
   DATATABLES_SELECT ("external/datatables/select-" + CDataTablesComponentVersion.SELECT + "/js/dataTables.select.js"),
 
   DATATABLES_SEARCH_HIGHLIGHT ("ph-oton/searchHighlight/dataTables.searchHighlight.js"),

@@ -44,6 +44,9 @@ public enum EDataTablesB5CSSPathProvider implements ICSSPathProvider
   DATATABLES_COL_REORDER_BOOTSTRAP5 ("external/datatables/colreorder-" +
                                      CDataTablesComponentVersion.COL_REORDER +
                                      "/css/colReorder.bootstrap5.css"),
+  DATATABLES_COLUMN_CONTROL_BOOTSTRAP5 ("external/datatables/columncontrol-" +
+                                        CDataTablesComponentVersion.COLUMN_CONTROL +
+                                        "/css/columnControl.bootstrap5.css"),
   DATATABLES_FIXED_COLUMNS_BOOTSTRAP5 ("external/datatables/fixedcolumns-" +
                                        CDataTablesComponentVersion.FIXED_COLUMNS +
                                        "/css/fixedColumns.bootstrap5.css"),
@@ -65,6 +68,9 @@ public enum EDataTablesB5CSSPathProvider implements ICSSPathProvider
   DATATABLES_SCROLLER_BOOTSTRAP5 ("external/datatables/scroller-" +
                                   CDataTablesComponentVersion.SCROLLER +
                                   "/css/scroller.bootstrap5.css"),
+  DATATABLES_SEARCH_BUILDER_BOOTSTRAP5 ("external/datatables/searchbuilder-" +
+                                        CDataTablesComponentVersion.SEARCH_BUILDER +
+                                        "/css/searchBuilder.bootstrap5.css"),
   DATATABLES_SELECT_BOOTSTRAP5 ("external/datatables/select-" +
                                 CDataTablesComponentVersion.SELECT +
                                 "/css/select.bootstrap5.css");

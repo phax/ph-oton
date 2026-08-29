@@ -40,9 +40,39 @@ public enum EDataTablesB5JSPathProvider implements IJSPathProvider
   DATATABLES_BUTTONS_BOOTSTRAP5 ("external/datatables/buttons-" +
                                  CDataTablesComponentVersion.BUTTONS +
                                  "/js/buttons.bootstrap5.js"),
+  DATATABLES_COL_REORDER_BOOTSTRAP5 ("external/datatables/colreorder-" +
+                                     CDataTablesComponentVersion.COL_REORDER +
+                                     "/js/colReorder.bootstrap5.js"),
+  DATATABLES_COLUMN_CONTROL_BOOTSTRAP5 ("external/datatables/columncontrol-" +
+                                        CDataTablesComponentVersion.COLUMN_CONTROL +
+                                        "/js/columnControl.bootstrap5.js"),
+  DATATABLES_FIXED_COLUMNS_BOOTSTRAP5 ("external/datatables/fixedcolumns-" +
+                                       CDataTablesComponentVersion.FIXED_COLUMNS +
+                                       "/js/fixedColumns.bootstrap5.js"),
+  DATATABLES_FIXED_HEADER_BOOTSTRAP5 ("external/datatables/fixedheader-" +
+                                      CDataTablesComponentVersion.FIXED_HEADER +
+                                      "/js/fixedHeader.bootstrap5.js"),
+  DATATABLES_KEY_TABLE_BOOTSTRAP5 ("external/datatables/keytable-" +
+                                   CDataTablesComponentVersion.KEY_TABLE +
+                                   "/js/keyTable.bootstrap5.js"),
   DATATABLES_RESPONSIVE_BOOTSTRAP5 ("external/datatables/responsive-" +
                                     CDataTablesComponentVersion.RESPONSIVE +
-                                    "/js/responsive.bootstrap5.js");
+                                    "/js/responsive.bootstrap5.js"),
+  DATATABLES_ROW_GROUP_BOOTSTRAP5 ("external/datatables/rowgroup-" +
+                                   CDataTablesComponentVersion.ROW_GROUP +
+                                   "/js/rowGroup.bootstrap5.js"),
+  DATATABLES_ROW_REORDER_BOOTSTRAP5 ("external/datatables/rowreorder-" +
+                                     CDataTablesComponentVersion.ROW_REORDER +
+                                     "/js/rowReorder.bootstrap5.js"),
+  DATATABLES_SCROLLER_BOOTSTRAP5 ("external/datatables/scroller-" +
+                                  CDataTablesComponentVersion.SCROLLER +
+                                  "/js/scroller.bootstrap5.js"),
+  DATATABLES_SEARCH_BUILDER_BOOTSTRAP5 ("external/datatables/searchbuilder-" +
+                                        CDataTablesComponentVersion.SEARCH_BUILDER +
+                                        "/js/searchBuilder.bootstrap5.js"),
+  DATATABLES_SELECT_BOOTSTRAP5 ("external/datatables/select-" +
+                                CDataTablesComponentVersion.SELECT +
+                                "/js/select.bootstrap5.js");
 
   private final ConstantJSPathProvider m_aPP;
 

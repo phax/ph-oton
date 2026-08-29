@@ -1,0 +1,63 @@
+:root {
+  --dts-label_offset: 20px;
+  --dts-label_background: rgba(0, 0, 0, 0.8);
+  --dts-label_color: white;
+  --dts-label_box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  --dts-label_text-align: right;
+  --dts-label_border-radius: 3px;
+  --dts-label_padding: 0.4em;
+  --dts-label_z-index: 2;
+  --dts-scroll_background: repeating-linear-gradient(
+  	45deg,
+  	rgba(0, 0, 0, 0.01),
+  	rgba(0, 0, 0, 0.01) 10px,
+  	rgba(0, 0, 0, 0) 10px,
+  	rgba(0, 0, 0, 0) 20px
+  );
+  --dts-table_background: white;
+  --dts-table_z-index: 2;
+}
+
+div.dts {
+  display: block !important;
+}
+div.dts tbody th,
+div.dts tbody td {
+  white-space: nowrap;
+}
+div.dts div.dts_label {
+  position: absolute;
+  right: var(--dts-label_offset);
+  background: var(--dts-label_background);
+  color: var(--dts-label_color);
+  box-shadow: var(--dts-label_box-shadow);
+  text-align: var(--dts-label_text-align);
+  border-radius: var(--dts-label_border-radius);
+  padding: var(--dts-label_padding);
+  z-index: var(--dts-label_z-index);
+  display: none;
+}
+div.dts div.dt-scroll-body {
+  background: var(--dts-scroll_background);
+}
+div.dts div.dt-scroll-body table {
+  background-color: var(--dts-table_background);
+  z-index: var(--dts-table_z-index);
+}
+div.dts div.dt-length,
+div.dts div.dt-paging {
+  display: none;
+}
+
+:root.dark {
+  --dts-label_background: rgba(255, 255, 255, 0.8);
+  --dts-label_color: black;
+  --dts-scroll_background: repeating-linear-gradient(
+  	45deg,
+  	rgba(255, 255, 255, 0.01),
+  	rgba(255, 255, 255, 0.01) 10px,
+  	rgba(255, 255, 255, 0) 10px,
+  	rgba(255, 255, 255, 0) 20px
+  );
+  --dts-table_background: var(--dt-html_background);
+}

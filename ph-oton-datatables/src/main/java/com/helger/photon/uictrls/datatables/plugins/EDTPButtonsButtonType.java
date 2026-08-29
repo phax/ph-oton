@@ -25,7 +25,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
-import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 
 /**
  * DataTables Buttons plugin, button type
@@ -34,15 +33,13 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
  */
 public enum EDTPButtonsButtonType implements IHasName
 {
-  /**
-   * Copy to clipboard (uses Flash in preference to HTML5 if Flash is available)
-   */
+  /** Copy to clipboard - resolves to {@link #COPY_HTML5} */
   COPY ("copy"),
-  /** Save to CSV file */
+  /** Save to CSV file - resolves to {@link #CSV_HTML5} */
   CSV ("csv"),
-  /** Save to Excel XSLX file */
+  /** Save to Excel XSLX file - resolves to {@link #EXCEL_HTML5} */
   EXCEL ("excel"),
-  /** Save to a PDF document */
+  /** Save to a PDF document - resolves to {@link #PDF_HTML5} */
   PDF ("pdf"),
   /**
    * Displays a dialogue asking the user to use their browser's copy command
@@ -61,24 +58,11 @@ public enum EDTPButtonsButtonType implements IHasName
    * file.
    */
   PDF_HTML5 ("pdfHtml5"),
-  /**
-   * Immediately copies the data to clipboard
-   */
-  COPY_FLASH ("copyFlash"),
-  /** Create and save an CSV file */
-  CSV_FLASH ("csvFlash"),
-  /** Create and save an Excel XLSX file */
-  EXCEL_FLASH ("excelFlash"),
-  /**
-   * Create and save a PDF document. Note - this does not support UTF8
-   * characters.
-   */
-  PDF_FLASH ("pdfFlash"),
   PRINT ("print"),
   COLLECTION ("collection"),
-  COL_VIS ("colvis", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS),
-  COL_VIS_GROUP ("colvisGroup", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS),
-  COLUMNS_TOGGLE ("columnsToggle", EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS);
+  COL_VIS ("colvis"),
+  COL_VIS_GROUP ("colvisGroup"),
+  COLUMNS_TOGGLE ("columnsToggle");
 
   private final String m_sName;
   private final ICommonsList <IJSPathProvider> m_aJSIncludes;

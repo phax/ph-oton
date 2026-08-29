@@ -68,6 +68,17 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 v10.4.0 - work in progress
+* Updated to DataTables 3.0.2 + current plugins: AutoFill 3.0.0, Buttons 4.0.2, ColReorder 3.0.1, ColumnControl 2.0.1, DateTime 2.0.0, FixedColumns 6.0.0, FixedHeader 5.0.0, KeyTable 3.0.0, Responsive 4.0.2, RowGroup 2.0.0, RowReorder 2.0.0, Scroller 3.0.0, SearchBuilder 2.0.0 and Select 4.0.1.
+  Note that DataTables 3 no longer requires jQuery.
+  **Breaking API change**: removed the enum entries `EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS`, `DATATABLES_BUTTONS_HTML5` and `DATATABLES_BUTTONS_PRINT`. Buttons 4 merged `buttons.colVis.js`, `buttons.html5.js` and `buttons.print.js` into `dataTables.buttons.js`, so the separate files no longer exist - registering `EDataTablesJSPathProvider.DATATABLES_BUTTONS` is now sufficient for all button types.
+  **Breaking API change**: removed the enum entries `EDTPButtonsButtonType.COPY_FLASH`, `CSV_FLASH`, `EXCEL_FLASH` and `PDF_FLASH`. The Flash based buttons were dropped in Buttons 2 already and resolved to nothing at runtime.
+  **Breaking API change**: removed the constants `CDataTablesComponentVersion.SEARCH_PANES` and `STATE_RESTORE` incl. the respective resources. SearchPanes and StateRestore are not yet ported to DataTables 3 and their DataTables 2 versions are incompatible with it.
+  Added the new enum entries `DATATABLES_COLUMN_CONTROL`, `DATATABLES_DATE_TIME` and `DATATABLES_SEARCH_BUILDER` to `EDataTablesCSSPathProvider` and `EDataTablesJSPathProvider`. The resources were shipped before, but were not reachable from Java.
+  Added the new enum entries `DATATABLES_COLUMN_CONTROL_BOOTSTRAP4` and `DATATABLES_SEARCH_BUILDER_BOOTSTRAP4` to `EDataTablesB4CSSPathProvider`.
+  Added entries for ColReorder, ColumnControl, FixedColumns, FixedHeader, KeyTable, RowGroup, RowReorder, Scroller, SearchBuilder and Select to `EDataTablesB4JSPathProvider` - DataTables 3 ships Bootstrap integration JS for these extensions for the first time, previously only the CSS existed.
+  The identical entries were added to the two Bootstrap 5 counterparts.
+  Note: the CardView and Editor extensions that the DataTables 3 download builder offers are deliberately not included, because they are licensed under "DataTables Plus" and must not be redistributed.
+  **Breaking API change**: removed `DataTables.isJQueryUI ()`, `setJQueryUI (boolean)` and the constant `DataTables.DEFAULT_JQUERY_UI`. The `jQueryUI` initialisation option was dropped in DataTables 2 already, so the emitted option had no effect any more.
 * Requires at least ph-commons 12.4.0
 * Reworked the CSP violation reporting in `CSPReportingXServletHandler` and added the new package `com.helger.photon.core.csp`.
   The handler now also accepts the Reporting API format (`application/reports+json`) next to the legacy format (`application/csp-report`) and normalizes both into the new class `CSPReport`, which additionally carries the User-Agent, the remote address, the receipt date time and the query parameters of the report URI. The latter are the only way to add server side context to a report, because the report body itself is created by the browser from a fixed set of fields.

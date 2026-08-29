@@ -40,9 +40,39 @@ public enum EDataTablesB4JSPathProvider implements IJSPathProvider
   DATATABLES_BUTTONS_BOOTSTRAP4 ("external/datatables/buttons-" +
                                  CDataTablesComponentVersion.BUTTONS +
                                  "/js/buttons.bootstrap4.js"),
+  DATATABLES_COL_REORDER_BOOTSTRAP4 ("external/datatables/colreorder-" +
+                                     CDataTablesComponentVersion.COL_REORDER +
+                                     "/js/colReorder.bootstrap4.js"),
+  DATATABLES_COLUMN_CONTROL_BOOTSTRAP4 ("external/datatables/columncontrol-" +
+                                        CDataTablesComponentVersion.COLUMN_CONTROL +
+                                        "/js/columnControl.bootstrap4.js"),
+  DATATABLES_FIXED_COLUMNS_BOOTSTRAP4 ("external/datatables/fixedcolumns-" +
+                                       CDataTablesComponentVersion.FIXED_COLUMNS +
+                                       "/js/fixedColumns.bootstrap4.js"),
+  DATATABLES_FIXED_HEADER_BOOTSTRAP4 ("external/datatables/fixedheader-" +
+                                      CDataTablesComponentVersion.FIXED_HEADER +
+                                      "/js/fixedHeader.bootstrap4.js"),
+  DATATABLES_KEY_TABLE_BOOTSTRAP4 ("external/datatables/keytable-" +
+                                   CDataTablesComponentVersion.KEY_TABLE +
+                                   "/js/keyTable.bootstrap4.js"),
   DATATABLES_RESPONSIVE_BOOTSTRAP4 ("external/datatables/responsive-" +
                                     CDataTablesComponentVersion.RESPONSIVE +
-                                    "/js/responsive.bootstrap4.js");
+                                    "/js/responsive.bootstrap4.js"),
+  DATATABLES_ROW_GROUP_BOOTSTRAP4 ("external/datatables/rowgroup-" +
+                                   CDataTablesComponentVersion.ROW_GROUP +
+                                   "/js/rowGroup.bootstrap4.js"),
+  DATATABLES_ROW_REORDER_BOOTSTRAP4 ("external/datatables/rowreorder-" +
+                                     CDataTablesComponentVersion.ROW_REORDER +
+                                     "/js/rowReorder.bootstrap4.js"),
+  DATATABLES_SCROLLER_BOOTSTRAP4 ("external/datatables/scroller-" +
+                                  CDataTablesComponentVersion.SCROLLER +
+                                  "/js/scroller.bootstrap4.js"),
+  DATATABLES_SEARCH_BUILDER_BOOTSTRAP4 ("external/datatables/searchbuilder-" +
+                                        CDataTablesComponentVersion.SEARCH_BUILDER +
+                                        "/js/searchBuilder.bootstrap4.js"),
+  DATATABLES_SELECT_BOOTSTRAP4 ("external/datatables/select-" +
+                                CDataTablesComponentVersion.SELECT +
+                                "/js/select.bootstrap4.js");
 
   private final ConstantJSPathProvider m_aPP;
 

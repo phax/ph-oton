@@ -44,6 +44,9 @@ public enum EDataTablesB4CSSPathProvider implements ICSSPathProvider
   DATATABLES_COL_REORDER_BOOTSTRAP4 ("external/datatables/colreorder-" +
                                      CDataTablesComponentVersion.COL_REORDER +
                                      "/css/colReorder.bootstrap4.css"),
+  DATATABLES_COLUMN_CONTROL_BOOTSTRAP4 ("external/datatables/columncontrol-" +
+                                        CDataTablesComponentVersion.COLUMN_CONTROL +
+                                        "/css/columnControl.bootstrap4.css"),
   DATATABLES_FIXED_COLUMNS_BOOTSTRAP4 ("external/datatables/fixedcolumns-" +
                                        CDataTablesComponentVersion.FIXED_COLUMNS +
                                        "/css/fixedColumns.bootstrap4.css"),
@@ -65,6 +68,9 @@ public enum EDataTablesB4CSSPathProvider implements ICSSPathProvider
   DATATABLES_SCROLLER_BOOTSTRAP4 ("external/datatables/scroller-" +
                                   CDataTablesComponentVersion.SCROLLER +
                                   "/css/scroller.bootstrap4.css"),
+  DATATABLES_SEARCH_BUILDER_BOOTSTRAP4 ("external/datatables/searchbuilder-" +
+                                        CDataTablesComponentVersion.SEARCH_BUILDER +
+                                        "/css/searchBuilder.bootstrap4.css"),
   DATATABLES_SELECT_BOOTSTRAP4 ("external/datatables/select-" +
                                 CDataTablesComponentVersion.SELECT +
                                 "/css/select.bootstrap4.css");

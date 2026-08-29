@@ -1,0 +1,13 @@
+table.fixedHeader-floating,
+table.fixedHeader-locked {
+  position: relative !important;
+  background-color: var(--dt-html_background);
+  background-color: var(--dt-html_background);
+}
+
+@media print {
+  table.fixedHeader-floating,
+  table.fixedHeader-locked {
+    display: none;
+  }
+}
