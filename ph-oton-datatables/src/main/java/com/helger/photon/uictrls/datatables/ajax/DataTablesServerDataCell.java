@@ -16,9 +16,6 @@
  */
 package com.helger.photon.uictrls.datatables.ajax;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.BitSet;
 import java.util.Locale;
 
@@ -34,7 +31,6 @@ import com.helger.html.hc.IHCConversionSettings;
 import com.helger.html.hc.IHCNodeList;
 import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.hc.html.tabular.IHCCell;
-import com.helger.html.hc.impl.HCNodeList;
 import com.helger.html.hc.render.HCRenderer;
 import com.helger.html.hc.special.HCSpecialNodeHandler;
 import com.helger.html.hc.special.HCSpecialNodes;
@@ -56,7 +52,6 @@ public final class DataTablesServerDataCell
   private IHCNodeList <?> m_aContent;
   // Lazy stuff
   private HCSpecialNodes m_aLazySpecialNodes;
-  private IMicroNode m_aLazyMicroNode;
   private String m_sLazyHTML;
   private String m_sLazyTextContent;
 
@@ -70,22 +65,10 @@ public final class DataTablesServerDataCell
     final IHCNodeList <?> aCellContent = aCell.getAllChildrenAsNodeList ();
 
     // Remember cell content
-    setContent (aCellContent);
+    _setContent (aCellContent);
   }
 
-  private void writeObject (@NonNull final ObjectOutputStream out) throws IOException
-  {
-    out.writeObject (m_aContent);
-    out.writeObject (m_aLazySpecialNodes);
-  }
-
-  private void readObject (@NonNull final ObjectInputStream in) throws IOException, ClassNotFoundException
-  {
-    m_aContent = (HCNodeList) in.readObject ();
-    m_aLazySpecialNodes = (HCSpecialNodes) in.readObject ();
-  }
-
-  public void setContent (@NonNull final IHCNodeList <?> aCellChildren)
+  private void _setContent (@NonNull final IHCNodeList <?> aCellChildren)
   {
     if (m_aLazySpecialNodes != null)
       m_aLazySpecialNodes.clear ();
@@ -111,105 +94,88 @@ public final class DataTablesServerDataCell
     }
 
     m_aContent = aCellChildren;
-    m_aLazyMicroNode = null;
     m_sLazyHTML = null;
     m_sLazyTextContent = null;
   }
 
-  @NonNull
-  public IHCNodeList <?> getContent ()
-  {
-    return m_aContent;
-  }
-
   @Nullable
-  private IMicroNode _getOrCreateMicroNode ()
+  private IMicroNode _createMicroNode ()
   {
-    IMicroNode ret = m_aLazyMicroNode;
-    if (ret == null)
+    // The micro node is deliberately not cached. It is only an intermediate representation to
+    // derive the HTML and the text content from, and keeping one per cell would multiply the
+    // memory consumption of the whole table
+    final IHCNodeList <?> aContent = m_aContent;
+    if (aContent == null)
     {
-      // Convert to HC node to Micro node
-      ret = m_aContent.convertToMicroNode (DataTablesServerData.DEFAULT_CONVERSION_SETTINGS);
-      m_aLazyMicroNode = ret;
-
-      if (ret == null)
-      {
-        // Avoid later checks
-        m_sLazyHTML = "";
-        m_sLazyTextContent = "";
-      }
+      // The content was already released, because both derived values are present
+      return null;
     }
-    return ret;
+    return aContent.convertToMicroNode (DataTablesServerData.DEFAULT_CONVERSION_SETTINGS);
   }
 
-  @Nullable
+  private void _releaseContentIfPossible ()
+  {
+    // Once both derived values are present, the HC node tree is not needed any more
+    if (m_sLazyHTML != null && m_sLazyTextContent != null)
+      m_aContent = null;
+  }
+
+  /**
+   * @return The cell content as an HTML string. Never <code>null</code> but maybe empty. The value
+   *         is created on first access and cached afterwards.
+   */
+  @NonNull
   public String getHTMLString ()
   {
     String ret = m_sLazyHTML;
     if (ret == null)
     {
-      // _getMicroNode may change lazy variable
-      final IMicroNode aMicroNode = _getOrCreateMicroNode ();
-      ret = m_sLazyHTML;
-
-      // Re-check
-      if (ret == null)
-      {
-        assert aMicroNode != null;
-
-        // Create lazy
+      final IMicroNode aMicroNode = _createMicroNode ();
+      if (aMicroNode != null)
         ret = MicroWriter.getNodeAsString (aMicroNode,
                                            DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
 
-        // Avoid multiple calls for non-cached version
-        if (ret == null)
-          ret = "";
-        m_sLazyHTML = ret;
-      }
+      // Avoid multiple calls for non-cached version
+      if (ret == null)
+        ret = "";
+      m_sLazyHTML = ret;
+      _releaseContentIfPossible ();
     }
     return ret;
   }
 
+  /**
+   * @return The plain text content of the cell, e.g. for sorting and searching. Never
+   *         <code>null</code> but maybe empty. The value is created on first access and cached
+   *         afterwards.
+   */
   @NonNull
   public String getTextContent ()
   {
     String ret = m_sLazyTextContent;
     if (ret == null)
     {
-      // _getMicroNode may change lazy variable
-      final IMicroNode aMicroNode = _getOrCreateMicroNode ();
-      ret = m_sLazyTextContent;
-
-      // Re-check
-      if (ret == null)
-      {
-        assert aMicroNode != null;
-
-        // Create lazy
-        // e.g. for initial sorting
-        if (aMicroNode instanceof final IMicroNodeWithChildren aNodeWithChildren)
-          ret = aNodeWithChildren.getTextContent ();
+      final IMicroNode aMicroNode = _createMicroNode ();
+      if (aMicroNode instanceof final IMicroNodeWithChildren aNodeWithChildren)
+        ret = aNodeWithChildren.getTextContent ();
+      else
+        if (aMicroNode != null && aMicroNode.isText ())
+        {
+          // ignore whitespace-only content
+          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
+            ret = aMicroNode.getNodeValue ();
+        }
         else
-          if (aMicroNode.isText ())
-          {
-            // ignore whitespace-only content
-            if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
-              ret = aMicroNode.getNodeValue ();
-          }
-          else
-            if (aMicroNode.isCDATA ())
-            {
-              ret = aMicroNode.getNodeValue ();
-            }
+          if (aMicroNode != null && aMicroNode.isCDATA ())
+            ret = aMicroNode.getNodeValue ();
 
-        // Avoid multiple calls for non-cached version
-        if (ret == null)
-          ret = "";
-        m_sLazyTextContent = ret;
-      }
+      // Avoid multiple calls for non-cached version
+      if (ret == null)
+        ret = "";
+      m_sLazyTextContent = ret;
+      _releaseContentIfPossible ();
     }
-
-    return m_sLazyTextContent;
+    return ret;
   }
 
   @Nullable
