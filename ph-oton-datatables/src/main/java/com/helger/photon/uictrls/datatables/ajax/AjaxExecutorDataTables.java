@@ -31,9 +31,7 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.helper.CollectionSort;
 import com.helger.html.hc.special.HCSpecialNodes;
-import com.helger.html.hc.special.IHCSpecialNodes;
 import com.helger.json.IJsonObject;
-import com.helger.json.JsonObject;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.uistate.UIStateRegistry;
@@ -71,11 +69,6 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
   private static final String COLUMNS_SEARCH = "search";
   private static final String COLUMNS_SEARCH_VALUE = "value";
   private static final String COLUMNS_SEARCH_REGEX = "regex";
-
-  private static final String DT_ROW_ID = "DT_RowId";
-  private static final String DT_ROW_CLASS = "DT_RowClass";
-  private static final String DT_ROW_DATA = "DT_RowData";
-  private static final String DT_ROW_ATTR = "DT_RowAttr";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxExecutorDataTables.class);
 
@@ -365,27 +358,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       }
 
       final DataTablesServerDataRow aRow = aResultRows.get (nRealIndex);
-      final IJsonObject aRowData = new JsonObject ();
-      if (aRow.hasRowID ())
-        aRowData.add (DT_ROW_ID, aRow.getRowID ());
-      if (aRow.hasRowClass ())
-        aRowData.add (DT_ROW_CLASS, aRow.getRowClass ());
-      if (aRow.hasRowData ())
-        aRowData.add (DT_ROW_DATA, aRow.directGetAllRowData ());
-      if (aRow.hasRowAttr ())
-        aRowData.add (DT_ROW_ATTR, aRow.directGetAllRowAttrs ());
-      int nCellIndex = 0;
-      for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
-      {
-        // Assume the index is the "data"
-        aRowData.add (Integer.toString (nCellIndex++), aCell.getHTMLString ());
-
-        // Merge all special nodes into the global ones
-        final IHCSpecialNodes aCellSpecialNodes = aCell.getSpecialNodes ();
-        if (aCellSpecialNodes != null)
-          aSpecialNodes.addAll (aCellSpecialNodes);
-      }
-      aData.add (aRowData);
+      aData.add (aRow.getAsJson (aSpecialNodes));
       ++nResultRowCount;
     }
 

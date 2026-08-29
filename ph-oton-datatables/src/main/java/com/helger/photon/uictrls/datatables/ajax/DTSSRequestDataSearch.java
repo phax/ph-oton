@@ -40,7 +40,9 @@ public final class DTSSRequestDataSearch
     if (StringHelper.isEmptyAfterTrim (sSearchText))
       return null;
 
-    return RegExHelper.getSplitToArray (sSearchText, "\\s+");
+    // Trim first, because leading whitespace would otherwise lead to an empty first search term,
+    // that matches everything
+    return RegExHelper.getSplitToArray (sSearchText.trim (), "\\s+");
   }
 
   public DTSSRequestDataSearch (@Nullable final String sSearchText, final boolean bSearchRegEx)

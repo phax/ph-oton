@@ -38,8 +38,8 @@ import com.helger.json.JsonObject;
 public final class DTSSResponseData implements IHasJson
 {
   private final int m_nDraw;
-  private final int m_nTotalRecords;
-  private final int m_nTotalDisplayRecords;
+  private final long m_nTotalRecords;
+  private final long m_nTotalDisplayRecords;
   private final ICommonsList <IJsonObject> m_aData;
   private final IHCSpecialNodes m_aSpecialNodes;
   private final String m_sErrorMsg;
@@ -60,8 +60,8 @@ public final class DTSSResponseData implements IHasJson
    *        Special nodes for the AJAX response
    */
   public DTSSResponseData (final int nDraw,
-                           final int nTotalRecords,
-                           final int nTotalDisplayRecords,
+                           final long nTotalRecords,
+                           final long nTotalDisplayRecords,
                            @Nullable final ICommonsList <IJsonObject> aData,
                            @Nullable final String sErrorMsg,
                            @NonNull final IHCSpecialNodes aSpecialNodes)
@@ -92,7 +92,7 @@ public final class DTSSResponseData implements IHasJson
    * @return Total records, before filtering (i.e. the total number of records
    *         in the database)
    */
-  public int getTotalRecords ()
+  public long getTotalRecords ()
   {
     return m_nTotalRecords;
   }
@@ -102,7 +102,7 @@ public final class DTSSResponseData implements IHasJson
    *         after filtering has been applied - not just the number of records
    *         being returned for this page of data).
    */
-  public int getTotalDisplayRecords ()
+  public long getTotalDisplayRecords ()
   {
     return m_nTotalDisplayRecords;
   }

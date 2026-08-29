@@ -35,6 +35,10 @@ import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.CHTMLAttributes;
 import com.helger.html.hc.html.tabular.HCRow;
 import com.helger.html.hc.html.tabular.IHCCell;
+import com.helger.html.hc.special.HCSpecialNodes;
+import com.helger.html.hc.special.IHCSpecialNodes;
+import com.helger.json.IJsonObject;
+import com.helger.json.JsonObject;
 import com.helger.xml.microdom.IMicroQName;
 
 /**
@@ -46,6 +50,15 @@ import com.helger.xml.microdom.IMicroQName;
 @NotThreadSafe
 public final class DataTablesServerDataRow
 {
+  /** JSON property name for the row ID */
+  public static final String DT_ROW_ID = "DT_RowId";
+  /** JSON property name for the row CSS classes */
+  public static final String DT_ROW_CLASS = "DT_RowClass";
+  /** JSON property name for the row data attributes */
+  public static final String DT_ROW_DATA = "DT_RowData";
+  /** JSON property name for the row custom attributes */
+  public static final String DT_ROW_ATTR = "DT_RowAttr";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataRow.class);
 
   private final String m_sRowID;
@@ -146,5 +159,45 @@ public final class DataTablesServerDataRow
   public DataTablesServerDataCell getCellAtIndex (@Nonnegative final int nIndex)
   {
     return m_aCells.get (nIndex);
+  }
+
+  /**
+   * Convert this row to the JSON representation expected by DataTables. Each cell is added with its
+   * 0-based index as the property name, because the index is used as the "data" of a column.
+   *
+   * @param aSpecialNodesToFill
+   *        An optional object to collect the special nodes (JS and CSS resources) of all contained
+   *        cells. May be <code>null</code> if the special nodes are not of interest.
+   * @return Never <code>null</code>.
+   * @since 10.4.0
+   */
+  @NonNull
+  public IJsonObject getAsJson (@Nullable final HCSpecialNodes aSpecialNodesToFill)
+  {
+    final IJsonObject ret = new JsonObject ();
+    if (hasRowID ())
+      ret.add (DT_ROW_ID, m_sRowID);
+    if (hasRowClass ())
+      ret.add (DT_ROW_CLASS, m_sRowClass);
+    if (hasRowData ())
+      ret.add (DT_ROW_DATA, m_aRowData);
+    if (hasRowAttr ())
+      ret.add (DT_ROW_ATTR, m_aRowAttr);
+
+    int nCellIndex = 0;
+    for (final DataTablesServerDataCell aCell : m_aCells)
+    {
+      // Assume the index is the "data"
+      ret.add (Integer.toString (nCellIndex++), aCell.getHTMLString ());
+
+      if (aSpecialNodesToFill != null)
+      {
+        // Merge all special nodes into the global ones
+        final IHCSpecialNodes aCellSpecialNodes = aCell.getSpecialNodes ();
+        if (aCellSpecialNodes != null)
+          aSpecialNodesToFill.addAll (aCellSpecialNodes);
+      }
+    }
+    return ret;
   }
 }

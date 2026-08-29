@@ -256,6 +256,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   // Custom properties
   private boolean m_bGenerateOnDocumentReady = DataTablesSettings.isDefaultGenerateOnDocumentReady ();
   private EDataTablesFilterType m_eServerFilterType = EDataTablesFilterType.DEFAULT;
+  private EDataTablesServerSideMode m_eServerSideMode = EDataTablesServerSideMode.DEFAULT;
   private transient Consumer <JSPackage> m_aJSBeforeModifier;
   private transient BiConsumer <JSPackage, JSLet> m_aJSAfterModifier;
 
@@ -576,6 +577,37 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   public DataTables setServerFilterType (@NonNull final EDataTablesFilterType eServerFilterType)
   {
     m_eServerFilterType = ValueEnforcer.notNull (eServerFilterType, "ServerFilterType");
+    return this;
+  }
+
+  /**
+   * @return How the server side data is provided. Never <code>null</code>. Only relevant if
+   *         {@link #isServerSide()} is <code>true</code>.
+   * @since 10.4.0
+   */
+  @NonNull
+  public EDataTablesServerSideMode getServerSideMode ()
+  {
+    return m_eServerSideMode;
+  }
+
+  /**
+   * Set how the server side data is provided. Use
+   * {@link EDataTablesServerSideMode#ON_DEMAND} to avoid, that the whole table is rendered and
+   * stored in the session. In that case the AJAX URL set via
+   * {@link #setAjaxBuilder(com.helger.html.jquery.JQueryAjaxBuilder)} must point to an
+   * {@link com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesOnDemand} instead of an
+   * {@link com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables}.
+   *
+   * @param eServerSideMode
+   *        The mode to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @since 10.4.0
+   */
+  @NonNull
+  public DataTables setServerSideMode (@NonNull final EDataTablesServerSideMode eServerSideMode)
+  {
+    m_eServerSideMode = ValueEnforcer.notNull (eServerSideMode, "ServerSideMode");
     return this;
   }
 
@@ -1208,12 +1240,16 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (isServerSide ())
     {
       aJSParams.add ("serverSide", true);
-      // This copies the content of the table
-      final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
-                                                                         m_aColumnDefs,
-                                                                         m_aDisplayLocale,
-                                                                         m_eServerFilterType);
-      UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
+      if (m_eServerSideMode.isPrerendered ())
+      {
+        // This copies the content of the table
+        final DataTablesServerData aServerData = new DataTablesServerData (m_aTable,
+                                                                           m_aColumnDefs,
+                                                                           m_aDisplayLocale,
+                                                                           m_eServerFilterType);
+        UIStateRegistry.getCurrent ().registerState (m_aTable.getID (), aServerData);
+      }
+      // else: nothing is stored in the session - each request is answered by the application
 
       // Remove all body rows to avoid initial double painting, as the most
       // reasonable state is retrieved from the server!
