@@ -18,9 +18,12 @@ package com.helger.photon.core.servlet;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,13 +39,20 @@ import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.CommonsHashSet;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.collection.commons.ICommonsSet;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.http.CHttpHeader;
 import com.helger.http.EHttpMethod;
 import com.helger.http.EHttpVersion;
-import com.helger.json.IJson;
 import com.helger.json.IJsonObject;
-import com.helger.json.serialize.JsonReader;
 import com.helger.json.serialize.JsonWriterSettings;
+import com.helger.photon.core.csp.CSPReport;
+import com.helger.photon.core.csp.CSPReportParser;
+import com.helger.photon.core.csp.ECSPReportClassification;
+import com.helger.photon.core.csp.ICSPReportClassifier;
 import com.helger.web.scope.IRequestWebScope;
 import com.helger.xservlet.handler.IXServletHandler;
 
@@ -62,9 +72,11 @@ public class CSPReportingXServletHandler implements IXServletHandler
   private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final Consumer <? super IJsonObject> m_aJsonHandler;
+  private final Consumer <? super CSPReport> m_aReportHandler;
   @GuardedBy ("m_aRWLock")
   private boolean m_bFilterDuplicates = DEFAULT_FILTER_DUPLICATES;
+  @GuardedBy ("m_aRWLock")
+  private ICSPReportClassifier m_aClassifier = ICSPReportClassifier.DEFAULT;
   @GuardedBy ("m_aRWLock")
   private final ICommonsSet <String> m_aBlockedURIs = new CommonsHashSet <> ();
 
@@ -73,18 +85,18 @@ public class CSPReportingXServletHandler implements IXServletHandler
     this (CSPReportingXServletHandler::logCSPReport);
   }
 
-  public CSPReportingXServletHandler (@NonNull final Consumer <? super IJsonObject> aJsonHandler)
+  public CSPReportingXServletHandler (@NonNull final Consumer <? super CSPReport> aReportHandler)
   {
-    m_aJsonHandler = ValueEnforcer.notNull (aJsonHandler, "JsonHandler");
+    m_aReportHandler = ValueEnforcer.notNull (aReportHandler, "ReportHandler");
   }
 
   /**
-   * @return The JSON consumer provided in the constructor. Never <code>null</code>.
+   * @return The report consumer provided in the constructor. Never <code>null</code>.
    */
   @NonNull
-  public final Consumer <? super IJsonObject> getJsonHandler ()
+  public final Consumer <? super CSPReport> getReportHandler ()
   {
-    return m_aJsonHandler;
+    return m_aReportHandler;
   }
 
   /**
@@ -107,6 +119,31 @@ public class CSPReportingXServletHandler implements IXServletHandler
     m_aRWLock.writeLocked ( () -> m_bFilterDuplicates = bFilterDuplicates);
   }
 
+  /**
+   * @return The classifier used to separate actionable reports from noise. Never <code>null</code>.
+   *         Defaults to {@link ICSPReportClassifier#DEFAULT}.
+   * @since 10.4.0
+   */
+  @NonNull
+  public final ICSPReportClassifier getClassifier ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aClassifier);
+  }
+
+  /**
+   * Set the classifier used to separate actionable reports from noise. A downstream consumer may
+   * have a different noise profile than the default.
+   *
+   * @param aClassifier
+   *        The classifier to be used. May not be <code>null</code>.
+   * @since 10.4.0
+   */
+  public final void setClassifier (@NonNull final ICSPReportClassifier aClassifier)
+  {
+    ValueEnforcer.notNull (aClassifier, "Classifier");
+    m_aRWLock.writeLocked ( () -> m_aClassifier = aClassifier);
+  }
+
   @IsLocked (ELockType.WRITE)
   protected final boolean rememberBlockedURL (@NonNull @Nonempty final String sBlockedURI)
   {
@@ -114,9 +151,38 @@ public class CSPReportingXServletHandler implements IXServletHandler
     return m_aRWLock.writeLockedBoolean ( () -> !m_aBlockedURIs.add (sBlockedURI));
   }
 
-  public static void logCSPReport (@NonNull final IJsonObject aJson)
+  /**
+   * The default report consumer. An actionable report is logged as a warning, a report classified
+   * as noise is logged on the info level only, so that it can be filtered away by log
+   * configuration.
+   *
+   * @param aReport
+   *        The received report. May not be <code>null</code>.
+   */
+  public static void logCSPReport (@NonNull final CSPReport aReport)
   {
-    LOGGER.warn ("CSP report: " + aJson.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));
+    final String sMsg = "CSP report: " +
+                        aReport.getAsJson ().getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED);
+    if (aReport.getClassification ().isLikelyNoise ())
+      LOGGER.info (sMsg);
+    else
+      LOGGER.warn (sMsg);
+  }
+
+  /**
+   * The legacy report consumer signature, taking the plain JSON object. Kept as a convenience for
+   * consumers that only care about the violation fields.
+   *
+   * @param aJsonConsumer
+   *        The consumer of the normalized violation fields. May not be <code>null</code>.
+   * @return A consumer that can be passed to the constructor. Never <code>null</code>.
+   * @since 10.4.0
+   */
+  @NonNull
+  public static Consumer <CSPReport> asJsonConsumer (@NonNull final Consumer <? super IJsonObject> aJsonConsumer)
+  {
+    ValueEnforcer.notNull (aJsonConsumer, "JsonConsumer");
+    return aReport -> aJsonConsumer.accept (aReport.getBody ());
   }
 
   public void onRequest (@NonNull final HttpServletRequest aHttpRequest,
@@ -125,41 +191,69 @@ public class CSPReportingXServletHandler implements IXServletHandler
                          @NonNull final EHttpMethod eHttpMethod,
                          @NonNull final IRequestWebScope aRequestScope) throws ServletException, IOException
   {
+    final String sContentType = aHttpRequest.getContentType ();
+    if (!CSPReportParser.isSupportedContentType (sContentType))
+    {
+      LOGGER.warn ("Rejecting CSP report with unsupported content type '" + sContentType + "'");
+      aHttpResponse.setStatus (HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+      return;
+    }
+
     // Read all request body bytes
     final byte [] aBytes = StreamHelper.getAllBytes (aHttpRequest.getInputStream ());
 
-    // Try to parse as JSON
-    final IJson aJson = JsonReader.builder ().source (aBytes).read ();
-    if (aJson != null)
+    final ICommonsList <CSPReport> aReports = CSPReportParser.parse (aBytes,
+                                                                     sContentType,
+                                                                     aHttpRequest.getHeader (CHttpHeader.USER_AGENT),
+                                                                     aRequestScope.getRemoteAddr (),
+                                                                     PDTFactory.getCurrentLocalDateTime ());
+    if (aReports.isEmpty ())
+      LOGGER.error ("Failed to parse CSP report of type '" +
+                    sContentType +
+                    "': " +
+                    new String (aBytes, StandardCharsets.ISO_8859_1));
+    else
     {
-      if (aJson.isObject ())
-      {
-        final IJsonObject aJsonObj = aJson.getAsObject ();
-        final String sBlockedURI = aJsonObj.getAsString ("blocked-uri");
+      // The query parameters of the report URI are the only way to add server side context to a
+      // report. They are attacker controlled, so they are used for grouping only.
+      final Map <String, String> aURIParams = _getURIParams (aRequestScope);
 
+      final ICSPReportClassifier aClassifier = getClassifier ();
+      for (final CSPReport aReport : aReports)
+      {
+        aReport.uriParams ().putAll (aURIParams);
+        aReport.setClassification (aClassifier.classify (aReport));
+
+        final String sBlockedURI = aReport.getBlockedURI ();
         final boolean bIsDuplicate = isFilterDuplicates () &&
                                      StringHelper.isNotEmpty (sBlockedURI) &&
                                      rememberBlockedURL (sBlockedURI);
-
         if (bIsDuplicate)
         {
           // Avoid too many reports
           LOGGER.info ("Ignoring already blocked CSP URI '" + sBlockedURI + "'");
         }
         else
-        {
-          // Unique URL
-          m_aJsonHandler.accept (aJson.getAsObject ());
-        }
+          m_aReportHandler.accept (aReport);
       }
-      else
-        LOGGER.error ("Weird JSON received: " + aJson.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));
     }
-    else
-      LOGGER.error ("Failed to parse CSP report JSON: " + new String (aBytes, StandardCharsets.ISO_8859_1));
 
     // Ack (202)
     aHttpResponse.setStatus (HttpServletResponse.SC_ACCEPTED);
+  }
+
+  @NonNull
+  @ReturnsMutableCopy
+  private static Map <String, String> _getURIParams (@NonNull final IRequestWebScope aRequestScope)
+  {
+    final ICommonsOrderedMap <String, String> ret = new CommonsLinkedHashMap <> ();
+    for (final Map.Entry <String, Object> aEntry : aRequestScope.params ().entrySet ())
+    {
+      final Object aValue = aEntry.getValue ();
+      if (aValue instanceof String)
+        ret.put (aEntry.getKey (), (String) aValue);
+    }
+    return ret;
   }
 
   @NonNull
@@ -173,5 +267,16 @@ public class CSPReportingXServletHandler implements IXServletHandler
   public final EChange clearAllBlockedURIs ()
   {
     return m_aRWLock.readLockedGet (m_aBlockedURIs::removeAll);
+  }
+
+  /**
+   * @param eClassification
+   *        The classification to check. May be <code>null</code>.
+   * @return <code>true</code> if the provided classification is noise.
+   * @since 10.4.0
+   */
+  public static boolean isNoise (@Nullable final ECSPReportClassification eClassification)
+  {
+    return eClassification != null && eClassification.isLikelyNoise ();
   }
 }
