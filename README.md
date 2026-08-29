@@ -78,6 +78,8 @@ v10.4.0 - work in progress
   Added entries for ColReorder, ColumnControl, FixedColumns, FixedHeader, KeyTable, RowGroup, RowReorder, Scroller, SearchBuilder and Select to `EDataTablesB4JSPathProvider` - DataTables 3 ships Bootstrap integration JS for these extensions for the first time, previously only the CSS existed.
   The identical entries were added to the two Bootstrap 5 counterparts.
   Note: the CardView and Editor extensions that the DataTables 3 download builder offers are deliberately not included, because they are licensed under "DataTables Plus" and must not be redistributed.
+  Fixed the SearchHighlight plugin (`DataTablesPluginSearchHighlight`), that stopped working with DataTables 3. It read the initialisation options of a table from `settings.oInit`, which DataTables 3 renamed to `settings.init` - the resulting `TypeError` aborted the `init.dt` handler, so no search term was ever highlighted. The bundled `dataTables.searchHighlight.js` now reads both and additionally ignores foreign "init" events that bubble up to the document.
+  The bundled SearchHighlight plugin was updated from v1.0.1 to v1.1.0, which highlights the search term of a single column as well - in its own colour, using the new CSS class `column_highlight` in `dataTables.searchHighlight.css`. The global search term keeps using `highlight`.
   **Breaking API change**: removed `DataTables.isJQueryUI ()`, `setJQueryUI (boolean)` and the constant `DataTables.DEFAULT_JQUERY_UI`. The `jQueryUI` initialisation option was dropped in DataTables 2 already, so the emitted option had no effect any more.
 * Requires at least ph-commons 12.4.0
 * Reworked the CSP violation reporting in `CSPReportingXServletHandler` and added the new package `com.helger.photon.core.csp`.

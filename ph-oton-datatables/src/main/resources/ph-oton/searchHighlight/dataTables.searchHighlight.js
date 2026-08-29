@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*! SearchHighlight for DataTables v1.0.1
- * 2014 SpryMedia Ltd - datatables.net/license
+/*! SearchHighlight for DataTables v1.1.0
+ * SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     SearchHighlight
  * @description Search term highlighter for DataTables
- * @version     1.0.1
+ * @version     1.1.0
  * @file        dataTables.searchHighlight.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
  * @contact     www.sprymedia.co.uk/contact
@@ -59,18 +59,37 @@ function highlight( body, table )
 
   // Don't highlight the "not found" row, so we get the rows using the api
   if ( table.rows( { filter: 'applied' } ).data().length ) {
+    // The search term of each single column
+    table.columns().every( function () {
+      var column = this;
+      var cells = column.nodes().flatten().to$();
+
+      cells.unhighlight( { className: 'column_highlight' } );
+      cells.highlight( column.search().trim().split (/\s+/), { className: 'column_highlight' } );
+    } );
+
+    // The global search term
     body.highlight( table.search().trim().split (/\s+/) );
   }
 }
 
 // Listen for DataTables initialisations
 $(document).on( 'init.dt.dth', function (e, settings, json) {
+  // Ignore "init" events of other libraries that bubble up to the document
+  if ( e.namespace !== 'dt' ) {
+    return;
+  }
+
   var table = new $.fn.dataTable.Api( settings );
   var body = $( table.table().body() );
 
+  // DataTables 3 renamed the initialisation options of a table from `oInit` to
+  // `init` - reading `oInit` would throw and abort this handler
+  var init = settings.init || settings.oInit || {};
+
   if (
     $( table.table().node() ).hasClass( 'searchHighlight' ) || // table has class
-    settings.oInit.searchHighlight                          || // option specified
+    init.searchHighlight                                    || // option specified
     $.fn.dataTable.defaults.searchHighlight                    // default set
   ) {
     table

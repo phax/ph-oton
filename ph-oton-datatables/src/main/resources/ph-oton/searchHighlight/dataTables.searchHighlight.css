@@ -18,3 +18,7 @@ table.dataTable span.highlight {
   background-color: #FFFF88;
 }
 
+table.dataTable span.column_highlight {
+  background-color: #FFCC99;
+}
+
