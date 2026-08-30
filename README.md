@@ -67,7 +67,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.4.0 - work in progress
+v10.4.0 - 2026-08-30
+* Requires at least ph-commons 12.4.0
 * Updated to DataTables 3.0.2 + current plugins: AutoFill 3.0.0, Buttons 4.0.2, ColReorder 3.0.1, ColumnControl 2.0.1, DateTime 2.0.0, FixedColumns 6.0.0, FixedHeader 5.0.0, KeyTable 3.0.0, Responsive 4.0.2, RowGroup 2.0.0, RowReorder 2.0.0, Scroller 3.0.0, SearchBuilder 2.0.0 and Select 4.0.1.
   Note that DataTables 3 no longer requires jQuery.
   **Breaking API change**: removed the enum entries `EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS`, `DATATABLES_BUTTONS_HTML5` and `DATATABLES_BUTTONS_PRINT`. Buttons 4 merged `buttons.colVis.js`, `buttons.html5.js` and `buttons.print.js` into `dataTables.buttons.js`, so the separate files no longer exist - registering `EDataTablesJSPathProvider.DATATABLES_BUTTONS` is now sufficient for all button types.
@@ -81,7 +82,6 @@ v10.4.0 - work in progress
   Fixed the SearchHighlight plugin (`DataTablesPluginSearchHighlight`), that stopped working with DataTables 3. It read the initialisation options of a table from `settings.oInit`, which DataTables 3 renamed to `settings.init` - the resulting `TypeError` aborted the `init.dt` handler, so no search term was ever highlighted. The bundled `dataTables.searchHighlight.js` now reads both and additionally ignores foreign "init" events that bubble up to the document.
   The bundled SearchHighlight plugin was updated from v1.0.1 to v1.1.0, which highlights the search term of a single column as well - in its own colour, using the new CSS class `column_highlight` in `dataTables.searchHighlight.css`. The global search term keeps using `highlight`.
   **Breaking API change**: removed `DataTables.isJQueryUI ()`, `setJQueryUI (boolean)` and the constant `DataTables.DEFAULT_JQUERY_UI`. The `jQueryUI` initialisation option was dropped in DataTables 2 already, so the emitted option had no effect any more.
-* Requires at least ph-commons 12.4.0
 * Reworked the CSP violation reporting in `CSPReportingXServletHandler` and added the new package `com.helger.photon.core.csp`.
   The handler now also accepts the Reporting API format (`application/reports+json`) next to the legacy format (`application/csp-report`) and normalizes both into the new class `CSPReport`, which additionally carries the User-Agent, the remote address, the receipt date time and the query parameters of the report URI. The latter are the only way to add server side context to a report, because the report body itself is created by the browser from a fixed set of fields.
   Added `ICSPReportClassifier` to separate actionable reports from the browser internal and browser extension noise that reaches every public reporting endpoint. The default implementation classifies a report as noise if its "source-file" has a scheme other than `http` or `https`; an absent "source-file" is deliberately not treated as a noise signal. The classification is part of `CSPReport` and can be replaced per application via `CSPReportingXServletHandler.setClassifier (...)`. Noise is logged on the info level instead of the warning level.
@@ -94,7 +94,6 @@ v10.4.0 - work in progress
   Previously long running job results could only be added and read, but never be removed - for results of type `FILE` that meant, that the referenced files piled up without any way to clean them up from the application.
   Note: deleting a job result does not delete a possibly referenced result file on disk.
   Custom implementations of `ILongRunningJobResultManager` need to implement the new method.
-* Added the new enum entry `EWebPageText.PAGE_NAME_APPINFO_LONG_RUNNING_JOBS`
 * Integrated [ph-telemetry](https://github.com/phax/ph-telemetry) 1.0.1 into `LongRunningJobManager` - submodule `ph-oton-mgrs` now depends on `com.helger.telemetry:ph-telemetry`.
   Every long running job execution is now covered by the span `photon.longrunningjob.execute` (started in `onStartJob`, closed in `onEndJob`), and the instruments `photon.longrunningjob.started`, `photon.longrunningjob.ended`, `photon.longrunningjob.running` and `photon.longrunningjob.duration` are emitted.
   Emission goes through the vendor neutral ph-telemetry facades only - without a registered `ITelemetryTracerSPI` / `ITelemetryMeterSPI` everything degrades to cheap no-ops, so no observability backend is required.
