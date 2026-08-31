@@ -99,27 +99,11 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO implemen
     return ret;
   }
 
-  @Nullable
-  public LocalDateTime getLastUpdateDT ()
-  {
-    return m_aRWLock.readLockedGet (m_aData::getLastUpdateDT);
-  }
-
   @NonNull
-  public ESystemMessageType getMessageType ()
+  public ISystemMessageData getSystemMessageData ()
   {
-    return m_aRWLock.readLockedGet (m_aData::getMessageType);
-  }
-
-  @Nullable
-  public String getSystemMessage ()
-  {
-    return m_aRWLock.readLockedGet (m_aData::getMessage);
-  }
-
-  public boolean hasSystemMessage ()
-  {
-    return m_aRWLock.readLockedBoolean (m_aData::hasMessage);
+    // Return a copy, so that the internal data cannot be modified from the outside
+    return m_aRWLock.readLockedGet (m_aData::getClone);
   }
 
   @NonNull

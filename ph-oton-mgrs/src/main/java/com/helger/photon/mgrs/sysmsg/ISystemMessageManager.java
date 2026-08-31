@@ -32,29 +32,58 @@ import com.helger.base.state.EChange;
 public interface ISystemMessageManager
 {
   /**
-   * @return The date and time when the system message was last modified. May be <code>null</code>.
+   * Get all system message data at once. Reading all fields in one go allows an implementation to
+   * use a single backend access (e.g. a single SQL statement) instead of one per field.
+   *
+   * @return The current system message data. Never <code>null</code>.
+   * @since 10.4.1
    */
+  @NonNull
+  ISystemMessageData getSystemMessageData ();
+
+  /**
+   * @return The date and time when the system message was last modified. May be <code>null</code>.
+   * @deprecated Since 10.4.1; use {@link #getSystemMessageData()} instead
+   */
+  @Deprecated (forRemoval = true, since = "10.4.1")
   @Nullable
-  LocalDateTime getLastUpdateDT ();
+  default LocalDateTime getLastUpdateDT ()
+  {
+    return getSystemMessageData ().getLastUpdateDT ();
+  }
 
   /**
    * @return The type of system message. Never <code>null</code>.
+   * @deprecated Since 10.4.1; use {@link #getSystemMessageData()} instead
    */
+  @Deprecated (forRemoval = true, since = "10.4.1")
   @NonNull
-  ESystemMessageType getMessageType ();
+  default ESystemMessageType getMessageType ()
+  {
+    return getSystemMessageData ().getMessageType ();
+  }
 
   /**
    * @return The system message text itself. May be <code>null</code>.
+   * @deprecated Since 10.4.1; use {@link #getSystemMessageData()} instead
    */
+  @Deprecated (forRemoval = true, since = "10.4.1")
   @Nullable
-  String getSystemMessage ();
+  default String getSystemMessage ()
+  {
+    return getSystemMessageData ().getMessage ();
+  }
 
   /**
    * @return <code>true</code> if a system message text is available, <code>false</code> if not.
+   * @deprecated Since 10.4.1; use {@link #getSystemMessageData()} instead
    */
-  boolean hasSystemMessage ();
+  @Deprecated (forRemoval = true, since = "10.4.1")
+  default boolean hasSystemMessage ()
+  {
+    return getSystemMessageData ().hasMessage ();
+  }
 
   @NonNull
   EChange setSystemMessage (@NonNull ESystemMessageType eMessageType, @Nullable String sMessage);
-
 }

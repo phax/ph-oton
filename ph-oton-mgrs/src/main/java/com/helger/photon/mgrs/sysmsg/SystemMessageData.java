@@ -22,6 +22,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.clone.ICloneable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -36,7 +37,7 @@ import com.helger.datetime.helper.PDTFactory;
  * @since 7.0.5
  */
 @NotThreadSafe
-public class SystemMessageData implements ISystemMessageData
+public class SystemMessageData implements ISystemMessageData, ICloneable <SystemMessageData>
 {
   private LocalDateTime m_aLastUpdate;
   private ESystemMessageType m_eMessageType = ESystemMessageType.DEFAULT;
@@ -49,6 +50,14 @@ public class SystemMessageData implements ISystemMessageData
   {
     internalSetMessageType (eMessageType);
     internalSetMessage (sMessage);
+  }
+
+  public SystemMessageData (@NonNull final ISystemMessageData aOther)
+  {
+    ValueEnforcer.notNull (aOther, "Other");
+    setLastUpdate (aOther.getLastUpdateDT ());
+    internalSetMessageType (aOther.getMessageType ());
+    internalSetMessage (aOther.getMessage ());
   }
 
   @Nullable
@@ -115,6 +124,12 @@ public class SystemMessageData implements ISystemMessageData
     setLastUpdate (PDTFactory.getCurrentLocalDateTime ());
 
     return EChange.CHANGED;
+  }
+
+  @NonNull
+  public SystemMessageData getClone ()
+  {
+    return new SystemMessageData (this);
   }
 
   @Override

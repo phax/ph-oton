@@ -67,6 +67,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.4.1 - work in progress
+* Added the new method `ISystemMessageManager.getSystemMessageData ()` that returns all system message fields at once. It is now the only method an implementation needs to provide, and it allows a backend to read everything in a single step - the JDBC implementation previously issued one `SELECT` per field.
+* Deprecated the methods `ISystemMessageManager.getLastUpdateDT ()`, `getMessageType ()`, `getSystemMessage ()` and `hasSystemMessage ()` for removal. They are now `default` methods that delegate to `getSystemMessageData ()`.
+* Added the copy constructor `SystemMessageData (ISystemMessageData)` and the method `SystemMessageData.getClone ()` - the class now implements `ICloneable`.
+
 v10.4.0 - 2026-08-30
 * Requires at least ph-commons 12.4.0
 * Updated to DataTables 3.0.2 + current plugins: AutoFill 3.0.0, Buttons 4.0.2, ColReorder 3.0.1, ColumnControl 2.0.1, DateTime 2.0.0, FixedColumns 6.0.0, FixedHeader 5.0.0, KeyTable 3.0.0, Responsive 4.0.2, RowGroup 2.0.0, RowReorder 2.0.0, Scroller 3.0.0, SearchBuilder 2.0.0 and Select 4.0.1.

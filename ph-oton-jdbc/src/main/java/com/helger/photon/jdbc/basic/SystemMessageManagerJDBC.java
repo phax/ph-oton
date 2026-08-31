@@ -16,7 +16,6 @@
  */
 package com.helger.photon.jdbc.basic;
 
-import java.time.LocalDateTime;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -25,7 +24,6 @@ import org.jspecify.annotations.Nullable;
 
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
-import com.helger.base.string.StringHelper;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
@@ -34,6 +32,7 @@ import com.helger.db.jdbc.executor.DBResultRow;
 import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
 import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.mgrs.sysmsg.ESystemMessageType;
+import com.helger.photon.mgrs.sysmsg.ISystemMessageData;
 import com.helger.photon.mgrs.sysmsg.ISystemMessageManager;
 import com.helger.photon.mgrs.sysmsg.SystemMessageData;
 
@@ -62,43 +61,31 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
     m_sTableName = aTableNameCustomizer.apply ("sys_message");
   }
 
-  @Nullable
-  private DBResultRow _readRow ()
+  /**
+   * Read all system message fields with a single SQL statement.
+   *
+   * @return Never <code>null</code>. The default data, if no row is present.
+   */
+  @NonNull
+  private SystemMessageData _readData ()
   {
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
     newExecutor ().querySingle ("SELECT messagetype, lastupdate, message FROM " + m_sTableName, aDBResult::set);
-    return aDBResult.get ();
-  }
 
-  @Nullable
-  public LocalDateTime getLastUpdateDT ()
-  {
-    final DBResultRow aRow = _readRow ();
-    return aRow != null ? aRow.getAsLocalDateTime (1) : null;
+    final DBResultRow aRow = aDBResult.get ();
+    if (aRow == null)
+      return new SystemMessageData ();
+
+    final SystemMessageData ret = new SystemMessageData (ESystemMessageType.getFromIDOrDefault (aRow.getAsString (0)),
+                                                         aRow.getAsString (2));
+    ret.setLastUpdate (aRow.getAsLocalDateTime (1));
+    return ret;
   }
 
   @NonNull
-  public ESystemMessageType getMessageType ()
+  public ISystemMessageData getSystemMessageData ()
   {
-    final DBResultRow aRow = _readRow ();
-    if (aRow != null)
-      return ESystemMessageType.getFromIDOrDefault (aRow.getAsString (0));
-    return ESystemMessageType.DEFAULT;
-  }
-
-  @Nullable
-  public String getSystemMessage ()
-  {
-    final DBResultRow aRow = _readRow ();
-    return aRow != null ? aRow.getAsString (2) : null;
-  }
-
-  public boolean hasSystemMessage ()
-  {
-    final DBResultRow aRow = _readRow ();
-    if (aRow == null)
-      return false;
-    return StringHelper.isNotEmpty (aRow.getAsString (2));
+    return _readData ();
   }
 
   @NonNull
@@ -107,19 +94,7 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
     ValueEnforcer.notNull (eMessageType, "MessageType");
 
     // Use SystemMessageData to check for actual change and compute new lastupdate
-    final DBResultRow aExisting = _readRow ();
-    final SystemMessageData aData;
-    if (aExisting != null)
-    {
-      aData = new SystemMessageData (ESystemMessageType.getFromIDOrDefault (aExisting.getAsString (0)),
-                                     aExisting.getAsString (2));
-      aData.setLastUpdate (aExisting.getAsLocalDateTime (1));
-    }
-    else
-    {
-      aData = new SystemMessageData ();
-    }
-
+    final SystemMessageData aData = _readData ();
     if (aData.setSystemMessage (eMessageType, sMessage).isUnchanged ())
       return EChange.UNCHANGED;
 
