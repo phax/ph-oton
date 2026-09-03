@@ -44,10 +44,11 @@ import com.helger.typeconvert.collection.StringMap;
 public final class LoginInfo implements IHasID <String>
 {
   private final IUser m_aUser;
-  private ISessionScope m_aSessionScope;
+  // volatile, because a LoginInfo is shared between all requests of a session
+  private volatile ISessionScope m_aSessionScope;
   private final LocalDateTime m_aLoginDT;
-  private LocalDateTime m_aLastAccessDT;
-  private LocalDateTime m_aLogoutDT;
+  private volatile LocalDateTime m_aLastAccessDT;
+  private volatile LocalDateTime m_aLogoutDT;
   private final StringMap m_aAttrs = new StringMap ();
 
   public LoginInfo (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)

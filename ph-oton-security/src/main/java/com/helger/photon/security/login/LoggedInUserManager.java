@@ -34,7 +34,9 @@ import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.callback.CallbackList;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsCollection;
@@ -52,6 +54,7 @@ import com.helger.scope.ISessionScope;
 import com.helger.scope.mgr.ScopeManager;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+import com.helger.security.password.salt.PasswordSalt;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -116,7 +119,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       {
         m_aUser = PhotonSecurityManager.getUserMgr ().getUserOfID (m_sUserID);
         if (m_aUser == null)
-          throw new IllegalStateException ("Failed to resolve user with ID '" + m_sUserID + "'");
+        {
+          // The user was removed while the session was passivated. Don't fail
+          // the whole session deserialization - simply don't log him in again.
+          LOGGER.warn ("Failed to resolve user with ID '" + m_sUserID + "' - not logging him in again");
+          m_sUserID = null;
+        }
       }
       // Resolve manager
       m_aOwningMgr = LoggedInUserManager.getInstance ();
@@ -124,8 +132,12 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
     public void onSessionDidActivate (@NonNull final ISessionWebScope aSessionScope)
     {
-      // Finally remember that the user is logged in
-      m_aOwningMgr.internalSessionActivateUser (m_aUser, aSessionScope);
+      // Finally remember that the user is logged in.
+      // Note: the user state may have changed while the session was passivated,
+      // so this may reject the user and reset this holder
+      if (m_aUser != null)
+        if (m_aOwningMgr.internalSessionActivateUser (m_aUser, aSessionScope).isFailure ())
+          _reset ();
     }
 
     private boolean _hasUser ()
@@ -205,6 +217,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   private static final Logger LOGGER = LoggerFactory.getLogger (LoggedInUserManager.class);
 
+  /**
+   * Contains the ID of the user for which the password hash is currently upgraded to the default
+   * algorithm as part of {@link #loginUser(IUser, String, Iterable)}. Used to distinguish an
+   * internal re-hashing from a real password change.
+   */
+  private static final ThreadLocal <String> PASSWORD_HASH_UPGRADE = new ThreadLocal <> ();
+
   // Set of logged in user IDs
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, LoginInfo> m_aLoggedInUsers = new CommonsHashMap <> ();
@@ -228,6 +247,33 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   public static LoggedInUserManager getInstance ()
   {
     return getGlobalSingleton (LoggedInUserManager.class);
+  }
+
+  /**
+   * @return The global instance of this class, but only if it was already instantiated.
+   *         <code>null</code> if it was not yet instantiated or if no global scope is present (e.g.
+   *         while the global scope is being destroyed).
+   * @since 10.5.0
+   */
+  @Nullable
+  public static LoggedInUserManager getInstanceIfInstantiated ()
+  {
+    return getGlobalSingletonIfInstantiated (LoggedInUserManager.class);
+  }
+
+  /**
+   * Check if the password of the provided user is currently only re-hashed with the default
+   * password hash algorithm as part of a login. This is an internal method for
+   * {@link UserModificationLogoutCallback} only.
+   *
+   * @param sUserID
+   *        The user ID to check. May be <code>null</code>.
+   * @return <code>true</code> if the password hash of that user is currently upgraded in this
+   *         thread, <code>false</code> otherwise.
+   */
+  static boolean internalIsPasswordHashUpgradeInProgress (@Nullable final String sUserID)
+  {
+    return sUserID != null && sUserID.equals (PASSWORD_HASH_UPGRADE.get ());
   }
 
   /**
@@ -289,13 +335,88 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     return eLoginResult;
   }
 
-  void internalSessionActivateUser (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)
+  /**
+   * Create a throw-away password hash, to consume roughly the same amount of CPU time as a real
+   * password check would. This is used if no user could be resolved, so that the response time does
+   * not disclose whether a login name exists or not (user enumeration).
+   *
+   * @param sPlainTextPassword
+   *        The plain text password provided by the caller. May be <code>null</code>.
+   */
+  private static void _consumePasswordHashingTime (@Nullable final String sPlainTextPassword)
+  {
+    try
+    {
+      GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                            StringHelper.getNotNull (sPlainTextPassword));
+    }
+    catch (final RuntimeException ex)
+    {
+      // Never let this influence the outcome of the login
+      LOGGER.warn ("Failed to create the dummy password hash", ex);
+    }
+  }
+
+  /**
+   * Re-establish the login of a user, after the session containing him was activated (e.g. after an
+   * application server restart with session persistence, or after a fail over in a cluster). The
+   * state of the user may have changed while the session was passivated, so the same basic checks
+   * as in {@link #loginUser(IUser, String, Iterable)} are performed - except for the password check,
+   * because no credentials are available at this point in time.
+   *
+   * @param aUser
+   *        The user to be logged in again. May not be <code>null</code>.
+   * @param aSessionScope
+   *        The activated session scope. May not be <code>null</code>.
+   * @return {@link ELoginResult#SUCCESS} if the user was logged in again, the respective error code
+   *         otherwise. Never <code>null</code>.
+   */
+  @NonNull
+  ELoginResult internalSessionActivateUser (@NonNull final IUser aUser, @NonNull final ISessionScope aSessionScope)
   {
     ValueEnforcer.notNull (aUser, "User");
     ValueEnforcer.notNull (aSessionScope, "SessionScope");
 
+    final String sUserID = aUser.getID ();
+
+    // Deleted user? (may have been deleted while the session was passivated)
+    if (aUser.isDeleted ())
+    {
+      LOGGER.warn ("Not re-activating " + _getUserIDLogText (sUserID) + " because the user is deleted");
+      AuditHelper.onAuditExecuteFailure ("session-activate-login", sUserID, "user-is-deleted");
+      return _onLoginError (sUserID, ELoginResult.USER_IS_DELETED);
+    }
+    // Disabled user? (may have been disabled while the session was passivated)
+    if (aUser.isDisabled ())
+    {
+      LOGGER.warn ("Not re-activating " + _getUserIDLogText (sUserID) + " because the user is disabled");
+      AuditHelper.onAuditExecuteFailure ("session-activate-login", sUserID, "user-is-disabled");
+      return _onLoginError (sUserID, ELoginResult.USER_IS_DISABLED);
+    }
+
     final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
-    m_aRWLock.writeLocked ( () -> m_aLoggedInUsers.put (aUser.getID (), aInfo));
+    final boolean bAdded = m_aRWLock.writeLockedBoolean ( () -> {
+      if (m_aLoggedInUsers.containsKey (sUserID))
+      {
+        // The user is already logged in somewhere else
+        return false;
+      }
+      m_aLoggedInUsers.put (sUserID, aInfo);
+      return true;
+    });
+    if (!bAdded)
+    {
+      LOGGER.warn ("Not re-activating " + _getUserIDLogText (sUserID) + " because the user is already logged in");
+      AuditHelper.onAuditExecuteFailure ("session-activate-login", sUserID, "user-already-logged-in");
+      return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
+    }
+
+    AuditHelper.onAuditExecuteSuccess ("session-activate-login", sUserID);
+
+    // Execute callback as the very last action
+    m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
+
+    return ELoginResult.SUCCESS;
   }
 
   /**
@@ -357,7 +478,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                                  @Nullable final Iterable <String> aRequiredRoleIDs)
   {
     if (aUser == null)
+    {
+      // Spend roughly the same amount of time as for an existing user, so that
+      // the response time does not disclose whether a user exists or not
+      _consumePasswordHashingTime (sPlainTextPassword);
+      AuditHelper.onAuditExecuteFailure ("login", "null", "no-such-user");
       return ELoginResult.USER_NOT_EXISTING;
+    }
 
     final String sUserID = aUser.getID ();
 
@@ -396,7 +523,17 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       // This implicitly implies using the default hash creator algorithm
       // This automatically saves the file
-      aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
+      // Note: this is a pure re-hashing and not a real password change, so any
+      // registered IUserModificationCallback must not log the user out
+      PASSWORD_HASH_UPGRADE.set (sUserID);
+      try
+      {
+        aUserMgr.setUserPassword (sUserID, sPlainTextPassword);
+      }
+      finally
+      {
+        PASSWORD_HASH_UPGRADE.remove ();
+      }
 
       LOGGER.info ("Updated password hash of " +
                    _getUserIDLogText (sUserID) +
@@ -407,29 +544,50 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                    "'");
     }
 
+    // Check if this session can take a user at all, BEFORE any existing login of
+    // that user is destroyed. Use the "if instantiated" version, so that no
+    // session is created for a login that is going to fail anyway.
+    final InternalSessionUserHolder aExistingSUH = InternalSessionUserHolder._getInstanceIfInstantiated ();
+    if (aExistingSUH != null && aExistingSUH._hasUser ())
+    {
+      // This session already has a user
+      LOGGER.warn ("The session user holder already has the user ID '" +
+                   aExistingSUH._getUserID () +
+                   "' so the new ID '" +
+                   sUserID +
+                   "' will not be set!");
+      AuditHelper.onAuditExecuteFailure ("login", sUserID, "session-already-has-user");
+      return _onLoginError (sUserID, ELoginResult.SESSION_ALREADY_HAS_USER);
+    }
+
+    // Handle an already logged in user outside of the write lock, so that the
+    // logout callbacks are not executed while holding it
     boolean bLoggedOutUser = false;
-    LoginInfo aInfo;
+    if (isUserLoggedIn (sUserID))
+    {
+      // The user is already logged in
+      if (!isLogoutAlreadyLoggedInUser ())
+      {
+        // Error: user already logged in
+        AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
+        return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
+      }
+      // Explicitly log out
+      logoutUser (sUserID);
+
+      AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
+      bLoggedOutUser = true;
+    }
+
+    final LoginInfo aInfo;
     m_aRWLock.writeLock ().lock ();
     try
     {
+      // Re-check inside the lock, in case a concurrent login won the race
       if (m_aLoggedInUsers.containsKey (sUserID))
       {
-        // The user is already logged in
-        if (!isLogoutAlreadyLoggedInUser ())
-        {
-          // Error: user already logged in
-          AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
-          return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
-        }
-        // Explicitly log out
-        logoutUser (sUserID);
-
-        // Just a short check
-        if (m_aLoggedInUsers.containsKey (sUserID))
-          throw new IllegalStateException ("Failed to logout '" + sUserID + "'");
-
-        AuditHelper.onAuditExecuteSuccess ("logout-in-login", sUserID);
-        bLoggedOutUser = true;
+        AuditHelper.onAuditExecuteFailure ("login", sUserID, "user-already-logged-in");
+        return _onLoginError (sUserID, ELoginResult.USER_ALREADY_LOGGED_IN);
       }
       // Update user in session
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstance ();
@@ -513,6 +671,14 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       final InternalSessionUserHolder aSUH = InternalSessionUserHolder._getInstanceIfInstantiatedInScope (aInfo.getSessionScope ());
       if (aSUH != null)
         aSUH._reset ();
+
+      // The session scope referenced by the LoginInfo may be stale (e.g. if the
+      // session ID was regenerated without calling onSessionChangeAfterLogin).
+      // Additionally reset the holder of the current session, if it refers to
+      // the very same user, to avoid a half logged out state
+      final InternalSessionUserHolder aCurrentSUH = InternalSessionUserHolder._getInstanceIfInstantiated ();
+      if (aCurrentSUH != null && aCurrentSUH != aSUH && EqualsHelper.equals (aCurrentSUH._getUserID (), sUserID))
+        aCurrentSUH._reset ();
 
       // Set logout time - in case somebody has a strong reference to the
       // LoginInfo object

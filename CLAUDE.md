@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ph-oton is a multi-module Java library stack for building Java web applications. It provides HTML element wrappers, JS code generation, jQuery integration, security, AJAX/API handling, UI controls, and embedded Jetty support. Published to Maven Central under group `com.helger.photon`.
 
-Current version: 10.2.0-SNAPSHOT (requires Java 17+, JakartaEE 10 / Tomcat 10.1.x / Jetty 12.x).
+Current version: 10.5.0-SNAPSHOT (requires Java 17+, JakartaEE 10 / Tomcat 10.1.x / Jetty 12.x).
 
 ## Build Commands
 

@@ -155,11 +155,15 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   IUserToken getUserTokenOfID (@Nullable String sUserTokenID);
 
   /**
-   * Find the user token that has the provided access token string.
+   * Find the user token that has the provided access token string as its currently active access
+   * token. Only access tokens that are valid now (see
+   * {@link com.helger.photon.security.token.accesstoken.IAccessToken#isValidNow()}) and that are
+   * not revoked are considered.
    *
    * @param sTokenString
    *        The token string to search.
-   * @return <code>null</code> if no user token uses this access token string.
+   * @return <code>null</code> if no user token uses this access token string, or if the respective
+   *         access token is expired or revoked.
    */
   @Nullable
   IUserToken getUserTokenOfTokenString (@Nullable String sTokenString);

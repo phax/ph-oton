@@ -24,6 +24,7 @@ import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.token.credentials.ITokenCredentials;
 import com.helger.photon.security.token.user.IUserToken;
 import com.helger.photon.security.token.user.IUserTokenManager;
+import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.IAuthCredentialValidatorSPI;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
@@ -57,6 +58,19 @@ public final class UserTokenAuthCredentialValidatorSPI implements IAuthCredentia
     {
       // Credential validation failed
       return ELoginResult.TOKEN_NOT_EXISTING;
+    }
+
+    // The state of the owning user must be checked as well - a token must not
+    // outlive the user it belongs to
+    final IUser aUser = aUserToken.getUser ();
+    if (aUser.isDeleted ())
+    {
+      // Deleted users are handled like non-existing users
+      return ELoginResult.USER_IS_DELETED;
+    }
+    if (aUser.isDisabled ())
+    {
+      return ELoginResult.USER_IS_DISABLED;
     }
 
     return ELoginResult.SUCCESS;

@@ -41,7 +41,12 @@ public final class GlobalUserIDProvider
   /**
    * The default supplier returning the current user ID from the {@link LoggedInUserManager}.
    */
-  public static final Supplier <String> DEFAULT_SUPPLIER = () -> LoggedInUserManager.getInstance ().getCurrentUserID ();
+  public static final Supplier <String> DEFAULT_SUPPLIER = () -> {
+    // Use the "if instantiated" version, so that this also works if no global
+    // scope is present (yet or any more)
+    final LoggedInUserManager aLUM = LoggedInUserManager.getInstanceIfInstantiated ();
+    return aLUM == null ? null : aLUM.getCurrentUserID ();
+  };
 
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 

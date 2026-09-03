@@ -34,6 +34,7 @@ import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.io.dao.AbstractPhotonMapBasedWALDAO;
 import com.helger.photon.security.object.BusinessObjectHelper;
 import com.helger.photon.security.token.accesstoken.AccessToken;
+import com.helger.photon.security.token.accesstoken.IAccessToken;
 import com.helger.photon.security.token.object.AccessTokenList;
 import com.helger.photon.security.user.IUser;
 
@@ -248,7 +249,13 @@ public class UserTokenManager extends AbstractPhotonMapBasedWALDAO <IUserToken, 
     if (StringHelper.isEmpty (sTokenString))
       return null;
 
-    return findFirst (x -> sTokenString.equals (x.getAccessTokenList ().getActiveTokenString ()));
+    return findFirst (x -> {
+      final IAccessToken aActiveToken = x.getAccessTokenList ().getActiveAccessToken ();
+      if (aActiveToken == null || !sTokenString.equals (aActiveToken.getTokenString ()))
+        return false;
+      // Also honour the validity period and the revocation status of the token
+      return aActiveToken.isValidNow () && !aActiveToken.isRevoked ();
+    });
   }
 
   public boolean isAccessTokenUsed (@Nullable final String sTokenString)
