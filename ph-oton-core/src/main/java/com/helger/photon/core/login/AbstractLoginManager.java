@@ -39,6 +39,7 @@ import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.LoginThrottlePerIP;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
