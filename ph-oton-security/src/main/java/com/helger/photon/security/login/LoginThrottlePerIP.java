@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.photon.core.login;
+package com.helger.photon.security.login;
 
 import java.time.Duration;
 
@@ -38,7 +38,8 @@ import com.helger.cache.impl.ManualCache;
  * after a configurable time-to-live to avoid unbounded memory growth.
  *
  * @author Philip Helger
- * @since 10.2.4
+ * @since 10.2.4; moved from package <code>com.helger.photon.core.login</code> to<br>
+ *        <code>com.helger.photon.security.login</code> in v10.5.0
  */
 @ThreadSafe
 public class LoginThrottlePerIP
