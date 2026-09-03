@@ -27,7 +27,7 @@
   </parent>
   <groupId>com.helger.photon</groupId>
   <artifactId>ph-oton-parent-pom</artifactId>
-  <version>10.4.1-SNAPSHOT</version>
+  <version>10.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-oton</name>
   <description>Base POM to build the ph-oton web stack</description>
@@ -70,7 +70,7 @@
     <log4j.version>2.26.1</log4j.version>
     
     <ph-commons.version>12.4.0</ph-commons.version>
-    <ph-db.version>8.4.2</ph-db.version>
+    <ph-db.version>8.4.3</ph-db.version>
     <ph-poi.version>7.1.0</ph-poi.version>
   </properties>
 
