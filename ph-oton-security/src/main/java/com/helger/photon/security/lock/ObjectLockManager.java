@@ -22,7 +22,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.tostring.ToStringGenerator;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
@@ -33,7 +33,7 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
 @ThreadSafe
 public final class ObjectLockManager extends AbstractGlobalSingleton
 {
-  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <> (LoggedInUserManager.getInstance ());
+  private final DefaultLockManager <String> m_aMgr = new DefaultLockManager <> (GlobalUserIDProvider::getCurrentUserID);
 
   @Deprecated (forRemoval = false)
   @UsedViaReflection

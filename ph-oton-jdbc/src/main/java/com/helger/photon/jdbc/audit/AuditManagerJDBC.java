@@ -30,7 +30,7 @@ import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.photon.audit.IAuditItem;
 import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.audit.IAuditor;
-import com.helger.photon.security.login.LoggedInUserManager;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
@@ -45,7 +45,9 @@ public class AuditManagerJDBC implements IAuditManager
   public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
                            @NonNull final Function <String, String> aTableNameCustomizer)
   {
-    this (aDBExecSupplier, aTableNameCustomizer, LoggedInUserManager.getInstance ());
+    // Use the GlobalUserIDProvider, so that alternative ways of authentication
+    // (e.g. request scoped ones) are correctly audited
+    this (aDBExecSupplier, aTableNameCustomizer, GlobalUserIDProvider::getCurrentUserID);
   }
 
   public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,

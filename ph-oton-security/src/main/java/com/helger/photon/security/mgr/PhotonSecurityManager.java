@@ -35,9 +35,11 @@ import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.GlobalUserIDProvider;
 import com.helger.photon.security.login.IUserLoginCallback;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
+import com.helger.photon.security.login.UserModificationLogoutCallback;
 import com.helger.photon.security.role.IRoleManager;
 import com.helger.photon.security.role.RoleManager;
 import com.helger.photon.security.token.user.IUserTokenManager;
@@ -140,7 +142,9 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     @NonNull
     public IAuditManager createAuditMgr () throws DAOException
     {
-      return new AuditManager (DIRECTORY_AUDITS, LoggedInUserManager.getInstance ());
+      // Use the GlobalUserIDProvider, so that alternative ways of
+      // authentication (e.g. request scoped ones) are correctly audited
+      return new AuditManager (DIRECTORY_AUDITS, GlobalUserIDProvider::getCurrentUserID);
     }
 
     @NonNull
@@ -248,6 +252,10 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
         }
       }
     });
+
+    // Ensure that a user that is no longer allowed to be logged in, is really
+    // logged out and does not stay logged in until his session times out
+    m_aUserMgr.userModificationCallbacks ().add (new UserModificationLogoutCallback ());
   }
 
   @Override
