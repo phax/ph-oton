@@ -32,7 +32,7 @@ import com.helger.text.IHasDescription;
 public interface IUserGroup extends IBusinessObject, IHasName, IHasDescription, IUserContainer, IRoleContainer
 {
   /**
-   * The maximum string length of the ID.
+   * The maximum string length of the ID. Aligned with User ID max length.
    *
    * @since 8.3.7
    */

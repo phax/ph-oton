@@ -40,12 +40,11 @@ import com.helger.text.IHasDescription;
 public interface IUser extends IBusinessObject, IHasDescription, IAuthSubject
 {
   /**
-   * The maximum string length of the user ID. Must be 20 and not 45, because of the creationuserid
-   * etc. fields. (don't blame yourself if you don't understand the connex here ;-) )
+   * The maximum string length of the user ID. Was updated from 20 to 45 in v10.5.0.
    *
    * @since 8.3.7
    */
-  int USER_ID_MAX_LENGTH = 20;
+  int USER_ID_MAX_LENGTH = 45;
 
   /**
    * The maximum string length of the login name.

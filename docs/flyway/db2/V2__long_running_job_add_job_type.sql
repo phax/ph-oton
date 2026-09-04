@@ -21,4 +21,4 @@ CREATE INDEX idx_lrj_job_type ON long_running_job (job_type);
 
 -- DB2 puts the table into 'reorg pending' state after ALTER TABLE ADD COLUMN;
 -- run the following as an administrator if inserts start to fail:
---   CALL SYSPROC.ADMIN_CMD ('REORG TABLE long_running_job');
+CALL SYSPROC.ADMIN_CMD ('REORG TABLE long_running_job');

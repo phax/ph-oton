@@ -24,16 +24,15 @@ import com.helger.photon.security.user.IUser;
 import com.helger.text.IHasDescription;
 
 /**
- * Base interface for a user token. A user token is always subordinated to an
- * application token and can have roles and additional properties with the
- * derived custom attributes.
+ * Base interface for a user token. A user token is always subordinated to an application token and
+ * can have roles and additional properties with the derived custom attributes.
  *
  * @author Philip Helger
  */
 public interface IUserToken extends IObjectWithAccessToken, IHasDescription
 {
   /**
-   * The maximum string length of the ID.
+   * The maximum string length of the ID. Aligned with user ID max length.
    *
    * @since 8.4.5
    */
@@ -46,8 +45,7 @@ public interface IUserToken extends IObjectWithAccessToken, IHasDescription
   IUser getUser ();
 
   /**
-   * @return The ID of the user to which this user token belongs. Never
-   *         <code>null</code>.
+   * @return The ID of the user to which this user token belongs. Never <code>null</code>.
    */
   @NonNull
   @Nonempty

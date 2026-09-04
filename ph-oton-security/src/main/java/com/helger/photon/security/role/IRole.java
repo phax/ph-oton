@@ -30,7 +30,7 @@ import com.helger.text.IHasDescription;
 public interface IRole extends IBusinessObject, IHasName, IHasDescription
 {
   /**
-   * The maximum string length of the ID.
+   * The maximum string length of the ID. Aligned with user ID max length.
    *
    * @since 8.3.7
    */
