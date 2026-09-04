@@ -152,7 +152,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
 
   @Override
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // Action is present
     final String sAjaxFunctionName = aRequestScope.attrs ().getAsString (SCOPE_ATTR_NAME);

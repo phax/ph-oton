@@ -16,7 +16,6 @@
  */
 package com.helger.photon.core.userdata;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
@@ -35,8 +34,6 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.fileupload.IFileItem;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
-
-import jakarta.servlet.ServletException;
 
 /**
  * A special upload servlet to be used with FineUploader.
@@ -133,7 +130,7 @@ public class UserUploadXServletHandler implements IXServletSimpleHandler
   }
 
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     aUnifiedResponse.disableCaching ();
     _post (aRequestScope, aUnifiedResponse);

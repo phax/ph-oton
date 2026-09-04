@@ -43,7 +43,6 @@ import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
@@ -373,7 +372,7 @@ public abstract class AbstractObjectDeliveryHttpHandler implements IXServletSimp
 
   @Override
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // The request has been checked and the filename is valid for delivery
     final String sFilename = aRequestScope.attrs ().getAsString (REQUEST_ATTR_OBJECT_DELIVERY_FILENAME);

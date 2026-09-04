@@ -103,6 +103,10 @@ v10.5.0 - work in progress
   It widens every column holding a user ID to 45 characters - `audit.userid`, the `creationuserid`, `lastmoduserid` and `deleteuserid` of `secrole`, `secusergroup`, `secuser` and `secusertoken`, as well as `secuser.id` and `secusertoken.userid`, which were 20 characters and would overflow otherwise.
   `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID. Only the length of the columns is changed, so existing data is preserved.
   See `docs/README.md` for details.
+* **Breaking API change**: the method `handleRequest (...)` of the classes `AbstractApplicationXServletHandler`, `AbstractObjectDeliveryHttpHandler`, `LogoutXServletHandler`, `PingPongXServletHandler`, `UserUploadXServletHandler` (all ph-oton-core) and `AjaxXServletHandler` (ph-oton-ajax) now declares `throws Exception` instead of `throws IOException, ServletException`.
+  The overwritten method `IXServletSimpleHandler.handleRequest (...)` always declared `throws Exception` - the listed classes just narrowed it, while `APIXServletHandler`, `ErrorXServletHandler` and `GoXServletHandler` did not.
+  Subclasses that overwrite one of these methods with a narrower `throws` clause and invoke `super.handleRequest (...)` need to be widened as well.
+  This is the precondition for wrapping the request handling in a `com.helger.telemetry.Telemetry` span, because `Telemetry.withSpanVoidThrowing (...)` can only propagate a single checked exception type.
 
 v10.4.0 - 2026-08-30
 * Requires at least ph-commons 12.4.0

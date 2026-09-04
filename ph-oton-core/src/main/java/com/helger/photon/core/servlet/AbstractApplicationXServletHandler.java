@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.servlet;
 
-import java.io.IOException;
-
 import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +30,6 @@ import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
-
-import jakarta.servlet.ServletException;
 
 /**
  * Base XServlet handler for the main application.
@@ -87,7 +83,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
 
   @OverridingMethodsMustInvokeSuper
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws IOException, ServletException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start handleRequest");

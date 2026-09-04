@@ -16,8 +16,6 @@
  */
 package com.helger.photon.core.servlet;
 
-import java.io.IOException;
-
 import org.jspecify.annotations.NonNull;
 
 import com.helger.annotation.style.OverrideOnDemand;
@@ -27,7 +25,6 @@ import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -78,7 +75,7 @@ public class LogoutXServletHandler implements IXServletSimpleHandler
   {}
 
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException, IOException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     // Get the redirect URL before the session is invalidated, in case the
     // acquisition code requires the current session

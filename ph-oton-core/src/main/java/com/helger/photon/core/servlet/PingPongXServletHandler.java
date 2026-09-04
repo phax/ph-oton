@@ -29,8 +29,6 @@ import com.helger.statistics.impl.StatisticsManager;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
-import jakarta.servlet.ServletException;
-
 /**
  * A simple availability-check servlet that responds with a "pong" text message. Usually this
  * servlet should be called "ping".
@@ -55,7 +53,7 @@ public class PingPongXServletHandler implements IXServletSimpleHandler
 
   @Override
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
-                             @NonNull final UnifiedResponse aUnifiedResponse) throws ServletException
+                             @NonNull final UnifiedResponse aUnifiedResponse) throws Exception
   {
     aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, RESPONSE_CHARSET)
                     .setMimeType (RESPONSE_MIMETYPE)
