@@ -42,6 +42,29 @@ public final class CAppTelemetry
   // === metric instrument names ===
   /** Histogram (ms): wall-clock duration of serializing one HC tree into the HTTP response. */
   public static final String METRIC_HTML_DURATION = "photon.html.duration";
+  /**
+   * Counter: number of web site resource cache accesses, by hit and resource type. Counting hits
+   * and misses makes the hit <em>ratio</em> derivable, and it makes a forgotten
+   * {@code WebSiteResourceCache.setCacheEnabled (false)} in production visible - every access is a
+   * miss then.
+   *
+   * @since 10.6.0
+   */
+  public static final String METRIC_RESOURCE_CACHE_ACCESS = "photon.resource.cache.access";
+  /**
+   * Counter: number of web site resource bundles that were newly created.
+   *
+   * @since 10.6.0
+   */
+  public static final String METRIC_RESOURCE_BUNDLES_CREATED = "photon.resource.bundles.created";
+  /**
+   * Counter: number of persisted web site resource bundles that were skipped on startup, because at
+   * least one contained resource is missing or changed. A number that is consistently greater than
+   * zero means the on-disk bundle cache is regenerated more often than expected.
+   *
+   * @since 10.6.0
+   */
+  public static final String METRIC_RESOURCE_BUNDLES_SKIPPED = "photon.resource.bundles.skipped";
 
   // === attribute keys ===
   /**
@@ -51,8 +74,36 @@ public final class CAppTelemetry
   public static final String ATTR_HTML_MIME_TYPE = "photon.html.mimetype";
   /** Whether the HTML response was created successfully. */
   public static final String ATTR_HTML_SUCCESS = "photon.html.success";
+  /**
+   * Whether a web site resource cache access was a hit.
+   *
+   * @since 10.6.0
+   */
+  public static final String ATTR_RESOURCE_CACHE_HIT = "photon.resource.cache.hit";
+  /**
+   * The ID of the {@link com.helger.photon.app.resource.EWebSiteResourceType} - a two value enum,
+   * so it is bounded.<br>
+   * The resource <em>path</em> is deliberately not used: it is bounded in principle but can be in
+   * the hundreds and is the kind of dimension that quietly multiplies with everything else - the
+   * log lines already carry it. Content hashes are not used as attributes at all.
+   *
+   * @since 10.6.0
+   */
+  public static final String ATTR_RESOURCE_TYPE = "photon.resource.type";
 
   // === metric units ===
+  /**
+   * Unit for all cache access counting instruments.
+   *
+   * @since 10.6.0
+   */
+  public static final String UNIT_ACCESS = "{access}";
+  /**
+   * Unit for all resource bundle counting instruments.
+   *
+   * @since 10.6.0
+   */
+  public static final String UNIT_BUNDLE = "{bundle}";
   /** Unit for all duration instruments. */
   public static final String UNIT_MILLIS = "ms";
 

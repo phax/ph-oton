@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.base.array.ArrayHelper;
 import com.helger.base.compare.ESortOrder;
 import com.helger.base.string.StringParser;
+import com.helger.base.timing.StopWatch;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.helper.CollectionSort;
@@ -36,10 +37,13 @@ import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.photon.core.uistate.UIStateRegistry;
 import com.helger.photon.uicore.css.CPageParam;
+import com.helger.photon.uictrls.datatables.CDataTablesTelemetry;
 import com.helger.photon.uictrls.datatables.DataTablesLengthMenu;
 import com.helger.photon.uictrls.datatables.EDataTablesFilterType;
 import com.helger.photon.uictrls.datatables.EDataTablesOrderDirectionType;
 import com.helger.servlet.request.IRequestParamMap;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
@@ -337,9 +341,17 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     // need to apply the sorting each time which might be time consuming. So
     // this pattern assumes that filtering changes more often than sorting order
     // changes.
-    _sort (aRequestData, aServerData);
+    // Sorting and filtering are the two operations that scale with the row count, so each gets its
+    // own child span - a table that is slow to filter needs a different fix from one that is slow
+    // to sort
+    Telemetry.withSpanVoid (CDataTablesTelemetry.SPAN_DT_SORT,
+                            ETelemetrySpanKind.INTERNAL,
+                            aSpan -> _sort (aRequestData, aServerData));
 
-    final ICommonsList <DataTablesServerDataRow> aResultRows = _filter (aRequestData, aServerData);
+    final ICommonsList <DataTablesServerDataRow> aResultRows = Telemetry.withSpan (CDataTablesTelemetry.SPAN_DT_FILTER,
+                                                                                   ETelemetrySpanKind.INTERNAL,
+                                                                                   aSpan -> _filter (aRequestData,
+                                                                                                     aServerData));
 
     // Build the resulting array
     final HCSpecialNodes aSpecialNodes = new HCSpecialNodes ();
@@ -368,6 +380,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     // Main response
     final int nTotalRecords = aServerData.getRowCount ();
     final int nTotalDisplayRecords = aResultRows.size ();
+    DataTablesTelemetry.onRowsProcessed (nTotalRecords, nTotalDisplayRecords);
     final String sErrorMsg = null;
     return new DTSSResponseData (aRequestData.getDraw (),
                                  nTotalRecords,
@@ -384,25 +397,40 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
       LOGGER.debug ("DataTables AJAX request: " + CollectionSort.getSortedByKey (aRequestScope.params ()));
 
     final DTSSRequestData aRequestData = extractDTSRequestData (aRequestScope);
+    // Only whether a sort order and a search were requested - never the search terms themselves
+    final boolean bSorted = aRequestData.directGetAllOrderColumns ().isNotEmpty ();
+    final boolean bFiltered = aRequestData.isSearchActive ();
 
-    // Resolve dataTables from UIStateRegistry
-    final String sDataTablesID = aRequestScope.params ().getAsString (OBJECT_ID);
-    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
-                                                            .getCastedState (DataTablesServerData.OT_DATATABLES,
-                                                                             sDataTablesID);
-    if (aServerData == null)
+    final StopWatch aSW = StopWatch.createdStarted ();
+    try
     {
-      LOGGER.error ("No such data tables ID: " + sDataTablesID);
-      aAjaxResponse.createNotFound ();
+      Telemetry.<Exception> withSpanVoidThrowing (CDataTablesTelemetry.SPAN_DT_REQUEST, ETelemetrySpanKind.INTERNAL, aSpan -> {
+        DataTablesTelemetry.onRequestStart (aSpan, bSorted, bFiltered);
+
+        // Resolve dataTables from UIStateRegistry
+        final String sDataTablesID = aRequestScope.params ().getAsString (OBJECT_ID);
+        final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
+                                                                .getCastedState (DataTablesServerData.OT_DATATABLES,
+                                                                                 sDataTablesID);
+        if (aServerData == null)
+        {
+          LOGGER.error ("No such data tables ID: " + sDataTablesID);
+          aAjaxResponse.createNotFound ();
+        }
+        else
+        {
+          // Main request handling
+          final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
+
+          // Convert the response to JSON and add the special nodes
+          aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
+                                                                                  aResponseData.getSpecialNodes ()));
+        }
+      });
     }
-    else
+    finally
     {
-      // Main request handling
-      final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
-
-      // Convert the response to JSON and add the special nodes
-      aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
-                                                                              aResponseData.getSpecialNodes ()));
+      DataTablesTelemetry.onRequestEnd (bSorted, bFiltered, aSW.stopAndGetMillis ());
     }
   }
 }

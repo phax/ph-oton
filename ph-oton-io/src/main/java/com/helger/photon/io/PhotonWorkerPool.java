@@ -19,9 +19,12 @@ package com.helger.photon.io;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +40,8 @@ import com.helger.base.log.ConditionalLogger;
 import com.helger.base.timing.StopWatch;
 import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 
 /**
  * Asynchronous worker pool that handles stuff that runs in the background.
@@ -108,107 +113,129 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
     CONDLOG.info ("ph-oton worker pool was closed!");
   }
 
-  @NonNull
-  public CompletableFuture <Void> run (@NonNull final String sActionName, @NonNull final Runnable aRunnable)
+  /**
+   * Execute the provided task body with the common logging and telemetry around it. This runs
+   * completely on the worker pool thread, so the span is started and ended on the same thread.
+   *
+   * @param sActionName
+   *        The caller supplied action name. May not be <code>null</code>.
+   * @param sTaskType
+   *        The task type for the log message - <code>runner</code> or <code>supplier</code>. May
+   *        not be <code>null</code>.
+   * @param aTask
+   *        The task object for the log message. May not be <code>null</code>.
+   * @param aEndEmitted
+   *        Guard, so that the end-of-task metrics are emitted exactly once per task - either here
+   *        or in the {@code exceptionally} handler of the caller. May not be <code>null</code>.
+   * @param aBody
+   *        The body to execute. May not be <code>null</code>.
+   * @param <T>
+   *        The body return type.
+   * @return The value returned by the body, or <code>null</code> if it threw.
+   */
+  @Nullable
+  private static <T> T _executeInstrumented (@NonNull final String sActionName,
+                                             @NonNull final String sTaskType,
+                                             @NonNull final Object aTask,
+                                             @NonNull final AtomicBoolean aEndEmitted,
+                                             @NonNull final IThrowingSupplier <T, Exception> aBody)
   {
-    return CompletableFuture.runAsync ( () -> {
+    return Telemetry.withSpan (CIOTelemetry.SPAN_WORKER_EXECUTE, ETelemetrySpanKind.INTERNAL, aSpan -> {
       final StopWatch aSW = StopWatch.createdStarted ();
       CONDLOG.info ( () -> "Starting '" + sActionName + "'");
+      PhotonWorkerPoolTelemetry.onTaskStart (aSpan, sActionName);
+
+      boolean bSuccess = false;
+      T ret = null;
       try
       {
-        aRunnable.run ();
+        ret = aBody.get ();
+        bSuccess = true;
+        PhotonWorkerPoolTelemetry.onTaskSuccess (aSpan);
       }
-      catch (final RuntimeException ex)
+      catch (final Exception ex)
       {
-        CONDLOG.error ( () -> "Error running ph-oton runner " + aRunnable, ex);
+        CONDLOG.error ( () -> "Error running ph-oton " + sTaskType + " " + aTask, ex);
+        PhotonWorkerPoolTelemetry.onTaskError (aSpan, ex);
       }
       finally
       {
         aSW.stop ();
         CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        if (aEndEmitted.compareAndSet (false, true))
+          PhotonWorkerPoolTelemetry.onTaskEnd (bSuccess, aSW.getMillis ());
       }
-    }, m_aES).exceptionally (ex -> {
-      LOGGER.error ("Unexpected exception in ph-oton runner '" + sActionName + "'", ex);
-      return null;
+      return ret;
     });
+  }
+
+  /**
+   * @param sActionName
+   *        The caller supplied action name. May not be <code>null</code>.
+   * @param sTaskType
+   *        The task type for the log message. May not be <code>null</code>.
+   * @param aEndEmitted
+   *        The guard shared with {@link #_executeInstrumented(String, String, Object, AtomicBoolean, IThrowingSupplier)}.
+   *        May not be <code>null</code>.
+   * @return The handler for failures that did not surface inside the task body. Never
+   *         <code>null</code>.
+   */
+  @NonNull
+  private static <T> Function <Throwable, T> _onUnexpectedException (@NonNull final String sActionName,
+                                                                     @NonNull final String sTaskType,
+                                                                     @NonNull final AtomicBoolean aEndEmitted)
+  {
+    return ex -> {
+      LOGGER.error ("Unexpected exception in ph-oton " + sTaskType + " '" + sActionName + "'", ex);
+      if (aEndEmitted.compareAndSet (false, true))
+        PhotonWorkerPoolTelemetry.onTaskDropped ();
+      return null;
+    };
+  }
+
+  @NonNull
+  public CompletableFuture <Void> run (@NonNull final String sActionName, @NonNull final Runnable aRunnable)
+  {
+    final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
+    return CompletableFuture.runAsync ( () -> _executeInstrumented (sActionName, "runner", aRunnable, aEndEmitted, () -> {
+      aRunnable.run ();
+      return null;
+    }), m_aES).exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
   }
 
   @NonNull
   public CompletableFuture <Void> runThrowing (@NonNull final String sActionName,
                                                @NonNull final IThrowingRunnable <? extends Exception> aRunnable)
   {
-    return CompletableFuture.runAsync ( () -> {
-      final StopWatch aSW = StopWatch.createdStarted ();
-      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
-      try
-      {
-        aRunnable.run ();
-      }
-      catch (final Exception ex)
-      {
-        CONDLOG.error ( () -> "Error running ph-oton runner " + aRunnable, ex);
-      }
-      finally
-      {
-        aSW.stop ();
-        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
-      }
-    }, m_aES).exceptionally (ex -> {
-      LOGGER.error ("Unexpected exception in ph-oton runner '" + sActionName + "'", ex);
+    final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
+    return CompletableFuture.runAsync ( () -> _executeInstrumented (sActionName, "runner", aRunnable, aEndEmitted, () -> {
+      aRunnable.run ();
       return null;
-    });
+    }), m_aES).exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
   }
 
   @NonNull
   public <T> CompletableFuture <T> supply (@NonNull final String sActionName, @NonNull final Supplier <T> aSupplier)
   {
-    return CompletableFuture.supplyAsync ( () -> {
-      final StopWatch aSW = StopWatch.createdStarted ();
-      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
-      try
-      {
-        return aSupplier.get ();
-      }
-      catch (final RuntimeException ex)
-      {
-        CONDLOG.error ( () -> "Error running ph-oton supplier " + aSupplier, ex);
-        return null;
-      }
-      finally
-      {
-        aSW.stop ();
-        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
-      }
-    }, m_aES).exceptionally (ex -> {
-      LOGGER.error ("Unexpected exception in ph-oton supplier '" + sActionName + "'", ex);
-      return null;
-    });
+    final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
+    return CompletableFuture.supplyAsync ( () -> _executeInstrumented (sActionName,
+                                                                      "supplier",
+                                                                      aSupplier,
+                                                                      aEndEmitted,
+                                                                      aSupplier::get), m_aES)
+                            .exceptionally (_onUnexpectedException (sActionName, "supplier", aEndEmitted));
   }
 
   @NonNull
   public <T> CompletableFuture <T> supplyThrowing (@NonNull final String sActionName,
                                                    @NonNull final IThrowingSupplier <T, ? extends Exception> aSupplier)
   {
-    return CompletableFuture.supplyAsync ( () -> {
-      final StopWatch aSW = StopWatch.createdStarted ();
-      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
-      try
-      {
-        return aSupplier.get ();
-      }
-      catch (final Exception ex)
-      {
-        CONDLOG.error ( () -> "Error running ph-oton supplier " + aSupplier, ex);
-        return null;
-      }
-      finally
-      {
-        aSW.stop ();
-        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
-      }
-    }, m_aES).exceptionally (ex -> {
-      LOGGER.error ("Unexpected exception in ph-oton supplier '" + sActionName + "'", ex);
-      return null;
-    });
+    final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
+    return CompletableFuture.supplyAsync ( () -> _executeInstrumented (sActionName,
+                                                                      "supplier",
+                                                                      aSupplier,
+                                                                      aEndEmitted,
+                                                                      aSupplier::get), m_aES)
+                            .exceptionally (_onUnexpectedException (sActionName, "supplier", aEndEmitted));
   }
 }

@@ -184,6 +184,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
 
       if (bResourcesAreOutOfSync)
       {
+        WebSiteResourceTelemetry.onBundleSkipped ();
+
         // Remember to save changes
         bAnyResourceIsOutOfSync = true;
       }
@@ -364,6 +366,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
             // Create the main bundle
             aBundleSerialized = new WebSiteResourceBundleSerialized (sBundleID, aBundle, bRegular);
             m_aMapToBundle.put (sBundleID, aBundleSerialized);
+
+            WebSiteResourceTelemetry.onBundleCreated ();
 
             // Remember that we created a bundle
             bCreatedAnyBundle = true;

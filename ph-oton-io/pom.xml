@@ -66,6 +66,10 @@
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-dao</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.telemetry</groupId>
+      <artifactId>ph-telemetry</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>junit</groupId>

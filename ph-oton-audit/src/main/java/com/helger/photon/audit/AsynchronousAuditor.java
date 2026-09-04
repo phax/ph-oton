@@ -35,6 +35,7 @@ import com.helger.base.state.EChange;
 import com.helger.commons.concurrent.collector.ConcurrentCollectorMultiple;
 import com.helger.commons.concurrent.collector.IConcurrentPerformer;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
+import com.helger.telemetry.ITelemetryGauge;
 
 /**
  * The class handles audit items asynchronously. If a new audit item is to be handled it is put into
@@ -56,6 +57,8 @@ public class AsynchronousAuditor extends AbstractAuditor
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private final ConcurrentCollectorMultiple <IAuditItem> m_aCollector;
   private final ExecutorService m_aSenderThreadPool;
+  // Bound to the life time of this auditor - must not be a static field
+  private final ITelemetryGauge m_aQueueLengthGauge;
 
   private static final class MyCollector extends ConcurrentCollectorMultiple <IAuditItem>
   {
@@ -74,6 +77,7 @@ public class AsynchronousAuditor extends AbstractAuditor
     m_aCollector = new MyCollector (aPerformer);
     m_aSenderThreadPool = Executors.newSingleThreadExecutor (THREAD_FACTORY);
     m_aSenderThreadPool.submit (m_aCollector::collect);
+    m_aQueueLengthGauge = AuditMetrics.createQueueLengthGauge (this::getQueueLength);
   }
 
   @Override
@@ -115,6 +119,9 @@ public class AsynchronousAuditor extends AbstractAuditor
       final int nQueueLength = m_aCollector.getQueueLength ();
       if (nQueueLength > 0)
         LOGGER.info ("Stopping auditor queue with " + nQueueLength + " items");
+
+      // Stop observing, so that this auditor is not kept alive by the gauge callback
+      m_aQueueLengthGauge.close ();
       return false;
     }))
     {

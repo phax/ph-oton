@@ -107,7 +107,31 @@ v10.6.0 - work in progress
 * Added ph-telemetry instrumentation for the CSRF nonce checks in `WebPageCSRFHandler` (ph-oton-uicore): the counter `photon.csrf.checks` with the attributes `photon.csrf.page.id` and `photon.csrf.valid`.
   Valid checks are counted as well, so that a failure rate can be computed. The nonce value itself never appears in telemetry.
   The new class `CSRFMetrics` holds the instrument.
-* The modules ph-oton-api, ph-oton-ajax, ph-oton-app, ph-oton-core, ph-oton-security and ph-oton-uicore now have a direct dependency to `com.helger.telemetry:ph-telemetry`.
+* Added ph-telemetry instrumentation for the asynchronous tasks of `PhotonWorkerPool` (ph-oton-io): the span `photon.worker.execute` (kind `INTERNAL`), the counters `photon.worker.started` and `photon.worker.ended`, the up-down counter `photon.worker.running` and the histogram `photon.worker.duration`.
+  The four public methods `run`, `runThrowing`, `supply` and `supplyThrowing` keep their signatures but now share one private instrumented helper instead of four near-identical bodies.
+  The caller supplied action name is a span attribute only and deliberately never a metric attribute - callers do interpolate unbounded values into it.
+  The new classes `CIOTelemetry` (names) and `PhotonWorkerPoolMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* Added ph-telemetry instrumentation for the system migrations of `SystemMigrationHelper` (ph-oton-mgrs): the span `photon.migration.execute` (kind `INTERNAL`), the counter `photon.migration.executed` and the histogram `photon.migration.duration`.
+  A migration that reports a failure without throwing is distinguished from one that threw via the attribute `photon.migration.failure.kind` (`none` / `business` / `technical`), and both mark the span as failed.
+  A migration that was already performed and is therefore skipped emits nothing at all.
+  The new classes `CMgrsTelemetry` (names) and `SystemMigrationMetrics` (instruments) are the public reference; `CLongRunningJobTelemetry` is unchanged.
+* Added ph-telemetry instrumentation for the audit trail (ph-oton-audit): the counter `photon.audit.items` in `AbstractAuditor`, so that all auditor implementations are covered by one increment, and the observable gauge `photon.audit.queue.length` over `AsynchronousAuditor.getQueueLength ()`.
+  Only the bounded `EAuditActionType` and the success flag are used as dimensions - never the audit action string, the audit arguments or the user ID.
+  The gauge is closed in `AsynchronousAuditor.stop ()`.
+  The new classes `CAuditTelemetry` (names) and `AuditMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* Added ph-telemetry instrumentation for the SFTP operations of `ChannelSftpRunner` (ph-oton-connect): the span `photon.sftp.execute` of kind **`CLIENT`** - these are the only genuine outbound network calls in ph-oton - plus the counter `photon.sftp.operations` and the histogram `photon.sftp.duration`.
+  `JSchSessionFactory` additionally emits the up-down counter `photon.sftp.sessions.open`, which is the difference between the two existing statistics counters that a monitoring system cannot compute itself.
+  The remote host is the only metric dimension; the operation display name is a span attribute only, and credentials, remote paths and user names never appear anywhere.
+  The new classes `CConnectTelemetry` (names) and `SftpMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* Added ph-telemetry instrumentation for the server-side DataTables processing of `AjaxExecutorDataTables` (ph-oton-datatables): the span `photon.datatables.request` with the child spans `photon.datatables.sort` and `photon.datatables.filter`, the histogram `photon.datatables.duration` and the row count histograms `photon.datatables.rows.total` and `photon.datatables.rows.filtered`.
+  Sorting and filtering are timed separately, because a table that is slow to filter needs a different fix from one that is slow to sort.
+  Only *whether* a search was active is recorded, never *what* was searched - the search terms are user input and routinely contain personal data.
+  The new classes `CDataTablesTelemetry` (names) and `DataTablesMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* Added ph-telemetry instrumentation for the web site resource cache and the resource bundling (ph-oton-app): the counters `photon.resource.cache.access` (by hit and resource type), `photon.resource.bundles.created` and `photon.resource.bundles.skipped`.
+  Counting hits and misses makes the hit ratio derivable and makes a forgotten `WebSiteResourceCache.setCacheEnabled (false)` in production visible.
+  No resource path and no content hash is used as an attribute. No spans are emitted, because this is startup-time work that belongs to no request trace.
+  The new class `WebSiteResourceMetrics` holds the instruments.
+* The modules ph-oton-io, ph-oton-app, ph-oton-audit, ph-oton-ajax, ph-oton-api, ph-oton-security, ph-oton-connect, ph-oton-core, ph-oton-uicore and ph-oton-datatables now have a direct dependency to `com.helger.telemetry:ph-telemetry` (ph-oton-mgrs already had one).
   As before ph-oton never depends on an OpenTelemetry implementation - registering an `ITelemetryTracerSPI` / `ITelemetryMeterSPI` is the business of the deploying application, and without one all telemetry degrades to cheap no-ops.
   All existing `StatisticsManager` handlers are unchanged - the telemetry is emitted alongside them.
 

@@ -111,6 +111,10 @@ public final class WebSiteResourceCache
 
     if (!isCacheEnabled ())
     {
+      // A disabled cache means every access is a miss - that is what makes a forgotten
+      // setCacheEnabled (false) visible in monitoring
+      WebSiteResourceTelemetry.onCacheAccess (eResourceType, false);
+
       // Always create a new resource to allow for modifications
       final WebSiteResource aResource = new WebSiteResource (eResourceType, sPath, aCharset);
       if (!aResource.isExisting ())
@@ -127,7 +131,12 @@ public final class WebSiteResourceCache
     // Entry already existing?
     final WebSiteResource ret = RW_LOCK.readLockedGet ( () -> s_aMap.get (sCacheKey));
     if (ret != null)
+    {
+      WebSiteResourceTelemetry.onCacheAccess (eResourceType, true);
       return ret;
+    }
+
+    WebSiteResourceTelemetry.onCacheAccess (eResourceType, false);
 
     // Try again in write lock
     return RW_LOCK.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey,

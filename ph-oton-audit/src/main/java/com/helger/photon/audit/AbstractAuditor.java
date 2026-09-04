@@ -94,6 +94,8 @@ public abstract class AbstractAuditor implements IAuditor
                                                   eActionType,
                                                   eSuccess,
                                                   sFullAction);
+      // Central for all auditor implementations
+      AuditTelemetry.onAuditItemCreated (eActionType, eSuccess);
       handleAuditItem (aAuditItem);
     }
   }

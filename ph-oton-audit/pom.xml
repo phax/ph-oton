@@ -71,6 +71,10 @@
       <artifactId>ph-oton-io</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger.telemetry</groupId>
+      <artifactId>ph-telemetry</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <optional>true</optional>

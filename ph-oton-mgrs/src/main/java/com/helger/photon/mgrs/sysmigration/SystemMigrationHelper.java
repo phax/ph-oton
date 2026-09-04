@@ -26,6 +26,11 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.SuccessWithValue;
+import com.helger.base.timing.StopWatch;
+import com.helger.base.wrapper.Wrapper;
+import com.helger.photon.mgrs.CMgrsTelemetry;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 
 /**
  * Helper class to perform default actions with {@link ISystemMigrationManager}.
@@ -59,24 +64,41 @@ public final class SystemMigrationHelper
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
 
+    // Nothing is emitted for a migration that was already performed
     if (!aSysMigMgr.wasMigrationExecutedSuccessfully (sMigrationID))
     {
+      final StopWatch aSW = StopWatch.createdStarted ();
+      // Needs to be readable from the finally block below
+      final Wrapper <String> aFailureKind = new Wrapper <> (CMgrsTelemetry.VALUE_FAILURE_NONE);
       try
       {
-        LOGGER.info ("Performing migration '" + sMigrationID + "'");
+        Telemetry.withSpanVoid (CMgrsTelemetry.SPAN_MIGRATION_EXECUTE, ETelemetrySpanKind.INTERNAL, aSpan -> {
+          SystemMigrationTelemetry.onMigrationStart (aSpan, sMigrationID);
+          try
+          {
+            LOGGER.info ("Performing migration '" + sMigrationID + "'");
 
-        // Invoke the callback
-        aMigrationAction.run ();
+            // Invoke the callback
+            aMigrationAction.run ();
 
-        LOGGER.info ("Finished performing migration '" + sMigrationID + "'");
+            LOGGER.info ("Finished performing migration '" + sMigrationID + "'");
 
-        // Always assume success
-        aSysMigMgr.addMigrationResultSuccess (sMigrationID);
+            // Always assume success
+            aSysMigMgr.addMigrationResultSuccess (sMigrationID);
+            SystemMigrationTelemetry.onMigrationSuccess (aSpan);
+          }
+          catch (final RuntimeException ex)
+          {
+            LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
+            aSysMigMgr.addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
+            aFailureKind.set (CMgrsTelemetry.VALUE_FAILURE_TECHNICAL);
+            SystemMigrationTelemetry.onMigrationTechnicalFailure (aSpan, sMigrationID, ex);
+          }
+        });
       }
-      catch (final RuntimeException ex)
+      finally
       {
-        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
-        aSysMigMgr.addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
+        SystemMigrationTelemetry.onMigrationEnd (sMigrationID, aFailureKind.get (), aSW.stopAndGetMillis ());
       }
     }
   }
@@ -98,30 +120,53 @@ public final class SystemMigrationHelper
     ValueEnforcer.notEmpty (sMigrationID, "MigrationID");
     ValueEnforcer.notNull (aMigrationAction, "MigrationAction");
 
+    // Nothing is emitted for a migration that was already performed
     if (!aSysMigMgr.wasMigrationExecutedSuccessfully (sMigrationID))
     {
+      final StopWatch aSW = StopWatch.createdStarted ();
+      // Needs to be readable from the finally block below
+      final Wrapper <String> aFailureKind = new Wrapper <> (CMgrsTelemetry.VALUE_FAILURE_NONE);
       try
       {
-        LOGGER.info ("Performing migration '" + sMigrationID + "'");
+        Telemetry.withSpanVoid (CMgrsTelemetry.SPAN_MIGRATION_EXECUTE, ETelemetrySpanKind.INTERNAL, aSpan -> {
+          SystemMigrationTelemetry.onMigrationStart (aSpan, sMigrationID);
+          try
+          {
+            LOGGER.info ("Performing migration '" + sMigrationID + "'");
 
-        // Invoke the callback
-        final SuccessWithValue <String> ret = aMigrationAction.get ();
+            // Invoke the callback
+            final SuccessWithValue <String> ret = aMigrationAction.get ();
 
-        LOGGER.info ("Finished performing migration '" +
-                     sMigrationID +
-                     "' with status " +
-                     (ret.isSuccess () ? "success" : "error"));
+            LOGGER.info ("Finished performing migration '" +
+                         sMigrationID +
+                         "' with status " +
+                         (ret.isSuccess () ? "success" : "error"));
 
-        // Success or error
-        if (ret.isSuccess ())
-          aSysMigMgr.addMigrationResultSuccess (sMigrationID);
-        else
-          aSysMigMgr.addMigrationResultError (sMigrationID, ret.get ());
+            // Success or error
+            if (ret.isSuccess ())
+            {
+              aSysMigMgr.addMigrationResultSuccess (sMigrationID);
+              SystemMigrationTelemetry.onMigrationSuccess (aSpan);
+            }
+            else
+            {
+              aSysMigMgr.addMigrationResultError (sMigrationID, ret.get ());
+              aFailureKind.set (CMgrsTelemetry.VALUE_FAILURE_BUSINESS);
+              SystemMigrationTelemetry.onMigrationBusinessFailure (aSpan, sMigrationID, ret.get ());
+            }
+          }
+          catch (final RuntimeException ex)
+          {
+            LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
+            aSysMigMgr.addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
+            aFailureKind.set (CMgrsTelemetry.VALUE_FAILURE_TECHNICAL);
+            SystemMigrationTelemetry.onMigrationTechnicalFailure (aSpan, sMigrationID, ex);
+          }
+        });
       }
-      catch (final RuntimeException ex)
+      finally
       {
-        LOGGER.error ("Error execution system migration '" + sMigrationID + "'", ex);
-        aSysMigMgr.addMigrationResultError (sMigrationID, ex.getClass () + ": " + ex.getMessage ());
+        SystemMigrationTelemetry.onMigrationEnd (sMigrationID, aFailureKind.get (), aSW.stopAndGetMillis ());
       }
     }
   }

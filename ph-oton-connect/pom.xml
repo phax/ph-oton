@@ -67,6 +67,10 @@
       <artifactId>ph-jsch</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger.telemetry</groupId>
+      <artifactId>ph-telemetry</artifactId>
+    </dependency>
+    <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
       <version>${commons-net.version}</version>

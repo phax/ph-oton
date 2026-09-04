@@ -108,6 +108,7 @@ public final class JSchSessionFactory
     aSession.connect ();
 
     STATS_COUNTER_CREATED.increment ();
+    SftpTelemetry.onSessionCreated (aSession);
     return aSession;
   }
 
@@ -138,6 +139,7 @@ public final class JSchSessionFactory
     aSession.connect ();
 
     STATS_COUNTER_CREATED.increment ();
+    SftpTelemetry.onSessionCreated (aSession);
     return aSession;
   }
 
@@ -153,6 +155,7 @@ public final class JSchSessionFactory
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Closed session " + _debugSession (aSession));
     STATS_COUNTER_DESTROYED.increment ();
+    SftpTelemetry.onSessionDestroyed (aSession);
     return EChange.CHANGED;
   }
 }
