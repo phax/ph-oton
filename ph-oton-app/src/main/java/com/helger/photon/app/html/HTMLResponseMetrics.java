@@ -28,7 +28,7 @@ import com.helger.telemetry.TelemetryMetrics;
  * no-ops, so referencing this class in a deployment without an observability backend has no cost.
  *
  * @author Philip Helger
- * @since 10.5.1
+ * @since 10.6.0
  */
 @Immutable
 public final class HTMLResponseMetrics

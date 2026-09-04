@@ -24,7 +24,7 @@ import com.helger.annotation.concurrent.Immutable;
  * same names when building dashboards, alerting rules or tests.
  *
  * @author Philip Helger
- * @since 10.5.1
+ * @since 10.6.0
  */
 @Immutable
 public final class CAPITelemetry

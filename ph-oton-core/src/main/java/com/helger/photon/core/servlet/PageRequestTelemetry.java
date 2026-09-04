@@ -29,7 +29,7 @@ import com.helger.telemetry.TelemetryAttributes;
  * ph-telemetry facades, so without a registered SPI everything degrades to cheap no-ops.
  *
  * @author Philip Helger
- * @since 10.5.1
+ * @since 10.6.0
  */
 @Immutable
 final class PageRequestTelemetry

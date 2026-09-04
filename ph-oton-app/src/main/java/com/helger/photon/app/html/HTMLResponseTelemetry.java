@@ -30,7 +30,7 @@ import com.helger.telemetry.TelemetryAttributes;
  * so without a registered SPI everything degrades to cheap no-ops.
  *
  * @author Philip Helger
- * @since 10.5.1
+ * @since 10.6.0
  */
 @Immutable
 final class HTMLResponseTelemetry
