@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableBoolean;
 import com.helger.base.timing.StopWatch;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.servlet.response.UnifiedResponse;
@@ -29,6 +30,8 @@ import com.helger.statistics.api.IMutableStatisticsHandlerCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.statistics.impl.StatisticsManager;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -60,49 +63,61 @@ public class APIInvoker implements IAPIInvoker
       LOGGER.debug ("Invoking API '" + sPath + "'");
 
     final StopWatch aSW = StopWatch.createdStarted ();
+    // Needs to be readable from the finally block below
+    final MutableBoolean aSuccess = new MutableBoolean (false);
     try
     {
-      // Global increment before invocation
-      STATS_GLOBAL_INVOKE.increment ();
+      Telemetry.<Exception> withSpanVoidThrowing (CAPITelemetry.SPAN_INVOKE, ETelemetrySpanKind.SERVER, aSpan -> {
+        APITelemetry.onInvokeStart (aSpan, aInvokableDescriptor);
+        try
+        {
+          // Global increment before invocation
+          STATS_GLOBAL_INVOKE.increment ();
 
-      // Invoke before handler
-      APISettings.beforeExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
+          // Invoke before handler
+          APISettings.beforeExecutionCallbacks ()
+                     .forEach (aCB -> aCB.onBeforeExecution (this, aInvokableDescriptor, aRequestScope));
 
-      // Main invocation
-      aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
+          // Main invocation
+          aInvokableDescriptor.invokeAPI (aRequestScope, aUnifiedResponse);
 
-      // Invoke after handler
-      APISettings.afterExecutionCallbacks ()
-                 .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
+          // Invoke after handler
+          APISettings.afterExecutionCallbacks ()
+                     .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
-      // Increment statistics after successful call
-      STATS_FUNCTION_INVOKE.increment (sPath);
-    }
-    catch (final Exception ex)
-    {
-      boolean bHandled = false;
-      final IAPIExceptionMapper aExMapper = aInvokableDescriptor.getAPIDescriptor ().getExceptionMapper ();
-      if (aExMapper != null)
-      {
-        // Apply exception mapper
-        bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, ex)
-                            .isHandled ();
-      }
-      if (!bHandled)
-      {
-        APISettings.exceptionCallbacks ()
-                   .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, ex));
+          // Increment statistics after successful call
+          STATS_FUNCTION_INVOKE.increment (sPath);
+          aSuccess.set (true);
+          APITelemetry.onInvokeSuccess (aSpan);
+        }
+        catch (final Exception ex)
+        {
+          boolean bHandled = false;
+          final IAPIExceptionMapper aExMapper = aInvokableDescriptor.getAPIDescriptor ().getExceptionMapper ();
+          if (aExMapper != null)
+          {
+            // Apply exception mapper
+            bHandled = aExMapper.applyExceptionOnResponse (aInvokableDescriptor, aRequestScope, aUnifiedResponse, ex)
+                                .isHandled ();
+          }
+          APITelemetry.onInvokeError (aSpan, ex, bHandled);
+          if (!bHandled)
+          {
+            APISettings.exceptionCallbacks ()
+                       .forEach (aCB -> aCB.onAPIExecutionException (this, aInvokableDescriptor, aRequestScope, ex));
 
-        // Re-throw
-        throw ex;
-      }
+            // Re-throw
+            throw ex;
+          }
+        }
+      });
     }
     finally
     {
       // Long running API request?
       final long nExecutionMillis = aSW.stopAndGetMillis ();
       STATS_FUNCTION_TIMER.addTime (sPath, nExecutionMillis);
+      APITelemetry.onInvokeEnd (aInvokableDescriptor, aSuccess.booleanValue (), nExecutionMillis);
       final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {

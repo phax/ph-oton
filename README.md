@@ -67,6 +67,28 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.5.1 - work in progress
+* Added ph-telemetry instrumentation for the REST API invocation in `APIInvoker` (ph-oton-api): the span `photon.api.invoke` (kind `SERVER`), the counter `photon.api.invocations` and the histogram `photon.api.duration`.
+  The new classes `CAPITelemetry` (names) and `APIMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+  The bounded metric dimension is the path *template* like `/user/{id}` - the concrete requested path is a span attribute only, because its cardinality is unbounded.
+  An exception that was handled by an `IAPIExceptionMapper` still marks the span as failed, even though `invoke (...)` returns normally.
+* Added ph-telemetry instrumentation for the AJAX function invocation in `AjaxInvoker` (ph-oton-ajax): the span `photon.ajax.invoke` (kind `SERVER`), the counter `photon.ajax.invocations` and the histogram `photon.ajax.duration`.
+  The new classes `CAjaxTelemetry` (names) and `AjaxMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* **Behaviour change**: `AjaxInvoker.invokeFunction (...)` now stops the execution time measurement in a `finally` block, so that failing invocations are timed as well.
+  As a consequence the statistics timer `AjaxInvoker$timer` and the registered `IAjaxLongRunningExecutionCallback`s are now also triggered for failing invocations - as it has always been the case in `APIInvoker`.
+* Added ph-telemetry instrumentation for the UI page rendering path: the span `photon.page.request` (kind `SERVER`), the counter `photon.page.requests` and the histogram `photon.page.duration` in `AbstractApplicationXServletHandler` (ph-oton-core), plus the nested span `photon.html.response` (kind `INTERNAL`) and the histogram `photon.html.duration` in `PhotonHTMLHelper` (ph-oton-app).
+  The new classes `CCoreTelemetry` and `PageRequestMetrics` (ph-oton-core) as well as `CAppTelemetry` and `HTMLResponseMetrics` (ph-oton-app) are the public reference for dashboards, alerting rules and tests.
+  The `photon.html.response` span covers the serialization of the HC tree only - the creation of the HC tree happens before the span is started, because it may end in a Post-Redirect-Get.
+* Added ph-telemetry instrumentation for the web page content creation in `AbstractWebPage.getContent (...)` (ph-oton-uicore): the span `photon.webpage.content` (kind `INTERNAL`), the counter `photon.webpage.rendered` and the histogram `photon.webpage.duration`.
+  The page ID is the bounded metric dimension, so this is the instrument that answers which screen of an application is slow - the display locale is a span attribute only.
+  A page that is not displayed because `isValidToDisplayPage (...)` rejected it, is counted as well, with the attribute `photon.webpage.displayed` set to `false`.
+  The new classes `CUICoreTelemetry` (names) and `WebPageMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* A `ForcedRedirectException` (Post-Redirect-Get) does not mark the spans `photon.page.request` and `photon.webpage.content` as failed - it is a regular control flow, exactly as `XServletHandlerToSimpleHandler` treats it.
+  Instead the span events `photon.page.forcedredirect` respectively `photon.webpage.forcedredirect` are added, and the request still counts as successful.
+* The modules ph-oton-api, ph-oton-ajax, ph-oton-app, ph-oton-core and ph-oton-uicore now have a direct dependency to `com.helger.telemetry:ph-telemetry`.
+  As before ph-oton never depends on an OpenTelemetry implementation - registering an `ITelemetryTracerSPI` / `ITelemetryMeterSPI` is the business of the deploying application, and without one all telemetry degrades to cheap no-ops.
+  All existing `StatisticsManager` handlers are unchanged - the telemetry is emitted alongside them.
+
 v10.5.0 - 2026-09-04
 * Added the new method `ISystemMessageManager.getSystemMessageData ()` that returns all system message fields at once.
   It is now the only method an implementation needs to provide, and it allows a backend to read everything in a single step - the JDBC implementation previously issued one `SELECT` per field.

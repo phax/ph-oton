@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableBoolean;
 import com.helger.base.timing.StopWatch;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
@@ -30,6 +31,8 @@ import com.helger.statistics.api.IMutableStatisticsHandlerCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedCounter;
 import com.helger.statistics.api.IMutableStatisticsHandlerKeyedTimer;
 import com.helger.statistics.impl.StatisticsManager;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -64,34 +67,55 @@ public class AjaxInvoker implements IAjaxInvoker
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Invoking Ajax function '" + sFunctionName + "'");
 
+    final StopWatch aSW = StopWatch.createdStarted ();
+    // Needs to be readable from the finally block below
+    final MutableBoolean aSuccess = new MutableBoolean (false);
     try
     {
-      final StopWatch aSW = StopWatch.createdStarted ();
+      Telemetry.<Exception> withSpanVoidThrowing (CAjaxTelemetry.SPAN_INVOKE, ETelemetrySpanKind.SERVER, aSpan -> {
+        AjaxTelemetry.onInvokeStart (aSpan, sFunctionName);
+        try
+        {
+          // Global increment before invocation
+          STATS_GLOBAL_INVOKE.increment ();
 
-      // Global increment before invocation
-      STATS_GLOBAL_INVOKE.increment ();
+          // Invoke before handler
+          AjaxSettings.beforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
 
-      // Invoke before handler
-      AjaxSettings.beforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
+          // Register all external resources, prior to handling the main request, as
+          // the JS/CSS elements will be contained in the AjaxDefaultResponse in
+          // case of success
+          aAjaxExecutor.registerExternalResources ();
 
-      // Register all external resources, prior to handling the main request, as
-      // the JS/CSS elements will be contained in the AjaxDefaultResponse in
-      // case of success
-      aAjaxExecutor.registerExternalResources ();
+          // Main handle request
+          aAjaxExecutor.handleRequest (aRequestScope, aAjaxResponse);
 
-      // Main handle request
-      aAjaxExecutor.handleRequest (aRequestScope, aAjaxResponse);
+          // Invoke after handler
+          AjaxSettings.afterExecutionCallbacks ()
+                      .forEach (aCB -> aCB.onAfterExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, aAjaxResponse));
 
-      // Invoke after handler
-      AjaxSettings.afterExecutionCallbacks ()
-                  .forEach (aCB -> aCB.onAfterExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, aAjaxResponse));
+          // Increment statistics after successful call
+          STATS_FUNCTION_INVOKE.increment (sFunctionName);
+          aSuccess.set (true);
+          AjaxTelemetry.onInvokeSuccess (aSpan);
+        }
+        catch (final Exception ex)
+        {
+          AjaxTelemetry.onInvokeError (aSpan);
+          AjaxSettings.exceptionCallbacks ()
+                      .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, ex));
 
-      // Increment statistics after successful call
-      STATS_FUNCTION_INVOKE.increment (sFunctionName);
-
+          // Re-throw
+          throw ex;
+        }
+      });
+    }
+    finally
+    {
       // Long running AJAX request?
       final long nExecutionMillis = aSW.stopAndGetMillis ();
       STATS_FUNCTION_TIMER.addTime (sFunctionName, nExecutionMillis);
+      AjaxTelemetry.onInvokeEnd (sFunctionName, aSuccess.booleanValue (), nExecutionMillis);
       final long nLimitMS = AjaxSettings.getLongRunningExecutionLimitTime ();
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)
       {
@@ -99,14 +123,6 @@ public class AjaxInvoker implements IAjaxInvoker
         AjaxSettings.longRunningExecutionCallbacks ()
                     .forEach (aCB -> aCB.onLongRunningExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, nExecutionMillis));
       }
-    }
-    catch (final Exception ex)
-    {
-      AjaxSettings.exceptionCallbacks ()
-                  .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, ex));
-
-      // Re-throw
-      throw ex;
     }
   }
 

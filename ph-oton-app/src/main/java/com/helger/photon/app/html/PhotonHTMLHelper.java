@@ -23,7 +23,9 @@ import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.CGlobal;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.io.stream.HasInputStream;
+import com.helger.base.numeric.mutable.MutableBoolean;
 import com.helger.base.string.StringHelper;
+import com.helger.base.timing.StopWatch;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.html.hc.IHCConversionSettings;
@@ -45,12 +47,15 @@ import com.helger.html.resource.js.IJSPathProvider;
 import com.helger.mime.CMimeType;
 import com.helger.mime.IMimeType;
 import com.helger.mime.MimeType;
+import com.helger.photon.app.CAppTelemetry;
 import com.helger.photon.app.PhotonAppSettings;
 import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.resource.IWebSiteResourceBundleProvider;
 import com.helger.photon.app.resource.WebSiteResourceBundleSerialized;
 import com.helger.photon.app.resource.WebSiteResourceWithCondition;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.Telemetry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
@@ -156,7 +161,10 @@ public final class PhotonHTMLHelper
                                          @NonNull final UnifiedResponse aUnifiedResponse,
                                          @NonNull final IHTMLProvider aHTMLProvider)
   {
-    // Build the main HC tree
+    // Build the main HC tree.
+    // This is deliberately outside of the telemetry span below, because it may throw a
+    // ForcedRedirectException (Post-Redirect-Get) which is a regular control flow and not an
+    // error. The time spent here is covered by the surrounding page request span anyway.
     final HCHtml aHtml = aHTMLProvider.createHTML (aRequestScope);
 
     // Add some ad comment :)
@@ -164,19 +172,35 @@ public final class PhotonHTMLHelper
          .metaElements ()
          .add (new HCMeta ().setName (EStandardMetaElement.GENERATOR.getName ()).setContent (META_GENERATOR_VALUE));
 
-    // Convert HTML to String, including namespaces
-    try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
-                                                                                              CGlobal.BYTES_PER_KILOBYTE))
+    final StopWatch aSW = StopWatch.createdStarted ();
+    // Needs to be readable from the finally block below
+    final MutableBoolean aSuccess = new MutableBoolean (false);
+    try
     {
-      final IMimeType aMimeType = getMimeType (aRequestScope);
-      final IHCConversionSettings aCS = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();
-      HCRenderer.writeHtmlTo (aHtml, aCS, aBAOS);
+      Telemetry.withSpanVoid (CAppTelemetry.SPAN_HTML_RESPONSE, ETelemetrySpanKind.INTERNAL, aSpan -> {
+        // Convert HTML to String, including namespaces
+        try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (50 *
+                                                                                                  CGlobal.BYTES_PER_KILOBYTE))
+        {
+          final IMimeType aMimeType = getMimeType (aRequestScope);
+          HTMLResponseTelemetry.onMimeTypeDetermined (aSpan, aMimeType);
 
-      // Write to response
-      aUnifiedResponse.setMimeType (aMimeType)
-                      .setCharset (aCS.getCharset ())
-                      .setContent (HasInputStream.create (aBAOS))
-                      .disableCaching ();
+          final IHCConversionSettings aCS = PhotonHTMLHelper.getHCConversionSettingsWithNonce ();
+          HCRenderer.writeHtmlTo (aHtml, aCS, aBAOS);
+
+          // Write to response
+          aUnifiedResponse.setMimeType (aMimeType)
+                          .setCharset (aCS.getCharset ())
+                          .setContent (HasInputStream.create (aBAOS))
+                          .disableCaching ();
+        }
+        aSuccess.set (true);
+        HTMLResponseTelemetry.onHTMLResponseSuccess (aSpan);
+      });
+    }
+    finally
+    {
+      HTMLResponseTelemetry.onHTMLResponseEnd (aSuccess.booleanValue (), aSW.stopAndGetMillis ());
     }
   }
 

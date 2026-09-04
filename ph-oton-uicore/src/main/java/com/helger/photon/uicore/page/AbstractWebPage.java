@@ -25,14 +25,20 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EValidity;
 import com.helger.base.state.IValidityIndicator;
 import com.helger.base.string.StringHelper;
+import com.helger.base.timing.StopWatch;
 import com.helger.html.css.ICSSClassProvider;
 import com.helger.html.hc.html.traits.IHCTrait;
 import com.helger.photon.ajax.GlobalAjaxInvoker;
 import com.helger.photon.ajax.decl.AjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.photon.core.page.AbstractPage;
+import com.helger.photon.uicore.CUICoreTelemetry;
 import com.helger.photon.uicore.css.CUICoreCSS;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.ITelemetrySpan;
+import com.helger.telemetry.Telemetry;
 import com.helger.text.IMultilingualText;
+import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 
 /**
  * Abstract base implementation for {@link IWebPage}.
@@ -153,21 +159,58 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
    */
   public final void getContent (@NonNull final WPECTYPE aWPEC)
   {
-    if (isValidToDisplayPage (aWPEC).isValid ())
+    final StopWatch aSW = StopWatch.createdStarted ();
+    boolean bDisplayed = false;
+    // A ForcedRedirectException must not mark the span as failed, so the span is managed manually
+    // instead of using one of the Telemetry.withSpan* helpers
+    try (final ITelemetrySpan aSpan = Telemetry.startSpan (CUICoreTelemetry.SPAN_PAGE_CONTENT,
+                                                           ETelemetrySpanKind.INTERNAL))
     {
-      // "before"-callback
-      beforeFillContent (aWPEC);
+      WebPageTelemetry.onContentStart (aSpan, getID (), aWPEC.getDisplayLocale ());
+      try
+      {
+        if (isValidToDisplayPage (aWPEC).isValid ())
+        {
+          bDisplayed = true;
+          WebPageTelemetry.onContentDisplayed (aSpan, true);
 
-      // Create the main page content
-      fillContent (aWPEC);
+          // "before"-callback
+          beforeFillContent (aWPEC);
 
-      // "after"-callback
-      afterFillContent (aWPEC);
+          // Create the main page content
+          fillContent (aWPEC);
+
+          // "after"-callback
+          afterFillContent (aWPEC);
+        }
+        else
+        {
+          WebPageTelemetry.onContentDisplayed (aSpan, false);
+
+          // Invalid to display page
+          onInvalidToDisplayPage (aWPEC);
+        }
+        WebPageTelemetry.onContentSuccess (aSpan);
+      }
+      catch (final ForcedRedirectException ex)
+      {
+        // Post-Redirect-Get is a regular control flow and no error
+        WebPageTelemetry.onContentRedirect (aSpan);
+
+        // Re-throw
+        throw ex;
+      }
+      catch (final RuntimeException ex)
+      {
+        WebPageTelemetry.onContentError (aSpan, ex);
+
+        // Re-throw
+        throw ex;
+      }
     }
-    else
+    finally
     {
-      // Invalid to display page
-      onInvalidToDisplayPage (aWPEC);
+      WebPageTelemetry.onContentEnd (getID (), bDisplayed, aSW.stopAndGetMillis ());
     }
   }
 

@@ -24,11 +24,17 @@ import com.helger.annotation.OverridingMethodsMustInvokeSuper;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.base.debug.GlobalDebug;
 import com.helger.base.state.EContinue;
+import com.helger.base.timing.StopWatch;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
+import com.helger.photon.core.CCoreTelemetry;
 import com.helger.photon.core.interror.InternalErrorBuilder;
 import com.helger.servlet.response.UnifiedResponse;
+import com.helger.telemetry.ETelemetrySpanKind;
+import com.helger.telemetry.ITelemetrySpan;
+import com.helger.telemetry.Telemetry;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
+import com.helger.xservlet.forcedredirect.ForcedRedirectException;
 import com.helger.xservlet.handler.simple.IXServletSimpleHandler;
 
 /**
@@ -88,16 +94,44 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start handleRequest");
 
-    try
+    final StopWatch aSW = StopWatch.createdStarted ();
+    boolean bSuccess = false;
+    // A ForcedRedirectException must not mark the span as failed, so the span is managed manually
+    // instead of using one of the Telemetry.withSpan* helpers
+    try (final ITelemetrySpan aSpan = Telemetry.startSpan (CCoreTelemetry.SPAN_PAGE_REQUEST,
+                                                           ETelemetrySpanKind.SERVER))
     {
-      // Who is responsible for creating the HTML?
-      final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
+      try
+      {
+        // Who is responsible for creating the HTML?
+        final IHTMLProvider aHTMLProvider = createHTMLProvider (aRequestScope);
 
-      // Create the HTML and put it into the response
-      PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
+        // Create the HTML and put it into the response
+        PhotonHTMLHelper.createHTMLResponse (aRequestScope, aUnifiedResponse, aHTMLProvider);
+        bSuccess = true;
+        PageRequestTelemetry.onPageRequestSuccess (aSpan);
+      }
+      catch (final ForcedRedirectException ex)
+      {
+        // Post-Redirect-Get is a regular control flow and no error
+        bSuccess = true;
+        PageRequestTelemetry.onPageRequestRedirect (aSpan);
+
+        // Re-throw
+        throw ex;
+      }
+      catch (final Exception ex)
+      {
+        PageRequestTelemetry.onPageRequestError (aSpan, ex);
+
+        // Re-throw
+        throw ex;
+      }
     }
     finally
     {
+      PageRequestTelemetry.onPageRequestEnd (bSuccess, aSW.stopAndGetMillis ());
+
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("End handleRequest");
     }
