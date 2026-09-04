@@ -32,23 +32,18 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.state.ESuccess;
-import com.helger.base.string.StringHelper;
-import com.helger.base.type.ObjectType;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
-import com.helger.datetime.helper.PDTFactory;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.executor.DBResultRow;
-import com.helger.db.jdbc.mgr.AbstractJDBCEnabledManager;
+import com.helger.photon.audit.AbstractAuditor;
 import com.helger.photon.audit.AuditItem;
 import com.helger.photon.audit.EAuditActionType;
-import com.helger.photon.audit.IAuditActionStringProvider;
 import com.helger.photon.audit.IAuditItem;
 import com.helger.photon.audit.IAuditor;
-import com.helger.security.authentication.subject.user.CUserID;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 
 /**
@@ -56,12 +51,12 @@ import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
  *
  * @author Philip Helger
  */
-public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
+public class AuditorJDBC extends AbstractAuditor
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AuditorJDBC.class);
 
+  private final Supplier <? extends DBExecutor> m_aDBExecSupplier;
   private final String m_sTableName;
-  private final ICurrentUserIDProvider m_aCurrentUserIDProvider;
 
   /**
    * Constructor
@@ -77,9 +72,26 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
                       @NonNull final Function <String, String> aTableNameCustomizer,
                       @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
-    super (aDBExecSupplier);
+    super (aCurrentUserIDProvider);
+    ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
+    m_aDBExecSupplier = aDBExecSupplier;
     m_sTableName = aTableNameCustomizer.apply ("audit");
-    m_aCurrentUserIDProvider = ValueEnforcer.notNull (aCurrentUserIDProvider, "UserIDProvider");
+  }
+
+  /**
+   * Get a new DB Executor. When running code in a transaction, make sure that each SQL call inside
+   * the transaction is done with the same DBExecutor.
+   *
+   * @return A new DB executor from the Supplier provided in the constructor. Never
+   *         <code>null</code>.
+   */
+  @NonNull
+  protected final DBExecutor newExecutor ()
+  {
+    final DBExecutor ret = m_aDBExecSupplier.get ();
+    if (ret == null)
+      throw new IllegalStateException ("The contained DBExecutor Supplier returned null!");
+    return ret;
   }
 
   @NonNull
@@ -89,20 +101,9 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
     return m_sTableName;
   }
 
-  public void createAuditItem (@NonNull final EAuditActionType eActionType,
-                               @NonNull final ESuccess eSuccess,
-                               @Nullable final ObjectType aActionObjectType,
-                               @Nullable final String sAction,
-                               @Nullable final Object... aArgs)
+  @Override
+  protected void handleAuditItem (@NonNull final IAuditItem aAuditItem)
   {
-    // Maybe null, so default like XML version
-    final String sUserID = StringHelper.getNotEmpty (m_aCurrentUserIDProvider.getCurrentUserID (),
-                                                     CUserID.USER_ID_GUEST);
-    // Combine arguments into one big JSON
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType
-                                                                                                                   .getName ()
-                                                                                                : sAction, aArgs);
-
     final DBExecutor aExecutor;
     try
     {
@@ -119,13 +120,13 @@ public class AuditorJDBC extends AbstractJDBCEnabledManager implements IAuditor
                                                               m_sTableName +
                                                               " (dt, userid, actiontype, success, action)" +
                                                               " VALUES (?, ?, ?, ?, ?)",
-                                                              new ConstantPreparedStatementDataProvider (DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
-                                                                                                         DBValueHelper.getTrimmedToLength (sUserID,
+                                                              new ConstantPreparedStatementDataProvider (DBValueHelper.toTimestamp (aAuditItem.getDateTime ()),
+                                                                                                         DBValueHelper.getTrimmedToLength (aAuditItem.getUserID (),
                                                                                                                                            GlobalIDFactory.STRING_ID_MAX_LENGTH),
-                                                                                                         DBValueHelper.getTrimmedToLength (eActionType.getID (),
+                                                                                                         DBValueHelper.getTrimmedToLength (aAuditItem.getTypeID (),
                                                                                                                                            EAuditActionType.MAX_ID_LENGTH),
-                                                                                                         Boolean.valueOf (eSuccess.isSuccess ()),
-                                                                                                         sFullAction));
+                                                                                                         Boolean.valueOf (aAuditItem.isSuccess ()),
+                                                                                                         aAuditItem.getAction ()));
       if (nCreated != 1)
       {
         // This may be triggered on the first startup where the audit table
