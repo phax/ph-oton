@@ -68,22 +68,32 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 v10.5.0 - work in progress
-* Added the new method `ISystemMessageManager.getSystemMessageData ()` that returns all system message fields at once. It is now the only method an implementation needs to provide, and it allows a backend to read everything in a single step - the JDBC implementation previously issued one `SELECT` per field.
-* Deprecated the methods `ISystemMessageManager.getLastUpdateDT ()`, `getMessageType ()`, `getSystemMessage ()` and `hasSystemMessage ()` for removal. They are now `default` methods that delegate to `getSystemMessageData ()`.
+* Added the new method `ISystemMessageManager.getSystemMessageData ()` that returns all system message fields at once.
+  It is now the only method an implementation needs to provide, and it allows a backend to read everything in a single step - the JDBC implementation previously issued one `SELECT` per field.
+* Deprecated the methods `ISystemMessageManager.getLastUpdateDT ()`, `getMessageType ()`, `getSystemMessage ()` and `hasSystemMessage ()` for removal.
+  They are now `default` methods that delegate to `getSystemMessageData ()`.
 * Added the copy constructor `SystemMessageData (ISystemMessageData)` and the method `SystemMessageData.getClone ()` - the class now implements `ICloneable`.
-* **Security fix**: `IUserTokenManager.getUserTokenOfTokenString (String)` now only considers access tokens that are valid now (`IAccessToken.isValidNow ()`) and that are not revoked. Previously an expired access token was still resolved.
-* **Security fix**: `UserTokenAuthCredentialValidatorSPI` now also checks the state of the user owning the token and returns `ELoginResult.USER_IS_DELETED` or `ELoginResult.USER_IS_DISABLED` accordingly. Previously a token of a deleted or disabled user was still valid.
-* **Security fix**: a user that is deleted, disabled or whose password is changed, is now logged out immediately. Previously he stayed logged in until his session timed out. This is implemented in the new class `UserModificationLogoutCallback` that is registered by default in `PhotonSecurityManager`. The internal password hash algorithm upgrade performed during login does not trigger a logout.
-* **Security fix**: when a session containing a logged in user is activated (e.g. after an application server restart with session persistence), the user state is now checked again. A user that was deleted or disabled in the meantime, or that is already logged in elsewhere, is no longer logged in again.
-* **Security fix**: `LoggedInUserManager.loginUser (...)` now checks whether the current session already has a user *before* an existing login of the user to be logged in is terminated. Previously a login failing with `ELoginResult.SESSION_ALREADY_HAS_USER` could log out that user's other session as a side effect.
-* **Security fix**: `LoggedInUserManager.loginUser (...)` now spends the same amount of time on password hashing if no user could be resolved, so that the response time no longer discloses whether a login name exists. A failed login without a resolvable user is now also audited.
+* **Security fix**: `IUserTokenManager.getUserTokenOfTokenString (String)` now only considers access tokens that are valid now (`IAccessToken.isValidNow ()`) and that are not revoked.
+  Previously an expired access token was still resolved.
+* **Security fix**: `UserTokenAuthCredentialValidatorSPI` now also checks the state of the user owning the token and returns `ELoginResult.USER_IS_DELETED` or `ELoginResult.USER_IS_DISABLED` accordingly.
+  Previously a token of a deleted or disabled user was still valid.
+* **Security fix**: a user that is deleted, disabled or whose password is changed, is now logged out immediately.
+  Previously he stayed logged in until his session timed out.
+  This is implemented in the new class `UserModificationLogoutCallback` that is registered by default in `PhotonSecurityManager`.
+  The internal password hash algorithm upgrade performed during login does not trigger a logout.
+* **Security fix**: when a session containing a logged in user is activated (e.g. after an application server restart with session persistence), the user state is now checked again.
+  A user that was deleted or disabled in the meantime, or that is already logged in elsewhere, is no longer logged in again.
+* **Security fix**: `LoggedInUserManager.loginUser (...)` now checks whether the current session already has a user *before* an existing login of the user to be logged in is terminated.
+  Previously a login failing with `ELoginResult.SESSION_ALREADY_HAS_USER` could log out that user's other session as a side effect.
+* **Security fix**: `LoggedInUserManager.loginUser (...)` now spends the same amount of time on password hashing if no user could be resolved, so that the response time no longer discloses whether a login name exists.
+  A failed login without a resolvable user is now also audited.
 * Added the new method `LoggedInUserManager.getInstanceIfInstantiated ()`.
 * `GlobalUserIDProvider.DEFAULT_SUPPLIER` no longer throws an exception if no global scope is present.
 * `PhotonSecurityManager.FactoryXML.createAuditMgr ()`, `AuditManagerJDBC` and `ObjectLockManager` now use `GlobalUserIDProvider` instead of `LoggedInUserManager` directly, so that alternative ways of authentication are correctly attributed.
 * `LoggedInUserManager` no longer executes the `IUserLogoutCallback`s while holding the internal write lock during a login.
 * The mutable fields of `LoginInfo` are now `volatile`, because a `LoginInfo` is shared between all requests of a session.
 * **Breaking API change**: moved the class `LoginThrottlePerIP` from package `com.helger.photon.core.login` (ph-oton-core) to `com.helger.photon.security.login` (ph-oton-security), so that it can be reused by non-UI authentication.
-* `IUser.USER_ID_MAX_LENGTH` is `GlobalIDFactory.STRING_ID_MAX_LENGTH` (40) instead of 20 now, so that a user ID created by the default ID factory is no longer trimmed.
+* `IUser.USER_ID_MAX_LENGTH` is `GlobalIDFactory.STRING_ID_MAX_LENGTH` (45) instead of 20 now, so that a user ID created by the default ID factory is no longer trimmed.
   Added the new Flyway script `V3__user_id_max_length.sql` in `docs/flyway/<dialect>/` for that. It widens every column holding a user ID to 45 characters - `audit.userid`, the `creationuserid`, `lastmoduserid` and `deleteuserid` of `secrole`, `secusergroup`, `secuser` and `secusertoken`, as well as `secuser.id` and `secusertoken.userid`, which were 20 characters and would overflow otherwise.
   `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID. Only the length of the columns is changed, so existing data is preserved. See `docs/README.md` for details.
 
