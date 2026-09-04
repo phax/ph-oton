@@ -29,8 +29,8 @@ import com.helger.base.enforce.ValueEnforcer;
 
 /**
  * Global, application wide provider for the current user ID. Internally a {@link Supplier} of
- * {@link String} is used. The default implementation returns
- * {@link LoggedInUserManager#getCurrentUserID()}.
+ * {@link String} is used. The default implementation prefers the user ID of the
+ * {@link RequestUserIDProvider} and falls back to {@link LoggedInUserManager#getCurrentUserID()}.
  *
  * @author Philip Helger
  * @since 10.2.3
@@ -39,9 +39,17 @@ import com.helger.base.enforce.ValueEnforcer;
 public final class GlobalUserIDProvider
 {
   /**
-   * The default supplier returning the current user ID from the {@link LoggedInUserManager}.
+   * The default supplier returning the current user ID. It first checks the
+   * {@link RequestUserIDProvider} for a user that was authenticated for the current request only
+   * (e.g. a REST API call) and falls back to the session user ID from the
+   * {@link LoggedInUserManager}.
    */
   public static final Supplier <String> DEFAULT_SUPPLIER = () -> {
+    // First check, if a user was authenticated for the current request only
+    final String sRequestUserID = RequestUserIDProvider.getCurrentUserID ();
+    if (sRequestUserID != null)
+      return sRequestUserID;
+
     // Use the "if instantiated" version, so that this also works if no global
     // scope is present (yet or any more)
     final LoggedInUserManager aLUM = LoggedInUserManager.getInstanceIfInstantiated ();

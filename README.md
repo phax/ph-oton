@@ -95,9 +95,14 @@ v10.5.0 - work in progress
 * **Breaking API change**: moved the class `LoginThrottlePerIP` from package `com.helger.photon.core.login` (ph-oton-core) to `com.helger.photon.security.login` (ph-oton-security), so that it can be reused by non-UI authentication.
 * `AuditorJDBC` now extends `AbstractAuditor` instead of implementing `IAuditor` directly, so that the contained `ICurrentUserIDProvider` and the `IAuditActionStringProvider` can be changed after instantiation, as for all other auditors.
   The method `AuditorJDBC.createAuditItem (...)` was therefore replaced by `handleAuditItem (IAuditItem)`.
+* Added the new class `RequestUserIDProvider` (ph-oton-security) that remembers the ID of a user that was authenticated for the current request only - e.g. a REST API call using HTTP Basic Auth or a Bearer token - without creating an HTTP session.
+* `GlobalUserIDProvider.DEFAULT_SUPPLIER` now prefers the user ID of the `RequestUserIDProvider` over the session user ID of the `LoggedInUserManager`.
+  Therefore stateless authenticated requests are now correctly attributed in the audit log and in the created business objects, without any additional configuration.
 * `IUser.USER_ID_MAX_LENGTH` is `GlobalIDFactory.STRING_ID_MAX_LENGTH` (45) instead of 20 now, so that a user ID created by the default ID factory is no longer trimmed.
-  Added the new Flyway script `V3__user_id_max_length.sql` in `docs/flyway/<dialect>/` for that. It widens every column holding a user ID to 45 characters - `audit.userid`, the `creationuserid`, `lastmoduserid` and `deleteuserid` of `secrole`, `secusergroup`, `secuser` and `secusertoken`, as well as `secuser.id` and `secusertoken.userid`, which were 20 characters and would overflow otherwise.
-  `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID. Only the length of the columns is changed, so existing data is preserved. See `docs/README.md` for details.
+  Added the new Flyway script `V3__user_id_max_length.sql` in `docs/flyway/<dialect>/` for that.
+  It widens every column holding a user ID to 45 characters - `audit.userid`, the `creationuserid`, `lastmoduserid` and `deleteuserid` of `secrole`, `secusergroup`, `secuser` and `secusertoken`, as well as `secuser.id` and `secusertoken.userid`, which were 20 characters and would overflow otherwise.
+  `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID. Only the length of the columns is changed, so existing data is preserved.
+  See `docs/README.md` for details.
 
 v10.4.0 - 2026-08-30
 * Requires at least ph-commons 12.4.0
