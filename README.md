@@ -67,7 +67,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.5.0 - work in progress
+v10.5.0 - 2026-09-04
 * Added the new method `ISystemMessageManager.getSystemMessageData ()` that returns all system message fields at once.
   It is now the only method an implementation needs to provide, and it allows a backend to read everything in a single step - the JDBC implementation previously issued one `SELECT` per field.
 * Deprecated the methods `ISystemMessageManager.getLastUpdateDT ()`, `getMessageType ()`, `getSystemMessage ()` and `hasSystemMessage ()` for removal.
