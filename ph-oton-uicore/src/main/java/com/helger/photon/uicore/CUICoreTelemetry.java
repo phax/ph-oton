@@ -24,7 +24,7 @@ import com.helger.annotation.concurrent.Immutable;
  * same names when building dashboards, alerting rules or tests.
  *
  * @author Philip Helger
- * @since 10.5.1
+ * @since 10.6.0
  */
 @Immutable
 public final class CUICoreTelemetry
@@ -50,6 +50,12 @@ public final class CUICoreTelemetry
   public static final String METRIC_PAGE_CONTENT = "photon.webpage.rendered";
   /** Histogram (ms): wall-clock duration of the content creation of a single web page. */
   public static final String METRIC_PAGE_CONTENT_DURATION = "photon.webpage.duration";
+  /**
+   * Counter: number of CSRF nonce checks that were performed - valid and invalid ones. Counting all
+   * checks and not only the failures is deliberate: a failure count without a total does not tell
+   * whether 3 out of 4 or 3 out of 40000 requests failed.
+   */
+  public static final String METRIC_CSRF_CHECKS = "photon.csrf.checks";
 
   // === attribute keys ===
   /**
@@ -68,10 +74,19 @@ public final class CUICoreTelemetry
    * to keep the number of metric dimensions small.
    */
   public static final String ATTR_PAGE_LOCALE = "photon.webpage.locale";
+  /** Whether the checked CSRF nonce was the expected one. */
+  public static final String ATTR_CSRF_VALID = "photon.csrf.valid";
+  /**
+   * The ID of the web page the CSRF nonce was checked for. Bounded by the number of screens of an
+   * application. The nonce value itself is a security token and must never appear in telemetry.
+   */
+  public static final String ATTR_CSRF_PAGE_ID = "photon.csrf.page.id";
 
   // === metric units ===
   /** Unit for all web page counting instruments. */
   public static final String UNIT_PAGE = "{page}";
+  /** Unit for all check counting instruments. */
+  public static final String UNIT_CHECK = "{check}";
   /** Unit for all duration instruments. */
   public static final String UNIT_MILLIS = "ms";
 

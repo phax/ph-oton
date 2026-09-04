@@ -39,6 +39,7 @@ import com.helger.photon.app.csrf.CSRFSessionManager;
 import com.helger.photon.app.html.IHTMLProvider;
 import com.helger.photon.app.html.PhotonHTMLHelper;
 import com.helger.photon.security.login.ELoginResult;
+import com.helger.photon.security.login.LoginThrottleMetrics;
 import com.helger.photon.security.login.LoginThrottlePerIP;
 import com.helger.photon.security.login.LoggedInUserManager;
 import com.helger.photon.security.login.LoginInfo;
@@ -112,11 +113,6 @@ public abstract class AbstractLoginManager
    */
   private Duration m_aFailedLoginWaitTime = Duration.ZERO;
 
-  /**
-   * Per-IP failed login counter, used to throttle failed logins where no user could be resolved.
-   */
-  private final LoginThrottlePerIP m_aFailedLoginPerIP = new LoginThrottlePerIP ();
-
   protected AbstractLoginManager ()
   {}
 
@@ -159,13 +155,17 @@ public abstract class AbstractLoginManager
   /**
    * @return The per-IP failed login throttle. Used to throttle failed logins where no user could be
    *         resolved, based on the calling IP address. Never <code>null</code>. Use this to
-   *         configure e.g. the time-to-live of the per-IP counters.
+   *         configure e.g. the time-to-live of the per-IP counters.<br>
+   *         Since v10.6.0 this is the global singleton {@link LoginThrottlePerIP#getInstance()} and
+   *         no longer an instance field, so that all login managers of an application share one
+   *         throttle - and so that the throttling keeps working even if an application creates its
+   *         login manager more often than once.
    * @since 10.2.0
    */
   @NonNull
   public final LoginThrottlePerIP getFailedLoginPerIP ()
   {
-    return m_aFailedLoginPerIP;
+    return LoginThrottlePerIP.getInstance ();
   }
 
   /**
@@ -476,7 +476,7 @@ public abstract class AbstractLoginManager
           CSRFSessionManager.getInstance ().generateNewNonce ();
 
           // Successful login - remove the per-IP failed login counter
-          m_aFailedLoginPerIP.onSuccessfulLogin (getRemoteAddressForThrottling (aRequestScope));
+          LoginThrottlePerIP.getInstance ().onSuccessfulLogin (getRemoteAddressForThrottling (aRequestScope));
         }
         else
         {
@@ -503,7 +503,7 @@ public abstract class AbstractLoginManager
                 // enumeration or blind brute force). Only if some credentials were provided.
                 final String sIP = getRemoteAddressForThrottling (aRequestScope);
                 if (StringHelper.isNotEmpty (sIP))
-                  nMultiplier = m_aFailedLoginPerIP.onFailedLogin (sIP);
+                  nMultiplier = LoginThrottlePerIP.getInstance ().onFailedLogin (sIP);
               }
 
             if (nMultiplier > 0)
@@ -512,6 +512,9 @@ public abstract class AbstractLoginManager
 
               if (LOGGER.isDebugEnabled ())
                 LOGGER.debug ("Now waiting " + aRealWaitDuration + " because of a failed login");
+
+              // A rising aggregate of this histogram is the clearest sign of a brute force attack
+              LoginThrottleMetrics.DELAY.record (aRealWaitDuration.toMillis ());
 
               ThreadHelper.sleep (aRealWaitDuration);
             }

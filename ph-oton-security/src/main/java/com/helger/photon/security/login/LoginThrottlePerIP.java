@@ -22,27 +22,37 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
-import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.impl.ManualCache;
+import com.helger.scope.IScope;
+import com.helger.scope.singleton.AbstractGlobalSingleton;
+import com.helger.telemetry.ITelemetryGauge;
 
 /**
  * Tracks the number of consecutive failed logins per remote IP address. This is used to throttle
  * login attempts where no user could be resolved (e.g. username enumeration or blind brute force
  * attacks), analogous to the per-user consecutive failed login counter. A per-IP counter is
  * incremented on each failed login and removed on a successful login of the same IP. Entries expire
- * after a configurable time-to-live to avoid unbounded memory growth.
+ * after a configurable time-to-live to avoid unbounded memory growth.<br>
+ * Since v10.6.0 this is a global singleton, so that there is exactly one throttle per application,
+ * independent of how many {@code AbstractLoginManager} instances or login filters an application
+ * creates. Before that the throttle was owned by the login manager, which made the effective scope
+ * depend on the life time the application happened to give that object - creating a login manager
+ * per request silently disabled the throttling altogether.
  *
  * @author Philip Helger
  * @since 10.2.4; moved from package <code>com.helger.photon.core.login</code> to<br>
- *        <code>com.helger.photon.security.login</code> in v10.5.0
+ *        <code>com.helger.photon.security.login</code> in v10.5.0;<br>
+ *        turned into a global singleton in v10.6.0
  */
 @ThreadSafe
-public class LoginThrottlePerIP
+public final class LoginThrottlePerIP extends AbstractGlobalSingleton
 {
   /**
    * The default time-to-live for the per-IP failed login counters: 1 hour.
@@ -54,20 +64,63 @@ public class LoginThrottlePerIP
    */
   public static final String CACHE_NAME = "login-failed-per-ip";
 
-  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   private Duration m_aTimeToLive = DEFAULT_TIME_TO_LIVE;
   // Lazily (re)built
   @GuardedBy ("m_aRWLock")
   private ManualCache <String, Integer> m_aCache;
+  // Must not be a static field - it would outlive the global scope
+  private ITelemetryGauge m_aTrackedIPsGauge;
 
+  @Deprecated (forRemoval = false)
+  @UsedViaReflection
   public LoginThrottlePerIP ()
   {}
+
+  @Override
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
+  {
+    // The observable gauge is bound to the life time of this global singleton
+    m_aTrackedIPsGauge = LoginThrottleMetrics.createTrackedIPsGauge (this::getTrackedIPCount);
+  }
+
+  @Override
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction)
+  {
+    // Stop observing, so that the gauge does not keep this instance alive across a servlet context
+    // restart
+    if (m_aTrackedIPsGauge != null)
+    {
+      m_aTrackedIPsGauge.close ();
+      m_aTrackedIPsGauge = null;
+    }
+    clear ();
+  }
+
+  /**
+   * @return The global instance of this class. Never <code>null</code>.
+   */
+  @NonNull
+  public static LoginThrottlePerIP getInstance ()
+  {
+    return getGlobalSingleton (LoginThrottlePerIP.class);
+  }
+
+  /**
+   * @return The global instance of this class, but only if it was already instantiated.
+   *         <code>null</code> if it was not yet instantiated or if no global scope is present (e.g.
+   *         while the global scope is being destroyed).
+   */
+  @Nullable
+  public static LoginThrottlePerIP getInstanceIfInstantiated ()
+  {
+    return getGlobalSingletonIfInstantiated (LoginThrottlePerIP.class);
+  }
 
   /**
    * @return The time-to-live for the per-IP failed login counters. Never <code>null</code>.
    */
   @NonNull
-  public final Duration getTimeToLive ()
+  public Duration getTimeToLive ()
   {
     return m_aRWLock.readLockedGet (() -> m_aTimeToLive);
   }
@@ -81,7 +134,7 @@ public class LoginThrottlePerIP
    *        effect - a zero or negative duration disables time-based expiration and lets the
    *        counters grow unbounded.
    */
-  public final void setTimeToLive (@NonNull final Duration aTimeToLive)
+  public void setTimeToLive (@NonNull final Duration aTimeToLive)
   {
     ValueEnforcer.notNull (aTimeToLive, "TimeToLive");
 
@@ -119,6 +172,9 @@ public class LoginThrottlePerIP
   public int onFailedLogin (@NonNull @Nonempty final String sIP)
   {
     ValueEnforcer.notEmpty (sIP, "IP");
+
+    // Deliberately without any attribute - the IP address is unbounded and personal data
+    LoginThrottleMetrics.FAILED.add (1);
 
     return m_aRWLock.writeLockedInt (() -> {
       final ManualCache <String, Integer> aCache = _getOrCreateCache ();
@@ -173,6 +229,21 @@ public class LoginThrottlePerIP
   }
 
   /**
+   * @return The number of distinct IP addresses that currently have failed logins on record. This
+   *         is the value observed by the <code>photon.security.throttle.tracked</code> gauge - the
+   *         IP addresses themselves are never exposed to telemetry.
+   * @since 10.6.0
+   */
+  @Nonnegative
+  public int getTrackedIPCount ()
+  {
+    return m_aRWLock.readLockedInt (() -> {
+      final ManualCache <String, Integer> aCache = m_aCache;
+      return aCache == null ? 0 : aCache.size ();
+    });
+  }
+
+  /**
    * Remove all currently held per-IP counters.
    */
   public void clear ()
@@ -186,6 +257,6 @@ public class LoginThrottlePerIP
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("TimeToLive", m_aTimeToLive).getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("TimeToLive", m_aTimeToLive).getToString ();
   }
 }

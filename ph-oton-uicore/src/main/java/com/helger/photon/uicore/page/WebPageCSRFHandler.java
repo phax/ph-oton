@@ -80,7 +80,9 @@ public class WebPageCSRFHandler implements IWebPageCSRFHandler
     {
       final CSRFSessionManager aCSRFSessionMgr = CSRFSessionManager.getInstance ();
       final String sRetrievedNonce = aWPEC.params ().getAsString (CPageParam.FIELD_NONCE);
-      if (!aCSRFSessionMgr.isExpectedNonce (sRetrievedNonce))
+      final boolean bValid = aCSRFSessionMgr.isExpectedNonce (sRetrievedNonce);
+      CSRFTelemetry.onCSRFNonceChecked (aWPEC, bValid);
+      if (!bValid)
       {
         // CSRF failure!
         m_aErrorHdl.onCSRFError (aWPEC, sRetrievedNonce, aCSRFSessionMgr.getNonce ());

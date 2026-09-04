@@ -67,7 +67,13 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.5.1 - work in progress
+v10.6.0 - work in progress
+* **Breaking API change**: the class `LoginThrottlePerIP` (ph-oton-security) is now a global singleton and must be retrieved via `LoginThrottlePerIP.getInstance ()` instead of being instantiated.
+  It was previously owned by `AbstractLoginManager` as an instance field, which made the effective scope of the failed login throttling depend on the life time the application happened to give its login manager - all known applications create it once in `Filter.init ()`, but an application creating one per request silently lost all throttling, without an error, a log entry or a metric.
+  There is now exactly one throttle per application, no matter how many login managers or login filters exist.
+  `AbstractLoginManager.getFailedLoginPerIP ()` keeps its signature and now returns that singleton, so the usual configuration code like `getFailedLoginPerIP ().setTimeToLive (...)` continues to work unchanged - it just applies application wide now.
+  The internal cache is cleared when the global scope is destroyed.
+* Added the new method `LoginThrottlePerIP.getTrackedIPCount ()` that returns the number of distinct IP addresses currently having failed logins on record.
 * Added ph-telemetry instrumentation for the REST API invocation in `APIInvoker` (ph-oton-api): the span `photon.api.invoke` (kind `SERVER`), the counter `photon.api.invocations` and the histogram `photon.api.duration`.
   The new classes `CAPITelemetry` (names) and `APIMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
   The bounded metric dimension is the path *template* like `/user/{id}` - the concrete requested path is a span attribute only, because its cardinality is unbounded.
@@ -85,7 +91,23 @@ v10.5.1 - work in progress
   The new classes `CUICoreTelemetry` (names) and `WebPageMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
 * A `ForcedRedirectException` (Post-Redirect-Get) does not mark the spans `photon.page.request` and `photon.webpage.content` as failed - it is a regular control flow, exactly as `XServletHandlerToSimpleHandler` treats it.
   Instead the span events `photon.page.forcedredirect` respectively `photon.webpage.forcedredirect` are added, and the request still counts as successful.
-* The modules ph-oton-api, ph-oton-ajax, ph-oton-app, ph-oton-core and ph-oton-uicore now have a direct dependency to `com.helger.telemetry:ph-telemetry`.
+* Added ph-telemetry instrumentation for the logins and logouts in `LoggedInUserManager` (ph-oton-security): the counters `photon.security.login.success`, `photon.security.login.failed` and `photon.security.logout`, the observable gauge `photon.security.users.loggedin` and the histogram `photon.security.session.duration`.
+  The only metric dimension is the name of the `ELoginResult` constant - no user ID, no login name and no IP address ever becomes a metric attribute.
+  Every login failure is counted exactly once, including `USER_NOT_EXISTING`, which does not go through the internal failure choke point.
+  The new classes `CSecurityTelemetry` (names) and `LoginMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
+* Added ph-telemetry instrumentation for the failed login throttling: the counter `photon.security.throttle.failed` in `LoginThrottlePerIP` (ph-oton-security), the histogram `photon.security.throttle.delay` in `AbstractLoginManager` (ph-oton-core), which records the artificial waiting time that was really applied, and the observable gauge `photon.security.throttle.tracked` over the number of distinct IP addresses currently being throttled.
+  No instrument carries any attribute - the remote IP address is unbounded and personal data.
+  The new class `LoginThrottleMetrics` holds them all.
+* Added ph-telemetry instrumentation for the HTTP session and servlet context life cycle in `WebAppListener` (ph-oton-core): the counter `photon.http.sessions.created`, the up-down counter `photon.http.sessions.active` and the histograms `photon.app.startup.duration` and `photon.app.shutdown.duration`.
+  The two duration histograms reuse the `StopWatch` values that were previously only logged.
+  The new class `WebAppMetrics` holds the instruments.
+* Added ph-telemetry instrumentation for the internal errors in `InternalErrorHandler` (ph-oton-core): the counter `photon.internalerror.count` by throwable class name, and the counter `photon.internalerror.mail.suppressed` by reason.
+  The latter makes a silently mis-configured internal error notification visible - previously a missing sender, receiver or SMTP configuration produced no notification and no signal that notifications are broken.
+  The new class `InternalErrorMetrics` holds the instruments.
+* Added ph-telemetry instrumentation for the CSRF nonce checks in `WebPageCSRFHandler` (ph-oton-uicore): the counter `photon.csrf.checks` with the attributes `photon.csrf.page.id` and `photon.csrf.valid`.
+  Valid checks are counted as well, so that a failure rate can be computed. The nonce value itself never appears in telemetry.
+  The new class `CSRFMetrics` holds the instrument.
+* The modules ph-oton-api, ph-oton-ajax, ph-oton-app, ph-oton-core, ph-oton-security and ph-oton-uicore now have a direct dependency to `com.helger.telemetry:ph-telemetry`.
   As before ph-oton never depends on an OpenTelemetry implementation - registering an `ITelemetryTracerSPI` / `ITelemetryMeterSPI` is the business of the deploying application, and without one all telemetry degrades to cheap no-ops.
   All existing `StatisticsManager` handlers are unchanged - the telemetry is emitted alongside them.
 

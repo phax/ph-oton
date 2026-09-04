@@ -55,6 +55,7 @@ import com.helger.scope.mgr.ScopeManager;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 import com.helger.security.authentication.subject.user.ICurrentUserIDProvider;
 import com.helger.security.password.salt.PasswordSalt;
+import com.helger.telemetry.ITelemetryGauge;
 import com.helger.web.scope.ISessionWebScope;
 import com.helger.web.scope.session.ISessionWebScopeActivationHandler;
 import com.helger.web.scope.singleton.AbstractSessionWebSingleton;
@@ -231,6 +232,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   private final CallbackList <IUserLogoutCallback> m_aUserLogoutCallbacks = new CallbackList <> ();
   private boolean m_bLogoutAlreadyLoggedInUser = DEFAULT_LOGOUT_ALREADY_LOGGED_IN_USER;
   private boolean m_bAnonymousLogging = DEFAULT_ANONYMOUS_LOGGING;
+  // Must not be a static field - it would outlive the global scope
+  private ITelemetryGauge m_aLoggedInUsersGauge;
 
   @Deprecated (forRemoval = false)
   @UsedViaReflection
@@ -238,6 +241,25 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   {
     // Ensure that all objects of a user are unlocked upon logout
     m_aUserLogoutCallbacks.add (new InternalUserLogoutCallbackUnlockAllObjects ());
+  }
+
+  @Override
+  protected void onAfterInstantiation (@NonNull final IScope aScope)
+  {
+    // The observable gauge is bound to the life time of this global singleton
+    m_aLoggedInUsersGauge = LoginMetrics.createLoggedInUsersGauge (this::getLoggedInUserCount);
+  }
+
+  @Override
+  protected void onDestroy (@NonNull final IScope aScopeInDestruction)
+  {
+    // Stop observing, so that the gauge does not keep this manager alive across a servlet context
+    // restart
+    if (m_aLoggedInUsersGauge != null)
+    {
+      m_aLoggedInUsersGauge.close ();
+      m_aLoggedInUsersGauge = null;
+    }
   }
 
   /**
@@ -331,6 +353,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @NonNull
   private ELoginResult _onLoginError (@NonNull @Nonempty final String sUserID, @NonNull final ELoginResult eLoginResult)
   {
+    // The single choke point of all login failures that have a resolved user
+    LoggedInUserTelemetry.onLoginFailed (eLoginResult);
     m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLoginError (sUserID, eLoginResult));
     return eLoginResult;
   }
@@ -413,6 +437,10 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
     AuditHelper.onAuditExecuteSuccess ("session-activate-login", sUserID);
 
+    // A re-activated session makes a user logged in as well, so it is counted like a login - the
+    // failure cases above are counted via _onLoginError anyway
+    LoggedInUserTelemetry.onLoginSuccess (ELoginResult.SUCCESS);
+
     // Execute callback as the very last action
     m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
 
@@ -455,6 +483,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     if (aUser == null)
     {
       AuditHelper.onAuditExecuteFailure ("login", sLoginName, "no-such-loginname");
+      // Does not go through _onLoginError, because no user ID is available
+      LoggedInUserTelemetry.onLoginFailed (ELoginResult.USER_NOT_EXISTING);
       return ELoginResult.USER_NOT_EXISTING;
     }
     return loginUser (aUser, sPlainTextPassword, aRequiredRoleIDs);
@@ -483,6 +513,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
       // the response time does not disclose whether a user exists or not
       _consumePasswordHashingTime (sPlainTextPassword);
       AuditHelper.onAuditExecuteFailure ("login", "null", "no-such-user");
+      // Does not go through _onLoginError, because no user ID is available
+      LoggedInUserTelemetry.onLoginFailed (ELoginResult.USER_NOT_EXISTING);
       return ELoginResult.USER_NOT_EXISTING;
     }
 
@@ -615,10 +647,13 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
                  (isAnonymousLogging () ? "" : " with login name '" + aUser.getLoginName () + "'"));
     AuditHelper.onAuditExecuteSuccess ("login-user", sUserID, aUser.getLoginName ());
 
+    final ELoginResult eSuccess = bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
+    LoggedInUserTelemetry.onLoginSuccess (eSuccess);
+
     // Execute callback as the very last action
     m_aUserLoginCallbacks.forEach (aCB -> aCB.onUserLogin (aInfo));
 
-    return bLoggedOutUser ? ELoginResult.SUCCESS_WITH_LOGOUT : ELoginResult.SUCCESS;
+    return eSuccess;
   }
 
   /**
@@ -688,11 +723,10 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    LOGGER.info ("Logged out " +
-                 _getUserIDLogText (sUserID) +
-                 " after " +
-                 Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ()).toString ());
+    final Duration aSessionDuration = Duration.between (aInfo.getLoginDT (), aInfo.getLogoutDT ());
+    LOGGER.info ("Logged out " + _getUserIDLogText (sUserID) + " after " + aSessionDuration.toString ());
     AuditHelper.onAuditExecuteSuccess ("logout", sUserID);
+    LoggedInUserTelemetry.onLogout (aSessionDuration);
 
     // Execute callback as the very last action
     m_aUserLogoutCallbacks.forEach (aCB -> aCB.onUserLogout (aInfo));

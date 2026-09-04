@@ -49,6 +49,7 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.photon.core.CCoreTelemetry;
 import com.helger.photon.core.appid.RequestSettings;
 import com.helger.photon.core.interror.uihandler.IUIInternalErrorHandler;
 import com.helger.scope.mgr.ScopeSessionManager;
@@ -175,6 +176,7 @@ public final class InternalErrorHandler
       if ((nOccurranceCount % nDuplicateEliminiationCount) != 0)
       {
         LOGGER.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+        InternalErrorTelemetry.onMailSuppressed (CCoreTelemetry.VALUE_SUPPRESS_OCCURRENCE_LIMIT);
         return;
       }
     }
@@ -187,18 +189,21 @@ public final class InternalErrorHandler
     if (aSender == null)
     {
       LOGGER.warn ("Not sending internal error mail, because 'sender' is not set!");
+      InternalErrorTelemetry.onMailSuppressed (CCoreTelemetry.VALUE_SUPPRESS_NO_SENDER);
       bCanSend = false;
     }
     else
       if (aReceivers.isEmpty ())
       {
         LOGGER.warn ("Not sending internal error mail, because 'receiver' is not set!");
+        InternalErrorTelemetry.onMailSuppressed (CCoreTelemetry.VALUE_SUPPRESS_NO_RECEIVER);
         bCanSend = false;
       }
       else
         if (aSMTPSettings == null)
         {
           LOGGER.warn ("Not sending internal error mail, because 'SMTP settings' is not set!");
+          InternalErrorTelemetry.onMailSuppressed (CCoreTelemetry.VALUE_SUPPRESS_NO_SMTP_SETTINGS);
           bCanSend = false;
         }
 
@@ -556,6 +561,9 @@ public final class InternalErrorHandler
 
     // Log the error, to ensure the data is persisted!
     LOGGER.error ("handleInternalError " + sErrorID, t);
+
+    // The unique error ID is not used as a metric attribute - it is unbounded
+    InternalErrorTelemetry.onInternalError (t);
 
     // Print on UI
     if (aUIErrorHandler != null)

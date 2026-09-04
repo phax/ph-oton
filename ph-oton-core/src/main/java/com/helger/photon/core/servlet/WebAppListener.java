@@ -725,10 +725,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
       m_aInitializationEndDT = PDTFactory.getCurrentLocalDateTime ();
 
       // Finally
+      final long nInitMillis = aSW.stopAndGetMillis ();
+      WebAppMetrics.STARTUP_DURATION.record (nInitMillis);
       LOGGER.info ("Servlet context '" +
                    aSC.getServletContextName () +
                    "' was initialized in " +
-                   aSW.stopAndGetMillis () +
+                   nInitMillis +
                    " milli seconds");
     }
     catch (final RuntimeException ex)
@@ -881,10 +883,12 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
         // De-init
         INITED.set (false);
       }
+      final long nDestroyMillis = aSW.stopAndGetMillis ();
+      WebAppMetrics.SHUTDOWN_DURATION.record (nDestroyMillis);
       LOGGER.info ("Servlet context '" +
                    aSC.getServletContextName () +
                    "' was destroyed in " +
-                   aSW.stopAndGetMillis () +
+                   nDestroyMillis +
                    " milli seconds");
     }
     catch (final RuntimeException ex)
@@ -917,6 +921,11 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("A new session was created: " + aHttpSession);
 
+    WebAppMetrics.SESSIONS_CREATED.add (1);
+    // Must use the same (empty) attributes as in sessionDestroyed, so that the up-down counter nets
+    // out to 0
+    WebAppMetrics.SESSIONS_ACTIVE.add (1);
+
     // Create the SessionScope
     WebScopeManager.onSessionBegin (aHttpSession);
   }
@@ -933,6 +942,8 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Destroying session: " + aHttpSession);
+
+    WebAppMetrics.SESSIONS_ACTIVE.add (-1);
 
     // Destroy the SessionScope
     WebScopeManager.onSessionEnd (aHttpSession);
