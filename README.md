@@ -68,6 +68,13 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 ## News and noteworthy
 
 v10.6.0 - work in progress
+* Added the package `com.helger.photon.core.paging` (ph-oton-core) with `ITableColumn`, `SortColumn` and `TableColumnHelper`.
+  They describe the sortable and searchable columns of a domain object, and resolve the sort fields of an `IPagingSpec` as well as the global search text onto them.
+  The methods `TableColumnHelper.getPage (...)` and `getCount (...)` are the in-memory implementation of a paged, sorted and filtered query - the reference behaviour every native data store implementation must comply to.
+  The classes were extracted from phoss-smp and phoss-directory, that both had a copy of them.
+* Added the class `DataTablesOnDemandHelper` (ph-oton-datatables) that wires an `ITableColumn` based data provider to a DataTables running in the server side mode `ON_DEMAND`.
+  `registerAjaxFunction (...)` registers the per page AJAX function in the `GlobalAjaxInvoker`, `applyOnDemandMode (...)` switches an existing `DataTables` to that mode and `createInitialOrder (...)` maps the default order declared by the columns onto the column indices of the table.
+  This requires that the sortable columns of the table are named after the ID of the respective `ITableColumn` via `DTCol.setName (...)`.
 * **Breaking API change**: the class `LoginThrottlePerIP` (ph-oton-security) is now a global singleton and must be retrieved via `LoginThrottlePerIP.getInstance ()` instead of being instantiated.
   It was previously owned by `AbstractLoginManager` as an instance field, which made the effective scope of the failed login throttling depend on the life time the application happened to give its login manager - all known applications create it once in `Filter.init ()`, but an application creating one per request silently lost all throttling, without an error, a log entry or a metric.
   There is now exactly one throttle per application, no matter how many login managers or login filters exist.
