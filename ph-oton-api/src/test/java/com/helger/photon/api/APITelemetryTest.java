@@ -67,6 +67,7 @@ public final class APITelemetryTest
   private static final String ROUTE = "/user/{id}";
   private static final String PATH = "/user/4711";
 
+  // TODO ph-telemetry 1.0.2: replace the local test doubles below with com.helger.telemetry.mock.CapturingTelemetry
   /** A span that only records what was set on it. */
   private static final class CapturingSpan implements ITelemetrySpan
   {

@@ -47,6 +47,11 @@ import com.helger.telemetry.TelemetryAttributes;
 @IsSPIImplementation
 public final class RecordingTelemetryMeterSPI implements ITelemetryMeterSPI
 {
+  // TODO ph-telemetry 1.0.2: replace this class with com.helger.telemetry.mock.CapturingTelemetry.
+  // That one is installed programmatically, so the ServiceLoader registration in
+  // src/test/resources/META-INF/services/com.helger.telemetry.ITelemetryMeterSPI goes away and the
+  // tests call CapturingTelemetry.install () in @BeforeClass instead.
+
   /** A single recorded measurement of an instrument. */
   public record Measurement (String sInstrument, double dValue, ICommonsOrderedMap <String, Object> aAttrs)
   {}

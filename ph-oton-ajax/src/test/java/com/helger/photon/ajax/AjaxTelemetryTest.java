@@ -62,6 +62,7 @@ public final class AjaxTelemetryTest
 {
   private static final String FUNCTION_NAME = "unit-test-function";
 
+  // TODO ph-telemetry 1.0.2: replace the local test doubles below with com.helger.telemetry.mock.CapturingTelemetry
   /** A span that only records what was set on it. */
   private static final class CapturingSpan implements ITelemetrySpan
   {
