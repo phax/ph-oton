@@ -20,8 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.function.LongSupplier;
-
 import org.jspecify.annotations.NonNull;
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,9 +31,11 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.CSecurity;
 import com.helger.photon.security.CSecurityTelemetry;
-import com.helger.photon.security.login.RecordingTelemetryMeterSPI.Measurement;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.user.IUser;
+import com.helger.telemetry.mock.CapturingTelemetry;
+import com.helger.telemetry.mock.CapturingTelemetry.CapturedGauge;
+import com.helger.telemetry.mock.CapturingTelemetry.CapturedMeasurement;
 
 /**
  * Test class for the ph-telemetry integration of {@link LoggedInUserManager}.
@@ -44,32 +44,34 @@ import com.helger.photon.security.user.IUser;
  */
 public final class LoggedInUserTelemetryTest
 {
+  private static final CapturingTelemetry TELEMETRY = RecordingTelemetryMeterSPI.TELEMETRY;
+
   @Rule
   public final TestRule m_aRule = new PhotonAppWebTestRule ();
 
   @Before
   public void clearRecordings ()
   {
-    RecordingTelemetryMeterSPI.clearRecordings ();
+    TELEMETRY.reset ();
     PhotonSecurityManager.getUserMgr ().createDefaultsForTest ();
   }
 
   @NonNull
-  private static ICommonsList <Measurement> _getFailures ()
+  private static ICommonsList <CapturedMeasurement> _getFailures ()
   {
-    return RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_FAILED);
+    return TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_FAILED);
   }
 
   private static void _assertSingleFailure (@NonNull final ELoginResult eExpected)
   {
-    final ICommonsList <Measurement> aFailures = _getFailures ();
+    final ICommonsList <CapturedMeasurement> aFailures = _getFailures ();
     assertEquals (1, aFailures.size ());
-    final Measurement aFailure = aFailures.getFirstOrNull ();
+    final CapturedMeasurement aFailure = aFailures.getFirstOrNull ();
     assertNotNull (aFailure);
-    assertEquals (1, (int) aFailure.dValue ());
+    assertEquals (1, (int) aFailure.getValue ());
     // The login result name is the only attribute - no user ID, no login name, no IP address
-    assertEquals (eExpected.name (), aFailure.aAttrs ().get (CSecurityTelemetry.ATTR_LOGIN_RESULT));
-    assertEquals (1, aFailure.aAttrs ().size ());
+    assertEquals (eExpected.name (), aFailure.getAttribute (CSecurityTelemetry.ATTR_LOGIN_RESULT));
+    assertEquals (1, aFailure.getAttributes ().size ());
   }
 
   @Test
@@ -115,7 +117,7 @@ public final class LoggedInUserTelemetryTest
     final LoggedInUserManager aUM = LoggedInUserManager.getInstance ();
     assertEquals (ELoginResult.SUCCESS,
                   aUM.loginUser (CSecurity.USER_ADMINISTRATOR_LOGIN, CSecurity.USER_ADMINISTRATOR_PASSWORD));
-    RecordingTelemetryMeterSPI.clearRecordings ();
+    TELEMETRY.reset ();
 
     assertEquals (ELoginResult.SESSION_ALREADY_HAS_USER,
                   aUM.loginUser (CSecurity.USER_USER_LOGIN, CSecurity.USER_USER_PASSWORD));
@@ -129,25 +131,25 @@ public final class LoggedInUserTelemetryTest
     assertEquals (ELoginResult.SUCCESS,
                   aUM.loginUser (CSecurity.USER_ADMINISTRATOR_LOGIN, CSecurity.USER_ADMINISTRATOR_PASSWORD));
 
-    final ICommonsList <Measurement> aSuccess = RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_SUCCESS);
+    final ICommonsList <CapturedMeasurement> aSuccess = TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_SUCCESS);
     assertEquals (1, aSuccess.size ());
     assertEquals (ELoginResult.SUCCESS.name (),
-                  aSuccess.getFirstOrNull ().aAttrs ().get (CSecurityTelemetry.ATTR_LOGIN_RESULT));
+                  aSuccess.getFirstOrNull ().getAttribute (CSecurityTelemetry.ATTR_LOGIN_RESULT));
     assertTrue (_getFailures ().isEmpty ());
 
     // The gauge observes the real number of logged in users
-    final LongSupplier aGauge = RecordingTelemetryMeterSPI.getGaugeSupplier (CSecurityTelemetry.METRIC_USERS_LOGGED_IN);
+    final CapturedGauge aGauge = TELEMETRY.getGauge (CSecurityTelemetry.METRIC_USERS_LOGGED_IN);
     assertNotNull (aGauge);
-    assertEquals (1, aGauge.getAsLong ());
+    assertEquals (1, aGauge.getValue ());
 
     // A logout of a user that is not logged in must not be counted
     assertTrue (aUM.logoutUser (CSecurity.USER_USER_ID).isUnchanged ());
-    assertTrue (RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGOUT).isEmpty ());
+    assertTrue (TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGOUT).isEmpty ());
 
     // The real logout is counted, including the session duration
     assertTrue (aUM.logoutUser (CSecurity.USER_ADMINISTRATOR_ID).isChanged ());
-    assertEquals (1, RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGOUT).size ());
-    assertEquals (1, RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_SESSION_DURATION).size ());
-    assertEquals (0, aGauge.getAsLong ());
+    assertEquals (1, TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGOUT).size ());
+    assertEquals (1, TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_SESSION_DURATION).size ());
+    assertEquals (0, aGauge.getValue ());
   }
 }

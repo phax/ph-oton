@@ -20,8 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.function.LongSupplier;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,7 +28,9 @@ import org.junit.rules.TestRule;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.photon.app.mock.PhotonAppWebTestRule;
 import com.helger.photon.security.CSecurityTelemetry;
-import com.helger.photon.security.login.RecordingTelemetryMeterSPI.Measurement;
+import com.helger.telemetry.mock.CapturingTelemetry;
+import com.helger.telemetry.mock.CapturingTelemetry.CapturedGauge;
+import com.helger.telemetry.mock.CapturingTelemetry.CapturedMeasurement;
 
 /**
  * Test class for the ph-telemetry integration of {@link LoginThrottlePerIP}.
@@ -41,6 +41,8 @@ public final class LoginThrottleTelemetryTest
 {
   private static final String IP = "1.2.3.4";
 
+  private static final CapturingTelemetry TELEMETRY = RecordingTelemetryMeterSPI.TELEMETRY;
+
   // A fresh global scope - and therefore a fresh throttle - per test
   @Rule
   public final TestRule m_aRule = new PhotonAppWebTestRule ();
@@ -48,7 +50,7 @@ public final class LoginThrottleTelemetryTest
   @Before
   public void clearRecordings ()
   {
-    RecordingTelemetryMeterSPI.clearRecordings ();
+    TELEMETRY.reset ();
   }
 
   @Test
@@ -59,13 +61,13 @@ public final class LoginThrottleTelemetryTest
     assertEquals (2, aThrottle.onFailedLogin (IP));
     assertEquals (1, aThrottle.onFailedLogin ("5.6.7.8"));
 
-    final ICommonsList <Measurement> aFailed = RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_FAILED);
+    final ICommonsList <CapturedMeasurement> aFailed = TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_FAILED);
     assertEquals (3, aFailed.size ());
-    for (final Measurement aMeasurement : aFailed)
+    for (final CapturedMeasurement aMeasurement : aFailed)
     {
-      assertEquals (1, (int) aMeasurement.dValue ());
+      assertEquals (1, (int) aMeasurement.getValue ());
       // The IP address is unbounded and personal data - it must never be a metric attribute
-      assertTrue (aMeasurement.aAttrs ().isEmpty ());
+      assertTrue (aMeasurement.getAttributes ().isEmpty ());
     }
   }
 
@@ -74,10 +76,10 @@ public final class LoginThrottleTelemetryTest
   {
     final LoginThrottlePerIP aThrottle = LoginThrottlePerIP.getInstance ();
     aThrottle.onFailedLogin (IP);
-    RecordingTelemetryMeterSPI.clearRecordings ();
+    TELEMETRY.reset ();
 
     assertTrue (aThrottle.onSuccessfulLogin (IP).isChanged ());
-    assertTrue (RecordingTelemetryMeterSPI.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_FAILED).isEmpty ());
+    assertTrue (TELEMETRY.getMeasurements (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_FAILED).isEmpty ());
   }
 
   @Test
@@ -86,20 +88,20 @@ public final class LoginThrottleTelemetryTest
     final LoginThrottlePerIP aThrottle = LoginThrottlePerIP.getInstance ();
 
     // The gauge is created when the global singleton is instantiated
-    final LongSupplier aGauge = RecordingTelemetryMeterSPI.getGaugeSupplier (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_TRACKED_IPS);
+    final CapturedGauge aGauge = TELEMETRY.getGauge (CSecurityTelemetry.METRIC_LOGIN_THROTTLE_TRACKED_IPS);
     assertNotNull (aGauge);
-    assertEquals (0, aGauge.getAsLong ());
+    assertEquals (0, aGauge.getValue ());
 
     // Two failures of the same IP are one tracked IP
     aThrottle.onFailedLogin (IP);
     aThrottle.onFailedLogin (IP);
-    assertEquals (1, aGauge.getAsLong ());
+    assertEquals (1, aGauge.getValue ());
 
     aThrottle.onFailedLogin ("5.6.7.8");
-    assertEquals (2, aGauge.getAsLong ());
+    assertEquals (2, aGauge.getValue ());
 
     // A successful login removes the counter of that IP again
     assertTrue (aThrottle.onSuccessfulLogin (IP).isChanged ());
-    assertEquals (1, aGauge.getAsLong ());
+    assertEquals (1, aGauge.getValue ());
   }
 }
