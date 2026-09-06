@@ -67,7 +67,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.6.0 - work in progress
+v10.6.0 - 2026-09-06
 * Added the package `com.helger.photon.core.paging` (ph-oton-core) with `ITableColumn`, `SortColumn` and `TableColumnHelper`.
   They describe the sortable and searchable columns of a domain object, and resolve the sort fields of an `IPagingSpec` as well as the global search text onto them.
   The methods `TableColumnHelper.getPage (...)` and `getCount (...)` are the in-memory implementation of a paged, sorted and filtered query - the reference behaviour every native data store implementation must comply to.
