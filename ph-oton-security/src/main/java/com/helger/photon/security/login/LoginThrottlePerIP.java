@@ -179,7 +179,7 @@ public final class LoginThrottlePerIP extends AbstractGlobalSingleton
     return m_aRWLock.writeLockedInt (() -> {
       final ManualCache <String, Integer> aCache = _getOrCreateCache ();
       final Integer aOld = aCache.getFromCache (sIP);
-      final int nNew = (aOld == null ? 0 : aOld.intValue ()) + 1;
+      final int nNew = aOld == null ? 1 : aOld.intValue () + 1;
       aCache.putInCache (sIP, Integer.valueOf (nNew));
       return nNew;
     });
