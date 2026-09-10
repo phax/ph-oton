@@ -53,9 +53,8 @@ import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 
 /**
- * Abstract base class for a web page that has the common form handling, with a
- * details view and an edit binding. Use this page when showing and editing a
- * single object like global settings.
+ * Abstract base class for a web page that has the common form handling, with a details view and an
+ * edit binding. Use this page when showing and editing a single object like global settings.
  *
  * @author Philip Helger
  * @param <DATATYPE>
@@ -114,8 +113,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The current web page execution context. Never <code>null</code>.
    * @return <code>true</code> if the form for
    *         {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
-   *         should be a file-upload form, <code>false</code> if a regular form
-   *         is sufficient.
+   *         should be a file-upload form, <code>false</code> if a regular form is sufficient.
    */
   @OverrideOnDemand
   protected boolean isFileUploadForm (@NonNull final WPECTYPE aWPEC)
@@ -142,7 +140,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   }
 
   @NonNull
-  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
+  public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final IHasID <String> aCurObject)
   {
     return createViewURL (aLEC, aCurObject.getID ());
   }
@@ -150,7 +149,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   @NonNull
   public static SimpleURL createViewURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final String sObjectID)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW).add (CPageParam.PARAM_OBJECT, sObjectID);
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_VIEW)
+               .add (CPageParam.PARAM_OBJECT, sObjectID);
   }
 
   @NonNull
@@ -168,7 +169,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayName ()),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayName ()),
                            aParams);
   }
 
@@ -187,14 +189,18 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
     final Locale aDisplayLocale = aLEC.getDisplayLocale ();
     return createEditLink (aLEC,
                            aCurObject,
-                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale, aCurObject.getDisplayText (aDisplayLocale)),
+                           EWebPageText.OBJECT_EDIT.getDisplayTextWithArgs (aDisplayLocale,
+                                                                            aCurObject.getDisplayText (aDisplayLocale)),
                            aParams);
   }
 
   @NonNull
-  public static SimpleURL createEditURL (@NonNull final ILayoutExecutionContext aLEC, @NonNull final IHasID <String> aCurObject)
+  public static SimpleURL createEditURL (@NonNull final ILayoutExecutionContext aLEC,
+                                         @NonNull final IHasID <String> aCurObject)
   {
-    return aLEC.getSelfHref ().add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT).add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
+    return aLEC.getSelfHref ()
+               .add (CPageParam.PARAM_ACTION, CPageParam.ACTION_EDIT)
+               .add (CPageParam.PARAM_OBJECT, aCurObject.getID ());
   }
 
   @NonNull
@@ -218,8 +224,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   /**
    * @param aWPEC
    *        Web page execution context. May not be <code>null</code>.
-   * @return A newly created toolbar. May be overridden to create other types of
-   *         toolbars. May not be <code>null</code>.
+   * @return A newly created toolbar. May be overridden to create other types of toolbars. May not
+   *         be <code>null</code>.
    */
   @NonNull
   @OverrideOnDemand
@@ -233,8 +239,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The web page execution context
    * @param aObject
    *        The object
-   * @return <code>true</code> to show the view toolbar, <code>false</code> to
-   *         draw your own toolbar
+   * @return <code>true</code> to show the view toolbar, <code>false</code> to draw your own toolbar
    */
   @OverrideOnDemand
   protected boolean showViewToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aObject)
@@ -253,12 +258,13 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyViewToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aObject, @NonNull final TOOLBAR_TYPE aToolbar)
+  protected void modifyViewToolbar (@NonNull final WPECTYPE aWPEC,
+                                    @NonNull final DATATYPE aObject,
+                                    @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   /**
-   * Create toolbar for viewing an existing object. Contains the back button and
-   * the edit button.
+   * Create toolbar for viewing an existing object. Contains the back button and the edit button.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
@@ -287,8 +293,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   /**
    * @param aWPEC
    *        Web page execution context. May not be <code>null</code>.
-   * @return A newly created toolbar. May be overridden to create other types of
-   *         toolbars :). May not be <code>null</code>.
+   * @return A newly created toolbar. May be overridden to create other types of toolbars :). May
+   *         not be <code>null</code>.
    */
   @NonNull
   @OverrideOnDemand
@@ -302,8 +308,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The web page execution context
    * @param aObject
    *        The object
-   * @return <code>true</code> to show the edit toolbar, <code>false</code> to
-   *         draw your own toolbar
+   * @return <code>true</code> to show the edit toolbar, <code>false</code> to draw your own toolbar
    */
   @OverrideOnDemand
   protected boolean showEditToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aObject)
@@ -322,7 +327,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The toolbar to be modified
    */
   @OverrideOnDemand
-  protected void modifyEditToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aObject, @NonNull final TOOLBAR_TYPE aToolbar)
+  protected void modifyEditToolbar (@NonNull final WPECTYPE aWPEC,
+                                    @NonNull final DATATYPE aObject,
+                                    @NonNull final TOOLBAR_TYPE aToolbar)
   {}
 
   @Nullable
@@ -352,7 +359,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    */
   @NonNull
   @OverrideOnDemand
-  protected TOOLBAR_TYPE createEditToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final FORM_TYPE aForm, @NonNull final DATATYPE aObject)
+  protected TOOLBAR_TYPE createEditToolbar (@NonNull final WPECTYPE aWPEC,
+                                            @NonNull final FORM_TYPE aForm,
+                                            @NonNull final DATATYPE aObject)
   {
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
 
@@ -379,8 +388,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    *        The form action that is to be checked. Never <code>null</code>.
    * @param aObject
    *        The currently object. Never <code>null</code>.
-   * @return <code>true</code> if the action is allowed, <code>false</code> if
-   *         not
+   * @return <code>true</code> if the action is allowed, <code>false</code> if not
    */
   @OverrideOnDemand
   protected boolean isActionAllowed (@NonNull final WPECTYPE aWPEC,
@@ -401,8 +409,8 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   protected abstract DATATYPE getObject (@NonNull WPECTYPE aWPEC);
 
   /**
-   * @return <code>true</code> if object locking should be active,
-   *         <code>false</code> if not. By default locking is enabled.
+   * @return <code>true</code> if object locking should be active, <code>false</code> if not. By
+   *         default locking is enabled.
    */
   @OverrideOnDemand
   protected boolean isObjectLockingEnabled ()
@@ -411,25 +419,21 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   }
 
   /**
-   * This method is called before the main processing starts. It can e.g. be
-   * used to try to lock the specified object. When overriding the method make
-   * sure to emit all error messages on your own, when e.g. an object is locked.
-   * If {@link EContinue#BREAK} is returned, the list of objects is shown by
-   * default.<br>
-   * If locking is enabled, try to lock the specified object. When overriding
-   * the method make sure to emit all error messages on your own, when e.g. an
-   * object is locked.
+   * This method is called before the main processing starts. It can e.g. be used to try to lock the
+   * specified object. When overriding the method make sure to emit all error messages on your own,
+   * when e.g. an object is locked. If {@link EContinue#BREAK} is returned, the list of objects is
+   * shown by default.<br>
+   * If locking is enabled, try to lock the specified object. When overriding the method make sure
+   * to emit all error messages on your own, when e.g. an object is locked.
    *
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @param aObject
-   *        The currently object. May be <code>null</code> if no object is
-   *        selected.
+   *        The currently object. May be <code>null</code> if no object is selected.
    * @param eSimpleFormAction
    *        The current form action. Never <code>null</code>.
-   * @return {@link EContinue#CONTINUE} if normal execution can continue or
-   *         {@link EContinue#BREAK} if execution cannot continue (e.g. because
-   *         object is already locked).
+   * @return {@link EContinue#CONTINUE} if normal execution can continue or {@link EContinue#BREAK}
+   *         if execution cannot continue (e.g. because object is already locked).
    */
   @NonNull
   @OverrideOnDemand
@@ -481,11 +485,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    * @param aWPEC
    *        The current web page execution context. Never <code>null</code>.
    * @param aObject
-   *        The currently object. May be <code>null</code> if no object is
-   *        selected.
+   *        The currently object. May be <code>null</code> if no object is selected.
    * @param eSimpleFormAction
-   *        The current form action. May be <code>null</code> if a non-standard
-   *        action is handled.
+   *        The current form action. May be <code>null</code> if a non-standard action is handled.
    */
   @OverrideOnDemand
   protected void afterProcessing (@NonNull final WPECTYPE aWPEC,
@@ -551,8 +553,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
   {}
 
   /**
-   * Add additional form IDs (e.g. client and accounting area). This method is
-   * called before
+   * Add additional form IDs (e.g. client and accounting area). This method is called before
    * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
    * is called.
    *
@@ -573,13 +574,12 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    * @param aObject
    *        The currently object. Never <code>null</code>.
    * @param aForm
-   *        The parent form. Use this as parent and not the node list from the
-   *        web page execution context! Never <code>null</code>.
+   *        The parent form. Use this as parent and not the node list from the web page execution
+   *        context! Never <code>null</code>.
    * @param eSimpleFormAction
    *        The form action used. Either create, copy or edit.
    * @param aFormErrors
-   *        Previous errors from validation. Never <code>null</code> but maybe
-   *        empty.
+   *        Previous errors from validation. Never <code>null</code> but maybe empty.
    */
   protected abstract void showInputForm (@NonNull WPECTYPE aWPEC,
                                          @NonNull DATATYPE aObject,
@@ -588,8 +588,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
                                          @NonNull FormErrorList aFormErrors);
 
   /**
-   * Add additional form IDs (e.g. client and accounting area). This method is
-   * called after
+   * Add additional form IDs (e.g. client and accounting area). This method is called after
    * {@link #showInputForm(IWebPageExecutionContext, IHasID, IHCForm, EWebPageSimpleFormAction, FormErrorList)}
    * was called but before the toolbars are added.
    *
@@ -610,8 +609,7 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
    * @param aObject
    *        The object. Never <code>null</code>.
    * @return {@link EShowObject#SHOW_OBJECT} to show the object afterwards.
-   *         {@link EShowObject#DONT_SHOW_OBJECT} if the object should not be
-   *         shown.
+   *         {@link EShowObject#DONT_SHOW_OBJECT} if the object should not be shown.
    */
   @OverrideOnDemand
   protected EShowObject handleCustomActions (@NonNull final WPECTYPE aWPEC, @NonNull final DATATYPE aObject)

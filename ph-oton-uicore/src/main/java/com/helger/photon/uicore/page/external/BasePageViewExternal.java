@@ -37,15 +37,16 @@ import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
 
 /**
- * Renders a page with HTML code that is provided from an external resource
- * (e.g. for static pages). The content of the page is language independent.
+ * Renders a page with HTML code that is provided from an external resource (e.g. for static pages).
+ * The content of the page is language independent.
  *
  * @author Philip Helger
  * @param <WPECTYPE>
  *        Web page execution context type
  */
 @ThreadSafe
-public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends AbstractWebPageResourceContent <WPECTYPE>
+public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> extends
+                                  AbstractWebPageResourceContent <WPECTYPE>
 {
   protected final IReadableResource m_aResource;
   @GuardedBy ("m_aRWLock")
@@ -86,8 +87,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
   }
 
   /**
-   * @return The resource to be read as specified in the constructor. Never
-   *         <code>null</code>.
+   * @return The resource to be read as specified in the constructor. Never <code>null</code>.
    */
   @NonNull
   public final IReadableResource getResource ()
@@ -107,7 +107,7 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
 
   public void updateFromResource ()
   {
-    m_aRWLock.writeLocked ( () -> m_aParsedContent = _readFromResource (m_aResource));
+    m_aRWLock.writeLocked (() -> m_aParsedContent = _readFromResource (m_aResource));
   }
 
   @Override
@@ -117,7 +117,8 @@ public class BasePageViewExternal <WPECTYPE extends IWebPageExecutionContext> ex
     final HCNodeList aNodeList = aWPEC.getNodeList ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> bReadFromResource ? _readFromResource (m_aResource) : m_aParsedContent);
+    final IMicroNode aNode = m_aRWLock.readLockedGet (() -> bReadFromResource ? _readFromResource (m_aResource)
+                                                                              : m_aParsedContent);
 
     aNodeList.addChild (new HCDOMWrapper (aNode));
   }

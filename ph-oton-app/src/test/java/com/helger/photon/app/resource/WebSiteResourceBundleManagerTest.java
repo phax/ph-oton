@@ -44,10 +44,14 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicJS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.builder ().path ("external/res/serverlog.js").minifiedPathFromPath ().build (),
-                                                         true));
-    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.builder ().path ("external/res/stacktrace.js").minifiedPathFromPath ().build (),
-                                                         true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.builder ()
+                                                                               .path ("external/res/serverlog.js")
+                                                                               .minifiedPathFromPath ()
+                                                                               .build (), true));
+    aList.add (WebSiteResourceWithCondition.createForJS (ConstantJSPathProvider.builder ()
+                                                                               .path ("external/res/stacktrace.js")
+                                                                               .minifiedPathFromPath ()
+                                                                               .build (), true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
                                                                                     .getResourceBundles (aList, true);
     assertNotNull (aBundles);
@@ -58,10 +62,14 @@ public final class WebSiteResourceBundleManagerTest
   public void testBasicCSS ()
   {
     final ICommonsList <WebSiteResourceWithCondition> aList = new CommonsArrayList <> ();
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.builder ().path ("external/res/animate.css").minifiedPathFromPath ().build (),
-                                                          true));
-    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.builder ().path ("external/res/famfam.css").minifiedPathFromPath ().build (),
-                                                          true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.builder ()
+                                                                                 .path ("external/res/animate.css")
+                                                                                 .minifiedPathFromPath ()
+                                                                                 .build (), true));
+    aList.add (WebSiteResourceWithCondition.createForCSS (ConstantCSSPathProvider.builder ()
+                                                                                 .path ("external/res/famfam.css")
+                                                                                 .minifiedPathFromPath ()
+                                                                                 .build (), true));
     final ICommonsList <WebSiteResourceBundleSerialized> aBundles = PhotonAppManager.getWebSiteResourceBundleMgr ()
                                                                                     .getResourceBundles (aList, true);
     assertNotNull (aBundles);

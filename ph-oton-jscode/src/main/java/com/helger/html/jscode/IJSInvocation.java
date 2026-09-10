@@ -32,7 +32,10 @@ import com.helger.html.hc.render.HCRenderer;
 import com.helger.json.IJson;
 import com.helger.xml.microdom.IMicroQName;
 
-public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends IJSExpression, IJSStatement, IGenericImplTrait <IMPLTYPE>
+public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> extends
+                               IJSExpression,
+                               IJSStatement,
+                               IGenericImplTrait <IMPLTYPE>
 {
   /**
    * Add an expression to this invocation's argument list
@@ -123,8 +126,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
   }
 
   /**
-   * Add an expression to this invocation's argument list or "null" if it is
-   * <code>null</code>
+   * Add an expression to this invocation's argument list or "null" if it is <code>null</code>
    *
    * @param aExpr
    *        Argument to add to argument list
@@ -501,8 +503,7 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
   int getArgCount ();
 
   /**
-   * @return <code>true</code> if at least 1 arg is present, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if at least 1 arg is present, <code>false</code> otherwise.
    */
   boolean hasArgs ();
 

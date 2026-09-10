@@ -26,8 +26,8 @@ import com.helger.html.hc.config.IHCOnDocumentReadyProvider;
 import com.helger.html.js.IHasJSCode;
 
 /**
- * Regular inline JS script elements with the special semantics, that stuff will
- * be executed on document.ready. This requires jQuery to be present!
+ * Regular inline JS script elements with the special semantics, that stuff will be executed on
+ * document.ready. This requires jQuery to be present!
  *
  * @author Philip Helger
  * @see HCScriptInline
@@ -81,6 +81,8 @@ public class HCScriptInlineOnDocumentReady extends AbstractHCScriptInline <HCScr
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).appendIfNotNull ("OnDocumentReadyCode", m_aOnDocumentReadyCode).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .appendIfNotNull ("OnDocumentReadyCode", m_aOnDocumentReadyCode)
+                            .getToString ();
   }
 }

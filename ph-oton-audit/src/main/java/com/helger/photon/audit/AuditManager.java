@@ -136,8 +136,8 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
    *         In case reading failed
    */
   @ContainsSoftMigration
-  public AuditManager (@Nullable final String sBaseDir, @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
-                                                                                                                      throws DAOException
+  public AuditManager (@Nullable final String sBaseDir,
+                       @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider) throws DAOException
   {
     super (new AuditHasFilename (sBaseDir));
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
@@ -172,7 +172,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     final IConcurrentPerformer <List <IAuditItem>> aPerformer = aAuditItems -> {
       if (!aAuditItems.isEmpty ())
       {
-        m_aRWLock.writeLocked ( () -> {
+        m_aRWLock.writeLocked (() -> {
           for (final IAuditItem aItem : aAuditItems)
             m_aItems.internalAddItem (aItem);
 
@@ -260,7 +260,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   @CodingStyleguideUnaware
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aItems.getLastItems (nMaxItems));
+    return m_aRWLock.readLockedGet (() -> m_aItems.getLastItems (nMaxItems));
   }
 
   public void stop ()

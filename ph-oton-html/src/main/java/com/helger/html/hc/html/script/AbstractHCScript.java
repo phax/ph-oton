@@ -34,8 +34,8 @@ import com.helger.mime.IMimeType;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Represents an HTML &lt;script&gt; element. This is the base class for inline
- * script and externally referenced script
+ * Represents an HTML &lt;script&gt; element. This is the base class for inline script and
+ * externally referenced script
  *
  * @author Philip Helger
  * @see HCScriptInline

@@ -24,8 +24,8 @@ import org.jspecify.annotations.Nullable;
 import com.helger.collection.commons.ICommonsList;
 
 /**
- * Shared interface to resolve API ambiguities. So if a single {@link APIPath}
- * resolves to multiple potential invokable handlers.
+ * Shared interface to resolve API ambiguities. So if a single {@link APIPath} resolves to multiple
+ * potential invokable handlers.
  *
  * @author Philip Helger
  * @since 8.1.4
@@ -38,10 +38,8 @@ public interface IAPIPathAmbiguityResolver extends
    * @param aPath
    *        The path for which handlers were resolved. Never <code>null</code>.
    * @param aDescriptors
-   *        The descriptors that were found. Never <code>null</code> but maybe
-   *        empty.
-   * @return The descriptor that should be used or <code>null</code> if it could
-   *         not be determined.
+   *        The descriptors that were found. Never <code>null</code> but maybe empty.
+   * @return The descriptor that should be used or <code>null</code> if it could not be determined.
    */
   @Nullable
   InvokableAPIDescriptor apply (@NonNull APIPath aPath, @NonNull ICommonsList <InvokableAPIDescriptor> aDescriptors);

@@ -25,23 +25,21 @@ package com.helger.html;
 public enum EHTMLRoleType
 {
   /**
-   * Are used for the ontology. Authors MUST NOT not use abstract roles in
-   * content.
+   * Are used for the ontology. Authors MUST NOT not use abstract roles in content.
    */
   ABSTRACT,
   /**
-   * Act as standalone user interface widgets or as part of larger, composite
-   * widgets.
+   * Act as standalone user interface widgets or as part of larger, composite widgets.
    */
   WIDGET,
   /**
-   * Act as composite user interface widgets. These roles typically act as
-   * containers that manage other, contained widgets.
+   * Act as composite user interface widgets. These roles typically act as containers that manage
+   * other, contained widgets.
    */
   WIDGET_CONTAINER,
   /**
-   * Describe structures that organize content in a page. Document structures
-   * are not usually interactive.
+   * Describe structures that organize content in a page. Document structures are not usually
+   * interactive.
    */
   DOCUMENT_STRUCTURE,
   /**

@@ -34,8 +34,7 @@ import com.helger.base.string.StringHelper;
 public interface ISystemMessageData extends Serializable
 {
   /**
-   * @return The date and time when the system message was last modified. May be
-   *         <code>null</code>.
+   * @return The date and time when the system message was last modified. May be <code>null</code>.
    */
   @Nullable
   LocalDateTime getLastUpdateDT ();
@@ -63,8 +62,7 @@ public interface ISystemMessageData extends Serializable
   String getMessage ();
 
   /**
-   * @return <code>true</code> if a system message text is available,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if a system message text is available, <code>false</code> if not.
    */
   default boolean hasMessage ()
   {

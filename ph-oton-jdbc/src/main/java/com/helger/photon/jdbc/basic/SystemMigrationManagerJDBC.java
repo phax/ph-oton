@@ -71,7 +71,7 @@ public class SystemMigrationManagerJDBC extends AbstractJDBCEnabledManager imple
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
                                                               " (migration_id, execution_dt, success, error_msg)" +

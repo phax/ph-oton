@@ -34,14 +34,12 @@ public interface IFormLabel extends IHCNode
   ELabelType getType ();
 
   /**
-   * @return <code>true</code> if this is a pure text label, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is a pure text label, <code>false</code> otherwise.
    */
   boolean isTextLabel ();
 
   /**
-   * @return The pure label text without any type specific suffix. Never
-   *         <code>null</code>.
+   * @return The pure label text without any type specific suffix. Never <code>null</code>.
    */
   @NonNull
   String getPlainText ();

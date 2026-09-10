@@ -32,8 +32,7 @@ public enum EHCNodeState
   /** Protected method onFinalizeNodeState was called on the node */
   FINALIZED (2),
   /**
-   * Consistency checks are disabled or protected method onConsistencyCheck was
-   * called
+   * Consistency checks are disabled or protected method onConsistencyCheck was called
    */
   CONSISTENCY_CHECKED (3),
   /** Protected method onRegisterExternalResources was called on the node */

@@ -256,8 +256,8 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
   }
 
   @Override
-  protected void mainHandleRequest (@NonNull final LECTYPE aLEC, @NonNull final PhotonUnifiedResponse aAjaxResponse)
-                                                                                                                     throws Exception
+  protected void mainHandleRequest (@NonNull final LECTYPE aLEC,
+                                    @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
     if (StringHelper.isEmptyAfterTrim (sOriginalQuery))

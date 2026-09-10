@@ -73,7 +73,7 @@ public class JettyRunner extends JettyStarter
       throw new IllegalStateException ("Jetty is already running!");
 
     m_aServerStartupSuccess.set (true);
-    m_aThread = new Thread ( () -> {
+    m_aThread = new Thread (() -> {
       try
       {
         run ();

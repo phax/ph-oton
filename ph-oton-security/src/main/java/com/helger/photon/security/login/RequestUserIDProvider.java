@@ -88,9 +88,7 @@ public final class RequestUserIDProvider extends AbstractRequestWebSingleton
     {
       // E.g. if the authentication happens outside of a web request
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Not remembering the request user ID '" +
-                      sUserID +
-                      "' because no request web scope is present");
+        LOGGER.debug ("Not remembering the request user ID '" + sUserID + "' because no request web scope is present");
       return;
     }
 

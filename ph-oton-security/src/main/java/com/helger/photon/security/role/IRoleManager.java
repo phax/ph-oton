@@ -51,8 +51,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * Create a new role.
    *
    * @param sName
-   *        The name of the new role. May neither be <code>null</code> nor
-   *        empty.
+   *        The name of the new role. May neither be <code>null</code> nor empty.
    * @param sDescription
    *        Optional description text. May be <code>null</code>.
    * @param aCustomAttrs
@@ -60,7 +59,9 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @return The created role. May be <code>null</code> if persisting fails.
    */
   @Nullable
-  IRole createNewRole (@NonNull @Nonempty String sName, @Nullable String sDescription, @Nullable Map <String, String> aCustomAttrs);
+  IRole createNewRole (@NonNull @Nonempty String sName,
+                       @Nullable String sDescription,
+                       @Nullable Map <String, String> aCustomAttrs);
 
   /**
    * Create a predefined role.
@@ -107,10 +108,9 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @param sRoleID
    *        The ID of the role to be renamed. May be <code>null</code>.
    * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor
-   *        empty.
-   * @return {@link EChange#CHANGED} if the passed role ID was found, and the
-   *         new name is different from the old name of he role
+   *        The new name of the role. May neither be <code>null</code> nor empty.
+   * @return {@link EChange#CHANGED} if the passed role ID was found, and the new name is different
+   *         from the old name of he role
    */
   @NonNull
   EChange renameRole (@Nullable String sRoleID, @NonNull @Nonempty String sNewName);
@@ -121,8 +121,7 @@ public interface IRoleManager extends IPhotonManager <IRole>
    * @param sRoleID
    *        The ID of the role to be renamed. May be <code>null</code>.
    * @param sNewName
-   *        The new name of the role. May neither be <code>null</code> nor
-   *        empty.
+   *        The new name of the role. May neither be <code>null</code> nor empty.
    * @param sNewDescription
    *        The new description text. May be <code>null</code>.
    * @param aNewCustomAttrs

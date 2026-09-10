@@ -21,8 +21,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.js.IHasJSCodeWithSettings;
 
 /**
- * Common interface for code components that can generate uses of themselves as
- * statements.
+ * Common interface for code components that can generate uses of themselves as statements.
  *
  * @author Philip Helger
  */

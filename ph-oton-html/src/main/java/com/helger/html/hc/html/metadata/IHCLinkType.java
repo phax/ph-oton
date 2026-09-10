@@ -19,16 +19,15 @@ package com.helger.html.hc.html.metadata;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
- * Base interface for link types (used in
- * {@link com.helger.html.hc.html.metadata.HCLink} )
+ * Base interface for link types (used in {@link com.helger.html.hc.html.metadata.HCLink} )
  *
  * @author Philip Helger
  */
 public interface IHCLinkType extends IHCHasHTMLAttributeValue
 {
   /**
-   * @return <code>true</code> if links of this type can occur more than once,
-   *         <code>false</code> if it may occur only once.
+   * @return <code>true</code> if links of this type can occur more than once, <code>false</code> if
+   *         it may occur only once.
    */
   boolean isAllowedMoreThanOnce ();
 }

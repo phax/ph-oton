@@ -111,10 +111,9 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   private static final AtomicInteger FUN_COUNTER = new AtomicInteger (0);
 
   /**
-   * Create a function that is not named. The created name is ensured to be
-   * unique. The registration is removed once the global context is shutdown so
-   * the created path is not durable, as the next time the context is
-   * initialized a different number might be assigned. Use
+   * Create a function that is not named. The created name is ensured to be unique. The registration
+   * is removed once the global context is shutdown so the created path is not durable, as the next
+   * time the context is initialized a different number might be assigned. Use
    * {@link #builder(String)} for a permanent name.
    *
    * @return A new function declaration builder. Never <code>null</code>.
@@ -132,8 +131,8 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   }
 
   /**
-   * Define the function name to use. If the parameter is empty, a "random"
-   * function name, starting with <code>fun</code> is created.
+   * Define the function name to use. If the parameter is empty, a "random" function name, starting
+   * with <code>fun</code> is created.
    *
    * @param sFunctionName
    *        The function name to use.
@@ -144,7 +143,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
   {
     // Create dynamic name on demand
     final String sRealFunctionName = StringHelper.isNotEmpty (sFunctionName) ? sFunctionName
-                                                                          : "fun" + getUniqueFunctionID ();
+                                                                             : "fun" + getUniqueFunctionID ();
     return new Builder (sRealFunctionName);
   }
 
@@ -170,7 +169,7 @@ public class AjaxFunctionDeclaration implements IAjaxFunctionDeclaration
     public final Builder executor (@NonNull final IAjaxExecutor aAjaxExecutor)
     {
       ValueEnforcer.notNull (aAjaxExecutor, "AjaxExecutor");
-      return executor ( () -> aAjaxExecutor);
+      return executor (() -> aAjaxExecutor);
     }
 
     @NonNull

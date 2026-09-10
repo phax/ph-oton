@@ -48,11 +48,10 @@ public final class JSFilenameHelper
   {}
 
   /**
-   * Check if the passed filename is a JS filename. Either it ends with ".js" or
-   * it contains ".js?" or ".js#" (both for URLs). Please note that every
-   * minified JS filename is also a "valid" filename in the sense of this
-   * method. That's why there is a {@link #isRegularJSFilename(String)} method
-   * to check for non-minified JS filenames explicitly.
+   * Check if the passed filename is a JS filename. Either it ends with ".js" or it contains ".js?"
+   * or ".js#" (both for URLs). Please note that every minified JS filename is also a "valid"
+   * filename in the sense of this method. That's why there is a
+   * {@link #isRegularJSFilename(String)} method to check for non-minified JS filenames explicitly.
    *
    * @param sFilename
    *        Filename to check. May be <code>null</code>.
@@ -77,10 +76,9 @@ public final class JSFilenameHelper
   }
 
   /**
-   * Check if the passed filename is a minified JS filename. Either it ends with
-   * ".min.js" or it contains ".min.js?" or ".min.js#" (both for URLs). Please
-   * note that every minified JS filename is also a "valid" filename in the
-   * sense of {@link #isJSFilename(String)} but not vice versa!.
+   * Check if the passed filename is a minified JS filename. Either it ends with ".min.js" or it
+   * contains ".min.js?" or ".min.js#" (both for URLs). Please note that every minified JS filename
+   * is also a "valid" filename in the sense of {@link #isJSFilename(String)} but not vice versa!.
    *
    * @param sFilename
    *        Filename to check. May be <code>null</code>.
@@ -108,9 +106,8 @@ public final class JSFilenameHelper
    *
    * @param sFilename
    *        filename to check
-   * @return <code>true</code> if {@link #isJSFilename(String)} is
-   *         <code>true</code> and {@link #isMinifiedJSFilename(String)} is
-   *         <code>false</code>.
+   * @return <code>true</code> if {@link #isJSFilename(String)} is <code>true</code> and
+   *         {@link #isMinifiedJSFilename(String)} is <code>false</code>.
    * @see #isJSFilename(String)
    * @see #isMinifiedJSFilename(String)
    */

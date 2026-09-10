@@ -53,8 +53,8 @@ public final class CIOTelemetry
 
   // === attribute keys ===
   /**
-   * The action name that the caller passed to
-   * {@link PhotonWorkerPool#run(String, Runnable)} and friends.
+   * The action name that the caller passed to {@link PhotonWorkerPool#run(String, Runnable)} and
+   * friends.
    * <p>
    * <b>Span attribute only - deliberately never a metric attribute.</b> The action name is free
    * text supplied by the caller, and callers really do interpolate unbounded values into it, e.g.

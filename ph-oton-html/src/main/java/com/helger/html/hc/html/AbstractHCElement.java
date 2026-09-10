@@ -107,8 +107,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   private ICommonsOrderedSet <ICSSClassProvider> m_aCSSClassProviders;
   private ICommonsOrderedMap <ECSSProperty, ICSSValue> m_aStyles;
   /*
-   * Use 1 pointer instead of many to save memory if no handler is used at all
-   * (which happens quite often)!
+   * Use 1 pointer instead of many to save memory if no handler is used at all (which happens quite
+   * often)!
    */
   private JSEventMap m_aJSEvents;
 
@@ -804,8 +804,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   /**
    * @param aConversionSettings
    *        The conversion settings to be used
-   * @return The created micro element for this HC element. May not be
-   *         <code>null</code>.
+   * @return The created micro element for this HC element. May not be <code>null</code>.
    */
   @OverrideOnDemand
   @NonNull
@@ -915,9 +914,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   }
 
   /**
-   * This method is called after the element itself was created and filled.
-   * Overwrite this method to perform actions that can only be done after the
-   * element was build finally.
+   * This method is called after the element itself was created and filled. Overwrite this method to
+   * perform actions that can only be done after the element was build finally.
    *
    * @param eElement
    *        The created micro element
@@ -930,8 +928,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   {}
 
   /*
-   * Note: return type cannot by IMicroElement since the HCHtml class delivers
-   * an IMicroDocument!
+   * Note: return type cannot by IMicroElement since the HCHtml class delivers an IMicroDocument!
    */
   @Override
   @NonNull

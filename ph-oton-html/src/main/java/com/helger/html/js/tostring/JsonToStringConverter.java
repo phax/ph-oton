@@ -27,8 +27,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.json.IJson;
 
 /**
- * Implementation of the {@link IJSToStringConverter} interface, for converting
- * native {@link IJson} objects.
+ * Implementation of the {@link IJSToStringConverter} interface, for converting native {@link IJson}
+ * objects.
  *
  * @author Philip Helger
  */
@@ -39,7 +39,8 @@ public final class JsonToStringConverter implements IJSToStringConverter, Serial
   public String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType)
   {
     if (aObject != null && !(aObject instanceof IJson))
-      throw new IllegalArgumentException ("The passed object is not of type IJson but " + aObject.getClass ().getName ());
+      throw new IllegalArgumentException ("The passed object is not of type IJson but " +
+                                          aObject.getClass ().getName ());
     if (aType != JSType.JSON)
       throw new IllegalArgumentException ("Unexpected JSType '" + aType + "'! Only JSON is supported!");
     return aObject == null ? null : ((IJson) aObject).getAsJsonString ();

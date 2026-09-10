@@ -65,13 +65,15 @@ public class LoggingSftpProgressMonitor implements SftpProgressMonitor
    *        Maximum number of bytes to be handled
    * @param nPerc
    *        Current percentage (count * 100 / max)
-   * @return The string to be logged. Should neither be <code>null</code> nor
-   *         empty.
+   * @return The string to be logged. Should neither be <code>null</code> nor empty.
    */
   @OverrideOnDemand
   @NonNull
   @Nonempty
-  protected String getLogMessage (@NonNull final String sOperation, final long nCount, final long nMax, final long nPerc)
+  protected String getLogMessage (@NonNull final String sOperation,
+                                  final long nCount,
+                                  final long nMax,
+                                  final long nPerc)
   {
     return sOperation + " Completed " + nCount + " out of " + nMax + " (" + nPerc + "%).";
   }
@@ -107,8 +109,7 @@ public class LoggingSftpProgressMonitor implements SftpProgressMonitor
   }
 
   /**
-   * @return The maximum number of bytes to be handled. May have weird values
-   *         but should be &ge; 0.
+   * @return The maximum number of bytes to be handled. May have weird values but should be &ge; 0.
    */
   @CheckForSigned
   public long getMaximumNumberOfBytes ()

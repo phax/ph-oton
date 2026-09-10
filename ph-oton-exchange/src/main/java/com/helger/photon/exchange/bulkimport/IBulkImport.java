@@ -67,8 +67,7 @@ public interface IBulkImport
    * Read the objects from the passed input stream.
    *
    * @param aIIS
-   *        The input stream provider to read from. May not be <code>null</code>
-   *        .
+   *        The input stream provider to read from. May not be <code>null</code> .
    * @param aDisplayLocale
    *        The display locale. May not be <code>null</code>.
    * @return The import result. Never <code>null</code>.

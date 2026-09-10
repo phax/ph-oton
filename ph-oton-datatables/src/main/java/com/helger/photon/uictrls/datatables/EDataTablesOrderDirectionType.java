@@ -40,8 +40,7 @@ public enum EDataTablesOrderDirectionType implements IHasName
    */
   DESC ("desc", ESortOrder.DESCENDING),
   /**
-   * Data index order. Note that this option is available as of DataTables 2.0
-   * and newer.
+   * Data index order. Note that this option is available as of DataTables 2.0 and newer.
    */
   NONE ("", null);
 

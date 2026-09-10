@@ -55,8 +55,8 @@ public interface IWebURIToURLConverter
    * Convert the passed URI to a URL.
    *
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param sURI
    *        The URI to be converted.
    * @return The created URL.

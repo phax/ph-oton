@@ -32,9 +32,8 @@ import com.helger.html.resource.css.ConstantCSSCodeProvider;
 import com.helger.html.resource.css.ICSSCodeProvider;
 
 /**
- * This is a very special list used only to group inline CSS code for correct
- * merging. It maintains the original order and combines only those with the
- * same media lists.
+ * This is a very special list used only to group inline CSS code for correct merging. It maintains
+ * the original order and combines only those with the same media lists.
  *
  * @author Philip Helger
  */

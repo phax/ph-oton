@@ -22,8 +22,7 @@ import com.helger.html.CHTMLAttributes;
 import com.helger.xml.microdom.IMicroQName;
 
 /**
- * An enumeration with all meta element types. The type defines the layout of
- * the meta element.
+ * An enumeration with all meta element types. The type defines the layout of the meta element.
  *
  * @author Philip Helger
  */

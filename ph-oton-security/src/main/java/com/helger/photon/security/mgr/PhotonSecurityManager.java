@@ -52,8 +52,8 @@ import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
- * The meta system manager encapsulates all managers that are located in this
- * project. Currently the contained managers are:
+ * The meta system manager encapsulates all managers that are located in this project. Currently the
+ * contained managers are:
  * <ul>
  * <li>{@link AuditManager}</li>
  * <li>{@link UserManager}</li>
@@ -180,8 +180,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   private static IFactory s_aFactory = new FactoryXML ();
 
   /**
-   * @return <code>true</code> if the {@link PhotonSecurityManager} was already
-   *         initialized, <code>false</code> if not.
+   * @return <code>true</code> if the {@link PhotonSecurityManager} was already initialized,
+   *         <code>false</code> if not.
    * @since 8.3.2
    */
   public static boolean isAlreadyInitialized ()
@@ -190,8 +190,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   /**
-   * @return The currently installed factory for security managers. By default
-   *         an instance of {@link FactoryXML} is returned.
+   * @return The currently installed factory for security managers. By default an instance of
+   *         {@link FactoryXML} is returned.
    * @see #setFactory(IFactory)
    */
   @NonNull
@@ -290,8 +290,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     if (m_aAuditMgr != null)
     {
       /*
-       * Call here to ensure that the AuditManager is still present! Otherwise
-       * the destruction order of the singletons is relevant!
+       * Call here to ensure that the AuditManager is still present! Otherwise the destruction order
+       * of the singletons is relevant!
        */
       AuditHelper.onAuditExecuteSuccess ("audit-shutdown");
     }

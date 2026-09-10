@@ -47,8 +47,8 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
   }
 
   /**
-   * @return <code>true</code> if the login screen is shown for an error,
-   *         <code>false</code> if the login screen is shown for the first time.
+   * @return <code>true</code> if the login screen is shown for an error, <code>false</code> if the
+   *         login screen is shown for the first time.
    */
   public final boolean isLoginError ()
   {
@@ -89,9 +89,12 @@ public abstract class AbstractLoginHTMLProvider extends AbstractSWECHTMLProvider
 
   @Nullable
   @OverrideOnDemand
-  protected String getTextErrorMessage (@NonNull final Locale aDisplayLocale, @NonNull final ICredentialValidationResult aLoginResult)
+  protected String getTextErrorMessage (@NonNull final Locale aDisplayLocale,
+                                        @NonNull final ICredentialValidationResult aLoginResult)
   {
-    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) + " " + aLoginResult.getDisplayText (aDisplayLocale);
+    return EPhotonCoreText.LOGIN_ERROR_MSG.getDisplayText (aDisplayLocale) +
+           " " +
+           aLoginResult.getDisplayText (aDisplayLocale);
   }
 
   @Nullable

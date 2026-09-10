@@ -36,23 +36,23 @@ public interface ICSSProvider extends IHTMLResourceProvider
   ICSSMediaList DEFAULT_CSS_MEDIA_LIST = null;
 
   /**
-   * @return The conditional comment required for this JS item or
-   *         <code>null</code> if it applies to all browsers.
+   * @return The conditional comment required for this JS item or <code>null</code> if it applies to
+   *         all browsers.
    */
   @Nullable
   String getConditionalComment ();
 
   /**
-   * @return The media list for which this CSS item applies. Never
-   *         <code>null</code> but maybe empty.
+   * @return The media list for which this CSS item applies. Never <code>null</code> but maybe
+   *         empty.
    */
   @NonNull
   @ReturnsMutableCopy
   ICSSMediaList getMediaList ();
 
   /**
-   * @return Whether or not this script can be bundled to a big CSS profile. For
-   *         some files this is not possible.
+   * @return Whether or not this script can be bundled to a big CSS profile. For some files this is
+   *         not possible.
    */
   boolean isBundlable ();
 }

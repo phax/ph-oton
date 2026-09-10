@@ -20,9 +20,9 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * This class represents the HTML5 <code>&lt;header&gt;</code> element. If
- * you're looking for the HTML <code>&lt;head&gt;</code> element please refer to
- * the class {@link com.helger.html.hc.html.metadata.HCHead}.
+ * This class represents the HTML5 <code>&lt;header&gt;</code> element. If you're looking for the
+ * HTML <code>&lt;head&gt;</code> element please refer to the class
+ * {@link com.helger.html.hc.html.metadata.HCHead}.
  *
  * @author Philip Helger
  */

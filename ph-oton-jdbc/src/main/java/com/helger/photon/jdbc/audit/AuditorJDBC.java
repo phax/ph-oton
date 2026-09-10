@@ -114,7 +114,7 @@ public class AuditorJDBC extends AbstractAuditor
       // Happens e.g. on shutdown
       return;
     }
-    final ESuccess eDBSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eDBSuccess = aExecutor.performInTransaction (() -> {
       // Create new
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +

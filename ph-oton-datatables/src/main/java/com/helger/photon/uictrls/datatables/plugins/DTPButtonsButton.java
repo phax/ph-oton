@@ -57,8 +57,7 @@ public class DTPButtonsButton
   /** Unique namespace for every button. */
   private String m_sNamespace;
   /**
-   * The text to show in the button. Text, HTML or function text( dt, node,
-   * config )
+   * The text to show in the button. Text, HTML or function text( dt, node, config )
    */
   private IJSExpression m_aText;
 

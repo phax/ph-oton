@@ -221,12 +221,12 @@ public final class JSToString
   }
 
   /**
-   * Auto-detect the type of the passed object and convert it to a JS string. If
-   * the type detection failed, an {@link IllegalArgumentException} is thrown.
+   * Auto-detect the type of the passed object and convert it to a JS string. If the type detection
+   * failed, an {@link IllegalArgumentException} is thrown.
    *
    * @param aObject
-   *        The object to be converted. May be <code>null</code>. Note: works
-   *        for atomic types and arrays, but <b>not</b> for collection types!
+   *        The object to be converted. May be <code>null</code>. Note: works for atomic types and
+   *        arrays, but <b>not</b> for collection types!
    * @return The string representation of the passed object.
    */
   @NonNull
@@ -242,7 +242,9 @@ public final class JSToString
   }
 
   @NonNull
-  public static String objectToJSString (@Nullable final Object aObject, @NonNull final JSType aType, final boolean bWithSurroundingVar)
+  public static String objectToJSString (@Nullable final Object aObject,
+                                         @NonNull final JSType aType,
+                                         final boolean bWithSurroundingVar)
   {
     ValueEnforcer.notNull (aType, "Type");
 

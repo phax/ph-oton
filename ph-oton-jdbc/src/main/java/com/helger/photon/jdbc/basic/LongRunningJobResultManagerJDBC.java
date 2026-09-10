@@ -92,7 +92,7 @@ public class LongRunningJobResultManagerJDBC extends AbstractJDBCEnabledManager 
       throw new IllegalArgumentException ("Passed jobData is not yet finished");
 
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
                                                               " (id, job_type, start_dt, job_data) VALUES (?, ?, ?, ?)",

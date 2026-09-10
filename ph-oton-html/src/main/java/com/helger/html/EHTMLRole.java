@@ -24,10 +24,9 @@ import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 
 /**
- * Enumeration with all HTML roles. Source: http://www.w3.org/TR/wai-aria/roles
- * <br>
- * Note: the deprecated rules are the abstract ones, as they should not be used
- * in HTML generation. They are only present for completeness!
+ * Enumeration with all HTML roles. Source: http://www.w3.org/TR/wai-aria/roles <br>
+ * Note: the deprecated rules are the abstract ones, as they should not be used in HTML generation.
+ * They are only present for completeness!
  *
  * @author Philip Helger
  */
@@ -39,25 +38,37 @@ public enum EHTMLRole implements IHasID <String>
   ALERTDIALOG ("alertdialog",
                EHTMLRoleType.WIDGET,
                "A type of dialog that contains an alert message, where initial focus goes to an element within the dialog. See related alert and dialog."),
-  APPLICATION ("application", EHTMLRoleType.LANDMARK, "A region declared as a web application, as opposed to a web document."),
+  APPLICATION ("application",
+               EHTMLRoleType.LANDMARK,
+               "A region declared as a web application, as opposed to a web document."),
   ARTICLE ("article",
            EHTMLRoleType.DOCUMENT_STRUCTURE,
            "A section of a page that consists of a composition that forms an independent part of a document, page, or site."),
-  BANNER ("banner", EHTMLRoleType.LANDMARK, "A region that contains mostly site-oriented content, rather than page-specific content."),
-  BUTTON ("button", EHTMLRoleType.WIDGET, "An input that allows for user-triggered actions when clicked or pressed. See related link."),
-  CHECKBOX ("checkbox", EHTMLRoleType.WIDGET, "A checkable input that has three possible values: true, false, or mixed."),
+  BANNER ("banner",
+          EHTMLRoleType.LANDMARK,
+          "A region that contains mostly site-oriented content, rather than page-specific content."),
+  BUTTON ("button",
+          EHTMLRoleType.WIDGET,
+          "An input that allows for user-triggered actions when clicked or pressed. See related link."),
+  CHECKBOX ("checkbox",
+            EHTMLRoleType.WIDGET,
+            "A checkable input that has three possible values: true, false, or mixed."),
   COLUMNHEADER ("columnheader", EHTMLRoleType.DOCUMENT_STRUCTURE, "A cell containing header information for a column."),
   COMBOBOX ("combobox",
             EHTMLRoleType.WIDGET_CONTAINER,
             "A presentation of a select; usually similar to a textbox where users can type ahead to select an option, or type to enter arbitrary text as a new item in the list. See related listbox."),
   @Deprecated
-  COMMAND ("command", EHTMLRoleType.ABSTRACT, "A form of widget that performs an action but does not receive input data."),
+  COMMAND ("command",
+           EHTMLRoleType.ABSTRACT,
+           "A form of widget that performs an action but does not receive input data."),
   COMPLEMENTARY ("complementary",
                  EHTMLRoleType.LANDMARK,
                  "A supporting section of the document, designed to be complementary to the main content at a similar level in the DOM hierarchy, but remains meaningful when separated from the main content."),
   @Deprecated
   COMPOSITE ("composite", EHTMLRoleType.ABSTRACT, "A widget that may contain navigable descendants or owned children."),
-  CONTENTINFO ("contentinfo", EHTMLRoleType.LANDMARK, "A large perceivable region that contains information about the parent document."),
+  CONTENTINFO ("contentinfo",
+               EHTMLRoleType.LANDMARK,
+               "A large perceivable region that contains information about the parent document."),
   DEFINITION ("definition", EHTMLRoleType.DOCUMENT_STRUCTURE, "A definition of a term or concept."),
   DIALOG ("dialog",
           EHTMLRoleType.WIDGET,
@@ -96,7 +107,9 @@ public enum EHTMLRole implements IHasID <String>
        EHTMLRoleType.WIDGET,
        "A type of live region where new information is added in meaningful order and old information may disappear. See related marquee."),
   MAIN ("main", EHTMLRoleType.LANDMARK, "The main content of a document."),
-  MARQUEE ("marquee", EHTMLRoleType.WIDGET, "A type of live region where non-essential information changes frequently. See related log."),
+  MARQUEE ("marquee",
+           EHTMLRoleType.WIDGET,
+           "A type of live region where non-essential information changes frequently. See related log."),
   MATH ("math", EHTMLRoleType.DOCUMENT_STRUCTURE, "Content that represents a mathematical expression. "),
   MENU ("menu", EHTMLRoleType.WIDGET_CONTAINER, "A type of widget that offers a list of choices to the user."),
   MENUBAR ("menubar",
@@ -119,8 +132,12 @@ public enum EHTMLRole implements IHasID <String>
   PRESENTATION ("presentation",
                 EHTMLRoleType.DOCUMENT_STRUCTURE,
                 "An element whose implicit native role semantics will not be mapped to the accessibility API."),
-  PROGRESSBAR ("progressbar", EHTMLRoleType.WIDGET, "An element that displays the progress status for tasks that take a long time."),
-  RADIO ("radio", EHTMLRoleType.WIDGET, "A checkable input in a group of radio roles, only one of which can be checked at a time."),
+  PROGRESSBAR ("progressbar",
+               EHTMLRoleType.WIDGET,
+               "An element that displays the progress status for tasks that take a long time."),
+  RADIO ("radio",
+         EHTMLRoleType.WIDGET,
+         "A checkable input in a group of radio roles, only one of which can be checked at a time."),
   RADIOGROUP ("radiogroup", EHTMLRoleType.WIDGET_CONTAINER, "A group of radio buttons."),
   @Deprecated
   RANGE ("range", EHTMLRoleType.ABSTRACT, "An input representing a range of values that can be set by the user."),
@@ -132,7 +149,9 @@ public enum EHTMLRole implements IHasID <String>
   ROW ("row", EHTMLRoleType.DOCUMENT_STRUCTURE, "A row of cells in a grid."),
   // No metatype defined - so I assume document structure
   ROWGROUP ("rowgroup", EHTMLRoleType.DOCUMENT_STRUCTURE, "A group containing one or more row elements in a grid."),
-  ROWHEADER ("rowheader", EHTMLRoleType.DOCUMENT_STRUCTURE, "A cell containing header information for a row in a grid."),
+  ROWHEADER ("rowheader",
+             EHTMLRoleType.DOCUMENT_STRUCTURE,
+             "A cell containing header information for a row in a grid."),
   SCROLLBAR ("scrollbar",
              EHTMLRoleType.WIDGET,
              "A graphical object that controls the scrolling of content within a viewing area, regardless of whether the content is fully displayed within the viewing area."),
@@ -142,14 +161,20 @@ public enum EHTMLRole implements IHasID <String>
   @Deprecated
   SECTION ("section", EHTMLRoleType.ABSTRACT, "A renderable structural containment unit in a document or application."),
   @Deprecated
-  SECTIONHEAD ("sectionhead", EHTMLRoleType.ABSTRACT, "A structure that labels or summarizes the topic of its related section."),
+  SECTIONHEAD ("sectionhead",
+               EHTMLRoleType.ABSTRACT,
+               "A structure that labels or summarizes the topic of its related section."),
   @Deprecated
-  SELECT ("select", EHTMLRoleType.ABSTRACT, "A form widget that allows the user to make selections from a set of choices."),
+  SELECT ("select",
+          EHTMLRoleType.ABSTRACT,
+          "A form widget that allows the user to make selections from a set of choices."),
   SEPARATOR ("separator",
              EHTMLRoleType.DOCUMENT_STRUCTURE,
              "A divider that separates and distinguishes sections of content or groups of menuitems."),
   SLIDER ("slider", EHTMLRoleType.WIDGET, "A user input where the user selects a value from within a given range."),
-  SPINBUTTON ("spinbutton", EHTMLRoleType.WIDGET, "A form of range that expects the user to select from among discrete choices."),
+  SPINBUTTON ("spinbutton",
+              EHTMLRoleType.WIDGET,
+              "A form of range that expects the user to select from among discrete choices."),
   STATUS ("status",
           EHTMLRoleType.WIDGET,
           "A container whose content is advisory information for the user but is not important enough to justify an alert, often but not necessarily presented as a status bar. See related alert."),
@@ -158,7 +183,9 @@ public enum EHTMLRole implements IHasID <String>
   TAB ("tab",
        EHTMLRoleType.WIDGET,
        "A grouping label providing a mechanism for selecting the tab content that is to be rendered to the user."),
-  TABLIST ("tablist", EHTMLRoleType.WIDGET_CONTAINER, "A list of tab elements, which are references to tabpanel elements."),
+  TABLIST ("tablist",
+           EHTMLRoleType.WIDGET_CONTAINER,
+           "A list of tab elements, which are references to tabpanel elements."),
   TABPANEL ("tabpanel",
             EHTMLRoleType.WIDGET,
             "A container for the resources associated with a tab, where each tab is contained in a tablist."),
@@ -188,7 +215,9 @@ public enum EHTMLRole implements IHasID <String>
   private final EHTMLRoleType m_eType;
   private final String m_sDescription;
 
-  EHTMLRole (@NonNull @Nonempty final String sID, @NonNull final EHTMLRoleType eType, @NonNull @Nonempty final String sDescription)
+  EHTMLRole (@NonNull @Nonempty final String sID,
+             @NonNull final EHTMLRoleType eType,
+             @NonNull @Nonempty final String sDescription)
   {
     m_sID = sID;
     m_eType = eType;

@@ -53,7 +53,8 @@ public final class TenantManagerTest
 
     // Login required for deletion
     final LoggedInUserManager aLUM = LoggedInUserManager.getInstance ();
-    assertEquals (ELoginResult.SUCCESS, aLUM.loginUser (CSecurity.USER_ADMINISTRATOR_LOGIN, CSecurity.USER_ADMINISTRATOR_PASSWORD));
+    assertEquals (ELoginResult.SUCCESS,
+                  aLUM.loginUser (CSecurity.USER_ADMINISTRATOR_LOGIN, CSecurity.USER_ADMINISTRATOR_PASSWORD));
     try
     {
       final String sTenantID = Long.toString (Clock.systemUTC ().millis ());

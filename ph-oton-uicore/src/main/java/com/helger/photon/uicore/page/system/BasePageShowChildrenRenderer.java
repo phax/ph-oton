@@ -74,7 +74,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuSeparator (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuSeparator aMenuSeparator)
+  public IHCNode renderMenuSeparator (@NonNull final IWebPageExecutionContext aWPEC,
+                                      @NonNull final IMenuSeparator aMenuSeparator)
   {
     return null;
   }
@@ -90,7 +91,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuItemPage (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuItemPage aMenuItemPage)
+  public IHCNode renderMenuItemPage (@NonNull final IWebPageExecutionContext aWPEC,
+                                     @NonNull final IMenuItemPage aMenuItemPage)
   {
     if (!aMenuItemPage.matchesDisplayFilter ())
       return null;
@@ -115,7 +117,8 @@ public class BasePageShowChildrenRenderer implements Serializable
    */
   @Nullable
   @OverrideOnDemand
-  public IHCNode renderMenuItemExternal (@NonNull final IWebPageExecutionContext aWPEC, @NonNull final IMenuItemExternal aMenuItemExternal)
+  public IHCNode renderMenuItemExternal (@NonNull final IWebPageExecutionContext aWPEC,
+                                         @NonNull final IMenuItemExternal aMenuItemExternal)
   {
     if (!aMenuItemExternal.matchesDisplayFilter ())
       return null;

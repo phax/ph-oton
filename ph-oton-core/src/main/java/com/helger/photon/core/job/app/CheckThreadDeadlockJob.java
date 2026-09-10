@@ -52,8 +52,8 @@ public final class CheckThreadDeadlockJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
-                                                                                                                 throws JobExecutionException
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap,
+                            @NonNull final IJobExecutionContext aContext) throws JobExecutionException
   {
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Checking for dead locks");

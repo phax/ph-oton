@@ -34,12 +34,11 @@ public interface IHCIteratorCallback extends ICallback
    * Callback method
    *
    * @param aParentNode
-   *        Optional parent node. May be <code>null</code> for the initial
-   *        element.
+   *        Optional parent node. May be <code>null</code> for the initial element.
    * @param aChildNode
    *        The current child node. Never <code>null</code>.
-   * @return {@link EContinue#BREAK} to break iteration and
-   *         {@link EContinue#CONTINUE} to continue iteration.
+   * @return {@link EContinue#BREAK} to break iteration and {@link EContinue#CONTINUE} to continue
+   *         iteration.
    */
   @NonNull
   EContinue call (@Nullable IHCNode aParentNode, @NonNull IHCNode aChildNode);

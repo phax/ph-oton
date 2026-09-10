@@ -24,8 +24,8 @@ import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to be used with the {@link IAjaxInvoker} to get notified
- * before an {@link IAjaxExecutor} is invoked.
+ * Callback interface to be used with the {@link IAjaxInvoker} to get notified before an
+ * {@link IAjaxExecutor} is invoked.
  *
  * @author Philip Helger
  */

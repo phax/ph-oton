@@ -92,10 +92,9 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   /**
-   * Provide a function here to display a message to the user when the uploader
-   * receives an error or the user attempts to leave the page. The provided
-   * function may return a promise if one wishes to do asynchronous work whilst
-   * waiting for user input.<br>
+   * Provide a function here to display a message to the user when the uploader receives an error or
+   * the user attempts to leave the page. The provided function may return a promise if one wishes
+   * to do asynchronous work whilst waiting for user input.<br>
    * Default: <code>function(message) { window.alert(message); }</code>
    *
    * @param aShowMessage
@@ -116,9 +115,8 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   /**
-   * Provide a function here to prompt the user to confirm deletion of a file.
-   * The provided function may return a promise if one wishes to do asynchronous
-   * work whilst waiting for user input.<br>
+   * Provide a function here to prompt the user to confirm deletion of a file. The provided function
+   * may return a promise if one wishes to do asynchronous work whilst waiting for user input.<br>
    * Default: <code>function(message) { window.confirm(message); }</code>
    *
    * @param aShowConfirm
@@ -139,11 +137,10 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   /**
-   * Provide a function here to prompt the user for a filename when pasting
-   * file(s). The provided function may return a promise if one wishes to do
-   * asynchronous work whilst waiting for user input.<br>
-   * Default:
-   * <code>function(message, defaultValue) { window.prompt(message, defaultValue); }</code>
+   * Provide a function here to prompt the user for a filename when pasting file(s). The provided
+   * function may return a promise if one wishes to do asynchronous work whilst waiting for user
+   * input.<br>
+   * Default: <code>function(message, defaultValue) { window.prompt(message, defaultValue); }</code>
    *
    * @param aShowPrompt
    *        New value. May be <code>null</code>.
@@ -164,10 +161,9 @@ public class FineUploader5UI extends FineUploader5Core
   }
 
   /**
-   * This points to the container element that contains the template to use for
-   * one or more Fine Uploader UI instances. You can either specify a string,
-   * which is the element ID (the ID of the container element on the page) or an
-   * Element that points to the container element.
+   * This points to the container element that contains the template to use for one or more Fine
+   * Uploader UI instances. You can either specify a string, which is the element ID (the ID of the
+   * container element on the page) or an Element that points to the container element.
    *
    * @param sTemplateID
    *        New value. May neither be <code>null</code> nor empty.
@@ -190,9 +186,12 @@ public class FineUploader5UI extends FineUploader5Core
     {
       if (aDisplayLocale != null)
       {
-        aAssocArray.add ("confirmMessage", EFineUploader5UIText.DELETE_FILE_CONFIRM_MESSAGE.getDisplayText (aDisplayLocale));
-        aAssocArray.add ("deletingFailedText", EFineUploader5UIText.DELETE_FILE_DELETING_FAILED_TEXT.getDisplayText (aDisplayLocale));
-        aAssocArray.add ("deletingStatusText", EFineUploader5UIText.DELETE_FILE_DELETING_STATUS_TEXT.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("confirmMessage",
+                         EFineUploader5UIText.DELETE_FILE_CONFIRM_MESSAGE.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("deletingFailedText",
+                         EFineUploader5UIText.DELETE_FILE_DELETING_FAILED_TEXT.getDisplayText (aDisplayLocale));
+        aAssocArray.add ("deletingStatusText",
+                         EFineUploader5UIText.DELETE_FILE_DELETING_STATUS_TEXT.getDisplayText (aDisplayLocale));
       }
     }
   }

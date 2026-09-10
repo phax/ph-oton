@@ -54,8 +54,8 @@ public final class JQueryProperty
   }
 
   /**
-   * @return <code>true</code> if "$" is used, <code>false</code> if "jQuery" is
-   *         used for the global jQuery field
+   * @return <code>true</code> if "$" is used, <code>false</code> if "jQuery" is used for the global
+   *         jQuery field
    */
   public static boolean isUseDollarForJQuery ()
   {

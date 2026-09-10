@@ -28,8 +28,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Password constraint defining that at least a certain amount of uppercase
- * letters must be contained
+ * Password constraint defining that at least a certain amount of uppercase letters must be
+ * contained
  *
  * @author Philip Helger
  * @since 2.7.4
@@ -44,8 +44,7 @@ public class PasswordConstraintMustContainLetterUpperCase implements IPasswordCo
    * Ctor
    *
    * @param nMinLetters
-   *        The minimum number of letters that must occur in a password. Must be
-   *        &gt; 0.
+   *        The minimum number of letters that must occur in a password. Must be &gt; 0.
    */
   public PasswordConstraintMustContainLetterUpperCase (@Nonnegative final int nMinLetters)
   {

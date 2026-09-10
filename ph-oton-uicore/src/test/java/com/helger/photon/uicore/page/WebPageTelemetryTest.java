@@ -128,9 +128,9 @@ public final class WebPageTelemetryTest
     final MenuTree aMenuTree = new MenuTree ();
     final IMenuItemPage aMenuItem = aMenuTree.createRootItem (aPage);
     final SimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (WebScopeManager.getRequestScope (),
-                                                                          LOCALE,
-                                                                          aMenuTree,
-                                                                          null);
+                                                                           LOCALE,
+                                                                           aMenuTree,
+                                                                           null);
     return new WebPageExecutionContext (new LayoutExecutionContext (aSWEC, aMenuItem), aPage);
   }
 

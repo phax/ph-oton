@@ -84,7 +84,7 @@ public final class WebSiteResourceCache
    */
   public static boolean isCacheEnabled ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bCacheEnabled);
+    return RW_LOCK.readLockedBoolean (() -> s_bCacheEnabled);
   }
 
   /**
@@ -95,7 +95,7 @@ public final class WebSiteResourceCache
    */
   public static void setCacheEnabled (final boolean bCacheEnabled)
   {
-    RW_LOCK.writeLocked ( () -> s_bCacheEnabled = bCacheEnabled);
+    RW_LOCK.writeLocked (() -> s_bCacheEnabled = bCacheEnabled);
     if (!isSilentMode ())
       LOGGER.info ("WebSiteResourceCache is now: " + (bCacheEnabled ? "enabled" : "disabled"));
   }
@@ -129,7 +129,7 @@ public final class WebSiteResourceCache
     final String sCacheKey = eResourceType.getID () + "-" + sPath;
 
     // Entry already existing?
-    final WebSiteResource ret = RW_LOCK.readLockedGet ( () -> s_aMap.get (sCacheKey));
+    final WebSiteResource ret = RW_LOCK.readLockedGet (() -> s_aMap.get (sCacheKey));
     if (ret != null)
     {
       WebSiteResourceTelemetry.onCacheAccess (eResourceType, true);
@@ -139,10 +139,10 @@ public final class WebSiteResourceCache
     WebSiteResourceTelemetry.onCacheAccess (eResourceType, false);
 
     // Try again in write lock
-    return RW_LOCK.writeLockedGet ( () -> s_aMap.computeIfAbsent (sCacheKey,
-                                                                  k -> new WebSiteResource (eResourceType,
-                                                                                            sPath,
-                                                                                            aCharset)));
+    return RW_LOCK.writeLockedGet (() -> s_aMap.computeIfAbsent (sCacheKey,
+                                                                 k -> new WebSiteResource (eResourceType,
+                                                                                           sPath,
+                                                                                           aCharset)));
   }
 
   @NonNull
@@ -154,7 +154,7 @@ public final class WebSiteResourceCache
 
     final String sCacheKey = eType.getID () + "-" + sPath;
 
-    return RW_LOCK.writeLockedGet ( () -> s_aMap.removeObject (sCacheKey));
+    return RW_LOCK.writeLockedGet (() -> s_aMap.removeObject (sCacheKey));
   }
 
   /**

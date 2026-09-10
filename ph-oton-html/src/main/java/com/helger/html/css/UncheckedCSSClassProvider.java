@@ -24,8 +24,8 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * A special implementation of {@link ICSSClassProvider} using no checks at all.
- * Handle with care. Prefer using {@link DefaultCSSClassProvider} instead.
+ * A special implementation of {@link ICSSClassProvider} using no checks at all. Handle with care.
+ * Prefer using {@link DefaultCSSClassProvider} instead.
  *
  * @author Philip Helger
  */

@@ -34,7 +34,8 @@ import com.helger.xml.microdom.IMicroElement;
  *
  * @author Philip Helger
  */
-public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, HCTextNode> implements IHCHasState <HCOption>
+public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, HCTextNode> implements
+                      IHCHasState <HCOption>
 {
   /** By default the option is not disabled */
   public static final boolean DEFAULT_DISABLED = false;
@@ -85,8 +86,7 @@ public class HCOption extends AbstractHCElementWithInternalChildren <HCOption, H
   }
 
   /**
-   * @return <code>true</code> if this option was specially marked selected or
-   *         not selected.
+   * @return <code>true</code> if this option was specially marked selected or not selected.
    */
   public final boolean isSelectionDefined ()
   {

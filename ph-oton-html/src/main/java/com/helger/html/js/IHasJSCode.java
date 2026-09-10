@@ -31,8 +31,7 @@ import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 public interface IHasJSCode extends Serializable
 {
   /**
-   * @return The JavaScript code representation. May be <code>null</code> to
-   *         indicate no JS code.
+   * @return The JavaScript code representation. May be <code>null</code> to indicate no JS code.
    */
   @Nullable
   String getJSCode ();

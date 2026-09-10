@@ -28,8 +28,7 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Password constraint defining that at least a certain amount of digits must be
- * contained
+ * Password constraint defining that at least a certain amount of digits must be contained
  *
  * @author Philip Helger
  * @since 2.7.4
@@ -44,8 +43,7 @@ public class PasswordConstraintMustContainDigit implements IPasswordConstraint
    * Ctor
    *
    * @param nMinDigits
-   *        The minimum number of digits that must occur in a password. Must be
-   *        &gt; 0.
+   *        The minimum number of digits that must occur in a password. Must be &gt; 0.
    */
   public PasswordConstraintMustContainDigit (@Nonnegative final int nMinDigits)
   {
@@ -71,7 +69,8 @@ public class PasswordConstraintMustContainDigit implements IPasswordConstraint
   @Nullable
   public String getDescription (@NonNull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MUST_CONTAIN_DIGITS.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinDigits));
+    return EPasswordConstraintText.DESC_MUST_CONTAIN_DIGITS.getDisplayTextWithArgs (aContentLocale,
+                                                                                    Integer.valueOf (m_nMinDigits));
   }
 
   public void fillMicroElement (@NonNull final IMicroElement aElement)

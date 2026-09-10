@@ -35,7 +35,9 @@ public class JSOpBinary extends AbstractJSExpression
   private final IJSGeneratable m_aRight;
   private boolean m_bUseBraces;
 
-  private static boolean _useBraces (@NonNull final IJSExpression aLeft, @NonNull final String sOp, @NonNull final IJSGeneratable aRight)
+  private static boolean _useBraces (@NonNull final IJSExpression aLeft,
+                                     @NonNull final String sOp,
+                                     @NonNull final IJSGeneratable aRight)
   {
     if (aLeft instanceof JSOpBinary)
     {
@@ -58,12 +60,14 @@ public class JSOpBinary extends AbstractJSExpression
    * @param aLeft
    *        Left side. May not be <code>null</code>.
    * @param sOp
-   *        Operator. May be empty string in very rare cases (e.g. JQuery
-   *        selector chaining). May not be <code>null</code>.
+   *        Operator. May be empty string in very rare cases (e.g. JQuery selector chaining). May
+   *        not be <code>null</code>.
    * @param aRight
    *        Right side. May not be <code>null</code>.
    */
-  public JSOpBinary (@NonNull final IJSExpression aLeft, @NonNull final String sOp, @NonNull final IJSGeneratable aRight)
+  public JSOpBinary (@NonNull final IJSExpression aLeft,
+                     @NonNull final String sOp,
+                     @NonNull final IJSGeneratable aRight)
   {
     this (aLeft, sOp, aRight, _useBraces (aLeft, sOp, aRight));
   }
@@ -74,13 +78,12 @@ public class JSOpBinary extends AbstractJSExpression
    * @param aLeft
    *        Left side. May not be <code>null</code>.
    * @param sOp
-   *        Operator. May be empty string in very rare cases (e.g. JQuery
-   *        selector chaining). May not be <code>null</code>.
+   *        Operator. May be empty string in very rare cases (e.g. JQuery selector chaining). May
+   *        not be <code>null</code>.
    * @param aRight
    *        Right side. May not be <code>null</code>.
    * @param bUseBraces
-   *        <code>true</code> to indicate usage of braces, <code>false</code> to
-   *        disable it
+   *        <code>true</code> to indicate usage of braces, <code>false</code> to disable it
    */
   public JSOpBinary (@NonNull final IJSExpression aLeft,
                      @NonNull final String sOp,
@@ -142,7 +145,11 @@ public class JSOpBinary extends AbstractJSExpression
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aLeft).append (m_sOp).append (m_aRight).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_aLeft)
+                            .append (m_sOp)
+                            .append (m_aRight)
+                            .getHashCode ();
   }
 
   @Override

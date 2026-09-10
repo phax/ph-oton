@@ -19,8 +19,7 @@ package com.helger.html.js.tostring;
 import org.jspecify.annotations.NonNull;
 
 /**
- * Interface for {@link JSType} objects having child types. Used for lists,
- * arrays and maps.
+ * Interface for {@link JSType} objects having child types. Used for lists, arrays and maps.
  *
  * @author Philip Helger
  */

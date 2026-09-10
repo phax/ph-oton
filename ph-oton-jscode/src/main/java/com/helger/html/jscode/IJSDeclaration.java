@@ -22,16 +22,14 @@ import com.helger.annotation.Nonempty;
 import com.helger.html.js.IHasJSCodeWithSettings;
 
 /**
- * Common interface for code components that can generate declarations of
- * themselves.
+ * Common interface for code components that can generate declarations of themselves.
  *
  * @author Philip Helger
  */
 public interface IJSDeclaration extends IHasJSCodeWithSettings
 {
   /**
-   * @return The name of the declared object. Neither <code>null</code> nor
-   *         empty.
+   * @return The name of the declared object. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty

@@ -98,8 +98,7 @@ public abstract class AbstractApplicationXServletHandler implements IXServletSim
     boolean bSuccess = false;
     // A ForcedRedirectException must not mark the span as failed, so the span is managed manually
     // instead of using one of the Telemetry.withSpan* helpers
-    try (final ITelemetrySpan aSpan = Telemetry.startSpan (CCoreTelemetry.SPAN_PAGE_REQUEST,
-                                                           ETelemetrySpanKind.SERVER))
+    try (final ITelemetrySpan aSpan = Telemetry.startSpan (CCoreTelemetry.SPAN_PAGE_REQUEST, ETelemetrySpanKind.SERVER))
     {
       try
       {

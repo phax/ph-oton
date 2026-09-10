@@ -49,8 +49,7 @@ final class CSRFTelemetry
   {
     CSRFMetrics.CHECKS.add (1,
                             TelemetryAttributes.builder ()
-                                               .put (CUICoreTelemetry.ATTR_CSRF_PAGE_ID,
-                                                     aWPEC.getWebPage ().getID ())
+                                               .put (CUICoreTelemetry.ATTR_CSRF_PAGE_ID, aWPEC.getWebPage ().getID ())
                                                .put (CUICoreTelemetry.ATTR_CSRF_VALID, bValid)
                                                .build ());
   }

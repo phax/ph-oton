@@ -43,8 +43,8 @@ import com.helger.xml.microdom.util.MicroVisitor;
 import com.helger.xml.serialize.read.SAXReaderSettings;
 
 /**
- * Base class for pages consisting of external HTML code that is provided from
- * an external resource (e.g. for static pages).
+ * Base class for pages consisting of external HTML code that is provided from an external resource
+ * (e.g. for static pages).
  *
  * @author Philip Helger
  * @param <WPECTYPE>
@@ -66,9 +66,8 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
   private boolean m_bReadEveryTime = isDefaultReadEveryTime ();
 
   /**
-   * @return <code>true</code> if pages should be read every time (especially
-   *         for debug mode), <code>false</code> if the content should be read
-   *         only once.
+   * @return <code>true</code> if pages should be read every time (especially for debug mode),
+   *         <code>false</code> if the content should be read only once.
    * @since 9.3.0
    */
   public static boolean isDefaultReadEveryTime ()
@@ -153,13 +152,13 @@ public abstract class AbstractWebPageResourceContent <WPECTYPE extends IWebPageE
 
   public final boolean isReadEveryTime ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bReadEveryTime);
+    return m_aRWLock.readLockedBoolean (() -> m_bReadEveryTime);
   }
 
   @NonNull
   public final AbstractWebPageResourceContent <WPECTYPE> setReadEveryTime (final boolean bReadEveryTime)
   {
-    m_aRWLock.writeLocked ( () -> m_bReadEveryTime = bReadEveryTime);
+    m_aRWLock.writeLocked (() -> m_bReadEveryTime = bReadEveryTime);
     return this;
   }
 

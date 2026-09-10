@@ -36,8 +36,7 @@ public interface IConnectionDestination <HANDLETYPE>
    *
    * @param aCredentials
    *        The credentials to use.
-   * @return <code>null</code> if connection could not be established, the
-   *         handle otherwise.
+   * @return <code>null</code> if connection could not be established, the handle otherwise.
    */
   @Nullable
   HANDLETYPE openConnection (IAuthCredentials aCredentials);

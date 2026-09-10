@@ -65,7 +65,8 @@ public class HCTitle extends AbstractHCElement <HCTitle>
   }
 
   @Override
-  protected void fillMicroElement (@NonNull final IMicroElement aElement, @NonNull final IHCConversionSettingsToNode aConversionSettings)
+  protected void fillMicroElement (@NonNull final IMicroElement aElement,
+                                   @NonNull final IHCConversionSettingsToNode aConversionSettings)
   {
     super.fillMicroElement (aElement, aConversionSettings);
     aElement.addText (m_sContent);

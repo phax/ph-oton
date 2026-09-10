@@ -51,8 +51,8 @@ final class PageRequestTelemetry
 
   /**
    * Mark the span of a UI page request that ended in a Post-Redirect-Get. That is a regular control
-   * flow and no error - {@code XServletHandlerToSimpleHandler} passes the exception through as
-   * well - so the request counts as successful.
+   * flow and no error - {@code XServletHandlerToSimpleHandler} passes the exception through as well
+   * - so the request counts as successful.
    *
    * @param aSpan
    *        The span to mark. May not be <code>null</code>.

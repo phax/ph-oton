@@ -31,9 +31,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.uictrls.datatables.column.DTOrderSpec;
 
 /**
- * Encapsulates the sorting information for the columns that are affected in
- * sorting. So the number of sort columns is always &ge; as the number of
- * overall columns.
+ * Encapsulates the sorting information for the columns that are affected in sorting. So the number
+ * of sort columns is always &ge; as the number of overall columns.
  *
  * @author Philip Helger
  */
@@ -69,8 +68,7 @@ public final class DTSSRequestDataOrderColumn
   }
 
   /**
-   * @return Direction to be sorted. If not specified, the default is used.
-   *         Never <code>null</code>.
+   * @return Direction to be sorted. If not specified, the default is used. Never <code>null</code>.
    */
   @NonNull
   public ESortOrder getSortDirectionOrDefault ()

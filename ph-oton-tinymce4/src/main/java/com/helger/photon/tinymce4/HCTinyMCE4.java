@@ -64,9 +64,9 @@ import com.helger.url.ISimpleURL;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Wraps TinyMCE4 into an HC node. The only required settings is
- * {@link #setSelector(String)} but this does not need to be called, as the
- * default value {@link #DEFAULT_SELECTOR} is used automatically.<br>
+ * Wraps TinyMCE4 into an HC node. The only required settings is {@link #setSelector(String)} but
+ * this does not need to be called, as the default value {@link #DEFAULT_SELECTOR} is used
+ * automatically.<br>
  * Note: all options that are not explicitly wrapped can be set by
  * {@link #addCustomOption(String, IJSExpression)}
  *
@@ -208,9 +208,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option enables you to auto focus an editor instance. The value of this
-   * option should be an editor instance id. The editor instance id is the id
-   * for the original textarea or div element that got replaced.
+   * This option enables you to auto focus an editor instance. The value of this option should be an
+   * editor instance id. The editor instance id is the id for the original textarea or div element
+   * that got replaced.
    *
    * @param sAutoFocus
    *        Editor ID
@@ -254,8 +254,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This is a true/false value if the usage of the browsers internal
-   * spellchecker should be used. Default value is false.
+   * This is a true/false value if the usage of the browsers internal spellchecker should be used.
+   * Default value is false.
    *
    * @param bBrowserSpellcheck
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -269,12 +269,12 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This is a true/false value if the usage of the browsers internal
-   * spellchecker should be used. Default value is false.
+   * This is a true/false value if the usage of the browsers internal spellchecker should be used.
+   * Default value is false.
    *
    * @param aBrowserSpellcheck
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -311,8 +311,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * A simple URL to where the language file to use. We recommend using a site
-   * absolute URL.
+   * A simple URL to where the language file to use. We recommend using a site absolute URL.
    *
    * @param aLanguageURL
    *        The language URL to use.
@@ -331,8 +330,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option will make the editable are behave like very much like a
-   * &lt;pre&gt; tag, and add a scroll instead of wrapping text.
+   * This option will make the editable are behave like very much like a &lt;pre&gt; tag, and add a
+   * scroll instead of wrapping text.
    *
    * @param bNoWrap
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -346,12 +345,12 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option will make the editable are behave like very much like a
-   * &lt;pre&gt; tag, and add a scroll instead of wrapping text.
+   * This option will make the editable are behave like very much like a &lt;pre&gt; tag, and add a
+   * scroll instead of wrapping text.
    *
    * @param aNoWrap
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -367,8 +366,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This options allows you to turn on/off the resizing handles on images,
-   * tables or media objects.
+   * This options allows you to turn on/off the resizing handles on images, tables or media objects.
    *
    * @param bObjectResizing
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -382,12 +380,11 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This options allows you to turn on/off the resizing handles on images,
-   * tables or media objects.
+   * This options allows you to turn on/off the resizing handles on images, tables or media objects.
    *
    * @param aObjectResizing
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -429,8 +426,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Add multiple TinyMCE plugins at once.
    *
    * @param aPlugins
-   *        The plugins to add. The array may be <code>null</code> but the
-   *        contained elements may not be <code>null</code>.
+   *        The plugins to add. The array may be <code>null</code> but the contained elements may
+   *        not be <code>null</code>.
    * @return this
    */
   @NonNull
@@ -446,8 +443,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Add multiple TinyMCE plugins at once.
    *
    * @param aPlugins
-   *        The plugins to add. The array may be <code>null</code> but the
-   *        contained elements may not be <code>null</code>.
+   *        The plugins to add. The array may be <code>null</code> but the contained elements may
+   *        not be <code>null</code>.
    * @return this
    */
   @NonNull
@@ -488,8 +485,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *
    * @param aPlugins
    *        The plugins to be removed. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} it at least one plugin was removed
-   *         successfully.
+   * @return {@link EChange#CHANGED} it at least one plugin was removed successfully.
    */
   @NonNull
   public EChange removePlugins (@Nullable final ETinyMCE4Plugin... aPlugins)
@@ -506,8 +502,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *
    * @param aPlugins
    *        The plugins to be removed. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} it at least one plugin was removed
-   *         successfully.
+   * @return {@link EChange#CHANGED} it at least one plugin was removed successfully.
    */
   @NonNull
   public EChange removePlugins (@Nullable final Iterable <ETinyMCE4Plugin> aPlugins)
@@ -567,8 +562,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Add multiple external plugins at once.
    *
    * @param aExternalPlugins
-   *        The plugins to be added. May be <code>null</code> but no contained
-   *        plugin may be <code>null</code>.
+   *        The plugins to be added. May be <code>null</code> but no contained plugin may be
+   *        <code>null</code>.
    * @return this
    */
   @NonNull
@@ -584,8 +579,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Add multiple external plugins at once.
    *
    * @param aExternalPlugins
-   *        The plugins to be added. May be <code>null</code> but no contained
-   *        plugin may be <code>null</code>.
+   *        The plugins to be added. May be <code>null</code> but no contained plugin may be
+   *        <code>null</code>.
    * @return this
    */
   @NonNull
@@ -615,8 +610,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *
    * @param aExternalPlugins
    *        The plugins to be removed. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} it at least one plugin was removed
-   *         successfully.
+   * @return {@link EChange#CHANGED} it at least one plugin was removed successfully.
    */
   @NonNull
   public EChange removeExternalPlugins (@Nullable final TinyMCE4ExternalPlugin... aExternalPlugins)
@@ -633,8 +627,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    *
    * @param aExternalPlugins
    *        The plugins to be removed. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} it at least one plugin was removed
-   *         successfully.
+   * @return {@link EChange#CHANGED} it at least one plugin was removed successfully.
    */
   @NonNull
   public EChange removeExternalPlugins (@Nullable final Iterable <? extends TinyMCE4ExternalPlugin> aExternalPlugins)
@@ -647,8 +640,7 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * @return The jQuery selector to be used to convert nodes to TinyMCE
-   *         elements.
+   * @return The jQuery selector to be used to convert nodes to TinyMCE elements.
    */
   @NonNull
   @Nonempty
@@ -709,9 +701,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option enables you to specify location of the current skin. Enables
-   * you to load TinyMCE from one URL for example a CDN then load a local skin
-   * on the current server.
+   * This option enables you to specify location of the current skin. Enables you to load TinyMCE
+   * from one URL for example a CDN then load a local skin on the current server.
    *
    * @param aSkinURL
    *        The skin URL to use.
@@ -751,9 +742,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option enables you to specify location of the current theme. Enables
-   * you to load TinyMCE from one URL for example a CDN then load a local theme
-   * on the current server.
+   * This option enables you to specify location of the current theme. Enables you to load TinyMCE
+   * from one URL for example a CDN then load a local theme on the current server.
    *
    * @param aThemeURL
    *        The theme URL to use.
@@ -772,8 +762,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option changes the behaviour of the editor to allow the usage of
-   * inline elements instead of a textarea.
+   * This option changes the behaviour of the editor to allow the usage of inline elements instead
+   * of a textarea.
    *
    * @param bInline
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -787,12 +777,12 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option changes the behaviour of the editor to allow the usage of
-   * inline elements instead of a textarea.
+   * This option changes the behaviour of the editor to allow the usage of inline elements instead
+   * of a textarea.
    *
    * @param aInline
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -808,11 +798,10 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option gives you the ability to disable the auto generation of hidden
-   * input fields for inline editing elements. By default all inline editors
-   * gets an hidden input element that contents gets saved to when you do
-   * editor.save() or tinymce.triggerSave(); this can be disabled if you don't
-   * need these controls.
+   * This option gives you the ability to disable the auto generation of hidden input fields for
+   * inline editing elements. By default all inline editors gets an hidden input element that
+   * contents gets saved to when you do editor.save() or tinymce.triggerSave(); this can be disabled
+   * if you don't need these controls.
    *
    * @param bHiddenInput
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -826,15 +815,14 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option gives you the ability to disable the auto generation of hidden
-   * input fields for inline editing elements. By default all inline editors
-   * gets an hidden input element that contents gets saved to when you do
-   * editor.save() or tinymce.triggerSave(); this can be disabled if you don't
-   * need these controls.
+   * This option gives you the ability to disable the auto generation of hidden input fields for
+   * inline editing elements. By default all inline editors gets an hidden input element that
+   * contents gets saved to when you do editor.save() or tinymce.triggerSave(); this can be disabled
+   * if you don't need these controls.
    *
    * @param aHiddenInput
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -852,10 +840,9 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * If you set this option to true, TinyMCE will convert all font elements to
-   * span elements and generate span elements instead of font elements. This
-   * option should be used in order to get more W3C compatible code, since font
-   * elements are deprecated.
+   * If you set this option to true, TinyMCE will convert all font elements to span elements and
+   * generate span elements instead of font elements. This option should be used in order to get
+   * more W3C compatible code, since font elements are deprecated.
    *
    * @param bConvertFontsToSpans
    *        <code>true</code> to enabled, <code>false</code> to disable
@@ -869,14 +856,13 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * If you set this option to true, TinyMCE will convert all font elements to
-   * span elements and generate span elements instead of font elements. This
-   * option should be used in order to get more W3C compatible code, since font
-   * elements are deprecated.
+   * If you set this option to true, TinyMCE will convert all font elements to span elements and
+   * generate span elements instead of font elements. This option should be used in order to get
+   * more W3C compatible code, since font elements are deprecated.
    *
    * @param aConvertFontsToSpans
-   *        <code>true</code> to enabled, <code>false</code> to disable and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to enabled, <code>false</code> to disable and <code>null</code> for
+   *        default value.
    * @return this
    */
   @NonNull
@@ -905,8 +891,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * This controls what buttons you want show up in the toolbar.
    *
    * @param aToolbar
-   *        The toolbar to be set. May be <code>null</code>. If not
-   *        <code>null</code> a clone of the object is stored.
+   *        The toolbar to be set. May be <code>null</code>. If not <code>null</code> a clone of the
+   *        object is stored.
    * @return this
    */
   @NonNull
@@ -943,12 +929,11 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option allows you to configure the menus you want to appear in the
-   * menu bar.
+   * This option allows you to configure the menus you want to appear in the menu bar.
    *
    * @param aMenubar
-   *        The menu bar to be set. May be <code>null</code>. If not
-   *        <code>null</code> a clone of the object is stored.
+   *        The menu bar to be set. May be <code>null</code>. If not <code>null</code> a clone of
+   *        the object is stored.
    * @return this
    */
   @NonNull
@@ -1000,8 +985,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
    * Show or hide the statusbar.
    *
    * @param aStatusbar
-   *        <code>true</code> to show, <code>false</code> to hide and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to show, <code>false</code> to hide and <code>null</code> for default
+   *        value.
    * @return this
    */
   @NonNull
@@ -1068,8 +1053,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * The enables you to turn of the preview of styles in format/style listboxes.
-   * It's turned on by default.
+   * The enables you to turn of the preview of styles in format/style listboxes. It's turned on by
+   * default.
    *
    * @param bPreviewStyles
    *        <code>true</code> to show, <code>false</code> to hide
@@ -1083,12 +1068,12 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * The enables you to turn of the preview of styles in format/style listboxes.
-   * It's turned on by default.
+   * The enables you to turn of the preview of styles in format/style listboxes. It's turned on by
+   * default.
    *
    * @param aPreviewStyles
-   *        <code>true</code> to show, <code>false</code> to hide and
-   *        <code>null</code> for default value.
+   *        <code>true</code> to show, <code>false</code> to hide and <code>null</code> for default
+   *        value.
    * @return this
    */
   @NonNull
@@ -1109,19 +1094,17 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * This option enables you to add your own file browser/image browser to
-   * TinyMCE. If this option is set with a value a browse button will appear in
-   * different dialogues such as "insert/edit link" or "insert/edit image". If
-   * this option hasn't got a value set (or equals to false or null) the
-   * dialogues in question won't show any browse button. This function is
-   * executed each time a user clicks on the "browse" buttons in various
-   * dialogues. The format of this callback function is: fileBrowser(field_name,
-   * url, type, win) where field_name is the id/name of the form element that
-   * the browser should insert its URL into. The url parameter contains the URL
-   * value that is currently inside the field. The type parameter contains what
-   * type of browser to present; this value can be file, image or flash
-   * depending on what dialogue is calling the function. The win parameter
-   * contains a reference to the dialog/window that executes the function.
+   * This option enables you to add your own file browser/image browser to TinyMCE. If this option
+   * is set with a value a browse button will appear in different dialogues such as "insert/edit
+   * link" or "insert/edit image". If this option hasn't got a value set (or equals to false or
+   * null) the dialogues in question won't show any browse button. This function is executed each
+   * time a user clicks on the "browse" buttons in various dialogues. The format of this callback
+   * function is: fileBrowser(field_name, url, type, win) where field_name is the id/name of the
+   * form element that the browser should insert its URL into. The url parameter contains the URL
+   * value that is currently inside the field. The type parameter contains what type of browser to
+   * present; this value can be file, image or flash depending on what dialogue is calling the
+   * function. The win parameter contains a reference to the dialog/window that executes the
+   * function.
    *
    * @param aFileBrowserCallback
    *        Callback function
@@ -1304,8 +1287,8 @@ public class HCTinyMCE4 extends AbstractHCTextArea <HCTinyMCE4>
   }
 
   /**
-   * @return The JSInvocation with the tinymce.init code and all options
-   *         specified for this instance.
+   * @return The JSInvocation with the tinymce.init code and all options specified for this
+   *         instance.
    */
   @NonNull
   public JSInvocation getJSInvocation ()

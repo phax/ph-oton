@@ -32,8 +32,8 @@ import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSWriterSettings;
 
 /**
- * This is a utility class for managing indentation and other basic formatting
- * for {@link PrintWriter}.
+ * This is a utility class for managing indentation and other basic formatting for
+ * {@link PrintWriter}.
  *
  * @author Philip Helger
  */

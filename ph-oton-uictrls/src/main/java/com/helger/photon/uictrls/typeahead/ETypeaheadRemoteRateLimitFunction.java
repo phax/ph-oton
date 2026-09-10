@@ -23,8 +23,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 
 /**
- * All possible values for the rateLimitFn parameter used in typeahead dataset
- * remote object.
+ * All possible values for the rateLimitFn parameter used in typeahead dataset remote object.
  *
  * @author Philip Helger
  */

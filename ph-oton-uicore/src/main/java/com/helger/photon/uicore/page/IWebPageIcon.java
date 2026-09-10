@@ -28,8 +28,7 @@ import com.helger.html.hc.IHCNode;
 public interface IWebPageIcon
 {
   /**
-   * @return The icon as self-contained node. The node must be visible by
-   *         itself!
+   * @return The icon as self-contained node. The node must be visible by itself!
    */
   @NonNull
   IHCNode getAsNode ();

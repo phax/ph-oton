@@ -28,8 +28,7 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * A single field of an {@link AuditEvent}. Has a mandatory name and an optional
- * value.
+ * A single field of an {@link AuditEvent}. Has a mandatory name and an optional value.
  *
  * @author Philip Helger
  */
@@ -111,8 +110,8 @@ public class AuditField implements Serializable
   }
 
   /**
-   * Factory method to create an {@link AuditField} with a value that indicates,
-   * that the real value is not to be persisted or displayed.
+   * Factory method to create an {@link AuditField} with a value that indicates, that the real value
+   * is not to be persisted or displayed.
    *
    * @param sFieldName
    *        Field name. May be <code>null</code>.

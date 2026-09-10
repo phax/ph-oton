@@ -21,8 +21,8 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.EHTMLVersion;
 
 /**
- * A special customization interface, that lets you modify existing elements
- * before they are assembled and emitted in the HTML code.
+ * A special customization interface, that lets you modify existing elements before they are
+ * assembled and emitted in the HTML code.
  *
  * @author Philip Helger
  */
@@ -37,8 +37,7 @@ public interface IHCCustomizer
    * @param eHTMLVersion
    *        The HTML version to be used. Never <code>null</code>.
    * @param aTargetNode
-   *        The node where additional elements should be appended to. May not be
-   *        <code>null</code>.
+   *        The node where additional elements should be appended to. May not be <code>null</code>.
    */
   void customizeNode (@NonNull IHCNode aNode,
                       @NonNull EHTMLVersion eHTMLVersion,

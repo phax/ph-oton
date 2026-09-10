@@ -34,16 +34,15 @@ import com.helger.html.jscode.JSExpr;
 public class DTPButtonsButtonColumnsToggle extends DTPButtonsButton
 {
   /**
-   * Columns selector that defines the columns to include in the column
-   * visibility button set. By default this is undefined which results in all
-   * columns being selected, but any of the column-selector options can be used
-   * to define a custom button set.
+   * Columns selector that defines the columns to include in the column visibility button set. By
+   * default this is undefined which results in all columns being selected, but any of the
+   * column-selector options can be used to define a custom button set.
    */
   private IJSExpression m_aColumns;
 
   /**
-   * The visibility value to set for the selected column(s). true will display
-   * the column, false will hide it and undefined will toggle its current state.
+   * The visibility value to set for the selected column(s). true will display the column, false
+   * will hide it and undefined will toggle its current state.
    */
   private ETriState m_eVisibility = ETriState.UNDEFINED;
 

@@ -21,8 +21,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.annotation.Nonempty;
 
 /**
- * Defines an abstract request field for input controls. It encapsulates a name
- * only.
+ * Defines an abstract request field for input controls. It encapsulates a name only.
  *
  * @author Philip Helger
  * @since 8.3.2
@@ -30,8 +29,7 @@ import com.helger.annotation.Nonempty;
 public interface IHCBaseRequestField
 {
   /**
-   * @return The field name of this request field. Neither <code>null</code> nor
-   *         empty.
+   * @return The field name of this request field. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty

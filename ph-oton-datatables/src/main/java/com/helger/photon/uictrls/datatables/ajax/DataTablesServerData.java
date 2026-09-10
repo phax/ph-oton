@@ -161,7 +161,7 @@ public final class DataTablesServerData implements IHasUIState
 
   public boolean hasServerSortState (@NonNull final DataTablesServerSortState aOtherserverSortState)
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_aServerSortState.equals (aOtherserverSortState));
+    return m_aRWLock.readLockedBoolean (() -> m_aServerSortState.equals (aOtherserverSortState));
   }
 
   public void setServerSortStateAndSort (@NonNull final DataTablesServerSortState aNewServerSortState)
@@ -170,7 +170,7 @@ public final class DataTablesServerData implements IHasUIState
 
     final Comparator <DataTablesServerDataRow> aComp = new ComparatorDataTablesServerDataRow (aNewServerSortState);
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       m_aServerSortState = aNewServerSortState;
       m_aRows.sort (aComp);
     });
@@ -190,7 +190,7 @@ public final class DataTablesServerData implements IHasUIState
    */
   public void forEachRow (final Consumer <? super DataTablesServerDataRow> aConsumer)
   {
-    m_aRWLock.readLocked ( () -> m_aRows.forEach (aConsumer));
+    m_aRWLock.readLocked (() -> m_aRows.forEach (aConsumer));
   }
 
   @NonNull
@@ -205,7 +205,7 @@ public final class DataTablesServerData implements IHasUIState
   {
     if (StringHelper.isEmpty (sID))
       return null;
-    return m_aRWLock.readLockedGet ( () -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
+    return m_aRWLock.readLockedGet (() -> m_aRows.findFirst (x -> sID.equals (x.getRowID ())));
   }
 
   @NonNull

@@ -41,8 +41,7 @@ public class HCCol extends AbstractHCCol <HCCol>
   }
 
   /**
-   * @return A new "star" column (<code>&lt;col width="*" /&gt;</code>). Never
-   *         <code>null</code>.
+   * @return A new "star" column (<code>&lt;col width="*" /&gt;</code>). Never <code>null</code>.
    */
   @NonNull
   public static HCCol star ()

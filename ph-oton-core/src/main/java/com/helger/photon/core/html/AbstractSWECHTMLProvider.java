@@ -54,8 +54,8 @@ public abstract class AbstractSWECHTMLProvider extends AbstractHTMLProvider
    * @throws ForcedRedirectException
    *         to indicate that the current page should be left.
    */
-  protected abstract void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC, @NonNull final HCHtml aHtml)
-                                                                                                                  throws ForcedRedirectException;
+  protected abstract void fillBody (@NonNull final ISimpleWebExecutionContext aSWEC,
+                                    @NonNull final HCHtml aHtml) throws ForcedRedirectException;
 
   /**
    * Fill the HTML HEAD element.

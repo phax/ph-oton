@@ -86,8 +86,7 @@ public final class JSWriterDefaultSettings
 
   /**
    * This is a wrapper around {@link #setIndentAndAlign(boolean)},
-   * {@link #setGenerateTypeNames(boolean)} and
-   * {@link #setGenerateComments(boolean)}
+   * {@link #setGenerateTypeNames(boolean)} and {@link #setGenerateComments(boolean)}
    *
    * @param bMinimumCodeSize
    *        true for minimum code size

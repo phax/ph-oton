@@ -148,8 +148,8 @@ public interface ILayoutExecutionContext extends ISimpleWebExecutionContext
    * @throws ForcedRedirectException
    *         Every time, since this is the P-R-G indicator.
    */
-  default void postRedirectGetInternal (@NonNull final SimpleURL aTargetURL, @Nullable final IHCNode aContent)
-                                                                                                               throws ForcedRedirectException
+  default void postRedirectGetInternal (@NonNull final SimpleURL aTargetURL,
+                                        @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     postRedirectGet (aTargetURL.add (ForcedRedirectManager.REQUEST_PARAMETER_PRG_ACTIVE), aContent);
   }

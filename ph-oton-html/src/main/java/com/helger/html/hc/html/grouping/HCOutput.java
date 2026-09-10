@@ -51,8 +51,8 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
   }
 
   /**
-   * Specifies the relationship between the result of the calculation, and the
-   * elements used in the calculation
+   * Specifies the relationship between the result of the calculation, and the elements used in the
+   * calculation
    *
    * @param sFor
    *        The HTML ID of the other object.
@@ -66,8 +66,8 @@ public class HCOutput extends AbstractHCElementWithChildren <HCOutput>
   }
 
   /**
-   * Specifies the relationship between the result of the calculation, and the
-   * elements used in the calculation
+   * Specifies the relationship between the result of the calculation, and the elements used in the
+   * calculation
    *
    * @param aFor
    *        The HTML of the other object.

@@ -25,8 +25,7 @@ import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
- * Alignment of an {@link com.helger.html.hc.html.tabular.AbstractHCCell}
- * element.
+ * Alignment of an {@link com.helger.html.hc.html.tabular.AbstractHCCell} element.
  *
  * @author Philip Helger
  */

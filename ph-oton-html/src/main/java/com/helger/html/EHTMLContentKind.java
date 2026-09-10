@@ -19,8 +19,7 @@ package com.helger.html;
 import com.helger.annotation.Nonnegative;
 
 /**
- * Source:
- * http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#kinds-of-content
+ * Source: http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#kinds-of-content
  *
  * @author Philip Helger
  */

@@ -69,10 +69,9 @@ public interface IUserTokenModificationCallback extends ICallback
   {}
 
   /**
-   * Called after the current access token of a user token got revoked and no
-   * new access token was created. In case a new access token is directly
-   * created only {@link #onUserTokenCreateAccessToken(String, AccessToken)} is
-   * called.
+   * Called after the current access token of a user token got revoked and no new access token was
+   * created. In case a new access token is directly created only
+   * {@link #onUserTokenCreateAccessToken(String, AccessToken)} is called.
    *
    * @param sUserTokenID
    *        The changed user token ID. Never <code>null</code>.

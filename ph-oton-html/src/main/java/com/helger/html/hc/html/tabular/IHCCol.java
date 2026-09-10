@@ -43,8 +43,8 @@ public interface IHCCol <IMPLTYPE extends IHCCol <IMPLTYPE>> extends IHCElement 
   }
 
   /**
-   * @return The width definition of the column as a string or <code>null</code>
-   *         if no width is present.
+   * @return The width definition of the column as a string or <code>null</code> if no width is
+   *         present.
    */
   @Nullable
   String getWidth ();
@@ -76,8 +76,8 @@ public interface IHCCol <IMPLTYPE extends IHCCol <IMPLTYPE>> extends IHCElement 
   }
 
   /**
-   * Set the width as string. May either be a pure integer or e.g. a percentage
-   * value (like "50%") or "*" for "any".
+   * Set the width as string. May either be a pure integer or e.g. a percentage value (like "50%")
+   * or "*" for "any".
    *
    * @param sWidth
    *        The width as a string. May be <code>null</code>.

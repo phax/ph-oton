@@ -32,19 +32,17 @@ import com.helger.xml.microdom.IMicroContainer;
 public interface IWebPageResourceContent
 {
   /**
-   * @return <code>true</code> if the underlying resource should be read each
-   *         time <code>fillContent(IWebPageExecutionContext)</code> is invoked
-   *         or <code>false</code> if the resource is read once in the
-   *         constructor and re-used over and over.
+   * @return <code>true</code> if the underlying resource should be read each time
+   *         <code>fillContent(IWebPageExecutionContext)</code> is invoked or <code>false</code> if
+   *         the resource is read once in the constructor and re-used over and over.
    */
   boolean isReadEveryTime ();
 
   /**
    * @param bReadEveryTime
-   *        <code>true</code> if the underlying resource should be read each
-   *        time <code>fillContent(IWebPageExecutionContext)</code> is invoked
-   *        or <code>false</code> if the resource should be read once in the
-   *        constructor and re-used over and over.
+   *        <code>true</code> if the underlying resource should be read each time
+   *        <code>fillContent(IWebPageExecutionContext)</code> is invoked or <code>false</code> if
+   *        the resource should be read once in the constructor and re-used over and over.
    * @return this for chaining
    */
   @NonNull
@@ -60,8 +58,8 @@ public interface IWebPageResourceContent
   void updateFromResource ();
 
   /**
-   * @return The additional cleanup consumer that is invoked after reading from
-   *         the resource. May be <code>null</code>.
+   * @return The additional cleanup consumer that is invoked after reading from the resource. May be
+   *         <code>null</code>.
    */
   @Nullable
   Consumer <? super IMicroContainer> getContentCleanser ();

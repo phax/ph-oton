@@ -111,7 +111,8 @@ public enum ETinyMCE4Theme
   }
 
   @Nullable
-  public static ETinyMCE4Theme getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Theme eDefault)
+  public static ETinyMCE4Theme getFromValueOrDefault (@Nullable final String sValue,
+                                                      @Nullable final ETinyMCE4Theme eDefault)
   {
     if (StringHelper.isNotEmpty (sValue))
       for (final ETinyMCE4Theme e : values ())

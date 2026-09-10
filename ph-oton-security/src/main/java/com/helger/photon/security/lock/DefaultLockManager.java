@@ -87,19 +87,19 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
   public final void setCurrentUserIDProvider (@NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     ValueEnforcer.notNull (aCurrentUserIDProvider, "CurrentUserIDProvider");
-    m_aRWLock.writeLocked ( () -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
+    m_aRWLock.writeLocked (() -> m_aCurrentUserIDProvider = aCurrentUserIDProvider);
   }
 
   @Nullable
   private String _getCurrentUserID ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aCurrentUserIDProvider.getCurrentUserID ());
+    return m_aRWLock.readLockedGet (() -> m_aCurrentUserIDProvider.getCurrentUserID ());
   }
 
   @Nullable
   public final ILockInfo getLockInfo (@Nullable final IDTYPE aObjID)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aLockedObjs.get (aObjID));
+    return m_aRWLock.readLockedGet (() -> m_aLockedObjs.get (aObjID));
   }
 
   @Nullable
@@ -250,7 +250,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                      "'");
       return EChange.UNCHANGED;
     }
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       // this user locked the object -> unlock it
       if (m_aLockedObjs.remove (aObjID) == null)
         throw new IllegalStateException ("Internal inconsistency: removing '" + aObjID + "' from lock list failed!");
@@ -319,7 +319,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     final ICommonsList <IDTYPE> aUnlockedObjects = new CommonsArrayList <> ();
     if (StringHelper.isNotEmpty (sUserID))
     {
-      m_aRWLock.writeLocked ( () -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
+      m_aRWLock.writeLocked (() -> _unlockAllObjects (sUserID, aObjectsToKeepLocked, aUnlockedObjects));
 
       if (aUnlockedObjects.isNotEmpty ())
         if (!isSilentMode ())
@@ -390,7 +390,7 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     final ICommonsSet <IDTYPE> ret = new CommonsHashSet <> ();
     if (StringHelper.isNotEmpty (sUserID))
     {
-      m_aRWLock.readLocked ( () -> {
+      m_aRWLock.readLocked (() -> {
         for (final Map.Entry <IDTYPE, ILockInfo> aEntry : m_aLockedObjs.entrySet ())
           if (aEntry.getValue ().getLockUserID ().equals (sUserID))
             ret.add (aEntry.getKey ());

@@ -127,9 +127,9 @@ public class DataTablesOnDemandRequest
 
   /**
    * Convert the provided DataTables request data into a data store agnostic paging specification.
-   * The sort field name of a column is taken from the <code>name</code> property of the column
-   * (see {@link com.helger.photon.uictrls.datatables.column.DataTablesColumnDef#setName(String)}).
-   * If no name was assigned, the 0-based column index is used as the field name instead.<br>
+   * The sort field name of a column is taken from the <code>name</code> property of the column (see
+   * {@link com.helger.photon.uictrls.datatables.column.DataTablesColumnDef#setName(String)}). If no
+   * name was assigned, the 0-based column index is used as the field name instead.<br>
    * Note: the field names are provided by the client and must therefore be treated as untrusted
    * input. A data provider may only ever use them to look up a known field - never to build a query
    * fragment from them.
@@ -169,7 +169,7 @@ public class DataTablesOnDemandRequest
 
       // Prefer the explicit column name over the column index
       final String sFieldName = StringHelper.isNotEmpty (aColumn.getName ()) ? aColumn.getName ()
-                                                                            : Integer.toString (nColumnIndex);
+                                                                             : Integer.toString (nColumnIndex);
       aSortFields.add (new SortField (sFieldName, aOrderColumn.getSortDirectionOrDefault ()));
     }
 

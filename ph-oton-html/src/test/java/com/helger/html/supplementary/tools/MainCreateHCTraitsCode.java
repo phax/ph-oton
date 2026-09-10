@@ -75,7 +75,13 @@ public class MainCreateHCTraitsCode
                   " (@Nullable final IHCNode aNode){return new " +
                   sType +
                   "().addChild (aNode);}\n");
-      aSB.append ("@NonNull default " + sType + " " + sMethod + " (@Nullable final String s){return new " + sType + "().addChild (s);}\n");
+      aSB.append ("@NonNull default " +
+                  sType +
+                  " " +
+                  sMethod +
+                  " (@Nullable final String s){return new " +
+                  sType +
+                  "().addChild (s);}\n");
       aSB.append ("@NonNull default " +
                   sType +
                   " " +

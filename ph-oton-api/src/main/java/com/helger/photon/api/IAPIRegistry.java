@@ -25,8 +25,8 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
 
 /**
- * Base interface for an API registry. It has a set of {@link APIDescriptor}
- * instances that it can invoke.
+ * Base interface for an API registry. It has a set of {@link APIDescriptor} instances that it can
+ * invoke.
  *
  * @author Philip Helger
  * @since 8.1.4
@@ -34,8 +34,8 @@ import com.helger.collection.commons.ICommonsList;
 public interface IAPIRegistry extends Serializable
 {
   /**
-   * Register a new API descriptor. It is the callers responsibility to ensure
-   * each API is only registered once.
+   * Register a new API descriptor. It is the callers responsibility to ensure each API is only
+   * registered once.
    *
    * @param aDescriptor
    *        The descriptor to be registered. May not be <code>null</code>.
@@ -43,8 +43,7 @@ public interface IAPIRegistry extends Serializable
   void registerAPI (@NonNull APIDescriptor aDescriptor);
 
   /**
-   * @return A mutable list of all registered descriptors. Never
-   *         <code>null</code> but maybe empty.
+   * @return A mutable list of all registered descriptors. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -55,8 +54,8 @@ public interface IAPIRegistry extends Serializable
    *
    * @param aPath
    *        The path to search. May not be <code>null</code>.
-   * @return <code>null</code> if no matching invoker is registered meaning the
-   *         path cannot be handled by this invoker.
+   * @return <code>null</code> if no matching invoker is registered meaning the path cannot be
+   *         handled by this invoker.
    */
   @Nullable
   default InvokableAPIDescriptor getAPIByPath (@NonNull final APIPath aPath)
@@ -71,8 +70,8 @@ public interface IAPIRegistry extends Serializable
    *        The path to search. May not be <code>null</code>.
    * @param aAmbiguityResolver
    *        The ambiguity resolver to be used. May not be <code>null</code>.
-   * @return <code>null</code> if no matching invoker is registered meaning the
-   *         path cannot be handled by this invoker.
+   * @return <code>null</code> if no matching invoker is registered meaning the path cannot be
+   *         handled by this invoker.
    * @since 8.1.4
    */
   @Nullable

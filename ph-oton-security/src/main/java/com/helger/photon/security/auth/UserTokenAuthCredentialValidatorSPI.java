@@ -29,9 +29,8 @@ import com.helger.security.authentication.credentials.IAuthCredentialValidatorSP
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
- * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link ITokenCredentials} using the {@link IUserTokenManager} to login
- * {@link IUserToken} objects.
+ * An implementation of the {@link IAuthCredentialValidatorSPI} for {@link ITokenCredentials} using
+ * the {@link IUserTokenManager} to login {@link IUserToken} objects.
  *
  * @author Philip Helger
  */

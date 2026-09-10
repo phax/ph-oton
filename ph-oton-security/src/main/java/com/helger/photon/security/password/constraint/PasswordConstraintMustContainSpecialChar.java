@@ -28,8 +28,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.xml.microdom.IMicroElement;
 
 /**
- * Password constraint defining that at least a certain amount of special
- * characters (= not letter and not digit) must be contained
+ * Password constraint defining that at least a certain amount of special characters (= not letter
+ * and not digit) must be contained
  *
  * @author Philip Helger
  * @since 2.7.4
@@ -44,8 +44,7 @@ public class PasswordConstraintMustContainSpecialChar implements IPasswordConstr
    * Ctor
    *
    * @param nMinSpecials
-   *        The minimum number of letters that must occur in a password. Must be
-   *        &gt; 0.
+   *        The minimum number of letters that must occur in a password. Must be &gt; 0.
    */
   public PasswordConstraintMustContainSpecialChar (@Nonnegative final int nMinSpecials)
   {
@@ -71,7 +70,8 @@ public class PasswordConstraintMustContainSpecialChar implements IPasswordConstr
   @Nullable
   public String getDescription (@NonNull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MUST_CONTAIN_SPECIALS.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinSpecials));
+    return EPasswordConstraintText.DESC_MUST_CONTAIN_SPECIALS.getDisplayTextWithArgs (aContentLocale,
+                                                                                      Integer.valueOf (m_nMinSpecials));
   }
 
   public void fillMicroElement (@NonNull final IMicroElement aElement)

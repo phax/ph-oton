@@ -30,7 +30,8 @@ import com.helger.text.util.TextHelper;
 @Translatable
 public enum EFineUploader5UIText implements IHasDisplayText
 {
-  DELETE_FILE_CONFIRM_MESSAGE ("Soll die Datei {filename} gelöscht werden?", "Are you sure you want to delete {filename}?"),
+  DELETE_FILE_CONFIRM_MESSAGE ("Soll die Datei {filename} gelöscht werden?",
+                               "Are you sure you want to delete {filename}?"),
   DELETE_FILE_DELETING_FAILED_TEXT ("Löschen ist fehlgeschlagen", "Delete failed"),
   DELETE_FILE_DELETING_STATUS_TEXT ("Löschen...", "Deleting..."),
   // old

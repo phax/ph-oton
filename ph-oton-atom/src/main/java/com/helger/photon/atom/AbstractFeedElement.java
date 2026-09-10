@@ -23,8 +23,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.base.string.StringHelper;
 
 /**
- * Abstract implementation of {@link IFeedElement} with a common language
- * handling.
+ * Abstract implementation of {@link IFeedElement} with a common language handling.
  *
  * @author Philip Helger
  */

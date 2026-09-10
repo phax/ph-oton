@@ -31,12 +31,11 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 public interface IAjaxExecutor extends Serializable
 {
   /**
-   * Initialization method that is called before the main execution is called.
-   * This can e.g be used to determine the last modification date time.
+   * Initialization method that is called before the main execution is called. This can e.g be used
+   * to determine the last modification date time.
    *
    * @param aRequestScope
-   *        The request scope to be used, to extract parameters. Never
-   *        <code>null</code>.
+   *        The request scope to be used, to extract parameters. Never <code>null</code>.
    */
   default void initExecution (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
   {
@@ -44,11 +43,9 @@ public interface IAjaxExecutor extends Serializable
   }
 
   /**
-   * Registers all external resources (CSS or JS files) needed by controls
-   * potentially spawned by an AJAX request of this handler. This method is
-   * called BEFORE
-   * {@link #handleRequest(IRequestWebScopeWithoutResponse, PhotonUnifiedResponse)}
-   * is invoked!
+   * Registers all external resources (CSS or JS files) needed by controls potentially spawned by an
+   * AJAX request of this handler. This method is called BEFORE
+   * {@link #handleRequest(IRequestWebScopeWithoutResponse, PhotonUnifiedResponse)} is invoked!
    */
   default void registerExternalResources ()
   {
@@ -56,12 +53,10 @@ public interface IAjaxExecutor extends Serializable
   }
 
   /**
-   * Called to handle a specific request. The implementation of this method
-   * usually performs a server side task and fills the provided response object
-   * with e.g. binary data to download or HTML content to be evaluated by the
-   * calling HTML page. If this Ajax executor only executes something but
-   * delivers no result, at least the HTTP status 204 (No content) should be
-   * returned.
+   * Called to handle a specific request. The implementation of this method usually performs a
+   * server side task and fills the provided response object with e.g. binary data to download or
+   * HTML content to be evaluated by the calling HTML page. If this Ajax executor only executes
+   * something but delivers no result, at least the HTTP status 204 (No content) should be returned.
    *
    * @param aRequestScope
    *        the request scope values to be used. Never <code>null</code>.

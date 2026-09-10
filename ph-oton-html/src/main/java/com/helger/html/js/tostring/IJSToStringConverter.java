@@ -22,8 +22,8 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 
 /**
- * Interface that defines the conversion routines to convert an arbitrary Java
- * object to a valid JavaScript object.
+ * Interface that defines the conversion routines to convert an arbitrary Java object to a valid
+ * JavaScript object.
  *
  * @author Philip Helger
  */

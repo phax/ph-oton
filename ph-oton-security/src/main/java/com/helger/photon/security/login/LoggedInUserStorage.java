@@ -60,7 +60,7 @@ public final class LoggedInUserStorage
   @NonNull
   public static String getBaseDirectory ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_sBaseDirectory);
+    return RW_LOCK.readLockedGet (() -> s_sBaseDirectory);
   }
 
   /**
@@ -73,7 +73,7 @@ public final class LoggedInUserStorage
   {
     ValueEnforcer.notNull (sBaseDirectory, "BaseDirectory");
 
-    RW_LOCK.writeLocked ( () -> s_sBaseDirectory = sBaseDirectory);
+    RW_LOCK.writeLocked (() -> s_sBaseDirectory = sBaseDirectory);
   }
 
   /**

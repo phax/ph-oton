@@ -43,8 +43,8 @@ import com.helger.xml.microdom.IMicroContainer;
 import com.helger.xml.microdom.IMicroNode;
 
 /**
- * Renders a page with HTML code that is provided from an external resource
- * (e.g. for static pages). The content of the page is language dependent.
+ * Renders a page with HTML code that is provided from an external resource (e.g. for static pages).
+ * The content of the page is language dependent.
  *
  * @author Philip Helger
  * @param <WPECTYPE>
@@ -150,8 +150,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
   /**
    * @param aLocale
    *        The locale to be used. May be <code>null</code>.
-   * @return A clone of the passed content. <code>null</code> if no such content
-   *         is present.
+   * @return A clone of the passed content. <code>null</code> if no such content is present.
    */
   @Nullable
   public IMicroContainer getParsedContent (@Nullable final Locale aLocale)
@@ -159,7 +158,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     if (aLocale == null)
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> {
+    return m_aRWLock.readLockedGet (() -> {
       // Determine locale to use
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrNull (aLocale, m_aContent.keySet ());
       if (aLocaleToUse == null)
@@ -177,7 +176,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
 
   public void updateFromResource ()
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       for (final Map.Entry <Locale, ContentPerLocale> aEntry : m_aContent.entrySet ())
       {
         final ContentPerLocale aContent = aEntry.getValue ();
@@ -196,7 +195,7 @@ public class BasePageViewExternalMultilingual <WPECTYPE extends IWebPageExecutio
     final Locale aDisplayLocale = aWPEC.getDisplayLocale ();
     final boolean bReadFromResource = isReadEveryTime ();
 
-    final IMicroNode aNode = m_aRWLock.readLockedGet ( () -> {
+    final IMicroNode aNode = m_aRWLock.readLockedGet (() -> {
       // Use the default locale as fallback, since we ensured that the default
       // locale is contained!
       final Locale aLocaleToUse = LocaleHelper.getLocaleToUseOrFallback (aDisplayLocale,

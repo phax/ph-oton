@@ -28,8 +28,8 @@ import org.jspecify.annotations.NonNull;
 public interface IHCHasFocus <IMPLTYPE extends IHCHasFocus <IMPLTYPE>>
 {
   /**
-   * @return <code>true</code> if this element is focused, <code>false</code>
-   *         otherwise. By default an element is not focused.
+   * @return <code>true</code> if this element is focused, <code>false</code> otherwise. By default
+   *         an element is not focused.
    */
   boolean isAutoFocus ();
 
@@ -37,8 +37,8 @@ public interface IHCHasFocus <IMPLTYPE extends IHCHasFocus <IMPLTYPE>>
    * Change the auto focused state of this element.
    *
    * @param bAutoFocus
-   *        <code>true</code> to auto focus this element, <code>false</code> to
-   *        not focus the element.
+   *        <code>true</code> to auto focus this element, <code>false</code> to not focus the
+   *        element.
    * @return this
    */
   @NonNull

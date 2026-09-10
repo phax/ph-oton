@@ -36,11 +36,10 @@ public abstract class AbstractJSClass extends AbstractJSType
   /**
    * Gets the super class of this class.
    *
-   * @return Returns the JClass representing the superclass of the entity (class
-   *         or interface) represented by this {@link AbstractJSClass}. Even if
-   *         no super class is given explicitly or this {@link AbstractJSClass}
-   *         is not a class, this method still returns {@link AbstractJSClass}
-   *         for {@link Object}. If this JClass represents {@link Object},
+   * @return Returns the JClass representing the superclass of the entity (class or interface)
+   *         represented by this {@link AbstractJSClass}. Even if no super class is given explicitly
+   *         or this {@link AbstractJSClass} is not a class, this method still returns
+   *         {@link AbstractJSClass} for {@link Object}. If this JClass represents {@link Object},
    *         return null.
    */
   @Nullable
@@ -50,8 +49,7 @@ public abstract class AbstractJSClass extends AbstractJSType
   /**
    * Checks the relationship between two classes.
    * <p>
-   * This method works in the same way as {@link Class#isAssignableFrom(Class)}
-   * works. For example
+   * This method works in the same way as {@link Class#isAssignableFrom(Class)} works. For example
    * <code>baseClass.isAssignableFrom(derivedClass)==true</code>.
    *
    * @param aDerived

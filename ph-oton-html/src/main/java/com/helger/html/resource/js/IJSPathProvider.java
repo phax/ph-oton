@@ -34,8 +34,8 @@ public interface IJSPathProvider extends IJSProvider
    * Get the path to this JavaScript resource. It is always classpath relative.
    *
    * @param bRegular
-   *        if <code>true</code> the regular version of item should be
-   *        retrieved, otherwise the minified version of the file.
+   *        if <code>true</code> the regular version of item should be retrieved, otherwise the
+   *        minified version of the file.
    * @return The path to the external JS item.
    */
   @NonNull

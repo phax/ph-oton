@@ -123,8 +123,7 @@ public interface IHCButton <IMPLTYPE extends IHCButton <IMPLTYPE>> extends
   IMPLTYPE setValue (@Nullable String sValue);
 
   /**
-   * @return The type of the button (button, submit or reset). Never
-   *         <code>null</code>.
+   * @return The type of the button (button, submit or reset). Never <code>null</code>.
    */
   @NonNull
   EHCButtonType getType ();

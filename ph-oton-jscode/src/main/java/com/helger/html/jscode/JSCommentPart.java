@@ -33,9 +33,8 @@ import com.helger.collection.commons.CommonsArrayList;
 public class JSCommentPart extends CommonsArrayList <Object>
 {
   /**
-   * Appends a new value. If the value is {@link AbstractJSType} it will be
-   * printed as a @link tag. Otherwise it will be converted to String via
-   * {@link Object#toString()} .
+   * Appends a new value. If the value is {@link AbstractJSType} it will be printed as a @link tag.
+   * Otherwise it will be converted to String via {@link Object#toString()} .
    *
    * @param aValue
    *        Value to append

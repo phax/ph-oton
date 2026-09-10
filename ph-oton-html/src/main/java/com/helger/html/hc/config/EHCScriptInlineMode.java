@@ -19,8 +19,7 @@ package com.helger.html.hc.config;
 public enum EHCScriptInlineMode
 {
   /**
-   * Emit JS code as plain text, but XML masked. The XML masking rules for text
-   * nodes apply.
+   * Emit JS code as plain text, but XML masked. The XML masking rules for text nodes apply.
    *
    * <pre>
    * &lt;script&gt;my &amp;lt; script&lt;/script&gt;
@@ -54,8 +53,8 @@ public enum EHCScriptInlineMode
    */
   CDATA,
   /**
-   * Wrap the whole JS code in an XML CDATA container inside a JS comment Tested
-   * OK with FF6, Opera11, Chrome13, IE8, IE9
+   * Wrap the whole JS code in an XML CDATA container inside a JS comment Tested OK with FF6,
+   * Opera11, Chrome13, IE8, IE9
    *
    * <pre>
    * &lt;script&gt;//&lt;![CDATA[

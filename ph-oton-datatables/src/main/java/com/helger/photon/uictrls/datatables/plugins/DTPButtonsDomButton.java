@@ -29,23 +29,21 @@ import com.helger.html.jscode.JSAssocArray;
 public class DTPButtonsDomButton
 {
   /**
-   * a string value which defines the HTML tag to use. There should be no spaces
-   * or any other formatting - e.g. it should simply be span, div, a etc.
+   * a string value which defines the HTML tag to use. There should be no spaces or any other
+   * formatting - e.g. it should simply be span, div, a etc.
    */
   private EHTMLElement m_eTag;
   /**
-   * a string value which defines the element's class name. Multiple classes can
-   * be given using space separation.
+   * a string value which defines the element's class name. Multiple classes can be given using
+   * space separation.
    */
   private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
   /**
-   * The class name to assign to the button when the button is in the disabled
-   * state.
+   * The class name to assign to the button when the button is in the disabled state.
    */
   private final HCHasCSSClasses m_aDisabled = new HCHasCSSClasses ();
   /**
-   * The class name to assign to the button when the button is in the active
-   * state.
+   * The class name to assign to the button when the button is in the active state.
    */
   private final HCHasCSSClasses m_aActive = new HCHasCSSClasses ();
 

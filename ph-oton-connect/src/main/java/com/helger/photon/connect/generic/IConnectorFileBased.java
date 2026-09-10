@@ -33,8 +33,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    * Receive data from somewhere.
    *
    * @param sID
-   *        ID of the data to be retrieved. E.g. a file name. May not be
-   *        <code>null</code>.
+   *        ID of the data to be retrieved. E.g. a file name. May not be <code>null</code>.
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -46,8 +45,8 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    * Write data to somewhere.
    *
    * @param sID
-   *        The ID of the artifact to write to. This may e.g. be a file name.
-   *        May not be <code>null</code>.
+   *        The ID of the artifact to write to. This may e.g. be a file name. May not be
+   *        <code>null</code>.
    * @param aIS
    *        The input stream to read from. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -90,8 +89,7 @@ public interface IConnectorFileBased <HANDLETYPE, REMOTEITEMTYPE> extends IConne
    * @param aFilter
    *        The filter to be used. Maybe <code>null</code>.
    * @param aTargetList
-   *        The list where the result files should be added. May not be
-   *        <code>null</code>.
+   *        The list where the result files should be added. May not be <code>null</code>.
    * @return {@link ESuccess}
    */
   @NonNull

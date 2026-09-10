@@ -69,8 +69,7 @@ public interface IAuditItem extends IHasUserID, ISuccessIndicator, Serializable
   }
 
   /**
-   * @return The performed action in a textual representation like
-   *         "action(param1,param2,...)"
+   * @return The performed action in a textual representation like "action(param1,param2,...)"
    */
   @NonNull
   String getAction ();

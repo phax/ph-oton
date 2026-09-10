@@ -24,7 +24,8 @@ import com.helger.html.hc.html.forms.IHCForm;
 import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.uicore.html.toolbar.IButtonToolbar;
 
-public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>> extends
+public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, TOOLBAR_TYPE extends IButtonToolbar <TOOLBAR_TYPE>>
+                                       extends
                                        IWebPageUIHandler
 {
   /**
@@ -32,8 +33,8 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    *
    * @param sHeaderText
    *        The header text to be displayed. May be <code>null</code> or empty.
-   * @return <code>null</code> if the passed header text is <code>null</code> or
-   *         empty, a non-<code>null</code> node otherwise.
+   * @return <code>null</code> if the passed header text is <code>null</code> or empty, a
+   *         non-<code>null</code> node otherwise.
    */
   @Nullable
   IHCNode createPageHeader (@Nullable String sHeaderText);
@@ -53,8 +54,7 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    * @param aLEC
    *        Layout execution context
    * @param bIsFormSubmitted
-   *        <code>true</code> if the form was submitted for validation,
-   *        <code>false</code> otherwise
+   *        <code>true</code> if the form was submitted for validation, <code>false</code> otherwise
    * @return A form that links to the current page.
    */
   @NonNull
@@ -75,8 +75,7 @@ public interface IWebPageFormUIHandler <FORM_TYPE extends IHCForm <FORM_TYPE>, T
    * @param aLEC
    *        Layout execution context
    * @param bIsFormSubmitted
-   *        <code>true</code> if the form was submitted for validation,
-   *        <code>false</code> otherwise
+   *        <code>true</code> if the form was submitted for validation, <code>false</code> otherwise
    * @return A file upload form that links to the current page.
    */
   @NonNull

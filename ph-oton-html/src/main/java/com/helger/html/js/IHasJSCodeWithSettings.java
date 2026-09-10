@@ -36,10 +36,8 @@ public interface IHasJSCodeWithSettings extends IHasJSCode
 
   /**
    * @param aSettings
-   *        The formatter settings to be used. May be <code>null</code> for the
-   *        default settings.
-   * @return The JavaScript code representation. May be <code>null</code> to
-   *         indicate no JS code.
+   *        The formatter settings to be used. May be <code>null</code> for the default settings.
+   * @return The JavaScript code representation. May be <code>null</code> to indicate no JS code.
    */
   @Nullable
   String getJSCode (@Nullable IJSWriterSettings aSettings);

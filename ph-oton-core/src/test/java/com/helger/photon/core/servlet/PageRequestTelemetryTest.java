@@ -121,7 +121,9 @@ public final class PageRequestTelemetryTest
   private static UnifiedResponse _createResponse ()
   {
     // The mock request has no protocol, so createSimple (...) cannot be used
-    return new UnifiedResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, WebScopeManager.getRequestScope ().getRequest ());
+    return new UnifiedResponse (EHttpVersion.HTTP_11,
+                                EHttpMethod.GET,
+                                WebScopeManager.getRequestScope ().getRequest ());
   }
 
   @Test

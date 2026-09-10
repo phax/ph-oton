@@ -34,8 +34,7 @@ public interface ISftpConnectionDestination extends IConnectionDestination <Chan
   String getHostname ();
 
   /**
-   * @return The port to use. In you are not sure, return
-   *         {@link #DEFAULT_SFTP_PORT}.
+   * @return The port to use. In you are not sure, return {@link #DEFAULT_SFTP_PORT}.
    */
   @Nonnegative
   int getPort ();

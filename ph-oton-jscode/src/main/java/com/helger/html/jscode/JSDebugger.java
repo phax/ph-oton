@@ -25,8 +25,7 @@ import com.helger.html.js.IJSWriterSettings;
 
 /**
  * Debugger statement.<br>
- * <a href=
- * "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger"
+ * <a href= "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Statements/debugger"
  * >Source</a>
  *
  * @author boris

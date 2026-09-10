@@ -128,10 +128,7 @@ public final class DataTablesOnDemandRequestTest
   @Test
   public void testSearchText ()
   {
-    final DTSSRequestData aRequestData = _req (0,
-                                               25,
-                                               "  foo   bar ",
-                                               new CommonsArrayList <> (_col ("id", true)));
+    final DTSSRequestData aRequestData = _req (0, 25, "  foo   bar ", new CommonsArrayList <> (_col ("id", true)));
     final DataTablesOnDemandRequest aRequest = new DataTablesOnDemandRequest (aRequestData);
     assertTrue (aRequest.isSearchActive ());
     assertEquals ("foo bar", aRequest.getSearchText ());

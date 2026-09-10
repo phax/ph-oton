@@ -27,9 +27,8 @@ import com.helger.photon.ajax.decl.IAjaxFunctionDeclaration;
 import com.helger.photon.ajax.executor.IAjaxExecutor;
 
 /**
- * Base interface for an AJAX registry. It has a set of {@link IAjaxExecutor}
- * instances. See {@link IAjaxInvoker} for the interface to implement the
- * execution.<br>
+ * Base interface for an AJAX registry. It has a set of {@link IAjaxExecutor} instances. See
+ * {@link IAjaxInvoker} for the interface to implement the execution.<br>
  * Note: This interface was extracted from {@link IAjaxInvoker} in v8.1.4.
  *
  * @author Philip Helger
@@ -55,8 +54,8 @@ public interface IAjaxRegistry extends Serializable
    *
    * @param sFunctionName
    *        The name of the AJAX function to check. May be <code>null</code>.
-   * @return <code>true</code> if an AJAX function with the given name is
-   *         contained, <code>false</code> otherwise.
+   * @return <code>true</code> if an AJAX function with the given name is contained,
+   *         <code>false</code> otherwise.
    */
   boolean isRegisteredFunction (@Nullable String sFunctionName);
 
@@ -64,8 +63,7 @@ public interface IAjaxRegistry extends Serializable
    * Add a handler function that is used as a callback.
    *
    * @param aFunction
-   *        The AJAX function declaration to be invoked. May not be
-   *        <code>null</code>.
+   *        The AJAX function declaration to be invoked. May not be <code>null</code>.
    */
   void registerFunction (@NonNull IAjaxFunctionDeclaration aFunction);
 }

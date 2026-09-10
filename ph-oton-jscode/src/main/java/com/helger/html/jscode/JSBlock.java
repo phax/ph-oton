@@ -30,9 +30,9 @@ import com.helger.html.js.IJSWriterSettings;
  * A block of JS code, which may contain statements and local declarations.
  * <p>
  * {@link JSBlock} contains a large number of factory methods that creates new
- * statements/declarations. Those newly created statements/declarations are
- * inserted into the {@link #pos() "current position"}. The position advances
- * one every time you add a new instruction.
+ * statements/declarations. Those newly created statements/declarations are inserted into the
+ * {@link #pos() "current position"}. The position advances one every time you add a new
+ * instruction.
  *
  * @author Philip Helger
  */
@@ -76,8 +76,8 @@ public class JSBlock extends AbstractJSBlock <JSBlock> implements IJSGeneratable
   }
 
   /**
-   * Determine whether a newline should be printed at the end of the block. This
-   * is only set to false for anonymous functions
+   * Determine whether a newline should be printed at the end of the block. This is only set to
+   * false for anonymous functions
    *
    * @param bNewLineAtEnd
    *        <code>true</code> to enable newline at the end

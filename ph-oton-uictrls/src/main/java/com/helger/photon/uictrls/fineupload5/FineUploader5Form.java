@@ -49,8 +49,7 @@ public class FineUploader5Form implements IFineUploader5Part
   }
 
   /**
-   * This can be the ID of the &lt;form&gt; or a reference to the &lt;form&gt;
-   * element.
+   * This can be the ID of the &lt;form&gt; or a reference to the &lt;form&gt; element.
    *
    * @param sElementID
    *        New value. May neither be <code>null</code> nor empty.
@@ -70,8 +69,8 @@ public class FineUploader5Form implements IFineUploader5Part
   }
 
   /**
-   * If Fine Uploader is able to attach to a form, this value takes the place of
-   * the base autoUpload option.
+   * If Fine Uploader is able to attach to a form, this value takes the place of the base autoUpload
+   * option.
    *
    * @param bAutoUpload
    *        New value
@@ -90,10 +89,9 @@ public class FineUploader5Form implements IFineUploader5Part
   }
 
   /**
-   * Set this to false if you do not want Fine Uploader to intercept attempts to
-   * submit your form. By default, Fine Uploader will intercept submit attempts
-   * and instead upload all submitted files, including data from your form in
-   * each upload request.
+   * Set this to false if you do not want Fine Uploader to intercept attempts to submit your form.
+   * By default, Fine Uploader will intercept submit attempts and instead upload all submitted
+   * files, including data from your form in each upload request.
    *
    * @param bInterceptSubmit
    *        New value

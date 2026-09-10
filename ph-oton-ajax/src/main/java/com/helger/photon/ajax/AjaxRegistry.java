@@ -54,7 +54,8 @@ public class AjaxRegistry implements IAjaxRegistry
   public static boolean isValidFunctionName (@Nullable final String sFunctionName)
   {
     // All characters allowed should be valid in URLs without masking
-    return StringHelper.isNotEmpty (sFunctionName) && RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
+    return StringHelper.isNotEmpty (sFunctionName) &&
+           RegExHelper.stringMatchesPattern ("^[a-zA-Z0-9\\-_]+$", sFunctionName);
   }
 
   @NonNull
@@ -70,7 +71,7 @@ public class AjaxRegistry implements IAjaxRegistry
     if (StringHelper.isEmpty (sFunctionName))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> m_aFuncDecls.get (sFunctionName));
+    return m_aRWLock.readLockedGet (() -> m_aFuncDecls.get (sFunctionName));
   }
 
   public boolean isRegisteredFunction (@Nullable final String sFunctionName)
@@ -78,7 +79,7 @@ public class AjaxRegistry implements IAjaxRegistry
     if (StringHelper.isEmpty (sFunctionName))
       return false;
 
-    return m_aRWLock.readLockedBoolean ( () -> m_aFuncDecls.containsKey (sFunctionName));
+    return m_aRWLock.readLockedBoolean (() -> m_aFuncDecls.containsKey (sFunctionName));
   }
 
   public void registerFunction (@NonNull final IAjaxFunctionDeclaration aFunctionDeclaration)
@@ -87,7 +88,7 @@ public class AjaxRegistry implements IAjaxRegistry
 
     final String sFunctionName = aFunctionDeclaration.getName ();
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (m_aFuncDecls.containsKey (sFunctionName))
         throw new IllegalArgumentException ("An Ajax function with the name '" +
                                             sFunctionName +
@@ -96,7 +97,10 @@ public class AjaxRegistry implements IAjaxRegistry
     });
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Registered AJAX function '" + sFunctionName + "' with executor factory " + aFunctionDeclaration.getExecutorFactory ());
+      LOGGER.debug ("Registered AJAX function '" +
+                    sFunctionName +
+                    "' with executor factory " +
+                    aFunctionDeclaration.getExecutorFactory ());
   }
 
   @Override

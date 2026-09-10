@@ -24,8 +24,8 @@ import com.helger.masterdata.vat.VATManager;
 import com.helger.photon.core.form.RequestField;
 
 /**
- * Special {@link RequestField} child class, that handles {@link IVATItem}
- * objects, and falls back to the 0% item if nothing is selected.
+ * Special {@link RequestField} child class, that handles {@link IVATItem} objects, and falls back
+ * to the 0% item if nothing is selected.
  *
  * @author Philip Helger
  */

@@ -112,8 +112,8 @@ public class FineUploader5Retry implements IFineUploader5Part
   }
 
   /**
-   * This property will be looked for in the server response and, if found and
-   * true, will indicate that no more retries should be attempted for this item.
+   * This property will be looked for in the server response and, if found and true, will indicate
+   * that no more retries should be attempted for this item.
    *
    * @param sPreventRetryResponseProperty
    *        property name

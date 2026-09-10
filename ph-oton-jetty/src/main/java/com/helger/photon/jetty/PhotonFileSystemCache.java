@@ -48,16 +48,16 @@ public class PhotonFileSystemCache implements AutoCloseable
   public PhotonFileSystemCache ()
   {}
 
-  public void ensureFileSystemIsPresent (@NonNull @Nonempty final String sKey, @NonNull final URI aUri)
-                                                                                                        throws IOException
+  public void ensureFileSystemIsPresent (@NonNull @Nonempty final String sKey,
+                                         @NonNull final URI aUri) throws IOException
   {
     // Try in read-lock for performance
-    final boolean bContained = m_aRWLock.readLockedBoolean ( () -> m_aFSCache.containsKey (sKey));
+    final boolean bContained = m_aRWLock.readLockedBoolean (() -> m_aFSCache.containsKey (sKey));
 
     if (!bContained)
     {
       // Try again in write lock
-      m_aRWLock.writeLockedThrowing ( () -> {
+      m_aRWLock.writeLockedThrowing (() -> {
         if (!m_aFSCache.containsKey (sKey))
         {
           LOGGER.info ("Loading FileSystem for URI '" + aUri + "'");
@@ -69,7 +69,7 @@ public class PhotonFileSystemCache implements AutoCloseable
 
   public void close ()
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       // Close all
       for (final var aFS : m_aFSCache.values ())
         StreamHelper.close (aFS);

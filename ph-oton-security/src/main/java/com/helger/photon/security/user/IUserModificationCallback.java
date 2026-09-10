@@ -22,8 +22,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
 
 /**
- * Callback interface when a user is created, modified, deleted, undeleted,
- * enabled or disabled.
+ * Callback interface when a user is created, modified, deleted, undeleted, enabled or disabled.
  *
  * @author Philip Helger
  */
@@ -35,8 +34,7 @@ public interface IUserModificationCallback extends ICallback
    * @param aUser
    *        The created user. Never <code>null</code>.
    * @param bPredefinedUser
-   *        <code>true</code> if it is a predefined user, <code>false</code> if
-   *        it is a regular user
+   *        <code>true</code> if it is a predefined user, <code>false</code> if it is a regular user
    */
   default void onUserCreated (@NonNull final IUser aUser, final boolean bPredefinedUser)
   {}
@@ -92,8 +90,7 @@ public interface IUserModificationCallback extends ICallback
    * @param sUserID
    *        The enabled or disabled user ID. Never <code>null</code>.
    * @param bEnabled
-   *        <code>true</code> if the user was enabled, <code>false</code> if it
-   *        was disabled
+   *        <code>true</code> if the user was enabled, <code>false</code> if it was disabled
    */
   default void onUserEnabled (@NonNull @Nonempty final String sUserID, final boolean bEnabled)
   {}

@@ -50,16 +50,15 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    * Create a new user token.
    *
    * @param sTokenString
-   *        The existing token string. May be <code>null</code> in which case a
-   *        new token string is created.
+   *        The existing token string. May be <code>null</code> in which case a new token string is
+   *        created.
    * @param aCustomAttrs
    *        Custom attributes. May be <code>null</code>.
    * @param aUser
    *        The user it belongs to. May not be <code>null</code>.
    * @param sDescription
    *        The description of the user token. May be <code>null</code>.
-   * @return The created user token. Returns <code>null</code> in case
-   *         persistence fails.
+   * @return The created user token. Returns <code>null</code> in case persistence fails.
    */
   @Nullable
   UserToken createUserToken (@Nullable String sTokenString,
@@ -105,8 +104,8 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
    * @param sRevocationReason
    *        Why was it revoked.
    * @param sTokenString
-   *        The new token string. May be <code>null</code> in which case a new
-   *        token string is created.
+   *        The new token string. May be <code>null</code> in which case a new token string is
+   *        created.
    * @return {@link EChange}
    */
   @NonNull
@@ -117,8 +116,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
                                 @Nullable String sTokenString);
 
   /**
-   * Revoke the latest access token of an existing user token. Does not create a
-   * new access token.
+   * Revoke the latest access token of an existing user token. Does not create a new access token.
    *
    * @param sUserTokenID
    *        The ID of the token to be modified.
@@ -137,8 +135,7 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
                              @NonNull @Nonempty String sRevocationReason);
 
   /**
-   * @return All contained, non-deleted user token. Never <code>null</code> but
-   *         maybe empty.
+   * @return All contained, non-deleted user token. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -169,8 +166,8 @@ public interface IUserTokenManager extends IPhotonManager <IUserToken>
   IUserToken getUserTokenOfTokenString (@Nullable String sTokenString);
 
   /**
-   * Check if the passed token string was already used in this application. This
-   * method considers all access token - revoked, expired or active.
+   * Check if the passed token string was already used in this application. This method considers
+   * all access token - revoked, expired or active.
    *
    * @param sTokenString
    *        The token string to check. May be <code>null</code>.

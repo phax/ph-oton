@@ -68,8 +68,8 @@ public final class DTSSRequestDataColumn
   }
 
   /**
-   * @return Flag to indicate if this column is searchable (true) or not
-   *         (false). This is controlled by columns.searchable
+   * @return Flag to indicate if this column is searchable (true) or not (false). This is controlled
+   *         by columns.searchable
    */
   public boolean isSearchable ()
   {
@@ -77,8 +77,8 @@ public final class DTSSRequestDataColumn
   }
 
   /**
-   * @return Flag to indicate if this column is orderable (true) or not (false).
-   *         This is controlled by columns.orderable.
+   * @return Flag to indicate if this column is orderable (true) or not (false). This is controlled
+   *         by columns.orderable.
    */
   public boolean isOrderable ()
   {
@@ -86,8 +86,7 @@ public final class DTSSRequestDataColumn
   }
 
   /**
-   * @return Individual column search object. May be <code>null</code> if column
-   *         is not searchable.
+   * @return Individual column search object. May be <code>null</code> if column is not searchable.
    */
   @Nullable
   public DTSSRequestDataSearch getSearch ()

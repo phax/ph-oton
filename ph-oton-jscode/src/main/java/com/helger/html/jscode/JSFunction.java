@@ -106,8 +106,7 @@ public class JSFunction implements IJSDocCommentable, IJSDeclaration
   }
 
   /**
-   * Add the specified variable to the list of parameters for this function
-   * signature.
+   * Add the specified variable to the list of parameters for this function signature.
    *
    * @param sName
    *        Name of the parameter being added

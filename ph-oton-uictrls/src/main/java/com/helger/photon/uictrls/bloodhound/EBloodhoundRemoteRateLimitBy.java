@@ -23,8 +23,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.string.StringHelper;
 
 /**
- * All possible values for the rateLimitBy parameter used in Bloodhound options
- * remote object.
+ * All possible values for the rateLimitBy parameter used in Bloodhound options remote object.
  *
  * @author Philip Helger
  */

@@ -103,7 +103,9 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
   }
 
   @NonNull
-  default HCOption addOption (@Nullable final String sValue, @Nullable final String sText, @Nullable final String sSelectedValue)
+  default HCOption addOption (@Nullable final String sValue,
+                              @Nullable final String sText,
+                              @Nullable final String sSelectedValue)
   {
     return addOption (sValue, sText, EqualsHelper.equals (sValue, sSelectedValue));
   }
@@ -120,7 +122,9 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    * @return this for chaining
    */
   @NonNull
-  default HCOption addOptionAt (@Nonnegative final int nIndex, @Nullable final String sValue, @Nullable final String sText)
+  default HCOption addOptionAt (@Nonnegative final int nIndex,
+                                @Nullable final String sValue,
+                                @Nullable final String sText)
   {
     final HCOption aOption = new HCOption ().setValue (sValue).addChild (HCTextNode.createOnDemand (sText));
     return addOptionAt (nIndex, aOption);
@@ -186,8 +190,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *
    * @param nIndex
    *        The index to retrieve. Should always be &ge; 0.
-   * @return <code>null</code> if no option is available for the specified
-   *         index.
+   * @return <code>null</code> if no option is available for the specified index.
    */
   @Nullable
   HCOption getOptionAtIndex (@Nonnegative int nIndex);
@@ -197,8 +200,7 @@ public interface IHCSelect <IMPLTYPE extends IHCSelect <IMPLTYPE>> extends IHCCo
    *
    * @param nIndex
    *        The index to retrieve. Should always be &ge; 0.
-   * @return <code>null</code> if no option group is available for the specified
-   *         index.
+   * @return <code>null</code> if no option group is available for the specified index.
    */
   @Nullable
   HCOptGroup getOptionGroupAtIndex (@Nonnegative int nIndex);

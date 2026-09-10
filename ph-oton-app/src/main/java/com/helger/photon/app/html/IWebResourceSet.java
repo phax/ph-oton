@@ -49,8 +49,7 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    * Add an item at the specified index
    *
    * @param nIndex
-   *        The index to be used. If the value is &lt; 0 the value is ignored
-   *        and item is appended.
+   *        The index to be used. If the value is &lt; 0 the value is ignored and item is appended.
    * @param aItem
    *        The item to add. May not be <code>null</code>.
    * @return {@link EChange}
@@ -72,8 +71,7 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
    * Add all items from another list at the specified index.
    *
    * @param nIndex
-   *        The index to be used. If the value is &lt; 0 the value is ignored
-   *        and item is appended.
+   *        The index to be used. If the value is &lt; 0 the value is ignored and item is appended.
    * @param aItems
    *        The items to be added. May not be <code>null</code>.
    * @return {@link EChange}
@@ -115,9 +113,8 @@ public interface IWebResourceSet <T extends IHTMLResourceProvider> extends IComm
   void getAllItems (@NonNull Collection <? super T> aTarget);
 
   /**
-   * Call this method to mark the resource set as "collected for further
-   * processing". This state may be used to determine additions afterwards which
-   * will potentially not be gathered.
+   * Call this method to mark the resource set as "collected for further processing". This state may
+   * be used to determine additions afterwards which will potentially not be gathered.
    */
   void markAsCollected ();
 

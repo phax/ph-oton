@@ -373,7 +373,7 @@ public class MainHtml2Code
           final String sVar = "var" + aCount.inc ();
           aSB.append (sType).append (" ").append (sVar).append (" = ");
           aSB.append ("new " + sType + " ();\r\n");
-          aElement.forAllAttributes ( (ns, n, v) -> {
+          aElement.forAllAttributes ((ns, n, v) -> {
             // Ignore xml:space
             if (!XMLConstants.XML_NS_URI.equals (ns))
               aSB.append (sVar + "." + _getSetterName (sType, n, v) + ";\n");
@@ -402,7 +402,6 @@ public class MainHtml2Code
       }
     });
     System.out.println (aSB.toString ());
-
   }
 
   @NonNull
@@ -481,7 +480,9 @@ public class MainHtml2Code
                   sParams = "new SimpleURL (" + _quote (sValue) + ")";
                 }
                 else
-                  if (sName.equalsIgnoreCase ("selected") || sName.equalsIgnoreCase ("disabled") || sName.equalsIgnoreCase ("hidden"))
+                  if (sName.equalsIgnoreCase ("selected") ||
+                      sName.equalsIgnoreCase ("disabled") ||
+                      sName.equalsIgnoreCase ("hidden"))
                   {
                     final boolean bTrue = sName.equalsIgnoreCase (sValue) || sName.equalsIgnoreCase ("true");
                     sParams = Boolean.toString (bTrue);

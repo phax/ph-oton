@@ -25,8 +25,7 @@ import com.helger.dao.wal.AbstractWALDAO;
 import com.helger.photon.io.WebFileIO;
 
 /**
- * Special {@link AbstractWALDAO} that uses the {@link WebFileIO#getDataIO()}
- * for read/write.
+ * Special {@link AbstractWALDAO} that uses the {@link WebFileIO#getDataIO()} for read/write.
  *
  * @author Philip Helger
  * @param <DATATYPE>

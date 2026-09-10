@@ -194,9 +194,9 @@ public class HCConversionSettings implements IHCConversionSettings
   @NonNull
   public HCConversionSettings setXMLWriterSettingsOptimized (final boolean bOptimized)
   {
-    m_aXMLWriterSettings.setIndent (bOptimized ? EXMLSerializeIndent.NONE : DEFAULT_INDENT_AND_ALIGN_HTML
-                                                                                                          ? EXMLSerializeIndent.INDENT_AND_ALIGN
-                                                                                                          : EXMLSerializeIndent.NONE);
+    m_aXMLWriterSettings.setIndent (bOptimized ? EXMLSerializeIndent.NONE
+                                               : DEFAULT_INDENT_AND_ALIGN_HTML ? EXMLSerializeIndent.INDENT_AND_ALIGN
+                                                                               : EXMLSerializeIndent.NONE);
     // WRITE_TO_FILE_NO_LOG is the quickest version
     m_aXMLWriterSettings.setIncorrectCharacterHandling (bOptimized ? EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG
                                                                    : EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING);

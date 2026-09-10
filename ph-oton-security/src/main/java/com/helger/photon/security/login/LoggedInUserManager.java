@@ -324,22 +324,22 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   public boolean isLogoutAlreadyLoggedInUser ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bLogoutAlreadyLoggedInUser);
+    return m_aRWLock.readLockedBoolean (() -> m_bLogoutAlreadyLoggedInUser);
   }
 
   public void setLogoutAlreadyLoggedInUser (final boolean bLogoutAlreadyLoggedInUser)
   {
-    m_aRWLock.writeLocked ( () -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
+    m_aRWLock.writeLocked (() -> m_bLogoutAlreadyLoggedInUser = bLogoutAlreadyLoggedInUser);
   }
 
   public boolean isAnonymousLogging ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bAnonymousLogging);
+    return m_aRWLock.readLockedBoolean (() -> m_bAnonymousLogging);
   }
 
   public void setAnonymousLogging (final boolean bAnonymousLogging)
   {
-    m_aRWLock.writeLocked ( () -> m_bAnonymousLogging = bAnonymousLogging);
+    m_aRWLock.writeLocked (() -> m_bAnonymousLogging = bAnonymousLogging);
   }
 
   @NonNull
@@ -385,8 +385,8 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    * Re-establish the login of a user, after the session containing him was activated (e.g. after an
    * application server restart with session persistence, or after a fail over in a cluster). The
    * state of the user may have changed while the session was passivated, so the same basic checks
-   * as in {@link #loginUser(IUser, String, Iterable)} are performed - except for the password check,
-   * because no credentials are available at this point in time.
+   * as in {@link #loginUser(IUser, String, Iterable)} are performed - except for the password
+   * check, because no credentials are available at this point in time.
    *
    * @param aUser
    *        The user to be logged in again. May not be <code>null</code>.
@@ -419,7 +419,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     }
 
     final LoginInfo aInfo = new LoginInfo (aUser, aSessionScope);
-    final boolean bAdded = m_aRWLock.writeLockedBoolean ( () -> {
+    final boolean bAdded = m_aRWLock.writeLockedBoolean (() -> {
       if (m_aLoggedInUsers.containsKey (sUserID))
       {
         // The user is already logged in somewhere else
@@ -674,7 +674,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     ValueEnforcer.notNull (aNewSession, "NewSession");
 
     final String sOldID = aOldSession.getID ();
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       for (final LoginInfo aInfo : m_aLoggedInUsers.values ())
         if (aInfo.getSessionScope ().getID ().equals (sOldID))
           aInfo.internalSetSessionScope (aNewSession);
@@ -754,7 +754,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
    */
   public boolean isUserLoggedIn (@Nullable final String sUserID)
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_aLoggedInUsers.containsKey (sUserID));
+    return m_aRWLock.readLockedBoolean (() -> m_aLoggedInUsers.containsKey (sUserID));
   }
 
   /**
@@ -777,7 +777,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
   @Nullable
   public LoginInfo getLoginInfo (@Nullable final String sUserID)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aLoggedInUsers.get (sUserID));
+    return m_aRWLock.readLockedGet (() -> m_aLoggedInUsers.get (sUserID));
   }
 
   /**

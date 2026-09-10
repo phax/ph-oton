@@ -78,8 +78,8 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   }
 
   /**
-   * The time (in milliseconds) the prefetched data should be cached in
-   * localStorage. Defaults to <code>86400000</code> (1 day).
+   * The time (in milliseconds) the prefetched data should be cached in localStorage. Defaults to
+   * <code>86400000</code> (1 day).
    *
    * @param nTTL
    *        Time to live in milliseconds. Must be &ge; 1.
@@ -95,8 +95,8 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   }
 
   /**
-   * @return The time (in milliseconds) the prefetched data should be cached in
-   *         localStorage. Defaults to <code>86400000</code> (1 day).
+   * @return The time (in milliseconds) the prefetched data should be cached in localStorage.
+   *         Defaults to <code>86400000</code> (1 day).
    */
   @Nonnegative
   public int getTTL ()
@@ -105,9 +105,8 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   }
 
   /**
-   * A function with the signature <code>filter(parsedResponse)</code> that
-   * transforms the response body into an array of datums. Expected to return an
-   * array of datums.
+   * A function with the signature <code>filter(parsedResponse)</code> that transforms the response
+   * body into an array of datums. Expected to return an array of datums.
    *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
@@ -121,9 +120,8 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   }
 
   /**
-   * @return A function with the signature <code>filter(parsedResponse)</code>
-   *         that transforms the response body into an array of datums. Expected
-   *         to return an array of datums.
+   * @return A function with the signature <code>filter(parsedResponse)</code> that transforms the
+   *         response body into an array of datums. Expected to return an array of datums.
    */
   @Nullable
   public JSAnonymousFunction getFilter ()
@@ -153,6 +151,9 @@ public class TypeaheadPrefetch implements ICloneable <TypeaheadPrefetch>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("URL", m_aURL).append ("ttl", m_nTTL).appendIfNotNull ("filter", m_aFilter).getToString ();
+    return new ToStringGenerator (this).append ("URL", m_aURL)
+                                       .append ("ttl", m_nTTL)
+                                       .appendIfNotNull ("filter", m_aFilter)
+                                       .getToString ();
   }
 }

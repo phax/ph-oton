@@ -33,7 +33,7 @@ import com.helger.collection.commons.CommonsArrayList;
  */
 public final class DoNothingAuditManager implements IAuditManager
 {
-  private final IAuditor m_aAuditor = new DoNothingAuditor ( () -> null);
+  private final IAuditor m_aAuditor = new DoNothingAuditor (() -> null);
 
   public boolean isInMemory ()
   {

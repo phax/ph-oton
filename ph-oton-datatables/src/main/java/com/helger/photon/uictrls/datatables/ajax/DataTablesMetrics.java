@@ -23,9 +23,10 @@ import com.helger.telemetry.TelemetryMetrics;
 
 /**
  * Central registry of the named metric instruments emitted for server-side DataTables requests.
- * Each instrument is created once at class-load time via the vendor neutral {@link TelemetryMetrics}
- * facade - if no {@code ITelemetryMeterSPI} is registered, the underlying instruments are cheap
- * no-ops, so referencing this class in a deployment without an observability backend has no cost.
+ * Each instrument is created once at class-load time via the vendor neutral
+ * {@link TelemetryMetrics} facade - if no {@code ITelemetryMeterSPI} is registered, the underlying
+ * instruments are cheap no-ops, so referencing this class in a deployment without an observability
+ * backend has no cost.
  *
  * @author Philip Helger
  * @since 10.6.0

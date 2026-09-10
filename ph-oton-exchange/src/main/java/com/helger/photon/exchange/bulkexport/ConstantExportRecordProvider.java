@@ -28,8 +28,7 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 
 /**
- * An implementation of {@link IExportRecordProvider} that uses a constant list
- * of records.
+ * An implementation of {@link IExportRecordProvider} that uses a constant list of records.
  *
  * @author Philip Helger
  */
@@ -45,7 +44,8 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
     this (null, aBody, null);
   }
 
-  public ConstantExportRecordProvider (@Nullable final IExportRecord aHeader, @NonNull final Iterable <? extends IExportRecord> aBody)
+  public ConstantExportRecordProvider (@Nullable final IExportRecord aHeader,
+                                       @NonNull final Iterable <? extends IExportRecord> aBody)
   {
     this (aHeader, aBody, null);
   }
@@ -83,6 +83,9 @@ public class ConstantExportRecordProvider implements IExportRecordProvider
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("header", m_aHeader).append ("body", m_aBody).append ("footer", m_aFooter).getToString ();
+    return new ToStringGenerator (this).append ("header", m_aHeader)
+                                       .append ("body", m_aBody)
+                                       .append ("footer", m_aFooter)
+                                       .getToString ();
   }
 }

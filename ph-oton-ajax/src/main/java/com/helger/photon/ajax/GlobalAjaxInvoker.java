@@ -27,8 +27,7 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.web.scope.singleton.AbstractGlobalWebSingleton;
 
 /**
- * Global AJAX invoker. Was reworked in v8.1.4 to clearly separate between
- * registry and invoker.
+ * Global AJAX invoker. Was reworked in v8.1.4 to clearly separate between registry and invoker.
  *
  * @author Philip Helger
  */
@@ -55,8 +54,8 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   }
 
   /**
-   * Reset all values to default. This is only intended for testing purposes.
-   * ATTENTION: this removes ALL registrations!
+   * Reset all values to default. This is only intended for testing purposes. ATTENTION: this
+   * removes ALL registrations!
    */
   @VisibleForTesting
   public void resetToDefault ()
@@ -68,13 +67,12 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   @NonNull
   public IAjaxRegistry getRegistry ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aRegistry);
+    return m_aRWLock.readLockedGet (() -> m_aRegistry);
   }
 
   /**
-   * Set the global registry to be used. Note: this API can only called BEFORE
-   * registrations are performed. Afterwards an {@link IllegalStateException} is
-   * thrown if this API is invoked.
+   * Set the global registry to be used. Note: this API can only called BEFORE registrations are
+   * performed. Afterwards an {@link IllegalStateException} is thrown if this API is invoked.
    *
    * @param aRegistry
    *        The registry to use. May not be <code>null</code>.
@@ -82,22 +80,22 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public void setRegistry (@NonNull final IAjaxRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
-    if (m_aRWLock.readLockedBoolean ( () -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
+    if (m_aRWLock.readLockedBoolean (() -> m_aRegistry.getAllRegisteredFunctions ().isNotEmpty ()))
       throw new IllegalStateException ("Cannot change the registry after a function was already registered!");
 
-    m_aRWLock.writeLocked ( () -> m_aRegistry = aRegistry);
+    m_aRWLock.writeLocked (() -> m_aRegistry = aRegistry);
   }
 
   @NonNull
   public IAjaxInvoker getInvoker ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aInvoker);
+    return m_aRWLock.readLockedGet (() -> m_aInvoker);
   }
 
   /**
-   * Set the global invoker to be used. This can be changed during the runtime
-   * of the application and is independent of the registry state. Use this to
-   * e.g. increase the debug logging or tracing of the invocations.
+   * Set the global invoker to be used. This can be changed during the runtime of the application
+   * and is independent of the registry state. Use this to e.g. increase the debug logging or
+   * tracing of the invocations.
    *
    * @param aInvoker
    *        The invoker to be used. May not be <code>null</code>.
@@ -105,7 +103,7 @@ public final class GlobalAjaxInvoker extends AbstractGlobalWebSingleton
   public void setInvoker (@NonNull final IAjaxInvoker aInvoker)
   {
     ValueEnforcer.notNull (aInvoker, "Invoker");
-    m_aRWLock.writeLocked ( () -> m_aInvoker = aInvoker);
+    m_aRWLock.writeLocked (() -> m_aInvoker = aInvoker);
   }
 
   @Override

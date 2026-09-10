@@ -108,9 +108,7 @@ public final class AjaxTelemetryTest
   {
     try (final WebScoped aWebScoped = new WebScoped ())
     {
-      final IAjaxExecutor aExecutor = (aRequestScope, aResponse) -> {
-        throw new IllegalStateException ("oops");
-      };
+      final IAjaxExecutor aExecutor = (aRequestScope, aResponse) -> { throw new IllegalStateException ("oops"); };
       new AjaxInvoker ().invokeFunction (FUNCTION_NAME,
                                          aExecutor,
                                          aWebScoped.getRequestScope (),

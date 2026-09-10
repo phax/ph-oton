@@ -28,8 +28,7 @@ import org.jspecify.annotations.NonNull;
 public interface IHCHasState <IMPLTYPE extends IHCHasState <IMPLTYPE>>
 {
   /**
-   * @return <code>true</code> if the element is disabled, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the element is disabled, <code>false</code> otherwise.
    */
   boolean isDisabled ();
 

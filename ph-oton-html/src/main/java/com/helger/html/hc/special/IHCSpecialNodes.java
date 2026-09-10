@@ -28,11 +28,9 @@ import com.helger.html.js.IHasJSCode;
 import com.helger.html.resource.css.ICSSCodeProvider;
 
 /**
- * This interface represents all special nodes that can occur in an HTML
- * document: CSS files (<code>&lt;link rel="stylesheet" href="..."/&gt;</code>),
- * JS files (<code>&lt;script
- * href="..."&gt;</code>) and inline JS code (
- * <code>&lt;script&gt;...&lt;/script&gt;</code>).
+ * This interface represents all special nodes that can occur in an HTML document: CSS files
+ * (<code>&lt;link rel="stylesheet" href="..."/&gt;</code>), JS files (<code>&lt;script
+ * href="..."&gt;</code>) and inline JS code ( <code>&lt;script&gt;...&lt;/script&gt;</code>).
  *
  * @author Philip Helger
  */
@@ -41,50 +39,48 @@ public interface IHCSpecialNodes extends Serializable
   boolean isEmpty ();
 
   /**
-   * @return <code>true</code> if CSS files are present, <code>false</code> if
-   *         not
+   * @return <code>true</code> if CSS files are present, <code>false</code> if not
    */
   boolean hasExternalCSSs ();
 
   /**
-   * @return All CSS files as a map from media list to the list of matching
-   *         files. Never <code>null</code>.
+   * @return All CSS files as a map from media list to the list of matching files. Never
+   *         <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedMap <ICSSMediaList, ICommonsList <String>> getAllExternalCSSs ();
 
   /**
-   * @return <code>true</code> if inline CSS to be included <b>before</b> the
-   *         CSS files is present, <code>false</code> if not
+   * @return <code>true</code> if inline CSS to be included <b>before</b> the CSS files is present,
+   *         <code>false</code> if not
    */
   boolean hasInlineCSSBeforeExternal ();
 
   /**
-   * @return The inline CSS to be included <b>before</b> the files as a map from
-   *         media list to the CSS code. May not be <code>null</code>.
+   * @return The inline CSS to be included <b>before</b> the files as a map from media list to the
+   *         CSS code. May not be <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsList <ICSSCodeProvider> getAllInlineCSSBeforeExternal ();
 
   /**
-   * @return <code>true</code> if inline CSS to be included <b>after</b> the CSS
-   *         files is present, <code>false</code> if not
+   * @return <code>true</code> if inline CSS to be included <b>after</b> the CSS files is present,
+   *         <code>false</code> if not
    */
   boolean hasInlineCSSAfterExternal ();
 
   /**
-   * @return The inline CSS to be included <b>after</b> the files as a map from
-   *         media list to the CSS code. May not be <code>null</code>.
+   * @return The inline CSS to be included <b>after</b> the files as a map from media list to the
+   *         CSS code. May not be <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsList <ICSSCodeProvider> getAllInlineCSSAfterExternal ();
 
   /**
-   * @return <code>true</code> if JS files are present, <code>false</code> if
-   *         not
+   * @return <code>true</code> if JS files are present, <code>false</code> if not
    */
   boolean hasExternalJSs ();
 
@@ -96,8 +92,7 @@ public interface IHCSpecialNodes extends Serializable
   ICommonsList <String> getAllExternalJSs ();
 
   /**
-   * @return <code>true</code> if inline JS is present, <code>false</code> if
-   *         not
+   * @return <code>true</code> if inline JS is present, <code>false</code> if not
    */
   boolean hasInlineJSBeforeExternal ();
 
@@ -109,8 +104,7 @@ public interface IHCSpecialNodes extends Serializable
   IHasJSCode getInlineJSBeforeExternal ();
 
   /**
-   * @return <code>true</code> if inline JS is present, <code>false</code> if
-   *         not
+   * @return <code>true</code> if inline JS is present, <code>false</code> if not
    */
   boolean hasInlineJSAfterExternal ();
 

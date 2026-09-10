@@ -42,16 +42,14 @@ public class RevocationStatus implements IRevocationStatus
   private String m_sRevocationReason;
 
   /**
-   * Constructor for deserialization only. Use {@link #createUnrevoked()}
-   * instead.
+   * Constructor for deserialization only. Use {@link #createUnrevoked()} instead.
    *
    * @param bRevoked
    *        <code>true</code> if it is revoked, <code>false</code> if not
    * @param sRevocationUserID
    *        The user ID that revoked the object. May be <code>null</code>.
    * @param aRevocationDT
-   *        The date time when the revocation took place. May be
-   *        <code>null</code>.
+   *        The date time when the revocation took place. May be <code>null</code>.
    * @param sRevocationReason
    *        The reason for the revocation. May be <code>null</code>.
    */
@@ -99,14 +97,12 @@ public class RevocationStatus implements IRevocationStatus
    * Mark the owning item as revoked.
    *
    * @param sRevocationUserID
-   *        The ID of the user who revoked it. May neither be <code>null</code>
-   *        nor empty.
+   *        The ID of the user who revoked it. May neither be <code>null</code> nor empty.
    * @param aRevocationDT
-   *        The date and time when the revocation took place. May not be
-   *        <code>null</code>.
+   *        The date and time when the revocation took place. May not be <code>null</code>.
    * @param sRevocationReason
-   *        A human readable reason why revocation took place. May neither be
-   *        <code>null</code> nor empty.
+   *        A human readable reason why revocation took place. May neither be <code>null</code> nor
+   *        empty.
    * @throws IllegalStateException
    *         If this status already denotes a revoked object.
    */

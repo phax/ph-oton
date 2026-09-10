@@ -52,88 +52,105 @@ public final class ComparatorDT
   @NonNull
   public static IComparableExtractor <BigDecimal> getExtractorBigDecimal (@NonNull final Locale aDisplayLocale)
   {
-    return sCellText -> StringHelper.isEmpty (sCellText) ? null : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
+                                                         : LocaleParser.parseBigDecimal (sCellText,
+                                                                                         aDisplayLocale,
+                                                                                         null);
   }
 
   @NonNull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyFormat (@NonNull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.isEmpty (sCellText) ? null : CurrencyHelper.parseCurrencyFormat (eCurrency, sCellText, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
+                                                         : CurrencyHelper.parseCurrencyFormat (eCurrency,
+                                                                                               sCellText,
+                                                                                               null);
   }
 
   @NonNull
   public static IComparableExtractor <BigDecimal> getExtractorCurrencyValueFormat (@NonNull final ECurrency eCurrency)
   {
-    return sCellText -> StringHelper.isEmpty (sCellText) ? null : CurrencyHelper.parseValueFormat (eCurrency, sCellText, null);
+    return sCellText -> StringHelper.isEmpty (sCellText) ? null
+                                                         : CurrencyHelper.parseValueFormat (eCurrency, sCellText, null);
   }
 
   @NonNull
   public static IComparableExtractor <BigInteger> getExtractorBigInteger (@NonNull final Locale aDisplayLocale)
   {
     return sCellText -> StringHelper.isEmpty (sCellText) ? null
-                                                           : LocaleParser.parseBigDecimal (sCellText, aDisplayLocale, BigDecimal.ZERO)
-                                                                         .toBigIntegerExact ();
+                                                         : LocaleParser.parseBigDecimal (sCellText,
+                                                                                         aDisplayLocale,
+                                                                                         BigDecimal.ZERO)
+                                                                       .toBigIntegerExact ();
   }
 
   @NonNull
   public static IComparableExtractor <LocalDate> getExtractorDate (@NonNull final Locale aDisplayLocale)
   {
-    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
+    return getExtractorDate (PDTFormatter.getFormatterDate (FormatStyle.MEDIUM,
+                                                            aDisplayLocale,
+                                                            EDTFormatterMode.PARSE));
   }
 
   @NonNull
   public static IComparableExtractor <LocalDate> getExtractorDate (@NonNull final DateTimeFormatter aDTFormatter)
   {
     return sCellText -> StringHelper.isEmpty (sCellText) ? null
-                                                           : ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
-                                                                                                                          aDTFormatter),
-                                                                                    () -> "Failed to parse date '" +
-                                                                                          sCellText +
-                                                                                          "' using formatter " +
-                                                                                          aDTFormatter);
+                                                         : ValueEnforcer.notNull (PDTFromString.getLocalDateFromString (sCellText,
+                                                                                                                        aDTFormatter),
+                                                                                  () -> "Failed to parse date '" +
+                                                                                        sCellText +
+                                                                                        "' using formatter " +
+                                                                                        aDTFormatter);
   }
 
   @NonNull
   public static IComparableExtractor <LocalTime> getExtractorTime (@NonNull final Locale aDisplayLocale)
   {
-    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
+    return getExtractorTime (PDTFormatter.getFormatterTime (FormatStyle.MEDIUM,
+                                                            aDisplayLocale,
+                                                            EDTFormatterMode.PARSE));
   }
 
   @NonNull
   public static IComparableExtractor <LocalTime> getExtractorTime (@NonNull final DateTimeFormatter aDTFormatter)
   {
     return sCellText -> StringHelper.isEmpty (sCellText) ? null
-                                                           : ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
-                                                                                                                          aDTFormatter),
-                                                                                    () -> "Failed to parse time '" +
-                                                                                          sCellText +
-                                                                                          "' with formatter " +
-                                                                                          aDTFormatter);
+                                                         : ValueEnforcer.notNull (PDTFromString.getLocalTimeFromString (sCellText,
+                                                                                                                        aDTFormatter),
+                                                                                  () -> "Failed to parse time '" +
+                                                                                        sCellText +
+                                                                                        "' with formatter " +
+                                                                                        aDTFormatter);
   }
 
   @NonNull
   public static IComparableExtractor <LocalDateTime> getExtractorDateTime (@NonNull final Locale aDisplayLocale)
   {
-    return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM, aDisplayLocale, EDTFormatterMode.PARSE));
+    return getExtractorDateTime (PDTFormatter.getFormatterDateTime (FormatStyle.MEDIUM,
+                                                                    aDisplayLocale,
+                                                                    EDTFormatterMode.PARSE));
   }
 
   @NonNull
   public static IComparableExtractor <LocalDateTime> getExtractorDateTime (@NonNull final DateTimeFormatter aDTFormatter)
   {
     return sCellText -> StringHelper.isEmpty (sCellText) ? null
-                                                           : ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
-                                                                                                                              aDTFormatter),
-                                                                                    () -> "Failed to parse datetime '" +
-                                                                                          sCellText +
-                                                                                          "' with formatter " +
-                                                                                          aDTFormatter);
+                                                         : ValueEnforcer.notNull (PDTFromString.getLocalDateTimeFromString (sCellText,
+                                                                                                                            aDTFormatter),
+                                                                                  () -> "Failed to parse datetime '" +
+                                                                                        sCellText +
+                                                                                        "' with formatter " +
+                                                                                        aDTFormatter);
   }
 
   @NonNull
   public static IComparableExtractor <Duration> getExtractorDuration ()
   {
     return sCellText -> StringHelper.isEmpty (sCellText) ? null
-                                                           : ValueEnforcer.notNull (PDTFromString.getDurationFromString (sCellText),
-                                                                                    () -> "Failed to parse duration '" + sCellText + "'");
+                                                         : ValueEnforcer.notNull (PDTFromString.getDurationFromString (sCellText),
+                                                                                  () -> "Failed to parse duration '" +
+                                                                                        sCellText +
+                                                                                        "'");
   }
 }

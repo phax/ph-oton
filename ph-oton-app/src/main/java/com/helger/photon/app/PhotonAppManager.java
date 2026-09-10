@@ -28,8 +28,8 @@ import com.helger.scope.IScope;
 import com.helger.scope.singleton.AbstractGlobalSingleton;
 
 /**
- * The meta system manager encapsulates all managers that are located in this
- * project. Currently the contained managers are:
+ * The meta system manager encapsulates all managers that are located in this project. Currently the
+ * contained managers are:
  * <ul>
  * <li>{@link WebSiteResourceBundleManager}</li>
  * </ul>

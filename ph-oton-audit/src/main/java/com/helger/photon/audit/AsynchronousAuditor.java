@@ -85,7 +85,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   {
     ValueEnforcer.notNull (aAuditItem, "AuditItem");
 
-    m_aRWLock.writeLocked ( () -> m_aCollector.queueObject (aAuditItem));
+    m_aRWLock.writeLocked (() -> m_aCollector.queueObject (aAuditItem));
   }
 
   @Nonnegative
@@ -105,7 +105,7 @@ public class AsynchronousAuditor extends AbstractAuditor
   @NonNull
   public EChange stop ()
   {
-    if (m_aRWLock.writeLockedBoolean ( () -> {
+    if (m_aRWLock.writeLockedBoolean (() -> {
       // Check if the thread pool is already shut down
       if (m_aSenderThreadPool.isShutdown ())
         return true;

@@ -29,8 +29,7 @@ import com.helger.html.hc.IHCWrappingNode;
 public interface IHCConditionalCommentNode extends IHCWrappingNode
 {
   /**
-   * @return The condition for the conditional comment. Neither
-   *         <code>null</code> nor empty.
+   * @return The condition for the conditional comment. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty

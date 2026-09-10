@@ -36,13 +36,13 @@ public final class InternalErrorMetrics
 {
   /** Internal errors, by the class name of the causing throwable. */
   public static final ITelemetryCounter INTERNAL_ERRORS = TelemetryMetrics.counter (CCoreTelemetry.METRIC_INTERNAL_ERRORS,
-                                                                                     "Internal errors that were handled",
-                                                                                     CCoreTelemetry.UNIT_ERROR);
+                                                                                    "Internal errors that were handled",
+                                                                                    CCoreTelemetry.UNIT_ERROR);
 
   /** Internal error notification mails that were not sent, by reason. */
   public static final ITelemetryCounter MAILS_SUPPRESSED = TelemetryMetrics.counter (CCoreTelemetry.METRIC_INTERNAL_ERROR_MAILS_SUPPRESSED,
-                                                                                      "Internal error notification mails that were not sent",
-                                                                                      CCoreTelemetry.UNIT_ERROR);
+                                                                                     "Internal error notification mails that were not sent",
+                                                                                     CCoreTelemetry.UNIT_ERROR);
 
   private InternalErrorMetrics ()
   {}

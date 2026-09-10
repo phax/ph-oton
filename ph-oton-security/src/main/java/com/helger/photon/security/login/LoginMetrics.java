@@ -56,17 +56,17 @@ public final class LoginMetrics
 
   /** Time between the login and the logout of a user. */
   public static final ITelemetryHistogram SESSION_DURATION = TelemetryMetrics.histogram (CSecurityTelemetry.METRIC_SESSION_DURATION,
-                                                                                          "Time between the login and the logout of a user",
-                                                                                          CSecurityTelemetry.UNIT_MILLIS);
+                                                                                         "Time between the login and the logout of a user",
+                                                                                         CSecurityTelemetry.UNIT_MILLIS);
 
   private LoginMetrics ()
   {}
 
   /**
    * Create the observable gauge over the number of currently logged in users. Deliberately not a
-   * constant of this class: the gauge is bound to the life time of the
-   * {@link LoggedInUserManager} global singleton and must be closed when that singleton is
-   * destroyed, so that it does not outlive the global scope.
+   * constant of this class: the gauge is bound to the life time of the {@link LoggedInUserManager}
+   * global singleton and must be closed when that singleton is destroyed, so that it does not
+   * outlive the global scope.
    *
    * @param aSupplier
    *        The supplier of the current number of logged in users. Invoked from a backend thread, so

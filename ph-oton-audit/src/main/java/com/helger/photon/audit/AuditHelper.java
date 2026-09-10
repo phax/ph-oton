@@ -41,7 +41,7 @@ public final class AuditHelper
 {
   private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
 
-  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor ( () -> "dummyUserID", "!DEFAULT-AUDITOR! ");
+  private static final IAuditor DEFAULT_AUDITOR = new LoggingAuditor (() -> "dummyUserID", "!DEFAULT-AUDITOR! ");
 
   // This is the default dummy auditor that should be replaced with something
   // meaningful!
@@ -53,7 +53,7 @@ public final class AuditHelper
   @NonNull
   public static IAuditor getAuditor ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aAuditor);
+    return RW_LOCK.readLockedGet (() -> s_aAuditor);
   }
 
   /**
@@ -62,7 +62,7 @@ public final class AuditHelper
    */
   public static boolean isDefaultAuditorSet ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> EqualsHelper.identityEqual (s_aAuditor, DEFAULT_AUDITOR));
+    return RW_LOCK.readLockedBoolean (() -> EqualsHelper.identityEqual (s_aAuditor, DEFAULT_AUDITOR));
   }
 
   /**
@@ -75,7 +75,7 @@ public final class AuditHelper
   {
     ValueEnforcer.notNull (aAuditor, "Auditor");
 
-    RW_LOCK.writeLocked ( () -> s_aAuditor = aAuditor);
+    RW_LOCK.writeLocked (() -> s_aAuditor = aAuditor);
   }
 
   /**

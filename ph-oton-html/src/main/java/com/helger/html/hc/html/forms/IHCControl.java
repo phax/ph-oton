@@ -23,8 +23,7 @@ import com.helger.html.hc.html.IHCElement;
 import com.helger.html.hc.html.IHCHasState;
 
 /**
- * Base interface for controls like edit, checkbox, radio button, select or text
- * area.
+ * Base interface for controls like edit, checkbox, radio button, select or text area.
  *
  * @author Philip Helger
  * @param <IMPLTYPE>

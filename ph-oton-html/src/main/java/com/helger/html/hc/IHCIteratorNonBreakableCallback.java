@@ -33,8 +33,7 @@ public interface IHCIteratorNonBreakableCallback extends ICallback
    * Callback method
    *
    * @param aParentNode
-   *        Optional parent node. May be <code>null</code> for the initial
-   *        element.
+   *        Optional parent node. May be <code>null</code> for the initial element.
    * @param aChildNode
    *        The current child node. Never <code>null</code>.
    */

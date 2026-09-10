@@ -106,8 +106,7 @@ final class MarkdownHTML
   /**
    * @param sValue
    *        String to check.
-   * @return Returns <code>true</code> if the given String is a HTML block level
-   *         tag.
+   * @return Returns <code>true</code> if the given String is a HTML block level tag.
    */
   public static boolean isHtmlBlockElement (@Nullable final String sValue)
   {
@@ -119,8 +118,7 @@ final class MarkdownHTML
   /**
    * @param sValue
    *        String to check.
-   * @return Returns <code>true</code> if the given String is an unsafe HTML
-   *         tag.
+   * @return Returns <code>true</code> if the given String is an unsafe HTML tag.
    */
   public static boolean isUnsafeHtmlElement (@Nullable final String sValue)
   {

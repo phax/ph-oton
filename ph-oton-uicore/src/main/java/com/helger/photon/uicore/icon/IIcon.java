@@ -31,8 +31,7 @@ import com.helger.html.hc.html.IHCElement;
 public interface IIcon extends ICSSClassProvider, Serializable
 {
   /**
-   * @return The icon as self-contained node. The node must be visible by
-   *         itself!
+   * @return The icon as self-contained node. The node must be visible by itself!
    */
   @Nullable
   IHCElement <?> getAsNode ();

@@ -31,8 +31,8 @@ public interface ICSSPathProvider extends ICSSProvider
 {
   /**
    * @param bRegular
-   *        if <code>true</code> the regular version of item should be
-   *        retrieved, otherwise the minified version of the file.
+   *        if <code>true</code> the regular version of item should be retrieved, otherwise the
+   *        minified version of the file.
    * @return The path to the external CSS item.
    */
   @NonNull

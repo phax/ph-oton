@@ -32,15 +32,15 @@ public interface IJSProvider extends IHTMLResourceProvider
   String DEFAULT_CONDITIONAL_COMMENT = null;
 
   /**
-   * @return The conditional comment required for this JS item or
-   *         <code>null</code> if it applies to all browsers.
+   * @return The conditional comment required for this JS item or <code>null</code> if it applies to
+   *         all browsers.
    */
   @Nullable
   String getConditionalComment ();
 
   /**
-   * @return Whether or not this script can be bundled to a big JS profile. For
-   *         some files this is not possible.
+   * @return Whether or not this script can be bundled to a big JS profile. For some files this is
+   *         not possible.
    */
   boolean isBundlable ();
 }

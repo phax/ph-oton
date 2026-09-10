@@ -73,14 +73,18 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   }
 
   @NonNull
-  default IMPLTYPE addButton (@Nullable final String sCaption, @NonNull final IHasJSCode aOnClick, @Nullable final IIcon aIcon)
+  default IMPLTYPE addButton (@Nullable final String sCaption,
+                              @NonNull final IHasJSCode aOnClick,
+                              @Nullable final IIcon aIcon)
   {
     addAndReturnButton (sCaption, aOnClick, aIcon);
     return thisAsT ();
   }
 
   @NonNull
-  IHCButton <?> addAndReturnButton (@Nullable final String sCaption, @Nullable final IHasJSCode aOnClick, @Nullable final IIcon aIcon);
+  IHCButton <?> addAndReturnButton (@Nullable final String sCaption,
+                                    @Nullable final IHasJSCode aOnClick,
+                                    @Nullable final IIcon aIcon);
 
   @NonNull
   default IMPLTYPE addButton (@Nullable final String sCaption, @Nullable final ISimpleURL aURL)
@@ -89,14 +93,18 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   }
 
   @NonNull
-  default IMPLTYPE addButton (@Nullable final String sCaption, @Nullable final ISimpleURL aURL, @Nullable final IIcon aIcon)
+  default IMPLTYPE addButton (@Nullable final String sCaption,
+                              @Nullable final ISimpleURL aURL,
+                              @Nullable final IIcon aIcon)
   {
     addAndReturnButton (sCaption, aURL, aIcon);
     return thisAsT ();
   }
 
   @NonNull
-  default IHCButton <?> addAndReturnButton (@Nullable final String sCaption, @Nullable final ISimpleURL aURL, @Nullable final IIcon aIcon)
+  default IHCButton <?> addAndReturnButton (@Nullable final String sCaption,
+                                            @Nullable final ISimpleURL aURL,
+                                            @Nullable final IIcon aIcon)
   {
     return addAndReturnButton (sCaption, aURL == null ? null : JSHtml.windowLocationHref (aURL), aIcon);
   }
@@ -205,10 +213,14 @@ public interface IButtonToolbar <IMPLTYPE extends IButtonToolbar <IMPLTYPE>> ext
   }
 
   @NonNull
-  IHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption, @Nullable IHasJSCode aOnClick, @Nullable IIcon aIcon);
+  IHCButton <?> addAndReturnSubmitButton (@Nullable String sCaption,
+                                          @Nullable IHasJSCode aOnClick,
+                                          @Nullable IIcon aIcon);
 
   @NonNull
-  default IMPLTYPE addSubmitButton (@Nullable final String sCaption, @Nullable final IHasJSCode aOnClick, @Nullable final IIcon aIcon)
+  default IMPLTYPE addSubmitButton (@Nullable final String sCaption,
+                                    @Nullable final IHasJSCode aOnClick,
+                                    @Nullable final IIcon aIcon)
   {
     addAndReturnSubmitButton (sCaption, aOnClick, aIcon);
     return thisAsT ();

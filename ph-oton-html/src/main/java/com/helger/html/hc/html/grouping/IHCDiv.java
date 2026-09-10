@@ -26,7 +26,9 @@ import com.helger.html.hc.html.IHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCDiv <IMPLTYPE extends IHCDiv <IMPLTYPE>> extends IHCElementWithChildren <IMPLTYPE>, IHCHasName <IMPLTYPE>
+public interface IHCDiv <IMPLTYPE extends IHCDiv <IMPLTYPE>> extends
+                        IHCElementWithChildren <IMPLTYPE>,
+                        IHCHasName <IMPLTYPE>
 {
   /* empty */
 }

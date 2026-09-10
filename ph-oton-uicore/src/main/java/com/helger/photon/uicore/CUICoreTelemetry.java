@@ -59,9 +59,9 @@ public final class CUICoreTelemetry
 
   // === attribute keys ===
   /**
-   * The ID of the web page as returned by
-   * {@link com.helger.photon.core.page.AbstractPage#getID()}. It is bounded by the number of
-   * screens of an application and is therefore the low cardinality dimension to group metrics by.
+   * The ID of the web page as returned by {@link com.helger.photon.core.page.AbstractPage#getID()}.
+   * It is bounded by the number of screens of an application and is therefore the low cardinality
+   * dimension to group metrics by.
    */
   public static final String ATTR_PAGE_ID = "photon.webpage.id";
   /**

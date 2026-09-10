@@ -100,7 +100,7 @@ public final class GlobalPasswordSettings
 
     // Create a copy
     final IPasswordConstraintList aRealPasswordConstraints = aPasswordConstraintList.getClone ();
-    RW_LOCK.writeLocked ( () -> s_aPasswordConstraintList = aRealPasswordConstraints);
+    RW_LOCK.writeLocked (() -> s_aPasswordConstraintList = aRealPasswordConstraints);
     LOGGER.info ("Set global password constraints to " + aRealPasswordConstraints);
   }
 

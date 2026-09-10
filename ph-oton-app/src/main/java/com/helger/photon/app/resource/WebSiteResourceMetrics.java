@@ -43,13 +43,13 @@ public final class WebSiteResourceMetrics
 
   /** Web site resource bundles that were newly created. */
   public static final ITelemetryCounter BUNDLES_CREATED = TelemetryMetrics.counter (CAppTelemetry.METRIC_RESOURCE_BUNDLES_CREATED,
-                                                                                     "Web site resource bundles that were newly created",
-                                                                                     CAppTelemetry.UNIT_BUNDLE);
+                                                                                    "Web site resource bundles that were newly created",
+                                                                                    CAppTelemetry.UNIT_BUNDLE);
 
   /** Persisted web site resource bundles that were skipped on startup. */
   public static final ITelemetryCounter BUNDLES_SKIPPED = TelemetryMetrics.counter (CAppTelemetry.METRIC_RESOURCE_BUNDLES_SKIPPED,
-                                                                                     "Persisted web site resource bundles that were skipped on startup",
-                                                                                     CAppTelemetry.UNIT_BUNDLE);
+                                                                                    "Persisted web site resource bundles that were skipped on startup",
+                                                                                    CAppTelemetry.UNIT_BUNDLE);
 
   private WebSiteResourceMetrics ()
   {}

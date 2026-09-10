@@ -25,34 +25,30 @@ import com.helger.base.state.EContinue;
 import com.helger.html.hc.html.forms.HCHiddenField;
 
 /**
- * Handle CSRF (Cross Site Request Forgery) issues on an {@link AbstractWebPage}
- * .
+ * Handle CSRF (Cross Site Request Forgery) issues on an {@link AbstractWebPage} .
  *
  * @author Philip Helger
  */
 public interface IWebPageCSRFHandler extends Serializable
 {
   /**
-   * @return <code>true</code> if CSRF prevention is enabled, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if CSRF prevention is enabled, <code>false</code> otherwise.
    */
   boolean isCSRFPreventionEnabled ();
 
   /**
-   * Check if the nonce if the passed WPEC is correct. The failure handling is
-   * implementation dependent.
+   * Check if the nonce if the passed WPEC is correct. The failure handling is implementation
+   * dependent.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
-   * @return {@link EContinue#CONTINUE} if CSRF checking is disabled or was
-   *         successful.
+   * @return {@link EContinue#CONTINUE} if CSRF checking is disabled or was successful.
    */
   @NonNull
   EContinue checkCSRFNonce (@NonNull IWebPageExecutionContext aWPEC);
 
   /**
-   * @return The HTML nonce hidden field or <code>null</code> if CSRF prevention
-   *         is disabled.
+   * @return The HTML nonce hidden field or <code>null</code> if CSRF prevention is disabled.
    */
   @Nullable
   HCHiddenField createCSRFNonceField ();

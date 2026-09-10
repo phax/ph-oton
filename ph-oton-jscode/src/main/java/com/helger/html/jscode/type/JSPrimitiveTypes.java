@@ -19,9 +19,8 @@ package com.helger.html.jscode.type;
 import com.helger.annotation.concurrent.Immutable;
 
 /**
- * Contains all the JS primitive types. Originally they were at
- * <code>JSPrimitiveType</code> but because subclasses should not be
- * instantiated in parent classes this was moved here.
+ * Contains all the JS primitive types. Originally they were at <code>JSPrimitiveType</code> but
+ * because subclasses should not be instantiated in parent classes this was moved here.
  *
  * @author Philip Helger
  * @since 8.2.6

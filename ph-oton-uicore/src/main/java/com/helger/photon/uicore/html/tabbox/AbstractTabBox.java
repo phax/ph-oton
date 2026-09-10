@@ -41,7 +41,8 @@ import com.helger.html.hc.impl.AbstractHCNodeList;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>> extends AbstractHCNodeList <IMPLTYPE> implements
+public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>> extends AbstractHCNodeList <IMPLTYPE>
+                                     implements
                                      ITabBox <IMPLTYPE>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractTabBox.class);
@@ -105,8 +106,7 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
   }
 
   /**
-   * @return The tab marked as active or <code>null</code> if no tab is marked
-   *         as active.
+   * @return The tab marked as active or <code>null</code> if no tab is marked as active.
    */
   @Nullable
   public Tab getActiveTab ()
@@ -119,8 +119,8 @@ public abstract class AbstractTabBox <IMPLTYPE extends AbstractTabBox <IMPLTYPE>
   }
 
   /**
-   * @return The tab marked as active, or the first tab which will be active by
-   *         default. May be <code>null</code> if no tab is contained
+   * @return The tab marked as active, or the first tab which will be active by default. May be
+   *         <code>null</code> if no tab is contained
    */
   @Nullable
   public Tab getActiveTabOrDefault ()

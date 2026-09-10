@@ -80,7 +80,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   @Nonempty
   public String createNewNonce ()
   {
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       String sNonce;
       int nCount = 0;
       final Random aRandom = ThreadLocalRandom.current ();
@@ -104,7 +104,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
   {
     ValueEnforcer.notEmpty (sNonce, "Nonce");
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (!m_aNoncesBase64.remove (sNonce))
         LOGGER.error ("Failed to remove nonce '" + sNonce + "'");
     });
@@ -115,7 +115,7 @@ public final class CSRFManager extends AbstractGlobalWebSingleton
     if (StringHelper.isEmpty (sNonce))
       return false;
 
-    return m_aRWLock.readLockedBoolean ( () -> m_aNoncesBase64.contains (sNonce));
+    return m_aRWLock.readLockedBoolean (() -> m_aNoncesBase64.contains (sNonce));
   }
 
   @Nonnegative

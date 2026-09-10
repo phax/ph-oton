@@ -83,7 +83,8 @@ public class UserModificationLogoutCallback implements IUserModificationCallback
   /**
    * @return <code>true</code> if a user is logged out when his password is changed. Default is
    *         {@link #DEFAULT_LOGOUT_ON_PASSWORD_CHANGED}. Note: the internal password hash algorithm
-   *         upgrade performed by {@link LoggedInUserManager#loginUser(com.helger.photon.security.user.IUser, String, Iterable)}
+   *         upgrade performed by
+   *         {@link LoggedInUserManager#loginUser(com.helger.photon.security.user.IUser, String, Iterable)}
    *         never triggers a logout, independent of this setting.
    */
   public final boolean isLogoutOnPasswordChanged ()

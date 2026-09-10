@@ -54,23 +54,22 @@ public interface IAjaxFunctionDeclaration extends IHasName
   }
 
   /**
-   * @return The optional filter to be invoked before the main AJAX invocation.
-   *         May be <code>null</code>.
+   * @return The optional filter to be invoked before the main AJAX invocation. May be
+   *         <code>null</code>.
    */
   @Nullable
   Predicate <? super IRequestWebScopeWithoutResponse> getExecutionFilter ();
 
   /**
-   * @return The path to the AJAX servlet. Must start with a slash and end with
-   *         a slash!
+   * @return The path to the AJAX servlet. Must start with a slash and end with a slash!
    */
   @NonNull
   @Nonempty
   String getAjaxServletPath ();
 
   /**
-   * @return The path to execute this AJAX function but without a context path.
-   *         Neither <code>null</code> nor empty. This is a shortcut for
+   * @return The path to execute this AJAX function but without a context path. Neither
+   *         <code>null</code> nor empty. This is a shortcut for
    *         <code>getAjaxServletPath () + getName ()</code>
    */
   @NonNull
@@ -82,10 +81,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return The URI where the AJAX function can be invoked. Neither
-   *         <code>null</code> nor empty.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return The URI where the AJAX function can be invoked. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -96,13 +94,12 @@ public interface IAjaxFunctionDeclaration extends IHasName
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
    * @param aParams
-   *        An optional map with URL parameters to be used in the URL. May be
-   *        <code>null</code> or empty.
-   * @return The URI where the AJAX function can be invoked. Neither
-   *         <code>null</code> nor empty.
+   *        An optional map with URL parameters to be used in the URL. May be <code>null</code> or
+   *        empty.
+   * @return The URI where the AJAX function can be invoked. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -120,10 +117,9 @@ public interface IAjaxFunctionDeclaration extends IHasName
 
   /**
    * @param aRequestScope
-   *        The request web scope to be used. Required for cookie-less handling.
-   *        May not be <code>null</code>.
-   * @return The URL where the AJAX function can be invoked. Never
-   *         <code>null</code>.
+   *        The request web scope to be used. Required for cookie-less handling. May not be
+   *        <code>null</code>.
+   * @return The URL where the AJAX function can be invoked. Never <code>null</code>.
    */
   @NonNull
   default SimpleURL getInvocationURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope)
@@ -135,10 +131,8 @@ public interface IAjaxFunctionDeclaration extends IHasName
    * Check if this AJAX function can be executed for the passed request.
    *
    * @param aRequestScope
-   *        The request scope to be used for evaluation. Never <code>null</code>
-   *        .
-   * @return <code>true</code> if this AJAX function can be executed,
-   *         <code>false</code> otherwise.
+   *        The request scope to be used for evaluation. Never <code>null</code> .
+   * @return <code>true</code> if this AJAX function can be executed, <code>false</code> otherwise.
    */
   boolean canExecute (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 }

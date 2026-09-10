@@ -21,36 +21,35 @@ import java.time.LocalDateTime;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Read-only interface for the revocation status. This is e.g. used to determine
- * if app tokens or user tokens are revoked or not.
+ * Read-only interface for the revocation status. This is e.g. used to determine if app tokens or
+ * user tokens are revoked or not.
  *
  * @author Philip Helger
  */
 public interface IRevocationStatus
 {
   /**
-   * @return <code>true</code> if this object is revoked, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this object is revoked, <code>false</code> otherwise.
    */
   boolean isRevoked ();
 
   /**
-   * @return The ID of the user who revoked the owning object. Must be non-
-   *         <code>null</code> and non-empty if this object is revoked.
+   * @return The ID of the user who revoked the owning object. Must be non- <code>null</code> and
+   *         non-empty if this object is revoked.
    */
   @Nullable
   String getRevocationUserID ();
 
   /**
-   * @return The date time when the owning object was revoked. Must be non-
-   *         <code>null</code> if this object is revoked.
+   * @return The date time when the owning object was revoked. Must be non- <code>null</code> if
+   *         this object is revoked.
    */
   @Nullable
   LocalDateTime getRevocationDateTime ();
 
   /**
-   * @return The reason why the owning object was revoked. Must be non-
-   *         <code>null</code> and non-empty if this object is revoked.
+   * @return The reason why the owning object was revoked. Must be non- <code>null</code> and
+   *         non-empty if this object is revoked.
    */
   @Nullable
   String getRevocationReason ();

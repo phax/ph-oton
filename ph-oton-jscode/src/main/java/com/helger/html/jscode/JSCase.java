@@ -60,8 +60,8 @@ public class JSCase extends AbstractJSStatement
   }
 
   /**
-   * Construct a case statement. If isDefaultCase is true, then label should be
-   * null since default cases don't have a label.
+   * Construct a case statement. If isDefaultCase is true, then label should be null since default
+   * cases don't have a label.
    *
    * @param aLabel
    *        May be <code>null</code> if this is the default case

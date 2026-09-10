@@ -112,8 +112,7 @@ public class JSAnonymousFunction extends AbstractJSExpression
   }
 
   /**
-   * Add the specified variable to the list of parameters for this function
-   * signature.
+   * Add the specified variable to the list of parameters for this function signature.
    *
    * @param sName
    *        Name of the parameter being added
@@ -128,8 +127,8 @@ public class JSAnonymousFunction extends AbstractJSExpression
   }
 
   /**
-   * Add the specified variable to the list of parameters for this function
-   * signature using an arbitrary name.
+   * Add the specified variable to the list of parameters for this function signature using an
+   * arbitrary name.
    *
    * @return New parameter variable
    * @see #param(String)

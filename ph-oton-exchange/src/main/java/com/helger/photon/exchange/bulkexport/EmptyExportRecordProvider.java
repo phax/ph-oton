@@ -19,8 +19,7 @@ package com.helger.photon.exchange.bulkexport;
 import com.helger.annotation.concurrent.Immutable;
 
 /**
- * A special implementation of {@link IExportRecordProvider} delivering an empty
- * set.
+ * A special implementation of {@link IExportRecordProvider} delivering an empty set.
  *
  * @author Philip Helger
  */

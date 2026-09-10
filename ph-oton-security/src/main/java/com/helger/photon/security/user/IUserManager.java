@@ -58,13 +58,12 @@ public interface IUserManager extends IPhotonManager <IUser>
    * Create a new user.
    *
    * @param sLoginName
-   *        Login name of the user. May neither be <code>null</code> nor
-   *        empty.This login name must be unique over all existing users.
+   *        Login name of the user. May neither be <code>null</code> nor empty.This login name must
+   *        be unique over all existing users.
    * @param sEmailAddress
    *        The email address. May be <code>null</code>.
    * @param sPlainTextPassword
-   *        The plain text password to be used. May neither be <code>null</code>
-   *        nor empty.
+   *        The plain text password to be used. May neither be <code>null</code> nor empty.
    * @param sFirstName
    *        The users first name. May be <code>null</code>.
    * @param sLastName
@@ -77,8 +76,8 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        Custom attributes. May be <code>null</code>.
    * @param bDisabled
    *        <code>true</code> if the user is disabled
-   * @return The created user or <code>null</code> if another user with the same
-   *         email address is already present or if serialization failed.
+   * @return The created user or <code>null</code> if another user with the same email address is
+   *         already present or if serialization failed.
    */
   @Nullable
   IUser createNewUser (@NonNull @Nonempty String sLoginName,
@@ -97,13 +96,12 @@ public interface IUserManager extends IPhotonManager <IUser>
    * @param sID
    *        The ID to use
    * @param sLoginName
-   *        Login name of the user. May neither be <code>null</code> nor empty.
-   *        This login name must be unique over all existing users.
+   *        Login name of the user. May neither be <code>null</code> nor empty. This login name must
+   *        be unique over all existing users.
    * @param sEmailAddress
    *        The email address. May be <code>null</code>.
    * @param sPlainTextPassword
-   *        The plain text password to be used. May neither be <code>null</code>
-   *        nor empty.
+   *        The plain text password to be used. May neither be <code>null</code> nor empty.
    * @param sFirstName
    *        The users first name. May be <code>null</code>.
    * @param sLastName
@@ -116,8 +114,8 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        Custom attributes. May be <code>null</code>.
    * @param bDisabled
    *        <code>true</code> if the user is disabled
-   * @return The created user or <code>null</code> if another user with the same
-   *         email address is already present or if serialization failed.
+   * @return The created user or <code>null</code> if another user with the same email address is
+   *         already present or if serialization failed.
    */
   @Nullable
   IUser createPredefinedUser (@NonNull @Nonempty String sID,
@@ -142,13 +140,12 @@ public interface IUserManager extends IPhotonManager <IUser>
   IUser getUserOfID (@Nullable String sUserID);
 
   /**
-   * Get the user with the specified ID but only if the user is neither deleted
-   * nor disabled.
+   * Get the user with the specified ID but only if the user is neither deleted nor disabled.
    *
    * @param sUserID
    *        The user ID to resolve. May be <code>null</code>.
-   * @return <code>null</code> if no such user exists or if the user exists but
-   *         is either deleted or disabled.
+   * @return <code>null</code> if no such user exists or if the user exists but is either deleted or
+   *         disabled.
    */
   @Nullable
   default IUser getActiveUserOfID (@Nullable final String sUserID)
@@ -191,8 +188,7 @@ public interface IUserManager extends IPhotonManager <IUser>
   IUser getUserOfEmailAddressIgnoreCase (@Nullable final String sEmailAddress);
 
   /**
-   * @return A non-<code>null</code> collection of all contained enabled and
-   *         not-deleted users
+   * @return A non-<code>null</code> collection of all contained enabled and not-deleted users
    */
   @NonNull
   @ReturnsMutableCopy
@@ -205,16 +201,14 @@ public interface IUserManager extends IPhotonManager <IUser>
   long getActiveUserCount ();
 
   /**
-   * @return A non-<code>null</code> collection of all contained disabled and
-   *         not-deleted users
+   * @return A non-<code>null</code> collection of all contained disabled and not-deleted users
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsList <IUser> getAllDisabledUsers ();
 
   /**
-   * @return A non-<code>null</code> collection of all contained not deleted
-   *         users
+   * @return A non-<code>null</code> collection of all contained not deleted users
    */
   @NonNull
   @ReturnsMutableCopy
@@ -289,8 +283,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    *
    * @param sUserID
    *        The ID of the user to delete
-   * @return {@link EChange#CHANGED} if the user was deleted,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the user was deleted, {@link EChange#UNCHANGED} otherwise.
    */
   @NonNull
   EChange deleteUser (@Nullable String sUserID);
@@ -300,8 +293,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    *
    * @param sUserID
    *        The ID of the user to undelete
-   * @return {@link EChange#CHANGED} if the user was undeleted,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the user was undeleted, {@link EChange#UNCHANGED} otherwise.
    */
   @NonNull
   EChange undeleteUser (@Nullable String sUserID);
@@ -311,8 +303,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    *
    * @param sUserID
    *        The ID of the user to disable
-   * @return {@link EChange#CHANGED} if the user was disabled,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the user was disabled, {@link EChange#UNCHANGED} otherwise.
    */
   @NonNull
   EChange disableUser (@Nullable String sUserID);
@@ -322,8 +313,7 @@ public interface IUserManager extends IPhotonManager <IUser>
    *
    * @param sUserID
    *        The ID of the user to enable
-   * @return {@link EChange#CHANGED} if the user was enabled,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the user was enabled, {@link EChange#UNCHANGED} otherwise.
    */
   @NonNull
   EChange enableUser (@Nullable String sUserID);
@@ -335,8 +325,8 @@ public interface IUserManager extends IPhotonManager <IUser>
    *        The ID of the user
    * @param sPlainTextPassword
    *        The plan text password to validate.
-   * @return <code>true</code> if the password hash matches the stored hash for
-   *         the specified user, <code>false</code> otherwise.
+   * @return <code>true</code> if the password hash matches the stored hash for the specified user,
+   *         <code>false</code> otherwise.
    */
   default boolean areUserIDAndPasswordValid (@Nullable final String sUserID, @Nullable final String sPlainTextPassword)
   {
@@ -352,7 +342,9 @@ public interface IUserManager extends IPhotonManager <IUser>
     // Now compare the hashes
     final String sPasswordHashAlgorithm = aUser.getPasswordHash ().getAlgorithmName ();
     final IPasswordSalt aSalt = aUser.getPasswordHash ().getSalt ();
-    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm, aSalt, sPlainTextPassword);
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserPasswordHash (sPasswordHashAlgorithm,
+                                                                                      aSalt,
+                                                                                      sPlainTextPassword);
     return aUser.getPasswordHash ().equals (aPasswordHash);
   }
 }

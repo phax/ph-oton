@@ -170,7 +170,7 @@ public final class PhotonJS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return LOCK.lockedGet ( () -> {
+    return LOCK.lockedGet (() -> {
       JSResourceSet ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_JSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {

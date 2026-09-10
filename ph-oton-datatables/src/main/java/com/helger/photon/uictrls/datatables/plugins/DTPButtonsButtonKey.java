@@ -30,23 +30,20 @@ public class DTPButtonsButtonKey
   /** The character to listen for. The character is case insensitive. */
   private char m_cKey = CGlobal.ILLEGAL_CHAR;
   /**
-   * When set to true activation will only occur if the shift key is also being
-   * held.
+   * When set to true activation will only occur if the shift key is also being held.
    */
   private ETriState m_eShiftKey = ETriState.UNDEFINED;
   /**
-   * When set to true activation will only occur if the alt key is also being
-   * held.
+   * When set to true activation will only occur if the alt key is also being held.
    */
   private ETriState m_eAltKey = ETriState.UNDEFINED;
   /**
-   * When set to true activation will only occur if the ctrl key is also being
-   * held.
+   * When set to true activation will only occur if the ctrl key is also being held.
    */
   private ETriState m_eCtrlKey = ETriState.UNDEFINED;
   /**
-   * When set to true activation will only occur if the cmd key (Mac) or Windows
-   * key (Windows) is also being held.
+   * When set to true activation will only occur if the cmd key (Mac) or Windows key (Windows) is
+   * also being held.
    */
   private ETriState m_eMetaKey = ETriState.UNDEFINED;
 

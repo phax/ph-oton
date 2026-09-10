@@ -56,8 +56,8 @@ public abstract class AbstractAjaxExecutorWithContext <LECTYPE extends ILayoutEx
    *         In case of an error
    */
   @OverrideOnDemand
-  protected abstract void mainHandleRequest (@NonNull LECTYPE aLEC, @NonNull PhotonUnifiedResponse aAjaxResponse)
-                                                                                                                  throws Exception;
+  protected abstract void mainHandleRequest (@NonNull LECTYPE aLEC,
+                                             @NonNull PhotonUnifiedResponse aAjaxResponse) throws Exception;
 
   public void handleRequest (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                              @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception

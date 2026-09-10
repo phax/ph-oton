@@ -41,9 +41,8 @@ public abstract class AbstractJSType implements IJSGeneratable
   public abstract String name ();
 
   /**
-   * @return The type to be used in "typeof" expressions. A string literal with
-   *         the name in it. For <code>Number</code> this returns
-   *         <code>"Number"</code>
+   * @return The type to be used in "typeof" expressions. A string literal with the name in it. For
+   *         <code>Number</code> this returns <code>"Number"</code>
    */
   @NonNull
   public final JSStringLiteral typeName ()

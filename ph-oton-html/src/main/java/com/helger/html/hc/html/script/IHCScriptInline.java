@@ -43,10 +43,9 @@ public interface IHCScriptInline <IMPLTYPE extends IHCScriptInline <IMPLTYPE>> e
 
   /**
    * @param aSettings
-   *        The settings to be used. May be <code>null</code> to use the
-   *        default.
-   * @return The text representation of the JS code passed in the constructor.
-   *         May be <code>null</code>.
+   *        The settings to be used. May be <code>null</code> to use the default.
+   * @return The text representation of the JS code passed in the constructor. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getJSCode (@NonNull final IJSWriterSettings aSettings);

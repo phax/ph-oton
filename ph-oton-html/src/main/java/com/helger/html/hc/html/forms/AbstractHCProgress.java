@@ -28,8 +28,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
 
-public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                         implements
+public abstract class AbstractHCProgress <IMPLTYPE extends AbstractHCProgress <IMPLTYPE>> extends
+                                         AbstractHCElementWithChildren <IMPLTYPE> implements
                                          IHCProgress <IMPLTYPE>
 {
   private double m_dValue = CGlobal.ILLEGAL_DOUBLE;

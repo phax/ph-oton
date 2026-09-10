@@ -27,8 +27,7 @@ import com.helger.mime.CMimeType;
 import com.helger.servlet.response.UnifiedResponse;
 
 /**
- * Abstract implementation of {@link IAPIExceptionMapper} with some helper
- * methods.
+ * Abstract implementation of {@link IAPIExceptionMapper} with some helper methods.
  *
  * @author Philip Helger
  * @since 8.1.3

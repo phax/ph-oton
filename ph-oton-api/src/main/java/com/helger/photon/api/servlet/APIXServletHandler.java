@@ -44,8 +44,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * Abstract API servlet. Use {@link IAPIRegistry} to register API functions
- * dynamically and {@link IAPIInvoker} to invoke them afterwards.
+ * Abstract API servlet. Use {@link IAPIRegistry} to register API functions dynamically and
+ * {@link IAPIInvoker} to invoke them afterwards.
  *
  * @author Philip Helger
  */
@@ -58,7 +58,7 @@ public class APIXServletHandler implements IXServletSimpleHandler
 
   public APIXServletHandler ()
   {
-    this ( () -> GlobalAPIInvoker.getInstance ().getRegistry (), () -> GlobalAPIInvoker.getInstance ().getInvoker ());
+    this (() -> GlobalAPIInvoker.getInstance ().getRegistry (), () -> GlobalAPIInvoker.getInstance ().getInvoker ());
   }
 
   public APIXServletHandler (@NonNull final Supplier <? extends IAPIRegistry> aRegistryFactory,

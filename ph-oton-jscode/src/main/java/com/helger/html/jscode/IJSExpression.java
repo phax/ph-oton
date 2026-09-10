@@ -102,15 +102,13 @@ public interface IJSExpression extends IJSGeneratable
   IJSExpression isNotTypeof (@NonNull AbstractJSType aType);
 
   /**
-   * @return "typeof [this] === 'undefined'" or "[this] === undefined" from
-   *         "[this]"
+   * @return "typeof [this] === 'undefined'" or "[this] === undefined" from "[this]"
    */
   @NonNull
   IJSExpression isUndefined ();
 
   /**
-   * @return "typeof [this] !== 'undefined'" or "[this] !== undefined" from
-   *         "[this]"
+   * @return "typeof [this] !== 'undefined'" or "[this] !== undefined" from "[this]"
    */
   @NonNull
   IJSExpression isNotUndefined ();
@@ -1357,8 +1355,8 @@ public interface IJSExpression extends IJSGeneratable
   /**
    * @param aMethod
    *        Method to invoke
-   * @return "[this].[method]". Arguments shall be added to the returned
-   *         {@link JSInvocation} object.
+   * @return "[this].[method]". Arguments shall be added to the returned {@link JSInvocation}
+   *         object.
    */
   @NonNull
   JSInvocation invoke (@NonNull JSMethod aMethod);
@@ -1366,8 +1364,8 @@ public interface IJSExpression extends IJSGeneratable
   /**
    * @param sMethod
    *        Method to invoke
-   * @return "[this].[method]". Arguments shall be added to the returned
-   *         {@link JSInvocation} object.
+   * @return "[this].[method]". Arguments shall be added to the returned {@link JSInvocation}
+   *         object.
    */
   @NonNull
   JSInvocation invoke (@NonNull String sMethod);

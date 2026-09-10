@@ -42,28 +42,25 @@ import jakarta.servlet.http.HttpServletResponse;
  * </p>
  * <h2>Deleting Files</h2>
  * <p>
- * If you have enabled this feature, you will need to handle the corresponding
- * DELETE or POST requests server-side. The method is configurable via the
- * method property of the deleteFile option.
+ * If you have enabled this feature, you will need to handle the corresponding DELETE or POST
+ * requests server-side. The method is configurable via the method property of the deleteFile
+ * option.
  * </p>
  * <p>
- * For DELETE requests, the UUID of the file to delete will be specified as the
- * last element of the URI path. Any custom parameters specified will be added
- * to the query string. For POST requests, the UUID is sent as a "qquuid"
- * parameter, and a "_method" parameter is sent with a value of "DELETE". All
- * POST request parameters are sent in the request payload.
+ * For DELETE requests, the UUID of the file to delete will be specified as the last element of the
+ * URI path. Any custom parameters specified will be added to the query string. For POST requests,
+ * the UUID is sent as a "qquuid" parameter, and a "_method" parameter is sent with a value of
+ * "DELETE". All POST request parameters are sent in the request payload.
  * </p>
  * <p>
- * Success of the request will depend solely on the response code. Acceptable
- * response codes that indicate success are 200, 202, and 204 for DELETE
- * requests and 200-204 for POST requests.
+ * Success of the request will depend solely on the response code. Acceptable response codes that
+ * indicate success are 200, 202, and 204 for DELETE requests and 200-204 for POST requests.
  * </p>
  * <p>
- * If you would like to enable the delete file feature for cross-origin
- * environments in IE9 or older, you will need to set the allowXdr property of
- * the cors client-side option and adjust your server-side code appropriately.
- * Keep in mind that the Content-Type will be absent from the request header,
- * and credentials (cookies) and non-simple headers cannot be sent.
+ * If you would like to enable the delete file feature for cross-origin environments in IE9 or
+ * older, you will need to set the allowXdr property of the cors client-side option and adjust your
+ * server-side code appropriately. Keep in mind that the Content-Type will be absent from the
+ * request header, and credentials (cookies) and non-simple headers cannot be sent.
  * </p>
  *
  * @author Philip Helger
@@ -91,20 +88,16 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
      * @param sErrorMsg
      *        Optional error message if a failure occurred.
      * @param ePreventRetry
-     *        prevent Fine Uploader from making any further attempts to retry
-     *        uploading the file. Only suitable in case of an error. May not be
-     *        <code>null</code>.
+     *        prevent Fine Uploader from making any further attempts to retry uploading the file.
+     *        Only suitable in case of an error. May not be <code>null</code>.
      * @param eReset
-     *        fail this attempt and restart with the first chunk on the next
-     *        attempt. Only applies if chunking is enabled. Note that, if resume
-     *        is also enabled, and this is the first chunk of a resume attempt,
-     *        this will result in the upload starting with the first chunk
-     *        immediately. Only suitable in case of an error. May not be
-     *        <code>null</code>.
+     *        fail this attempt and restart with the first chunk on the next attempt. Only applies
+     *        if chunking is enabled. Note that, if resume is also enabled, and this is the first
+     *        chunk of a resume attempt, this will result in the upload starting with the first
+     *        chunk immediately. Only suitable in case of an error. May not be <code>null</code>.
      * @param sNewUUID
-     *        When you would like to override the UUID for this file provided by
-     *        Fine Uploader. Only suitable in case of success. May be
-     *        <code>null</code>.
+     *        When you would like to override the UUID for this file provided by Fine Uploader. Only
+     *        suitable in case of success. May be <code>null</code>.
      */
     protected Response (@NonNull final ESuccess eSuccess,
                         @Nullable final String sErrorMsg,
@@ -172,7 +165,9 @@ public abstract class AbstractFineUploader5Servlet implements IXServletSimpleHan
     }
 
     @NonNull
-    public static Response createError (@Nullable final String sErrorMsg, final boolean bPreventRetry, final boolean bReset)
+    public static Response createError (@Nullable final String sErrorMsg,
+                                        final boolean bPreventRetry,
+                                        final boolean bReset)
     {
       return createError (sErrorMsg, ETriState.valueOf (bPreventRetry), ETriState.valueOf (bReset));
     }

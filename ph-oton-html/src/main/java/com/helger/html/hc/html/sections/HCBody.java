@@ -60,8 +60,8 @@ public class HCBody extends AbstractHCElementWithChildren <HCBody>
                                                  sID +
                                                  "' is used more than once within a single HTML page!" +
                                                  (aHasID instanceof final IHCElement <?> aElement ? " The second usage is at an '" +
-                                                                                              aElement.getTagName () +
-                                                                                              "' element" : ""));
+                                                                                                    aElement.getTagName () +
+                                                                                                    "' element" : ""));
         }
       }
     });

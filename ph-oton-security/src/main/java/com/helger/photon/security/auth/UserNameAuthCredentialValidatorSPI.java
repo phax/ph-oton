@@ -28,8 +28,8 @@ import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswo
 
 /**
  * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link IUserNamePasswordCredentials} using the {@link LoggedInUserManager} to
- * login {@link IUser} objects.
+ * {@link IUserNamePasswordCredentials} using the {@link LoggedInUserManager} to login {@link IUser}
+ * objects.
  *
  * @author Philip Helger
  */

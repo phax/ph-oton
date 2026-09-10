@@ -17,8 +17,8 @@
 package com.helger.html.hc.impl;
 
 /**
- * This class is an abstract HC node that represents a list of nodes without
- * creating an HTML element by itself.
+ * This class is an abstract HC node that represents a list of nodes without creating an HTML
+ * element by itself.
  *
  * @author Philip Helger
  */

@@ -36,13 +36,13 @@ import com.helger.tenancy.accarea.IAccountingAreaObject;
 import com.helger.tenancy.tenant.ITenant;
 
 /**
- * Like {@link AbstractAccountingAreaObject} but with an optional accounting
- * area
+ * Like {@link AbstractAccountingAreaObject} but with an optional accounting area
  *
  * @author Philip Helger
  */
 @Immutable
-public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusinessObject implements IAccountingAreaObject
+public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusinessObject implements
+                                                           IAccountingAreaObject
 {
   private final ITenant m_aTenant;
   private final IAccountingArea m_aAccountingArea;
@@ -56,7 +56,8 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
     m_aAccountingArea = aOther.getAccountingArea ();
   }
 
-  public AbstractAccountingAreaOptionalObject (@NonNull final IAccountingArea aAccountingArea, @NonNull final IBusinessObject aObject)
+  public AbstractAccountingAreaOptionalObject (@NonNull final IAccountingArea aAccountingArea,
+                                               @NonNull final IBusinessObject aObject)
   {
     this (aAccountingArea.getTenant (), aAccountingArea, aObject);
   }
@@ -138,7 +139,8 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   {
     return aAccountingAreaObject != null &&
            hasSameTenantID (aAccountingAreaObject) &&
-           (m_aAccountingArea == null || m_aAccountingArea.getID ().equals (aAccountingAreaObject.getAccountingAreaID ()));
+           (m_aAccountingArea == null ||
+            m_aAccountingArea.getID ().equals (aAccountingAreaObject.getAccountingAreaID ()));
   }
 
   @Override
@@ -159,7 +161,10 @@ public abstract class AbstractAccountingAreaOptionalObject extends AbstractBusin
   {
     int ret = m_nHashCode;
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant).append (m_aAccountingArea).append (getID ()).getHashCode ();
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_aTenant)
+                                                      .append (m_aAccountingArea)
+                                                      .append (getID ())
+                                                      .getHashCode ();
     return ret;
   }
 

@@ -56,7 +56,8 @@ public enum ETinyMCE4Skin
   }
 
   @Nullable
-  public static ETinyMCE4Skin getFromValueOrDefault (@Nullable final String sValue, @Nullable final ETinyMCE4Skin eDefault)
+  public static ETinyMCE4Skin getFromValueOrDefault (@Nullable final String sValue,
+                                                     @Nullable final ETinyMCE4Skin eDefault)
   {
     if (StringHelper.isNotEmpty (sValue))
       for (final ETinyMCE4Skin e : values ())

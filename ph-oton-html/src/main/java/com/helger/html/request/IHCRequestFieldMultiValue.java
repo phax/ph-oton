@@ -21,8 +21,8 @@ import org.jspecify.annotations.NonNull;
 import com.helger.collection.commons.ICommonsList;
 
 /**
- * Defines an abstract request field for input controls. It encapsulates a name
- * and 0-n request values.
+ * Defines an abstract request field for input controls. It encapsulates a name and 0-n request
+ * values.
  *
  * @author Philip Helger´
  * @since 8.0.2
@@ -32,19 +32,18 @@ public interface IHCRequestFieldMultiValue extends IHCBaseRequestField
   /**
    * Get the default values that should be used if no request value is present.
    *
-   * @return The default value to be used as fallback. May not be
-   *         <code>null</code> but maybe empty.
+   * @return The default value to be used as fallback. May not be <code>null</code> but maybe empty.
    */
   @NonNull
   ICommonsList <String> getDefaultValues ();
 
   /**
-   * In case multiple request parameters with the same value are present (e.g.
-   * multi-selects) this method retrieves all request values. If no such request
-   * value is present, the default values are returned.
+   * In case multiple request parameters with the same value are present (e.g. multi-selects) this
+   * method retrieves all request values. If no such request value is present, the default values
+   * are returned.
    *
-   * @return A list of request values with the same field name or the default
-   *         values if no such request values are present.
+   * @return A list of request values with the same field name or the default values if no such
+   *         request values are present.
    */
   @NonNull
   ICommonsList <String> getRequestValues ();

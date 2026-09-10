@@ -106,7 +106,10 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
   @NonNull
   public static ConstantCSSCodeProvider create (@NonNull @Nonempty final String sCSSCode)
   {
-    return new ConstantCSSCodeProvider (sCSSCode, DEFAULT_CONDITIONAL_COMMENT, DEFAULT_CSS_MEDIA_LIST, DEFAULT_IS_BUNDLABLE);
+    return new ConstantCSSCodeProvider (sCSSCode,
+                                        DEFAULT_CONDITIONAL_COMMENT,
+                                        DEFAULT_CSS_MEDIA_LIST,
+                                        DEFAULT_IS_BUNDLABLE);
   }
 
   @NonNull
@@ -125,7 +128,8 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
   }
 
   @NonNull
-  public static ConstantCSSCodeProvider createBundlable (@NonNull @Nonempty final String sCSSCode, final boolean bBundlable)
+  public static ConstantCSSCodeProvider createBundlable (@NonNull @Nonempty final String sCSSCode,
+                                                         final boolean bBundlable)
   {
     return createBundlable (sCSSCode, DEFAULT_CSS_MEDIA_LIST, bBundlable);
   }

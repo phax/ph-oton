@@ -60,8 +60,8 @@ import org.jspecify.annotations.NonNull;
 public interface IMarkdownBlockEmitter
 {
   /**
-   * This method is responsible for outputting a markdown block and for any
-   * needed pre-processing like escaping HTML special characters.
+   * This method is responsible for outputting a markdown block and for any needed pre-processing
+   * like escaping HTML special characters.
    *
    * @param out
    *        The StringBuilder to append to

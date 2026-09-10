@@ -68,7 +68,7 @@ public final class LinkHelper
                                           "' passed. It must match the following rexg: " +
                                           STREAM_SERVLET_NAME_REGEX);
 
-    RW_LOCK.writeLocked ( () -> s_sStreamServletName = sStreamServletName);
+    RW_LOCK.writeLocked (() -> s_sStreamServletName = sStreamServletName);
   }
 
   /**
@@ -79,7 +79,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletName ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_sStreamServletName);
+    return RW_LOCK.readLockedGet (() -> s_sStreamServletName);
   }
 
   /**
@@ -90,7 +90,7 @@ public final class LinkHelper
   @Nonempty
   public static String getStreamServletPath ()
   {
-    return RW_LOCK.readLockedGet ( () -> "/" + s_sStreamServletName);
+    return RW_LOCK.readLockedGet (() -> "/" + s_sStreamServletName);
   }
 
   /**

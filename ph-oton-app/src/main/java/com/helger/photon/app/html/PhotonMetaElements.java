@@ -138,7 +138,7 @@ public final class PhotonMetaElements
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return LOCK.lockedGet ( () -> {
+    return LOCK.lockedGet (() -> {
       MetaElementList ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_METAELEMENTS);
       if (ret == null && bCreateIfNotExisting)
       {

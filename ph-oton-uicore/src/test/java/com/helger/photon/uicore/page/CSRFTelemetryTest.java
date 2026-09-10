@@ -99,9 +99,9 @@ public final class CSRFTelemetryTest
     final MenuTree aMenuTree = new MenuTree ();
     final IMenuItemPage aMenuItem = aMenuTree.createRootItem (aPage);
     final SimpleWebExecutionContext aSWEC = new SimpleWebExecutionContext (WebScopeManager.getRequestScope (),
-                                                                          Locale.GERMAN,
-                                                                          aMenuTree,
-                                                                          null);
+                                                                           Locale.GERMAN,
+                                                                           aMenuTree,
+                                                                           null);
     return new WebPageExecutionContext (new LayoutExecutionContext (aSWEC, aMenuItem), aPage);
   }
 

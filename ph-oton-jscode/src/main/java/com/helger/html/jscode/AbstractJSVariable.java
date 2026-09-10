@@ -56,8 +56,8 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
     }
 
     /**
-     * @return The code for usage with "formatter.plain", including a trailing
-     *         whitespace if it is non-empty.
+     * @return The code for usage with "formatter.plain", including a trailing whitespace if it is
+     *         non-empty.
      */
     @NonNull
     public String getCode ()
@@ -93,8 +93,8 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
                                 @Nullable final IJSExpression aInit)
   {
     ValueEnforcer.notNull (eMode, "Mode");
-    ValueEnforcer.isTrue ( () -> JSMarshaller.isJSIdentifier (sName),
-                           () -> "The name '" + sName + "' is not a legal JS identifier!");
+    ValueEnforcer.isTrue (() -> JSMarshaller.isJSIdentifier (sName),
+                          () -> "The name '" + sName + "' is not a legal JS identifier!");
     m_eMode = eMode;
     m_sName = sName;
     m_aInit = aInit;
@@ -138,8 +138,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
   }
 
   /**
-   * @return <code>true</code> if an init expression is present,
-   *         <code>false</code> otherwise
+   * @return <code>true</code> if an init expression is present, <code>false</code> otherwise
    */
   public final boolean hasInit ()
   {
@@ -159,8 +158,7 @@ public abstract class AbstractJSVariable <IMPLTYPE extends AbstractJSVariable <I
    * Initialize this variable
    *
    * @param aNewInit
-   *        Expression to be used to initialize this field. May be
-   *        <code>null</code>.
+   *        Expression to be used to initialize this field. May be <code>null</code>.
    * @return this
    */
   @NonNull

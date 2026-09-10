@@ -33,11 +33,13 @@ import com.helger.photon.uicore.page.IWebPageExecutionContext;
  * @param <WPECTYPE>
  *        Web page execution context type
  */
-public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext> extends Serializable
+public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTYPE extends IWebPageExecutionContext>
+                                       extends
+                                       Serializable
 {
   /**
-   * @return <code>true</code> if this action can only be executed when an
-   *         object is selected, <code>false</code> otherwise.
+   * @return <code>true</code> if this action can only be executed when an object is selected,
+   *         <code>false</code> otherwise.
    */
   boolean isSelectedObjectRequired ();
 
@@ -45,13 +47,11 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
    * Check if the action handler can be executed on the provided object.
    *
    * @param aWPEC
-   *        Web page execution context. Never <code>null</code>. Parameter was
-   *        added in v8.0.1.
+   *        Web page execution context. Never <code>null</code>. Parameter was added in v8.0.1.
    * @param aSelectedObject
-   *        The selected object. May be <code>null</code> if
-   *        {@link #isSelectedObjectRequired()} is <code>false</code>.
-   * @return <code>true</code> if
-   *         {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
+   *        The selected object. May be <code>null</code> if {@link #isSelectedObjectRequired()} is
+   *        <code>false</code>.
+   * @return <code>true</code> if {@link #handleAction(IWebPageExecutionContext, IHasID)} can be
    *         called on the provided object, <code>false</code> otherwise.
    */
   default boolean canHandleAction (@NonNull final WPECTYPE aWPEC, final DATATYPE aSelectedObject)
@@ -60,17 +60,16 @@ public interface IWebPageActionHandler <DATATYPE extends IHasID <String>, WPECTY
   }
 
   /**
-   * This is the main entry to action handling. This method is only called if
-   * the passed action is provided and if the preconditions are met.
+   * This is the main entry to action handling. This method is only called if the passed action is
+   * provided and if the preconditions are met.
    *
    * @param aWPEC
    *        Web page execution context. Never <code>null</code>.
    * @param aSelectedObject
    *        Currently selected object. May be <code>null</code> if
    *        {@link #isSelectedObjectRequired()} returned <code>false</code>.
-   * @return Never <code>null</code>. {@link EShowList#SHOW_LIST} to show the
-   *         list of all objects afterwards, {@link EShowList#DONT_SHOW_LIST} to
-   *         not do so.
+   * @return Never <code>null</code>. {@link EShowList#SHOW_LIST} to show the list of all objects
+   *         afterwards, {@link EShowList#DONT_SHOW_LIST} to not do so.
    */
   @NonNull
   EShowList handleAction (@NonNull WPECTYPE aWPEC, DATATYPE aSelectedObject);

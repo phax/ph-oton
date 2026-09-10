@@ -40,8 +40,8 @@ import com.helger.html.hc.ext.HCConditionalCommentNode;
 import com.helger.mime.IMimeType;
 
 /**
- * This is a bundle of 1-n {@link WebSiteResource} objects that share the same
- * conditional comment and can be bundled with each other.
+ * This is a bundle of 1-n {@link WebSiteResource} objects that share the same conditional comment
+ * and can be bundled with each other.
  *
  * @author Philip Helger
  */
@@ -85,8 +85,7 @@ public class WebSiteResourceBundle
   }
 
   /**
-   * @return A list of all bundled resources. Neither <code>null</code> nor
-   *         empty.
+   * @return A list of all bundled resources. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -111,8 +110,7 @@ public class WebSiteResourceBundle
   }
 
   /**
-   * @return <code>true</code> if a conditional comment is present,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if a conditional comment is present, <code>false</code> if not.
    */
   public boolean hasConditionalComment ()
   {
@@ -120,8 +118,8 @@ public class WebSiteResourceBundle
   }
 
   /**
-   * @return The conditional comment to use or <code>null</code> if no such
-   *         conditional comment is present.
+   * @return The conditional comment to use or <code>null</code> if no such conditional comment is
+   *         present.
    */
   @Nullable
   public String getConditionalComment ()

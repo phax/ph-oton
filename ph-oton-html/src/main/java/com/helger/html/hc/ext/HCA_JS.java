@@ -35,8 +35,8 @@ public class HCA_JS extends AbstractHCA <HCA_JS>
   public HCA_JS ()
   {
     /**
-     * JS links must always set a JS void in the href. This ensures that if the
-     * href gets called (due to double click etc.) it has no effect.
+     * JS links must always set a JS void in the href. This ensures that if the href gets called
+     * (due to double click etc.) it has no effect.
      **/
     super (JS_URL);
   }

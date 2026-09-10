@@ -49,7 +49,9 @@ public final class RequestParameterHandlerURLParameterTest
 
   private static final Locale LOCALE = LocaleCache.getInstance ().getLocale ("de_AT");
 
-  private void _test (@NonNull final String sBasePath, @NonNull final MenuTree aMenuTree, @NonNull final IMenuItemPage aMenuItem)
+  private void _test (@NonNull final String sBasePath,
+                      @NonNull final MenuTree aMenuTree,
+                      @NonNull final IMenuItemPage aMenuItem)
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
     final RequestParameterHandlerURLParameter h = new RequestParameterHandlerURLParameter ();

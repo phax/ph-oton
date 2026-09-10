@@ -31,9 +31,8 @@ import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.ICommonsMap;
 
 /**
- * This class represents a map from an {@link EJSEvent} to an {@link IHasJSCode}
- * that represents the code. This is mainly meant for managing HTML element JS
- * event handler.
+ * This class represents a map from an {@link EJSEvent} to an {@link IHasJSCode} that represents the
+ * code. This is mainly meant for managing HTML element JS event handler.
  *
  * @author Philip Helger
  */
@@ -43,8 +42,8 @@ public class JSEventMap implements Serializable
   private final ICommonsMap <EJSEvent, CollectingJSCodeProvider> m_aEvents = new CommonsEnumMap <> (EJSEvent.class);
 
   /**
-   * Add an additional handler for the given JS event. If an existing handler is
-   * present, the new handler is appended at the end.
+   * Add an additional handler for the given JS event. If an existing handler is present, the new
+   * handler is appended at the end.
    *
    * @param eJSEvent
    *        The JS event. May not be <code>null</code>.
@@ -60,8 +59,8 @@ public class JSEventMap implements Serializable
   }
 
   /**
-   * Add an additional handler for the given JS event. If an existing handler is
-   * present, the new handler is appended at front.
+   * Add an additional handler for the given JS event. If an existing handler is present, the new
+   * handler is appended at front.
    *
    * @param eJSEvent
    *        The JS event. May not be <code>null</code>.
@@ -77,8 +76,8 @@ public class JSEventMap implements Serializable
   }
 
   /**
-   * Set a handler for the given JS event. If an existing handler is present, it
-   * is automatically overridden.
+   * Set a handler for the given JS event. If an existing handler is present, it is automatically
+   * overridden.
    *
    * @param eJSEvent
    *        The JS event. May not be <code>null</code>.

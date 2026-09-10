@@ -36,10 +36,9 @@ public interface IExporter
    * @param aProvider
    *        The provider for all records. May not be <code>null</code>.
    * @param aOS
-   *        The output stream to write to. Will be closed automatically in any
-   *        case. May not be <code>null</code>.
-   * @return {@link ESuccess#SUCCESS} if at lease one record was provided and
-   *         saving was successful.
+   *        The output stream to write to. Will be closed automatically in any case. May not be
+   *        <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if at lease one record was provided and saving was successful.
    */
   @NonNull
   ESuccess exportRecords (@NonNull IExportRecordProvider aProvider, @NonNull @WillClose OutputStream aOS);

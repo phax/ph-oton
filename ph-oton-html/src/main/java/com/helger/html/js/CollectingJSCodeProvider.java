@@ -32,8 +32,8 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 
 /**
- * A JSCode provider that encapsulates a list of {@link IHasJSCode} elements and
- * itself implements {@link IHasJSCode}.
+ * A JSCode provider that encapsulates a list of {@link IHasJSCode} elements and itself implements
+ * {@link IHasJSCode}.
  *
  * @author Philip Helger
  */
@@ -62,8 +62,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   }
 
   /**
-   * @return The underlying modifiable list. Never <code>null</code> but maybe
-   *         empty.
+   * @return The underlying modifiable list. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableObject
@@ -73,8 +72,7 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   }
 
   /**
-   * @return A copy of the list with all members. Never <code>null</code> but
-   *         maybe empty.
+   * @return A copy of the list with all members. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -101,8 +99,8 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   }
 
   /**
-   * Add JS code at the specified index but unwrapping any
-   * {@link CollectingJSCodeProvider} instances.
+   * Add JS code at the specified index but unwrapping any {@link CollectingJSCodeProvider}
+   * instances.
    *
    * @param nIndex
    *        The index where the element should be added. Should be &ge; 0.
@@ -130,9 +128,8 @@ public class CollectingJSCodeProvider implements IHasJSCodeWithSettings, IHasSiz
   }
 
   /**
-   * This will append all the content from the given provider. If the provider
-   * itself is a {@link CollectingJSCodeProvider}, its contents will be
-   * appended.
+   * This will append all the content from the given provider. If the provider itself is a
+   * {@link CollectingJSCodeProvider}, its contents will be appended.
    *
    * @param aProvider
    *        The provider to add. May be <code>null</code>.

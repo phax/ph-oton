@@ -47,7 +47,11 @@ public class LoggingAPIExceptionCallback implements IAPIExceptionCallback
     if (t instanceof IOException)
     {
       if (!StreamHelper.isKnownEOFException (t))
-        LOGGER.error ("Error writing result of API '" + aInvokableDescriptor.getPath () + "' with " + aInvokableDescriptor, t);
+        LOGGER.error ("Error writing result of API '" +
+                      aInvokableDescriptor.getPath () +
+                      "' with " +
+                      aInvokableDescriptor,
+                      t);
     }
     else
     {

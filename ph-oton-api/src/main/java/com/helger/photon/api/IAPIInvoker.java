@@ -24,8 +24,8 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Base interface for an API invoker. It has a set of {@link IAPIExecutor}
- * instances that it can invoke.
+ * Base interface for an API invoker. It has a set of {@link IAPIExecutor} instances that it can
+ * invoke.
  *
  * @author Philip Helger
  */
@@ -39,8 +39,7 @@ public interface IAPIInvoker extends Serializable
    * @param aRequestScope
    *        The current request scope. Never <code>null</code>.
    * @param aUnifiedResponse
-   *        The current response object, with caching already disabled. Never
-   *        <code>null</code>.
+   *        The current response object, with caching already disabled. Never <code>null</code>.
    * @throws Exception
    *         In case something goes wrong
    */

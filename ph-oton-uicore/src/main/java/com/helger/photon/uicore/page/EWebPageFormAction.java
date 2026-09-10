@@ -25,8 +25,7 @@ import com.helger.base.lang.EnumHelper;
 import com.helger.photon.uicore.css.CPageParam;
 
 /**
- * Determines the different form actions to be handled in
- * {@link AbstractWebPageForm}.
+ * Determines the different form actions to be handled in {@link AbstractWebPageForm}.
  *
  * @author Philip Helger
  */
@@ -58,8 +57,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #SHOW_LIST}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #SHOW_LIST}, <code>false</code> otherwise.
    */
   public boolean isShowList ()
   {
@@ -67,8 +65,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #VIEW}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #VIEW}, <code>false</code> otherwise.
    */
   public boolean isView ()
   {
@@ -76,8 +73,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #CREATE}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #CREATE}, <code>false</code> otherwise.
    */
   public boolean isCreate ()
   {
@@ -85,8 +81,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #EDIT}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #EDIT}, <code>false</code> otherwise.
    */
   public boolean isEdit ()
   {
@@ -94,8 +89,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #COPY}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #COPY}, <code>false</code> otherwise.
    */
   public boolean isCopy ()
   {
@@ -103,8 +97,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #DELETE}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #DELETE}, <code>false</code> otherwise.
    */
   public boolean isDelete ()
   {
@@ -112,8 +105,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #UNDELETE}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #UNDELETE}, <code>false</code> otherwise.
    */
   public boolean isUndelete ()
   {
@@ -121,8 +113,7 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #CUSTOM}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #CUSTOM}, <code>false</code> otherwise.
    */
   public boolean isCustom ()
   {
@@ -130,8 +121,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action creates a new object (CREATE,
-   *         COPY), <code>false</code> otherwise.
+   * @return <code>true</code> if this action creates a new object (CREATE, COPY),
+   *         <code>false</code> otherwise.
    */
   public boolean isCreating ()
   {
@@ -139,9 +130,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action modifies an existing object (EDIT,
-   *         DELETE, UNDELETE), <code>false</code> if either creates a new
-   *         object or just reads an existing object.
+   * @return <code>true</code> if this action modifies an existing object (EDIT, DELETE, UNDELETE),
+   *         <code>false</code> if either creates a new object or just reads an existing object.
    */
   public boolean isModifying ()
   {
@@ -149,9 +139,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action only reads an existing format
-   *         (SHOW_LIST, VIEW), <code>false</code> if the action needs write
-   *         access.
+   * @return <code>true</code> if this action only reads an existing format (SHOW_LIST, VIEW),
+   *         <code>false</code> if the action needs write access.
    */
   public boolean isReadonly ()
   {
@@ -159,9 +148,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action needs write access (for creating
-   *         or modifying; CREATE, COPY, EDIT, DELETE, UNDELETE),
-   *         <code>false</code> if the action is read-only.
+   * @return <code>true</code> if this action needs write access (for creating or modifying; CREATE,
+   *         COPY, EDIT, DELETE, UNDELETE), <code>false</code> if the action is read-only.
    * @see #isCreating()
    * @see #isModifying()
    */
@@ -177,7 +165,8 @@ public enum EWebPageFormAction implements IHasID <String>
   }
 
   @Nullable
-  public static EWebPageFormAction getFromIDOrDefault (@Nullable final String sID, @Nullable final EWebPageFormAction eDefault)
+  public static EWebPageFormAction getFromIDOrDefault (@Nullable final String sID,
+                                                       @Nullable final EWebPageFormAction eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EWebPageFormAction.class, sID, eDefault);
   }

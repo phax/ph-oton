@@ -25,9 +25,9 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * API exception mapper to convert exceptions into reasonable HTTP responses. It
- * is called from inside {@link APIInvoker} in case an exception is thrown. See
- * {@link IAPIDescriptor} for the assignment.
+ * API exception mapper to convert exceptions into reasonable HTTP responses. It is called from
+ * inside {@link APIInvoker} in case an exception is thrown. See {@link IAPIDescriptor} for the
+ * assignment.
  *
  * @author Philip Helger
  * @since 8.1.3
@@ -43,8 +43,8 @@ public interface IAPIExceptionMapper extends Serializable
    *        The current response. Never <code>null</code>.
    * @param aThrowable
    *        The thrown Exception. Never <code>null</code>.
-   * @return {@link EHandled#HANDLED} to indicate that the exception was handled
-   *         and should NOT be re-thrown.
+   * @return {@link EHandled#HANDLED} to indicate that the exception was handled and should NOT be
+   *         re-thrown.
    */
   @NonNull
   EHandled applyExceptionOnResponse (@NonNull InvokableAPIDescriptor aInvokableDescriptor,

@@ -161,7 +161,7 @@ public final class HCSettings
   {
     ValueEnforcer.notNull (aConversionSettings, "ConversionSettings");
 
-    RW_LOCK.writeLocked ( () -> s_aConversionSettings = aConversionSettings);
+    RW_LOCK.writeLocked (() -> s_aConversionSettings = aConversionSettings);
   }
 
   /**
@@ -171,7 +171,7 @@ public final class HCSettings
   @ReturnsMutableObject
   public static HCConversionSettings getMutableConversionSettings ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aConversionSettings);
+    return RW_LOCK.readLockedGet (() -> s_aConversionSettings);
   }
 
   /**
@@ -227,7 +227,7 @@ public final class HCSettings
     getMutableConversionSettings ().setXMLWriterSettings (HCConversionSettings.createDefaultXMLWriterSettings (eHTMLVersion));
 
     if (!eHTMLVersion.equals (eOldVersion))
-      CONDLOG.info ( () -> "Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
+      CONDLOG.info (() -> "Default HTML version changed from " + eOldVersion + " to " + eHTMLVersion);
     if (eHTMLVersion.isAtLeastHTML5 ())
     {
       // No need to put anything in a comment
@@ -244,39 +244,39 @@ public final class HCSettings
 
   public static boolean isAutoCompleteOffForPasswordEdits ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bAutoCompleteOffForPasswordEdits);
+    return RW_LOCK.readLockedBoolean (() -> s_bAutoCompleteOffForPasswordEdits);
   }
 
   public static void setAutoCompleteOffForPasswordEdits (final boolean bAutoCompleteOffForPasswordEdits)
   {
-    RW_LOCK.writeLocked ( () -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
-    CONDLOG.info ( () -> "Default @autocomplete for <input type=password> set to " +
-                         (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
+    RW_LOCK.writeLocked (() -> s_bAutoCompleteOffForPasswordEdits = bAutoCompleteOffForPasswordEdits);
+    CONDLOG.info (() -> "Default @autocomplete for <input type=password> set to " +
+                        (bAutoCompleteOffForPasswordEdits ? "off" : "on"));
   }
 
   public static int getTextAreaDefaultRows ()
   {
-    return RW_LOCK.readLockedInt ( () -> s_nTextAreaDefaultRows);
+    return RW_LOCK.readLockedInt (() -> s_nTextAreaDefaultRows);
   }
 
   public static void setTextAreaDefaultRows (final int nTextAreaDefaultRows)
   {
-    RW_LOCK.writeLocked ( () -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
-    CONDLOG.info ( () -> "Default <textarea> rows set to " + nTextAreaDefaultRows);
+    RW_LOCK.writeLocked (() -> s_nTextAreaDefaultRows = nTextAreaDefaultRows);
+    CONDLOG.info (() -> "Default <textarea> rows set to " + nTextAreaDefaultRows);
   }
 
   @NonNull
   public static IHCOnDocumentReadyProvider getOnDocumentReadyProvider ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aOnDocumentReadyProvider);
+    return RW_LOCK.readLockedGet (() -> s_aOnDocumentReadyProvider);
   }
 
   public static void setOnDocumentReadyProvider (@NonNull final IHCOnDocumentReadyProvider aOnDocumentReadyProvider)
   {
     ValueEnforcer.notNull (aOnDocumentReadyProvider, "OnDocumentReadyProvider");
 
-    RW_LOCK.writeLocked ( () -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
-    CONDLOG.info ( () -> "Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
+    RW_LOCK.writeLocked (() -> s_aOnDocumentReadyProvider = aOnDocumentReadyProvider);
+    CONDLOG.info (() -> "Default JS onDocumentReady provider set to " + aOnDocumentReadyProvider);
   }
 
   /**
@@ -285,7 +285,7 @@ public final class HCSettings
   @NonNull
   public static EHCScriptInlineMode getScriptInlineMode ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_eScriptInlineMode);
+    return RW_LOCK.readLockedGet (() -> s_eScriptInlineMode);
   }
 
   /**
@@ -300,9 +300,9 @@ public final class HCSettings
     ValueEnforcer.notNull (eMode, "Mode");
 
     final EHCScriptInlineMode eOld = getScriptInlineMode ();
-    RW_LOCK.writeLocked ( () -> s_eScriptInlineMode = eMode);
+    RW_LOCK.writeLocked (() -> s_eScriptInlineMode = eMode);
     if (!eMode.equals (eOld))
-      CONDLOG.info ( () -> "Default <script> mode changed from " + eOld + " to " + eMode);
+      CONDLOG.info (() -> "Default <script> mode changed from " + eOld + " to " + eMode);
   }
 
   /**
@@ -311,7 +311,7 @@ public final class HCSettings
   @NonNull
   public static EHCStyleInlineMode getStyleInlineMode ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_eStyleInlineMode);
+    return RW_LOCK.readLockedGet (() -> s_eStyleInlineMode);
   }
 
   /**
@@ -326,15 +326,15 @@ public final class HCSettings
     ValueEnforcer.notNull (eStyleInlineMode, "mode");
 
     final EHCStyleInlineMode eOld = getStyleInlineMode ();
-    RW_LOCK.writeLocked ( () -> s_eStyleInlineMode = eStyleInlineMode);
+    RW_LOCK.writeLocked (() -> s_eStyleInlineMode = eStyleInlineMode);
     if (!eStyleInlineMode.equals (eOld))
-      CONDLOG.info ( () -> "Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
+      CONDLOG.info (() -> "Default <style> mode changed from " + eOld + " to " + eStyleInlineMode);
   }
 
   @NonNull
   public static ENewLineMode getNewLineMode ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_eNewLineMode);
+    return RW_LOCK.readLockedGet (() -> s_eNewLineMode);
   }
 
   public static void setNewLineMode (@NonNull final ENewLineMode eNewLineMode)
@@ -342,20 +342,20 @@ public final class HCSettings
     ValueEnforcer.notNull (eNewLineMode, "NewLineMode");
 
     final ENewLineMode eOld = getNewLineMode ();
-    RW_LOCK.writeLocked ( () -> s_eNewLineMode = eNewLineMode);
+    RW_LOCK.writeLocked (() -> s_eNewLineMode = eNewLineMode);
     if (!eNewLineMode.equals (eOld))
-      CONDLOG.info ( () -> "Default new line mode changed from " + eOld + " to " + eNewLineMode);
+      CONDLOG.info (() -> "Default new line mode changed from " + eOld + " to " + eNewLineMode);
   }
 
   public static boolean isOutOfBandDebuggingEnabled ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bOOBDebugging);
+    return RW_LOCK.readLockedBoolean (() -> s_bOOBDebugging);
   }
 
   public static void setOutOfBandDebuggingEnabled (final boolean bEnabled)
   {
-    RW_LOCK.writeLocked ( () -> s_bOOBDebugging = bEnabled);
-    CONDLOG.info ( () -> "Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
+    RW_LOCK.writeLocked (() -> s_bOOBDebugging = bEnabled);
+    CONDLOG.info (() -> "Default out-of-band debugging " + (bEnabled ? "enabled" : "disabled"));
   }
 
   /**
@@ -365,13 +365,13 @@ public final class HCSettings
    */
   public static boolean isScriptsInBody ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bScriptsInBody);
+    return RW_LOCK.readLockedBoolean (() -> s_bScriptsInBody);
   }
 
   public static void setScriptsInBody (final boolean bEnabled)
   {
-    RW_LOCK.writeLocked ( () -> s_bScriptsInBody = bEnabled);
-    CONDLOG.info ( () -> "Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
+    RW_LOCK.writeLocked (() -> s_bScriptsInBody = bEnabled);
+    CONDLOG.info (() -> "Default put <scripts>s in " + (bEnabled ? "<body>" : "<head>"));
   }
 
   /**
@@ -380,13 +380,13 @@ public final class HCSettings
    */
   public static boolean isUseRegularResources ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bUseRegularResources);
+    return RW_LOCK.readLockedBoolean (() -> s_bUseRegularResources);
   }
 
   public static void setUseRegularResources (final boolean bUseRegularResources)
   {
-    RW_LOCK.writeLocked ( () -> s_bUseRegularResources = bUseRegularResources);
-    CONDLOG.info ( () -> "Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
+    RW_LOCK.writeLocked (() -> s_bUseRegularResources = bUseRegularResources);
+    CONDLOG.info (() -> "Default using " + (bUseRegularResources ? "regular" : "minified") + " resources");
   }
 
   /**
@@ -396,13 +396,13 @@ public final class HCSettings
    */
   public static boolean isUseNonceInScript ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInScript);
+    return RW_LOCK.readLockedBoolean (() -> s_bUseNonceInScript);
   }
 
   public static void setUseNonceInScript (final boolean b)
   {
-    RW_LOCK.writeLocked ( () -> s_bUseNonceInScript = b);
-    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <script> elements");
+    RW_LOCK.writeLocked (() -> s_bUseNonceInScript = b);
+    CONDLOG.info (() -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <script> elements");
   }
 
   /**
@@ -412,12 +412,12 @@ public final class HCSettings
    */
   public static boolean isUseNonceInStyle ()
   {
-    return RW_LOCK.readLockedBoolean ( () -> s_bUseNonceInStyle);
+    return RW_LOCK.readLockedBoolean (() -> s_bUseNonceInStyle);
   }
 
   public static void setUseNonceInStyle (final boolean b)
   {
-    RW_LOCK.writeLocked ( () -> s_bUseNonceInStyle = b);
-    CONDLOG.info ( () -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <style> elements");
+    RW_LOCK.writeLocked (() -> s_bUseNonceInStyle = b);
+    CONDLOG.info (() -> "The 'nonce' attribute will" + (b ? "" : " not") + " be used for <style> elements");
   }
 }

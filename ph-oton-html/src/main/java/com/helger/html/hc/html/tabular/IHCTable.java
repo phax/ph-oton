@@ -104,8 +104,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   // Column handling
 
   /**
-   * @return The column group used for this table. May be <code>null</code> if
-   *         undefined.
+   * @return The column group used for this table. May be <code>null</code> if undefined.
    */
   @Nullable
   HCColGroup getColGroup ();
@@ -160,8 +159,8 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * Add multiple columns at once.
    *
    * @param aCols
-   *        The columns to be added. May be <code>null</code> and may contain
-   *        <code>null</code> elements.
+   *        The columns to be added. May be <code>null</code> and may contain <code>null</code>
+   *        elements.
    * @return this
    */
   @NonNull
@@ -177,8 +176,8 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
    * Add multiple columns at once.
    *
    * @param aCols
-   *        The columns to be added. May be <code>null</code> and may contain
-   *        <code>null</code> elements.
+   *        The columns to be added. May be <code>null</code> and may contain <code>null</code>
+   *        elements.
    * @return this
    */
   @NonNull
@@ -191,8 +190,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   }
 
   /**
-   * Remove the column definition at the specified index. This does not affect
-   * any row contents.
+   * Remove the column definition at the specified index. This does not affect any row contents.
    *
    * @param nColumnIndex
    *        The index of the column to remove
@@ -210,8 +208,8 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   IMPLTYPE removeAllColumns ();
 
   /**
-   * @return The number of columns as specified in the column group. If no
-   *         column group is defined, 0 is returned.
+   * @return The number of columns as specified in the column group. If no column group is defined,
+   *         0 is returned.
    */
   @Nonnegative
   int getColumnCount ();
@@ -242,8 +240,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   }
 
   /**
-   * @return <code>true</code> if a table header ID is present,
-   *         <code>false</code> otherwise
+   * @return <code>true</code> if a table header ID is present, <code>false</code> otherwise
    */
   default boolean hasHeaderID ()
   {
@@ -404,8 +401,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   }
 
   /**
-   * @return <code>true</code> if a Footer ID is present, <code>false</code>
-   *         otherwise
+   * @return <code>true</code> if a Footer ID is present, <code>false</code> otherwise
    */
   default boolean hasFooterID ()
   {
@@ -566,8 +562,7 @@ public interface IHCTable <IMPLTYPE extends IHCTable <IMPLTYPE>> extends IHCElem
   }
 
   /**
-   * @return <code>true</code> if a body ID is present, <code>false</code>
-   *         otherwise
+   * @return <code>true</code> if a body ID is present, <code>false</code> otherwise
    */
   default boolean hasBodyID ()
   {

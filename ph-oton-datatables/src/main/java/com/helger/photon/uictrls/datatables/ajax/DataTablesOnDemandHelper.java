@@ -46,9 +46,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * Helper to run a DataTables in the server side mode {@link EDataTablesServerSideMode#ON_DEMAND}:
  * the table is never rendered as a whole, instead every AJAX request queries only the rows of the
  * requested page from the underlying data store.<br>
- * An application usually points all its DataTables to a single shared {@link AjaxExecutorDataTables}
- * that keeps a rendered copy of the whole table in the session. The methods of this class override
- * that per table.
+ * An application usually points all its DataTables to a single shared
+ * {@link AjaxExecutorDataTables} that keeps a rendered copy of the whole table in the session. The
+ * methods of this class override that per table.
  *
  * @author Philip Helger
  * @since 10.6.0

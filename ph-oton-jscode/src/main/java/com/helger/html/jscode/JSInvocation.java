@@ -65,8 +65,7 @@ public class JSInvocation extends AbstractJSInvocation <JSInvocation>
    * Invokes a method on an object.
    *
    * @param aObject
-   *        JExpression for the object upon which the named method will be
-   *        invoked, or null if none
+   *        JExpression for the object upon which the named method will be invoked, or null if none
    * @param sName
    *        Name of method to invoke
    */

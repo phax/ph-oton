@@ -42,20 +42,18 @@ public enum EDTPButtonsButtonType implements IHasName
   /** Save to a PDF document - resolves to {@link #PDF_HTML5} */
   PDF ("pdf"),
   /**
-   * Displays a dialogue asking the user to use their browser's copy command
-   * (HTML5 does not have a copy to clipboard API)
+   * Displays a dialogue asking the user to use their browser's copy command (HTML5 does not have a
+   * copy to clipboard API)
    */
   COPY_HTML5 ("copyHtml5"),
   /** Create and save an CSV file */
   CSV_HTML5 ("csvHtml5"),
   /**
-   * Create and save an Excel XLSX file - this requires JSZip. Note - this will
-   * not work in Safari.
+   * Create and save an Excel XLSX file - this requires JSZip. Note - this will not work in Safari.
    */
   EXCEL_HTML5 ("excelHtml5"),
   /**
-   * Create and save a PDF document - this required PDFMake and a suitable font
-   * file.
+   * Create and save a PDF document - this required PDFMake and a suitable font file.
    */
   PDF_HTML5 ("pdfHtml5"),
   PRINT ("print"),

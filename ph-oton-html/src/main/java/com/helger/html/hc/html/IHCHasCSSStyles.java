@@ -151,8 +151,7 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *
    * @param eProperty
    *        The property to search. May be <code>null</code>.
-   * @return <code>true</code> if a respective style is present,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if a respective style is present, <code>false</code> otherwise.
    */
   boolean containsStyle (@Nullable ECSSProperty eProperty);
 
@@ -161,14 +160,12 @@ public interface IHCHasCSSStyles <IMPLTYPE extends IHCHasCSSStyles <IMPLTYPE>> e
    *
    * @param aValue
    *        The value to be checked
-   * @return <code>true</code> if such a CSS value is contained,
-   *         <code>false</code> otherwise
+   * @return <code>true</code> if such a CSS value is contained, <code>false</code> otherwise
    */
   boolean hasStyle (@Nullable ICSSValue aValue);
 
   /**
-   * @return <code>true</code> if at least one CSS style is assigned,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if at least one CSS style is assigned, <code>false</code> otherwise.
    */
   boolean hasAnyStyle ();
 

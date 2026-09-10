@@ -62,8 +62,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   String getTagName ();
 
   /**
-   * @return The value of the HTML <code>accesskey</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>accesskey</code> attribute. May be <code>null</code>.
    */
   @Nullable
   String getAccessKey ();
@@ -79,8 +78,8 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setAccessKey (@Nullable String sAccessKey);
 
   /**
-   * @return <code>true</code> if this element should be automatically focused,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if this element should be automatically focused, <code>false</code>
+   *         if not.
    * @since 9.3.0
    */
   boolean isAutoFocus ();
@@ -113,8 +112,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setContentEditable (@Nullable EHCContentEditable eContentEditable);
 
   /**
-   * @return The value of the HTML <code>dir</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>dir</code> attribute. May be <code>null</code>.
    */
   @Nullable
   EHCTextDirection getDirection ();
@@ -146,8 +144,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setDraggable (@Nullable EHCDraggable eDraggable);
 
   /**
-   * @return The value of the HTML <code>enterkeyhint</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>enterkeyhint</code> attribute. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
@@ -165,8 +162,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setEnterKeyHint (@Nullable String sEnterKeyHint);
 
   /**
-   * @return The value of the HTML <code>exportparts</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>exportparts</code> attribute. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
@@ -234,8 +230,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setInputMode (@Nullable EHCInputMode eInputMode);
 
   /**
-   * @return The value of the HTML <code>lang</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>lang</code> attribute. May be <code>null</code>.
    */
   @Nullable
   String getLanguage ();
@@ -251,16 +246,15 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setLanguage (@Nullable String sLanguage);
 
   /**
-   * @return The value of the HTML <code>nonce</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>nonce</code> attribute. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
   String getNonce ();
 
   /**
-   * @return <code>true</code> if the HTML <code>nonce</code> attribute is
-   *         present, <code>false</code> if not.
+   * @return <code>true</code> if the HTML <code>nonce</code> attribute is present,
+   *         <code>false</code> if not.
    * @since 9.3.0
    */
   default boolean hasNonce ()
@@ -280,8 +274,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setNonce (@Nullable String sNonce);
 
   /**
-   * @return The value of the HTML <code>part</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>part</code> attribute. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
@@ -299,8 +292,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setPart (@Nullable String sPart);
 
   /**
-   * @return The value of the HTML <code>slot</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>slot</code> attribute. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
@@ -318,8 +310,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setSlot (@Nullable String sSlot);
 
   /**
-   * @return <code>true</code> if spell check is enabled, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if spell check is enabled, <code>false</code> otherwise.
    */
   boolean isSpellCheck ();
 
@@ -334,30 +325,27 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setSpellCheck (boolean bSpellCheck);
 
   /**
-   * @return The tab index of this object. The semantics of negative values
-   *         depends on the browser! In HTML5 negative values are allowed but
-   *         won't set a focus when tabbing. The default value is indicated by
-   *         {@link #DEFAULT_TABINDEX}
+   * @return The tab index of this object. The semantics of negative values depends on the browser!
+   *         In HTML5 negative values are allowed but won't set a focus when tabbing. The default
+   *         value is indicated by {@link #DEFAULT_TABINDEX}
    */
   @CheckForSigned
   long getTabIndex ();
 
   /**
-   * Set the tab index of this object. This is a common element in HTML5 only.
-   * The default value is {@link #DEFAULT_TABINDEX}
+   * Set the tab index of this object. This is a common element in HTML5 only. The default value is
+   * {@link #DEFAULT_TABINDEX}
    *
    * @param nTabIndex
-   *        The tab-index of this object. The semantics of negative values
-   *        depends on the browser! In HTML5 negative values are allowed but
-   *        won't set a focus when tabbing.
+   *        The tab-index of this object. The semantics of negative values depends on the browser!
+   *        In HTML5 negative values are allowed but won't set a focus when tabbing.
    * @return this
    */
   @NonNull
   IMPLTYPE setTabIndex (long nTabIndex);
 
   /**
-   * @return The value of the HTML <code>title</code> attribute. May be
-   *         <code>null</code>.
+   * @return The value of the HTML <code>title</code> attribute. May be <code>null</code>.
    */
   @Nullable
   String getTitle ();
@@ -373,14 +361,12 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   IMPLTYPE setTitle (String sTitle);
 
   /**
-   * @return <code>true</code> if HTML <code>translate</code> is
-   *         <code>true</code>.
+   * @return <code>true</code> if HTML <code>translate</code> is <code>true</code>.
    */
   boolean isTranslateOn ();
 
   /**
-   * @return <code>true</code> if HTML <code>translate</code> is
-   *         <code>false</code>.
+   * @return <code>true</code> if HTML <code>translate</code> is <code>false</code>.
    */
   boolean isTranslateOff ();
 
@@ -390,8 +376,7 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
   boolean isTranslateUndefined ();
 
   /**
-   * @return The value of the HTML <code>translate</code> attribute. Never
-   *         <code>null</code>.
+   * @return The value of the HTML <code>translate</code> attribute. Never <code>null</code>.
    */
   @NonNull
   ETriState getTranslate ();
@@ -430,16 +415,14 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * Set the unfocusable state of this element.
    *
    * @param bUnfocusable
-   *        <code>true</code> to make it unfocusable, <code>false</code>
-   *        otherwise.
+   *        <code>true</code> to make it unfocusable, <code>false</code> otherwise.
    * @return this
    */
   @NonNull
   IMPLTYPE setUnfocusable (boolean bUnfocusable);
 
   /**
-   * @return The role of this element. May be <code>null</code>. By default an
-   *         element has no role.
+   * @return The role of this element. May be <code>null</code>. By default an element has no role.
    */
   @Nullable
   EHTMLRole getRole ();
@@ -448,29 +431,27 @@ public interface IHCElement <IMPLTYPE extends IHCElement <IMPLTYPE>> extends
    * Set the role attribute of this element.
    *
    * @param eRole
-   *        The role to set. May be <code>null</code>. According to the specs,
-   *        abstract roles should not be used!
+   *        The role to set. May be <code>null</code>. According to the specs, abstract roles should
+   *        not be used!
    * @return this
    */
   @NonNull
   IMPLTYPE setRole (@Nullable EHTMLRole eRole);
 
   /**
-   * @return A non-<code>null</code> set of "custom" attributes for which no
-   *         predefined method binding is available. Used e.g. for "aria-*" and
-   *         "data-*" attributes.
+   * @return A non-<code>null</code> set of "custom" attributes for which no predefined method
+   *         binding is available. Used e.g. for "aria-*" and "data-*" attributes.
    */
   @NonNull
   @ReturnsMutableObject
   IHCAttrContainer customAttrs ();
 
   /**
-   * A helper method that deals with custom attributes, but maintains the
-   * chainable manner of this API.
+   * A helper method that deals with custom attributes, but maintains the chainable manner of this
+   * API.
    *
    * @param aConsumer
-   *        The consumer that deals with the custom attributes. May not be
-   *        <code>null</code>.
+   *        The consumer that deals with the custom attributes. May not be <code>null</code>.
    * @return this for chaining
    * @since 8.4.4
    */

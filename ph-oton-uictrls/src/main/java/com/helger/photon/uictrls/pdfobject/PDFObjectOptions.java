@@ -26,8 +26,7 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 
 /**
- * This class represents the options for embedding PDFObject. See
- * https://pdfobject.com/
+ * This class represents the options for embedding PDFObject. See https://pdfobject.com/
  * 
  * @author Philip Helger
  */
@@ -44,9 +43,9 @@ public class PDFObjectOptions
   {}
 
   /**
-   * Alias for PDF Open Parameters "page" option. Any number entered here will
-   * cause the PDF be opened to the specified page number (if the browser
-   * supports it). If left unspecified, the PDF will open on page 1.
+   * Alias for PDF Open Parameters "page" option. Any number entered here will cause the PDF be
+   * opened to the specified page number (if the browser supports it). If left unspecified, the PDF
+   * will open on page 1.
    *
    * @param nPage
    *        Page number
@@ -60,9 +59,9 @@ public class PDFObjectOptions
   }
 
   /**
-   * Alias for PDF Open Parameters "page" option. Any number entered here will
-   * cause the PDF be opened to the specified page number (if the browser
-   * supports it). If left unspecified, the PDF will open on page 1.
+   * Alias for PDF Open Parameters "page" option. Any number entered here will cause the PDF be
+   * opened to the specified page number (if the browser supports it). If left unspecified, the PDF
+   * will open on page 1.
    *
    * @param sPage
    *        Page number
@@ -76,8 +75,8 @@ public class PDFObjectOptions
   }
 
   /**
-   * Any string entered here will be appended to the generated &lt;embed&gt;
-   * element as the ID. If left unspecified, no ID will be appended.
+   * Any string entered here will be appended to the generated &lt;embed&gt; element as the ID. If
+   * left unspecified, no ID will be appended.
    *
    * @param sID
    *        ID to use
@@ -91,9 +90,9 @@ public class PDFObjectOptions
   }
 
   /**
-   * Will insert the width as an inline style via the style attribute on the
-   * &lt;embed&gt; element. If left unspecified, PDFObject will default to 100%.
-   * Is standard CSS, supports all units, including px, %, em, and rem.
+   * Will insert the width as an inline style via the style attribute on the &lt;embed&gt; element.
+   * If left unspecified, PDFObject will default to 100%. Is standard CSS, supports all units,
+   * including px, %, em, and rem.
    *
    * @param sWidth
    *        Width to use
@@ -107,9 +106,9 @@ public class PDFObjectOptions
   }
 
   /**
-   * Will insert the height as an inline style via the style attribute on the
-   * target element. If left unspecified, PDFObject will default to 100%. Is
-   * standard CSS, supports all units, including px, %, em, and rem.
+   * Will insert the height as an inline style via the style attribute on the target element. If
+   * left unspecified, PDFObject will default to 100%. Is standard CSS, supports all units,
+   * including px, %, em, and rem.
    *
    * @param sHeight
    *        Height to use
@@ -123,8 +122,7 @@ public class PDFObjectOptions
   }
 
   /**
-   * disable the fallback text option and prevent PDFObject from inserting
-   * fallback text
+   * disable the fallback text option and prevent PDFObject from inserting fallback text
    *
    * @return this for chaining
    */
@@ -136,10 +134,9 @@ public class PDFObjectOptions
   }
 
   /**
-   * Any string entered here will be inserted into the target element when the
-   * browser doesn't support inline PDFs. HTML is supported. Use the shortcode
-   * <code>[url</code>] to insert the URL of the PDF (as specified via the URL
-   * parameter in the embed() method).
+   * Any string entered here will be inserted into the target element when the browser doesn't
+   * support inline PDFs. HTML is supported. Use the shortcode <code>[url</code>] to insert the URL
+   * of the PDF (as specified via the URL parameter in the embed() method).
    *
    * @param sText
    *        Text to use

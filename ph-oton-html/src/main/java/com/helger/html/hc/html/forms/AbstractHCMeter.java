@@ -28,8 +28,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
 import com.helger.html.hc.html.HCHTMLHelper;
 import com.helger.xml.microdom.IMicroElement;
 
-public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                      implements
+public abstract class AbstractHCMeter <IMPLTYPE extends AbstractHCMeter <IMPLTYPE>> extends
+                                      AbstractHCElementWithChildren <IMPLTYPE> implements
                                       IHCMeter <IMPLTYPE>
 {
   private double m_dValue = CGlobal.ILLEGAL_DOUBLE;

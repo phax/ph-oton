@@ -26,8 +26,8 @@ import com.helger.photon.core.execcontext.ILayoutExecutionContext;
 import com.helger.photon.core.execcontext.LayoutExecutionContext;
 
 /**
- * This page is instantiated per page view, so that the thread safety of the
- * execution parameters is more clear.
+ * This page is instantiated per page view, so that the thread safety of the execution parameters is
+ * more clear.
  *
  * @author Philip Helger
  */
@@ -59,6 +59,9 @@ public class WebPageExecutionContext extends LayoutExecutionContext implements I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("webPage", m_aWebPage).append ("nodeList", m_aNodeList).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("webPage", m_aWebPage)
+                            .append ("nodeList", m_aNodeList)
+                            .getToString ();
   }
 }

@@ -70,7 +70,7 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   {
     ValueEnforcer.notNull (aMetaElement, "MetaElement");
 
-    m_aRWLock.writeLocked ( () -> m_aItems.put (aMetaElement.getName (), aMetaElement));
+    m_aRWLock.writeLocked (() -> m_aItems.put (aMetaElement.getName (), aMetaElement));
     return this;
   }
 
@@ -88,14 +88,14 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   {
     ValueEnforcer.notNull (aMetaElementList, "MetaElementList");
 
-    m_aRWLock.writeLocked ( () -> m_aItems.putAll (aMetaElementList.m_aItems));
+    m_aRWLock.writeLocked (() -> m_aItems.putAll (aMetaElementList.m_aItems));
     return this;
   }
 
   @NonNull
   public EChange removeMetaElement (@Nullable final String sMetaElementName)
   {
-    return m_aRWLock.writeLockedGet ( () -> m_aItems.removeObject (sMetaElementName));
+    return m_aRWLock.writeLockedGet (() -> m_aItems.removeObject (sMetaElementName));
   }
 
   @NonNull
@@ -115,7 +115,7 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aItems.values ()));
+    m_aRWLock.readLockedBoolean (() -> aTarget.addAll (m_aItems.values ()));
   }
 
   @NonNull
@@ -128,12 +128,12 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   @Nullable
   public IMetaElement getMetaElementOfName (@Nullable final String sName)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aItems.get (sName));
+    return m_aRWLock.readLockedGet (() -> m_aItems.get (sName));
   }
 
   public boolean containsMetaElementWithName (@Nullable final String sName)
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_aItems.containsKey (sName));
+    return m_aRWLock.readLockedBoolean (() -> m_aItems.containsKey (sName));
   }
 
   @Nonnegative
@@ -150,14 +150,14 @@ public class MetaElementList implements ICloneable <MetaElementList>, IMetaEleme
   @NonNull
   public Iterator <IMetaElement> iterator ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aItems.values ().iterator ());
+    return m_aRWLock.readLockedGet (() -> m_aItems.values ().iterator ());
   }
 
   @NonNull
   @ReturnsMutableCopy
   public MetaElementList getClone ()
   {
-    return m_aRWLock.readLockedGet ( () -> new MetaElementList (this));
+    return m_aRWLock.readLockedGet (() -> new MetaElementList (this));
   }
 
   @Override

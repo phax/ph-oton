@@ -28,8 +28,8 @@ import com.helger.diagnostics.callback.exception.LoggingExceptionCallback;
 import com.helger.photon.audit.v2.domain.AuditEvent;
 
 /**
- * Pipeline of {@link IAuditEventConsumer} being itself an
- * {@link IAuditEventConsumer}. So basically a list of other consumers.
+ * Pipeline of {@link IAuditEventConsumer} being itself an {@link IAuditEventConsumer}. So basically
+ * a list of other consumers.
  *
  * @author Philip Helger
  */
@@ -58,8 +58,8 @@ public class AuditEventConsumerPipeline implements IAuditEventConsumer
   }
 
   /**
-   * @return The mutable exception callback list. Each callback is invoked, if
-   *         one of the consumers throws an Exception.
+   * @return The mutable exception callback list. Each callback is invoked, if one of the consumers
+   *         throws an Exception.
    */
   @NonNull
   @ReturnsMutableObject

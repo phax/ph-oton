@@ -55,8 +55,8 @@ public final class CLongRunningJobTelemetry
   public static final String ATTR_JOB_TYPE = "photon.job.type";
   /**
    * The unique ID of a single job <em>execution</em> as returned by
-   * {@link LongRunningJobData#getID()}. Only used as a span attribute - never as a metric attribute,
-   * because its cardinality is unbounded.
+   * {@link LongRunningJobData#getID()}. Only used as a span attribute - never as a metric
+   * attribute, because its cardinality is unbounded.
    */
   public static final String ATTR_JOB_EXECUTION_ID = "photon.job.execution.id";
   /** The ID of the user who started the job. May be absent. */

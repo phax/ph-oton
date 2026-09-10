@@ -20,8 +20,8 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * The &lt;dialog&gt; HTML element represents a dialog box or other interactive
- * component, such as a dismissible alert, inspector, or subwindow.<br>
+ * The &lt;dialog&gt; HTML element represents a dialog box or other interactive component, such as a
+ * dismissible alert, inspector, or subwindow.<br>
  * Available since Firefox 98
  *
  * @author Philip Helger

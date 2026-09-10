@@ -48,9 +48,7 @@ final class LoggedInUserTelemetry
   @NonNull
   private static TelemetryAttributes _getResultAttrs (@NonNull final ELoginResult eLoginResult)
   {
-    return TelemetryAttributes.builder ()
-                              .put (CSecurityTelemetry.ATTR_LOGIN_RESULT, eLoginResult.name ())
-                              .build ();
+    return TelemetryAttributes.builder ().put (CSecurityTelemetry.ATTR_LOGIN_RESULT, eLoginResult.name ()).build ();
   }
 
   /**

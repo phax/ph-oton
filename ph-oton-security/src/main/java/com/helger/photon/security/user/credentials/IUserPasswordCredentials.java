@@ -23,8 +23,7 @@ import com.helger.photon.security.user.IUser;
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
- * This interface represents {@link IUser} and password credentials passed from
- * a login page.
+ * This interface represents {@link IUser} and password credentials passed from a login page.
  *
  * @author Philip Helger
  */
@@ -43,8 +42,7 @@ public interface IUserPasswordCredentials extends IAuthCredentials
   String getPassword ();
 
   /**
-   * @return A collection of required rules for login. May be <code>null</code>
-   *         or empty.
+   * @return A collection of required rules for login. May be <code>null</code> or empty.
    */
   @Nullable
   ICommonsCollection <String> getAllRequiredRoles ();

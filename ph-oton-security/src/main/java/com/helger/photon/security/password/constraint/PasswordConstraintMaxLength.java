@@ -58,7 +58,8 @@ public class PasswordConstraintMaxLength implements IPasswordConstraint
   @Nullable
   public String getDescription (@NonNull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MAX_LENGTH.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMaxLength));
+    return EPasswordConstraintText.DESC_MAX_LENGTH.getDisplayTextWithArgs (aContentLocale,
+                                                                           Integer.valueOf (m_nMaxLength));
   }
 
   public void fillMicroElement (@NonNull final IMicroElement aElement)

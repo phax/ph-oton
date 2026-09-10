@@ -578,10 +578,9 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   /**
-   * Set how the server side data is provided. Use
-   * {@link EDataTablesServerSideMode#ON_DEMAND} to avoid, that the whole table is rendered and
-   * stored in the session. In that case the AJAX URL set via
-   * {@link #setAjaxBuilder(com.helger.html.jquery.JQueryAjaxBuilder)} must point to an
+   * Set how the server side data is provided. Use {@link EDataTablesServerSideMode#ON_DEMAND} to
+   * avoid, that the whole table is rendered and stored in the session. In that case the AJAX URL
+   * set via {@link #setAjaxBuilder(com.helger.html.jquery.JQueryAjaxBuilder)} must point to an
    * {@link com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTablesOnDemand} instead of an
    * {@link com.helger.photon.uictrls.datatables.ajax.AjaxExecutorDataTables}.
    *

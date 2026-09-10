@@ -56,10 +56,9 @@ public interface IWebPage <WPECTYPE extends IWebPageExecutionContext> extends IP
   }
 
   /**
-   * Get the headline of the page. By default it is a &lt;h1&gt; element with
-   * the result of {@link #getHeaderText(IWebPageExecutionContext)} as the
-   * content. This method is especially relevant when the page header contains
-   * entity nodes or other special formatting.
+   * Get the headline of the page. By default it is a &lt;h1&gt; element with the result of
+   * {@link #getHeaderText(IWebPageExecutionContext)} as the content. This method is especially
+   * relevant when the page header contains entity nodes or other special formatting.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.

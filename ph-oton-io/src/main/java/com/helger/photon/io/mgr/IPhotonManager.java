@@ -43,8 +43,7 @@ public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
   <T> ICommonsList <T> getNone ();
 
   /**
-   * @return A non-<code>null</code> but maybe empty list of all contained
-   *         objects.
+   * @return A non-<code>null</code> but maybe empty list of all contained objects.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -53,8 +52,7 @@ public interface IPhotonManager <INTERFACETYPE extends IHasID <String>>
   /**
    * @param sID
    *        The object ID to be checked
-   * @return <code>true</code> if a object with this ID is contained,
-   *         <code>false</code> if not
+   * @return <code>true</code> if a object with this ID is contained, <code>false</code> if not
    */
   boolean containsWithID (@Nullable String sID);
 

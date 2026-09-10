@@ -238,8 +238,8 @@ public final class LongRunningJobTelemetryTest
 
     // ... and it survives the persistence round trip together with the unique execution ID
     final LongRunningJobData aReadBack = new LongRunningJobDataMicroTypeConverter ().convertToNative (new LongRunningJobDataMicroTypeConverter ().convertToMicroElement (aJobData,
-                                                                                                                                                                        null,
-                                                                                                                                                                        "job"));
+                                                                                                                                                                         null,
+                                                                                                                                                                         "job"));
     assertNotNull (aReadBack);
     assertEquals (sExecutionID, aReadBack.getID ());
     assertEquals (JOB_TYPE, aReadBack.getJobType ());

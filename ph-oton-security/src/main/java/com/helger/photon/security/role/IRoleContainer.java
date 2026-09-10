@@ -30,8 +30,7 @@ import com.helger.collection.commons.ICommonsSet;
 public interface IRoleContainer
 {
   /**
-   * @return <code>true</code> if at least one role is contained,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if at least one role is contained, <code>false</code> otherwise.
    */
   boolean hasContainedRoles ();
 
@@ -42,8 +41,7 @@ public interface IRoleContainer
   int getContainedRoleCount ();
 
   /**
-   * @return A non-<code>null</code>but maybe empty set of all assigned role
-   *         IDs.
+   * @return A non-<code>null</code>but maybe empty set of all assigned role IDs.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -54,8 +52,8 @@ public interface IRoleContainer
    *
    * @param sRoleID
    *        The role ID to check. May be <code>null</code>.
-   * @return <code>true</code> if the role is contained in this container,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the role is contained in this container, <code>false</code>
+   *         otherwise.
    */
   boolean containsRoleID (String sRoleID);
 }

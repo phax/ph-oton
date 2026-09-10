@@ -61,26 +61,23 @@ public interface IAPIDescriptor
   Supplier <? extends IAPIExecutor> getExecutorFactory ();
 
   /**
-   * @return The names of all required HTTP headers. Never <code>null</code> but
-   *         maybe empty.
+   * @return The names of all required HTTP headers. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableObject
   ICommonsOrderedSet <String> requiredHeaders ();
 
   /**
-   * @return The names of all required request parameters. Never
-   *         <code>null</code> but maybe empty.
+   * @return The names of all required request parameters. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableObject
   ICommonsOrderedSet <String> requiredParams ();
 
   /**
-   * @return The names of all allowed MIME types for the data. Never
-   *         <code>null</code> but maybe empty. Only MIME types without
-   *         parameters (as in ";x=y") should be added here. Also unified casing
-   *         should be considered.
+   * @return The names of all allowed MIME types for the data. Never <code>null</code> but maybe
+   *         empty. Only MIME types without parameters (as in ";x=y") should be added here. Also
+   *         unified casing should be considered.
    */
   @NonNull
   @ReturnsMutableObject
@@ -93,8 +90,7 @@ public interface IAPIDescriptor
   IAPIExecutionFilter getExecutionFilter ();
 
   /**
-   * @return <code>true</code> if an execution filter is present,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if an execution filter is present, <code>false</code> otherwise.
    */
   default boolean hasExecutionFilter ()
   {
@@ -109,8 +105,7 @@ public interface IAPIDescriptor
   IAPIExceptionMapper getExceptionMapper ();
 
   /**
-   * @return <code>true</code> if an exception mapper is configured,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if an exception mapper is configured, <code>false</code> if not.
    * @since 8.1.3
    */
   default boolean hasExceptionMapper ()

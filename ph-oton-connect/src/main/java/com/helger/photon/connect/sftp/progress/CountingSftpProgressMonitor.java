@@ -20,8 +20,7 @@ import com.helger.annotation.Nonnegative;
 import com.jcraft.jsch.SftpProgressMonitor;
 
 /**
- * An implementation of {@link SftpProgressMonitor} that just counts the written
- * bytes.
+ * An implementation of {@link SftpProgressMonitor} that just counts the written bytes.
  *
  * @author Philip Helger
  * @since 8.3.2

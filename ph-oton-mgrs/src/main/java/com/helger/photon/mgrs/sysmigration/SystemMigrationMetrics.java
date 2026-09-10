@@ -42,8 +42,8 @@ public final class SystemMigrationMetrics
 
   /** Wall-clock duration of a single system migration, by ID. */
   public static final ITelemetryHistogram MIGRATION_DURATION = TelemetryMetrics.histogram (CMgrsTelemetry.METRIC_MIGRATION_DURATION,
-                                                                                            "Wall-clock duration of a single system migration",
-                                                                                            CMgrsTelemetry.UNIT_MILLIS);
+                                                                                           "Wall-clock duration of a single system migration",
+                                                                                           CMgrsTelemetry.UNIT_MILLIS);
 
   private SystemMigrationMetrics ()
   {}

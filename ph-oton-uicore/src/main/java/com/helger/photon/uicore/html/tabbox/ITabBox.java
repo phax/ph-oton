@@ -61,19 +61,29 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
   }
 
   @NonNull
-  default Tab addTab (@Nullable final String sID, @Nullable final String sLabel, @Nullable final IHCNode aContent, final boolean bActive)
+  default Tab addTab (@Nullable final String sID,
+                      @Nullable final String sLabel,
+                      @Nullable final IHCNode aContent,
+                      final boolean bActive)
   {
     return addTab (sID, new HCTextNode (sLabel), aContent, bActive);
   }
 
   @NonNull
-  default Tab addTab (@Nullable final String sID, @Nullable final IHCNode aLabel, @Nullable final IHCNode aContent, final boolean bActive)
+  default Tab addTab (@Nullable final String sID,
+                      @Nullable final IHCNode aLabel,
+                      @Nullable final IHCNode aContent,
+                      final boolean bActive)
   {
     return addTab (sID, aLabel, aContent, bActive, DEFAULT_DISABLED);
   }
 
   @NonNull
-  Tab addTab (@Nullable String sID, @Nullable IHCNode aLabel, @Nullable IHCNode aContent, boolean bActive, boolean bDisabled);
+  Tab addTab (@Nullable String sID,
+              @Nullable IHCNode aLabel,
+              @Nullable IHCNode aContent,
+              boolean bActive,
+              boolean bDisabled);
 
   @NonNull
   IMPLTYPE addTab (Tab aTab, boolean bActive);
@@ -86,15 +96,14 @@ public interface ITabBox <IMPLTYPE extends ITabBox <IMPLTYPE>> extends IHCNodeLi
   Tab getTabOfID (@Nullable String sID);
 
   /**
-   * @return The tab marked as active or <code>null</code> if no tab is marked
-   *         as active.
+   * @return The tab marked as active or <code>null</code> if no tab is marked as active.
    */
   @Nullable
   Tab getActiveTab ();
 
   /**
-   * @return The tab marked as active, or the first tab which will be active by
-   *         default. May be <code>null</code> if no tab is contained
+   * @return The tab marked as active, or the first tab which will be active by default. May be
+   *         <code>null</code> if no tab is contained
    */
   @Nullable
   Tab getActiveTabOrDefault ();

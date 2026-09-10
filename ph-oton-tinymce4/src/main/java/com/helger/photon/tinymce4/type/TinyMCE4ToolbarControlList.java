@@ -80,8 +80,8 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   }
 
   /**
-   * @return The default toolbar. Separators are denoted by <code>null</code>
-   *         elements. See the respective theme.js file.
+   * @return The default toolbar. Separators are denoted by <code>null</code> elements. See the
+   *         respective theme.js file.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -113,7 +113,8 @@ public class TinyMCE4ToolbarControlList implements ICloneable <TinyMCE4ToolbarCo
   }
 
   @NonNull
-  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex, @NonNull final ETinyMCE4ToolbarControl eControl)
+  public TinyMCE4ToolbarControlList addControl (@Nonnegative final int nIndex,
+                                                @NonNull final ETinyMCE4ToolbarControl eControl)
   {
     ValueEnforcer.notNull (eControl, "Control");
     m_aList.add (nIndex, eControl);

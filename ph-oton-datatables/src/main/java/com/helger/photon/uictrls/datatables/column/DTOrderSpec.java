@@ -78,8 +78,8 @@ public class DTOrderSpec
     else
     {
       // format, than extract
-      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null : aFormatter.apply (
-                                                                                                                     x));
+      final IComparableExtractor <T> aRealCE = x -> aComparableExtractor.apply (x == null ? null
+                                                                                          : aFormatter.apply (x));
       m_aComparableExtractor = aRealCE;
     }
     // reset status vars

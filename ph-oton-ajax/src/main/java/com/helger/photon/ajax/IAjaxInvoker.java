@@ -25,8 +25,8 @@ import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Base interface for an AJAX invoker. It has a set of {@link IAjaxExecutor}
- * instances that it can invoke.
+ * Base interface for an AJAX invoker. It has a set of {@link IAjaxExecutor} instances that it can
+ * invoke.
  *
  * @author Philip Helger
  */
@@ -36,13 +36,11 @@ public interface IAjaxInvoker extends Serializable
    * Invoke the specified AJAX function.
    *
    * @param sFunctionName
-   *        the alias of the AJAX function to invoke. May not be
-   *        <code>null</code>.
+   *        the alias of the AJAX function to invoke. May not be <code>null</code>.
    * @param aAjaxExecutor
    *        The executor to be invoked. May not be <code>null</code>.
    * @param aRequestScope
-   *        The request scope to be used for the function. Never
-   *        <code>null</code>.
+   *        The request scope to be used for the function. Never <code>null</code>.
    * @param aAjaxResponse
    *        The Ajax response to be filled. Never <code>null</code>.
    * @throws Exception

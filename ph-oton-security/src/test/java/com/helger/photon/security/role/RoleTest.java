@@ -50,7 +50,9 @@ public final class RoleTest
   @Test
   public void testMicroConversion ()
   {
-    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1", new StringMap ("key", "value")), "Role 1", "bla");
+    final Role aRole = new Role (StubObject.createForCurrentUserAndID ("id1", new StringMap ("key", "value")),
+                                 "Role 1",
+                                 "bla");
 
     // To XML
     final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aRole, "role");

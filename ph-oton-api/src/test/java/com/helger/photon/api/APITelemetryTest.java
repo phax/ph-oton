@@ -100,10 +100,8 @@ public final class APITelemetryTest
   {
     try (final WebScoped aWebScoped = new WebScoped ())
     {
-      final InvokableAPIDescriptor aInvokable = _createInvokable ( (a, b, c, d, e) -> {}, null);
-      new APIInvoker ().invoke (aInvokable,
-                                aWebScoped.getRequestScope (),
-                                _createResponse (aWebScoped));
+      final InvokableAPIDescriptor aInvokable = _createInvokable ((a, b, c, d, e) -> {}, null);
+      new APIInvoker ().invoke (aInvokable, aWebScoped.getRequestScope (), _createResponse (aWebScoped));
     }
 
     // The span was started, filled and closed
@@ -140,13 +138,11 @@ public final class APITelemetryTest
   {
     try (final WebScoped aWebScoped = new WebScoped ())
     {
-      final InvokableAPIDescriptor aInvokable = _createInvokable ( (a, b, c, d, e) -> {
+      final InvokableAPIDescriptor aInvokable = _createInvokable ((a, b, c, d, e) -> {
         throw new IllegalStateException ("oops");
       }, (a, b, c, d) -> EHandled.HANDLED);
       // The exception mapper handled it - so no exception is propagated
-      new APIInvoker ().invoke (aInvokable,
-                                aWebScoped.getRequestScope (),
-                                _createResponse (aWebScoped));
+      new APIInvoker ().invoke (aInvokable, aWebScoped.getRequestScope (), _createResponse (aWebScoped));
     }
 
     final CapturedSpan aSpan = TELEMETRY.getSpans ().getFirstOrNull ();
@@ -169,12 +165,10 @@ public final class APITelemetryTest
   {
     try (final WebScoped aWebScoped = new WebScoped ())
     {
-      final InvokableAPIDescriptor aInvokable = _createInvokable ( (a, b, c, d, e) -> {
+      final InvokableAPIDescriptor aInvokable = _createInvokable ((a, b, c, d, e) -> {
         throw new IllegalStateException ("oops");
       }, null);
-      new APIInvoker ().invoke (aInvokable,
-                                aWebScoped.getRequestScope (),
-                                _createResponse (aWebScoped));
+      new APIInvoker ().invoke (aInvokable, aWebScoped.getRequestScope (), _createResponse (aWebScoped));
       fail ();
     }
     catch (final Exception ex)

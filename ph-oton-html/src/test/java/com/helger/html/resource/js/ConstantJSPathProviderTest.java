@@ -35,7 +35,15 @@ public final class ConstantJSPathProviderTest
     final ConstantJSPathProvider pp = ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ();
     assertEquals ("a.js", pp.getJSItemPath (true));
     assertEquals ("a.min.js", pp.getJSItemPath (false));
-    TestHelper.testDefaultImplementationWithEqualContentObject (pp, ConstantJSPathProvider.builder ().path ("a.js").minifiedPathFromPath ().build ());
-    TestHelper.testDefaultImplementationWithDifferentContentObject (pp, ConstantJSPathProvider.builder ().path ("b.js").minifiedPathFromPath ().build ());
+    TestHelper.testDefaultImplementationWithEqualContentObject (pp,
+                                                                ConstantJSPathProvider.builder ()
+                                                                                      .path ("a.js")
+                                                                                      .minifiedPathFromPath ()
+                                                                                      .build ());
+    TestHelper.testDefaultImplementationWithDifferentContentObject (pp,
+                                                                    ConstantJSPathProvider.builder ()
+                                                                                          .path ("b.js")
+                                                                                          .minifiedPathFromPath ()
+                                                                                          .build ());
   }
 }

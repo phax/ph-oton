@@ -46,8 +46,8 @@ public final class InternalDataTablesDownloader
   private InternalDataTablesDownloader ()
   {}
 
-  public static void downloadDataTables (@NonNull final String sHTML, @Nullable final String sFilenameMustContain)
-                                                                                                                   throws Exception
+  public static void downloadDataTables (@NonNull final String sHTML,
+                                         @Nullable final String sFilenameMustContain) throws Exception
   {
     try (HttpClientManager hcm = new HttpClientManager ())
     {

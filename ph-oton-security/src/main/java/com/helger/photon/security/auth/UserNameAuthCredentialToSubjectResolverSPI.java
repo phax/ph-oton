@@ -30,8 +30,7 @@ import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswo
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
- * {@link IUserNamePasswordCredentials} and the resolution via the global
- * {@link UserManager}.
+ * {@link IUserNamePasswordCredentials} and the resolution via the global {@link UserManager}.
  *
  * @author Philip Helger
  */

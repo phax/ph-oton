@@ -27,9 +27,8 @@ import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
 
 /**
- * This class represents the overall result of a path matching. Upon successful
- * matching all variable path parts are returned as a map in the order of the
- * path.
+ * This class represents the overall result of a path matching. Upon successful matching all
+ * variable path parts are returned as a map in the order of the path.
  *
  * @author Philip Helger
  */
@@ -63,8 +62,7 @@ public final class PathMatchingResult implements Serializable
   }
 
   /**
-   * @return <code>true</code> if the path matching was successful,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the path matching was successful, <code>false</code> otherwise.
    */
   public boolean isMatch ()
   {
@@ -81,7 +79,9 @@ public final class PathMatchingResult implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("Match", m_bMatch).appendIfNotNull ("VariableValues", m_aVariableValues).getToString ();
+    return new ToStringGenerator (null).append ("Match", m_bMatch)
+                                       .appendIfNotNull ("VariableValues", m_aVariableValues)
+                                       .getToString ();
   }
 
   @NonNull

@@ -105,8 +105,7 @@ public final class LoggedInUserManagerTest
       // Simulate that the administrator is logged in "somewhere else"
       final IUser aAdmin = PhotonSecurityManager.getUserMgr ().getUserOfID (CSecurity.USER_ADMINISTRATOR_ID);
       assertNotNull (aAdmin);
-      assertEquals (ELoginResult.SUCCESS,
-                    aUM.internalSessionActivateUser (aAdmin, ScopeManager.getSessionScope ()));
+      assertEquals (ELoginResult.SUCCESS, aUM.internalSessionActivateUser (aAdmin, ScopeManager.getSessionScope ()));
       assertTrue (aUM.isUserLoggedIn (CSecurity.USER_ADMINISTRATOR_ID));
 
       // Login a different user in this session

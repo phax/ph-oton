@@ -26,10 +26,9 @@ import com.helger.datetime.helper.PDTFactory;
 import com.helger.photon.security.token.revocation.IRevocationStatus;
 
 /**
- * This class represents a single token. It uniquely belongs to a user token but
- * may also be used in other tokens. It consists of a random string token, a
- * not-before date time, an optional not-after date time and a revocation
- * status.
+ * This class represents a single token. It uniquely belongs to a user token but may also be used in
+ * other tokens. It consists of a random string token, a not-before date time, an optional not-after
+ * date time and a revocation status.
  *
  * @author Philip Helger
  */
@@ -56,19 +55,17 @@ public interface IAccessToken
   LocalDateTime getNotBefore ();
 
   /**
-   * @return The date time after which this token is not valid. May be
-   *         <code>null</code> to indicate infinity. If it is not
-   *         <code>null</code> it must be &ge; than the not-before date time.
+   * @return The date time after which this token is not valid. May be <code>null</code> to indicate
+   *         infinity. If it is not <code>null</code> it must be &ge; than the not-before date time.
    */
   @Nullable
   LocalDateTime getNotAfter ();
 
   /**
-   * Check if this token is valid now. This method does not consider the
-   * revocation status!
+   * Check if this token is valid now. This method does not consider the revocation status!
    *
-   * @return <code>true</code> if the token is valid now. This method does not
-   *         consider the revocation status!
+   * @return <code>true</code> if the token is valid now. This method does not consider the
+   *         revocation status!
    */
   default boolean isValidNow ()
   {
@@ -76,19 +73,18 @@ public interface IAccessToken
   }
 
   /**
-   * Check if the token is valid at the specified date and time. This method
-   * does not consider the revocation status!
+   * Check if the token is valid at the specified date and time. This method does not consider the
+   * revocation status!
    *
    * @param aDT
    *        The date time to check. May not be <code>null</code>.
-   * @return <code>true</code> if the token was valid at that point in time,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the token was valid at that point in time, <code>false</code>
+   *         otherwise.
    */
   boolean isValidAt (@NonNull LocalDateTime aDT);
 
   /**
-   * @return The current revocation status of this token. Never
-   *         <code>null</code>.
+   * @return The current revocation status of this token. Never <code>null</code>.
    */
   @NonNull
   IRevocationStatus getRevocationStatus ();
@@ -96,8 +92,7 @@ public interface IAccessToken
   /**
    * A short cut for <code>getRevocationStatus ().isRevoked ()</code>.
    *
-   * @return <code>true</code> if this access token was revoked,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this access token was revoked, <code>false</code> otherwise.
    * @see #getRevocationStatus()
    */
   default boolean isRevoked ()

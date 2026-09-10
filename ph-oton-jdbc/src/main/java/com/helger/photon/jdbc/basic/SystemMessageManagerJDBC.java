@@ -99,7 +99,7 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
       return EChange.UNCHANGED;
 
     final DBExecutor aExecutor = newExecutor ();
-    aExecutor.performInTransaction ( () -> {
+    aExecutor.performInTransaction (() -> {
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
                                                               " SET messagetype=?, lastupdate=?, message=?",

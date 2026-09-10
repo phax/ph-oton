@@ -52,8 +52,8 @@ public final class DTSSResponseData implements IHasJson
    * @param nTotalDisplayRecords
    *        Total number of records after filtering
    * @param aData
-   *        Main data, where each list item represents a single row (as map from
-   *        column-index to HTML content)
+   *        Main data, where each list item represents a single row (as map from column-index to
+   *        HTML content)
    * @param sErrorMsg
    *        Optional error message
    * @param aSpecialNodes
@@ -76,12 +76,11 @@ public final class DTSSResponseData implements IHasJson
   }
 
   /**
-   * @return The draw counter that this object is a response to - from the draw
-   *         parameter sent as part of the data request. Note that it is
-   *         strongly recommended for security reasons that you cast this
-   *         parameter to an integer, rather than simply echoing back to the
-   *         client what it sent in the draw parameter, in order to prevent
-   *         Cross Site Scripting (XSS) attacks
+   * @return The draw counter that this object is a response to - from the draw parameter sent as
+   *         part of the data request. Note that it is strongly recommended for security reasons
+   *         that you cast this parameter to an integer, rather than simply echoing back to the
+   *         client what it sent in the draw parameter, in order to prevent Cross Site Scripting
+   *         (XSS) attacks
    */
   public int getDraw ()
   {
@@ -89,8 +88,7 @@ public final class DTSSResponseData implements IHasJson
   }
 
   /**
-   * @return Total records, before filtering (i.e. the total number of records
-   *         in the database)
+   * @return Total records, before filtering (i.e. the total number of records in the database)
    */
   public long getTotalRecords ()
   {
@@ -98,9 +96,8 @@ public final class DTSSResponseData implements IHasJson
   }
 
   /**
-   * @return Total records, after filtering (i.e. the total number of records
-   *         after filtering has been applied - not just the number of records
-   *         being returned for this page of data).
+   * @return Total records, after filtering (i.e. the total number of records after filtering has
+   *         been applied - not just the number of records being returned for this page of data).
    */
   public long getTotalDisplayRecords ()
   {
@@ -108,8 +105,8 @@ public final class DTSSResponseData implements IHasJson
   }
 
   /**
-   * @return The data to be displayed in the table. This is an array of data
-   *         source objects, one for each row, which will be used by DataTables.
+   * @return The data to be displayed in the table. This is an array of data source objects, one for
+   *         each row, which will be used by DataTables.
    */
   @Nullable
   @ReturnsMutableCopy

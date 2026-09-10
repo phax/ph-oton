@@ -26,8 +26,8 @@ import com.helger.servlet.response.UnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Interface for API executors. Implementations of this class contain the
- * business logic that is mapped to a certain URL path.
+ * Interface for API executors. Implementations of this class contain the business logic that is
+ * mapped to a certain URL path.
  *
  * @author Philip Helger
  */
@@ -38,13 +38,12 @@ public interface IAPIExecutor extends Serializable
    * @param aAPIDescriptor
    *        The base API descriptor which is invoked. Never <code>null</code>.
    * @param sPath
-   *        The invoked path by the user. Neither <code>null</code> nor empty.
-   *        All potential variable elements were already resolved. The mapping
-   *        of the source path variables is contained in the path variable
-   *        parameter.
+   *        The invoked path by the user. Neither <code>null</code> nor empty. All potential
+   *        variable elements were already resolved. The mapping of the source path variables is
+   *        contained in the path variable parameter.
    * @param aPathVariables
-   *        The resolved variable path parts according to the underlying
-   *        {@link IAPIDescriptor}. Never <code>null</code>.
+   *        The resolved variable path parts according to the underlying {@link IAPIDescriptor}.
+   *        Never <code>null</code>.
    * @param aRequestScope
    *        The current request scope. Never <code>null</code>.
    * @param aUnifiedResponse

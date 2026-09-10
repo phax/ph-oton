@@ -168,8 +168,8 @@ public class HCStyle extends AbstractHCElement <HCStyle>
   }
 
   /**
-   * @return <code>true</code> if no explicit media is defined or if
-   *         {@link ECSSMedium#ALL} is contained.
+   * @return <code>true</code> if no explicit media is defined or if {@link ECSSMedium#ALL} is
+   *         contained.
    */
   public final boolean hasNoMediaOrAll ()
   {

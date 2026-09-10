@@ -75,8 +75,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
    * Constructor
    *
    * @param aURL
-   *        A URL to make requests to when when the data provided by local and
-   *        prefetch is insufficient.
+   *        A URL to make requests to when when the data provided by local and prefetch is
+   *        insufficient.
    */
   public TypeaheadRemote (@NonNull final ISimpleURL aURL)
   {
@@ -112,8 +112,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * The type of data you're expecting from the server. See the jQuery.ajax docs
-   * for more info. Defaults to <code>json</code>.
+   * The type of data you're expecting from the server. See the jQuery.ajax docs for more info.
+   * Defaults to <code>json</code>.
    *
    * @param sDataType
    *        The data type to use. May neither be <code>null</code> nor empty.
@@ -127,8 +127,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return The type of data you're expecting from the server. See the
-   *         jQuery.ajax docs for more info. Defaults to <code>json</code>.
+   * @return The type of data you're expecting from the server. See the jQuery.ajax docs for more
+   *         info. Defaults to <code>json</code>.
    */
   @NonNull
   @Nonempty
@@ -138,8 +138,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * Determines whether or not the browser will cache responses. See the
-   * jQuery.ajax docs for more info.
+   * Determines whether or not the browser will cache responses. See the jQuery.ajax docs for more
+   * info.
    *
    * @param bCache
    *        Use cache?
@@ -152,8 +152,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * Determines whether or not the browser will cache responses. See the
-   * jQuery.ajax docs for more info.
+   * Determines whether or not the browser will cache responses. See the jQuery.ajax docs for more
+   * info.
    *
    * @param eCache
    *        Use cache? May not be <code>null</code>.
@@ -167,8 +167,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return Determines whether or not the browser will cache responses. See the
-   *         jQuery.ajax docs for more info.
+   * @return Determines whether or not the browser will cache responses. See the jQuery.ajax docs
+   *         for more info.
    */
   @NonNull
   public ETriState getCache ()
@@ -191,8 +191,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return Sets a timeout for requests. See the jQuery.ajax docs for more
-   *         info.
+   * @return Sets a timeout for requests. See the jQuery.ajax docs for more info.
    */
   public int getTimeout ()
   {
@@ -200,8 +199,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * The pattern in <code>url</code> that will be replaced with the user's query
-   * when a request is made. Defaults to {@link #DEFAULT_WILDCARD}.
+   * The pattern in <code>url</code> that will be replaced with the user's query when a request is
+   * made. Defaults to {@link #DEFAULT_WILDCARD}.
    *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.
@@ -215,9 +214,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return The pattern in <code>url</code> that will be replaced with the
-   *         user's query when a request is made. Defaults to
-   *         {@link #DEFAULT_WILDCARD}.
+   * @return The pattern in <code>url</code> that will be replaced with the user's query when a
+   *         request is made. Defaults to {@link #DEFAULT_WILDCARD}.
    */
   @Nullable
   public String getWildcard ()
@@ -226,10 +224,9 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * A function with the signature <code>replace(url, uriEncodedQuery)</code>
-   * that can be used to override the request URL. Expected to return a valid
-   * URL. If set, no wildcard substitution will be performed on <code>url</code>
-   * .
+   * A function with the signature <code>replace(url, uriEncodedQuery)</code> that can be used to
+   * override the request URL. Expected to return a valid URL. If set, no wildcard substitution will
+   * be performed on <code>url</code> .
    *
    * @param aReplace
    *        The function to use. May be <code>null</code>.
@@ -243,10 +240,9 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return A function with the signature
-   *         <code>replace(url, uriEncodedQuery)</code> that can be used to
-   *         override the request URL. Expected to return a valid URL. If set,
-   *         no wildcard substitution will be performed on <code>url</code>.
+   * @return A function with the signature <code>replace(url, uriEncodedQuery)</code> that can be
+   *         used to override the request URL. Expected to return a valid URL. If set, no wildcard
+   *         substitution will be performed on <code>url</code>.
    */
   @Nullable
   public JSAnonymousFunction getReplace ()
@@ -255,9 +251,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * The function used for rate-limiting network requests. Can be either
-   * <code>debounce</code> or <code>throttle</code>. Defaults to
-   * <code>debounce</code>.
+   * The function used for rate-limiting network requests. Can be either <code>debounce</code> or
+   * <code>throttle</code>. Defaults to <code>debounce</code>.
    *
    * @param eRateLimitFn
    *        function to use. May not be <code>null</code>.
@@ -272,8 +267,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
 
   /**
    * @return The function used for rate-limiting network requests. Can be either
-   *         <code>debounce</code> or <code>throttle</code>. Defaults to
-   *         <code>debounce</code>.
+   *         <code>debounce</code> or <code>throttle</code>. Defaults to <code>debounce</code>.
    */
   @NonNull
   public ETypeaheadRemoteRateLimitFunction getRateLimitFn ()
@@ -282,8 +276,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * The time interval in milliseconds that will be used by
-   * <code>rateLimitFn</code>. Defaults to <code>300</code>.
+   * The time interval in milliseconds that will be used by <code>rateLimitFn</code>. Defaults to
+   * <code>300</code>.
    *
    * @param nRateLimitWait
    *        Milliseconds to use. Must be &ge; 1.
@@ -297,8 +291,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return The time interval in milliseconds that will be used by
-   *         <code>rateLimitFn</code>. Defaults to <code>300</code>.
+   * @return The time interval in milliseconds that will be used by <code>rateLimitFn</code>.
+   *         Defaults to <code>300</code>.
    */
   @Nonnegative
   public int getRateLimitWait ()
@@ -307,8 +301,7 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * The max number of parallel requests typeahead.js can have pending. Defaults
-   * to <code>6</code>.
+   * The max number of parallel requests typeahead.js can have pending. Defaults to <code>6</code>.
    *
    * @param nMaxParallelRequests
    *        Maximum parallel requests. Must be &ge; 1.
@@ -322,8 +315,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return The max number of parallel requests typeahead.js can have pending.
-   *         Defaults to <code>6</code>.
+   * @return The max number of parallel requests typeahead.js can have pending. Defaults to
+   *         <code>6</code>.
    */
   @Nonnegative
   public int getMaxParallelRequests ()
@@ -332,9 +325,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * A pre-request callback with the signature
-   * <code>beforeSend(jqXhr,settings)</code>. Can be used to set custom headers.
-   * See the jQuery.ajax docs for more info.
+   * A pre-request callback with the signature <code>beforeSend(jqXhr,settings)</code>. Can be used
+   * to set custom headers. See the jQuery.ajax docs for more info.
    *
    * @param aBeforeSend
    *        Function to use. May be <code>null</code>.
@@ -348,9 +340,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return A pre-request callback with the signature
-   *         <code>beforeSend(jqXhr,settings)</code>. Can be used to set custom
-   *         headers. See the jQuery.ajax docs for more info.
+   * @return A pre-request callback with the signature <code>beforeSend(jqXhr,settings)</code>. Can
+   *         be used to set custom headers. See the jQuery.ajax docs for more info.
    */
   @Nullable
   public JSAnonymousFunction getBeforeSend ()
@@ -359,9 +350,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * A function with the signature <code>filter(parsedResponse)</code> that
-   * transforms the response body into an array of datums. Expected to return an
-   * array of datums.
+   * A function with the signature <code>filter(parsedResponse)</code> that transforms the response
+   * body into an array of datums. Expected to return an array of datums.
    *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
@@ -375,9 +365,8 @@ public class TypeaheadRemote implements ICloneable <TypeaheadRemote>
   }
 
   /**
-   * @return A function with the signature <code>filter(parsedResponse)</code>
-   *         that transforms the response body into an array of datums. Expected
-   *         to return an array of datums.
+   * @return A function with the signature <code>filter(parsedResponse)</code> that transforms the
+   *         response body into an array of datums. Expected to return an array of datums.
    */
   @Nullable
   public JSAnonymousFunction getFilter ()

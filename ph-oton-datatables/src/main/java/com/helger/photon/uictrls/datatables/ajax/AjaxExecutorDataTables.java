@@ -404,29 +404,34 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
     final StopWatch aSW = StopWatch.createdStarted ();
     try
     {
-      Telemetry.<Exception> withSpanVoidThrowing (CDataTablesTelemetry.SPAN_DT_REQUEST, ETelemetrySpanKind.INTERNAL, aSpan -> {
-        DataTablesTelemetry.onRequestStart (aSpan, bSorted, bFiltered);
+      Telemetry.<Exception> withSpanVoidThrowing (CDataTablesTelemetry.SPAN_DT_REQUEST,
+                                                  ETelemetrySpanKind.INTERNAL,
+                                                  aSpan -> {
+                                                    DataTablesTelemetry.onRequestStart (aSpan, bSorted, bFiltered);
 
-        // Resolve dataTables from UIStateRegistry
-        final String sDataTablesID = aRequestScope.params ().getAsString (OBJECT_ID);
-        final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
-                                                                .getCastedState (DataTablesServerData.OT_DATATABLES,
-                                                                                 sDataTablesID);
-        if (aServerData == null)
-        {
-          LOGGER.error ("No such data tables ID: " + sDataTablesID);
-          aAjaxResponse.createNotFound ();
-        }
-        else
-        {
-          // Main request handling
-          final DTSSResponseData aResponseData = _handleRequest (aRequestData, aServerData);
+                                                    // Resolve dataTables from UIStateRegistry
+                                                    final String sDataTablesID = aRequestScope.params ()
+                                                                                              .getAsString (OBJECT_ID);
+                                                    final DataTablesServerData aServerData = UIStateRegistry.getCurrent ()
+                                                                                                            .getCastedState (DataTablesServerData.OT_DATATABLES,
+                                                                                                                             sDataTablesID);
+                                                    if (aServerData == null)
+                                                    {
+                                                      LOGGER.error ("No such data tables ID: " + sDataTablesID);
+                                                      aAjaxResponse.createNotFound ();
+                                                    }
+                                                    else
+                                                    {
+                                                      // Main request handling
+                                                      final DTSSResponseData aResponseData = _handleRequest (aRequestData,
+                                                                                                             aServerData);
 
-          // Convert the response to JSON and add the special nodes
-          aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
-                                                                                  aResponseData.getSpecialNodes ()));
-        }
-      });
+                                                      // Convert the response to JSON and add the
+                                                      // special nodes
+                                                      aAjaxResponse.json (PhotonUnifiedResponse.HtmlHelper.getResponseAsJSON (aResponseData.getAsJson (),
+                                                                                                                              aResponseData.getSpecialNodes ()));
+                                                    }
+                                                  });
     }
     finally
     {

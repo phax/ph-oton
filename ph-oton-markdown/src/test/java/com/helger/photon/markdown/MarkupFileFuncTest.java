@@ -111,9 +111,8 @@ public final class MarkupFileFuncTest
   private static ICommonsList <String []> _getTestResultPairList (final String sFilename) throws IOException
   {
     final ICommonsList <String []> ret = new CommonsArrayList <> ();
-    try (
-        final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
-                                                                                                   StandardCharsets.ISO_8859_1)))
+    try (final NonBlockingBufferedReader in = new NonBlockingBufferedReader (new InputStreamReader (ClassPathResource.getInputStream (sFilename),
+                                                                                                    StandardCharsets.ISO_8859_1)))
     {
       StringBuilder aTest = null;
       StringBuilder aResult = null;

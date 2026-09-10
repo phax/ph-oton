@@ -26,8 +26,8 @@ import org.jspecify.annotations.NonNull;
 public abstract class AbstractJSAtomNumeric extends AbstractJSExpression
 {
   /**
-   * @return <code>true</code> if this is a decimal values, <code>false</code>
-   *         if it is an integer value
+   * @return <code>true</code> if this is a decimal values, <code>false</code> if it is an integer
+   *         value
    */
   public abstract boolean isDecimalValue ();
 

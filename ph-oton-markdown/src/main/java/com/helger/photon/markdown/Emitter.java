@@ -406,8 +406,8 @@ final class Emitter
   }
 
   /**
-   * Check if there is a valid HTML tag here. This method also transforms auto
-   * links and mailto auto links.
+   * Check if there is a valid HTML tag here. This method also transforms auto links and mailto auto
+   * links.
    *
    * @param out
    *        The StringBuilder to write to.
@@ -618,8 +618,7 @@ final class Emitter
   }
 
   /**
-   * Recursively scans through the given line, taking care of any markdown
-   * stuff.
+   * Recursively scans through the given line, taking care of any markdown stuff.
    *
    * @param aOut
    *        The StringBuilder to write to.
@@ -629,8 +628,7 @@ final class Emitter
    *        Start position.
    * @param eToken
    *        The matching Token (for e.g. '*')
-   * @return The position of the matching Token or -1 if token was NONE or no
-   *         Token could be found.
+   * @return The position of the matching Token or -1 if token was NONE or no Token could be found.
    */
   private int _recursiveEmitLine (final MarkdownHCStack aOut,
                                   final String sIn,
@@ -880,9 +878,8 @@ final class Emitter
         }
         if (m_bUseExtensions)
         {
-          return Character.isLetterOrDigit (c0) &&
-                 c0 != '_' &&
-                 Character.isLetterOrDigit (c1) ? EMarkToken.NONE : EMarkToken.EM_UNDERSCORE;
+          return Character.isLetterOrDigit (c0) && c0 != '_' && Character.isLetterOrDigit (c1) ? EMarkToken.NONE
+                                                                                               : EMarkToken.EM_UNDERSCORE;
         }
         return c0 != ' ' || c1 != ' ' ? EMarkToken.EM_UNDERSCORE : EMarkToken.NONE;
       case '~':

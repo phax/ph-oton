@@ -29,8 +29,7 @@ import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
  * Implementation of {@link IAuthCredentialToSubjectResolverSPI} supporting
- * {@link ITokenCredentials} and the resolution via the global
- * {@link IUserTokenManager}.
+ * {@link ITokenCredentials} and the resolution via the global {@link IUserTokenManager}.
  *
  * @author Philip Helger
  */

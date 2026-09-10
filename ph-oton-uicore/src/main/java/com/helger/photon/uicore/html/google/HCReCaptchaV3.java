@@ -36,8 +36,7 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.url.SimpleURL;
 
 /**
- * Handle Google reCAPTCHA according to
- * https://developers.google.com/recaptcha/docs/display
+ * Handle Google reCAPTCHA according to https://developers.google.com/recaptcha/docs/display
  *
  * <pre>
  * &lt;div class="g-recaptcha" data-sitekey="your_site_key" data-callback="js-function" data-action="submit"&gt;&lt;/div&gt;
@@ -72,8 +71,7 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
   }
 
   /**
-   * @return The display language as passed in the constructor. May be
-   *         <code>null</code>.
+   * @return The display language as passed in the constructor. May be <code>null</code>.
    */
   @Nullable
   public final String getDisplayLanguage ()
@@ -100,6 +98,10 @@ public class HCReCaptchaV3 extends AbstractHCDiv <HCReCaptchaV3>
     if (m_sDisplayLanguage != null)
       aURL.add ("hl", m_sDisplayLanguage);
     final String sURI = aURL.getAsString ();
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path (sURI).minifiedPath (sURI).bundlable (false).build ());
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ()
+                                                                    .path (sURI)
+                                                                    .minifiedPath (sURI)
+                                                                    .bundlable (false)
+                                                                    .build ());
   }
 }

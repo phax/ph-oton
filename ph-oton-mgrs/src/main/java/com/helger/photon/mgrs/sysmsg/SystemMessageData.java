@@ -102,8 +102,7 @@ public class SystemMessageData implements ISystemMessageData, ICloneable <System
   }
 
   /**
-   * Set the system message type and text, and update the last modification
-   * date.
+   * Set the system message type and text, and update the last modification date.
    * 
    * @param eMessageType
    *        Message type. May not be <code>null</code>.
@@ -148,7 +147,10 @@ public class SystemMessageData implements ISystemMessageData, ICloneable <System
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aLastUpdate).append (m_eMessageType).append (m_sMessage).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aLastUpdate)
+                                       .append (m_eMessageType)
+                                       .append (m_sMessage)
+                                       .getHashCode ();
   }
 
   @Override

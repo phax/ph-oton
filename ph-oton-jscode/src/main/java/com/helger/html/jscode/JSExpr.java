@@ -379,12 +379,10 @@ public final class JSExpr
   /**
    * Creates an expression directly from a source code fragment.
    * <p>
-   * This method can be used as a short-cut to create a {@link IJSExpression}.
-   * For example, instead of <code>_a.gt(_b)</code>, you can write it as:
-   * <code>JSExpr.direct("a&gt;b")</code>.
+   * This method can be used as a short-cut to create a {@link IJSExpression}. For example, instead
+   * of <code>_a.gt(_b)</code>, you can write it as: <code>JSExpr.direct("a&gt;b")</code>.
    * <p>
-   * Be warned that there is a danger in using this method, as it obfuscates the
-   * object model.
+   * Be warned that there is a danger in using this method, as it obfuscates the object model.
    *
    * @param sSource
    *        direct JS code

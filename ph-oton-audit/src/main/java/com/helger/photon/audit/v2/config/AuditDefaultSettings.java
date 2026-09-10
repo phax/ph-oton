@@ -38,8 +38,7 @@ public final class AuditDefaultSettings
   {}
 
   /**
-   * @return The default ID provider that uses the most significant bits of a
-   *         random UUID.
+   * @return The default ID provider that uses the most significant bits of a random UUID.
    */
   @NonNull
   public static ILongSupplier getDefaultAuditEventIDProvider ()
@@ -48,8 +47,7 @@ public final class AuditDefaultSettings
   }
 
   /**
-   * @return The default date time provider using
-   *         {@link PDTFactory#getCurrentLocalDateTime()}.
+   * @return The default date time provider using {@link PDTFactory#getCurrentLocalDateTime()}.
    */
   @NonNull
   public static Supplier <LocalDateTime> getDefaultAuditEventDateTimeProvider ()

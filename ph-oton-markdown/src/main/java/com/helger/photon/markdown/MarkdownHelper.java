@@ -286,8 +286,7 @@ final class MarkdownHelper
   }
 
   /**
-   * Reads characters until any 'end' character is encountered, ignoring escape
-   * sequences.
+   * Reads characters until any 'end' character is encountered, ignoring escape sequences.
    *
    * @param out
    *        The StringBuilder to write to.
@@ -324,8 +323,7 @@ final class MarkdownHelper
   }
 
   /**
-   * Reads characters until the end character is encountered, ignoring escape
-   * sequences.
+   * Reads characters until the end character is encountered, ignoring escape sequences.
    *
    * @param out
    *        The StringBuilder to write to.

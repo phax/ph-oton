@@ -29,14 +29,13 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsSet;
 
 /**
- * Base interface for a manager that handles object locking. See
- * {@link DefaultLockManager} for a per-instance implementation and
- * {@link ObjectLockManager} for a singleton version.
+ * Base interface for a manager that handles object locking. See {@link DefaultLockManager} for a
+ * per-instance implementation and {@link ObjectLockManager} for a singleton version.
  *
  * @author Philip Helger
  * @param <IDTYPE>
- *        The type of object to be locked. E.g. String or TypedObject. Must
- *        implement equals and hashCode!
+ *        The type of object to be locked. E.g. String or TypedObject. Must implement equals and
+ *        hashCode!
  */
 public interface ILockManager <IDTYPE>
 {
@@ -45,8 +44,7 @@ public interface ILockManager <IDTYPE>
    *
    * @param aObjID
    *        The object to query for lock owner.
-   * @return <code>null</code> if the object is not locked, the lock information
-   *         otherwise
+   * @return <code>null</code> if the object is not locked, the lock information otherwise
    */
   @Nullable
   ILockInfo getLockInfo (@Nullable IDTYPE aObjID);
@@ -56,8 +54,7 @@ public interface ILockManager <IDTYPE>
    *
    * @param aObjID
    *        The object to query for lock owner.
-   * @return <code>null</code> if the object is not locked, the user ID
-   *         otherwise
+   * @return <code>null</code> if the object is not locked, the user ID otherwise
    */
   @Nullable
   String getLockUserID (@Nullable IDTYPE aObjID);
@@ -67,97 +64,90 @@ public interface ILockManager <IDTYPE>
    *
    * @param aObjID
    *        The object to query for lock owner.
-   * @return <code>null</code> if the object is not locked, the locking date
-   *         time otherwise
+   * @return <code>null</code> if the object is not locked, the locking date time otherwise
    */
   @Nullable
   LocalDateTime getLockDateTime (@Nullable IDTYPE aObjID);
 
   /**
-   * Lock the object with the given ID. If the passed object is already locked
-   * by this user, this method has no effect. This is an atomic action.
+   * Lock the object with the given ID. If the passed object is already locked by this user, this
+   * method has no effect. This is an atomic action.
    *
    * @param aObjID
    *        The object ID to lock. May not be <code>null</code>.
-   * @return {@link ELocked#LOCKED} if the object is locked by the current user
-   *         after the call to this method, {@link ELocked#NOT_LOCKED} if the
-   *         object was already locked by another user.
+   * @return {@link ELocked#LOCKED} if the object is locked by the current user after the call to
+   *         this method, {@link ELocked#NOT_LOCKED} if the object was already locked by another
+   *         user.
    */
   @NonNull
   ELocked lockObject (@NonNull IDTYPE aObjID);
 
   /**
-   * Lock the object with the given ID. If the passed object is already locked
-   * by this user, this method has no effect. This is an atomic action.
+   * Lock the object with the given ID. If the passed object is already locked by this user, this
+   * method has no effect. This is an atomic action.
    *
    * @param aObjID
    *        The object ID to lock. May not be <code>null</code>.
    * @param sUserID
    *        The id of the user who locked the object. May be <code>null</code>.
-   * @return {@link ELocked#LOCKED} if the object is locked by the specified
-   *         user after the call to this method, {@link ELocked#NOT_LOCKED} if
-   *         the object was already locked by another user or no user ID was
-   *         provided.
+   * @return {@link ELocked#LOCKED} if the object is locked by the specified user after the call to
+   *         this method, {@link ELocked#NOT_LOCKED} if the object was already locked by another
+   *         user or no user ID was provided.
    */
   @NonNull
   ELocked lockObject (@NonNull IDTYPE aObjID, @Nullable String sUserID);
 
   /**
-   * Lock the object with the given ID and unlock all other objects. If the
-   * passed object is already locked by this user, this method has no effect.
-   * This is an atomic action.
+   * Lock the object with the given ID and unlock all other objects. If the passed object is already
+   * locked by this user, this method has no effect. This is an atomic action.
    *
    * @param aObjID
    *        The object ID to lock. May not be <code>null</code>.
-   * @return The locking result and never <code>null</code>. If
-   *         {@link ILockedIndicator#isLocked()} is <code>true</code>, the
-   *         object is locked by the current user after the call to this method.
-   *         If {@link ILockedIndicator#isNotLocked()} is <code>true</code> the
-   *         object was already locked by another user.
+   * @return The locking result and never <code>null</code>. If {@link ILockedIndicator#isLocked()}
+   *         is <code>true</code>, the object is locked by the current user after the call to this
+   *         method. If {@link ILockedIndicator#isNotLocked()} is <code>true</code> the object was
+   *         already locked by another user.
    */
   @NonNull
   LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull IDTYPE aObjID);
 
   /**
-   * Lock the object with the given ID and unlock all other objects. If the
-   * passed object is already locked by this user, this method has no effect.
-   * This is an atomic action.
+   * Lock the object with the given ID and unlock all other objects. If the passed object is already
+   * locked by this user, this method has no effect. This is an atomic action.
    *
    * @param aObjID
    *        The object ID to lock. May not be <code>null</code>.
    * @param sUserID
    *        The id of the user who locked the object. May be <code>null</code>.
-   * @return {@link ELocked#LOCKED} if the object is locked by the specified
-   *         user after the call to this method, {@link ELocked#NOT_LOCKED} if
-   *         the object was already locked by another user or no user ID was
-   *         provided.
+   * @return {@link ELocked#LOCKED} if the object is locked by the specified user after the call to
+   *         this method, {@link ELocked#NOT_LOCKED} if the object was already locked by another
+   *         user or no user ID was provided.
    */
   @NonNull
   LockResult <IDTYPE> lockObjectAndUnlockAllOthers (@NonNull IDTYPE aObjID, @Nullable String sUserID);
 
   /**
-   * Unlock the object with the given ID. Unlocking is only possible, if the
-   * current session user locked the object.
+   * Unlock the object with the given ID. Unlocking is only possible, if the current session user
+   * locked the object.
    *
    * @param aObjID
    *        The object ID to unlock.
-   * @return <code>true</code> if the object was successfully unlocked,
-   *         <code>false</code> if either the object is not locked or the object
-   *         is locked by another user than the current session user.
+   * @return <code>true</code> if the object was successfully unlocked, <code>false</code> if either
+   *         the object is not locked or the object is locked by another user than the current
+   *         session user.
    */
   @NonNull
   EChange unlockObject (@NonNull IDTYPE aObjID);
 
   /**
-   * Manually unlock a special object locked by a special user. This manual
-   * version is only required for especially unlocking a user!
+   * Manually unlock a special object locked by a special user. This manual version is only required
+   * for especially unlocking a user!
    *
    * @param sUserID
    *        The user who locked the object.
    * @param aObjID
    *        The object to be unlocked.
-   * @return <code>true</code> if unlocking succeeded, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if unlocking succeeded, <code>false</code> otherwise.
    */
   @NonNull
   EChange unlockObject (@NonNull String sUserID, @NonNull IDTYPE aObjID);
@@ -175,8 +165,8 @@ public interface ILockManager <IDTYPE>
    * Unlock all objects of the current user except for the passed objects.
    *
    * @param aObjectsToKeepLocked
-   *        An optional set of objects which should not be unlocked. May be
-   *        <code>null</code> or empty.
+   *        An optional set of objects which should not be unlocked. May be <code>null</code> or
+   *        empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
   @NonNull
@@ -187,8 +177,7 @@ public interface ILockManager <IDTYPE>
    * Unlock all objects of the passed user.
    *
    * @param sUserID
-   *        The user ID who's object are to be unlocked. May be
-   *        <code>null</code> or empty.
+   *        The user ID who's object are to be unlocked. May be <code>null</code> or empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
   @NonNull
@@ -199,37 +188,35 @@ public interface ILockManager <IDTYPE>
    * Unlock all objects of the passed user except for the passed objects.
    *
    * @param sUserID
-   *        The user ID who's object are to be unlocked. May be
-   *        <code>null</code> or empty.
+   *        The user ID who's object are to be unlocked. May be <code>null</code> or empty.
    * @param aObjectsToKeepLocked
-   *        An optional set of objects which should not be unlocked. May be
-   *        <code>null</code> or empty.
+   *        An optional set of objects which should not be unlocked. May be <code>null</code> or
+   *        empty.
    * @return The list of all unlocked object IDs. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
-  ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID, @Nullable Set <IDTYPE> aObjectsToKeepLocked);
+  ICommonsList <IDTYPE> unlockAllObjectsOfUserExcept (@Nullable String sUserID,
+                                                      @Nullable Set <IDTYPE> aObjectsToKeepLocked);
 
   /**
    * Check if the object with the given ID is locked by the current user.
    *
    * @param aObjID
    *        The object ID to check.
-   * @return <code>true</code> if the object is locked by the current user,
-   *         <code>false</code> if the object is either not locked or locked by
-   *         another user.
+   * @return <code>true</code> if the object is locked by the current user, <code>false</code> if
+   *         the object is either not locked or locked by another user.
    */
   boolean isObjectLockedByCurrentUser (@Nullable IDTYPE aObjID);
 
   /**
-   * Check if the object with the given ID is locked by any but the current
-   * user.
+   * Check if the object with the given ID is locked by any but the current user.
    *
    * @param aObjID
    *        The object ID to check.
-   * @return <code>true</code> if the object is locked by any user that is not
-   *         the currently logged in user, <code>false</code> if the object is
-   *         either not locked or locked by the current user.
+   * @return <code>true</code> if the object is locked by any user that is not the currently logged
+   *         in user, <code>false</code> if the object is either not locked or locked by the current
+   *         user.
    */
   boolean isObjectLockedByOtherUser (@Nullable IDTYPE aObjID);
 
@@ -238,30 +225,30 @@ public interface ILockManager <IDTYPE>
    *
    * @param aObjID
    *        The object ID to check.
-   * @return <code>true</code> if the object is locked by any user,
-   *         <code>false</code> if the object is not locked.
+   * @return <code>true</code> if the object is locked by any user, <code>false</code> if the object
+   *         is not locked.
    */
   boolean isObjectLockedByAnyUser (@Nullable IDTYPE aObjID);
 
   /**
-   * @return A non-<code>null</code> set of all locked objects of all users.
-   *         Never <code>null</code> but maybe empty.
+   * @return A non-<code>null</code> set of all locked objects of all users. Never <code>null</code>
+   *         but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsSet <IDTYPE> getAllLockedObjects ();
 
   /**
-   * @return A non-<code>null</code> map of all locked objects of all users.
-   *         Never <code>null</code> but maybe empty.
+   * @return A non-<code>null</code> map of all locked objects of all users. Never <code>null</code>
+   *         but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsMap <IDTYPE, ILockInfo> getAllLockInfos ();
 
   /**
-   * @return A non-<code>null</code> set of all locked objects of the current
-   *         user. Never <code>null</code> but maybe empty.
+   * @return A non-<code>null</code> set of all locked objects of the current user. Never
+   *         <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -269,10 +256,9 @@ public interface ILockManager <IDTYPE>
 
   /**
    * @param sUserID
-   *        The user ID to be queried for all locked objects. May be
-   *        <code>null</code>.
-   * @return A non-<code>null</code> set of all locked objects of the passed
-   *         user. Never <code>null</code> but maybe empty.
+   *        The user ID to be queried for all locked objects. May be <code>null</code>.
+   * @return A non-<code>null</code> set of all locked objects of the passed user. Never
+   *         <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy

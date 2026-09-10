@@ -25,8 +25,8 @@ import com.helger.photon.ajax.executor.IAjaxExecutor;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to be used with the {@link IAjaxInvoker} to get notified
- * on long running executions.
+ * Callback interface to be used with the {@link IAjaxInvoker} to get notified on long running
+ * executions.
  *
  * @author Philip Helger
  */

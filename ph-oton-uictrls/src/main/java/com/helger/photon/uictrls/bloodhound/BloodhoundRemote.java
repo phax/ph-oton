@@ -65,8 +65,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
    * Constructor
    *
    * @param aURL
-   *        A URL to make requests to when when the data provided by local and
-   *        prefetch is insufficient. Required.
+   *        A URL to make requests to when when the data provided by local and prefetch is
+   *        insufficient. Required.
    */
   public BloodhoundRemote (@NonNull final ISimpleURL aURL)
   {
@@ -89,8 +89,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return A URL to make requests to when when the data provided by local and
-   *         prefetch is insufficient. Required. Never <code>null</code>.
+   * @return A URL to make requests to when when the data provided by local and prefetch is
+   *         insufficient. Required. Never <code>null</code>.
    */
   @NonNull
   public ISimpleURL getURL ()
@@ -99,9 +99,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return The pattern in <code>url</code> that will be replaced with the
-   *         user's query when a request is made. Defaults to
-   *         {@link #DEFAULT_WILDCARD}.
+   * @return The pattern in <code>url</code> that will be replaced with the user's query when a
+   *         request is made. Defaults to {@link #DEFAULT_WILDCARD}.
    */
   @Nullable
   public String getWildcard ()
@@ -110,8 +109,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * The pattern in <code>url</code> that will be replaced with the user's query
-   * when a request is made. Defaults to {@link #DEFAULT_WILDCARD}.
+   * The pattern in <code>url</code> that will be replaced with the user's query when a request is
+   * made. Defaults to {@link #DEFAULT_WILDCARD}.
    *
    * @param sWildcard
    *        The wild card to use. May be <code>null</code>.
@@ -125,10 +124,9 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return A function with the signature <code>replace(url, query)</code> that
-   *         can be used to override the request URL. Expected to return a valid
-   *         URL. If set, no wildcard substitution will be performed on
-   *         <code>url</code>.
+   * @return A function with the signature <code>replace(url, query)</code> that can be used to
+   *         override the request URL. Expected to return a valid URL. If set, no wildcard
+   *         substitution will be performed on <code>url</code>.
    */
   @Nullable
   public IJSExpression getReplace ()
@@ -137,9 +135,9 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * A function with the signature <code>replace(url, query)</code> that can be
-   * used to override the request URL. Expected to return a valid URL. If set,
-   * no wildcard substitution will be performed on <code>url</code> .
+   * A function with the signature <code>replace(url, query)</code> that can be used to override the
+   * request URL. Expected to return a valid URL. If set, no wildcard substitution will be performed
+   * on <code>url</code> .
    *
    * @param aReplace
    *        The function to use. May be <code>null</code>.
@@ -153,9 +151,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return The method used to rate-limit network requests. Can be either
-   *         <code>debounce</code> or <code>throttle</code>. Defaults to
-   *         <code>debounce</code>.
+   * @return The method used to rate-limit network requests. Can be either <code>debounce</code> or
+   *         <code>throttle</code>. Defaults to <code>debounce</code>.
    */
   @NonNull
   public EBloodhoundRemoteRateLimitBy getRateLimitBy ()
@@ -164,9 +161,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * The method used to rate-limit network requests. Can be either
-   * <code>debounce</code> or <code>throttle</code>. Defaults to
-   * <code>debounce</code>.
+   * The method used to rate-limit network requests. Can be either <code>debounce</code> or
+   * <code>throttle</code>. Defaults to <code>debounce</code>.
    *
    * @param eRateLimitBy
    *        function to use. May not be <code>null</code>.
@@ -180,8 +176,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return The time interval in milliseconds that will be used by
-   *         <code>rateLimitBy</code>. Defaults to <code>300</code>.
+   * @return The time interval in milliseconds that will be used by <code>rateLimitBy</code>.
+   *         Defaults to <code>300</code>.
    */
   @Nonnegative
   public int getRateLimitWait ()
@@ -190,8 +186,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * The time interval in milliseconds that will be used by
-   * <code>rateLimitBy</code>. Defaults to <code>300</code>.
+   * The time interval in milliseconds that will be used by <code>rateLimitBy</code>. Defaults to
+   * <code>300</code>.
    *
    * @param nRateLimitWait
    *        Milliseconds to use. Must be &ge; 1.
@@ -205,9 +201,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return A function with the signature <code>filter(parsedResponse)</code>
-   *         that transforms the response body into an array of datums. Expected
-   *         to return an array of datums.
+   * @return A function with the signature <code>filter(parsedResponse)</code> that transforms the
+   *         response body into an array of datums. Expected to return an array of datums.
    */
   @Nullable
   public IJSExpression getFilter ()
@@ -216,9 +211,8 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * A function with the signature <code>filter(parsedResponse)</code> that
-   * transforms the response body into an array of datums. Expected to return an
-   * array of datums.
+   * A function with the signature <code>filter(parsedResponse)</code> that transforms the response
+   * body into an array of datums. Expected to return an array of datums.
    *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
@@ -232,8 +226,7 @@ public class BloodhoundRemote implements ICloneable <BloodhoundRemote>
   }
 
   /**
-   * @return The ajax settings object passed to <code>jQuery.ajax</code>. Maybe
-   *         <code>null</code>.
+   * @return The ajax settings object passed to <code>jQuery.ajax</code>. Maybe <code>null</code>.
    */
   @Nullable
   public JQueryAjaxBuilder getAjax ()

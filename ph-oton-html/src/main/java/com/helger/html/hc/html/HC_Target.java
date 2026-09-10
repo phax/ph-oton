@@ -89,17 +89,17 @@ public class HC_Target implements IHCHasHTMLAttributeValue
   }
 
   /**
-   * Try to find one of the default targets by name. The name comparison is
-   * performed case insensitive.
+   * Try to find one of the default targets by name. The name comparison is performed case
+   * insensitive.
    *
    * @param sName
    *        The name to check. May not be <code>null</code>.
    * @param aDefault
-   *        The default value to be returned in case the name was never found.
-   *        May be <code>null</code>.
-   * @return The constant link target representing the name or the default
-   *         value. May be <code>null</code> if the passed default value is
-   *         <code>null</code> and the name was not found.
+   *        The default value to be returned in case the name was never found. May be
+   *        <code>null</code>.
+   * @return The constant link target representing the name or the default value. May be
+   *         <code>null</code> if the passed default value is <code>null</code> and the name was not
+   *         found.
    */
   @Nullable
   public static HC_Target getFromName (@NonNull final String sName, @Nullable final HC_Target aDefault)
@@ -108,21 +108,21 @@ public class HC_Target implements IHCHasHTMLAttributeValue
   }
 
   /**
-   * Try to find one of the default targets by name. The name comparison is
-   * performed case insensitive.
+   * Try to find one of the default targets by name. The name comparison is performed case
+   * insensitive.
    *
    * @param sName
    *        The name to check. May not be <code>null</code>.
    * @param aDefaultSupplier
-   *        The supplier to be invoked in case the name was never found. May not
-   *        be <code>null</code> but may return a <code>null</code> value.
-   * @return The constant link target representing the name or the default
-   *         value. May be <code>null</code> if the passed supplier returns
-   *         null.
+   *        The supplier to be invoked in case the name was never found. May not be
+   *        <code>null</code> but may return a <code>null</code> value.
+   * @return The constant link target representing the name or the default value. May be
+   *         <code>null</code> if the passed supplier returns null.
    * @since 8.2.6
    */
   @Nullable
-  public static HC_Target getFromName (@NonNull final String sName, @NonNull final Function <String, ? extends HC_Target> aDefaultSupplier)
+  public static HC_Target getFromName (@NonNull final String sName,
+                                       @NonNull final Function <String, ? extends HC_Target> aDefaultSupplier)
   {
     if (BLANK.getAttrValue ().equalsIgnoreCase (sName))
       return BLANK;

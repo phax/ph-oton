@@ -21,9 +21,8 @@ import org.jspecify.annotations.Nullable;
 import com.helger.html.hc.html.IHCElement;
 
 /**
- * Contains all default icon types. A default icon is an abstraction level for
- * different icon suites (FamFam, Bootstrap, ...) to handle certain things
- * layout-independent.
+ * Contains all default icon types. A default icon is an abstraction level for different icon suites
+ * (FamFam, Bootstrap, ...) to handle certain things layout-independent.
  *
  * @author Philip Helger
  */
@@ -66,8 +65,7 @@ public enum EDefaultIcon implements IIcon
   /**
    * Shortcut for <code>getIcon ().getAsNode ()</code>
    *
-   * @return The icon HC node or <code>null</code> if no such default icon is
-   *         set.
+   * @return The icon HC node or <code>null</code> if no such default icon is set.
    */
   @Nullable
   public IHCElement <?> getAsNode ()

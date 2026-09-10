@@ -30,7 +30,8 @@ import com.helger.html.jscode.JSFunction;
  *
  * @author Philip Helger
  */
-public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements IJQueryInvocationExtended <JQueryInvocation>
+public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> implements
+                              IJQueryInvocationExtended <JQueryInvocation>
 {
   public JQueryInvocation (@NonNull final JSFunction aFunction)
   {
@@ -46,8 +47,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
    * Invoke an arbitrary function on this jQuery object.
    *
    * @param sMethod
-   *        The method to be invoked. May neither be <code>null</code> nor
-   *        empty.
+   *        The method to be invoked. May neither be <code>null</code> nor empty.
    * @return A new jQuery invocation object. Never <code>null</code>.
    */
   @Override
@@ -90,8 +90,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   }
 
   /**
-   * @return The invocation of the custom jQuery function
-   *         <code>setDisabled()</code>
+   * @return The invocation of the custom jQuery function <code>setDisabled()</code>
    */
   @NonNull
   public JQueryInvocation setDisabled ()
@@ -102,8 +101,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param bDisabled
    *        <code>true</code> to set disabled
-   * @return The invocation of the custom jQuery function
-   *         <code>setDisabled()</code>
+   * @return The invocation of the custom jQuery function <code>setDisabled()</code>
    */
   @NonNull
   public JQueryInvocation setDisabled (final boolean bDisabled)
@@ -114,8 +112,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param aExpr
    *        Expression to determine disabled state
-   * @return The invocation of the custom jQuery function
-   *         <code>setDisabled()</code>
+   * @return The invocation of the custom jQuery function <code>setDisabled()</code>
    */
   @NonNull
   public JQueryInvocation setDisabled (@NonNull final IJSExpression aExpr)
@@ -124,8 +121,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   }
 
   /**
-   * @return The invocation of the custom jQuery function
-   *         <code>setReadOnly()</code>
+   * @return The invocation of the custom jQuery function <code>setReadOnly()</code>
    * @since 8.3.1
    */
   @NonNull
@@ -137,8 +133,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param bReadOnly
    *        <code>true</code> to set read-only
-   * @return The invocation of the custom jQuery function
-   *         <code>setReadOnly()</code>
+   * @return The invocation of the custom jQuery function <code>setReadOnly()</code>
    * @since 8.3.1
    */
   @NonNull
@@ -150,8 +145,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param aExpr
    *        Expression to determine read-only state
-   * @return The invocation of the custom jQuery function
-   *         <code>setReadOnly()</code>
+   * @return The invocation of the custom jQuery function <code>setReadOnly()</code>
    * @since 8.3.1
    */
   @NonNull
@@ -179,8 +173,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   }
 
   /**
-   * @return The invocation of the custom jQuery function
-   *         <code>setChecked()</code>
+   * @return The invocation of the custom jQuery function <code>setChecked()</code>
    */
   @NonNull
   public JQueryInvocation setChecked ()
@@ -191,8 +184,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param bChecked
    *        <code>true</code> to check it
-   * @return The invocation of the custom jQuery function
-   *         <code>setChecked()</code>
+   * @return The invocation of the custom jQuery function <code>setChecked()</code>
    */
   @NonNull
   public JQueryInvocation setChecked (final boolean bChecked)
@@ -203,8 +195,7 @@ public class JQueryInvocation extends AbstractJSInvocation <JQueryInvocation> im
   /**
    * @param aExpr
    *        Expression to determine checked state
-   * @return The invocation of the custom jQuery function
-   *         <code>setChecked()</code>
+   * @return The invocation of the custom jQuery function <code>setChecked()</code>
    */
   @NonNull
   public JQueryInvocation setChecked (@NonNull final IJSExpression aExpr)

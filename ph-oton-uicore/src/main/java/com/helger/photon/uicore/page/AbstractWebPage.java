@@ -94,8 +94,7 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   }
 
   /**
-   * Check some pre-requisites. This is called as the very first action on each
-   * page view.
+   * Check some pre-requisites. This is called as the very first action on each page view.
    *
    * @param aWPEC
    *        The web page execution context
@@ -109,8 +108,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   }
 
   /**
-   * This method is called before the main
-   * {@link #fillContent(IWebPageExecutionContext)} method is called.
+   * This method is called before the main {@link #fillContent(IWebPageExecutionContext)} method is
+   * called.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
@@ -120,9 +119,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   {}
 
   /**
-   * Abstract method to be implemented by subclasses, that creates the main page
-   * content. This method is only called, when
-   * {@link #isValidToDisplayPage(IWebPageExecutionContext)} returned
+   * Abstract method to be implemented by subclasses, that creates the main page content. This
+   * method is only called, when {@link #isValidToDisplayPage(IWebPageExecutionContext)} returned
    * <code>true</code>.
    *
    * @param aWPEC
@@ -131,8 +129,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   protected abstract void fillContent (@NonNull WPECTYPE aWPEC);
 
   /**
-   * This method is called after the main
-   * {@link #fillContent(IWebPageExecutionContext)} method is called.
+   * This method is called after the main {@link #fillContent(IWebPageExecutionContext)} method is
+   * called.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
@@ -142,9 +140,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   {}
 
   /**
-   * A callback method that is is invoked if
-   * {@link #isValidToDisplayPage(IWebPageExecutionContext)} returned
-   * <code>false</code>.
+   * A callback method that is is invoked if {@link #isValidToDisplayPage(IWebPageExecutionContext)}
+   * returned <code>false</code>.
    *
    * @param aWPEC
    *        The web page execution context. Never <code>null</code>.
@@ -154,8 +151,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   {}
 
   /**
-   * Default implementation calling the abstract fillContent method and creating
-   * the help node if desired.
+   * Default implementation calling the abstract fillContent method and creating the help node if
+   * desired.
    */
   public final void getContent (@NonNull final WPECTYPE aWPEC)
   {
@@ -215,8 +212,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   }
 
   /**
-   * Add a per-page AJAX executor, with an automatically generated name. It is
-   * automatically generated with the global AjaxInvoker.
+   * Add a per-page AJAX executor, with an automatically generated name. It is automatically
+   * generated with the global AjaxInvoker.
    *
    * @param aExecutor
    *        The executor to be executed. May not be <code>null</code>.
@@ -229,12 +226,12 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
   }
 
   /**
-   * Add a per-page AJAX executor, with an automatically generated name. It is
-   * automatically generated with the global AjaxInvoker.
+   * Add a per-page AJAX executor, with an automatically generated name. It is automatically
+   * generated with the global AjaxInvoker.
    *
    * @param sPrefix
-   *        Function name prefix. If one is provided, this will be used as URL
-   *        name so only limited chars are allowed.
+   *        Function name prefix. If one is provided, this will be used as URL name so only limited
+   *        chars are allowed.
    * @param aExecutor
    *        The executor to be executed. May not be <code>null</code>.
    * @return The create {@link AjaxFunctionDeclaration} to be invoked.
@@ -244,8 +241,8 @@ public abstract class AbstractWebPage <WPECTYPE extends IWebPageExecutionContext
                                                        @NonNull final IAjaxExecutor aExecutor)
   {
     // null means "random" name
-    final String sFuncName = StringHelper.isNotEmpty (sPrefix) ? sPrefix + AjaxFunctionDeclaration.getUniqueFunctionID ()
-                                                            : null;
+    final String sFuncName = StringHelper.isNotEmpty (sPrefix) ? sPrefix +
+                                                                 AjaxFunctionDeclaration.getUniqueFunctionID () : null;
     final AjaxFunctionDeclaration aFunction = AjaxFunctionDeclaration.builder (sFuncName).executor (aExecutor).build ();
     GlobalAjaxInvoker.getInstance ().getRegistry ().registerFunction (aFunction);
     return aFunction;

@@ -41,5 +41,7 @@ public interface ICSRFErrorHandler extends Serializable
    * @param sExpectedNone
    *        The expected nonce. May neither be <code>null</code> nor empty.
    */
-  void onCSRFError (@NonNull IWebPageExecutionContext aWPEC, @Nullable String sProvidedNonce, @NonNull @Nonempty String sExpectedNone);
+  void onCSRFError (@NonNull IWebPageExecutionContext aWPEC,
+                    @Nullable String sProvidedNonce,
+                    @NonNull @Nonempty String sExpectedNone);
 }

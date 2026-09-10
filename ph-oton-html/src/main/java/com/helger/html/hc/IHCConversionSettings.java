@@ -23,8 +23,8 @@ import com.helger.base.clone.ICloneable;
 import com.helger.html.EHTMLVersion;
 
 /**
- * Settings interface that is used to convert HC* nodes to micro nodes, to plain
- * text and for consistency checks.
+ * Settings interface that is used to convert HC* nodes to micro nodes, to plain text and for
+ * consistency checks.
  *
  * @author Philip Helger
  */
@@ -42,9 +42,8 @@ public interface IHCConversionSettings extends IHCConversionSettingsToNode, IClo
   IHCConversionSettings getClone (@NonNull EHTMLVersion eHTMLVersion);
 
   /**
-   * Get a clone of this settings, but with a different HTML version. If the
-   * passed HTML version equals this HTML version than this is returned
-   * unchanged.
+   * Get a clone of this settings, but with a different HTML version. If the passed HTML version
+   * equals this HTML version than this is returned unchanged.
    *
    * @param eHTMLVersion
    *        The new HTML version to use. May not be <code>null</code>.

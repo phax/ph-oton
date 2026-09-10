@@ -22,8 +22,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.callback.ICallback;
 
 /**
- * Callback interface when a user group is created, modified, deleted or
- * assigned to.
+ * Callback interface when a user group is created, modified, deleted or assigned to.
  *
  * @author Philip Helger
  */
@@ -35,8 +34,8 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param aUserGroup
    *        The created user group. Never <code>null</code>.
    * @param bPredefinedUserGroup
-   *        <code>true</code> if it is a predefined user group,
-   *        <code>false</code> if it is a regular user group
+   *        <code>true</code> if it is a predefined user group, <code>false</code> if it is a
+   *        regular user group
    */
   default void onUserGroupCreated (@NonNull final IUserGroup aUserGroup, final boolean bPredefinedUserGroup)
   {}
@@ -85,8 +84,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sUserID
    *        The ID of the user that was assigned/unassigned.
    * @param bAssign
-   *        <code>true</code> if the user was assigned, <code>false</code> if it
-   *        was unassigned
+   *        <code>true</code> if the user was assigned, <code>false</code> if it was unassigned
    */
   default void onUserGroupUserAssignment (@NonNull @Nonempty final String sUserGroupID,
                                           @NonNull @Nonempty final String sUserID,
@@ -101,8 +99,7 @@ public interface IUserGroupModificationCallback extends ICallback
    * @param sRoleID
    *        The ID of the role that was assigned/unassigned.
    * @param bAssign
-   *        <code>true</code> if the role was assigned, <code>false</code> if it
-   *        was unassigned
+   *        <code>true</code> if the role was assigned, <code>false</code> if it was unassigned
    */
   default void onUserGroupRoleAssignment (@NonNull @Nonempty final String sUserGroupID,
                                           @NonNull @Nonempty final String sRoleID,

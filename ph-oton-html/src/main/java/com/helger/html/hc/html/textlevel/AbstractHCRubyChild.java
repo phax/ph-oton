@@ -21,8 +21,8 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
-public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                          implements
+public abstract class AbstractHCRubyChild <IMPLTYPE extends AbstractHCRubyChild <IMPLTYPE>> extends
+                                          AbstractHCElementWithChildren <IMPLTYPE> implements
                                           IHCRubyChild <IMPLTYPE>
 {
   public AbstractHCRubyChild (@NonNull final EHTMLElement aElement)

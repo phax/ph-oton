@@ -71,7 +71,7 @@ public class BulkImportResult implements ISuccessIndicator
 
   public final void registerAdded (@NonNull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> m_aAdded.put (aObj.getID (), aObj));
+    m_aRWLock.writeLocked (() -> m_aAdded.put (aObj.getID (), aObj));
   }
 
   @NonNull
@@ -90,12 +90,12 @@ public class BulkImportResult implements ISuccessIndicator
   public final boolean containsAdded (@NonNull final ITypedObject <String> aObj)
   {
     // linear scanning :(
-    return m_aRWLock.readLockedBoolean ( () -> m_aAdded.containsKey (aObj.getID ()));
+    return m_aRWLock.readLockedBoolean (() -> m_aAdded.containsKey (aObj.getID ()));
   }
 
   public final void registerChanged (@NonNull final ITypedObject <String> aObj)
   {
-    m_aRWLock.writeLocked ( () -> m_aChanged.put (aObj.getID (), aObj));
+    m_aRWLock.writeLocked (() -> m_aChanged.put (aObj.getID (), aObj));
   }
 
   @NonNull
@@ -114,12 +114,12 @@ public class BulkImportResult implements ISuccessIndicator
   public final boolean containsChanged (@NonNull final ITypedObject <String> aObj)
   {
     // linear scanning :(
-    return m_aRWLock.readLockedBoolean ( () -> m_aChanged.containsKey (aObj.getID ()));
+    return m_aRWLock.readLockedBoolean (() -> m_aChanged.containsKey (aObj.getID ()));
   }
 
   public final void registerFailed (final String sID)
   {
-    m_aRWLock.writeLocked ( () -> m_aFailed.add (sID));
+    m_aRWLock.writeLocked (() -> m_aFailed.add (sID));
   }
 
   /**
@@ -141,12 +141,12 @@ public class BulkImportResult implements ISuccessIndicator
   public final boolean containsFailed (@Nullable final String sID)
   {
     // linear scanning :(
-    return m_aRWLock.readLockedBoolean ( () -> m_aFailed.contains (sID));
+    return m_aRWLock.readLockedBoolean (() -> m_aFailed.contains (sID));
   }
 
   public final void addWarning (final String sWarningMsg)
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (m_aWarnings.size () < m_nMaxWarnings)
       {
         if (false)
@@ -171,23 +171,22 @@ public class BulkImportResult implements ISuccessIndicator
   @Nonnegative
   public final int getWarningsCount ()
   {
-    return m_aRWLock.readLockedInt ( () -> m_aWarnings.size () + m_nAdditionalWarnings);
+    return m_aRWLock.readLockedInt (() -> m_aWarnings.size () + m_nAdditionalWarnings);
   }
 
   public final void setSuccess (final boolean bSuccess)
   {
-    m_aRWLock.writeLocked ( () -> m_bSuccess = bSuccess);
+    m_aRWLock.writeLocked (() -> m_bSuccess = bSuccess);
   }
 
   /**
    * Indicates, that the overall import succeeded. Default is <code>true</code>.
    *
-   * @return <code>true</code> for import success, <code>false</code> for import
-   *         failure.
+   * @return <code>true</code> for import success, <code>false</code> for import failure.
    */
   @Override
   public final boolean isSuccess ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bSuccess);
+    return m_aRWLock.readLockedBoolean (() -> m_bSuccess);
   }
 }

@@ -50,8 +50,7 @@ final class AuditTelemetry
   {
     AuditMetrics.AUDIT_ITEMS.add (1,
                                   TelemetryAttributes.builder ()
-                                                     .put (CAuditTelemetry.ATTR_AUDIT_ACTION_TYPE,
-                                                           eActionType.getID ())
+                                                     .put (CAuditTelemetry.ATTR_AUDIT_ACTION_TYPE, eActionType.getID ())
                                                      .put (CAuditTelemetry.ATTR_AUDIT_SUCCESS, eSuccess.isSuccess ())
                                                      .build ());
   }

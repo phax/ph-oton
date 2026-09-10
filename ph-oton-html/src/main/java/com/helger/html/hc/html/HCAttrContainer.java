@@ -37,8 +37,7 @@ import com.helger.typeconvert.collection.AttributeContainer;
 import com.helger.xml.microdom.IMicroQName;
 
 /**
- * Default implementation of {@link IHCAttrContainer} based on
- * {@link AttributeContainer}
+ * Default implementation of {@link IHCAttrContainer} based on {@link AttributeContainer}
  *
  * @author Philip Helger
  * @since 9.3.0 public

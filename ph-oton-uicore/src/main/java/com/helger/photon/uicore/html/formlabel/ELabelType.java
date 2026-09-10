@@ -56,8 +56,7 @@ public enum ELabelType implements IHasID <String>
   }
 
   /**
-   * @return The CSS class to be used for this label type. May be
-   *         <code>null</code>.
+   * @return The CSS class to be used for this label type. May be <code>null</code>.
    */
   @Nullable
   public ICSSClassProvider getCSSClass ()

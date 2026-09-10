@@ -36,18 +36,17 @@ public class FooterCallbackSumColumn
   private final int m_nPrintColumn;
 
   /**
-   * Parameter for a dynamic callback for calculated datatables footer values
-   * (like sums etc.)
+   * Parameter for a dynamic callback for calculated datatables footer values (like sums etc.)
    *
    * @param aFuncIntVal
-   *        JS function to be invoked on all cells to convert a String into an
-   *        int. Use it to e.g. cut prefixes and/or suffixes.
+   *        JS function to be invoked on all cells to convert a String into an int. Use it to e.g.
+   *        cut prefixes and/or suffixes.
    * @param aFuncPrintSum
-   *        JS function to be invoked to format the sum. The parameter is a
-   *        floating point value (the sum).
+   *        JS function to be invoked to format the sum. The parameter is a floating point value
+   *        (the sum).
    * @param nColumn
-   *        The 0-based column index for which the sum should be calculated and
-   *        where the sum should be printed.
+   *        The 0-based column index for which the sum should be calculated and where the sum should
+   *        be printed.
    */
   public FooterCallbackSumColumn (@NonNull final JSAnonymousFunction aFuncIntVal,
                                   @NonNull final JSAnonymousFunction aFuncPrintSum,
@@ -57,23 +56,20 @@ public class FooterCallbackSumColumn
   }
 
   /**
-   * Parameter for a dynamic callback for calculated datatables footer values
-   * (like sums etc.)
+   * Parameter for a dynamic callback for calculated datatables footer values (like sums etc.)
    *
    * @param aFuncIntVal
-   *        JS function to be invoked on all cells to convert a String into an
-   *        int. Use it to e.g. cut prefixes and/or suffixes.
+   *        JS function to be invoked on all cells to convert a String into an int. Use it to e.g.
+   *        cut prefixes and/or suffixes.
    * @param aFuncPrintSum
-   *        JS function to be invoked to format the sum. The first parameter is
-   *        the total sum as float, and the second parameter is the page sum as
-   *        float.
+   *        JS function to be invoked to format the sum. The first parameter is the total sum as
+   *        float, and the second parameter is the page sum as float.
    * @param nCalcColumn
-   *        The 0-based column index for which the sum should be calculated.
-   *        This should be a hidden column that contains the numerical value
-   *        without any formatting.
+   *        The 0-based column index for which the sum should be calculated. This should be a hidden
+   *        column that contains the numerical value without any formatting.
    * @param nPrintColumn
-   *        The 0-based column index where the sum should be printed. This
-   *        should be a visible column.
+   *        The 0-based column index where the sum should be printed. This should be a visible
+   *        column.
    */
   public FooterCallbackSumColumn (@NonNull final JSAnonymousFunction aFuncIntVal,
                                   @NonNull final JSAnonymousFunction aFuncPrintSum,

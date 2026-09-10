@@ -26,16 +26,14 @@ import org.jspecify.annotations.Nullable;
 public interface IHCConversionSettingsToNode extends IHCConversionSettingsGlobal
 {
   /**
-   * @return The value of 'nonce' attribute for script elements. May be
-   *         <code>null</code>.
+   * @return The value of 'nonce' attribute for script elements. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable
   String getNonceScript ();
 
   /**
-   * @return The value of 'nonce' attribute for style elements. May be
-   *         <code>null</code>.
+   * @return The value of 'nonce' attribute for style elements. May be <code>null</code>.
    * @since 9.3.0
    */
   @Nullable

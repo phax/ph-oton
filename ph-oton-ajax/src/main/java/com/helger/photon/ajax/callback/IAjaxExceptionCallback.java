@@ -36,8 +36,7 @@ public interface IAjaxExceptionCallback extends ICallback
    * @param aAjaxInvoker
    *        Source AJAX invoker. Never <code>null</code>.
    * @param sFunctionName
-   *        The AJAX function that should have been involved. Never
-   *        <code>null</code>.
+   *        The AJAX function that should have been involved. Never <code>null</code>.
    * @param aAjaxExecutor
    *        The running AJAX executor. Never <code>null</code>.
    * @param aRequestScope

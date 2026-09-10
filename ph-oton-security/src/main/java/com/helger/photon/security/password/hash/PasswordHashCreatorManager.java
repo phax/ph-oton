@@ -71,7 +71,7 @@ public class PasswordHashCreatorManager
     if (StringHelper.isEmpty (sAlgorithmName))
       throw new IllegalArgumentException ("PasswordHashCreator algorithm '" + aPasswordHashCreator + "' is empty!");
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (m_aPasswordHashCreators.containsKey (sAlgorithmName))
         throw new IllegalArgumentException ("Another PasswordHashCreator for algorithm '" +
                                             sAlgorithmName +
@@ -90,7 +90,7 @@ public class PasswordHashCreatorManager
       final String sAlgorithmName = aPasswordHashCreator.getAlgorithmName ();
       if (StringHelper.isNotEmpty (sAlgorithmName))
       {
-        m_aRWLock.writeLocked ( () -> {
+        m_aRWLock.writeLocked (() -> {
           if (m_aPasswordHashCreators.remove (sAlgorithmName) != null)
             LOGGER.info ("Unregistered password hash creator algorithm '" + sAlgorithmName + "'");
         });
@@ -108,7 +108,7 @@ public class PasswordHashCreatorManager
   @Nullable
   public IPasswordHashCreator getPasswordHashCreatorOfAlgorithm (@Nullable final String sAlgorithmName)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aPasswordHashCreators.get (sAlgorithmName));
+    return m_aRWLock.readLockedGet (() -> m_aPasswordHashCreators.get (sAlgorithmName));
   }
 
   @NonNull
@@ -131,7 +131,7 @@ public class PasswordHashCreatorManager
   @NonNull
   public IPasswordHashCreator getDefaultPasswordHashCreator ()
   {
-    final IPasswordHashCreator ret = m_aRWLock.readLockedGet ( () -> m_aDefaultPasswordHashCreator);
+    final IPasswordHashCreator ret = m_aRWLock.readLockedGet (() -> m_aDefaultPasswordHashCreator);
     if (ret == null)
       throw new IllegalStateException ("No default PasswordHashCreator present!");
     return ret;
@@ -158,7 +158,7 @@ public class PasswordHashCreatorManager
   {
     ValueEnforcer.notEmpty (sAlgorithm, "Algorithm");
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       final IPasswordHashCreator aPHC = m_aPasswordHashCreators.get (sAlgorithm);
       if (aPHC == null)
         throw new IllegalArgumentException ("No PasswordHashCreator registered for algorithm '" + sAlgorithm + "'");

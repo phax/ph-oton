@@ -292,8 +292,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
 
       // Serialize remaining node to HTML
       final IMicroNode aMicroNode = aTargetNode.convertToMicroNode (aConversionSettings);
-      return aMicroNode == null ? "" : MicroWriter.getNodeAsString (aMicroNode,
-                                                                    aConversionSettings.getXMLWriterSettings ());
+      return aMicroNode == null ? ""
+                                : MicroWriter.getNodeAsString (aMicroNode, aConversionSettings.getXMLWriterSettings ());
     }
 
     public static void addCSSAndJS (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
@@ -362,9 +362,9 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @NonNull
   public PhotonUnifiedResponse html (@Nullable final IHCNode aNode)
   {
-    return html (aNode == null ? null : aNode instanceof IHCHasChildrenMutable <?, ?>
-                                                                                      ? (IHCHasChildrenMutable <?, IHCNode>) aNode
-                                                                                      : new HCNodeList ().addChild (aNode),
+    return html (aNode == null ? null
+                               : aNode instanceof IHCHasChildrenMutable <?, ?> ? (IHCHasChildrenMutable <?, IHCNode>) aNode
+                                                                               : new HCNodeList ().addChild (aNode),
                  null,
                  null);
   }
@@ -598,7 +598,8 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   {
     final HttpServletRequest aHttpRequest = aRequestScope.getRequest ();
     if (aHttpRequest instanceof MockHttpServletRequest ||
-        (aHttpRequest instanceof final SafeHttpServletRequest aSHSR && aSHSR.getRequest () instanceof MockHttpServletRequest))
+        (aHttpRequest instanceof final SafeHttpServletRequest aSHSR &&
+         aSHSR.getRequest () instanceof MockHttpServletRequest))
     {
       // No version and no method present
       return new PhotonUnifiedResponse (EHttpVersion.HTTP_11, EHttpMethod.GET, aHttpRequest, aRequestScope);

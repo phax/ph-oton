@@ -25,8 +25,8 @@ import com.helger.photon.app.PhotonUnifiedResponse;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to be used with the {@link IAjaxInvoker} to get notified
- * after an {@link IAjaxExecutor} was invoked.
+ * Callback interface to be used with the {@link IAjaxInvoker} to get notified after an
+ * {@link IAjaxExecutor} was invoked.
  *
  * @author Philip Helger
  */

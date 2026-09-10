@@ -25,9 +25,8 @@ import com.helger.base.string.StringHelper;
 import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 
 /**
- * An enumeration that can be used in
- * {@link com.helger.html.hc.html.embedded.HCParam} objects to define the used
- * value type.
+ * An enumeration that can be used in {@link com.helger.html.hc.html.embedded.HCParam} objects to
+ * define the used value type.
  *
  * @author Philip Helger
  */

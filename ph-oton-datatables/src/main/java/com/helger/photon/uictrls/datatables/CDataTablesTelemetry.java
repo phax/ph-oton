@@ -60,8 +60,8 @@ public final class CDataTablesTelemetry
    * or e-mail addresses being searched for, so they must never appear in a span attribute either.
    * <p>
    * The per-render object ID of the table is deliberately not used as a dimension either - it is
-   * generated per render and is therefore not a stable table identifier. For a per-screen
-   * breakdown use <code>photon.webpage.id</code> from the {@code AbstractWebPage} instrumentation.
+   * generated per render and is therefore not a stable table identifier. For a per-screen breakdown
+   * use <code>photon.webpage.id</code> from the {@code AbstractWebPage} instrumentation.
    */
   public static final String ATTR_DT_FILTERED = "photon.datatables.filtered";
 

@@ -38,15 +38,15 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
 public interface IHCConversionSettingsGlobal
 {
   /**
-   * @return The HTML version to be used to transform HC nodes into micro nodes.
-   *         Never <code>null</code>.
+   * @return The HTML version to be used to transform HC nodes into micro nodes. Never
+   *         <code>null</code>.
    */
   @NonNull
   EHTMLVersion getHTMLVersion ();
 
   /**
-   * @return The namespace URI of the HTML version. This should result in the
-   *         same as calling <code>getHTMLVersion().getNamespaceURI()</code>
+   * @return The namespace URI of the HTML version. This should result in the same as calling
+   *         <code>getHTMLVersion().getNamespaceURI()</code>
    */
   @Nullable
   String getHTMLNamespaceURI ();
@@ -58,8 +58,7 @@ public interface IHCConversionSettingsGlobal
   IXMLWriterSettings getXMLWriterSettings ();
 
   /**
-   * @return A mutable copy of the XML writer settings to be used. Never
-   *         <code>null</code>.
+   * @return A mutable copy of the XML writer settings to be used. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -72,8 +71,7 @@ public interface IHCConversionSettingsGlobal
   ICSSWriterSettings getCSSWriterSettings ();
 
   /**
-   * @return A mutable copy of the CSS writer settings to be used. Never
-   *         <code>null</code>.
+   * @return A mutable copy of the CSS writer settings to be used. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -86,29 +84,26 @@ public interface IHCConversionSettingsGlobal
   IJSWriterSettings getJSWriterSettings ();
 
   /**
-   * @return A mutable copy of the JS formatter settings to be used. Never
-   *         <code>null</code>.
+   * @return A mutable copy of the JS formatter settings to be used. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   JSWriterSettings getMutableJSWriterSettings ();
 
   /**
-   * @return <code>true</code> if the consistency checks are enabled,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the consistency checks are enabled, <code>false</code> otherwise.
    */
   boolean areConsistencyChecksEnabled ();
 
   /**
-   * @return <code>true</code> if out-of-band nodes should be extracted,
-   *         <code>false</code> if not. By default <code>true</code> is
-   *         returned.
+   * @return <code>true</code> if out-of-band nodes should be extracted, <code>false</code> if not.
+   *         By default <code>true</code> is returned.
    */
   boolean isExtractOutOfBandNodes ();
 
   /**
-   * @return The current customizer to be used. May be <code>null</code>. The
-   *         default is <code>null</code>.
+   * @return The current customizer to be used. May be <code>null</code>. The default is
+   *         <code>null</code>.
    */
   @Nullable
   IHCCustomizer getCustomizer ();

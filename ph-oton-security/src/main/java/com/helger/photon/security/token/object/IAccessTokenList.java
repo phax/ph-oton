@@ -35,8 +35,8 @@ import com.helger.photon.security.token.accesstoken.IAccessToken;
 public interface IAccessTokenList
 {
   /**
-   * @return A list of all tokens used by this user. The latest, active token is
-   *         always the last one. Neither <code>null</code> nor empty.
+   * @return A list of all tokens used by this user. The latest, active token is always the last
+   *         one. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -48,23 +48,21 @@ public interface IAccessTokenList
    *
    * @param aFilter
    *        The filter to use. May be <code>null</code>.
-   * @return The first access token (if filter is <code>null</code>) or the
-   *         first matching filter or <code>null</code> if no token is present,
-   *         or if no token matches the supplied filter.
+   * @return The first access token (if filter is <code>null</code>) or the first matching filter or
+   *         <code>null</code> if no token is present, or if no token matches the supplied filter.
    */
   @Nullable
   IAccessToken findFirstAccessToken (@Nullable Predicate <? super IAccessToken> aFilter);
 
   /**
-   * @return The main token to access this application from the outside. May be
-   *         <code>null</code> if all are revoked.
+   * @return The main token to access this application from the outside. May be <code>null</code> if
+   *         all are revoked.
    */
   @Nullable
   IAccessToken getActiveAccessToken ();
 
   /**
-   * @return <code>true</code> if this token list has an active token,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if this token list has an active token, <code>false</code> if not.
    */
   default boolean hasActiveAccessToken ()
   {
@@ -72,10 +70,9 @@ public interface IAccessTokenList
   }
 
   /**
-   * @return The token string of the active access token. May be
-   *         <code>null</code> if no active access token is present (which can
-   *         be the case if all access tokens were revoked or if no access token
-   *         is present).
+   * @return The token string of the active access token. May be <code>null</code> if no active
+   *         access token is present (which can be the case if all access tokens were revoked or if
+   *         no access token is present).
    * @see #getActiveAccessToken()
    */
   @Nullable

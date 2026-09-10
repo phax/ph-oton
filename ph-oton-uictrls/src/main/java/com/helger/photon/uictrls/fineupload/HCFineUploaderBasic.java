@@ -55,8 +55,8 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
   }
 
   /**
-   * Set the button object to use. The button element MUST NOT be manually
-   * attached to the response tree - this happens inside!
+   * Set the button object to use. The button element MUST NOT be manually attached to the response
+   * tree - this happens inside!
    *
    * @param aButton
    *        The button object to use. May be <code>null</code>.
@@ -70,8 +70,8 @@ public class HCFineUploaderBasic extends AbstractHCNodeList <HCFineUploaderBasic
   }
 
   /**
-   * Set the ID of the button object to use. The button element MUST be manually
-   * attached to the response tree!
+   * Set the ID of the button object to use. The button element MUST be manually attached to the
+   * response tree!
    *
    * @param sButtonID
    *        The button ID to use. May be <code>null</code>.

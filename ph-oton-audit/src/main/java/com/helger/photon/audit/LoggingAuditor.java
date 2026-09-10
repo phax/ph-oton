@@ -52,8 +52,7 @@ public class LoggingAuditor extends AbstractAuditor
   }
 
   /**
-   * @return The prefix to be used in all logging lines. Never <code>null</code>
-   *         but maybe empty.
+   * @return The prefix to be used in all logging lines. Never <code>null</code> but maybe empty.
    */
   @NonNull
   public String getCommonPrefix ()

@@ -79,8 +79,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Enable or disable splitting the file separate chunks. Each chunks is sent
-   * in a separate request.
+   * Enable or disable splitting the file separate chunks. Each chunks is sent in a separate
+   * request.
    *
    * @param bEnabled
    *        new value
@@ -99,9 +99,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Ensure every file is uploaded in chunks, even if the file can only be split
-   * up into 1 chunk. Does not apply if chunking is not possible in the current
-   * browser.
+   * Ensure every file is uploaded in chunks, even if the file can only be split up into 1 chunk.
+   * Does not apply if chunking is not possible in the current browser.
    *
    * @param bMandatory
    *        new value
@@ -142,8 +141,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Name of the parameter passed with a chunked request that specifies the size
-   * in bytes of the associated chunk.
+   * Name of the parameter passed with a chunked request that specifies the size in bytes of the
+   * associated chunk.
    *
    * @param sParamNameChunkSize
    *        New value. May neither be <code>null</code> nor empty.
@@ -165,8 +164,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Name of the parameter passed with a chunked request that specifies the
-   * starting byte of the associated chunk.
+   * Name of the parameter passed with a chunked request that specifies the starting byte of the
+   * associated chunk.
    *
    * @param sParamNamePartByteOffset
    *        New value. May neither be <code>null</code> nor empty.
@@ -188,8 +187,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Name of the parameter passed with a chunked request that specifies the
-   * index of the associated partition.
+   * Name of the parameter passed with a chunked request that specifies the index of the associated
+   * partition.
    *
    * @param sParamNamePartIndex
    *        New value. May neither be <code>null</code> nor empty.
@@ -211,8 +210,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Name of the parameter passed with a chunked request that specifies the
-   * total number of chunks associated with the File or Blob.
+   * Name of the parameter passed with a chunked request that specifies the total number of chunks
+   * associated with the File or Blob.
    *
    * @param sParamNameTotalParts
    *        New value. May neither be <code>null</code> nor empty.
@@ -233,8 +232,8 @@ public class FineUploader5Chunking implements IFineUploader5Part
   }
 
   /**
-   * Endpoint to send a POST after all chunks have been successfully uploaded
-   * for each file. Required if the concurrent.enabled option is set.
+   * Endpoint to send a POST after all chunks have been successfully uploaded for each file.
+   * Required if the concurrent.enabled option is set.
    *
    * @param aSuccessEndpoint
    *        New value. May be <code>null</code>.

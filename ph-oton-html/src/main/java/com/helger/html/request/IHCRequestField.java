@@ -19,8 +19,8 @@ package com.helger.html.request;
 import org.jspecify.annotations.NonNull;
 
 /**
- * Defines an abstract request field for input controls. It encapsulates a name
- * and a single request value.
+ * Defines an abstract request field for input controls. It encapsulates a name and a single request
+ * value.
  *
  * @author Philip Helger
  */
@@ -29,16 +29,15 @@ public interface IHCRequestField extends IHCBaseRequestField
   /**
    * Get the default value that should be used if no request value is present.
    *
-   * @return The default value to be used as fallback. May not be
-   *         <code>null</code>. <code>null</code> have to be returned as empty
-   *         strings!
+   * @return The default value to be used as fallback. May not be <code>null</code>.
+   *         <code>null</code> have to be returned as empty strings!
    */
   @NonNull
   String getDefaultValue ();
 
   /**
-   * Get the value of the request - optionally falling back to an eventually
-   * provided default value if no such request parameter is present
+   * Get the value of the request - optionally falling back to an eventually provided default value
+   * if no such request parameter is present
    *
    * @return A single request value as string.
    * @see #getDefaultValue()

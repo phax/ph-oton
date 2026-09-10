@@ -41,10 +41,8 @@ public interface IHCElementWithInternalChildren <IMPLTYPE extends IHCElementWith
    * Check if this element contains any of the specified elements.
    * 
    * @param aElements
-   *        The list of HTML elements to query. May neither be <code>null</code>
-   *        nor empty.
-   * @return <code>true</code> if such an element is contained,
-   *         <code>false</code> if not.
+   *        The list of HTML elements to query. May neither be <code>null</code> nor empty.
+   * @return <code>true</code> if such an element is contained, <code>false</code> if not.
    */
   default boolean recursiveContainsChildWithTagName (@NonNull @Nonempty final EHTMLElement... aElements)
   {

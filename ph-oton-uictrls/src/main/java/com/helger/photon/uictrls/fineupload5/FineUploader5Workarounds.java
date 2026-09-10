@@ -42,9 +42,9 @@ public class FineUploader5Workarounds implements IFineUploader5Part
   }
 
   /**
-   * Ensures all &lt;input type='file'&gt; elements tracked by Fine Uploader do
-   * NOT contain a multiple attribute to work around an issue present in iOS7
-   * &amp; 8 that otherwise results in 0-sized uploaded videos.
+   * Ensures all &lt;input type='file'&gt; elements tracked by Fine Uploader do NOT contain a
+   * multiple attribute to work around an issue present in iOS7 &amp; 8 that otherwise results in
+   * 0-sized uploaded videos.
    *
    * @param bIosEmptyVideo
    *        New value
@@ -63,11 +63,10 @@ public class FineUploader5Workarounds implements IFineUploader5Part
   }
 
   /**
-   * Ensures all &lt;input type='file'&gt; elements tracked by Fine Uploader
-   * always have a multiple attribute present. This only applies to iOS8 Chrome
-   * and iOS8 UIWebView, and is put in place to work around an issue that causes
-   * the browser to crash when a file input element does not contain a multiple
-   * attribute inside of a UIWebView container created by an iOS8 app compiled
+   * Ensures all &lt;input type='file'&gt; elements tracked by Fine Uploader always have a multiple
+   * attribute present. This only applies to iOS8 Chrome and iOS8 UIWebView, and is put in place to
+   * work around an issue that causes the browser to crash when a file input element does not
+   * contain a multiple attribute inside of a UIWebView container created by an iOS8 app compiled
    * with and iOS7 SDK.
    *
    * @param bIos8BrowserCrash
@@ -87,10 +86,9 @@ public class FineUploader5Workarounds implements IFineUploader5Part
   }
 
   /**
-   * Disables Fine Uploader and displays a message to the user in iOS 8.0.0
-   * Safari. Due to serious bugs in iOS 8.0.0 Safari, uploading is not possible.
-   * This was apparently fixed in subsequent builds of iOS8, so this workaround
-   * only targets 8.0.0.
+   * Disables Fine Uploader and displays a message to the user in iOS 8.0.0 Safari. Due to serious
+   * bugs in iOS 8.0.0 Safari, uploading is not possible. This was apparently fixed in subsequent
+   * builds of iOS8, so this workaround only targets 8.0.0.
    *
    * @param bIos8SafariUploads
    *        New value

@@ -117,15 +117,13 @@ public enum EHTMLVersion
   }
 
   /**
-   * @return The document type matching this HTML version. Never
-   *         <code>null</code>.
+   * @return The document type matching this HTML version. Never <code>null</code>.
    */
   @NonNull
   public abstract IMicroDocumentType getDocType ();
 
   /**
-   * @return The XML namespace URI to use. May be <code>null</code> for HTML5 or
-   *         later.
+   * @return The XML namespace URI to use. May be <code>null</code> for HTML5 or later.
    */
   @Nullable
   public abstract String getNamespaceURI ();

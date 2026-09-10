@@ -155,7 +155,8 @@ final class MarkdownHCStack
                     if (aParent instanceof final HCRow aParentRow && aNode instanceof final IHCCell <?> aCell)
                       aParentRow.addChild (aCell);
                     else
-                      if (aParent instanceof final HCRuby aParentRuby && aNode instanceof final IHCRubyChild <?> aRubyChild)
+                      if (aParent instanceof final HCRuby aParentRuby &&
+                          aNode instanceof final IHCRubyChild <?> aRubyChild)
                         aParentRuby.addChild (aRubyChild);
                       else
                         if (aParent instanceof final IHCNodeWithChildren <?> aRealParent)
@@ -180,7 +181,7 @@ final class MarkdownHCStack
                             {
                               // Append
                               aParentScript.setJSCodeProvider (new UnparsedJSCodeProvider (aUnparsed.getJSCode () +
-                                                                                         aTextNode.getText ()));
+                                                                                           aTextNode.getText ()));
                             }
                             else
                             {

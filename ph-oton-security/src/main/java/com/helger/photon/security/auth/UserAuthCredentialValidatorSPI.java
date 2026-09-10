@@ -27,9 +27,8 @@ import com.helger.security.authentication.credentials.IAuthCredentialValidatorSP
 import com.helger.security.authentication.credentials.IAuthCredentials;
 
 /**
- * An implementation of the {@link IAuthCredentialValidatorSPI} for
- * {@link IUserPasswordCredentials} using the {@link LoggedInUserManager} to
- * login {@link IUser} objects.
+ * An implementation of the {@link IAuthCredentialValidatorSPI} for {@link IUserPasswordCredentials}
+ * using the {@link LoggedInUserManager} to login {@link IUser} objects.
  *
  * @author Philip Helger
  */
@@ -45,6 +44,7 @@ public final class UserAuthCredentialValidatorSPI implements IAuthCredentialVali
   public ELoginResult validateCredentials (@NonNull final IAuthCredentials aCredentials)
   {
     final IUserPasswordCredentials aUPC = (IUserPasswordCredentials) aCredentials;
-    return LoggedInUserManager.getInstance ().loginUser (aUPC.getUser (), aUPC.getPassword (), aUPC.getAllRequiredRoles ());
+    return LoggedInUserManager.getInstance ()
+                              .loginUser (aUPC.getUser (), aUPC.getPassword (), aUPC.getAllRequiredRoles ());
   }
 }

@@ -32,8 +32,7 @@ import com.helger.text.resolve.DefaultTextResolver;
 import com.helger.text.util.TextHelper;
 
 /**
- * An implementation of {@link ISystemMessageRenderer} that renders the text as
- * plain text.
+ * An implementation of {@link ISystemMessageRenderer} that renders the text as plain text.
  *
  * @author Philip Helger
  * @since 8.4.3

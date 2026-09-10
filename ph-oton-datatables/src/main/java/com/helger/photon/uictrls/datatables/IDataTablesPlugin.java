@@ -49,8 +49,8 @@ public interface IDataTablesPlugin
   boolean canBeApplied (@NonNull DataTables aDT);
 
   /**
-   * Apply all necessary information to the owning DataTables object. This can
-   * be used to e.g. wave stuff into the DOM.
+   * Apply all necessary information to the owning DataTables object. This can be used to e.g. wave
+   * stuff into the DOM.
    *
    * @param aDT
    *        DataTables to use. Never <code>null</code>.
@@ -78,8 +78,7 @@ public interface IDataTablesPlugin
   void registerExternalResources (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
-   * @return The initialization parameters to be added to the DT init
-   *         JavaScript.
+   * @return The initialization parameters to be added to the DT init JavaScript.
    */
   @Nullable
   IJSExpression getInitParams ();

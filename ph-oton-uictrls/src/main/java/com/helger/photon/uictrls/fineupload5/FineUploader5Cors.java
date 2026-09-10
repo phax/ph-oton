@@ -44,8 +44,7 @@ public class FineUploader5Cors implements IFineUploader5Part
   }
 
   /**
-   * Enable or disable cross-origin requests from IE9 and older where
-   * XDomainRequest must be used.
+   * Enable or disable cross-origin requests from IE9 and older where XDomainRequest must be used.
    *
    * @param bAllowXdr
    *        New value
@@ -83,8 +82,8 @@ public class FineUploader5Cors implements IFineUploader5Part
   }
 
   /**
-   * Enable or disable sending credentials along with each cross-domain request.
-   * Ignored if allowXdr is true and IE9 is being used.
+   * Enable or disable sending credentials along with each cross-domain request. Ignored if allowXdr
+   * is true and IE9 is being used.
    *
    * @param bSendCredentials
    *        New value

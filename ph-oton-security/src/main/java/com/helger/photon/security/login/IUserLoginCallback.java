@@ -32,8 +32,7 @@ public interface IUserLoginCallback extends ICallback
    * Called when a user is successfully logged in.
    *
    * @param aInfo
-   *        The login info of the user that just logged in. Never
-   *        <code>null</code>.
+   *        The login info of the user that just logged in. Never <code>null</code>.
    */
   default void onUserLogin (@NonNull final LoginInfo aInfo)
   {}

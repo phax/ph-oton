@@ -43,8 +43,8 @@ import com.helger.photon.app.html.PhotonJS;
 import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
 
 /**
- * Canvas element containing a ChartJS v4 data. This should be wrapped in a
- * respective "div" element to set max-width and max-height if needed.
+ * Canvas element containing a ChartJS v4 data. This should be wrapped in a respective "div" element
+ * to set max-width and max-height if needed.
  *
  * @author Philip Helger
  * @since 9.2.3
@@ -147,8 +147,7 @@ public class HCChartV4 extends AbstractHCCanvas <HCChartV4>
   }
 
   /**
-   * Callback method to be implemented by implementing classes to add additional
-   * JS code.
+   * Callback method to be implemented by implementing classes to add additional JS code.
    *
    * @param aJSBody
    *        The JS body where code should be appended to.

@@ -64,7 +64,7 @@ public final class SystemMessageManager extends AbstractPhotonSimpleDAO implemen
   @Override
   public void reload ()
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       m_aData.internalReset ();
       try
       {

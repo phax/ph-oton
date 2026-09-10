@@ -35,8 +35,7 @@ import com.helger.html.resource.js.ConstantJSPathProvider;
 import com.helger.photon.app.html.PhotonJS;
 
 /**
- * Handle Google reCAPTCHA according to
- * https://developers.google.com/recaptcha/docs/invisible
+ * Handle Google reCAPTCHA according to https://developers.google.com/recaptcha/docs/invisible
  *
  * <pre>
  * &lt;button class="g-recaptcha" data-sitekey="your_site_key" data-callback=
@@ -72,11 +71,16 @@ public class HCReCaptchaInvisible extends AbstractHCButton <HCReCaptchaInvisible
                                               final boolean bForceRegistration)
   {
     super.onRegisterExternalResources (aConversionSettings, bForceRegistration);
-    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ().path ("https://www.google.com/recaptcha/api.js").minifiedPath ("https://www.google.com/recaptcha/api.js").bundlable (false).build ());
+    PhotonJS.registerJSIncludeForThisRequest (ConstantJSPathProvider.builder ()
+                                                                    .path ("https://www.google.com/recaptcha/api.js")
+                                                                    .minifiedPath ("https://www.google.com/recaptcha/api.js")
+                                                                    .bundlable (false)
+                                                                    .build ());
   }
 
   @NonNull
-  public static HCReCaptchaInvisible createForFormSubmit (@NonNull @Nonempty final String sSiteKey, @NonNull final IHCForm <?> aForm)
+  public static HCReCaptchaInvisible createForFormSubmit (@NonNull @Nonempty final String sSiteKey,
+                                                          @NonNull final IHCForm <?> aForm)
   {
     final String sFuncName = "jsrc" + GlobalIDFactory.getNewIntID ();
     final HCReCaptchaInvisible ret = new HCReCaptchaInvisible (sSiteKey, sFuncName);

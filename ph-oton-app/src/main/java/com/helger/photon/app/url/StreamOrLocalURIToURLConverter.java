@@ -33,9 +33,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
  * The default implementation of {@link IWebURIToURLConverter} that uses
- * {@link LinkHelper#getStreamURL(IRequestWebScopeWithoutResponse, String)} to
- * convert relative URIs to URLs. If you are using a different stream servlet
- * path, you may need to provide your own implementation and use it!
+ * {@link LinkHelper#getStreamURL(IRequestWebScopeWithoutResponse, String)} to convert relative URIs
+ * to URLs. If you are using a different stream servlet path, you may need to provide your own
+ * implementation and use it!
  *
  * @author Philip Helger
  */
@@ -47,8 +47,8 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   {}
 
   /**
-   * Absolute paths are project relative files and therefore are relative to the
-   * servlet context directory
+   * Absolute paths are project relative files and therefore are relative to the servlet context
+   * directory
    *
    * @param sURI
    *        The String to check. May neither be <code>null</code> nor empty.
@@ -133,7 +133,8 @@ public class StreamOrLocalURIToURLConverter implements IWebURIToURLConverter
   }
 
   @NonNull
-  public SimpleURL getAsURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope, @NonNull @Nonempty final String sURI)
+  public SimpleURL getAsURL (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
+                             @NonNull @Nonempty final String sURI)
   {
     return getAsURLStatic (aRequestScope, sURI);
   }

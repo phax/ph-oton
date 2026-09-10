@@ -29,8 +29,7 @@ import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 public interface ICSSClassProvider
 {
   /**
-   * @return The desired CSS class. May be <code>null</code> to indicate no
-   *         class.
+   * @return The desired CSS class. May be <code>null</code> to indicate no class.
    */
   @Nullable
   String getCSSClass ();

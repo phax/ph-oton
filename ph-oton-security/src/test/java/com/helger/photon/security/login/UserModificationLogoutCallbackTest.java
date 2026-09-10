@@ -79,7 +79,9 @@ public final class UserModificationLogoutCallbackTest
   {
     _login ();
 
-    assertTrue (PhotonSecurityManager.getUserMgr ().setUserPassword (CSecurity.USER_USER_ID, "new-password").isChanged ());
+    assertTrue (PhotonSecurityManager.getUserMgr ()
+                                     .setUserPassword (CSecurity.USER_USER_ID, "new-password")
+                                     .isChanged ());
 
     final LoggedInUserManager aUM = LoggedInUserManager.getInstance ();
     assertFalse (aUM.isUserLoggedIn (CSecurity.USER_USER_ID));

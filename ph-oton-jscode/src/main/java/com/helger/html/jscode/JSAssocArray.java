@@ -72,8 +72,7 @@ public class JSAssocArray extends AbstractJSExpression implements IHasSize
   }
 
   /**
-   * Get the key to be used. May be either a {@link JSAtom} or a
-   * {@link JSStringLiteral}.
+   * Get the key to be used. May be either a {@link JSAtom} or a {@link JSStringLiteral}.
    *
    * @param sKey
    *        Key to use. May not be <code>null</code>.

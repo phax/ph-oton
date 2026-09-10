@@ -42,27 +42,25 @@ public final class CSecurity
   public static final int INHERITED_ACCESS_FROM_OBJECT = 0x78;
 
   /**
-   * If no right settings are applied to a right object, does this mean that a
-   * user has access, or not?
+   * If no right settings are applied to a right object, does this mean that a user has access, or
+   * not?
    */
   public static final boolean NO_RIGHT_SPECIFIED_MEANS_HAS_ACCESS = true;
 
   /**
-   * If a user is not assigned to a single user group, does it mean he has
-   * access?
+   * If a user is not assigned to a single user group, does it mean he has access?
    */
   public static final boolean USER_WITHOUT_USERGROUP_HAS_ACCESS = false;
 
   /**
-   * This is relevant for hierarchical right objects only. If set to true,
-   * rights set on parent objects will dominate rights set on parent user groups
-   * for the current object
+   * This is relevant for hierarchical right objects only. If set to true, rights set on parent
+   * objects will dominate rights set on parent user groups for the current object
    */
   public static final boolean INHERIT_OBJECT_BEFORE_USERGROUP = true;
 
   /**
-   * Define whether an explicit "forbidden" access right has higher precedence
-   * than an explicit "allowed".
+   * Define whether an explicit "forbidden" access right has higher precedence than an explicit
+   * "allowed".
    */
   public static final boolean FORBIDDEN_HAS_HIGHER_PRECEDENCE = false;
 

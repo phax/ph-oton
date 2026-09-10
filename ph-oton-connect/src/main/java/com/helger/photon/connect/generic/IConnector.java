@@ -37,8 +37,7 @@ public interface IConnector <HANDLETYPE>
   HANDLETYPE getHandle ();
 
   /**
-   * A shortcut for
-   * {@link IConnectionDestination#openConnection(IAuthCredentials)}.
+   * A shortcut for {@link IConnectionDestination#openConnection(IAuthCredentials)}.
    *
    * @param aCredentials
    *        The credentials to use.
@@ -56,8 +55,7 @@ public interface IConnector <HANDLETYPE>
   EChange closeConnection ();
 
   /**
-   * @return <code>true</code> if connection is open, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if connection is open, <code>false</code> otherwise.
    */
   boolean isConnectionOpen ();
 }

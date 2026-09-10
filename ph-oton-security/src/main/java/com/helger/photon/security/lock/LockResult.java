@@ -76,8 +76,8 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   }
 
   /**
-   * @return <code>true</code> if the lock was just created or
-   *         <code>false</code> if the object was already locked.
+   * @return <code>true</code> if the lock was just created or <code>false</code> if the object was
+   *         already locked.
    */
   public boolean isNewLock ()
   {
@@ -85,8 +85,8 @@ public final class LockResult <IDTYPE> implements ILockedIndicator
   }
 
   /**
-   * @return A list with all objects that were unlocked during the locking
-   *         process. Never <code>null</code> but maybe empty.
+   * @return A list with all objects that were unlocked during the locking process. Never
+   *         <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy

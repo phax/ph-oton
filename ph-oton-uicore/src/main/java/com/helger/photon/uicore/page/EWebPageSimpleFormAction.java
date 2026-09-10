@@ -25,8 +25,7 @@ import com.helger.base.lang.EnumHelper;
 import com.helger.photon.uicore.css.CPageParam;
 
 /**
- * Determines the different form actions to be handled in
- * {@link AbstractWebPageSimpleForm}.
+ * Determines the different form actions to be handled in {@link AbstractWebPageSimpleForm}.
  *
  * @author Philip Helger
  */
@@ -53,8 +52,7 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #VIEW}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #VIEW}, <code>false</code> otherwise.
    */
   public boolean isView ()
   {
@@ -62,8 +60,7 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #EDIT}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #EDIT}, <code>false</code> otherwise.
    */
   public boolean isEdit ()
   {
@@ -71,8 +68,7 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this is {@link #CUSTOM}, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if this is {@link #CUSTOM}, <code>false</code> otherwise.
    */
   public boolean isCustom ()
   {
@@ -80,8 +76,8 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action only reads an existing format,
-   *         <code>false</code> if the action needs write access.
+   * @return <code>true</code> if this action only reads an existing format, <code>false</code> if
+   *         the action needs write access.
    */
   public boolean isReadonly ()
   {
@@ -89,9 +85,8 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if this action modifies an existing object,
-   *         <code>false</code> if either creates a new object or just reads an
-   *         existing object.
+   * @return <code>true</code> if this action modifies an existing object, <code>false</code> if
+   *         either creates a new object or just reads an existing object.
    */
   public boolean isModifying ()
   {
@@ -105,7 +100,8 @@ public enum EWebPageSimpleFormAction implements IHasID <String>
   }
 
   @Nullable
-  public static EWebPageSimpleFormAction getFromIDOrDefault (@Nullable final String sID, @Nullable final EWebPageSimpleFormAction eDefault)
+  public static EWebPageSimpleFormAction getFromIDOrDefault (@Nullable final String sID,
+                                                             @Nullable final EWebPageSimpleFormAction eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EWebPageSimpleFormAction.class, sID, eDefault);
   }

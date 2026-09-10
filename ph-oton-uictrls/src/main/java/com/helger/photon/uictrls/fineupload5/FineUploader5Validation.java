@@ -69,9 +69,9 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Used by the file selection dialog. Restrict the valid file types that
-   * appear in the selection dialog by listing valid content-type specifiers
-   * here. See docs on the accept attribute of the &lt;input&gt; element
+   * Used by the file selection dialog. Restrict the valid file types that appear in the selection
+   * dialog by listing valid content-type specifiers here. See docs on the accept attribute of the
+   * &lt;input&gt; element
    *
    * @param aAcceptFiles
    *        The MIME types to be set.
@@ -85,9 +85,9 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Used by the file selection dialog. Restrict the valid file types that
-   * appear in the selection dialog by listing valid content-type specifiers
-   * here. See docs on the accept attribute of the &lt;input&gt; element
+   * Used by the file selection dialog. Restrict the valid file types that appear in the selection
+   * dialog by listing valid content-type specifiers here. See docs on the accept attribute of the
+   * &lt;input&gt; element
    *
    * @param aAcceptFiles
    *        The MIME types to be added.
@@ -102,9 +102,9 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Used by the file selection dialog. Restrict the valid file types that
-   * appear in the selection dialog by listing valid content-type specifiers
-   * here. See docs on the accept attribute of the &lt;input&gt; element
+   * Used by the file selection dialog. Restrict the valid file types that appear in the selection
+   * dialog by listing valid content-type specifiers here. See docs on the accept attribute of the
+   * &lt;input&gt; element
    *
    * @param aAcceptFile
    *        The MIME type to be added. May not be <code>null</code>.
@@ -126,8 +126,7 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Specify file valid file extensions here to restrict uploads to specific
-   * types.
+   * Specify file valid file extensions here to restrict uploads to specific types.
    *
    * @param aAllowedExtensions
    *        The allowed extensions to be set.
@@ -141,8 +140,7 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Specify file valid file extensions here to restrict uploads to specific
-   * types.
+   * Specify file valid file extensions here to restrict uploads to specific types.
    *
    * @param aAllowedExtensions
    *        The allowed extensions to be added.
@@ -157,8 +155,7 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Specify file valid file extensions here to restrict uploads to specific
-   * types.
+   * Specify file valid file extensions here to restrict uploads to specific types.
    *
    * @param sAllowedExtension
    *        The allowed extension to be added. E.g. ("jpeg", "jpg", "gif")
@@ -179,9 +176,8 @@ public class FineUploader5Validation implements IFineUploader5Part
   }
 
   /**
-   * Maximum number of items that can be potentially uploaded in this session.
-   * Will reject all items that are added or retried after this limit is
-   * reached.
+   * Maximum number of items that can be potentially uploaded in this session. Will reject all items
+   * that are added or retried after this limit is reached.
    *
    * @param nItemLimit
    *        Minimum size limit. 0 == unlimited

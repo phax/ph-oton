@@ -22,8 +22,8 @@ import com.helger.html.EHTMLElement;
 import com.helger.html.hc.html.AbstractHCElementWithChildren;
 
 /**
- * Fallback implementation of {@link AbstractHCElementWithChildren} for
- * {@link EHTMLElement} items that are not explicitly wrapped in its own class.
+ * Fallback implementation of {@link AbstractHCElementWithChildren} for {@link EHTMLElement} items
+ * that are not explicitly wrapped in its own class.
  *
  * @author Philip Helger
  */

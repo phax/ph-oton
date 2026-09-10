@@ -29,10 +29,11 @@ public final class MockUnifiedResponseServlet extends AbstractXServlet
   public MockUnifiedResponseServlet ()
   {
     handlerRegistry ().registerHandler (EHttpMethod.GET,
-                                        (aRequestScope,
-                                         aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (RESPONSE_TEXT, StandardCharsets.UTF_8)
-                                                                              .setMimeType (CMimeType.TEXT_PLAIN)
-                                                                              .disableCaching ());
+                                        (aRequestScope, aUnifiedResponse) -> aUnifiedResponse.setContentAndCharset (
+                                                                                                                    RESPONSE_TEXT,
+                                                                                                                    StandardCharsets.UTF_8)
+                                                                                             .setMimeType (CMimeType.TEXT_PLAIN)
+                                                                                             .disableCaching ());
     handlerRegistry ().copyHandlerToAll (EHttpMethod.GET);
   }
 }

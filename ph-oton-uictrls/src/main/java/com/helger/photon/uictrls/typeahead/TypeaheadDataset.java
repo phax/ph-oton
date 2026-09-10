@@ -81,8 +81,7 @@ public class TypeaheadDataset
    * Constructor.
    *
    * @param sName
-   *        The string used to identify the dataset. Used by typeahead.js to
-   *        cache intelligently.
+   *        The string used to identify the dataset. Used by typeahead.js to cache intelligently.
    */
   public TypeaheadDataset (@NonNull @Nonempty final String sName)
   {
@@ -91,8 +90,7 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The string used to identify the dataset. Used by typeahead.js to
-   *         cache intelligently.
+   * @return The string used to identify the dataset. Used by typeahead.js to cache intelligently.
    */
   @NonNull
   @Nonempty
@@ -102,12 +100,12 @@ public class TypeaheadDataset
   }
 
   /**
-   * The key used to access the value of the datum in the datum object. Defaults
-   * to <code>value</code>.
+   * The key used to access the value of the datum in the datum object. Defaults to
+   * <code>value</code>.
    *
    * @param sValueKey
-   *        The name of the value key in the typeahead datum. May neither be
-   *        <code>null</code> nor empty.
+   *        The name of the value key in the typeahead datum. May neither be <code>null</code> nor
+   *        empty.
    * @return this
    */
   @NonNull
@@ -119,8 +117,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The key used to access the value of the datum in the datum object.
-   *         Defaults to <code>value</code>.
+   * @return The key used to access the value of the datum in the datum object. Defaults to
+   *         <code>value</code>.
    */
   @NonNull
   @Nonempty
@@ -130,8 +128,7 @@ public class TypeaheadDataset
   }
 
   /**
-   * The max number of suggestions from the dataset to display for a given
-   * query. Defaults to 5.
+   * The max number of suggestions from the dataset to display for a given query. Defaults to 5.
    *
    * @param nLimit
    *        The new limit. Must be &ge; 1.
@@ -146,8 +143,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The max number of suggestions from the dataset to display for a
-   *         given query. Defaults to 5.
+   * @return The max number of suggestions from the dataset to display for a given query. Defaults
+   *         to 5.
    */
   @Nonnegative
   public int getLimit ()
@@ -156,10 +153,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * The template used to render suggestions. Can be a string or a precompiled
-   * template. If not provided, suggestions will render as their value contained
-   * in a <code>&lt;p&gt;</code> element (i.e.
-   * <code>&lt;p&gt;value&lt;/p&gt;</code>).
+   * The template used to render suggestions. Can be a string or a precompiled template. If not
+   * provided, suggestions will render as their value contained in a <code>&lt;p&gt;</code> element
+   * (i.e. <code>&lt;p&gt;value&lt;/p&gt;</code>).
    *
    * @param sTemplate
    *        The String template to use. May be <code>null</code> or empty.
@@ -172,10 +168,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * The template used to render suggestions. Can be a string or a precompiled
-   * template. If not provided, suggestions will render as their value contained
-   * in a <code>&lt;p&gt;</code> element (i.e.
-   * <code>&lt;p&gt;value&lt;/p&gt;</code>).
+   * The template used to render suggestions. Can be a string or a precompiled template. If not
+   * provided, suggestions will render as their value contained in a <code>&lt;p&gt;</code> element
+   * (i.e. <code>&lt;p&gt;value&lt;/p&gt;</code>).
    *
    * @param aTemplate
    *        The JS expression to use. May be <code>null</code>.
@@ -189,10 +184,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The template used to render suggestions. Can be a string or a
-   *         precompiled template. If not provided, suggestions will render as
-   *         their value contained in a <code>&lt;p&gt;</code> element (i.e.
-   *         <code>&lt;p&gt;value&lt;/p&gt;</code>).
+   * @return The template used to render suggestions. Can be a string or a precompiled template. If
+   *         not provided, suggestions will render as their value contained in a
+   *         <code>&lt;p&gt;</code> element (i.e. <code>&lt;p&gt;value&lt;/p&gt;</code>).
    */
   @Nullable
   public IJSExpression getTemplate ()
@@ -201,12 +195,11 @@ public class TypeaheadDataset
   }
 
   /**
-   * The template engine used to compile/render <code>template</code> if it is a
-   * string. Any engine can use used as long as it adheres to the expected API.
-   * <strong>Required</strong> if <code>template</code> is a string.<br>
-   * When you want to use Handlebars as the engine you must include Handlebars
-   * and ph-typeahead.js and may specify the name
-   * <strong>TypeaheadHandlebars</strong>.
+   * The template engine used to compile/render <code>template</code> if it is a string. Any engine
+   * can use used as long as it adheres to the expected API. <strong>Required</strong> if
+   * <code>template</code> is a string.<br>
+   * When you want to use Handlebars as the engine you must include Handlebars and ph-typeahead.js
+   * and may specify the name <strong>TypeaheadHandlebars</strong>.
    *
    * @param sEngine
    *        The name of the engine to use. May be <code>null</code>.
@@ -220,10 +213,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The template engine used to compile/render <code>template</code> if
-   *         it is a string. Any engine can use used as long as it adheres to
-   *         the expected API. <strong>Required</strong> if
-   *         <code>template</code> is a string.
+   * @return The template engine used to compile/render <code>template</code> if it is a string. Any
+   *         engine can use used as long as it adheres to the expected API.
+   *         <strong>Required</strong> if <code>template</code> is a string.
    */
   @Nullable
   public String getEngine ()
@@ -232,8 +224,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The header rendered before suggestions in the dropdown menu. Can be either
-   * a DOM element or HTML.
+   * The header rendered before suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param aHeader
    *        The header to use. May be <code>null</code>.
@@ -247,8 +239,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The header rendered before suggestions in the dropdown menu. Can be either
-   * a DOM element or HTML.
+   * The header rendered before suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param sHeaderHTML
    *        The header to use. May be <code>null</code> or empty.
@@ -261,8 +253,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The header rendered before suggestions in the dropdown menu. Can be either
-   * a DOM element or HTML.
+   * The header rendered before suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param aHeader
    *        The header to use. May be <code>null</code>.
@@ -276,8 +268,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The header rendered before suggestions in the dropdown menu. Can be
-   *         either a DOM element or HTML.
+   * @return The header rendered before suggestions in the dropdown menu. Can be either a DOM
+   *         element or HTML.
    */
   @Nullable
   public IJSExpression getHeader ()
@@ -286,8 +278,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The footer rendered after suggestions in the dropdown menu. Can be either a
-   * DOM element or HTML.
+   * The footer rendered after suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param aFooter
    *        The footer to use. May be <code>null</code>.
@@ -301,8 +293,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The footer rendered after suggestions in the dropdown menu. Can be either a
-   * DOM element or HTML.
+   * The footer rendered after suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param sFooterHTML
    *        The footer to use. May be <code>null</code> or empty.
@@ -315,8 +307,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * The footer rendered after suggestions in the dropdown menu. Can be either a
-   * DOM element or HTML.
+   * The footer rendered after suggestions in the dropdown menu. Can be either a DOM element or
+   * HTML.
    *
    * @param aFooter
    *        The footer to use. May be <code>null</code>.
@@ -330,8 +322,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return The footer rendered after suggestions in the dropdown menu. Can be
-   *         either a DOM element or HTML.
+   * @return The footer rendered after suggestions in the dropdown menu. Can be either a DOM element
+   *         or HTML.
    */
   @Nullable
   public IJSExpression getFooter ()
@@ -360,8 +352,8 @@ public class TypeaheadDataset
   }
 
   /**
-   * Can be a URL to a JSON file containing an array of datums or, if more
-   * configurability is needed, a prefetch options object.
+   * Can be a URL to a JSON file containing an array of datums or, if more configurability is
+   * needed, a prefetch options object.
    *
    * @param aURL
    *        URL to the JSON file. May be <code>null</code>.
@@ -374,12 +366,11 @@ public class TypeaheadDataset
   }
 
   /**
-   * Can be a URL to a JSON file containing an array of datums or, if more
-   * configurability is needed, a prefetch options object.
+   * Can be a URL to a JSON file containing an array of datums or, if more configurability is
+   * needed, a prefetch options object.
    *
    * @param aPrefetch
-   *        Prefetch object. May be <code>null</code>. The object is stored as
-   *        is!
+   *        Prefetch object. May be <code>null</code>. The object is stored as is!
    * @return this
    */
   @NonNull
@@ -390,10 +381,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return Can be a URL to a JSON file containing an array of datums or, if
-   *         more configurability is needed, a prefetch options object.<br>
-   *         This returns the internal representation of the object so handle
-   *         with care!
+   * @return Can be a URL to a JSON file containing an array of datums or, if more configurability
+   *         is needed, a prefetch options object.<br>
+   *         This returns the internal representation of the object so handle with care!
    */
   @Nullable
   @ReturnsMutableObject
@@ -403,13 +393,11 @@ public class TypeaheadDataset
   }
 
   /**
-   * Can be a URL to fetch suggestions from when the data provided by local and
-   * prefetch is insufficient or, if more configurability is needed, a remote
-   * options object.
+   * Can be a URL to fetch suggestions from when the data provided by local and prefetch is
+   * insufficient or, if more configurability is needed, a remote options object.
    *
    * @param aRemote
-   *        The remote object to use. May be <code>null</code>. The object is
-   *        stored as is!
+   *        The remote object to use. May be <code>null</code>. The object is stored as is!
    * @return this
    */
   @NonNull
@@ -420,11 +408,9 @@ public class TypeaheadDataset
   }
 
   /**
-   * @return Can be a URL to fetch suggestions from when the data provided by
-   *         local and prefetch is insufficient or, if more configurability is
-   *         needed, a remote options object.<br>
-   *         This returns the internal representation of the object so handle
-   *         with care!
+   * @return Can be a URL to fetch suggestions from when the data provided by local and prefetch is
+   *         insufficient or, if more configurability is needed, a remote options object.<br>
+   *         This returns the internal representation of the object so handle with care!
    */
   @Nullable
   @ReturnsMutableObject

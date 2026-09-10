@@ -26,7 +26,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCNav <IMPLTYPE extends AbstractHCNav <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCNav <IMPLTYPE extends AbstractHCNav <IMPLTYPE>> extends
+                                    AbstractHCElementWithChildren <IMPLTYPE> implements
                                     IHCNav <IMPLTYPE>
 {
   public AbstractHCNav ()

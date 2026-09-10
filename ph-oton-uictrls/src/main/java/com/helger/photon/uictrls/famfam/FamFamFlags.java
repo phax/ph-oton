@@ -43,9 +43,8 @@ public final class FamFamFlags
    *
    * @param aFlagLocale
    *        The locale to resolve. May be <code>null</code>.
-   * @return <code>null</code> if the passed locale is <code>null</code>, if the
-   *         locale has no country or if the no flag is present for the passed
-   *         locale.
+   * @return <code>null</code> if the passed locale is <code>null</code>, if the locale has no
+   *         country or if the no flag is present for the passed locale.
    */
   @Nullable
   public static EFamFamFlagIcon getFlagFromLocale (@Nullable final Locale aFlagLocale)
@@ -64,9 +63,8 @@ public final class FamFamFlags
    *
    * @param aFlagLocale
    *        The locale to resolve. May be <code>null</code>.
-   * @return <code>null</code> if the passed locale is <code>null</code>, if the
-   *         locale has no country or if the no flag is present for the passed
-   *         locale.
+   * @return <code>null</code> if the passed locale is <code>null</code>, if the locale has no
+   *         country or if the no flag is present for the passed locale.
    */
   @Nullable
   public static IHCNode getFlagNodeFromLocale (@Nullable final Locale aFlagLocale)

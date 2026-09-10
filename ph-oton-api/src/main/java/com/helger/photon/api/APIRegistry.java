@@ -43,7 +43,7 @@ public class APIRegistry implements IAPIRegistry
 
   public void registerAPI (@NonNull final APIDescriptor aDescriptor)
   {
-    m_aRWLock.writeLocked ( () -> m_aApiDecls.addDescriptor (aDescriptor));
+    m_aRWLock.writeLocked (() -> m_aApiDecls.addDescriptor (aDescriptor));
   }
 
   @NonNull
@@ -54,9 +54,10 @@ public class APIRegistry implements IAPIRegistry
   }
 
   @Nullable
-  public InvokableAPIDescriptor getAPIByPath (@NonNull final APIPath aPath, @NonNull final IAPIPathAmbiguityResolver aAmbiguityResolver)
+  public InvokableAPIDescriptor getAPIByPath (@NonNull final APIPath aPath,
+                                              @NonNull final IAPIPathAmbiguityResolver aAmbiguityResolver)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
+    return m_aRWLock.readLockedGet (() -> m_aApiDecls.getMatching (aPath, aAmbiguityResolver));
   }
 
   @Override

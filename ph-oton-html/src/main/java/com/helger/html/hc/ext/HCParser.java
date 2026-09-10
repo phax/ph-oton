@@ -43,14 +43,14 @@ public class HCParser extends XHTMLParser
   }
 
   /**
-   * If the passed text looks like XHTML, unescape it (using
-   * {@link #unescapeXHTMLFragment(String)}) else return a simple text node.
+   * If the passed text looks like XHTML, unescape it (using {@link #unescapeXHTMLFragment(String)})
+   * else return a simple text node.
    *
    * @param sText
    *        The text to be converted. May be <code>null</code>.
-   * @return A non-<code>null</code> IHCNode with the result representation
-   *         (e.g. an {@link HCTextNode} or an {@link HCDOMWrapper} with an
-   *         {@link IMicroContainer} having all the body elements)
+   * @return A non-<code>null</code> IHCNode with the result representation (e.g. an
+   *         {@link HCTextNode} or an {@link HCDOMWrapper} with an {@link IMicroContainer} having
+   *         all the body elements)
    */
   @NonNull
   public IHCNode convertToXHTMLFragmentOnDemand (@Nullable final String sText)

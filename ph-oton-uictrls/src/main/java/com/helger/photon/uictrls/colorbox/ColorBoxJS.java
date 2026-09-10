@@ -52,7 +52,8 @@ public final class ColorBoxJS
   }
 
   @NonNull
-  public static JSInvocation invokeColorBox (@NonNull final IJQuerySelector aSelector, @NonNull final ColorBoxOptions aOptions)
+  public static JSInvocation invokeColorBox (@NonNull final IJQuerySelector aSelector,
+                                             @NonNull final ColorBoxOptions aOptions)
   {
     ValueEnforcer.notNull (aOptions, "Options");
     return invokeColorBox (aSelector).arg (aOptions.getJSOptions ());

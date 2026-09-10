@@ -125,8 +125,8 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * Set to false if you want to be able to upload queued items later by calling
-   * the uploadStoredFiles() method.
+   * Set to false if you want to be able to upload queued items later by calling the
+   * uploadStoredFiles() method.
    *
    * @param bAutoUpload
    *        New value
@@ -146,8 +146,7 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * Specify an element to use as the 'select files' button. Cannot be a
-   * &lt;button&gt;.
+   * Specify an element to use as the 'select files' button. Cannot be a &lt;button&gt;.
    *
    * @param sButtonElementID
    *        Element ID of the button
@@ -166,8 +165,7 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * This will result in log messages being written to the window.console
-   * object.
+   * This will result in log messages being written to the window.console object.
    *
    * @param bCoreDebug
    *        New value
@@ -186,8 +184,7 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * When true the cancel link does not appear next to files when the form
-   * uploader is used.
+   * When true the cancel link does not appear next to files when the form uploader is used.
    *
    * @param bDisableCancelForFormUploads
    *        New value
@@ -207,10 +204,9 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * Provide a function to control the display of file names. The raw file name
-   * is passed into the function when it is invoked. Your function may return a
-   * modified file name. Note that this does not affect the actual file name,
-   * only the displayed file name.
+   * Provide a function to control the display of file names. The raw file name is passed into the
+   * function when it is invoked. Your function may return a modified file name. Note that this does
+   * not affect the actual file name, only the displayed file name.
    *
    * @param aCoreFormatFileName
    *        New value
@@ -250,8 +246,8 @@ public class FineUploader5Core implements IFineUploader5Part
   }
 
   /**
-   * When false this will prevent the user from simultaneously selecting or
-   * dropping more than one item.
+   * When false this will prevent the user from simultaneously selecting or dropping more than one
+   * item.
    *
    * @param bMultiple
    *        <code>true</code> for multiple, <code>false</code> for single
@@ -350,13 +346,12 @@ public class FineUploader5Core implements IFineUploader5Part
 
   /**
    * @param sKey
-   *        The key under which it is added to the root JSON. Neither
-   *        <code>null</code> nor empty.
+   *        The key under which it is added to the root JSON. Neither <code>null</code> nor empty.
    * @param aAssocArray
    *        The JSON messages object to extend
    * @param aDisplayLocale
-   *        The locale to be used for test resolving. May be <code>null</code>
-   *        if none was provided in the constructor.
+   *        The locale to be used for test resolving. May be <code>null</code> if none was provided
+   *        in the constructor.
    */
   @OverrideOnDemand
   protected void extendJSONPart (@NonNull @Nonempty final String sKey,
@@ -368,8 +363,8 @@ public class FineUploader5Core implements IFineUploader5Part
    * @param aAssocArray
    *        The JSON messages object to extend
    * @param aDisplayLocale
-   *        The locale to be used for test resolving. May be <code>null</code>
-   *        if none passed in the constructor.
+   *        The locale to be used for test resolving. May be <code>null</code> if none passed in the
+   *        constructor.
    */
   @OverrideOnDemand
   protected void extendJSON (@NonNull final JSAssocArray aAssocArray, @Nullable final Locale aDisplayLocale)
@@ -416,11 +411,13 @@ public class FineUploader5Core implements IFineUploader5Part
       aSub.add ("minSizeError", EFineUploader5CoreText.MIN_SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("noFilesError", EFineUploader5CoreText.NO_FILES_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("onLeave", EFineUploader5CoreText.ON_LEAVE.getDisplayText (m_aDisplayLocale));
-      aSub.add ("retryFailTooManyItemsError", EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
+      aSub.add ("retryFailTooManyItemsError",
+                EFineUploader5CoreText.RETRY_FAIL_TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("sizeError", EFineUploader5CoreText.SIZE_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("tooManyItemsError", EFineUploader5CoreText.TOO_MANY_ITEMS_ERROR.getDisplayText (m_aDisplayLocale));
       aSub.add ("typeError", EFineUploader5CoreText.TYPE_ERROR.getDisplayText (m_aDisplayLocale));
-      aSub.add ("unsupportedBrowserIos8Safari", EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
+      aSub.add ("unsupportedBrowserIos8Safari",
+                EFineUploader5CoreText.UNSUPPORTED_BROWSER_IOS8_SAFARI.getDisplayText (m_aDisplayLocale));
 
       // extended
       _extendAndAdd (ret, KEY_MESSAGES, aSub);
@@ -431,7 +428,8 @@ public class FineUploader5Core implements IFineUploader5Part
       final JSAssocArray aSub = new JSAssocArray ();
       if (m_aDisplayLocale != null)
       {
-        aSub.add ("defaultResponseError", EFineUploader5CoreText.DEFAULT_RESPONSE_ERROR.getDisplayText (m_aDisplayLocale));
+        aSub.add ("defaultResponseError",
+                  EFineUploader5CoreText.DEFAULT_RESPONSE_ERROR.getDisplayText (m_aDisplayLocale));
         aSub.add ("fileInputTitle", EFineUploader5CoreText.FILE_INPUT_TITLE.getDisplayText (m_aDisplayLocale));
       }
       if (!m_aTextSizeSymbols.equals (DEFAULT_TEXT_SIZE_SYMBOLS))

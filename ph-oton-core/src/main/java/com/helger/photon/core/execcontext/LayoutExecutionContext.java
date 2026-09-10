@@ -79,8 +79,8 @@ public class LayoutExecutionContext extends SimpleWebExecutionContext implements
     return ret.getClone ();
   }
 
-  public final void postRedirectGet (@NonNull final ISimpleURL aTargetURL, @Nullable final IHCNode aContent)
-                                                                                                             throws ForcedRedirectException
+  public final void postRedirectGet (@NonNull final ISimpleURL aTargetURL,
+                                     @Nullable final IHCNode aContent) throws ForcedRedirectException
   {
     // Add the "PRG active" parameter
     throw new ForcedRedirectException (m_aSelectedMenuItem.getID (), aTargetURL, aContent);

@@ -108,7 +108,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   @Override
   protected void onDestroy (@NonNull final IScope aScopeInDestruction) throws Exception
   {
-    CONDLOG.debug ( () -> "ph-oton worker pool about to be closed");
+    CONDLOG.debug (() -> "ph-oton worker pool about to be closed");
     ExecutorServiceHelper.shutdownAndWaitUntilAllTasksAreFinished (m_aES);
     CONDLOG.info ("ph-oton worker pool was closed!");
   }
@@ -142,7 +142,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   {
     return Telemetry.withSpan (CIOTelemetry.SPAN_WORKER_EXECUTE, ETelemetrySpanKind.INTERNAL, aSpan -> {
       final StopWatch aSW = StopWatch.createdStarted ();
-      CONDLOG.info ( () -> "Starting '" + sActionName + "'");
+      CONDLOG.info (() -> "Starting '" + sActionName + "'");
       PhotonWorkerPoolTelemetry.onTaskStart (aSpan, sActionName);
 
       boolean bSuccess = false;
@@ -155,13 +155,13 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       catch (final Exception ex)
       {
-        CONDLOG.error ( () -> "Error running ph-oton " + sTaskType + " " + aTask, ex);
+        CONDLOG.error (() -> "Error running ph-oton " + sTaskType + " " + aTask, ex);
         PhotonWorkerPoolTelemetry.onTaskError (aSpan, ex);
       }
       finally
       {
         aSW.stop ();
-        CONDLOG.info ( () -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
+        CONDLOG.info (() -> "Finished '" + sActionName + "' after " + aSW.getMillis () + " milliseconds");
         if (aEndEmitted.compareAndSet (false, true))
           PhotonWorkerPoolTelemetry.onTaskEnd (bSuccess, aSW.getMillis ());
       }
@@ -175,7 +175,8 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
    * @param sTaskType
    *        The task type for the log message. May not be <code>null</code>.
    * @param aEndEmitted
-   *        The guard shared with {@link #_executeInstrumented(String, String, Object, AtomicBoolean, IThrowingSupplier)}.
+   *        The guard shared with
+   *        {@link #_executeInstrumented(String, String, Object, AtomicBoolean, IThrowingSupplier)}.
    *        May not be <code>null</code>.
    * @return The handler for failures that did not surface inside the task body. Never
    *         <code>null</code>.
@@ -197,10 +198,15 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   public CompletableFuture <Void> run (@NonNull final String sActionName, @NonNull final Runnable aRunnable)
   {
     final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
-    return CompletableFuture.runAsync ( () -> _executeInstrumented (sActionName, "runner", aRunnable, aEndEmitted, () -> {
-      aRunnable.run ();
-      return null;
-    }), m_aES).exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
+    return CompletableFuture.runAsync (() -> _executeInstrumented (sActionName,
+                                                                   "runner",
+                                                                   aRunnable,
+                                                                   aEndEmitted,
+                                                                   () -> {
+                                                                     aRunnable.run ();
+                                                                     return null;
+                                                                   }), m_aES)
+                            .exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
   }
 
   @NonNull
@@ -208,17 +214,22 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
                                                @NonNull final IThrowingRunnable <? extends Exception> aRunnable)
   {
     final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
-    return CompletableFuture.runAsync ( () -> _executeInstrumented (sActionName, "runner", aRunnable, aEndEmitted, () -> {
-      aRunnable.run ();
-      return null;
-    }), m_aES).exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
+    return CompletableFuture.runAsync (() -> _executeInstrumented (sActionName,
+                                                                   "runner",
+                                                                   aRunnable,
+                                                                   aEndEmitted,
+                                                                   () -> {
+                                                                     aRunnable.run ();
+                                                                     return null;
+                                                                   }), m_aES)
+                            .exceptionally (_onUnexpectedException (sActionName, "runner", aEndEmitted));
   }
 
   @NonNull
   public <T> CompletableFuture <T> supply (@NonNull final String sActionName, @NonNull final Supplier <T> aSupplier)
   {
     final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
-    return CompletableFuture.supplyAsync ( () -> _executeInstrumented (sActionName,
+    return CompletableFuture.supplyAsync (() -> _executeInstrumented (sActionName,
                                                                       "supplier",
                                                                       aSupplier,
                                                                       aEndEmitted,
@@ -231,7 +242,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
                                                    @NonNull final IThrowingSupplier <T, ? extends Exception> aSupplier)
   {
     final AtomicBoolean aEndEmitted = new AtomicBoolean (false);
-    return CompletableFuture.supplyAsync ( () -> _executeInstrumented (sActionName,
+    return CompletableFuture.supplyAsync (() -> _executeInstrumented (sActionName,
                                                                       "supplier",
                                                                       aSupplier,
                                                                       aEndEmitted,

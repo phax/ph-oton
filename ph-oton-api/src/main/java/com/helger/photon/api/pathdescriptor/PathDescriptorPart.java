@@ -176,8 +176,8 @@ public final class PathDescriptorPart implements Serializable
   public static String getVariableName (@NonNull @Nonempty final String sName)
   {
     ValueEnforcer.notEmpty (sName, "Name");
-    ValueEnforcer.isFalse ( () -> sName.startsWith (VARIABLE_START),
-                            () -> "Name is already a variable: '" + sName + "'");
+    ValueEnforcer.isFalse (() -> sName.startsWith (VARIABLE_START),
+                           () -> "Name is already a variable: '" + sName + "'");
     return VARIABLE_START + sName + VARIABLE_END;
   }
 

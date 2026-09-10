@@ -24,8 +24,7 @@ import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
 
 /**
- * This enum contains all the variable constraint types that can be used in API
- * paths.
+ * This enum contains all the variable constraint types that can be used in API paths.
  *
  * @author Philip Helger
  */

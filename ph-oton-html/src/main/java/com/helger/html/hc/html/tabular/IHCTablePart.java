@@ -22,18 +22,18 @@ import com.helger.annotation.Nonnegative;
 import com.helger.html.hc.html.IHCElementWithInternalChildren;
 
 /**
- * Interface for thead, tbody and tfoot. It encapsulates all table elements
- * having rows.
+ * Interface for thead, tbody and tfoot. It encapsulates all table elements having rows.
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>> extends IHCElementWithInternalChildren <IMPLTYPE, HCRow>
+public interface IHCTablePart <IMPLTYPE extends IHCTablePart <IMPLTYPE>> extends
+                              IHCElementWithInternalChildren <IMPLTYPE, HCRow>
 {
   /**
-   * @return <code>true</code> if this is a header or footer part,
-   *         <code>false</code> if this is the body part.
+   * @return <code>true</code> if this is a header or footer part, <code>false</code> if this is the
+   *         body part.
    */
   boolean isHeaderOrFooter ();
 

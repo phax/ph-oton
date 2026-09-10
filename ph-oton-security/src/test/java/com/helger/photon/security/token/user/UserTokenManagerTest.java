@@ -68,8 +68,7 @@ public final class UserTokenManagerTest
     final String sTokenString = aUserToken.getAccessTokenList ().getActiveTokenString ();
     assertTrue (sTokenString != null && sTokenString.length () > 0);
 
-    assertSame (aUserToken,
-                PhotonSecurityManager.getUserTokenMgr ().getUserTokenOfTokenString (sTokenString));
+    assertSame (aUserToken, PhotonSecurityManager.getUserTokenMgr ().getUserTokenOfTokenString (sTokenString));
   }
 
   /**

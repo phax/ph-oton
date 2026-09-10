@@ -34,7 +34,8 @@ import com.helger.html.request.IHCRequestFieldBooleanMultiValue;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>
+public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <IMPLTYPE>> extends
+                                         AbstractHCInput <IMPLTYPE>
 {
   /** The default value of the "value" attribute in HTML */
   public static final String DEFAULT_VALUE = Boolean.TRUE.toString ();
@@ -107,12 +108,10 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   }
 
   /**
-   * Sets whether or not hidden fields will be emitted according to the passed
-   * value
+   * Sets whether or not hidden fields will be emitted according to the passed value
    *
    * @param bEmitHiddenField
-   *        <code>true</code> to emit the hidden field, <code>false</code> to
-   *        avoid.
+   *        <code>true</code> to emit the hidden field, <code>false</code> to avoid.
    * @return This object for chaining
    */
   @NonNull
@@ -125,8 +124,8 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   /**
    * Get the hidden field name for this checkbox.
    *
-   * @return <code>null</code> if no field name ({@link #getName()}) is present
-   *         or a non-<code>null</code> and non-empty string.
+   * @return <code>null</code> if no field name ({@link #getName()}) is present or a
+   *         non-<code>null</code> and non-empty string.
    */
   @Nullable
   public final String getHiddenFieldName ()
@@ -154,6 +153,8 @@ public abstract class AbstractHCCheckBox <IMPLTYPE extends AbstractHCCheckBox <I
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("emitHiddenField", m_bEmitHiddenField).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("emitHiddenField", m_bEmitHiddenField)
+                            .getToString ();
   }
 }

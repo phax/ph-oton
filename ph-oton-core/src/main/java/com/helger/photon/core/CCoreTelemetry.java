@@ -73,9 +73,9 @@ public final class CCoreTelemetry
   /** Whether the UI page request was handled successfully. */
   public static final String ATTR_PAGE_SUCCESS = "photon.page.success";
   /**
-   * The class name of the throwable that caused an internal error, or {@link #VALUE_ERROR_TYPE_NONE}
-   * if no throwable is present. The throwable <em>message</em> is unbounded - it usually embeds IDs,
-   * paths or SQL - and must never become a metric attribute.
+   * The class name of the throwable that caused an internal error, or
+   * {@link #VALUE_ERROR_TYPE_NONE} if no throwable is present. The throwable <em>message</em> is
+   * unbounded - it usually embeds IDs, paths or SQL - and must never become a metric attribute.
    */
   public static final String ATTR_INTERNAL_ERROR_TYPE = "photon.internalerror.type";
   /** The reason why an internal error notification mail was not sent. */

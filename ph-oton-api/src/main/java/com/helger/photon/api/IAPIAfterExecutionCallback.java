@@ -22,8 +22,8 @@ import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to be used with the {@link IAPIInvoker} to get notified
- * after an {@link InvokableAPIDescriptor} was invoked.
+ * Callback interface to be used with the {@link IAPIInvoker} to get notified after an
+ * {@link InvokableAPIDescriptor} was invoked.
  *
  * @author Philip Helger
  */

@@ -90,7 +90,7 @@ public final class AuditEventBuilderTest
   public void testCurrentUserIDProvider ()
   {
     final AuditEventBuilder b = new AuditEventBuilder ();
-    final AuditEvent aEvent = b.setCurrentUserIDProvider ( () -> "17").build ();
+    final AuditEvent aEvent = b.setCurrentUserIDProvider (() -> "17").build ();
     assertNotNull (aEvent);
     assertNotNull (aEvent.getCreationDateTime ());
     assertEquals ("17", aEvent.getActor ());

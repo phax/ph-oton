@@ -41,8 +41,8 @@ public class HCGenericSelect <T extends IHasID <String>> extends AbstractHCExtSe
   {
     super (aRF);
 
-    final Collection <? extends T> aIterable = aComparator == null ? aElements : CollectionSort.getSorted (aElements,
-                                                                                                           aComparator);
+    final Collection <? extends T> aIterable = aComparator == null ? aElements
+                                                                   : CollectionSort.getSorted (aElements, aComparator);
     // for all items
     for (final T aElement : aIterable)
       if (aFilter == null || aFilter.test (aElement))

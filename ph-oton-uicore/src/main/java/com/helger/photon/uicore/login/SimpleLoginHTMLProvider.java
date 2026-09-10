@@ -57,8 +57,8 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
   }
 
   /**
-   * @return <code>true</code> if the header text should be shown,
-   *         <code>false</code> to not show the header text
+   * @return <code>true</code> if the header text should be shown, <code>false</code> to not show
+   *         the header text
    */
   @OverrideOnDemand
   protected boolean showHeaderText ()
@@ -81,8 +81,8 @@ public class SimpleLoginHTMLProvider extends AbstractLoginHTMLProvider
   }
 
   /**
-   * Add additional rows. Called after username and password row are added but
-   * before the submit button is added.
+   * Add additional rows. Called after username and password row are added but before the submit
+   * button is added.
    *
    * @param aTable
    *        The table to be modified.

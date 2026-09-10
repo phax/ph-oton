@@ -41,16 +41,15 @@ public interface IJSWriterSettings extends Serializable
   boolean isGenerateComments ();
 
   /**
-   * @return The string used for indenting a single level. By default it is 2
-   *         spaces.
+   * @return The string used for indenting a single level. By default it is 2 spaces.
    */
   @NonNull
   @Nonempty
   String getIndent ();
 
   /**
-   * @return The newline mode to be used. By default it is the platform specific
-   *         new line mode. Never <code>null</code>.
+   * @return The newline mode to be used. By default it is the platform specific new line mode.
+   *         Never <code>null</code>.
    */
   @NonNull
   ENewLineMode getNewLineMode ();

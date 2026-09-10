@@ -26,8 +26,7 @@ import com.helger.io.relative.FileRelativeIO;
 import com.helger.photon.io.WebFileIO;
 
 /**
- * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()}
- * for read/write.
+ * Special {@link AbstractSimpleDAO} that uses the {@link WebFileIO#getDataIO()} for read/write.
  *
  * @author Philip Helger
  */

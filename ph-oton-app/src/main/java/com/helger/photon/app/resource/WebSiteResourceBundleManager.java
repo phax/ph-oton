@@ -132,8 +132,8 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
           final String sHash = eResource.getAttributeValue (ATTR_CONTENT_HASH);
           final String sCharset = eResource.getAttributeValue (ATTR_CHARSET);
           // Soft migration as charset was added later
-          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET : CharsetHelper
-                                                                                                     .getCharsetFromName (sCharset);
+          final Charset aCharset = sCharset == null ? WebSiteResource.DEFAULT_CHARSET
+                                                    : CharsetHelper.getCharsetFromName (sCharset);
 
           final WebSiteResource aNewResource = new WebSiteResource (eResourceType, sPath, aCharset);
           if (!aNewResource.isExisting ())
@@ -276,7 +276,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     if (StringHelper.isEmpty (sBundleID))
       return null;
 
-    return m_aRWLock.readLockedGet ( () -> m_aMapToBundle.get (sBundleID));
+    return m_aRWLock.readLockedGet (() -> m_aMapToBundle.get (sBundleID));
   }
 
   /**
@@ -291,7 +291,7 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     if (StringHelper.isEmpty (sBundleID))
       return false;
 
-    return m_aRWLock.readLockedBoolean ( () -> m_aMapToBundle.containsKey (sBundleID));
+    return m_aRWLock.readLockedBoolean (() -> m_aMapToBundle.containsKey (sBundleID));
   }
 
   @NonNull

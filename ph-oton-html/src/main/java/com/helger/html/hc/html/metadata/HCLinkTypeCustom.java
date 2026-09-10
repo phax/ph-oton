@@ -24,8 +24,7 @@ import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * Implementation of custom {@link IHCLinkType} objects that cannot be found in
- * {@link EHCLinkType}.
+ * Implementation of custom {@link IHCLinkType} objects that cannot be found in {@link EHCLinkType}.
  *
  * @author Philip Helger
  */

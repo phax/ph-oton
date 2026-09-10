@@ -17,8 +17,7 @@
 package com.helger.html.request;
 
 /**
- * Special request field for check boxes and radio buttons. Assumes that the
- * field name is unique.
+ * Special request field for check boxes and radio buttons. Assumes that the field name is unique.
  *
  * @author Philip Helger
  * @see IHCRequestFieldBooleanMultiValue
@@ -26,9 +25,8 @@ package com.helger.html.request;
 public interface IHCRequestFieldBoolean extends IHCRequestField
 {
   /**
-   * @return <code>true</code> if the check-box is checked or if no such request
-   *         parameter is present and the fall-back is <code>true</code>,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the check-box is checked or if no such request parameter is
+   *         present and the fall-back is <code>true</code>, <code>false</code> otherwise.
    */
   boolean isChecked ();
 }

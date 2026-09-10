@@ -161,8 +161,7 @@ public enum EJSEvent
   }
 
   /**
-   * @return The HTML attribute to be emitted for this event (starting with
-   *         "on")
+   * @return The HTML attribute to be emitted for this event (starting with "on")
    */
   @NonNull
   @Nonempty

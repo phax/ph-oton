@@ -27,15 +27,15 @@ import org.jspecify.annotations.Nullable;
 public interface ISftpSettings extends ISftpSettingsHost
 {
   /**
-   * @return The folder where the messages are to be uploaded to. Should NOT end
-   *         with a slash ("/"). Relative for the selected user.
+   * @return The folder where the messages are to be uploaded to. Should NOT end with a slash ("/").
+   *         Relative for the selected user.
    */
   @Nullable
   String getServerDirectoryUpload ();
 
   /**
-   * @return The folder where the messages are to be downloaded from. Should NOT
-   *         end with a slash ("/"). Relative for the selected user.
+   * @return The folder where the messages are to be downloaded from. Should NOT end with a slash
+   *         ("/"). Relative for the selected user.
    */
   @Nullable
   String getServerDirectoryDownload ();

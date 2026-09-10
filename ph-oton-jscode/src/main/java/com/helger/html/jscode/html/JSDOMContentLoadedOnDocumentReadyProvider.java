@@ -23,8 +23,7 @@ import com.helger.html.js.IHasJSCode;
 import com.helger.html.jscode.JSAnonymousFunction;
 
 /**
- * The default JS "DOMContentLoaded" event listener based "on document ready"
- * provider.
+ * The default JS "DOMContentLoaded" event listener based "on document ready" provider.
  *
  * @author Philip Helger
  */

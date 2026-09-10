@@ -51,9 +51,7 @@ final class LongRunningJobTelemetry
   @NonNull
   private static TelemetryAttributes _getJobAttrs (@NonNull final LongRunningJobData aJobData)
   {
-    return TelemetryAttributes.builder ()
-                              .put (CLongRunningJobTelemetry.ATTR_JOB_TYPE, aJobData.getJobType ())
-                              .build ();
+    return TelemetryAttributes.builder ().put (CLongRunningJobTelemetry.ATTR_JOB_TYPE, aJobData.getJobType ()).build ();
   }
 
   /**

@@ -41,8 +41,8 @@ public interface IMetaElement extends IMetaElementDeclaration
   /**
    * Check if the meta tag is language independent.
    *
-   * @return <code>true</code> if the meta tag is language independent,
-   *         <code>false</code> if it is not
+   * @return <code>true</code> if the meta tag is language independent, <code>false</code> if it is
+   *         not
    */
   boolean isLanguageIndependent ();
 
@@ -73,8 +73,7 @@ public interface IMetaElement extends IMetaElementDeclaration
   Iterable <Map.Entry <Locale, String>> getContent ();
 
   /**
-   * Get the contents of this meta tag as a self contained list of meta tag
-   * values.
+   * Get the contents of this meta tag as a self contained list of meta tag values.
    *
    * @return A non-<code>null</code> modifiable list of meta tags.
    */

@@ -36,7 +36,10 @@ public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
 {
   private static final String PREFIX = "http://www.youtube.com/v/";
 
-  public HCYouTubeEmbed (final int nWidth, final int nHeight, @NonNull @Nonempty final String sVideoID, final boolean bAllowFullScreen)
+  public HCYouTubeEmbed (final int nWidth,
+                         final int nHeight,
+                         @NonNull @Nonempty final String sVideoID,
+                         final boolean bAllowFullScreen)
   {
     final ISimpleURL aBaseURL = new SimpleURL (PREFIX + sVideoID);
     setWidth (nWidth);

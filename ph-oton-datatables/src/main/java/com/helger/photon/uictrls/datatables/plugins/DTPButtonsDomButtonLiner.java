@@ -29,13 +29,13 @@ import com.helger.html.jscode.JSAssocArray;
 public class DTPButtonsDomButtonLiner
 {
   /**
-   * a string value which defines the HTML tag to use. There should be no spaces
-   * or any other formatting - e.g. it should simply be span, div, li etc.
+   * a string value which defines the HTML tag to use. There should be no spaces or any other
+   * formatting - e.g. it should simply be span, div, li etc.
    */
   private EHTMLElement m_eTag;
   /**
-   * a string value which defines the element's class name. Multiple classes can
-   * be given using space separation.
+   * a string value which defines the element's class name. Multiple classes can be given using
+   * space separation.
    */
   private final HCHasCSSClasses m_aClassNames = new HCHasCSSClasses ();
 

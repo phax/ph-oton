@@ -87,7 +87,7 @@ public final class AjaxSettings
   @CheckForSigned
   public static long getLongRunningExecutionLimitTime ()
   {
-    return RW_LOCK.readLockedLong ( () -> s_nLongRunningExecutionLimitTime);
+    return RW_LOCK.readLockedLong (() -> s_nLongRunningExecutionLimitTime);
   }
 
   /**
@@ -98,7 +98,7 @@ public final class AjaxSettings
    */
   public static void setLongRunningExecutionLimitTime (final long nLongRunningExecutionLimitTime)
   {
-    RW_LOCK.writeLocked ( () -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
+    RW_LOCK.writeLocked (() -> s_nLongRunningExecutionLimitTime = nLongRunningExecutionLimitTime);
   }
 
   @NonNull

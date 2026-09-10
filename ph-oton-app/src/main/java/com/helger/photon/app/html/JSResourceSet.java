@@ -103,7 +103,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       // Check uniqueness
       if (!m_aItems.add (aJSPathProvider))
         return EChange.UNCHANGED;
@@ -155,7 +155,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   {
     ValueEnforcer.notNull (aJSPathProvider, "JSPathProvider");
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       if (!m_aItems.remove (aJSPathProvider))
         return EChange.UNCHANGED;
       m_aList.remove (aJSPathProvider);
@@ -169,7 +169,7 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @NonNull
   public EChange removeAll ()
   {
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       if (m_aItems.isEmpty ())
         return EChange.UNCHANGED;
       m_aItems.clear ();
@@ -185,14 +185,14 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
   @ReturnsMutableCopy
   public ICommonsOrderedSet <IJSPathProvider> getAllItems ()
   {
-    return m_aRWLock.readLockedGet ( () -> new CommonsLinkedHashSet <> (m_aList));
+    return m_aRWLock.readLockedGet (() -> new CommonsLinkedHashSet <> (m_aList));
   }
 
   public void getAllItems (@NonNull final Collection <? super IJSPathProvider> aTarget)
   {
     ValueEnforcer.notNull (aTarget, "Target");
 
-    m_aRWLock.readLockedBoolean ( () -> aTarget.addAll (m_aList));
+    m_aRWLock.readLockedBoolean (() -> aTarget.addAll (m_aList));
   }
 
   public boolean isEmpty ()
@@ -220,12 +220,12 @@ public class JSResourceSet implements IWebResourceSet <IJSPathProvider>
 
   public boolean isCollected ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bIsCollected);
+    return m_aRWLock.readLockedBoolean (() -> m_bIsCollected);
   }
 
   public void markAsCollected ()
   {
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (m_bIsCollected)
         _collectWarn ("Resource set was already collected before!");
       m_bIsCollected = true;

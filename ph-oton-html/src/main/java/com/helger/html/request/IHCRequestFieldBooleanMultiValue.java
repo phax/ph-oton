@@ -19,8 +19,8 @@ package com.helger.html.request;
 import org.jspecify.annotations.NonNull;
 
 /**
- * Special request field for check boxes and radio buttons where the same field
- * name is used with multiple different values.
+ * Special request field for check boxes and radio buttons where the same field name is used with
+ * multiple different values.
  *
  * @author Philip Helger
  * @see IHCRequestFieldBoolean
@@ -28,9 +28,9 @@ import org.jspecify.annotations.NonNull;
 public interface IHCRequestFieldBooleanMultiValue extends IHCRequestFieldBoolean
 {
   /**
-   * @return <code>true</code> if the check box with the passed value is checked
-   *         is checked or if no such request parameter is present and the
-   *         fall-back is <code>true</code>, <code>false</code> otherwise.
+   * @return <code>true</code> if the check box with the passed value is checked is checked or if no
+   *         such request parameter is present and the fall-back is <code>true</code>,
+   *         <code>false</code> otherwise.
    */
   boolean isChecked ();
 

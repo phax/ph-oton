@@ -58,8 +58,7 @@ public interface IHCLabel <IMPLTYPE extends IHCLabel <IMPLTYPE>> extends IHCElem
   String getForm ();
 
   /**
-   * The value of the id attribute on the form with which to associate the
-   * element.
+   * The value of the id attribute on the form with which to associate the element.
    *
    * @param sForm
    *        The HTML ID of the form.

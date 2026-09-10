@@ -69,7 +69,9 @@ public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE exten
    *        The objects to be handled. Never <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showQuery (@NonNull WPECTYPE aWPEC, @NonNull FORM_TYPE aForm, @NonNull ICommonsList <DATATYPE> aSelectedObjects);
+  protected abstract void showQuery (@NonNull WPECTYPE aWPEC,
+                                     @NonNull FORM_TYPE aForm,
+                                     @NonNull ICommonsList <DATATYPE> aSelectedObjects);
 
   /**
    * Perform object action
@@ -87,8 +89,7 @@ public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE exten
    *        The web page execution context
    * @param aSelectedObjects
    *        The selected objects. Never <code>null</code>.
-   * @return <code>true</code> to show the toolbar, <code>false</code> to draw
-   *         your own toolbar
+   * @return <code>true</code> to show the toolbar, <code>false</code> to draw your own toolbar
    */
   @OverrideOnDemand
   protected boolean showToolbar (@NonNull final WPECTYPE aWPEC, @NonNull final ICommonsList <DATATYPE> aSelectedObjects)
@@ -163,7 +164,8 @@ public abstract class AbstractWebPageActionHandlerMultiWithQuery <DATATYPE exten
   }
 
   @NonNull
-  public EShowList handleMultiAction (@NonNull final WPECTYPE aWPEC, @NonNull final ICommonsList <DATATYPE> aSelectedObjects)
+  public EShowList handleMultiAction (@NonNull final WPECTYPE aWPEC,
+                                      @NonNull final ICommonsList <DATATYPE> aSelectedObjects)
   {
     final boolean bIsFormSubmitted = isFormSubmitted (aWPEC);
     final IWebPageCSRFHandler aCSRFHandler = aWPEC.getWebPage ().getCSRFHandler ();

@@ -43,9 +43,8 @@ public interface IMutableMetaElement extends IMetaElement
   EChange setType (@NonNull EMetaElementType eType);
 
   /**
-   * Set the name of the meta element. May usually neither be <code>null</code>
-   * nor empty, except for {@link EMetaElementType#CHARSET} where the name does
-   * not matter.
+   * Set the name of the meta element. May usually neither be <code>null</code> nor empty, except
+   * for {@link EMetaElementType#CHARSET} where the name does not matter.
    * 
    * @param sName
    *        The name to use. May not be <code>null</code>.
@@ -58,8 +57,7 @@ public interface IMutableMetaElement extends IMetaElement
    * Set the value of the meta element in an unspecified locale.
    *
    * @param sContent
-   *        The value to be set. If the content is <code>null</code> the value
-   *        is removed.
+   *        The value to be set. If the content is <code>null</code> the value is removed.
    * @return {@link EChange}
    */
   @NonNull
@@ -74,8 +72,7 @@ public interface IMutableMetaElement extends IMetaElement
    * @param aContentLocale
    *        The locale to set. May be <code>null</code>.
    * @param sContent
-   *        The value to be set. If the content is <code>null</code> the value
-   *        is removed.
+   *        The value to be set. If the content is <code>null</code> the value is removed.
    * @return {@link EChange}
    */
   @NonNull

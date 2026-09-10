@@ -46,49 +46,46 @@ public interface IPasswordConstraintList extends ICloneable <IPasswordConstraint
   int getConstraintCount ();
 
   /**
-   * @return A list of all contained password constraints. Never
-   *         <code>null</code>.
+   * @return A list of all contained password constraints. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsList <IPasswordConstraint> getAllPasswordConstraints ();
 
   /**
-   * Check if the passed plaintext password is valid. Breaks after the first
-   * unfulfilled constrained
+   * Check if the passed plaintext password is valid. Breaks after the first unfulfilled constrained
    *
    * @param sPlainTextPassword
    *        The password to check. May be <code>null</code>.
-   * @return <code>true</code> if no constraint was unfulfilled (meaning that if
-   *         no constrained is defined, every password is valid).
+   * @return <code>true</code> if no constraint was unfulfilled (meaning that if no constrained is
+   *         defined, every password is valid).
    */
   boolean isPasswordValid (@Nullable String sPlainTextPassword);
 
   /**
-   * Check if the passed password is valid. The descriptions of all failed
-   * constraints are returned.
+   * Check if the passed password is valid. The descriptions of all failed constraints are returned.
    *
    * @param sPlainTextPassword
    *        The password to check. May be <code>null</code>.
    * @param aContentLocale
    *        The content locale to be used to determine the descriptions.
-   * @return A non-<code>null</code> but empty list if no constraint was
-   *         unfulfilled (meaning that if no constrained is defined, every
-   *         password is valid). If the returned list is not empty than the
-   *         password is invalid.
+   * @return A non-<code>null</code> but empty list if no constraint was unfulfilled (meaning that
+   *         if no constrained is defined, every password is valid). If the returned list is not
+   *         empty than the password is invalid.
    */
   @NonNull
   @ReturnsMutableCopy
-  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword, @NonNull Locale aContentLocale);
+  ICommonsList <String> getInvalidPasswordDescriptions (@Nullable String sPlainTextPassword,
+                                                        @NonNull Locale aContentLocale);
 
   /**
-   * Get a list of all password constraint descriptions in the specified locale
-   * (e.g. for hinting a user)
+   * Get a list of all password constraint descriptions in the specified locale (e.g. for hinting a
+   * user)
    *
    * @param aContentLocale
    *        The locale to be used for text resolving.
-   * @return A non-<code>null</code> list with all constraint descriptions. If
-   *         the returned list is empty, it means that no constraint is defined.
+   * @return A non-<code>null</code> list with all constraint descriptions. If the returned list is
+   *         empty, it means that no constraint is defined.
    */
   @NonNull
   @ReturnsMutableCopy

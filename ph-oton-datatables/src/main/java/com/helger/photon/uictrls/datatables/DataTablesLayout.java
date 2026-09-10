@@ -30,8 +30,7 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 
 /**
- * Replacement of DT DOM element in v2. See
- * https://datatables.net/reference/option/layout
+ * Replacement of DT DOM element in v2. See https://datatables.net/reference/option/layout
  *
  * @author Philip Helger
  */

@@ -39,8 +39,8 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
   HCNodeList getNodeList ();
 
   /**
-   * @return The special request parameter value of
-   *         {@link CPageParam#PARAM_ACTION}. May be <code>null</code>.
+   * @return The special request parameter value of {@link CPageParam#PARAM_ACTION}. May be
+   *         <code>null</code>.
    */
   @Nullable
   default String getAction ()
@@ -61,8 +61,8 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
   }
 
   /**
-   * @return The special request parameter value of
-   *         {@link CPageParam#PARAM_SUBACTION}. May be <code>null</code>.
+   * @return The special request parameter value of {@link CPageParam#PARAM_SUBACTION}. May be
+   *         <code>null</code>.
    */
   @Nullable
   default String getSubAction ()
@@ -75,8 +75,7 @@ public interface IWebPageExecutionContext extends ILayoutExecutionContext
    *
    * @param sSubAction
    *        Sub action to check.
-   * @return <code>true</code> if
-   *         <code>getSubAction().equals (sSubAction)</code>
+   * @return <code>true</code> if <code>getSubAction().equals (sSubAction)</code>
    */
   default boolean hasSubAction (@Nullable final String sSubAction)
   {

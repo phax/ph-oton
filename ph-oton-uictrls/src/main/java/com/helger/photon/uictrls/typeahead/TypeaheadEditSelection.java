@@ -25,8 +25,7 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.photon.uicore.page.IWebPageExecutionContext;
 
 /**
- * Domain object to easily handle the selected elements of a
- * {@link TypeaheadEdit}.
+ * Domain object to easily handle the selected elements of a {@link TypeaheadEdit}.
  *
  * @author Philip Helger
  */
@@ -50,8 +49,7 @@ public class TypeaheadEditSelection
   }
 
   /**
-   * @return The value of the edit field. May be <code>null</code> if nothing
-   *         was entered.
+   * @return The value of the edit field. May be <code>null</code> if nothing was entered.
    */
   @Nullable
   public String getEditValue ()
@@ -60,8 +58,8 @@ public class TypeaheadEditSelection
   }
 
   /**
-   * @return The value of the hidden field with the selected ID of the object.
-   *         May be <code>null</code> if no valid object was selected.
+   * @return The value of the hidden field with the selected ID of the object. May be
+   *         <code>null</code> if no valid object was selected.
    */
   @Nullable
   public String getHiddenFieldValue ()
@@ -72,16 +70,16 @@ public class TypeaheadEditSelection
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("editValue", m_sEditValue).append ("hiddenFieldValue", m_sHiddenFieldValue).getToString ();
+    return new ToStringGenerator (this).append ("editValue", m_sEditValue)
+                                       .append ("hiddenFieldValue", m_sHiddenFieldValue)
+                                       .getToString ();
   }
 
   /**
-   * Get the current selection in the case that it is mandatory to select an
-   * available object.
+   * Get the current selection in the case that it is mandatory to select an available object.
    *
    * @param aWPEC
-   *        The current web page execution context. May not be <code>null</code>
-   *        .
+   *        The current web page execution context. May not be <code>null</code> .
    * @param sEditFieldName
    *        The name of the edit input field.
    * @param sHiddenFieldName

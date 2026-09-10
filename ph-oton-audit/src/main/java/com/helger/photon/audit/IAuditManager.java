@@ -34,16 +34,16 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 public interface IAuditManager
 {
   /**
-   * @return <code>true</code> if this manager operates only in memory,
-   *         <code>false</code> if it keeps persistent files.
+   * @return <code>true</code> if this manager operates only in memory, <code>false</code> if it
+   *         keeps persistent files.
    * @see #getBaseDir()
    */
   boolean isInMemory ();
 
   /**
-   * @return The base directory used for audit entries. May be <code>null</code>
-   *         to indicate in-memory only auditing. If the results is not
-   *         <code>null</code> it must end with a path separator (slash).
+   * @return The base directory used for audit entries. May be <code>null</code> to indicate
+   *         in-memory only auditing. If the results is not <code>null</code> it must end with a
+   *         path separator (slash).
    * @see #isInMemory()
    */
   @Nullable
@@ -66,16 +66,15 @@ public interface IAuditManager
   List <IAuditItem> getLastAuditItems (@Nonnegative int nMaxItems);
 
   /**
-   * Stop taking new audits. Call this upon shutdown for correct cleanup!
-   * Consecutive calls to this method have no further effect.
+   * Stop taking new audits. Call this upon shutdown for correct cleanup! Consecutive calls to this
+   * method have no further effect.
    */
   void stop ();
 
   /**
-   * @return The earliest date for which auditing information is present. If
-   *         this is an in-memory audit manager, it must return the current
-   *         date. May be <code>null</code> if a persistent storage is used and
-   *         no entry is present yet.
+   * @return The earliest date for which auditing information is present. If this is an in-memory
+   *         audit manager, it must return the current date. May be <code>null</code> if a
+   *         persistent storage is used and no entry is present yet.
    */
   @Nullable
   LocalDate getEarliestAuditDate ();

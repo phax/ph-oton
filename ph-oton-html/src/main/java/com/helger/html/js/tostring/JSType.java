@@ -39,14 +39,14 @@ import com.helger.html.js.IHasJSCode;
 public class JSType implements Serializable
 {
   /**
-   * Special JS type for type auto detection - in this case {@link #getType()}
-   * returns <code>null</code>!!
+   * Special JS type for type auto detection - in this case {@link #getType()} returns
+   * <code>null</code>!!
    */
   public static final JSType AUTO_DETECT = new JSType ();
 
   /**
-   * Constant basic type for HTML. In contrast to {@link #STRING} values, HTML
-   * values are neither quoted not escaped!
+   * Constant basic type for HTML. In contrast to {@link #STRING} values, HTML values are neither
+   * quoted not escaped!
    */
   public static final JSType HTML = new JSType (EJSType.HTML);
 
@@ -100,8 +100,7 @@ public class JSType implements Serializable
   }
 
   /**
-   * The constructor is protected to avoid outside instantiation. Use only the
-   * above constants.
+   * The constructor is protected to avoid outside instantiation. Use only the above constants.
    *
    * @param eType
    *        The basic type. May not be <code>null</code>.
@@ -114,8 +113,7 @@ public class JSType implements Serializable
   /**
    * Get the contained base type.
    *
-   * @return The base type. Is only <code>null</code> for the
-   *         {@link #AUTO_DETECT} type.
+   * @return The base type. Is only <code>null</code> for the {@link #AUTO_DETECT} type.
    */
   @Nullable
   public final EJSType getType ()

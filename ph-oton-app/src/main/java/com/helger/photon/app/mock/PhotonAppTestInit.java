@@ -58,7 +58,7 @@ public final class PhotonAppTestInit
     if (!GlobalIDFactory.hasPersistentIntIDFactory ())
     {
       GlobalIDFactory.setPersistentIntIDFactory (new WebIOIntIDFactory ("ph-oton-app.id"));
-      aCleansing.push ( () -> GlobalIDFactory.setPersistentIntIDFactory (null));
+      aCleansing.push (() -> GlobalIDFactory.setPersistentIntIDFactory (null));
     }
 
     return aCleansing;

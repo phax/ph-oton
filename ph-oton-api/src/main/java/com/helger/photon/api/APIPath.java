@@ -59,8 +59,7 @@ public class APIPath implements Serializable
   }
 
   /**
-   * @return The HTTP method as provided in the constructor. Never
-   *         <code>null</code>.
+   * @return The HTTP method as provided in the constructor. Never <code>null</code>.
    */
   @NonNull
   public EHttpMethod getHttpMethod ()
@@ -69,8 +68,7 @@ public class APIPath implements Serializable
   }
 
   /**
-   * @return The path as provided in the constructor. Neither <code>null</code>
-   *         nor empty.
+   * @return The path as provided in the constructor. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -83,9 +81,9 @@ public class APIPath implements Serializable
    * Get the invocation URL of this API path.
    *
    * @param sBasePath
-   *        The HTTP base path of the server (e.g. http://www.example.org/api"),
-   *        which is prepended to the relative path of this object. May not be
-   *        <code>null</code> but maybe empty (since v8.1.4)
+   *        The HTTP base path of the server (e.g. http://www.example.org/api"), which is prepended
+   *        to the relative path of this object. May not be <code>null</code> but maybe empty (since
+   *        v8.1.4)
    * @return The new URL. Never <code>null</code>.
    * @see #getPath()
    */

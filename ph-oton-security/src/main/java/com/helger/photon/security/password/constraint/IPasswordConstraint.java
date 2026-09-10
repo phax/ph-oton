@@ -43,8 +43,7 @@ public interface IPasswordConstraint extends Serializable
   boolean isPasswordValid (@Nullable String sPlainTextPassword);
 
   /**
-   * Get a description of this constraint, so that it can be displayed to the
-   * user
+   * Get a description of this constraint, so that it can be displayed to the user
    *
    * @param aContentLocale
    *        The locale to get the description in. Never <code>null</code>.
@@ -54,8 +53,8 @@ public interface IPasswordConstraint extends Serializable
   String getDescription (@NonNull Locale aContentLocale);
 
   /**
-   * This method is responsible for filling a micro element for serializing the
-   * password constraints.
+   * This method is responsible for filling a micro element for serializing the password
+   * constraints.
    *
    * @param aElement
    *        The element to be filled. Never <code>null</code>.

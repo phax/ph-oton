@@ -35,8 +35,7 @@ import com.helger.html.hc.IHCHasChildrenMutable;
 import com.helger.html.hc.IHCNode;
 
 /**
- * An implementation of {@link IHCCustomizer} that handles a list of multiple
- * customizers.
+ * An implementation of {@link IHCCustomizer} that handles a list of multiple customizers.
  *
  * @author Philip Helger
  */
@@ -65,14 +64,14 @@ public class HCCustomizerList extends AbstractHCCustomizer
   public HCCustomizerList addCustomizer (@NonNull final IHCCustomizer aCustomizer)
   {
     ValueEnforcer.notNull (aCustomizer, "Customizer");
-    m_aRWLock.writeLocked ( () -> m_aList.add (aCustomizer));
+    m_aRWLock.writeLocked (() -> m_aList.add (aCustomizer));
     return this;
   }
 
   @NonNull
   public EChange removeCustomizer (@Nullable final IHCCustomizer aCustomizer)
   {
-    return m_aRWLock.writeLockedGet ( () -> m_aList.removeObject (aCustomizer));
+    return m_aRWLock.writeLockedGet (() -> m_aList.removeObject (aCustomizer));
   }
 
   @NonNull
@@ -80,7 +79,7 @@ public class HCCustomizerList extends AbstractHCCustomizer
   {
     ValueEnforcer.notNull (aCustomizerClass, "CustomizerClass");
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       EChange eChange = EChange.UNCHANGED;
       for (final IHCCustomizer aCustomizer : m_aList.getClone ())
         if (aCustomizer.getClass ().equals (aCustomizerClass))

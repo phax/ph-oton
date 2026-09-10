@@ -98,15 +98,14 @@ public interface IHCTextArea <IMPLTYPE extends IHCTextArea <IMPLTYPE>> extends I
   IMPLTYPE setMinLength (int nMinLength);
 
   /**
-   * @return The current value of the HTML <code>placeholder</code> attribute.
-   *         May be <code>null</code>.
+   * @return The current value of the HTML <code>placeholder</code> attribute. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getPlaceholder ();
 
   /**
-   * @return <code>true</code> if a placeholder is present, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if a placeholder is present, <code>false</code> otherwise.
    */
   default boolean hasPlaceholder ()
   {

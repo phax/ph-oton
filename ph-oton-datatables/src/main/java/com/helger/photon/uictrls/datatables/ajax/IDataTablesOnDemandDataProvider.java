@@ -27,10 +27,9 @@ import com.helger.web.scope.IRequestWebScopeWithoutResponse;
  * mode <code>PRERENDERED</code> nothing is kept in the session - the implementation of this
  * interface is invoked for every single AJAX request and is expected to query only the rows of the
  * requested page from the underlying data store.<br>
- * Note on security: the sort field names of
- * {@link DataTablesOnDemandRequest#getPagingSpec()} as well as the search text are provided by the
- * client and must be treated as untrusted input. Use the field names to look up a known field only
- * - never build a query fragment from them.
+ * Note on security: the sort field names of {@link DataTablesOnDemandRequest#getPagingSpec()} as
+ * well as the search text are provided by the client and must be treated as untrusted input. Use
+ * the field names to look up a known field only - never build a query fragment from them.
  *
  * @author Philip Helger
  * @since 10.4.0

@@ -25,8 +25,8 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.JSMarshaller;
 
 /**
- * Default implementation of the {@link IJSToStringConverter} interface, using
- * {@link JSMarshaller} to convert an object to a string representation.
+ * Default implementation of the {@link IJSToStringConverter} interface, using {@link JSMarshaller}
+ * to convert an object to a string representation.
  *
  * @author Philip Helger
  */

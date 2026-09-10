@@ -38,7 +38,9 @@ public final class MicroTypeConverterRegistrar_ph_oton_security_Mock implements 
     try
     {
       aRegistry.registerMicroElementTypeConverter (AccountingArea.class,
-                                                   new AccountingAreaMicroTypeConverter (sID -> new Tenant (sID, "Dummy-" + sID)));
+                                                   new AccountingAreaMicroTypeConverter (sID -> new Tenant (sID,
+                                                                                                            "Dummy-" +
+                                                                                                                 sID)));
     }
     catch (final IllegalArgumentException ex)
     {

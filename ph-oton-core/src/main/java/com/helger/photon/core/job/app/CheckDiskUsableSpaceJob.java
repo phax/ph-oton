@@ -68,8 +68,8 @@ public final class CheckDiskUsableSpaceJob extends AbstractScopeAwareJob
   {}
 
   @Override
-  protected void onExecute (@NonNull final JobDataMap aJobDataMap, @NonNull final IJobExecutionContext aContext)
-                                                                                                                 throws JobExecutionException
+  protected void onExecute (@NonNull final JobDataMap aJobDataMap,
+                            @NonNull final IJobExecutionContext aContext) throws JobExecutionException
   {
     final long nThresholdBytes = aJobDataMap.getAsLong (JOB_DATA_ATTR_THRESHOLD_BYTES);
     final Supplier <File> aPathSupplier = aJobDataMap.getCastedValue (JOB_DATA_ATTR_PATH_SUPPLIER);

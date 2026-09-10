@@ -34,86 +34,77 @@ import com.helger.html.hc.html.IHCHasHTMLAttributeValue;
 public enum EHCReferrerPolicy implements IHCHasHTMLAttributeValue
 {
   /**
-   * The empty string "" corresponds to no referrer policy, causing a fallback
-   * to a referrer policy defined elsewhere, or in the case where no such
-   * higher-level policy is available, falling back to the default referrer
-   * policy. This happens in Fetch’s main fetch algorithm, for example.
+   * The empty string "" corresponds to no referrer policy, causing a fallback to a referrer policy
+   * defined elsewhere, or in the case where no such higher-level policy is available, falling back
+   * to the default referrer policy. This happens in Fetch’s main fetch algorithm, for example.
    */
   NONE (""),
   /**
-   * The simplest policy is "no-referrer", which specifies that no referrer
-   * information is to be sent along with requests to any origin. The header
-   * Referer will be omitted entirely.
+   * The simplest policy is "no-referrer", which specifies that no referrer information is to be
+   * sent along with requests to any origin. The header Referer will be omitted entirely.
    */
   NO_REFERRER ("no-referrer"),
   /**
-   * The "no-referrer-when-downgrade" policy sends a request’s full referrerURL
-   * stripped for use as a referrer for requests:
+   * The "no-referrer-when-downgrade" policy sends a request’s full referrerURL stripped for use as
+   * a referrer for requests:
    * <ul>
-   * <li>whose referrerURL and current URL are both potentially trustworthy
-   * URLs, or</li>
+   * <li>whose referrerURL and current URL are both potentially trustworthy URLs, or</li>
    * <li>whose referrerURL is a non-potentially trustworthy URL.</li>
    * </ul>
-   * Requests whose referrerURL is a potentially trustworthy URL and whose
-   * current URL is a non-potentially trustworthy URL on the other hand, will
-   * contain no referrer information. A Referer HTTP header will not be sent.
+   * Requests whose referrerURL is a potentially trustworthy URL and whose current URL is a
+   * non-potentially trustworthy URL on the other hand, will contain no referrer information. A
+   * Referer HTTP header will not be sent.
    */
   NO_REFERRER_WHEN_DOWNGRADE ("no-referrer-when-downgrade"),
   /**
-   * The "same-origin" policy specifies that a request’s full referrerURL is
-   * sent as referrer information when making same-origin-referrer requests.
-   * <br>
-   * Cross-origin-referrer requests, on the other hand, will contain no referrer
-   * information. A Referer HTTP header will not be sent.
+   * The "same-origin" policy specifies that a request’s full referrerURL is sent as referrer
+   * information when making same-origin-referrer requests. <br>
+   * Cross-origin-referrer requests, on the other hand, will contain no referrer information. A
+   * Referer HTTP header will not be sent.
    */
   SAME_ORIGIN ("same-origin"),
   /**
-   * The "origin" policy specifies that only the ASCII serialization of the
-   * request’s referrerURL is sent as referrer information when making both
-   * same-origin-referrer requests and cross-origin-referrer requests.
+   * The "origin" policy specifies that only the ASCII serialization of the request’s referrerURL is
+   * sent as referrer information when making both same-origin-referrer requests and
+   * cross-origin-referrer requests.
    */
   ORIGIN ("origin"),
   /**
-   * The "strict-origin" policy sends the ASCII serialization of the origin of
-   * the referrerURL for requests:
+   * The "strict-origin" policy sends the ASCII serialization of the origin of the referrerURL for
+   * requests:
    * <ul>
-   * <li>whose referrerURL and current URL are both potentially trustworthy
-   * URLs, or</li>
+   * <li>whose referrerURL and current URL are both potentially trustworthy URLs, or</li>
    * <li>whose referrerURL is a non-potentially trustworthy URL.</li>
    * </ul>
-   * Requests whose referrerURL is a potentially trustworthy URL and whose
-   * current URL is a non-potentially trustworthy URL on the other hand, will
-   * contain no referrer information. A Referer HTTP header will not be sent.
+   * Requests whose referrerURL is a potentially trustworthy URL and whose current URL is a
+   * non-potentially trustworthy URL on the other hand, will contain no referrer information. A
+   * Referer HTTP header will not be sent.
    */
   STRICT_ORIGIN ("strict-origin"),
   /**
-   * The "origin-when-cross-origin" policy specifies that a request’s full
-   * referrerURL is sent as referrer information when making
-   * same-origin-referrer requests, and only the ASCII serialization of the
-   * origin of the request’s referrerURL is sent as referrer information when
+   * The "origin-when-cross-origin" policy specifies that a request’s full referrerURL is sent as
+   * referrer information when making same-origin-referrer requests, and only the ASCII
+   * serialization of the origin of the request’s referrerURL is sent as referrer information when
    * making cross-origin-referrer requests.
    */
   ORIGIN_WHEN_CROSS_ORIGIN ("origin-when-cross-origin"),
   /**
-   * The "strict-origin-when-cross-origin" policy specifies that a request’s
-   * full referrerURL is sent as referrer information when making
-   * same-origin-referrer requests, and only the ASCII serialization of the
-   * origin of the request’s referrerURL when making cross-origin-referrer
+   * The "strict-origin-when-cross-origin" policy specifies that a request’s full referrerURL is
+   * sent as referrer information when making same-origin-referrer requests, and only the ASCII
+   * serialization of the origin of the request’s referrerURL when making cross-origin-referrer
    * requests:
    * <ul>
-   * <li>whose referrerURL and current URL are both potentially trustworthy
-   * URLs, or</li>
+   * <li>whose referrerURL and current URL are both potentially trustworthy URLs, or</li>
    * <li>whose referrerURL is a non-potentially trustworthy URL.</li>
    * </ul>
-   * Requests whose referrerURL is a potentially trustworthy URL and whose
-   * current URL is a non-potentially trustworthy URL on the other hand, will
-   * contain no referrer information. A Referer HTTP header will not be sent.
+   * Requests whose referrerURL is a potentially trustworthy URL and whose current URL is a
+   * non-potentially trustworthy URL on the other hand, will contain no referrer information. A
+   * Referer HTTP header will not be sent.
    */
   STRICT_ORIGIN_WHEN_CROSS_ORIGIN ("strict-origin-when-cross-origin"),
   /**
-   * The "unsafe-url" policy specifies that a request’s full referrerURL is sent
-   * along for both same-origin-referrer requests and cross-origin-referrer
-   * requests.
+   * The "unsafe-url" policy specifies that a request’s full referrerURL is sent along for both
+   * same-origin-referrer requests and cross-origin-referrer requests.
    */
   UNSAFE_URL ("unsafe-url");
 

@@ -193,8 +193,7 @@ final class Block
   }
 
   /**
-   * Splits this block's lines, creating a new child block having 'line' as it's
-   * lineTail.
+   * Splits this block's lines, creating a new child block having 'line' as it's lineTail.
    *
    * @param aLine
    *        The line to split from.
@@ -267,8 +266,8 @@ final class Block
   }
 
   /**
-   * Changes all Blocks of type <code>NONE</code> to <code>PARAGRAPH</code> if
-   * this Block is a List and any of the ListItems contains a paragraph.
+   * Changes all Blocks of type <code>NONE</code> to <code>PARAGRAPH</code> if this Block is a List
+   * and any of the ListItems contains a paragraph.
    */
   public void expandListParagraphs ()
   {

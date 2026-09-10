@@ -23,8 +23,8 @@ import com.helger.base.callback.ICallback;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 /**
- * Callback interface to be used with the {@link IAPIInvoker} to get notified on
- * long running executions.
+ * Callback interface to be used with the {@link IAPIInvoker} to get notified on long running
+ * executions.
  *
  * @author Philip Helger
  */

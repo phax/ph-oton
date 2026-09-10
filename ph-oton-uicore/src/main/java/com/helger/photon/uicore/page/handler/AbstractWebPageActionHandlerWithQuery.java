@@ -56,8 +56,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   }
 
   /**
-   * @return The action provided in the constructor. Neither <code>null</code>
-   *         nor empty.
+   * @return The action provided in the constructor. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -67,8 +66,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
   }
 
   /**
-   * @return The form ID provided in the constructor. Neither <code>null</code>
-   *         nor empty.
+   * @return The form ID provided in the constructor. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
@@ -88,7 +86,9 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The object to be handled. May be <code>null</code>.
    */
   @OverrideOnDemand
-  protected abstract void showQuery (@NonNull WPECTYPE aWPEC, @NonNull FORM_TYPE aForm, @Nullable DATATYPE aSelectedObject);
+  protected abstract void showQuery (@NonNull WPECTYPE aWPEC,
+                                     @NonNull FORM_TYPE aForm,
+                                     @Nullable DATATYPE aSelectedObject);
 
   /**
    * Perform action
@@ -106,8 +106,7 @@ public abstract class AbstractWebPageActionHandlerWithQuery <DATATYPE extends IH
    *        The web page execution context
    * @param aSelectedObject
    *        The selected object. May be <code>null</code>.
-   * @return <code>true</code> to show the toolbar, <code>false</code> to draw
-   *         your own toolbar
+   * @return <code>true</code> to show the toolbar, <code>false</code> to draw your own toolbar
    */
   @OverrideOnDemand
   protected boolean showToolbar (@NonNull final WPECTYPE aWPEC, @Nullable final DATATYPE aSelectedObject)

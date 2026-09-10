@@ -37,8 +37,8 @@ import com.helger.photon.uictrls.datatables.EDataTablesJSPathProvider;
 /**
  * Enable and configure the Scroller extension for DataTables. <br>
  * Paging must be enabled in DataTables<br>
- * All rows must be of equal height. This is to allow row height calculations
- * for rows which have not yet been rendered.
+ * All rows must be of equal height. This is to allow row height calculations for rows which have
+ * not yet been rendered.
  *
  * @author Philip Helger
  */

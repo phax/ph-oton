@@ -51,5 +51,7 @@ public interface IPrismPlugin
    * @param aPreStyles
    *        The pre element styles
    */
-  void applyOnPre (@NonNull IMicroElement aPreElement, @NonNull HCHasCSSClasses aPreClasses, @NonNull HCHasCSSStyles aPreStyles);
+  void applyOnPre (@NonNull IMicroElement aPreElement,
+                   @NonNull HCHasCSSClasses aPreClasses,
+                   @NonNull HCHasCSSStyles aPreStyles);
 }

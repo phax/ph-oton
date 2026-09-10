@@ -58,8 +58,8 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    *
    * @param eJSEvent
    *        The event to be queried. May be <code>null</code>.
-   * @return <code>true</code> of a non-<code>null</code> event is specified,
-   *         and if a handler is present.
+   * @return <code>true</code> of a non-<code>null</code> event is specified, and if a handler is
+   *         present.
    */
   boolean containsEventHandler (@Nullable EJSEvent eJSEvent);
 
@@ -69,8 +69,8 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    * @param eJSEvent
    *        The event to use. May not be <code>null</code>.
    * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case nothing happens.
+   *        The JSCode to be executed on the specified event. May be <code>null</code> in which case
+   *        nothing happens.
    * @return this.
    */
   @NonNull
@@ -82,23 +82,21 @@ public interface IHCHasJSEventHandler <IMPLTYPE extends IHCHasJSEventHandler <IM
    * @param eJSEvent
    *        The event to use. May not be <code>null</code>.
    * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case nothing happens.
+   *        The JSCode to be executed on the specified event. May be <code>null</code> in which case
+   *        nothing happens.
    * @return this.
    */
   @NonNull
   IMPLTYPE prependEventHandler (@NonNull EJSEvent eJSEvent, @Nullable IHasJSCode aJSHandler);
 
   /**
-   * Set a JS event handler. All eventually present event handlers are
-   * overwritten.
+   * Set a JS event handler. All eventually present event handlers are overwritten.
    *
    * @param eJSEvent
    *        The event to set. May not be <code>null</code>.
    * @param aJSHandler
-   *        The JSCode to be executed on the specified event. May be
-   *        <code>null</code> in which case no event handler will be present
-   *        after the call.
+   *        The JSCode to be executed on the specified event. May be <code>null</code> in which case
+   *        no event handler will be present after the call.
    * @return this.
    */
   @NonNull

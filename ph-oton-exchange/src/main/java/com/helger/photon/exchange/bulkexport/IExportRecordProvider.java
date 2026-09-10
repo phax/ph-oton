@@ -30,24 +30,21 @@ public interface IExportRecordProvider extends Serializable
 {
   /**
    * @param aConsumer
-   *        The consumer invoked for each header record. May not be
-   *        <code>null</code>.
+   *        The consumer invoked for each header record. May not be <code>null</code>.
    */
   default void forEachHeaderRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}
 
   /**
    * @param aConsumer
-   *        The consumer invoked for each body record. May not be
-   *        <code>null</code>.
+   *        The consumer invoked for each body record. May not be <code>null</code>.
    */
   default void forEachBodyRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}
 
   /**
    * @param aConsumer
-   *        The consumer invoked for each footer record. May not be
-   *        <code>null</code>.
+   *        The consumer invoked for each footer record. May not be <code>null</code>.
    */
   default void forEachFooterRecord (@NonNull final Consumer <? super IExportRecord> aConsumer)
   {}

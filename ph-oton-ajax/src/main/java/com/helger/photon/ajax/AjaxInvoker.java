@@ -45,11 +45,11 @@ public class AjaxInvoker implements IAjaxInvoker
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AjaxInvoker.class);
   private static final IMutableStatisticsHandlerCounter STATS_GLOBAL_INVOKE = StatisticsManager.getCounterHandler (AjaxInvoker.class.getName () +
-                                                                                                                    "$invocations");
+                                                                                                                   "$invocations");
   private static final IMutableStatisticsHandlerKeyedCounter STATS_FUNCTION_INVOKE = StatisticsManager.getKeyedCounterHandler (AjaxInvoker.class.getName () +
-                                                                                                                                "$func");
+                                                                                                                               "$func");
   private static final IMutableStatisticsHandlerKeyedTimer STATS_FUNCTION_TIMER = StatisticsManager.getKeyedTimerHandler (AjaxInvoker.class.getName () +
-                                                                                                                           "$timer");
+                                                                                                                          "$timer");
 
   public AjaxInvoker ()
   {}
@@ -80,7 +80,8 @@ public class AjaxInvoker implements IAjaxInvoker
           STATS_GLOBAL_INVOKE.increment ();
 
           // Invoke before handler
-          AjaxSettings.beforeExecutionCallbacks ().forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
+          AjaxSettings.beforeExecutionCallbacks ()
+                      .forEach (aCB -> aCB.onBeforeExecution (this, sFunctionName, aRequestScope, aAjaxExecutor));
 
           // Register all external resources, prior to handling the main request, as
           // the JS/CSS elements will be contained in the AjaxDefaultResponse in
@@ -92,7 +93,11 @@ public class AjaxInvoker implements IAjaxInvoker
 
           // Invoke after handler
           AjaxSettings.afterExecutionCallbacks ()
-                      .forEach (aCB -> aCB.onAfterExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, aAjaxResponse));
+                      .forEach (aCB -> aCB.onAfterExecution (this,
+                                                             sFunctionName,
+                                                             aRequestScope,
+                                                             aAjaxExecutor,
+                                                             aAjaxResponse));
 
           // Increment statistics after successful call
           STATS_FUNCTION_INVOKE.increment (sFunctionName);
@@ -103,7 +108,11 @@ public class AjaxInvoker implements IAjaxInvoker
         {
           AjaxTelemetry.onInvokeError (aSpan);
           AjaxSettings.exceptionCallbacks ()
-                      .forEach (aCB -> aCB.onAjaxExecutionException (this, sFunctionName, aAjaxExecutor, aRequestScope, ex));
+                      .forEach (aCB -> aCB.onAjaxExecutionException (this,
+                                                                     sFunctionName,
+                                                                     aAjaxExecutor,
+                                                                     aRequestScope,
+                                                                     ex));
 
           // Re-throw
           throw ex;
@@ -121,7 +130,11 @@ public class AjaxInvoker implements IAjaxInvoker
       {
         // Long running execution
         AjaxSettings.longRunningExecutionCallbacks ()
-                    .forEach (aCB -> aCB.onLongRunningExecution (this, sFunctionName, aRequestScope, aAjaxExecutor, nExecutionMillis));
+                    .forEach (aCB -> aCB.onLongRunningExecution (this,
+                                                                 sFunctionName,
+                                                                 aRequestScope,
+                                                                 aAjaxExecutor,
+                                                                 nExecutionMillis));
       }
     }
   }

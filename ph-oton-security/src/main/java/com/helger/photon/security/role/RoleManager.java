@@ -82,7 +82,7 @@ public class RoleManager extends AbstractPhotonMapBasedWALDAO <IRole, Role> impl
   private void _createNewRole (@NonNull final Role aRole, final boolean bPredefined)
   {
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aRole));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aRole));
     AuditHelper.onAuditCreateSuccess (Role.OT,
                                       aRole.getID (),
                                       aRole.getName (),

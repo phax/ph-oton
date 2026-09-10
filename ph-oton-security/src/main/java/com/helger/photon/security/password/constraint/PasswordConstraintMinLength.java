@@ -43,8 +43,8 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
    * Ctor
    *
    * @param nMinLength
-   *        The minimum length to use. Must be &gt; 0. If 0 should be allowed,
-   *        simply don't use the constraint!
+   *        The minimum length to use. Must be &gt; 0. If 0 should be allowed, simply don't use the
+   *        constraint!
    */
   public PasswordConstraintMinLength (@Nonnegative final int nMinLength)
   {
@@ -65,7 +65,8 @@ public class PasswordConstraintMinLength implements IPasswordConstraint
   @Nullable
   public String getDescription (@NonNull final Locale aContentLocale)
   {
-    return EPasswordConstraintText.DESC_MIN_LENGTH.getDisplayTextWithArgs (aContentLocale, Integer.valueOf (m_nMinLength));
+    return EPasswordConstraintText.DESC_MIN_LENGTH.getDisplayTextWithArgs (aContentLocale,
+                                                                           Integer.valueOf (m_nMinLength));
   }
 
   public void fillMicroElement (@NonNull final IMicroElement aElement)

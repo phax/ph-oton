@@ -29,8 +29,8 @@ import com.helger.xml.microdom.IMicroText;
 import com.helger.xml.microdom.util.MicroRecursiveIterator;
 
 /**
- * This is a simple wrapper around any {@link IMicroNode} so it can easily be
- * used in a HC* construction!
+ * This is a simple wrapper around any {@link IMicroNode} so it can easily be used in a HC*
+ * construction!
  *
  * @author Philip Helger
  */

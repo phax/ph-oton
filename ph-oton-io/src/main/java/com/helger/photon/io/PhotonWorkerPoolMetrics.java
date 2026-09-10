@@ -47,13 +47,13 @@ public final class PhotonWorkerPoolMetrics
 
   /** Asynchronous tasks currently running. */
   public static final ITelemetryUpDownCounter TASKS_RUNNING = TelemetryMetrics.upDownCounter (CIOTelemetry.METRIC_WORKER_RUNNING,
-                                                                                               "Asynchronous tasks currently running",
-                                                                                               CIOTelemetry.UNIT_TASK);
+                                                                                              "Asynchronous tasks currently running",
+                                                                                              CIOTelemetry.UNIT_TASK);
 
   /** Wall-clock duration of a single asynchronous task, by success. */
   public static final ITelemetryHistogram TASK_DURATION = TelemetryMetrics.histogram (CIOTelemetry.METRIC_WORKER_DURATION,
-                                                                                       "Wall-clock duration of a single asynchronous task",
-                                                                                       CIOTelemetry.UNIT_MILLIS);
+                                                                                      "Wall-clock duration of a single asynchronous task",
+                                                                                      CIOTelemetry.UNIT_MILLIS);
 
   private PhotonWorkerPoolMetrics ()
   {}

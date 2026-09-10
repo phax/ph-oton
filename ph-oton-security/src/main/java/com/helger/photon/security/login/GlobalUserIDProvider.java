@@ -73,7 +73,7 @@ public final class GlobalUserIDProvider
   @NonNull
   public static Supplier <String> getUserIDSupplier ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_aSupplier);
+    return RW_LOCK.readLockedGet (() -> s_aSupplier);
   }
 
   /**
@@ -85,7 +85,7 @@ public final class GlobalUserIDProvider
   public static void setUserIDSupplier (@NonNull final Supplier <String> aSupplier)
   {
     ValueEnforcer.notNull (aSupplier, "Supplier");
-    RW_LOCK.writeLocked ( () -> s_aSupplier = aSupplier);
+    RW_LOCK.writeLocked (() -> s_aSupplier = aSupplier);
   }
 
   /**

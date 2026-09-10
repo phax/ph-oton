@@ -21,16 +21,16 @@ import org.jspecify.annotations.NonNull;
 import com.helger.security.authentication.credentials.usernamepw.IUserNamePasswordCredentials;
 
 /**
- * Interface having all required fields required for connecting to a server via
- * SSH using username and password.
+ * Interface having all required fields required for connecting to a server via SSH using username
+ * and password.
  *
  * @author philip
  */
 public interface IServerConnectionSettingsPassword extends IBaseServerConnectionSettings, IUserNamePasswordCredentials
 {
   /**
-   * @return The plain password used to connect to the server. May not be
-   *         <code>null</code> but maybe empty.
+   * @return The plain password used to connect to the server. May not be <code>null</code> but
+   *         maybe empty.
    */
   @NonNull
   String getPassword ();

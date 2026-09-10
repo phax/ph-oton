@@ -35,7 +35,8 @@ import com.helger.xml.microdom.IMicroElement;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCDiv <IMPLTYPE extends AbstractHCDiv <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE> implements
+public abstract class AbstractHCDiv <IMPLTYPE extends AbstractHCDiv <IMPLTYPE>> extends
+                                    AbstractHCElementWithChildren <IMPLTYPE> implements
                                     IHCDiv <IMPLTYPE>
 {
   private String m_sName;

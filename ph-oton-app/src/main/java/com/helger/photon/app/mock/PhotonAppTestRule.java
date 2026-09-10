@@ -56,8 +56,7 @@ public class PhotonAppTestRule extends ScopeTestRule
    * Ctor with an arbitrary path
    *
    * @param aPath
-   *        The data AND servlet context path to be used. May not be
-   *        <code>null</code>.
+   *        The data AND servlet context path to be used. May not be <code>null</code>.
    * @since 8.0.1
    */
   public PhotonAppTestRule (@NonNull final File aPath)
@@ -101,12 +100,10 @@ public class PhotonAppTestRule extends ScopeTestRule
   }
 
   /**
-   * Delete the directories with data and servlet context path before each
-   * iteration?
+   * Delete the directories with data and servlet context path before each iteration?
    *
    * @param bDeleteAllData
-   *        <code>true</code> to delete them in {@link #before()},
-   *        <code>false</code> if not.
+   *        <code>true</code> to delete them in {@link #before()}, <code>false</code> if not.
    * @return this for chaining
    */
   @NonNull

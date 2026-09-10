@@ -84,14 +84,14 @@ public final class DataTablesHelper
    * @param sSuffix
    *        The string suffix to be appended. May be <code>null</code> or empty.
    * @param sBothPrefix
-   *        The prefix to be printed if page total and overall total are
-   *        displayed. May be <code>null</code>.
+   *        The prefix to be printed if page total and overall total are displayed. May be
+   *        <code>null</code>.
    * @param sBothSep
-   *        The separator to be printed if page total and overall total are
-   *        displayed. May be <code>null</code>.
+   *        The separator to be printed if page total and overall total are displayed. May be
+   *        <code>null</code>.
    * @param sBothSuffix
-   *        The suffix to be printed if page total and overall total are
-   *        displayed. May be <code>null</code>.
+   *        The suffix to be printed if page total and overall total are displayed. May be
+   *        <code>null</code>.
    * @return Never <code>null</code>.
    */
   @NonNull

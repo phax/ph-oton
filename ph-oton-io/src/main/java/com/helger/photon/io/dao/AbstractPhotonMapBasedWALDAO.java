@@ -25,8 +25,8 @@ import com.helger.dao.wal.AbstractMapBasedWALDAO;
 import com.helger.photon.io.WebFileIO;
 
 /**
- * Special {@link AbstractMapBasedWALDAO} that uses the
- * {@link WebFileIO#getDataIO()} for read/write.
+ * Special {@link AbstractMapBasedWALDAO} that uses the {@link WebFileIO#getDataIO()} for
+ * read/write.
  *
  * @author Philip Helger
  * @param <INTERFACETYPE>
@@ -60,7 +60,7 @@ public abstract class AbstractPhotonMapBasedWALDAO <INTERFACETYPE extends IHasID
   @Override
   public void reload () throws DAOException
   {
-    m_aRWLock.writeLockedThrowing ( () -> {
+    m_aRWLock.writeLockedThrowing (() -> {
       internalRemoveAllItemsNoCallback ();
       initialRead ();
     });

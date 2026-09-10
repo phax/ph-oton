@@ -56,13 +56,15 @@ public final class JSFormHelper
   }
 
   @NonNull
-  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID, @NonNull final IHCNode aHCNode)
+  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID,
+                                                  @NonNull final IHCNode aHCNode)
   {
     return updateElementDirect (sFieldID, HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
   @NonNull
-  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID, @NonNull final String sHTMLCode)
+  public static JSInvocation updateElementDirect (@NonNull @Nonempty final String sFieldID,
+                                                  @NonNull final String sHTMLCode)
   {
     return getFormHelper ().invoke ("updateElementDirect").arg (sFieldID).arg (sHTMLCode);
   }
@@ -76,13 +78,15 @@ public final class JSFormHelper
   }
 
   @NonNull
-  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID, @NonNull final ISimpleURL aUpdateCallURL)
+  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID,
+                                                   @NonNull final ISimpleURL aUpdateCallURL)
   {
     return updateElementViaAjax (sFieldID, aUpdateCallURL.getAsString ());
   }
 
   @NonNull
-  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID, @NonNull final String sUpdateCallURI)
+  public static JSInvocation updateElementViaAjax (@NonNull @Nonempty final String sFieldID,
+                                                   @NonNull final String sUpdateCallURI)
   {
     return getFormHelper ().invoke ("updateElementViaAjax").arg (sFieldID).arg (sUpdateCallURI);
   }
@@ -90,13 +94,15 @@ public final class JSFormHelper
   // missing updateElements
 
   @NonNull
-  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID, @NonNull final IHCNode aHCNode)
+  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID,
+                                                @NonNull final IHCNode aHCNode)
   {
     return new JSAssocArray ().add ("id", sFieldID).add ("html", HCRenderer.getAsHTMLStringWithoutNamespaces (aHCNode));
   }
 
   @NonNull
-  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID, @NonNull final ISimpleURL aURL)
+  public static JSAssocArray createUpdateParam (@NonNull @Nonempty final String sFieldID,
+                                                @NonNull final ISimpleURL aURL)
   {
     return new JSAssocArray ().add ("id", sFieldID).add ("url", aURL.getAsString ());
   }
@@ -111,7 +117,8 @@ public final class JSFormHelper
    * @return the invocation
    */
   @NonNull
-  public static JSInvocation setSelectOptions (@NonNull final IJSExpression aSelector, @NonNull final IJSExpression aValueList)
+  public static JSInvocation setSelectOptions (@NonNull final IJSExpression aSelector,
+                                               @NonNull final IJSExpression aValueList)
   {
     return getFormHelper ().invoke ("setSelectOptions").arg (aSelector).arg (aValueList);
   }

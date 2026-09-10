@@ -84,8 +84,8 @@ public interface IMetaElementList extends ICommonsIterable <IMetaElement>
   int getMetaElementCount ();
 
   /**
-   * @return <code>true</code> if at least one meta element is contained,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if at least one meta element is contained, <code>false</code>
+   *         otherwise.
    */
   boolean hasMetaElements ();
 }

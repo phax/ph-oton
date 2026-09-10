@@ -122,15 +122,14 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
                                @Nullable final String sAction,
                                @Nullable final Object... aArgs)
   {
-    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType
-                                                                                                                   .getName ()
+    final String sFullAction = IAuditActionStringProvider.JSON.apply (aActionObjectType != null ? aActionObjectType.getName ()
                                                                                                 : sAction, aArgs);
     final AuditItem aAuditItem = new AuditItem (m_aCurrentUserIDProvider.getCurrentUserID (),
                                                 eActionType,
                                                 eSuccess,
                                                 sFullAction);
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       m_aItems.internalAddItem (aAuditItem);
 
       markAsChanged (aAuditItem, EDAOActionType.CREATE);
@@ -154,7 +153,7 @@ public class SimpleAuditManager extends AbstractPhotonWALDAO <AuditItem> impleme
   @ReturnsMutableCopy
   public List <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aItems.getLastItems (nMaxItems));
+    return m_aRWLock.readLockedGet (() -> m_aItems.getLastItems (nMaxItems));
   }
 
   @Override

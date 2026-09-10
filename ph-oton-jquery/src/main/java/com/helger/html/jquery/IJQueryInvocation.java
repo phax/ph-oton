@@ -26,17 +26,18 @@ import com.helger.html.jscode.JSFieldRef;
 
 /**
  * This file is generated - do NOT edit!
+ * 
  * @author com.helger.html.jquery.supplementary.main.Main_IJQueryInvocation
- * @param <IMPLTYPE> Implementation type
-*/
+ * @param <IMPLTYPE>
+ *        Implementation type
+ */
 public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE>> extends IJSInvocation <IMPLTYPE>
 {
   /**
    * Invoke an arbitrary function on this jQuery object.
    * 
    * @param sMethod
-   *        The method to be invoked. May neither be <code>null</code> nor
-   *        empty.
+   *        The method to be invoked. May neither be <code>null</code> nor empty.
    * @return A new jQuery invocation object. Never <code>null</code>.
    */
   @NonNull
@@ -100,6 +101,7 @@ public interface IJQueryInvocation <IMPLTYPE extends IJQueryInvocation <IMPLTYPE
   {
     return ref ("length");
   }
+
   @NonNull
   default IMPLTYPE add ()
   {

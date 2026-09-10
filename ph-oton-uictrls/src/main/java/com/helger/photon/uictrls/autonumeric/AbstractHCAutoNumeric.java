@@ -59,8 +59,8 @@ import com.helger.photon.uictrls.EUICtrlsJSPathProvider;
  *        Implementation type
  */
 @NotThreadSafe
-public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends AbstractHCInput <IMPLTYPE>
-                                            implements
+public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNumeric <IMPLTYPE>> extends
+                                            AbstractHCInput <IMPLTYPE> implements
                                             IHCNodeWithJSOptions
 {
   /** The special CSS class to use for numeric inputs */
@@ -111,12 +111,12 @@ public abstract class AbstractHCAutoNumeric <IMPLTYPE extends AbstractHCAutoNume
   @Nullable
   public static String getDefaultThousandSeparator ()
   {
-    return RW_LOCK.readLockedGet ( () -> s_sDefaultThousandSeparator);
+    return RW_LOCK.readLockedGet (() -> s_sDefaultThousandSeparator);
   }
 
   public static void setDefaultThousandSeparator (@Nullable final String sDefaultThousandSeparator)
   {
-    RW_LOCK.writeLocked ( () -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
+    RW_LOCK.writeLocked (() -> s_sDefaultThousandSeparator = sDefaultThousandSeparator);
   }
 
   @Nullable

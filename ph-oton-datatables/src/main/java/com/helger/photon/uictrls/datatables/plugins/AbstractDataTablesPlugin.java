@@ -37,8 +37,8 @@ public abstract class AbstractDataTablesPlugin implements IDataTablesPlugin
 
   /**
    * @param sName
-   *        Name of the plugin. May neither be <code>null</code> empty. This
-   *        name is only internally used to make sure that no such
+   *        Name of the plugin. May neither be <code>null</code> empty. This name is only internally
+   *        used to make sure that no such
    */
   protected AbstractDataTablesPlugin (@NonNull @Nonempty final String sName)
   {

@@ -37,8 +37,7 @@ public interface IAPIExecutionFilter extends Serializable
    *
    * @param aRequestScope
    *        The current request scope. Never <code>null</code>.
-   * @return <code>true</code> if execution can continue, <code>false</code> if
-   *         not.
+   * @return <code>true</code> if execution can continue, <code>false</code> if not.
    */
   boolean canExecute (@NonNull IRequestWebScopeWithoutResponse aRequestScope);
 
@@ -51,7 +50,8 @@ public interface IAPIExecutionFilter extends Serializable
   }
 
   @Nullable
-  static IAPIExecutionFilter and (@Nullable final IAPIExecutionFilter aFirst, @Nullable final IAPIExecutionFilter aSecond)
+  static IAPIExecutionFilter and (@Nullable final IAPIExecutionFilter aFirst,
+                                  @Nullable final IAPIExecutionFilter aSecond)
   {
     return aFirst != null ? aSecond != null ? aFirst.and (aSecond) : aFirst : aSecond;
   }

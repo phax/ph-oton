@@ -350,8 +350,7 @@ final class Line
   }
 
   /**
-   * Checks if this line contains an ID at it's end and removes it from the
-   * line.
+   * Checks if this line contains an ID at it's end and removes it from the line.
    *
    * @return The ID or <code>null</code> if no valid ID exists.
    */
@@ -439,8 +438,7 @@ final class Line
   /**
    * Checks for a valid HTML block. Sets <code>xmlEndLine</code>.
    *
-   * @return <code>EHTMLType.TAG</code> or <code>EHTMLType.COMMENT</code> if it
-   *         is a valid block.
+   * @return <code>EHTMLType.TAG</code> or <code>EHTMLType.COMMENT</code> if it is a valid block.
    */
   @NonNull
   private EHTMLElementType _checkHTML ()

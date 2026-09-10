@@ -54,7 +54,8 @@ public final class RequestParameterHandlerURLPathOrderedTest
   public void testBasic ()
   {
     final MockHttpServletRequest aRequest = new MockHttpServletRequest ();
-    final IRequestWebScopeWithoutResponse aRequestScope = new RequestWebScope (aRequest, new MockHttpServletResponse ());
+    final IRequestWebScopeWithoutResponse aRequestScope = new RequestWebScope (aRequest,
+                                                                               new MockHttpServletResponse ());
     final RequestParameterHandlerURLPathOrdered h = new RequestParameterHandlerURLPathOrdered ();
 
     GlobalLocaleManager.getInstance ().registerLocale (LOCALE);

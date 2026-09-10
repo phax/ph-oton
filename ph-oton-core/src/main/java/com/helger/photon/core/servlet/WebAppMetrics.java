@@ -29,8 +29,8 @@ import com.helger.telemetry.TelemetryMetrics;
  * vendor neutral {@link TelemetryMetrics} facade - if no {@code ITelemetryMeterSPI} is registered,
  * the underlying instruments are cheap no-ops, so referencing this class in a deployment without an
  * observability backend has no cost.<br>
- * None of these instruments carries an attribute: session IDs are unbounded, and the servlet context
- * path and the server name are constant per deployment and belong on the OpenTelemetry
+ * None of these instruments carries an attribute: session IDs are unbounded, and the servlet
+ * context path and the server name are constant per deployment and belong on the OpenTelemetry
  * <code>Resource</code>, which the deploying application configures.
  *
  * @author Philip Helger
@@ -41,23 +41,23 @@ public final class WebAppMetrics
 {
   /** HTTP sessions that were created. */
   public static final ITelemetryCounter SESSIONS_CREATED = TelemetryMetrics.counter (CCoreTelemetry.METRIC_SESSIONS_CREATED,
-                                                                                      "HTTP sessions that were created",
-                                                                                      CCoreTelemetry.UNIT_SESSION);
+                                                                                     "HTTP sessions that were created",
+                                                                                     CCoreTelemetry.UNIT_SESSION);
 
   /** HTTP sessions currently active. */
   public static final ITelemetryUpDownCounter SESSIONS_ACTIVE = TelemetryMetrics.upDownCounter (CCoreTelemetry.METRIC_SESSIONS_ACTIVE,
-                                                                                                 "HTTP sessions currently active",
-                                                                                                 CCoreTelemetry.UNIT_SESSION);
+                                                                                                "HTTP sessions currently active",
+                                                                                                CCoreTelemetry.UNIT_SESSION);
 
   /** Wall-clock duration of the servlet context initialization. */
   public static final ITelemetryHistogram STARTUP_DURATION = TelemetryMetrics.histogram (CCoreTelemetry.METRIC_STARTUP_DURATION,
-                                                                                          "Wall-clock duration of the servlet context initialization",
-                                                                                          CCoreTelemetry.UNIT_MILLIS);
+                                                                                         "Wall-clock duration of the servlet context initialization",
+                                                                                         CCoreTelemetry.UNIT_MILLIS);
 
   /** Wall-clock duration of the servlet context destruction. */
   public static final ITelemetryHistogram SHUTDOWN_DURATION = TelemetryMetrics.histogram (CCoreTelemetry.METRIC_SHUTDOWN_DURATION,
-                                                                                           "Wall-clock duration of the servlet context destruction",
-                                                                                           CCoreTelemetry.UNIT_MILLIS);
+                                                                                          "Wall-clock duration of the servlet context destruction",
+                                                                                          CCoreTelemetry.UNIT_MILLIS);
 
   private WebAppMetrics ()
   {}

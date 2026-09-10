@@ -31,12 +31,11 @@ import com.helger.xml.microdom.IMicroElement;
 public interface IFeedElement
 {
   /**
-   * Any element defined by this specification MAY have an xml:lang attribute,
-   * whose content indicates the natural language for the element and its
-   * descendants. The language context is only significant for elements and
-   * attributes declared to be "Language-Sensitive" by this specification.
-   * Requirements regarding the content and interpretation of xml:lang are
-   * specified in XML 1.0 [W3C.REC-xml-20040204], Section 2.12.
+   * Any element defined by this specification MAY have an xml:lang attribute, whose content
+   * indicates the natural language for the element and its descendants. The language context is
+   * only significant for elements and attributes declared to be "Language-Sensitive" by this
+   * specification. Requirements regarding the content and interpretation of xml:lang are specified
+   * in XML 1.0 [W3C.REC-xml-20040204], Section 2.12.
    *
    * @return <code>null</code> or the current language
    */
@@ -60,9 +59,9 @@ public interface IFeedElement
   void setLanguage (@Nullable String sContentLanguage);
 
   /**
-   * Convert this news feed element to an MicroElement with the given element
-   * name. In case this element is not valid according to {@link #isValid()} it
-   * should be safe anyway to create an element.
+   * Convert this news feed element to an MicroElement with the given element name. In case this
+   * element is not valid according to {@link #isValid()} it should be safe anyway to create an
+   * element.
    *
    * @param sElementName
    *        The element name to use. May neither be <code>null</code> nor empty.
@@ -72,12 +71,11 @@ public interface IFeedElement
   IMicroElement getAsElement (String sElementName);
 
   /**
-   * Check if this element matches the specification. This check method should
-   * only be called once the feed is assembled completely since there are
-   * interdependencies between the main feed and its entries.
+   * Check if this element matches the specification. This check method should only be called once
+   * the feed is assembled completely since there are interdependencies between the main feed and
+   * its entries.
    *
-   * @return <code>true</code> if the element is valid, and <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the element is valid, and <code>false</code> otherwise.
    */
   boolean isValid ();
 }

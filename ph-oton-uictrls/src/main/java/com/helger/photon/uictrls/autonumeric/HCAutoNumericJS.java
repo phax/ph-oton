@@ -30,11 +30,9 @@ import com.helger.html.jquery.JQueryInvocation;
 import com.helger.html.js.IHasJSCode;
 
 /**
- * A special script that initializes the auto numeric. It is a separate class,
- * so that potentially identical options can be merged to a single invocation.
- * <br>
- * Must implement equals and hashcode to be able to get removed "stateless" from
- * a node
+ * A special script that initializes the auto numeric. It is a separate class, so that potentially
+ * identical options can be merged to a single invocation. <br>
+ * Must implement equals and hashcode to be able to get removed "stateless" from a node
  *
  * @author Philip Helger
  */
@@ -49,7 +47,8 @@ public class HCAutoNumericJS extends HCScriptInlineOnDocumentReady
   public static IHasJSCode createInitCode (@Nullable final JQueryInvocation aExplicitAutoNumeric,
                                            @NonNull final AbstractHCAutoNumeric <?> aAutoNumeric)
   {
-    final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric : JQuery.idRef (aAutoNumeric);
+    final JQueryInvocation aInvocation = aExplicitAutoNumeric != null ? aExplicitAutoNumeric
+                                                                      : JQuery.idRef (aAutoNumeric);
 
     return HCAutoNumeric.autoNumericInit (aInvocation, aAutoNumeric.getJSOptions ());
   }

@@ -46,14 +46,15 @@ import com.helger.html.hc.config.HCConsistencyChecker;
 import com.helger.html.hc.html.AbstractHCElement;
 
 /**
- * This is the common base class for regular HC tables as well as for more
- * complex constructs (e.g. PUI)
+ * This is the common base class for regular HC tables as well as for more complex constructs (e.g.
+ * PUI)
  *
  * @author Philip Helger
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable <IMPLTYPE>> extends AbstractHCElement <IMPLTYPE> implements
+public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable <IMPLTYPE>> extends
+                                          AbstractHCElement <IMPLTYPE> implements
                                           IHCTable <IMPLTYPE>
 {
   public static final ICSSClassProvider CSS_FORCE_COLSPAN = DefaultCSSClassProvider.create ("force-colspan");
@@ -67,8 +68,8 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   private HCTFoot m_aFoot = new HCTFoot ();
 
   /**
-   * This constructor is used to create elements with logic like a table but
-   * actually not having a top 'table' element
+   * This constructor is used to create elements with logic like a table but actually not having a
+   * top 'table' element
    *
    * @param aElement
    *        The HTML element to be used to create the table
@@ -420,7 +421,8 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
   }
 
   @Override
-  public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter, @NonNull final Consumer <? super IHCNode> aConsumer)
+  public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter,
+                                    @NonNull final Consumer <? super IHCNode> aConsumer)
   {
     m_aHead.forAllChildren (aFilter, aConsumer);
     m_aBody.forAllChildren (aFilter, aConsumer);

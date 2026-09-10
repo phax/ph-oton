@@ -19,8 +19,7 @@ package com.helger.photon.markdown;
 import org.jspecify.annotations.NonNull;
 
 /**
- * An interface for emitting span elements. Currently only used for special
- * links.
+ * An interface for emitting span elements. Currently only used for special links.
  *
  * @author René Jeschke (rene_jeschke@yahoo.de)
  */

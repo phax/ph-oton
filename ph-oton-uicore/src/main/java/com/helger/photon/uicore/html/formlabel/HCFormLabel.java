@@ -46,8 +46,7 @@ public class HCFormLabel extends AbstractHCLabel <HCFormLabel> implements IFormL
   }
 
   /**
-   * This constructor is only meant for internal use because it does not apply
-   * form styles.
+   * This constructor is only meant for internal use because it does not apply form styles.
    *
    * @param aNode
    *        The node to add. May be <code>null</code>.

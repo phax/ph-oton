@@ -40,7 +40,9 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
 
   public boolean containsClass (@Nullable final ICSSClassProvider aCSSClassProvider)
   {
-    return aCSSClassProvider != null && m_aCSSClassProviders != null && m_aCSSClassProviders.contains (aCSSClassProvider);
+    return aCSSClassProvider != null &&
+           m_aCSSClassProviders != null &&
+           m_aCSSClassProviders.contains (aCSSClassProvider);
   }
 
   @NonNull
@@ -121,6 +123,8 @@ public class HCHasCSSClasses implements IHCHasCSSClasses <HCHasCSSClasses>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIf ("CSSClassProviders", m_aCSSClassProviders, CollectionHelper::isNotEmpty).getToString ();
+    return new ToStringGenerator (this).appendIf ("CSSClassProviders",
+                                                  m_aCSSClassProviders,
+                                                  CollectionHelper::isNotEmpty).getToString ();
   }
 }

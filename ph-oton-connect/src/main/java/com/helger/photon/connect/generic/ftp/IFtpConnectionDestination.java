@@ -34,8 +34,7 @@ public interface IFtpConnectionDestination extends IConnectionDestination <FTPCl
   String getHostname ();
 
   /**
-   * @return The port to use. In you are not sure, return
-   *         {@link #DEFAULT_FTP_PORT}.
+   * @return The port to use. In you are not sure, return {@link #DEFAULT_FTP_PORT}.
    */
   @Nonnegative
   int getPort ();

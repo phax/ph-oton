@@ -49,7 +49,9 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
    * @param aInit
    *        Value to initialize this variable to
    */
-  public JSFieldVar (@NonNull final JSDefinedClass aOwnerClass, @NonNull @Nonempty final String sName, @Nullable final IJSExpression aInit)
+  public JSFieldVar (@NonNull final JSDefinedClass aOwnerClass,
+                     @NonNull @Nonempty final String sName,
+                     @Nullable final IJSExpression aInit)
   {
     super (sName, aInit);
     m_aOwnerClass = ValueEnforcer.notNull (aOwnerClass, "OwnerClass");
@@ -123,7 +125,10 @@ public class JSFieldVar extends JSVar implements IJSDocCommentable
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aOwnerClass.name ()).append (m_aJSDoc).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_aOwnerClass.name ())
+                            .append (m_aJSDoc)
+                            .getHashCode ();
   }
 
   @Override

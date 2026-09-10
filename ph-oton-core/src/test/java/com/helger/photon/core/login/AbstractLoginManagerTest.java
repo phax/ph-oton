@@ -126,7 +126,8 @@ public final class AbstractLoginManagerTest
   {
     assertEquals ("192.0.2.60", AbstractLoginManager.getFirstIPFromForwardedValue ("for=192.0.2.60:1234"));
     assertEquals ("192.0.2.60", AbstractLoginManager.getFirstIPFromForwardedValue ("for=\"192.0.2.60:1234\""));
-    assertEquals ("192.0.2.60", AbstractLoginManager.getFirstIPFromForwardedValue ("For=\"192.0.2.60:1234\";proto=http"));
+    assertEquals ("192.0.2.60",
+                  AbstractLoginManager.getFirstIPFromForwardedValue ("For=\"192.0.2.60:1234\";proto=http"));
   }
 
   @Test
@@ -148,7 +149,8 @@ public final class AbstractLoginManagerTest
   public void testForwardedMultipleElements ()
   {
     // The first forwarded element (the original client) is used
-    assertEquals ("192.0.2.43", AbstractLoginManager.getFirstIPFromForwardedValue ("for=192.0.2.43, for=198.51.100.17"));
+    assertEquals ("192.0.2.43",
+                  AbstractLoginManager.getFirstIPFromForwardedValue ("for=192.0.2.43, for=198.51.100.17"));
     assertEquals ("192.0.2.43",
                   AbstractLoginManager.getFirstIPFromForwardedValue ("for=192.0.2.43;proto=http, for=198.51.100.17;proto=https"));
     // If the first element has no usable "for", later elements are NOT consulted

@@ -51,8 +51,8 @@ public final class DTSSRequestData
                           @NonNull final ICommonsList <DTSSRequestDataOrderColumn> aOrderColumns)
   {
     ValueEnforcer.notNull (aColumnData, "ColumnData");
-    ValueEnforcer.isFalse ( () -> CollectionFind.containsAnyNullElement (aColumnData),
-                            "ColumnData may not contain null elements");
+    ValueEnforcer.isFalse (() -> CollectionFind.containsAnyNullElement (aColumnData),
+                           "ColumnData may not contain null elements");
     ValueEnforcer.notNull (aOrderColumns, "OrderColumns");
     m_nDraw = nDraw;
     m_nDisplayStart = nDisplayStart;

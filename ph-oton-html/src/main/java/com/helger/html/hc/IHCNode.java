@@ -50,27 +50,23 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    * @param eHTMLVersion
    *        The HTML version to be used. May not be <code>null</code>.
    * @param aTargetNode
-   *        The target node where additional nodes should be added. May not be
-   *        <code>null</code>.
+   *        The target node where additional nodes should be added. May not be <code>null</code>.
    */
   void customizeNode (@Nullable IHCCustomizer aCustomizer,
                       @NonNull EHTMLVersion eHTMLVersion,
                       @NonNull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
 
   /**
-   * Finalize the node by applying any internal state that was not yet converted
-   * to a HC element.<br>
+   * Finalize the node by applying any internal state that was not yet converted to a HC
+   * element.<br>
    * This method is called at last once per {@link IHCNode}.<br>
-   * This is called after
-   * {@link #customizeNode(IHCCustomizer, EHTMLVersion, IHCHasChildrenMutable)}
+   * This is called after {@link #customizeNode(IHCCustomizer, EHTMLVersion, IHCHasChildrenMutable)}
    * as second.
    *
    * @param aConversionSettings
-   *        The current conversion settings to be used. May not be
-   *        <code>null</code>.
+   *        The current conversion settings to be used. May not be <code>null</code>.
    * @param aTargetNode
-   *        The target node where additional nodes should be added. May not be
-   *        <code>null</code>.
+   *        The target node where additional nodes should be added. May not be <code>null</code>.
    */
   void finalizeNodeState (@NonNull IHCConversionSettingsToNode aConversionSettings,
                           @NonNull IHCHasChildrenMutable <?, ? super IHCNode> aTargetNode);
@@ -79,40 +75,35 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
    * Perform consistency checks on this node.<br>
    * This method is called at last once per {@link IHCNode}.<br>
    * This is called after
-   * {@link #finalizeNodeState(IHCConversionSettingsToNode, IHCHasChildrenMutable)}
-   * as third.
+   * {@link #finalizeNodeState(IHCConversionSettingsToNode, IHCHasChildrenMutable)} as third.
    *
    * @param aConversionSettings
-   *        The current conversion settings to be used. May not be
-   *        <code>null</code>.
+   *        The current conversion settings to be used. May not be <code>null</code>.
    */
   void consistencyCheck (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
-   * This method checks whether the node is suitable for conversion to an
-   * {@link IMicroNode}. If this node cannot be converted, no child node will be
-   * converted as well!
+   * This method checks whether the node is suitable for conversion to an {@link IMicroNode}. If
+   * this node cannot be converted, no child node will be converted as well!
    *
    * @param aConversionSettings
    *        The conversion settings to be used
-   * @return <code>true</code> if the node can be converted to a node,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the node can be converted to a node, <code>false</code> otherwise.
    */
   boolean canConvertToMicroNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
-   * Register external JS and CSS resources required for this node, but only if
-   * this HC node can be converted to a micro node as determined by
-   * {@link #canConvertToMicroNode(IHCConversionSettingsToNode)}. Using the
-   * bForceRegistration parameter, this can be forced.<br>
+   * Register external JS and CSS resources required for this node, but only if this HC node can be
+   * converted to a micro node as determined by
+   * {@link #canConvertToMicroNode(IHCConversionSettingsToNode)}. Using the bForceRegistration
+   * parameter, this can be forced.<br>
    * This method is called at last once per {@link IHCNode}.
    *
    * @param aConversionSettings
    *        Conversion settings to be used. Never <code>null</code>.
    * @param bForceRegistration
-   *        <code>true</code> to force registration, <code>false</code> to
-   *        register resources only if the node can be converted to a micro
-   *        node.
+   *        <code>true</code> to force registration, <code>false</code> to register resources only
+   *        if the node can be converted to a micro node.
    */
   void registerExternalResources (@NonNull IHCConversionSettingsToNode aConversionSettings, boolean bForceRegistration);
 
@@ -128,8 +119,7 @@ public interface IHCNode extends IHasChildrenSorted <IHCNode>, IHasChildrenRecur
   IMicroNode convertToMicroNode (@NonNull IHCConversionSettingsToNode aConversionSettings);
 
   /**
-   * @return The plain text representation of this text. May not be
-   *         <code>null</code>.
+   * @return The plain text representation of this text. May not be <code>null</code>.
    */
   @NonNull
   String getPlainText ();

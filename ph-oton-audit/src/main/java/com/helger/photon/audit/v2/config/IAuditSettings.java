@@ -36,8 +36,8 @@ public interface IAuditSettings extends Serializable
   ILongSupplier getAuditEventIDProvider ();
 
   /**
-   * @return The date and time provider to be used. Never <code>null</code>. The
-   *         returned supplier may not return <code>null</code>.
+   * @return The date and time provider to be used. Never <code>null</code>. The returned supplier
+   *         may not return <code>null</code>.
    */
   @NonNull
   Supplier <LocalDateTime> getAuditEventDateTimeProvider ();

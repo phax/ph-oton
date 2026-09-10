@@ -31,8 +31,7 @@ import com.helger.base.tostring.ToStringGenerator;
 public class JSFieldRef extends JSRef
 {
   /**
-   * Object expression upon which this field will be accessed, or null for the
-   * implicit 'this'.
+   * Object expression upon which this field will be accessed, or null for the implicit 'this'.
    */
   private final IJSGeneratable m_aObject;
 

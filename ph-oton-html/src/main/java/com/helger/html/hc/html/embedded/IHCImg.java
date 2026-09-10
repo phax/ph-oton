@@ -73,8 +73,7 @@ public interface IHCImg <IMPLTYPE extends IHCImg <IMPLTYPE>> extends IHCMediaEle
   IMPLTYPE scaleToHeight (@Nonnegative int nNewHeight);
 
   /**
-   * Scales the image so that neither with nor height are exceeded, keeping the
-   * aspect ratio.
+   * Scales the image so that neither with nor height are exceeded, keeping the aspect ratio.
    *
    * @param nMaxWidth
    *        Maximum with

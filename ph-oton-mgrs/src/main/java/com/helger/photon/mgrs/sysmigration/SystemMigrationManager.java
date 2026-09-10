@@ -94,7 +94,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO implements I
   {
     ValueEnforcer.notNull (aMigrationResult, "MigrationResult");
 
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       internalAdd (aMigrationResult);
       markAsChanged ();
     });
@@ -109,7 +109,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO implements I
   @ReturnsMutableCopy
   public ICommonsList <SystemMigrationResult> getAllMigrationResults (@Nullable final String sMigrationID)
   {
-    return m_aRWLock.readLockedGet ( () -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
+    return m_aRWLock.readLockedGet (() -> new CommonsArrayList <> (m_aMap.get (sMigrationID)));
   }
 
   @NonNull
@@ -117,7 +117,7 @@ public class SystemMigrationManager extends AbstractPhotonSimpleDAO implements I
   public ICommonsList <SystemMigrationResult> getAllMigrationResultsFlattened ()
   {
     final ICommonsList <SystemMigrationResult> ret = new CommonsArrayList <> ();
-    m_aRWLock.readLocked ( () -> {
+    m_aRWLock.readLocked (() -> {
       for (final ICommonsList <SystemMigrationResult> aResults : m_aMap.values ())
         ret.addAll (aResults);
     });

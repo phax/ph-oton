@@ -103,7 +103,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Administrators user group
     UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (createDefaultUserGroupAdministrators ()));
+      aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupAdministrators ()));
     if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
       aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
     if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
@@ -112,7 +112,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Users user group
     aUG = getOfID (CSecurity.USERGROUP_USERS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (createDefaultUserGroupUsers ()));
+      aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupUsers ()));
     if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
       aUG.assignUser (CSecurity.USER_USER_ID);
     if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID))
@@ -121,7 +121,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     // Guests user group
     aUG = getOfID (CSecurity.USERGROUP_GUESTS_ID);
     if (aUG == null)
-      aUG = m_aRWLock.writeLockedGet ( () -> internalCreateItem (createDefaultUserGroupGuests ()));
+      aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupGuests ()));
     if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
       aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
@@ -143,7 +143,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     final UserGroup aUserGroup = new UserGroup (sName, sDescription, aCustomAttrs);
 
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aUserGroup));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aUserGroup));
     AuditHelper.onAuditCreateSuccess (UserGroup.OT, aUserGroup.getID (), sName, sDescription, aCustomAttrs);
 
     // Execute callback as the very last action
@@ -164,7 +164,7 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                                                 sDescription);
 
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aUserGroup));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aUserGroup));
     AuditHelper.onAuditCreateSuccess (UserGroup.OT,
                                       aUserGroup.getID (),
                                       "predefined-usergroup",

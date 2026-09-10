@@ -42,7 +42,8 @@ import com.helger.tenancy.tenant.ITenant;
  *
  * @author Philip Helger
  */
-public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea> implements IAccountingAreaResolver
+public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccountingArea, AccountingArea> implements
+                                   IAccountingAreaResolver
 {
   public AccountingAreaManager (@NonNull @Nonempty final String sFilename) throws DAOException
   {
@@ -85,7 +86,7 @@ public class AccountingAreaManager extends AbstractPhotonMapBasedWALDAO <IAccoun
                                                                aDisplayLocale);
 
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aAccountingArea));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aAccountingArea));
     AuditHelper.onAuditCreateSuccess (AccountingArea.OT,
                                       aAccountingArea.getID (),
                                       sDisplayName,

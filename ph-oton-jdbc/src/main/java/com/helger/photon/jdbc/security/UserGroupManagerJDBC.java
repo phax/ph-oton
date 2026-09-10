@@ -247,7 +247,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
   private ESuccess _internalCreateItem (@NonNull final UserGroup aUserGroup)
   {
     final DBExecutor aExecutor = newExecutor ();
-    return aExecutor.performInTransaction ( () -> {
+    return aExecutor.performInTransaction (() -> {
       // Create new
       final long nCreated = aExecutor.insertOrUpdateOrDelete ("INSERT INTO " +
                                                               m_sTableName +
@@ -341,7 +341,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Update existing
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
@@ -384,7 +384,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Update existing
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
@@ -473,7 +473,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Update existing
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
@@ -519,7 +519,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
 
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Update existing
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
@@ -578,7 +578,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final MutableBoolean aWasAdded = new MutableBoolean (false);
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
       aExecutor.querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
@@ -645,14 +645,14 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final MutableBoolean aWasRemoved = new MutableBoolean (false);
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
       aExecutor.querySingle ("SELECT userids FROM " + m_sTableName + " WHERE id=?",
                              new ConstantPreparedStatementDataProvider (sUserGroupID),
                              aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
-                                                                                                  .getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
+                                                                      : idsToSet (aDBResult.get ().getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sUserID))
       {
@@ -709,7 +709,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ICommonsList <String> aAffectedUserGroups = new CommonsArrayList <> ();
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get all existing assignments
       final ICommonsList <DBResultRow> aRows = aExecutor.queryAll ("SELECT id, userids FROM " + m_sTableName);
       for (final DBResultRow aRow : aRows)
@@ -790,7 +790,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final MutableBoolean aWasAdded = new MutableBoolean (false);
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
       aExecutor.querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
@@ -857,14 +857,14 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final MutableBoolean aWasRemoved = new MutableBoolean (false);
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get existing users
       final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
       aExecutor.querySingle ("SELECT roleids FROM " + m_sTableName + " WHERE id=?",
                              new ConstantPreparedStatementDataProvider (sUserGroupID),
                              aDBResult::set);
-      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null : idsToSet (aDBResult.get ()
-                                                                                                  .getAsString (0));
+      final ICommonsSet <String> aAssignedIDs = aDBResult.isNotSet () ? null
+                                                                      : idsToSet (aDBResult.get ().getAsString (0));
 
       if (aAssignedIDs != null && aAssignedIDs.remove (sRoleID))
       {
@@ -921,7 +921,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
     final ICommonsList <String> aAffectedUserGroups = new CommonsArrayList <> ();
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction ( () -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       // Get all existing assignments
       final ICommonsList <DBResultRow> aRows = aExecutor.queryAll ("SELECT id, roleids FROM " + m_sTableName);
       for (final DBResultRow aRow : aRows)

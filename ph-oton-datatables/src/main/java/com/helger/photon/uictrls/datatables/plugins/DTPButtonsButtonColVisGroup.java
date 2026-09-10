@@ -25,10 +25,9 @@ import com.helger.html.jscode.JSAssocArray;
 import com.helger.html.jscode.JSExpr;
 
 /**
- * Show and hide multiple columns. Please note that unlike most other buttons,
- * the button text ({@link #setText(String)}) option is not predefined as there
- * is no sensible default that could be applied. You must set a text property
- * for this button.
+ * Show and hide multiple columns. Please note that unlike most other buttons, the button text
+ * ({@link #setText(String)}) option is not predefined as there is no sensible default that could be
+ * applied. You must set a text property for this button.
  *
  * @author Philip Helger
  */

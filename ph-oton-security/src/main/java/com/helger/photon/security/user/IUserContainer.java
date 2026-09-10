@@ -30,8 +30,7 @@ import com.helger.collection.commons.ICommonsSet;
 public interface IUserContainer
 {
   /**
-   * @return <code>true</code> if at least one user is contained,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if at least one user is contained, <code>false</code> otherwise.
    */
   boolean hasContainedUsers ();
 
@@ -42,8 +41,7 @@ public interface IUserContainer
   int getContainedUserCount ();
 
   /**
-   * @return A non-<code>null</code>but maybe empty set of all assigned user
-   *         IDs.
+   * @return A non-<code>null</code>but maybe empty set of all assigned user IDs.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -54,8 +52,8 @@ public interface IUserContainer
    *
    * @param sUserID
    *        The user ID to check. May be <code>null</code>.
-   * @return <code>true</code> if the user is contained in this container,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the user is contained in this container, <code>false</code>
+   *         otherwise.
    */
   boolean containsUserID (String sUserID);
 }

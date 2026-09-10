@@ -39,8 +39,8 @@ import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
 
 /**
- * This class encapsulates a HTML input field, a hidden field for the ID and the
- * script to execute the typeahead action
+ * This class encapsulates a HTML input field, a hidden field for the ID and the script to execute
+ * the typeahead action
  *
  * @author Philip Helger
  */
@@ -94,8 +94,8 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
   }
 
   /**
-   * @return The ID of the hidden field that is generated for this edit. Neither
-   *         <code>null</code> nor empty.
+   * @return The ID of the hidden field that is generated for this edit. Neither <code>null</code>
+   *         nor empty.
    */
   @NonNull
   @Nonempty
@@ -105,10 +105,9 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
   }
 
   /**
-   * @return The JS callback function that is invoked, when an item is selected.
-   *         Never <code>null</code>. Do not modify the original body content,
-   *         as this is required to be present for the correct working of this
-   *         control!
+   * @return The JS callback function that is invoked, when an item is selected. Never
+   *         <code>null</code>. Do not modify the original body content, as this is required to be
+   *         present for the correct working of this control!
    */
   @NonNull
   public final JSAnonymousFunction getJSSelectionCallback ()
@@ -117,9 +116,9 @@ public class TypeaheadEdit extends AbstractHCInput <TypeaheadEdit>
   }
 
   /**
-   * @return The type ahead script that handles the AJAX trigger based on the
-   *         input. Never <code>null</code>. Changes on the script only have an
-   *         effect if they are performed before this control is build!
+   * @return The type ahead script that handles the AJAX trigger based on the input. Never
+   *         <code>null</code>. Changes on the script only have an effect if they are performed
+   *         before this control is build!
    */
   @NonNull
   public final HCTypeahead getScript ()

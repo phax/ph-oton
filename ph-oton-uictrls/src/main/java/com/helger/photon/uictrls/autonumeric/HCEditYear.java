@@ -23,8 +23,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.html.request.IHCRequestField;
 
 /**
- * Special numeric edit for years from {@value #DEFAULT_MIN} to
- * {@value #DEFAULT_MAX}.
+ * Special numeric edit for years from {@value #DEFAULT_MIN} to {@value #DEFAULT_MAX}.
  *
  * @author Philip Helger
  */

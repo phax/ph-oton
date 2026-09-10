@@ -104,8 +104,8 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
   }
 
   /**
-   * Class name accessor. For example, for <code>java.util.List</code>, this
-   * method returns <code>"List"</code>
+   * Class name accessor. For example, for <code>java.util.List</code>, this method returns
+   * <code>"List"</code>
    *
    * @return Name of this class
    */
@@ -205,7 +205,10 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     ValueEnforcer.notNull (aField, "Field");
 
     if (m_aFields.remove (aField.name ()) != aField)
-      throw new IllegalArgumentException ("Failed to remove field '" + aField.name () + "' from " + m_aFields.keySet ());
+      throw new IllegalArgumentException ("Failed to remove field '" +
+                                          aField.name () +
+                                          "' from " +
+                                          m_aFields.keySet ());
     return this;
   }
 

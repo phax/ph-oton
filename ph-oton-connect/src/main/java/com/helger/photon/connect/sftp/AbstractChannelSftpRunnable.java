@@ -22,8 +22,8 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.enforce.ValueEnforcer;
 
 /**
- * Abstract implementation of the {@link IChannelSftpRunnable} interface
- * encapsulating the display name.
+ * Abstract implementation of the {@link IChannelSftpRunnable} interface encapsulating the display
+ * name.
  *
  * @author philip
  */

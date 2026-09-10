@@ -58,8 +58,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AjaxXServletHandler implements IXServletSimpleHandler
 {
   /**
-   * The name of the request parameter used by jQuery to indicate "no cache".
-   * Use this constant for parameter filtering.
+   * The name of the request parameter used by jQuery to indicate "no cache". Use this constant for
+   * parameter filtering.
    */
   public static final String REQUEST_PARAM_JQUERY_NO_CACHE = "_";
 
@@ -75,7 +75,7 @@ public class AjaxXServletHandler implements IXServletSimpleHandler
 
   public AjaxXServletHandler ()
   {
-    this ( () -> GlobalAjaxInvoker.getInstance ().getRegistry (), () -> GlobalAjaxInvoker.getInstance ().getInvoker ());
+    this (() -> GlobalAjaxInvoker.getInstance ().getRegistry (), () -> GlobalAjaxInvoker.getInstance ().getInvoker ());
   }
 
   public AjaxXServletHandler (@NonNull final Supplier <? extends IAjaxRegistry> aRegistryFactory,

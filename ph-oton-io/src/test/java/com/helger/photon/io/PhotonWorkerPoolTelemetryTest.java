@@ -117,9 +117,7 @@ public final class PhotonWorkerPoolTelemetryTest
   public void testFailingTask ()
   {
     // The exception is swallowed by the worker pool, so the future completes normally
-    PhotonWorkerPool.getInstance ().run (ACTION_NAME, () -> {
-      throw new IllegalStateException ("oops");
-    }).join ();
+    PhotonWorkerPool.getInstance ().run (ACTION_NAME, () -> { throw new IllegalStateException ("oops"); }).join ();
 
     final CapturedSpan aSpan = TELEMETRY.getSpans ().getFirstOrNull ();
     assertNotNull (aSpan);

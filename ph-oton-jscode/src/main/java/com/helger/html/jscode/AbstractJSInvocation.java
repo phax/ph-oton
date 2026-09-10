@@ -38,12 +38,13 @@ import com.helger.html.js.JSMarshaller;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocation <IMPLTYPE>> extends AbstractJSExpression implements
+public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocation <IMPLTYPE>> extends
+                                           AbstractJSExpression implements
                                            IJSInvocation <IMPLTYPE>
 {
   /**
-   * Object expression upon which this method will be invoked, or null if this
-   * is a constructor invocation
+   * Object expression upon which this method will be invoked, or null if this is a constructor
+   * invocation
    */
   private final IJSGeneratable m_aObject;
 
@@ -53,10 +54,9 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   private final IJSGeneratable m_aCtorType;
 
   /**
-   * Name of the method to be invoked. Either this field is set, or
-   * {@link #m_aCallee}, or {@link #m_aCtorType} (in which case it's a
-   * constructor invocation.) This allows {@link JSMethod#name(String) the name
-   * of the method to be changed later}.
+   * Name of the method to be invoked. Either this field is set, or {@link #m_aCallee}, or
+   * {@link #m_aCtorType} (in which case it's a constructor invocation.) This allows
+   * {@link JSMethod#name(String) the name of the method to be changed later}.
    */
   private final String m_sName;
 
@@ -113,8 +113,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
    * Invokes a method on an object.
    *
    * @param aLhs
-   *        Expression for the object upon which the named method will be
-   *        invoked, or null if none
+   *        Expression for the object upon which the named method will be invoked, or null if none
    * @param sMethod
    *        Name of method to invoke
    */
@@ -239,8 +238,7 @@ public abstract class AbstractJSInvocation <IMPLTYPE extends AbstractJSInvocatio
   }
 
   /**
-   * @return <code>true</code> if at least 1 arg is present, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if at least 1 arg is present, <code>false</code> otherwise.
    */
   public boolean hasArgs ()
   {

@@ -26,8 +26,8 @@ import com.helger.html.hc.html.AbstractHCElementWithChildren;
  * @param <IMPLTYPE>
  *        Implementation type
  */
-public abstract class AbstractHCSpan <IMPLTYPE extends AbstractHCSpan <IMPLTYPE>> extends AbstractHCElementWithChildren <IMPLTYPE>
-                                     implements
+public abstract class AbstractHCSpan <IMPLTYPE extends AbstractHCSpan <IMPLTYPE>> extends
+                                     AbstractHCElementWithChildren <IMPLTYPE> implements
                                      IHCSpan <IMPLTYPE>
 {
   public AbstractHCSpan ()

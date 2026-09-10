@@ -33,8 +33,8 @@ import com.helger.collection.commons.ICommonsList;
 public interface IDateFormatBuilder
 {
   /**
-   * @return A non-<code>null</code> list with {@link EDateTimeFormatToken} and
-   *         {@link Character} objects.
+   * @return A non-<code>null</code> list with {@link EDateTimeFormatToken} and {@link Character}
+   *         objects.
    */
   @NonNull
   ICommonsList <Object> getAllInternalObjects ();

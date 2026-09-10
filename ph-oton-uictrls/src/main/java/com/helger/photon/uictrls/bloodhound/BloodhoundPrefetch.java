@@ -90,8 +90,8 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * @return The key that data will be stored in local storage under. Defaults
-   *         to value of url. May be <code>null</code>.
+   * @return The key that data will be stored in local storage under. Defaults to value of url. May
+   *         be <code>null</code>.
    */
   @Nullable
   public String getCacheKey ()
@@ -107,8 +107,8 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * @return The time (in milliseconds) the prefetched data should be cached in
-   *         local storage. Defaults to <code>86400000</code> (1 day).
+   * @return The time (in milliseconds) the prefetched data should be cached in local storage.
+   *         Defaults to <code>86400000</code> (1 day).
    */
   @Nonnegative
   public long getTTL ()
@@ -117,8 +117,8 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * The time (in milliseconds) the prefetched data should be cached in
-   * localStorage. Defaults to <code>86400000</code> (1 day).
+   * The time (in milliseconds) the prefetched data should be cached in localStorage. Defaults to
+   * <code>86400000</code> (1 day).
    *
    * @param nTTL
    *        Time to live in milliseconds. Must be &ge; 1.
@@ -132,9 +132,8 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * @return A string used for thumbprinting prefetched data. If this doesn't
-   *         match what's stored in local storage, the data will be refetched.
-   *         May be <code>null</code>.
+   * @return A string used for thumbprinting prefetched data. If this doesn't match what's stored in
+   *         local storage, the data will be refetched. May be <code>null</code>.
    */
   @Nullable
   public String getThumbprint ()
@@ -150,9 +149,9 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * @return A function with the signature <code>filter(parsedResponse)</code>
-   *         that transforms the response body into an array of datums. Expected
-   *         to return an array of datums. May be <code>null</code>.
+   * @return A function with the signature <code>filter(parsedResponse)</code> that transforms the
+   *         response body into an array of datums. Expected to return an array of datums. May be
+   *         <code>null</code>.
    */
   @Nullable
   public IJSExpression getFilter ()
@@ -161,9 +160,8 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * A function with the signature <code>filter(parsedResponse)</code> that
-   * transforms the response body into an array of datums. Expected to return an
-   * array of datums.
+   * A function with the signature <code>filter(parsedResponse)</code> that transforms the response
+   * body into an array of datums. Expected to return an array of datums.
    *
    * @param aFilter
    *        Function to use. May be <code>null</code>.
@@ -177,8 +175,7 @@ public class BloodhoundPrefetch implements ICloneable <BloodhoundPrefetch>
   }
 
   /**
-   * @return The ajax settings object passed to <code>jQuery.ajax</code>. Maybe
-   *         <code>null</code>.
+   * @return The ajax settings object passed to <code>jQuery.ajax</code>. Maybe <code>null</code>.
    */
   @Nullable
   public JQueryAjaxBuilder getAjax ()

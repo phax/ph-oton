@@ -195,7 +195,7 @@ public final class PhotonCSS
   {
     final IRequestWebScopeWithoutResponse aRequestScope = WebScopeManager.getRequestScope ();
 
-    return LOCK.lockedGet ( () -> {
+    return LOCK.lockedGet (() -> {
       CSSResourceSet ret = aRequestScope.attrs ().getCastedValue (REQUEST_ATTR_CSSRESOURCES);
       if (ret == null && bCreateIfNotExisting)
       {

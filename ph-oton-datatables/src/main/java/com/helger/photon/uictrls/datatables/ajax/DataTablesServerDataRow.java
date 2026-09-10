@@ -42,8 +42,7 @@ import com.helger.json.JsonObject;
 import com.helger.xml.microdom.IMicroQName;
 
 /**
- * This class holds table rows to be used by the DataTables server side
- * handling.
+ * This class holds table rows to be used by the DataTables server side handling.
  *
  * @author Philip Helger
  */

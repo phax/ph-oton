@@ -112,15 +112,15 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   {
     // Create Administrator
     if (!containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (createDefaultUserAdministrator ()));
+      m_aRWLock.writeLocked (() -> internalCreateItem (createDefaultUserAdministrator ()));
 
     // Create regular user
     if (!containsWithID (CSecurity.USER_USER_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (createDefaultUserUser ()));
+      m_aRWLock.writeLocked (() -> internalCreateItem (createDefaultUserUser ()));
 
     // Create guest user
     if (!containsWithID (CSecurity.USER_GUEST_ID))
-      m_aRWLock.writeLocked ( () -> internalCreateItem (createDefaultUserGuest ()));
+      m_aRWLock.writeLocked (() -> internalCreateItem (createDefaultUserGuest ()));
   }
 
   @NonNull
@@ -162,7 +162,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                  bDisabled);
 
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aUser));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aUser));
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       sLoginName,
@@ -214,7 +214,7 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                                    bDisabled);
 
     // Store
-    m_aRWLock.writeLocked ( () -> internalCreateItem (aUser));
+    m_aRWLock.writeLocked (() -> internalCreateItem (aUser));
 
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),

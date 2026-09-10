@@ -37,8 +37,7 @@ public enum EAuditActionType implements IHasID <String>
   EXECUTE ("execute");
 
   /**
-   * The maximum ID length - that needs to be maintained for database
-   * compatibility.
+   * The maximum ID length - that needs to be maintained for database compatibility.
    */
   public static final int MAX_ID_LENGTH = 10;
 

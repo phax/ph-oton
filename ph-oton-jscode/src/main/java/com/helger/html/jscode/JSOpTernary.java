@@ -83,7 +83,13 @@ public class JSOpTernary extends AbstractJSExpression
 
   public void generate (@NonNull final JSFormatter aFormatter)
   {
-    aFormatter.plain ('(').generatable (m_aExpr1).plain (m_sOp1).generatable (m_aExpr2).plain (m_sOp2).generatable (m_aExpr3).plain (')');
+    aFormatter.plain ('(')
+              .generatable (m_aExpr1)
+              .plain (m_sOp1)
+              .generatable (m_aExpr2)
+              .plain (m_sOp2)
+              .generatable (m_aExpr3)
+              .plain (')');
   }
 
   @Override

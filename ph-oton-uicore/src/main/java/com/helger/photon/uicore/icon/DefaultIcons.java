@@ -39,8 +39,8 @@ public final class DefaultIcons
   {}
 
   /**
-   * @return <code>true</code> if at least a single default icon is defined,
-   *         <code>false</code> if no default icon is defined.
+   * @return <code>true</code> if at least a single default icon is defined, <code>false</code> if
+   *         no default icon is defined.
    */
   public static boolean areDefined ()
   {
@@ -63,8 +63,7 @@ public final class DefaultIcons
   }
 
   /**
-   * @return A copy of all currently defined default icons. Never
-   *         <code>null</code> but maybe empty.
+   * @return A copy of all currently defined default icons. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -74,14 +73,13 @@ public final class DefaultIcons
   }
 
   /**
-   * Set the icon to be used for the specified default icon. Existing
-   * definitions are simply overwritten.
+   * Set the icon to be used for the specified default icon. Existing definitions are simply
+   * overwritten.
    *
    * @param eDefaultIcon
    *        The default icon to use. May not be <code>null</code>.
    * @param aIcon
-   *        The icon to set. May be <code>null</code> in which case the
-   *        assignment is removed.
+   *        The icon to set. May be <code>null</code> in which case the assignment is removed.
    */
   public static void set (@NonNull final EDefaultIcon eDefaultIcon, @Nullable final IIcon aIcon)
   {

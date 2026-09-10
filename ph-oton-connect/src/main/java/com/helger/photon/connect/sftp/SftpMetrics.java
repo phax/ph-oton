@@ -47,8 +47,8 @@ public final class SftpMetrics
 
   /** JSch sessions currently open, by host. */
   public static final ITelemetryUpDownCounter SESSIONS_OPEN = TelemetryMetrics.upDownCounter (CConnectTelemetry.METRIC_SFTP_SESSIONS_OPEN,
-                                                                                               "JSch sessions currently open",
-                                                                                               CConnectTelemetry.UNIT_SESSION);
+                                                                                              "JSch sessions currently open",
+                                                                                              CConnectTelemetry.UNIT_SESSION);
 
   private SftpMetrics ()
   {}

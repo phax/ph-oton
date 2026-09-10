@@ -110,8 +110,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * Triggered after initialization. If data needs to be prefetched, this event
-   * will not be triggered until after the prefetched data is processed.
+   * Triggered after initialization. If data needs to be prefetched, this event will not be
+   * triggered until after the prefetched data is processed.
    *
    * @param aOnInitialized
    *        Function to use. May be <code>null</code>.
@@ -125,9 +125,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * @return Triggered after initialization. If data needs to be prefetched,
-   *         this event will not be triggered until after the prefetched data is
-   *         processed.
+   * @return Triggered after initialization. If data needs to be prefetched, this event will not be
+   *         triggered until after the prefetched data is processed.
    */
   @Nullable
   public JSAnonymousFunction getOnInitialized ()
@@ -182,9 +181,9 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * Triggered when a suggestion from the dropdown menu is explicitly selected.
-   * The datum for the selected suggestion is passed to the event handler as an
-   * argument in addition to the name of the dataset it originated from.
+   * Triggered when a suggestion from the dropdown menu is explicitly selected. The datum for the
+   * selected suggestion is passed to the event handler as an argument in addition to the name of
+   * the dataset it originated from.
    *
    * @param aOnSelected
    *        Function to call. May be <code>null</code>.
@@ -198,10 +197,9 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * @return Triggered when a suggestion from the dropdown menu is explicitly
-   *         selected. The datum for the selected suggestion is passed to the
-   *         event handler as an argument in addition to the name of the dataset
-   *         it originated from.
+   * @return Triggered when a suggestion from the dropdown menu is explicitly selected. The datum
+   *         for the selected suggestion is passed to the event handler as an argument in addition
+   *         to the name of the dataset it originated from.
    */
   @Nullable
   public JSAnonymousFunction getOnSelected ()
@@ -210,9 +208,8 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * Triggered when the query is autocompleted. The datum used for
-   * autocompletion is passed to the event handler as an argument in addition to
-   * the name of the dataset it originated from.
+   * Triggered when the query is autocompleted. The datum used for autocompletion is passed to the
+   * event handler as an argument in addition to the name of the dataset it originated from.
    *
    * @param aOnAutoCompleted
    *        Function to call. May be <code>null</code>.
@@ -226,9 +223,9 @@ public class HCTypeahead extends AbstractHCScriptInline <HCTypeahead>
   }
 
   /**
-   * @return Triggered when the query is autocompleted. The datum used for
-   *         autocompletion is passed to the event handler as an argument in
-   *         addition to the name of the dataset it originated from.
+   * @return Triggered when the query is autocompleted. The datum used for autocompletion is passed
+   *         to the event handler as an argument in addition to the name of the dataset it
+   *         originated from.
    */
   @Nullable
   public JSAnonymousFunction getOnAutoCompleted ()

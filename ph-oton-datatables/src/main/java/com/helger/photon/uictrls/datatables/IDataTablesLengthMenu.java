@@ -35,8 +35,7 @@ import com.helger.html.jscode.JSArray;
 public interface IDataTablesLengthMenu
 {
   /**
-   * @return <code>true</code> if no entry is contained, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if no entry is contained, <code>false</code> otherwise.
    */
   boolean isEmpty ();
 
@@ -47,8 +46,7 @@ public interface IDataTablesLengthMenu
   int getItemCount ();
 
   /**
-   * @return A copy of all contained items. Never <code>null</code> but maybe
-   *         empty.
+   * @return A copy of all contained items. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy

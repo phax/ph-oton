@@ -46,8 +46,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
   }
 
   /**
-   * Add multiple unique CSS classes at once. Each CSS class that is already
-   * present, is ignored.
+   * Add multiple unique CSS classes at once. Each CSS class that is already present, is ignored.
    *
    * @param aCSSClassProviders
    *        The CSS classed to add. May neither be <code>null</code> nor empty.
@@ -63,8 +62,7 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
   }
 
   /**
-   * Add multiple unique CSS classes at once. Each CSS class that is already
-   * present, is ignored.
+   * Add multiple unique CSS classes at once. Each CSS class that is already present, is ignored.
    *
    * @param aCSSClassProviders
    *        The CSS classed to add. May neither be <code>null</code> nor empty.
@@ -102,37 +100,32 @@ public interface IHCHasCSSClasses <IMPLTYPE extends IHCHasCSSClasses <IMPLTYPE>>
    *
    * @param aProvider
    *        The CSS class provider to check. May be <code>null</code>.
-   * @return <code>true</code> if the passed CSS class is contained,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if the passed CSS class is contained, <code>false</code> otherwise.
    */
   boolean containsClass (@Nullable ICSSClassProvider aProvider);
 
   /**
-   * @return A sorted set with all registered CSS class providers. Never
-   *         <code>null</code>.
+   * @return A sorted set with all registered CSS class providers. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <ICSSClassProvider> getAllClasses ();
 
   /**
-   * @return A set with all CSS class names registered so far. Never
-   *         <code>null</code>.
+   * @return A set with all CSS class names registered so far. Never <code>null</code>.
    */
   @NonNull
   @ReturnsMutableCopy
   ICommonsOrderedSet <String> getAllClassNames ();
 
   /**
-   * @return <code>true</code> if at least one CSS class is assigned,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if at least one CSS class is assigned, <code>false</code> otherwise.
    */
   boolean hasAnyClass ();
 
   /**
-   * Get the string representation of all contained classes as it should be set
-   * to the HTML <code>class</code> attribute. A single blank is used as a
-   * separator.
+   * Get the string representation of all contained classes as it should be set to the HTML
+   * <code>class</code> attribute. A single blank is used as a separator.
    *
    * @return <code>null</code> if no classes are present.
    */

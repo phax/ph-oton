@@ -60,7 +60,11 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
       return new ExporterExcel (EExcelVersion.XLS);
     }
   },
-  XLSX ("xlsx", EExcelVersion.XLSX.getFileExtension (), EExcelVersion.XLSX.getMimeType (), true, EExchangeFileTypeName.XLSX)
+  XLSX ("xlsx",
+        EExcelVersion.XLSX.getFileExtension (),
+        EExcelVersion.XLSX.getMimeType (),
+        true,
+        EExchangeFileTypeName.XLSX)
   {
     @Override
     @NonNull
@@ -153,8 +157,8 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   }
 
   /**
-   * @return <code>true</code> if this file type is line based. This is e.g. the
-   *         case for CSV or Excel files.
+   * @return <code>true</code> if this file type is line based. This is e.g. the case for CSV or
+   *         Excel files.
    */
   public boolean isLineBased ()
   {
@@ -194,7 +198,8 @@ public enum EExchangeFileType implements IHasID <String>, IHasDisplayText
   }
 
   @Nullable
-  public static EExchangeFileType getFromIDOrDefault (@Nullable final String sID, @Nullable final EExchangeFileType eDefault)
+  public static EExchangeFileType getFromIDOrDefault (@Nullable final String sID,
+                                                      @Nullable final EExchangeFileType eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EExchangeFileType.class, sID, eDefault);
   }
