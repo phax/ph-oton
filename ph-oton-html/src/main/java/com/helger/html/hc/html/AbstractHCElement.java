@@ -265,7 +265,7 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
       return null;
 
     if (nCount == 1)
-      return aCSSClassProviders.getFirst ().getCSSClass ();
+      return aCSSClassProviders.getFirstOrNull ().getCSSClass ();
 
     final StringBuilder aSB = new StringBuilder ();
     for (final ICSSClassProvider aCSSClassProvider : aCSSClassProviders)

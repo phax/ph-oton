@@ -174,7 +174,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       final ICommonsOrderedSet <String> aUniqueIDs = new CommonsLinkedHashSet <> (aIDs);
       final int nIDCount = aUniqueIDs.size ();
       if (nIDCount == 1)
-        return containsWithID (aUniqueIDs.getFirst ());
+        return containsWithID (aUniqueIDs.getFirstOrNull ());
 
       if (nIDCount > 0)
       {

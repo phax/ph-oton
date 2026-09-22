@@ -628,7 +628,7 @@ abstract class AbstractCreateJQueryAPIList
                                                                        : false;
 
             final ICommonsList <String> aTypes = new CommonsArrayList <> ();
-            if (StringHelper.isEmptyAfterTrim (sArgType))
+            if (StringHelper.isBlank (sArgType))
             {
               for (final IMicroElement eArgType : eArg.getAllChildElements ("type"))
                 for (final String sRealArgType : StringHelper.getExploded ('/', eArgType.getAttributeValue ("name")))

@@ -83,7 +83,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
     @NonNull
     protected Finder initialize (@NonNull @Nonempty final String sSearchTerms)
     {
-      if (StringHelper.isEmptyAfterTrim (sSearchTerms))
+      if (StringHelper.isBlank (sSearchTerms))
         throw new IllegalArgumentException ("SearchTerms");
 
       // Split search terms by white spaces
@@ -260,7 +260,7 @@ public abstract class AbstractAjaxExecutorTypeaheadFinder <LECTYPE extends ILayo
                                     @NonNull final PhotonUnifiedResponse aAjaxResponse) throws Exception
   {
     final String sOriginalQuery = getQueryString (aLEC);
-    if (StringHelper.isEmptyAfterTrim (sOriginalQuery))
+    if (StringHelper.isBlank (sOriginalQuery))
     {
       // May happen when the user enters " " (only spaces)
       aAjaxResponse.jsonEmpty ();

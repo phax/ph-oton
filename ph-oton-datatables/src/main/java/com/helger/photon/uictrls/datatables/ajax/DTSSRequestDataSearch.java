@@ -37,7 +37,7 @@ public final class DTSSRequestDataSearch
   @Nullable
   public static String [] getSearchTexts (@Nullable final String sSearchText)
   {
-    if (StringHelper.isEmptyAfterTrim (sSearchText))
+    if (StringHelper.isBlank (sSearchText))
       return null;
 
     // Trim first, because leading whitespace would otherwise lead to an empty first search term,
