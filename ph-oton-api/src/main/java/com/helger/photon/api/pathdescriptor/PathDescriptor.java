@@ -43,12 +43,19 @@ import com.helger.url.codec.URLCoder;
 public final class PathDescriptor implements Serializable
 {
   private final ICommonsList <PathDescriptorPart> m_aPathParts = new CommonsArrayList <> ();
+  private final String m_sAsURLString;
 
   private PathDescriptor (@NonNull @Nonempty final List <String> aPathParts)
   {
     ValueEnforcer.notEmpty (aPathParts, "PathParts");
     for (final String sPathPart : aPathParts)
       m_aPathParts.add (PathDescriptorPart.create (sPathPart));
+
+    // This object is immutable, and the URL String is needed on every API invocation
+    final StringBuilder aSB = new StringBuilder ();
+    for (final PathDescriptorPart aPart : m_aPathParts)
+      aSB.append ('/').append (aPart.getAsURLString ());
+    m_sAsURLString = aSB.toString ();
   }
 
   @NonNull
@@ -106,10 +113,7 @@ public final class PathDescriptor implements Serializable
   @Nonempty
   public String getAsURLString ()
   {
-    final StringBuilder aSB = new StringBuilder ();
-    for (final PathDescriptorPart aPart : m_aPathParts)
-      aSB.append ('/').append (aPart.getAsURLString ());
-    return aSB.toString ();
+    return m_sAsURLString;
   }
 
   public boolean containsVariables ()

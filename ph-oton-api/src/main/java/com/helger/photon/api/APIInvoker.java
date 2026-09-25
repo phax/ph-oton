@@ -59,6 +59,8 @@ public class APIInvoker implements IAPIInvoker
     ValueEnforcer.notNull (aUnifiedResponse, "UnifiedResponse");
 
     final String sPath = aInvokableDescriptor.getPath ();
+    // The route template is bounded by the number of registered APIs - the concrete path is not
+    final String sRoute = aInvokableDescriptor.getAPIDescriptor ().getPathDescriptor ().getAsURLString ();
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Invoking API '" + sPath + "'");
 
@@ -86,7 +88,7 @@ public class APIInvoker implements IAPIInvoker
                      .forEach (aCB -> aCB.onAfterExecution (this, aInvokableDescriptor, aRequestScope));
 
           // Increment statistics after successful call
-          STATS_FUNCTION_INVOKE.increment (sPath);
+          STATS_FUNCTION_INVOKE.increment (sRoute);
           aSuccess.set (true);
           APITelemetry.onInvokeSuccess (aSpan);
         }
@@ -116,7 +118,7 @@ public class APIInvoker implements IAPIInvoker
     {
       // Long running API request?
       final long nExecutionMillis = aSW.stopAndGetMillis ();
-      STATS_FUNCTION_TIMER.addTime (sPath, nExecutionMillis);
+      STATS_FUNCTION_TIMER.addTime (sRoute, nExecutionMillis);
       APITelemetry.onInvokeEnd (aInvokableDescriptor, aSuccess.booleanValue (), nExecutionMillis);
       final long nLimitMS = APISettings.getLongRunningExecutionLimitTime ();
       if (nLimitMS > 0 && nExecutionMillis > nLimitMS)

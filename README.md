@@ -69,6 +69,12 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 v10.6.1 - work in progress
 * Requires at least ph-commons 12.5.0
+* **Behaviour change**: `APIInvoker` now keys its `$func` and `$timer` statistics by the route template (e.g. `/{ServiceGroupID}/services/{DocumentTypeID}`) instead of the concrete path requested by the caller.
+  Both handlers are backed by a map that is never evicted and lives as long as the JVM, so for every API with a variable path part the number of keys grew with the number of distinct values ever requested - unauthenticated and unmatched requests included.
+  A phoss SMP instance ran out of a 6.7 GB heap every three to four days because of this.
+  This is the same bounded dimension that the ph-telemetry metrics introduced in v10.6.0 already use, so statistics and metrics are now keyed identically.
+  See [phax/ph-oton#57](https://github.com/phax/ph-oton/issues/57) - thx @ismailbennani
+* `PathDescriptor.getAsURLString ()` returns a value computed once in the constructor, instead of building a new String on every call.
 
 v10.6.0 - 2026-09-06
 * Added the package `com.helger.photon.core.paging` (ph-oton-core) with `ITableColumn`, `SortColumn` and `TableColumnHelper`.
