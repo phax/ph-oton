@@ -19,6 +19,7 @@ package com.helger.photon.security.mgr;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ import com.helger.photon.audit.AuditHelper;
 import com.helger.photon.audit.AuditManager;
 import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.security.lock.DefaultLockManager;
+import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.lock.ObjectLockManager;
 import com.helger.photon.security.login.ELoginResult;
 import com.helger.photon.security.login.GlobalUserIDProvider;
@@ -56,6 +58,7 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  * contained managers are:
  * <ul>
  * <li>{@link AuditManager}</li>
+ * <li>{@link ILockManager}</li>
  * <li>{@link UserManager}</li>
  * <li>{@link RoleManager}</li>
  * <li>{@link UserGroupManager}</li>
@@ -82,6 +85,24 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
      */
     @NonNull
     IAuditManager createAuditMgr () throws Exception;
+
+    /**
+     * Create the lock manager to be used. As the default implementation is a pure in-memory
+     * implementation, this method has a default implementation returning the lock manager of the
+     * (deprecated) {@link ObjectLockManager} singleton, so that existing code accessing that
+     * singleton directly still sees the same instance.
+     *
+     * @return A new instance of {@link ILockManager}.
+     * @throws Exception
+     *         In case of error
+     * @since 10.7.0
+     */
+    @NonNull
+    @SuppressWarnings ("deprecation")
+    default ILockManager <String> createLockMgr () throws Exception
+    {
+      return ObjectLockManager.getInstance ().getDefaultLockMgr ();
+    }
 
     /**
      * @return A new instance of {@link IUserManager}
@@ -221,6 +242,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
   }
 
   private IAuditManager m_aAuditMgr;
+  private ILockManager <String> m_aLockMgr;
   private IUserManager m_aUserMgr;
   private IRoleManager m_aRoleMgr;
   private IUserGroupManager m_aUserGroupMgr;
@@ -267,6 +289,7 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       AuditHelper.setAuditor (m_aAuditMgr.getAuditor ());
       AuditHelper.onAuditExecuteSuccess ("audit-initialized");
 
+      m_aLockMgr = s_aFactory.createLockMgr ();
       m_aUserMgr = s_aFactory.createUserMgr ();
       m_aRoleMgr = s_aFactory.createRoleMgr ();
       m_aUserGroupMgr = s_aFactory.createUserGroupMgr (m_aUserMgr, m_aRoleMgr);
@@ -305,6 +328,8 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
       AuditHelper.setDefaultAuditor ();
       m_aAuditMgr.stop ();
     }
+    // Allow to set a new factory after the global scope was destroyed
+    INITED.set (false);
   }
 
   @NonNull
@@ -319,10 +344,27 @@ public final class PhotonSecurityManager extends AbstractGlobalSingleton
     return getInstance ().m_aAuditMgr;
   }
 
+  /**
+   * @return The lock manager created by the installed {@link IFactory}. Never <code>null</code>.
+   *         Since 10.7.0 this returns {@link ILockManager} instead of {@link DefaultLockManager}.
+   */
   @NonNull
-  public static DefaultLockManager <String> getLockMgr ()
+  public static ILockManager <String> getLockMgr ()
   {
-    return ObjectLockManager.getInstance ().getDefaultLockMgr ();
+    return getInstance ().m_aLockMgr;
+  }
+
+  /**
+   * @return The lock manager created by the installed {@link IFactory} or <code>null</code> if this
+   *         manager was not yet instantiated. This method never instantiates this manager and can
+   *         therefore safely be used during shutdown.
+   * @since 10.7.0
+   */
+  @Nullable
+  public static ILockManager <String> getLockMgrIfInstantiated ()
+  {
+    final PhotonSecurityManager aInstance = getGlobalSingletonIfInstantiated (PhotonSecurityManager.class);
+    return aInstance == null ? null : aInstance.m_aLockMgr;
   }
 
   @NonNull

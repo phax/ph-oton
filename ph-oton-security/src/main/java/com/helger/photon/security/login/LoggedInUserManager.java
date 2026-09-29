@@ -43,7 +43,7 @@ import com.helger.collection.commons.ICommonsCollection;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.photon.audit.AuditHelper;
-import com.helger.photon.security.lock.ObjectLockManager;
+import com.helger.photon.security.lock.ILockManager;
 import com.helger.photon.security.mgr.PhotonSecurityManager;
 import com.helger.photon.security.password.GlobalPasswordSettings;
 import com.helger.photon.security.user.IUser;
@@ -198,7 +198,7 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
 
   /**
    * Special logout callback that is executed every time a user logs out. It removes all objects
-   * from the {@link ObjectLockManager}.
+   * from the lock manager of the {@link PhotonSecurityManager}.
    *
    * @author Philip Helger
    */
@@ -207,9 +207,10 @@ public final class LoggedInUserManager extends AbstractGlobalSingleton implement
     @Override
     public void onUserLogout (@NonNull final LoginInfo aInfo)
     {
-      final ObjectLockManager aOLMgr = ObjectLockManager.getInstanceIfInstantiated ();
-      if (aOLMgr != null)
-        aOLMgr.getDefaultLockMgr ().unlockAllObjectsOfUser (aInfo.getUserID ());
+      // Don't instantiate the manager, in case we are already shutting down
+      final ILockManager <String> aLockMgr = PhotonSecurityManager.getLockMgrIfInstantiated ();
+      if (aLockMgr != null)
+        aLockMgr.unlockAllObjectsOfUser (aInfo.getUserID ());
     }
   }
 

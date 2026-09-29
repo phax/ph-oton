@@ -30,7 +30,9 @@ import com.helger.collection.commons.ICommonsSet;
 
 /**
  * Base interface for a manager that handles object locking. See {@link DefaultLockManager} for a
- * per-instance implementation and {@link ObjectLockManager} for a singleton version.
+ * per-instance implementation. Use
+ * {@link com.helger.photon.security.mgr.PhotonSecurityManager#getLockMgr()} to retrieve the
+ * globally configured instance.
  *
  * @author Philip Helger
  * @param <IDTYPE>

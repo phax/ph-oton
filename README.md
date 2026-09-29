@@ -67,7 +67,14 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.6.1 - work in progress
+v10.7.0 - work in progress
+* **Incompatible change**: `PhotonSecurityManager.getLockMgr ()` now returns `ILockManager <String>` instead of `DefaultLockManager <String>`. This is source compatible but requires a recompilation.
+* Added `PhotonSecurityManager.IFactory.createLockMgr ()` so that the lock manager can be replaced like all the other security managers. It is a `default` method returning the lock manager of `ObjectLockManager`, so existing `IFactory` implementations are unaffected.
+* Added `PhotonSecurityManager.getLockMgrIfInstantiated ()` that never instantiates the manager and can therefore be used during shutdown.
+* The logout callback that unlocks all objects of a user now uses the lock manager of `PhotonSecurityManager` instead of always using `ObjectLockManager`.
+* Deprecated `ObjectLockManager` - use `PhotonSecurityManager.getLockMgr ()` instead. It stays the default lock manager holder, so both ways return the same instance as long as the factory is not customized.
+  See [phax/ph-oton#58](https://github.com/phax/ph-oton/issues/58) - thx @andreasa-winenet
+* `PhotonSecurityManager` resets its "already initialized" flag on destruction, so that `setFactory` works again after the global scope was destroyed.
 * Requires at least ph-commons 12.5.0
 * **Behaviour change**: `APIInvoker` now keys its `$func` and `$timer` statistics by the route template (e.g. `/{ServiceGroupID}/services/{DocumentTypeID}`) instead of the concrete path requested by the caller.
   Both handlers are backed by a map that is never evicted and lives as long as the JVM, so for every API with a variable path part the number of keys grew with the number of distinct values ever requested - unauthenticated and unmatched requests included.

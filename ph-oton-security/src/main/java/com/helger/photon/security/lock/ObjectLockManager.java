@@ -29,7 +29,14 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  * Singleton of {@link ILockManager}.
  *
  * @author Philip Helger
+ * @deprecated Since 10.7.0 use
+ *             {@link com.helger.photon.security.mgr.PhotonSecurityManager#getLockMgr()} instead.
+ *             That one respects the installed
+ *             {@link com.helger.photon.security.mgr.PhotonSecurityManager.IFactory} and can
+ *             therefore be replaced. This class stays the default lock manager holder, so that
+ *             both ways return the same instance as long as the factory is not customized.
  */
+@Deprecated (forRemoval = false)
 @ThreadSafe
 public final class ObjectLockManager extends AbstractGlobalSingleton
 {
