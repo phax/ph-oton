@@ -96,8 +96,7 @@ public final class PhotonSecurityManagerLockMgrFactoryTest
   }
 
   @Rule
-  public final TestRule m_aRule = RuleChain.outerRule (new RestoreFactoryRule ())
-                                           .around (new PhotonAppWebTestRule ());
+  public final TestRule m_aRule = RuleChain.outerRule (new RestoreFactoryRule ()).around (new PhotonAppWebTestRule ());
 
   @Test
   public void testLockMgrIsTakenFromFactory ()

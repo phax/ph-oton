@@ -33,8 +33,8 @@ import com.helger.scope.singleton.AbstractGlobalSingleton;
  *             {@link com.helger.photon.security.mgr.PhotonSecurityManager#getLockMgr()} instead.
  *             That one respects the installed
  *             {@link com.helger.photon.security.mgr.PhotonSecurityManager.IFactory} and can
- *             therefore be replaced. This class stays the default lock manager holder, so that
- *             both ways return the same instance as long as the factory is not customized.
+ *             therefore be replaced. This class stays the default lock manager holder, so that both
+ *             ways return the same instance as long as the factory is not customized.
  */
 @Deprecated (forRemoval = false)
 @ThreadSafe
