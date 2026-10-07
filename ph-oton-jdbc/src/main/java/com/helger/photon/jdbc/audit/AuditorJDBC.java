@@ -143,16 +143,9 @@ public class AuditorJDBC extends AbstractAuditor
 
   @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
+  private static ICommonsList <IAuditItem> _toAuditItems (@Nullable final ICommonsList <DBResultRow> aDBResult)
   {
-    ValueEnforcer.isGT0 (nMaxItems, "MaxItems");
-
     final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
-    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT dt, userid, actiontype, success, action FROM " +
-                                                                          m_sTableName +
-                                                                          " ORDER BY dt DESC" +
-                                                                          " LIMIT ?",
-                                                                          new ConstantPreparedStatementDataProvider (Integer.valueOf (nMaxItems)));
     if (aDBResult != null)
       for (final DBResultRow aRow : aDBResult)
       {
@@ -163,6 +156,51 @@ public class AuditorJDBC extends AbstractAuditor
                                 aRow.getAsString (4)));
       }
     return ret;
+  }
+
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <IAuditItem> getLastAuditItems (@Nonnegative final int nMaxItems)
+  {
+    ValueEnforcer.isGT0 (nMaxItems, "MaxItems");
+
+    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT dt, userid, actiontype, success, action FROM " +
+                                                                          m_sTableName +
+                                                                          " ORDER BY dt DESC" +
+                                                                          " LIMIT ?",
+                                                                          new ConstantPreparedStatementDataProvider (Integer.valueOf (nMaxItems)));
+    return _toAuditItems (aDBResult);
+  }
+
+  /**
+   * Get all audit items that were created in the provided date range.
+   *
+   * @param aStartDate
+   *        The first date to include. May not be <code>null</code>.
+   * @param aEndDate
+   *        The last date to include. May not be <code>null</code> and may not be before the start
+   *        date.
+   * @return All audit items created between the start of the start date and the end of the end
+   *         date, sorted ascending by date time. Never <code>null</code>.
+   * @since 10.7.0
+   */
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <IAuditItem> getAllAuditItemsOfDateRange (@NonNull final LocalDate aStartDate,
+                                                                @NonNull final LocalDate aEndDate)
+  {
+    ValueEnforcer.notNull (aStartDate, "StartDate");
+    ValueEnforcer.notNull (aEndDate, "EndDate");
+    ValueEnforcer.isFalse (aEndDate.isBefore (aStartDate), "EndDate may not be before StartDate");
+
+    final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT dt, userid, actiontype, success, action FROM " +
+                                                                          m_sTableName +
+                                                                          " WHERE dt >= ? AND dt < ?" +
+                                                                          " ORDER BY dt ASC",
+                                                                          new ConstantPreparedStatementDataProvider (DBValueHelper.toTimestamp (aStartDate.atStartOfDay ()),
+                                                                                                                     DBValueHelper.toTimestamp (aEndDate.plusDays (1)
+                                                                                                                                                        .atStartOfDay ())));
+    return _toAuditItems (aDBResult);
   }
 
   @Nullable

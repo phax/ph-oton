@@ -82,6 +82,14 @@ public class AuditManagerJDBC implements IAuditManager
     return m_aAuditor.getLastAuditItems (nMaxItems);
   }
 
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <IAuditItem> getAllAuditItemsOfDateRange (@NonNull final LocalDate aStartDate,
+                                                                @NonNull final LocalDate aEndDate)
+  {
+    return m_aAuditor.getAllAuditItemsOfDateRange (aStartDate, aEndDate);
+  }
+
   public void stop ()
   {
     // Nothing to do

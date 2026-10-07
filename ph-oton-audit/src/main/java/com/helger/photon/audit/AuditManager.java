@@ -19,8 +19,10 @@ package com.helger.photon.audit;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.jspecify.annotations.NonNull;
@@ -281,9 +283,54 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     if (!aFile.exists ())
       return null;
 
+    // Read-lock, so that the file is not read while it is written
+    final IMicroDocument aDoc = m_aRWLock.readLockedGet ( () -> MicroReader.readMicroXML (aFile));
+    if (aDoc == null)
+    {
+      LOGGER.warn ("Failed to read audit file '" + aFile.getAbsolutePath () + "'");
+      return null;
+    }
+
     final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
-    final IMicroDocument aDoc = MicroReader.readMicroXML (aFile);
     readFromXML (aDoc, ret::add);
+    return ret;
+  }
+
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <IAuditItem> getAllAuditItemsOfDateRange (@NonNull final LocalDate aStartDate,
+                                                                @NonNull final LocalDate aEndDate)
+  {
+    ValueEnforcer.notNull (aStartDate, "StartDate");
+    ValueEnforcer.notNull (aEndDate, "EndDate");
+    ValueEnforcer.isFalse (aEndDate.isBefore (aStartDate), "EndDate may not be before StartDate");
+
+    final Predicate <IAuditItem> aIsInRange = aItem -> {
+      final LocalDate aItemDate = aItem.getDateTime ().toLocalDate ();
+      return !aItemDate.isBefore (aStartDate) && !aItemDate.isAfter (aEndDate);
+    };
+
+    final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
+    if (isInMemory ())
+    {
+      // Only the items kept in memory are available
+      m_aRWLock.readLocked ( () -> m_aItems.getAllItems ().findAll (aIsInRange, ret::add));
+    }
+    else
+    {
+      // Items are written asynchronously, so items created shortly before
+      // midnight may end up in the file of the following day
+      final LocalDate aLastFileDate = aEndDate.plusDays (1);
+      LocalDate aDate = aStartDate;
+      while (!aDate.isAfter (aLastFileDate))
+      {
+        final ICommonsList <IAuditItem> aItemsOfDate = getAllAuditItemsOfDate (aDate);
+        if (aItemsOfDate != null)
+          aItemsOfDate.findAll (aIsInRange, ret::add);
+        aDate = aDate.plusDays (1);
+      }
+    }
+    ret.sort (Comparator.comparing (IAuditItem::getDateTime));
     return ret;
   }
 

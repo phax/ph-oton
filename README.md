@@ -82,6 +82,8 @@ v10.7.0 - work in progress
   This is the same bounded dimension that the ph-telemetry metrics introduced in v10.6.0 already use, so statistics and metrics are now keyed identically.
   See [phax/ph-oton#57](https://github.com/phax/ph-oton/issues/57) - thx @ismailbennani
 * `PathDescriptor.getAsURLString ()` returns a value computed once in the constructor, instead of building a new String on every call.
+* Added `IAuditManager.getAllAuditItemsOfDateRange (LocalDate, LocalDate)` to get all audit items of a date range. It is a `default` method returning `null` ("not supported"), so existing implementations are unaffected. `AuditManager`, `AuditManagerJDBC` (and `AuditorJDBC`) and `DoNothingAuditManager` implement it.
+* `AuditManager.getAllAuditItemsOfDate (LocalDate)` now reads the file in a read-lock, so that it is not read while being written, and returns `null` instead of failing if the file cannot be parsed.
 
 v10.6.0 - 2026-09-06
 * Added the package `com.helger.photon.core.paging` (ph-oton-core) with `ITableColumn`, `SortColumn` and `TableColumnHelper`.

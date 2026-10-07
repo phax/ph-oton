@@ -58,6 +58,13 @@ public final class DoNothingAuditManager implements IAuditManager
     return new CommonsArrayList <> ();
   }
 
+  @NonNull
+  public List <IAuditItem> getAllAuditItemsOfDateRange (@NonNull final LocalDate aStartDate,
+                                                        @NonNull final LocalDate aEndDate)
+  {
+    return new CommonsArrayList <> ();
+  }
+
   public void stop ()
   {
     // Nothing to do

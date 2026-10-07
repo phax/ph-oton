@@ -66,6 +66,29 @@ public interface IAuditManager
   List <IAuditItem> getLastAuditItems (@Nonnegative int nMaxItems);
 
   /**
+   * Get all audit items that were created in the provided date range. Not all implementations
+   * support this.
+   *
+   * @param aStartDate
+   *        The first date to include. May not be <code>null</code>.
+   * @param aEndDate
+   *        The last date to include. May not be <code>null</code> and may not be before the start
+   *        date.
+   * @return All audit items created between the start of the start date and the end of the end
+   *         date, sorted ascending by date time. <code>null</code> if this implementation does not
+   *         support querying by date.
+   * @since 10.7.0
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  @CodingStyleguideUnaware
+  default List <IAuditItem> getAllAuditItemsOfDateRange (@NonNull final LocalDate aStartDate,
+                                                         @NonNull final LocalDate aEndDate)
+  {
+    return null;
+  }
+
+  /**
    * Stop taking new audits. Call this upon shutdown for correct cleanup! Consecutive calls to this
    * method have no further effect.
    */
