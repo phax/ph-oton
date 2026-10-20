@@ -155,7 +155,7 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
       }
       catch (final Exception ex)
       {
-        CONDLOG.error (() -> "Error running ph-oton " + sTaskType + " " + aTask, ex);
+        CONDLOG.error (() -> "Error running ph-oton " + sTaskType + " " + aTask, (Throwable) ex);
         PhotonWorkerPoolTelemetry.onTaskError (aSpan, ex);
       }
       finally

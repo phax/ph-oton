@@ -67,6 +67,9 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.7.1 - work in progress
+* Requires at least ph-commons 12.5.2
+
 v10.7.0 - 2026-10-08
 * **Incompatible change**: `PhotonSecurityManager.getLockMgr ()` now returns `ILockManager <String>` instead of `DefaultLockManager <String>`.
   This is source compatible but requires a recompilation.
