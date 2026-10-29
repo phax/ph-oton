@@ -60,6 +60,11 @@ public class PhotonWorkerPool extends AbstractGlobalSingleton
   @UsedViaReflection
   public PhotonWorkerPool ()
   {
+    // TODO once the minimum Java version is 21: use Executors.newVirtualThreadPerTaskExecutor () as
+    // the default. The tasks are mostly blocking I/O (HTTP, DB), so virtual threads fit better than
+    // a fixed pool sized by the CPU count, and the executor can still be shut down in onDestroy.
+    // Not the common ForkJoin pool: it is sized for CPU-bound work, cannot be shut down and its
+    // threads lack the context class loader of a web application.
     this (Runtime.getRuntime ().availableProcessors () * 2);
   }
 
