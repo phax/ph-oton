@@ -16,6 +16,7 @@
  */
 package com.helger.photon.app.resource;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -71,7 +72,8 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
   }
 
   /**
-   * Constructor for de-serialization only.
+   * Constructor for de-serialization and for subclasses that store the merged content somewhere
+   * else than in the file system. This constructor does not write the merged content.
    *
    * @param sBundleID
    *        Bundle ID
@@ -80,13 +82,82 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
    * @param aCreationDT
    *        Bundle creation data
    */
-  WebSiteResourceBundleSerialized (@NonNull @Nonempty final String sBundleID,
-                                   @NonNull final WebSiteResourceBundle aBundle,
-                                   @NonNull final LocalDateTime aCreationDT)
+  protected WebSiteResourceBundleSerialized (@NonNull @Nonempty final String sBundleID,
+                                             @NonNull final WebSiteResourceBundle aBundle,
+                                             @NonNull final LocalDateTime aCreationDT)
   {
     m_sBundleID = ValueEnforcer.notEmpty (sBundleID, "BundleID");
     m_aBundle = ValueEnforcer.notNull (aBundle, "Bundle");
     m_aCreationDT = ValueEnforcer.notNull (aCreationDT, "CreationDT");
+  }
+
+  /**
+   * Write the merged content of all resources of this bundle to the passed writer. This is the
+   * content that is delivered for the bundle. It can be used by implementations that store the
+   * merged content somewhere else than in the file system.
+   *
+   * @param aWriter
+   *        The writer to write to. May not be <code>null</code>. It is not closed by this method.
+   * @param bRegular
+   *        <code>true</code> to use the regular version of the resources, <code>false</code> to
+   *        use the minified version.
+   * @throws IOException
+   *         In case writing fails
+   * @since 10.8.0
+   */
+  public void writeMergedContent (@NonNull final Writer aWriter, final boolean bRegular) throws IOException
+  {
+    ValueEnforcer.notNull (aWriter, "Writer");
+
+    // Write all used files into the result file (at least for now)
+    for (final WebSiteResource aRes : m_aBundle.getAllResources ())
+    {
+      // This type of comment works for CSS and JS!
+      // Update don't display the resource as URL because that might
+      // reveal internal paths
+      final String sMetaInfo = "/* " +
+                               aRes.getPath () +
+                               (true ? "" : " - " + aRes.getResource ().getAsURL ()) +
+                               " - " +
+                               aRes.getContentHashAsString () +
+                               " */\n";
+      aWriter.write (sMetaInfo);
+    }
+    // Write all resources themselves
+    for (final WebSiteResource aRes : m_aBundle.getAllResources ())
+    {
+      final String sContent = aRes.getContent (bRegular);
+      if (sContent != null)
+      {
+        aWriter.write (sContent);
+        if (StringHelper.getLastChar (sContent) != '\n')
+        {
+          // For the sake of clarity if a script does not end with a "\n"
+          // Add this in minified mode as well, because if the last line
+          // of the previous
+          // script started with "//" and the next file starts with a
+          // multi line comment,
+          // we would run in a syntax error!
+          // As in:
+          /**
+           * <pre>
+           * // last line of previous file/*
+           * * Multi line comment in next file
+           * ... etc
+           * </pre>
+           */
+          aWriter.write ('\n');
+        }
+      }
+      else
+      {
+        LOGGER.error ("Web site resource '" +
+                      aRes.getPath () +
+                      "' at '" +
+                      aRes.getAsURLString () +
+                      "' has no content/does not exist!");
+      }
+    }
   }
 
   private void _ensureSerialized (final boolean bRegular)
@@ -115,55 +186,7 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
         }
         else
         {
-          // Write all used files into the result file (at least for now)
-          for (final WebSiteResource aRes : m_aBundle.getAllResources ())
-          {
-            // This type of comment works for CSS and JS!
-            // Update don't display the resource as URL because that might
-            // reveal internal paths
-            final String sMetaInfo = "/* " +
-                                     aRes.getPath () +
-                                     (true ? "" : " - " + aRes.getResource ().getAsURL ()) +
-                                     " - " +
-                                     aRes.getContentHashAsString () +
-                                     " */\n";
-            aWriter.write (sMetaInfo);
-          }
-          // Write all resources themselves
-          for (final WebSiteResource aRes : m_aBundle.getAllResources ())
-          {
-            final String sContent = aRes.getContent (bRegular);
-            if (sContent != null)
-            {
-              aWriter.write (sContent);
-              if (StringHelper.getLastChar (sContent) != '\n')
-              {
-                // For the sake of clarity if a script does not end with a "\n"
-                // Add this in minified mode as well, because if the last line
-                // of the previous
-                // script started with "//" and the next file starts with a
-                // multi line comment,
-                // we would run in a syntax error!
-                // As in:
-                /**
-                 * <pre>
-                 * // last line of previous file/*
-                 * * Multi line comment in next file
-                 * ... etc
-                 * </pre>
-                 */
-                aWriter.write ('\n');
-              }
-            }
-            else
-            {
-              LOGGER.error ("Web site resource '" +
-                            aRes.getPath () +
-                            "' at '" +
-                            aRes.getAsURLString () +
-                            "' has no content/does not exist!");
-            }
-          }
+          writeMergedContent (aWriter, bRegular);
           LOGGER.info ("Serialized " +
                        m_aBundle.getResourceType ().getID () +
                        " bundle '" +

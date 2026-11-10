@@ -67,8 +67,15 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.7.1 - work in progress
+v10.8.0 - work in progress
 * Requires at least ph-commons 12.5.2
+* Added new interface `IWebSiteResourceBundleManager` that extends `IWebSiteResourceBundleProvider` and is implemented by `WebSiteResourceBundleManager`
+* **Incompatible change**: `PhotonAppManager.getWebSiteResourceBundleMgr ()` now returns `IWebSiteResourceBundleManager` instead of `WebSiteResourceBundleManager`.
+  This is source compatible for callers that only use the interface methods but requires a recompilation.
+* Added `PhotonAppManager.IFactory`, `PhotonAppManager.FactoryXML` and `PhotonAppManager.setFactory (IFactory)` so that the resource bundle manager can be replaced (e.g. to store the merged bundles in an object storage).
+  See [phax/ph-oton#59](https://github.com/phax/ph-oton/issues/59)
+* Deprecated `PhotonAppManager.WEBSITE_RESOURCE_BUNDLES_XML` - use `PhotonAppManager.FactoryXML.WEBSITE_RESOURCE_BUNDLES_XML` instead
+* Added `WebSiteResourceBundleSerialized.writeMergedContent (Writer, boolean)` and made the non-writing constructor `protected`, so that subclasses can store the merged content outside the file system
 
 v10.7.0 - 2026-10-08
 * **Incompatible change**: `PhotonSecurityManager.getLockMgr ()` now returns `ILockManager <String>` instead of `DefaultLockManager <String>`.

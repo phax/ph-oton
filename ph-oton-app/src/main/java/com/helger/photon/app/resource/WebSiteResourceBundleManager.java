@@ -51,8 +51,14 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 
+/**
+ * Default implementation of {@link IWebSiteResourceBundleManager} that stores the bundle
+ * information in an XML file and the merged bundle content in the file system.
+ *
+ * @author Philip Helger
+ */
 public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO implements
-                                                IWebSiteResourceBundleProvider
+                                                IWebSiteResourceBundleManager
 {
   private static final String ELEMENT_RESOURCE_BUNDLES = "resource-bundles";
   private static final String ELEMENT_RESOURCE_BUNDLE = "resource-bundle";
@@ -263,13 +269,6 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     return m_aRWLock.readLockedGet (m_aMapToBundle::copyOfValues);
   }
 
-  /**
-   * Get the serialized resource bundle with the passed ID.
-   *
-   * @param sBundleID
-   *        The bundle ID to be resolved. May be <code>null</code>.
-   * @return <code>null</code> if no such bundle exists.
-   */
   @Nullable
   public WebSiteResourceBundleSerialized getResourceBundleOfID (@Nullable final String sBundleID)
   {
@@ -279,13 +278,6 @@ public final class WebSiteResourceBundleManager extends AbstractPhotonSimpleDAO 
     return m_aRWLock.readLockedGet (() -> m_aMapToBundle.get (sBundleID));
   }
 
-  /**
-   * Check if the passed resource bundle ID is contained.
-   *
-   * @param sBundleID
-   *        The bundle ID to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the passed bundle exists, <code>false</code> otherwise.
-   */
   public boolean containsResourceBundleOfID (@Nullable final String sBundleID)
   {
     if (StringHelper.isEmpty (sBundleID))
