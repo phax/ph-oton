@@ -444,7 +444,7 @@ v9.2.2 - 2024-03-28
 
 v9.2.1 - 2023-09-26
 * Updated to Jetty 11.0.16
-* Fixed DateTime picker error in September for en-gb locale [Java 17]
+* Fixed DateTime picker error in September for en-gb locale (Java 17)
 
 v9.2.0 - 2023-08-20
 * Extracted submodule `ph-oton-io` for dependency minimized inclusion
