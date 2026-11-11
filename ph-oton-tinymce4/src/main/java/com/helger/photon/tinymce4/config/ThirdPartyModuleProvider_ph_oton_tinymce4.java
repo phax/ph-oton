@@ -33,11 +33,13 @@ import com.helger.photon.tinymce4.CTinyMCE4;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_ph_oton_tinymce4 implements IThirdPartyModuleProviderSPI
 {
-  public static final IThirdPartyModule TINYMCE4 = new ThirdPartyModule ("TinyMCE",
-                                                                         "Moxiecode Systems AB",
-                                                                         ELicense.LGPL21,
-                                                                         CTinyMCE4.TINYMCE_VERSION,
-                                                                         "http://www.tinymce.com");
+  public static final IThirdPartyModule TINYMCE4 = ThirdPartyModule.builder ()
+                                                                   .displayName ("TinyMCE")
+                                                                   .copyrightOwner ("Moxiecode Systems AB")
+                                                                   .license (ELicense.LGPL21)
+                                                                   .version (CTinyMCE4.TINYMCE_VERSION)
+                                                                   .webSiteUrl ("http://www.tinymce.com")
+                                                                   .build ();
 
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()

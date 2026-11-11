@@ -34,11 +34,13 @@ import com.helger.jsch.config.ThirdPartyModuleProvider_ph_jsch;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPartyModuleProviderSPI
 {
-  public static final IThirdPartyModule COMMONS_NET = new ThirdPartyModule ("Apache Commons Net",
-                                                                            "Apache",
-                                                                            ELicense.APACHE2,
-                                                                            new Version (3, 8, 0),
-                                                                            "http://commons.apache.org/proper/commons-net/");
+  public static final IThirdPartyModule COMMONS_NET = ThirdPartyModule.builder ()
+                                                                      .displayName ("Apache Commons Net")
+                                                                      .copyrightOwner ("Apache")
+                                                                      .license (ELicense.APACHE2)
+                                                                      .version (new Version (3, 8, 0))
+                                                                      .copyrightOwner ("http://commons.apache.org/proper/commons-net/")
+                                                                      .build ();
 
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()

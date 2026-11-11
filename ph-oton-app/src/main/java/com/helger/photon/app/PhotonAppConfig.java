@@ -25,11 +25,13 @@ import com.helger.base.version.Version;
 @Immutable
 public final class PhotonAppConfig
 {
-  public static final IThirdPartyModule LOG4J2 = new ThirdPartyModule ("Apache Log4j 2",
-                                                                       "Apache",
-                                                                       ELicense.APACHE2,
-                                                                       new Version (2, 26, 1),
-                                                                       "https://logging.apache.org/log4j/2.x/");
+  public static final IThirdPartyModule LOG4J2 = ThirdPartyModule.builder ()
+                                                                 .displayName ("Apache Log4j 2")
+                                                                 .copyrightOwner ("Apache")
+                                                                 .license (ELicense.APACHE2)
+                                                                 .version (new Version (2, 26, 1))
+                                                                 .webSiteUrl ("https://logging.apache.org/log4j/2.x/")
+                                                                 .build ();
 
   private PhotonAppConfig ()
   {}

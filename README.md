@@ -67,8 +67,8 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.8.0 - work in progress
-* Requires at least ph-commons 12.5.2
+v10.8.0 - 2026-11-11
+* Requires at least ph-commons 12.6.0
 * Added new interface `IWebSiteResourceBundleManager` that extends `IWebSiteResourceBundleProvider` and is implemented by `WebSiteResourceBundleManager`
 * **Incompatible change**: `PhotonAppManager.getWebSiteResourceBundleMgr ()` now returns `IWebSiteResourceBundleManager` instead of `WebSiteResourceBundleManager`.
   This is source compatible for callers that only use the interface methods but requires a recompilation.
@@ -95,7 +95,9 @@ v10.7.0 - 2026-10-08
   This is the same bounded dimension that the ph-telemetry metrics introduced in v10.6.0 already use, so statistics and metrics are now keyed identically.
   See [phax/ph-oton#57](https://github.com/phax/ph-oton/issues/57) - thx @ismailbennani
 * `PathDescriptor.getAsURLString ()` returns a value computed once in the constructor, instead of building a new String on every call.
-* Added `IAuditManager.getAllAuditItemsOfDateRange (LocalDate, LocalDate)` to get all audit items of a date range. It is a `default` method returning `null` ("not supported"), so existing implementations are unaffected. `AuditManager`, `AuditManagerJDBC` (and `AuditorJDBC`) and `DoNothingAuditManager` implement it.
+* Added `IAuditManager.getAllAuditItemsOfDateRange (LocalDate, LocalDate)` to get all audit items of a date range.
+  It is a `default` method returning `null` ("not supported"), so existing implementations are unaffected.
+  `AuditManager`, `AuditManagerJDBC` (and `AuditorJDBC`) and `DoNothingAuditManager` implement it.
 * `AuditManager.getAllAuditItemsOfDate (LocalDate)` now reads the file in a read-lock, so that it is not read while being written, and returns `null` instead of failing if the file cannot be parsed.
 
 v10.6.0 - 2026-09-06
@@ -143,7 +145,8 @@ v10.6.0 - 2026-09-06
   The latter makes a silently mis-configured internal error notification visible - previously a missing sender, receiver or SMTP configuration produced no notification and no signal that notifications are broken.
   The new class `InternalErrorMetrics` holds the instruments.
 * Added ph-telemetry instrumentation for the CSRF nonce checks in `WebPageCSRFHandler` (ph-oton-uicore): the counter `photon.csrf.checks` with the attributes `photon.csrf.page.id` and `photon.csrf.valid`.
-  Valid checks are counted as well, so that a failure rate can be computed. The nonce value itself never appears in telemetry.
+  Valid checks are counted as well, so that a failure rate can be computed.
+  The nonce value itself never appears in telemetry.
   The new class `CSRFMetrics` holds the instrument.
 * Added ph-telemetry instrumentation for the asynchronous tasks of `PhotonWorkerPool` (ph-oton-io): the span `photon.worker.execute` (kind `INTERNAL`), the counters `photon.worker.started` and `photon.worker.ended`, the up-down counter `photon.worker.running` and the histogram `photon.worker.duration`.
   The four public methods `run`, `runThrowing`, `supply` and `supplyThrowing` keep their signatures but now share one private instrumented helper instead of four near-identical bodies.
@@ -167,7 +170,8 @@ v10.6.0 - 2026-09-06
   The new classes `CDataTablesTelemetry` (names) and `DataTablesMetrics` (instruments) are the public reference for dashboards, alerting rules and tests.
 * Added ph-telemetry instrumentation for the web site resource cache and the resource bundling (ph-oton-app): the counters `photon.resource.cache.access` (by hit and resource type), `photon.resource.bundles.created` and `photon.resource.bundles.skipped`.
   Counting hits and misses makes the hit ratio derivable and makes a forgotten `WebSiteResourceCache.setCacheEnabled (false)` in production visible.
-  No resource path and no content hash is used as an attribute. No spans are emitted, because this is startup-time work that belongs to no request trace.
+  No resource path and no content hash is used as an attribute.
+  No spans are emitted, because this is startup-time work that belongs to no request trace.
   The new class `WebSiteResourceMetrics` holds the instruments.
 * The modules ph-oton-io, ph-oton-app, ph-oton-audit, ph-oton-ajax, ph-oton-api, ph-oton-security, ph-oton-connect, ph-oton-core, ph-oton-uicore and ph-oton-datatables now have a direct dependency to `com.helger.telemetry:ph-telemetry` (ph-oton-mgrs already had one).
   As before ph-oton never depends on an OpenTelemetry implementation - registering an `ITelemetryTracerSPI` / `ITelemetryMeterSPI` is the business of the deploying application, and without one all telemetry degrades to cheap no-ops.
@@ -207,7 +211,8 @@ v10.5.0 - 2026-09-04
 * `IUser.USER_ID_MAX_LENGTH` is `GlobalIDFactory.STRING_ID_MAX_LENGTH` (45) instead of 20 now, so that a user ID created by the default ID factory is no longer trimmed.
   Added the new Flyway script `V3__user_id_max_length.sql` in `docs/flyway/<dialect>/` for that.
   It widens every column holding a user ID to 45 characters - `audit.userid`, the `creationuserid`, `lastmoduserid` and `deleteuserid` of `secrole`, `secusergroup`, `secuser` and `secusertoken`, as well as `secuser.id` and `secusertoken.userid`, which were 20 characters and would overflow otherwise.
-  `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID. Only the length of the columns is changed, so existing data is preserved.
+  `long_running_job.id` stays at 40 characters, because it holds a persistent ID from `GlobalIDFactory` and not a user ID.
+  Only the length of the columns is changed, so existing data is preserved.
   See `docs/README.md` for details.
 * **Breaking API change**: the method `handleRequest (...)` of the classes `AbstractApplicationXServletHandler`, `AbstractObjectDeliveryHttpHandler`, `LogoutXServletHandler`, `PingPongXServletHandler`, `UserUploadXServletHandler` (all ph-oton-core) and `AjaxXServletHandler` (ph-oton-ajax) now declares `throws Exception` instead of `throws IOException, ServletException`.
   The overwritten method `IXServletSimpleHandler.handleRequest (...)` always declared `throws Exception` - the listed classes just narrowed it, while `APIXServletHandler`, `ErrorXServletHandler` and `GoXServletHandler` did not.
@@ -218,20 +223,31 @@ v10.4.0 - 2026-08-30
 * Requires at least ph-commons 12.4.0
 * Updated to DataTables 3.0.2 + current plugins: AutoFill 3.0.0, Buttons 4.0.2, ColReorder 3.0.1, ColumnControl 2.0.1, DateTime 2.0.0, FixedColumns 6.0.0, FixedHeader 5.0.0, KeyTable 3.0.0, Responsive 4.0.2, RowGroup 2.0.0, RowReorder 2.0.0, Scroller 3.0.0, SearchBuilder 2.0.0 and Select 4.0.1.
   Note that DataTables 3 no longer requires jQuery.
-  **Breaking API change**: removed the enum entries `EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS`, `DATATABLES_BUTTONS_HTML5` and `DATATABLES_BUTTONS_PRINT`. Buttons 4 merged `buttons.colVis.js`, `buttons.html5.js` and `buttons.print.js` into `dataTables.buttons.js`, so the separate files no longer exist - registering `EDataTablesJSPathProvider.DATATABLES_BUTTONS` is now sufficient for all button types.
-  **Breaking API change**: removed the enum entries `EDTPButtonsButtonType.COPY_FLASH`, `CSV_FLASH`, `EXCEL_FLASH` and `PDF_FLASH`. The Flash based buttons were dropped in Buttons 2 already and resolved to nothing at runtime.
-  **Breaking API change**: removed the constants `CDataTablesComponentVersion.SEARCH_PANES` and `STATE_RESTORE` incl. the respective resources. SearchPanes and StateRestore are not yet ported to DataTables 3 and their DataTables 2 versions are incompatible with it.
-  Added the new enum entries `DATATABLES_COLUMN_CONTROL`, `DATATABLES_DATE_TIME` and `DATATABLES_SEARCH_BUILDER` to `EDataTablesCSSPathProvider` and `EDataTablesJSPathProvider`. The resources were shipped before, but were not reachable from Java.
+  **Breaking API change**: removed the enum entries `EDataTablesJSPathProvider.DATATABLES_BUTTONS_COLVIS`, `DATATABLES_BUTTONS_HTML5` and `DATATABLES_BUTTONS_PRINT`.
+  Buttons 4 merged `buttons.colVis.js`, `buttons.html5.js` and `buttons.print.js` into `dataTables.buttons.js`, so the separate files no longer exist - registering `EDataTablesJSPathProvider.DATATABLES_BUTTONS` is now sufficient for all button types.
+  **Breaking API change**: removed the enum entries `EDTPButtonsButtonType.COPY_FLASH`, `CSV_FLASH`, `EXCEL_FLASH` and `PDF_FLASH`.
+  The Flash based buttons were dropped in Buttons 2 already and resolved to nothing at runtime.
+  **Breaking API change**: removed the constants `CDataTablesComponentVersion.SEARCH_PANES` and `STATE_RESTORE` incl. the respective resources.
+  SearchPanes and StateRestore are not yet ported to DataTables 3 and their DataTables 2 versions are incompatible with it.
+  Added the new enum entries `DATATABLES_COLUMN_CONTROL`, `DATATABLES_DATE_TIME` and `DATATABLES_SEARCH_BUILDER` to `EDataTablesCSSPathProvider` and `EDataTablesJSPathProvider`.
+  The resources were shipped before, but were not reachable from Java.
   Added the new enum entries `DATATABLES_COLUMN_CONTROL_BOOTSTRAP4` and `DATATABLES_SEARCH_BUILDER_BOOTSTRAP4` to `EDataTablesB4CSSPathProvider`.
   Added entries for ColReorder, ColumnControl, FixedColumns, FixedHeader, KeyTable, RowGroup, RowReorder, Scroller, SearchBuilder and Select to `EDataTablesB4JSPathProvider` - DataTables 3 ships Bootstrap integration JS for these extensions for the first time, previously only the CSS existed.
   The identical entries were added to the two Bootstrap 5 counterparts.
   Note: the CardView and Editor extensions that the DataTables 3 download builder offers are deliberately not included, because they are licensed under "DataTables Plus" and must not be redistributed.
-  Fixed the SearchHighlight plugin (`DataTablesPluginSearchHighlight`), that stopped working with DataTables 3. It read the initialisation options of a table from `settings.oInit`, which DataTables 3 renamed to `settings.init` - the resulting `TypeError` aborted the `init.dt` handler, so no search term was ever highlighted. The bundled `dataTables.searchHighlight.js` now reads both and additionally ignores foreign "init" events that bubble up to the document.
-  The bundled SearchHighlight plugin was updated from v1.0.1 to v1.1.0, which highlights the search term of a single column as well - in its own colour, using the new CSS class `column_highlight` in `dataTables.searchHighlight.css`. The global search term keeps using `highlight`.
-  **Breaking API change**: removed `DataTables.isJQueryUI ()`, `setJQueryUI (boolean)` and the constant `DataTables.DEFAULT_JQUERY_UI`. The `jQueryUI` initialisation option was dropped in DataTables 2 already, so the emitted option had no effect any more.
+  Fixed the SearchHighlight plugin (`DataTablesPluginSearchHighlight`), that stopped working with DataTables 3.
+  It read the initialisation options of a table from `settings.oInit`, which DataTables 3 renamed to `settings.init` - the resulting `TypeError` aborted the `init.dt` handler, so no search term was ever highlighted.
+  The bundled `dataTables.searchHighlight.js` now reads both and additionally ignores foreign "init" events that bubble up to the document.
+  The bundled SearchHighlight plugin was updated from v1.0.1 to v1.1.0, which highlights the search term of a single column as well - in its own colour, using the new CSS class `column_highlight` in `dataTables.searchHighlight.css`.
+  The global search term keeps using `highlight`.
+  **Breaking API change**: removed `DataTables.isJQueryUI ()`, `setJQueryUI (boolean)` and the constant `DataTables.DEFAULT_JQUERY_UI`.
+  The `jQueryUI` initialisation option was dropped in DataTables 2 already, so the emitted option had no effect any more.
 * Reworked the CSP violation reporting in `CSPReportingXServletHandler` and added the new package `com.helger.photon.core.csp`.
-  The handler now also accepts the Reporting API format (`application/reports+json`) next to the legacy format (`application/csp-report`) and normalizes both into the new class `CSPReport`, which additionally carries the User-Agent, the remote address, the receipt date time and the query parameters of the report URI. The latter are the only way to add server side context to a report, because the report body itself is created by the browser from a fixed set of fields.
-  Added `ICSPReportClassifier` to separate actionable reports from the browser internal and browser extension noise that reaches every public reporting endpoint. The default implementation classifies a report as noise if its "source-file" has a scheme other than `http` or `https`; an absent "source-file" is deliberately not treated as a noise signal. The classification is part of `CSPReport` and can be replaced per application via `CSPReportingXServletHandler.setClassifier (...)`. Noise is logged on the info level instead of the warning level.
+  The handler now also accepts the Reporting API format (`application/reports+json`) next to the legacy format (`application/csp-report`) and normalizes both into the new class `CSPReport`, which additionally carries the User-Agent, the remote address, the receipt date time and the query parameters of the report URI.
+  The latter are the only way to add server side context to a report, because the report body itself is created by the browser from a fixed set of fields.
+  Added `ICSPReportClassifier` to separate actionable reports from the browser internal and browser extension noise that reaches every public reporting endpoint.
+  The default implementation classifies a report as noise if its "source-file" has a scheme other than `http` or `https`; an absent "source-file" is deliberately not treated as a noise signal.
+  The classification is part of `CSPReport` and can be replaced per application via `CSPReportingXServletHandler.setClassifier (...)`. Noise is logged on the info level instead of the warning level.
   Added `CSPReportingEndpoint` that ties the name of the CSP `report-to` directive to the URI of the `Reporting-Endpoints` HTTP response header and of the legacy `report-uri` directive, so that the three cannot drift apart, and `ICSPReportingParameterProvider` for an application to contribute the query parameters of the report URI (default: none).
   **Incompatible change**: the `CSPReportingXServletHandler` constructor now takes a `Consumer <? super CSPReport>` instead of a `Consumer <? super IJsonObject>`. Use `CSPReportingXServletHandler.asJsonConsumer (...)` to keep an existing JSON based consumer.
   **Incompatible change**: a request with a content type other than `application/csp-report` or `application/reports+json` is now answered with HTTP 415 instead of being parsed as JSON.

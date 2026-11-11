@@ -353,9 +353,7 @@ public final class TableColumnHelper
 
     final Predicate <DATATYPE> aFilter = getSearchPredicate (aColumns, aSearchTexts);
     final ICommonsList <DATATYPE> aMatching = aFilter == null ? aAll : aAll.getAll (aFilter);
-    // No copy needed - the caller owns the list
-    final boolean bCopyList = false;
-    return PagingHelper.getPage (aMatching, bCopyList, aPagingSpec, getComparator (aColumns, aPagingSpec));
+    return PagingHelper.getPage (aMatching, aPagingSpec, getComparator (aColumns, aPagingSpec));
   }
 
   /**
