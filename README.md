@@ -32,6 +32,7 @@ Contained subprojects are:
 * ph-oton-uictrls - misc web UI controls
 * ph-oton-jetty - wrapper for Jetty to simply use as main
 * ph-oton-jdbc - provides certain JDBC-based manager implementations (since 8.4.2)
+* ph-oton-bom - Bill of Materials (BOM) containing all ph-oton artifacts (since 10.8.1)
 
 # Requirements
 
@@ -54,7 +55,7 @@ Replace `x.y.z` with the effective version number.
     <dependencies>
       <dependency>
         <groupId>com.helger.photon</groupId>
-        <artifactId>ph-oton-parent-pom</artifactId>
+        <artifactId>ph-oton-bom</artifactId>
         <version>x.y.z</version>
         <type>pom</type>
         <scope>import</scope>
@@ -63,9 +64,15 @@ Replace `x.y.z` with the effective version number.
   </dependencyManagement>
 ```
 
+Note: prior to v10.8.1 there was no dedicated BOM and `ph-oton-parent-pom` had to be imported instead.
+
 Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
+
+v10.8.1 - 2026-11-14
+* Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.
+  It should be used instead of `ph-oton-parent-pom` for importing.
 
 v10.8.0 - 2026-11-11
 * Requires at least ph-commons 12.6.0

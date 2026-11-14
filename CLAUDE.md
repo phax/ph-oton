@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ph-oton is a multi-module Java library stack for building Java web applications. It provides HTML element wrappers, JS code generation, jQuery integration, security, AJAX/API handling, UI controls, and embedded Jetty support. Published to Maven Central under group `com.helger.photon`.
 
-Current version: 10.8.0-SNAPSHOT (requires Java 17+, JakartaEE 10 / Tomcat 10.1.x / Jetty 12.x).
+Current version: 10.8.1-SNAPSHOT (requires Java 17+, JakartaEE 10 / Tomcat 10.1.x / Jetty 12.x).
 
 ## Build Commands
 
@@ -45,6 +45,8 @@ The modules form a layered dependency graph (lower layers depend on nothing abov
 6. **Web Core**: `ph-oton-core` (servlets, menu tree, request handling, SMTP)
 7. **UI**: `ph-oton-uicore` (web pages), `ph-oton-icon`, `ph-oton-tinymce4`, `ph-oton-datatables`, `ph-oton-uictrls`
 8. **Runtime**: `ph-oton-jetty` (embedded Jetty runner)
+
+`ph-oton-bom` (since 10.8.1) is a pure BOM with all ph-oton artifacts; keep its `dependencyManagement` in sync when adding or removing modules.
 
 Bootstrap 4 UI binding lives in a separate repository: https://github.com/phax/ph-oton-bootstrap4
 
