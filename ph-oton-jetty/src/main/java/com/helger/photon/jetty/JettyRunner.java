@@ -41,6 +41,7 @@ public class JettyRunner extends JettyStarter
   private Thread m_aThread;
   private final Semaphore m_aServerStartedSem = new Semaphore (0);
   private final AtomicBoolean m_aServerStartupSuccess = new AtomicBoolean (true);
+  private volatile Server m_aServer;
 
   public JettyRunner ()
   {
@@ -55,6 +56,8 @@ public class JettyRunner extends JettyStarter
   @Override
   protected void onServerStarted (@NonNull final Server aServer)
   {
+    // Remember the server, so that it can be stopped without the stop monitor
+    m_aServer = aServer;
     // Notify that server started
     m_aServerStartedSem.release ();
   }
@@ -73,14 +76,21 @@ public class JettyRunner extends JettyStarter
       throw new IllegalStateException ("Jetty is already running!");
 
     m_aServerStartupSuccess.set (true);
+    // Remove any left-over permit from a previous run
+    m_aServerStartedSem.drainPermits ();
+    m_aServer = null;
     m_aThread = new Thread (() -> {
       try
       {
         run ();
       }
-      catch (final Exception ex)
+      catch (final Throwable t)
       {
-        LOGGER.error ("Error running Jetty", ex);
+        LOGGER.error ("Error running Jetty", t);
+        // Make sure startServer does not wait forever, if the error occurred before the startup
+        // callbacks were invoked
+        m_aServerStartupSuccess.set (false);
+        m_aServerStartedSem.release ();
       }
     }, "JettyRunner");
     m_aThread.setDaemon (true);
@@ -101,9 +111,25 @@ public class JettyRunner extends JettyStarter
   {
     if (m_aThread != null)
     {
-      new JettyStopper ().setStopPort (getStopPort ()).setStopKey (getStopKey ()).run ();
+      if (isRunStopMonitor ())
+        new JettyStopper ().setStopPort (getStopPort ()).setStopKey (getStopKey ()).run ();
+      else
+      {
+        // No stop monitor is running - stop the server directly
+        final Server aServer = m_aServer;
+        if (aServer != null)
+          try
+          {
+            aServer.stop ();
+          }
+          catch (final Exception ex)
+          {
+            throw new IOException ("Failed to stop Jetty", ex);
+          }
+      }
       m_aThread.join ();
       m_aThread = null;
+      m_aServer = null;
     }
   }
 }

@@ -116,8 +116,6 @@ public class HCParam extends AbstractHCElement <HCParam>
       aElement.setAttribute (CHTMLAttributes.VALUETYPE, m_eValueType);
     if (m_aType != null)
       aElement.setAttribute (CHTMLAttributes.TYPE, m_aType.getAsString ());
-    // Should not be self closed!
-    aElement.addText ("");
   }
 
   @Override

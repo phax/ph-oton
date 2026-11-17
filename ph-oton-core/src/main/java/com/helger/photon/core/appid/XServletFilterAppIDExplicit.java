@@ -129,7 +129,7 @@ public final class XServletFilterAppIDExplicit implements IXServletHighLevelFilt
         aDisplayLocale = GlobalLocaleManager.getInstance ().getDefaultLocale ();
 
         if (aDisplayLocale == null)
-          throw new IllegalStateException ("No locale could be determined for application ID '" + sAppID + "!");
+          throw new IllegalStateException ("No locale could be determined for application ID '" + sAppID + "'!");
       }
     }
 

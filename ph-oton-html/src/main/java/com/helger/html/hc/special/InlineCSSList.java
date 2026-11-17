@@ -127,6 +127,23 @@ public class InlineCSSList
     }
 
     @Override
+    public boolean equals (final Object o)
+    {
+      if (o == this)
+        return true;
+      if (o == null || !getClass ().equals (o.getClass ()))
+        return false;
+      final Item rhs = (Item) o;
+      return m_aKey.equals (rhs.m_aKey) && getCSS ().equals (rhs.getCSS ());
+    }
+
+    @Override
+    public int hashCode ()
+    {
+      return new HashCodeGenerator (this).append (m_aKey).append (getCSS ()).getHashCode ();
+    }
+
+    @Override
     public String toString ()
     {
       return new ToStringGenerator (this).append ("Key", m_aKey).append ("CSS", m_aCSS).getToString ();
@@ -184,6 +201,23 @@ public class InlineCSSList
                                                                         null,
                                                                         aItem.getMediaList (),
                                                                         true));
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final InlineCSSList rhs = (InlineCSSList) o;
+    return m_aItems.equals (rhs.m_aItems);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aItems).getHashCode ();
   }
 
   @Override

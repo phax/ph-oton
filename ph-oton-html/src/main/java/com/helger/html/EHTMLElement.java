@@ -123,7 +123,7 @@ public enum EHTMLElement
   OPTION ("option", false, EHTMLContentModelType.CHILD),
   OUTPUT ("output", false, EHTMLContentModelType.PHRASING),
   P ("p", false, EHTMLContentModelType.PHRASING),
-  PARAM ("param", false, EHTMLContentModelType.CHILD),
+  PARAM ("param", true, EHTMLContentModelType.CHILD),
   PICTURE ("picture", false, EHTMLContentModelType.FLOW_METADATA),
   PRE ("pre", false, EHTMLContentModelType.FLOW),
   PROGRESS ("progress", false, EHTMLContentModelType.PHRASING),

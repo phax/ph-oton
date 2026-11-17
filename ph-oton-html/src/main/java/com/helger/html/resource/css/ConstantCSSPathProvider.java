@@ -23,6 +23,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.CSSFilenameHelper;
@@ -95,6 +96,8 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     final ConstantCSSPathProvider rhs = (ConstantCSSPathProvider) o;
     return m_sPath.equals (rhs.m_sPath) &&
            m_sMinifiedPath.equals (rhs.m_sMinifiedPath) &&
+           EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
+           m_aCSSMediaList.equals (rhs.m_aCSSMediaList) &&
            m_bIsBundlable == rhs.m_bIsBundlable;
   }
 
@@ -103,6 +106,8 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
   {
     return new HashCodeGenerator (this).append (m_sPath)
                                        .append (m_sMinifiedPath)
+                                       .append (m_sConditionalComment)
+                                       .append (m_aCSSMediaList)
                                        .append (m_bIsBundlable)
                                        .getHashCode ();
   }

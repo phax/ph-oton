@@ -21,7 +21,6 @@ import org.jspecify.annotations.NonNull;
 import com.helger.annotation.style.OverrideOnDemand;
 import com.helger.io.resource.IReadableResource;
 import com.helger.photon.core.servlet.AbstractResourceDeliveryHttpHandler;
-import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHandler
@@ -40,10 +39,8 @@ public class UserDataDeliveryHttpHandler extends AbstractResourceDeliveryHttpHan
   protected UserDataObject getUserDataObject (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                               @NonNull final String sFilename)
   {
-    // URL decode is required because requests contain e.g. "%20"
-    final String sFilename1 = URLCoder.urlDecodeOrDefault (sFilename, sFilename);
-
-    return new UserDataObject (sFilename1);
+    // The filename was already URL decoded and checked in initRequestState
+    return new UserDataObject (sFilename);
   }
 
   @Override

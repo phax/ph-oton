@@ -226,7 +226,7 @@ public class FeedLink extends AbstractFeedElement
     if (StringHelper.isNotEmpty (m_sType))
       aElement.setAttribute ("type", m_sType);
     if (m_aHrefLang != null)
-      aElement.setAttribute ("hreflang", m_aHrefLang.toString ());
+      aElement.setAttribute ("hreflang", m_aHrefLang.toLanguageTag ());
     if (StringHelper.isNotEmpty (m_sTitle))
       aElement.setAttribute ("title", m_sTitle);
     if (m_nLength > 0)

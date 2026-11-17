@@ -149,14 +149,23 @@ public final class FftpConnectionDestination implements IFtpConnectionDestinatio
       // end FTP session
       if (!aFtpClient.logout ())
         LOGGER.warn ("Failed to log out from FTP connection: " + aFtpClient.getReplyString ());
-
-      // close channel
-      if (aFtpClient.isConnected ())
-        aFtpClient.disconnect ();
     }
     catch (final IOException ex)
     {
       LOGGER.error ("Error closing FTP connection: " + aFtpClient.getReplyString (), ex);
+    }
+    finally
+    {
+      // close channel
+      if (aFtpClient.isConnected ())
+        try
+        {
+          aFtpClient.disconnect ();
+        }
+        catch (final IOException ex)
+        {
+          LOGGER.error ("Error disconnecting from FTP: " + aFtpClient.getReplyString (), ex);
+        }
     }
     return EChange.CHANGED;
   }

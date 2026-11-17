@@ -98,33 +98,65 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
                           (String) null);
   }
 
+  private void _assignDefaultsForTest (@NonNull final UserGroup aUserGroup,
+                                       @Nullable final String sUserID,
+                                       @Nullable final String sRoleID)
+  {
+    final String sUserGroupID = aUserGroup.getID ();
+    final boolean bAssignUser = sUserID != null && m_aUserMgr.containsWithID (sUserID);
+    final boolean bAssignRole = sRoleID != null && m_aRoleMgr.containsWithID (sRoleID);
+    boolean bUserAssigned = false;
+    boolean bRoleAssigned = false;
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (bAssignUser)
+        bUserAssigned = aUserGroup.assignUser (sUserID).isChanged ();
+      if (bAssignRole)
+        bRoleAssigned = aUserGroup.assignRole (sRoleID).isChanged ();
+      if (!bUserAssigned && !bRoleAssigned)
+        return;
+
+      BusinessObjectHelper.setLastModificationNow (aUserGroup);
+      internalUpdateItem (aUserGroup);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    if (bUserAssigned)
+      AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-user", sUserGroupID, sUserID);
+    if (bRoleAssigned)
+      AuditHelper.onAuditModifySuccess (UserGroup.OT, "assign-role", sUserGroupID, sRoleID);
+
+    // Execute callback as the very last action
+    if (bUserAssigned)
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupUserAssignment (sUserGroupID, sUserID, true));
+    if (bRoleAssigned)
+      m_aCallbacks.forEach (aCB -> aCB.onUserGroupRoleAssignment (sUserGroupID, sRoleID, true));
+  }
+
   public void createDefaultsForTest ()
   {
     // Administrators user group
     UserGroup aUG = getOfID (CSecurity.USERGROUP_ADMINISTRATORS_ID);
     if (aUG == null)
       aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupAdministrators ()));
-    if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
-      aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
-    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
+    _assignDefaultsForTest (aUG, CSecurity.USER_ADMINISTRATOR_ID, CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
     aUG = getOfID (CSecurity.USERGROUP_USERS_ID);
     if (aUG == null)
       aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupUsers ()));
-    if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
-      aUG.assignUser (CSecurity.USER_USER_ID);
-    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID))
-      aUG.assignRole (CSecurity.ROLE_USER_ID);
+    _assignDefaultsForTest (aUG, CSecurity.USER_USER_ID, CSecurity.ROLE_USER_ID);
 
     // Guests user group
     aUG = getOfID (CSecurity.USERGROUP_GUESTS_ID);
     if (aUG == null)
       aUG = m_aRWLock.writeLockedGet (() -> internalCreateItem (createDefaultUserGroupGuests ()));
-    if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
-      aUG.assignUser (CSecurity.USER_GUEST_ID);
     // no role for this user group
+    _assignDefaultsForTest (aUG, CSecurity.USER_GUEST_ID, null);
   }
 
   @NonNull

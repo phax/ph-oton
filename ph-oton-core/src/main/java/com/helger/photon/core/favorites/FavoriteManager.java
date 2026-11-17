@@ -172,20 +172,24 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @ReturnsMutableCopy
   public ICommonsMap <String, ICommonsList <IFavorite>> getAll ()
   {
-    final ICommonsMap <String, ICommonsList <IFavorite>> ret = new CommonsHashMap <> ();
-    for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
-      ret.put (aEntry.getKey (), new CommonsArrayList <> (aEntry.getValue ()));
-    return ret;
+    return m_aRWLock.readLockedGet (() -> {
+      final ICommonsMap <String, ICommonsList <IFavorite>> ret = new CommonsHashMap <> ();
+      for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
+        ret.put (aEntry.getKey (), new CommonsArrayList <> (aEntry.getValue ()));
+      return ret;
+    });
   }
 
   @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IFavorite> getAllFavorites ()
   {
-    final ICommonsList <IFavorite> ret = new CommonsArrayList <> ();
-    for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
-      ret.addAll (aEntry.getValue ());
-    return ret;
+    return m_aRWLock.readLockedGet (() -> {
+      final ICommonsList <IFavorite> ret = new CommonsArrayList <> ();
+      for (final Map.Entry <String, ICommonsList <Favorite>> aEntry : m_aMap.entrySet ())
+        ret.addAll (aEntry.getValue ());
+      return ret;
+    });
   }
 
   /**
@@ -200,8 +204,10 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
     if (StringHelper.isEmpty (sUserID))
       return false;
 
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet (() -> m_aMap.get (sUserID));
-    return aFavorites != null && aFavorites.isNotEmpty ();
+    return m_aRWLock.readLockedBoolean (() -> {
+      final ICommonsList <Favorite> aFavorites = m_aMap.get (sUserID);
+      return aFavorites != null && aFavorites.isNotEmpty ();
+    });
   }
 
   /**
@@ -248,9 +254,12 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
         StringHelper.isNotEmpty (sApplicationID) &&
         StringHelper.isNotEmpty (sMenuItemID))
     {
-      final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet (() -> m_aMap.get (sUserID));
-      if (aFavs != null)
+      return m_aRWLock.readLockedGet (() -> {
+        final ICommonsList <Favorite> aFavs = m_aMap.get (sUserID);
+        if (aFavs == null)
+          return null;
         return aFavs.findFirst (x -> x.hasSameContent (sApplicationID, sMenuItemID, aAdditionalParams));
+      });
     }
     return null;
   }
@@ -260,9 +269,10 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   {
     if (StringHelper.isNotEmpty (sUserID) && StringHelper.isNotEmpty (sFavoriteID))
     {
-      final ICommonsList <Favorite> aFavs = m_aRWLock.readLockedGet (() -> m_aMap.get (sUserID));
-      if (aFavs != null)
-        return aFavs.findFirst (x -> x.getID ().equals (sFavoriteID));
+      return m_aRWLock.readLockedGet (() -> {
+        final ICommonsList <Favorite> aFavs = m_aMap.get (sUserID);
+        return aFavs == null ? null : aFavs.findFirst (x -> x.getID ().equals (sFavoriteID));
+      });
     }
     return null;
   }
@@ -328,17 +338,18 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
                                  @NonNull @Nonempty final String sDisplayName,
                                  @Nullable final Map <String, String> aAdditionalParams)
   {
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet (() -> m_aMap.get (sUserID));
-    final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
-    if (aFavorite == null)
-    {
-      AuditHelper.onAuditModifyFailure (Favorite.OT, sID, "no-such-id");
-      return EChange.UNCHANGED;
-    }
-
+    final Favorite aFavorite;
     m_aRWLock.writeLock ().lock ();
     try
     {
+      final ICommonsList <Favorite> aFavorites = m_aMap.get (sUserID);
+      aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
+      if (aFavorite == null)
+      {
+        AuditHelper.onAuditModifyFailure (Favorite.OT, sID, "no-such-id");
+        return EChange.UNCHANGED;
+      }
+
       EChange eChange = EChange.UNCHANGED;
       eChange = eChange.or (aFavorite.setMenuItemID (sMenuItemID));
       eChange = eChange.or (aFavorite.setDisplayName (sDisplayName));
@@ -376,17 +387,17 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Nullable
   public EChange removeFavorite (@Nullable final String sUserID, @Nullable final String sID)
   {
-    final ICommonsList <Favorite> aFavorites = m_aRWLock.readLockedGet (() -> m_aMap.get (sUserID));
-    final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
-    if (aFavorite == null)
-    {
-      AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, sID, "no-such-id");
-      return EChange.UNCHANGED;
-    }
-
     m_aRWLock.writeLock ().lock ();
     try
     {
+      final ICommonsList <Favorite> aFavorites = m_aMap.get (sUserID);
+      final Favorite aFavorite = aFavorites == null ? null : aFavorites.findFirst (x -> x.getID ().equals (sID));
+      if (aFavorite == null)
+      {
+        AuditHelper.onAuditDeleteFailure (Favorite.OT, sUserID, sID, "no-such-id");
+        return EChange.UNCHANGED;
+      }
+
       if (aFavorites.removeObject (aFavorite).isUnchanged ())
       {
         AuditHelper.onAuditDeleteFailure (Favorite.OT, sID, "no-such-id");

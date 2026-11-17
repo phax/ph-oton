@@ -37,7 +37,7 @@ import com.helger.url.URLBuilder;
  */
 public class HCYouTubeIFrame extends AbstractHCIFrame <HCYouTubeIFrame>
 {
-  private static final String PREFIX = "http://www.youtube.com/embed/";
+  private static final String PREFIX = "https://www.youtube.com/embed/";
 
   private final URLBuilder m_aVideoURL;
 

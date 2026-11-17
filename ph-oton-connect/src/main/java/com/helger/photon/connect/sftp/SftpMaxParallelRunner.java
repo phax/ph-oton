@@ -77,6 +77,7 @@ public final class SftpMaxParallelRunner
     }
     catch (final InterruptedException ex)
     {
+      Thread.currentThread ().interrupt ();
       LOGGER.error ("Failed to acquire Semaphore for SFTP settings " + aSFTPSettings, ex);
       return ESuccess.FAILURE;
     }

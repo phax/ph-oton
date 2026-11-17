@@ -300,7 +300,7 @@ public abstract class AbstractHCSpecialNodes <IMPLTYPE extends AbstractHCSpecial
                                        .append ("inlineCSSAfterExternal", m_aInlineCSSAfterExternal)
                                        .appendIf ("externalJS", m_aExternalJSs, CollectionHelper::isNotEmpty)
                                        .append ("inlineJSBeforeExternal", m_aInlineJSBeforeExternal)
-                                       .append ("inlineJSAfterExternal", m_aInlineJSBeforeExternal)
+                                       .append ("inlineJSAfterExternal", m_aInlineJSAfterExternal)
                                        .getToString ();
   }
 }

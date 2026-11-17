@@ -34,7 +34,7 @@ import com.helger.url.SimpleURL;
  */
 public class HCYouTubeEmbed extends AbstractHCObject <HCYouTubeEmbed>
 {
-  private static final String PREFIX = "http://www.youtube.com/v/";
+  private static final String PREFIX = "https://www.youtube.com/v/";
 
   public HCYouTubeEmbed (final int nWidth,
                          final int nHeight,

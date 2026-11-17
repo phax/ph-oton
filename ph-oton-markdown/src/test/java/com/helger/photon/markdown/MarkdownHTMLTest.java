@@ -79,5 +79,28 @@ public final class MarkdownHTMLTest
     assertFalse (MarkdownHTML.isUnsafeHtmlElement ("div"));
     assertFalse (MarkdownHTML.isUnsafeHtmlElement ("Div"));
     assertFalse (MarkdownHTML.isUnsafeHtmlElement ("DIV"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("style"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("link"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("meta"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("base"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("embed"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("form"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("SVG"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlElement ("math"));
+  }
+
+  @Test
+  public void testIsUnsafeHtmlAttribute ()
+  {
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("onclick", "alert(1)"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("OnError", ""));
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("href", "javascript:alert(1)"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("HREF", " Java\tScript:alert(1)"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("src", "vbscript:x"));
+    assertTrue (MarkdownHTML.isUnsafeHtmlAttribute ("src", "data:text/html,x"));
+    assertFalse (MarkdownHTML.isUnsafeHtmlAttribute ("href", "https://example.org"));
+    assertFalse (MarkdownHTML.isUnsafeHtmlAttribute ("title", "javascript:alert(1)"));
+    assertFalse (MarkdownHTML.isUnsafeHtmlAttribute ("class", "foo"));
+    assertFalse (MarkdownHTML.isUnsafeHtmlAttribute (null, null));
   }
 }

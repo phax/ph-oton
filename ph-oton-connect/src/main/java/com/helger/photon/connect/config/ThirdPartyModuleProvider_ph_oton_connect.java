@@ -38,7 +38,7 @@ public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPar
                                                                       .displayName ("Apache Commons Net")
                                                                       .copyrightOwner ("Apache")
                                                                       .license (ELicense.APACHE2)
-                                                                      .version (new Version (3, 8, 0))
+                                                                      .version (new Version (3, 13, 0))
                                                                       .webSiteUrl ("http://commons.apache.org/proper/commons-net/")
                                                                       .build ();
 

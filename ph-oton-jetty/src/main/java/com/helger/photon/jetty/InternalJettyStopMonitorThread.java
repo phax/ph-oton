@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -51,46 +52,63 @@ final class InternalJettyStopMonitorThread extends Thread
     m_sKey = sKey;
     setDaemon (true);
     setName ("JettyStopMonitor");
-    m_aServerSocket = new ServerSocket (m_nPort, 1, InetAddress.getByName (null));
-    m_aServerSocket.setReuseAddress (true);
+    // Reuse address must be set before binding
+    m_aServerSocket = new ServerSocket ();
+    try
+    {
+      m_aServerSocket.setReuseAddress (true);
+      m_aServerSocket.bind (new InetSocketAddress (InetAddress.getByName (null), m_nPort), 1);
+    }
+    catch (final IOException ex)
+    {
+      StreamHelper.close (m_aServerSocket);
+      throw ex;
+    }
     m_aAction = aAction;
   }
 
   @Override
   public void run ()
   {
-    while (true)
+    try
     {
-      try (final Socket aSocket = m_aServerSocket.accept ();
-           final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
-                                                                                         StandardCharsets.UTF_8)))
+      while (true)
       {
-        // First line: key
-        final String sKey = aReader.readLine ();
-        if (!m_sKey.equals (sKey))
+        try (final Socket aSocket = m_aServerSocket.accept ();
+             final LineNumberReader aReader = new LineNumberReader (new InputStreamReader (aSocket.getInputStream (),
+                                                                                           StandardCharsets.UTF_8)))
         {
-          LOGGER.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
-          continue;
-        }
+          // First line: key
+          final String sKey = aReader.readLine ();
+          if (!m_sKey.equals (sKey))
+          {
+            LOGGER.warn ("Stop key mismatch. Got '" + sKey + "' but was expecting something else");
+            continue;
+          }
 
-        // Second line: stop
-        final String sCmd = aReader.readLine ();
-        if (false)
-          LOGGER.info ("Got command: " + sCmd);
-        if ("stop".equals (sCmd))
-        {
-          StreamHelper.close (aSocket);
-          StreamHelper.close (m_aServerSocket);
-          m_aAction.run ();
-          return;
+          // Second line: stop
+          final String sCmd = aReader.readLine ();
+          if (false)
+            LOGGER.info ("Got command: " + sCmd);
+          if ("stop".equals (sCmd))
+          {
+            StreamHelper.close (aSocket);
+            StreamHelper.close (m_aServerSocket);
+            m_aAction.run ();
+            return;
+          }
         }
-      }
-      catch (final Exception e)
-      {
-        LOGGER.error ("Error reading from socket", e);
-        break;
+        catch (final Exception e)
+        {
+          LOGGER.error ("Error reading from socket", e);
+          break;
+        }
       }
     }
-    // Never reached
+    finally
+    {
+      // Ensure the port is released in any case
+      StreamHelper.close (m_aServerSocket);
+    }
   }
 }

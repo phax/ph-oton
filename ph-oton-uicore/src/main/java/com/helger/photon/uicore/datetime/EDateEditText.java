@@ -107,7 +107,7 @@ public enum EDateEditText implements IHasDisplayText
                       "(Shift-)Click or drag to change value"),
   CALENDAR_DEF_DATE_FORMAT ("%d.%m.%Y", "%Y-%m-%d"),
   CALENDAR_TT_DATE_FORMAT ("%A, %e. %B", "%a, %b %e"),
-  CALENDAR_DEF_TIME_FORMAT ("%H:%M:%S", "%H:%M:%S %P"),
+  CALENDAR_DEF_TIME_FORMAT ("%H:%M:%S", "%I:%M:%S %P"),
   CALENDAR_WK ("KW", "wk"),
   CALENDAR_TIME ("Zeit:", "Time:");
 

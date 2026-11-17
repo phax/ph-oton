@@ -20,7 +20,6 @@ import org.jspecify.annotations.NonNull;
 
 import com.helger.io.resource.ClassPathResource;
 import com.helger.io.resource.IReadableResource;
-import com.helger.url.codec.URLCoder;
 import com.helger.web.scope.IRequestWebScopeWithoutResponse;
 
 public class ClassPathResourceHttpHandler extends AbstractResourceDeliveryHttpHandler
@@ -30,9 +29,7 @@ public class ClassPathResourceHttpHandler extends AbstractResourceDeliveryHttpHa
   protected IReadableResource getResource (@NonNull final IRequestWebScopeWithoutResponse aRequestScope,
                                            @NonNull final String sFilename)
   {
-    // URL decode is required because requests contain e.g. "%20"
-    final String sFilename1 = URLCoder.urlDecodeOrDefault (sFilename, sFilename);
-
-    return new ClassPathResource (sFilename1);
+    // The filename was already URL decoded and checked in initRequestState
+    return new ClassPathResource (sFilename);
   }
 }

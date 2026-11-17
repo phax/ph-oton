@@ -16,6 +16,9 @@
  */
 package com.helger.photon.markdown;
 
+import java.util.Locale;
+
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.base.string.StringHelper;
@@ -65,7 +68,35 @@ final class MarkdownHTML
                                                            EHTMLElement.FRAMESET,
                                                            EHTMLElement.IFRAME,
                                                            EHTMLElement.SCRIPT,
-                                                           EHTMLElement.OBJECT, };
+                                                           EHTMLElement.OBJECT,
+                                                           EHTMLElement.STYLE,
+                                                           EHTMLElement.LINK,
+                                                           EHTMLElement.META,
+                                                           EHTMLElement.BASE,
+                                                           EHTMLElement.EMBED,
+                                                           EHTMLElement.FORM };
+
+  /** Unsafe elements that are not part of {@link EHTMLElement}. */
+  private static final String [] UNSAFE_ELEMENT_NAMES = { "svg", "math" };
+
+  /** Attributes that may contain a URL. */
+  private static final String [] URL_ATTRIBUTES = { "action",
+                                                    "background",
+                                                    "cite",
+                                                    "codebase",
+                                                    "data",
+                                                    "dynsrc",
+                                                    "formaction",
+                                                    "href",
+                                                    "longdesc",
+                                                    "lowsrc",
+                                                    "poster",
+                                                    "src",
+                                                    "srcset",
+                                                    "xlink:href" };
+
+  /** URL schemes that are not allowed in safe mode. */
+  private static final String [] UNSAFE_URL_SCHEMES = { "javascript:", "vbscript:", "data:" };
 
   /** Set of valid markdown link prefixes. */
   private static final ICommonsSet <String> LINK_PREFIX = new CommonsHashSet <> ();
@@ -73,6 +104,8 @@ final class MarkdownHTML
   private static final ICommonsSet <String> HTML_BLOCK_ELEMENTS = new CommonsHashSet <> ();
   /** Set of unsafe HTML tags. */
   private static final ICommonsSet <String> HTML_UNSAFE = new CommonsHashSet <> ();
+  /** Set of HTML attributes that may contain a URL. */
+  private static final ICommonsSet <String> HTML_URL_ATTRIBUTES = new CommonsHashSet <> ();
 
   static
   {
@@ -88,6 +121,11 @@ final class MarkdownHTML
 
     for (final EHTMLElement e : UNSAFE_ELEMENTS)
       HTML_UNSAFE.add (e.getElementName ());
+    for (final String sElementName : UNSAFE_ELEMENT_NAMES)
+      HTML_UNSAFE.add (sElementName);
+
+    for (final String sAttrName : URL_ATTRIBUTES)
+      HTML_URL_ATTRIBUTES.add (sAttrName);
   }
 
   private MarkdownHTML ()
@@ -125,5 +163,49 @@ final class MarkdownHTML
     if (StringHelper.isEmpty (sValue))
       return false;
     return HTML_UNSAFE.contains (EHTMLElement.getUnifiedHTMLElementName (sValue));
+  }
+
+  @NonNull
+  private static String _getWithoutWhitespaceAndControlChars (@NonNull final String sValue)
+  {
+    final StringBuilder aSB = new StringBuilder (sValue.length ());
+    for (final char c : sValue.toCharArray ())
+      if (c > ' ')
+        aSB.append (c);
+    return aSB.toString ();
+  }
+
+  /**
+   * Check if an attribute is unsafe and must not be emitted in safe mode. This is the case for
+   * event handler attributes (starting with <code>on</code>) and for URL attributes using the
+   * <code>javascript:</code>, <code>vbscript:</code> or <code>data:</code> scheme.
+   *
+   * @param sAttrName
+   *        Attribute name to check. May be <code>null</code>.
+   * @param sAttrValue
+   *        Attribute value to check. May be <code>null</code>.
+   * @return Returns <code>true</code> if the given attribute is unsafe.
+   */
+  public static boolean isUnsafeHtmlAttribute (@Nullable final String sAttrName, @Nullable final String sAttrValue)
+  {
+    if (StringHelper.isEmpty (sAttrName))
+      return false;
+
+    final String sUnifiedName = sAttrName.toLowerCase (Locale.ROOT);
+    if (sUnifiedName.startsWith ("on"))
+    {
+      // Event handler
+      return true;
+    }
+
+    if (sAttrValue != null && HTML_URL_ATTRIBUTES.contains (sUnifiedName))
+    {
+      // Browsers ignore whitespace and control characters inside the scheme
+      final String sUnifiedValue = _getWithoutWhitespaceAndControlChars (sAttrValue).toLowerCase (Locale.ROOT);
+      for (final String sScheme : UNSAFE_URL_SCHEMES)
+        if (sUnifiedValue.startsWith (sScheme))
+          return true;
+    }
+    return false;
   }
 }

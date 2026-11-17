@@ -224,7 +224,7 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   {
     if (o == this)
       return true;
-    if (o == null || !getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final JSCommentMultiLine rhs = (JSCommentMultiLine) o;
     return m_aParams.equals (rhs.m_aParams) &&
@@ -236,11 +236,12 @@ public class JSCommentMultiLine extends JSCommentPart implements IJSGeneratable
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aParams)
-                                       .append (m_aXDoclets)
-                                       .append (m_aReturn)
-                                       .append (m_aDeprecated)
-                                       .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_aParams)
+                            .append (m_aXDoclets)
+                            .append (m_aReturn)
+                            .append (m_aDeprecated)
+                            .getHashCode ();
   }
 
   @Override

@@ -22,6 +22,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.css.media.CSSMediaList;
@@ -84,13 +85,20 @@ public final class ConstantCSSCodeProvider implements ICSSCodeProvider
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ConstantCSSCodeProvider rhs = (ConstantCSSCodeProvider) o;
-    return m_sCSSCode.equals (rhs.m_sCSSCode) && m_bIsBundlable == rhs.m_bIsBundlable;
+    return m_sCSSCode.equals (rhs.m_sCSSCode) &&
+           EqualsHelper.equals (m_sConditionalComment, rhs.m_sConditionalComment) &&
+           m_aCSSMediaList.equals (rhs.m_aCSSMediaList) &&
+           m_bIsBundlable == rhs.m_bIsBundlable;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sCSSCode).append (m_bIsBundlable).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sCSSCode)
+                                       .append (m_sConditionalComment)
+                                       .append (m_aCSSMediaList)
+                                       .append (m_bIsBundlable)
+                                       .getHashCode ();
   }
 
   @Override

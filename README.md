@@ -109,6 +109,23 @@ v10.8.2 - work in progress
 * Fixed DataTables `ctrlKey` button key, the `lengthMenu` translation, multiple initial sort columns, an empty `layout`, the Buttons plugin without explicit DOM and server-side column searches
 * Added `DataTables.getTextLoadingURLLocaleParameterName` and deprecated the misspelled `getextLoadingURLLocaleParameterName`
 * Fixed the TinyMCE 4 toolbar control `INSERTTIME` to use `insertdatetime`
+* `UserDataDeliveryHttpHandler` and `ClassPathResourceHttpHandler` no longer URL-decode the filename a second time after the directory traversal check
+* `UserGroupManager.createDefaultsForTest` now persists the default user and role assignments
+* `JSchSessionFactory` now uses `StrictHostKeyChecking=yes` if a known hosts file is configured
+* The Markdown safe mode now also blocks `style`, `link`, `meta`, `base`, `embed`, `form`, `svg` and `math` elements, event handler attributes and `javascript:`, `vbscript:` and `data:` URLs
+* `JettyRunner.startServer` no longer blocks forever on startup errors, and `shutDownServer` now works without the stop monitor
+* `InternalJettyStopMonitorThread` now closes its server socket
+* `FftpConnectionDestination` now always disconnects, even if the logout fails
+* `SftpMaxParallelRunner` now restores the interrupt flag
+* Fixed thread-safety issues in `FavoriteManager` and `InternalErrorHandler`
+* Fixed `equals` and `hashCode` of `InlineCSSList`, `ConstantCSSPathProvider`, `ConstantCSSCodeProvider`, `JSCatchBlock` and `JSCommentMultiLine`
+* `IMenuObjectFilter.or` now combines the display texts of both filters
+* `HCParam` is now rendered as a void element without an end tag
+* `FeedLink` now writes `hreflang` as a BCP 47 language tag
+* The YouTube embeds now use `https`
+* The English default time format in `EDateEditText` now uses a 12-hour clock with AM/PM
+* `AbstractWebPageSimpleForm` now passes the form submission state when creating the form
+* Fixed the texts of the tree expand/collapse entries in `EPhotonCoreText`
 
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.

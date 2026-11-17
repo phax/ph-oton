@@ -69,7 +69,7 @@ public final class DataTablesServerDataRow
   public DataTablesServerDataRow (@NonNull final HCRow aRow)
   {
     if (aRow.hasAnyStyle ())
-      LOGGER.warn ("Cell has styles assigned which will be lost: " + aRow.getAllStyles ());
+      LOGGER.warn ("Row has styles assigned which will be lost: " + aRow.getAllStyles ());
 
     m_sRowID = aRow.getID ();
     m_sRowClass = aRow.getAllClassesAsString ();

@@ -67,7 +67,8 @@ public final class JSchSessionFactory
 
   @NonNull
   private static Session _createSession (@NonNull final JSch aJSch,
-                                         @NonNull final IBaseServerConnectionSettings aSettings) throws JSchException
+                                         @NonNull final IBaseServerConnectionSettings aSettings,
+                                         final boolean bHasKnownHosts) throws JSchException
   {
     final Session aSession = aJSch.getSession (aSettings.getUserName (),
                                                aSettings.getServerAddress (),
@@ -77,10 +78,10 @@ public final class JSchSessionFactory
     if (aConnectionTimeout != null && !aConnectionTimeout.isNegative ())
       aSession.setTimeout (Math.toIntExact (aConnectionTimeout.toMillis ()));
 
-    // Setup Strict HostKeyChecking to no so we don't get the
-    // unknown host key exception
+    // Use strict host key checking if a known hosts file is configured.
+    // Otherwise set it to "no" so we don't get the unknown host key exception
     final Properties aConfig = new Properties ();
-    aConfig.put ("StrictHostKeyChecking", "no");
+    aConfig.put ("StrictHostKeyChecking", bHasKnownHosts ? "yes" : "no");
     aSession.setConfig (aConfig);
 
     return aSession;
@@ -94,11 +95,12 @@ public final class JSchSessionFactory
 
     final JSch aJSch = new JSch ();
 
-    if (StringHelper.isNotEmpty (sKnownHostsPath))
+    final boolean bHasKnownHosts = StringHelper.isNotEmpty (sKnownHostsPath);
+    if (bHasKnownHosts)
       aJSch.setKnownHosts (sKnownHostsPath);
 
     // Create session
-    final Session aSession = _createSession (aJSch, aSettings);
+    final Session aSession = _createSession (aJSch, aSettings, bHasKnownHosts);
     aSession.setPassword (aSettings.getPassword ().getBytes (StandardCharsets.UTF_8));
 
     if (LOGGER.isDebugEnabled ())
@@ -120,7 +122,8 @@ public final class JSchSessionFactory
 
     final JSch aJSch = new JSch ();
 
-    if (StringHelper.isNotEmpty (sKnownHostsPath))
+    final boolean bHasKnownHosts = StringHelper.isNotEmpty (sKnownHostsPath);
+    if (bHasKnownHosts)
       aJSch.setKnownHosts (sKnownHostsPath);
 
     // key pair
@@ -130,7 +133,7 @@ public final class JSchSessionFactory
                        aSettings.getKeyPairPassphrase ());
 
     // Create session
-    final Session aSession = _createSession (aJSch, aSettings);
+    final Session aSession = _createSession (aJSch, aSettings, bHasKnownHosts);
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Created new session " + _debugSession (aSession));

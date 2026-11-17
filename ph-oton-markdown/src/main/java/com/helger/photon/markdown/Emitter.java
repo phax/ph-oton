@@ -44,6 +44,7 @@ import com.helger.html.hc.impl.HCDOMWrapper;
 import com.helger.html.hc.impl.HCEntityNode;
 import com.helger.url.ISimpleURL;
 import com.helger.url.SimpleURL;
+import com.helger.xml.microdom.IMicroAttribute;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.serialize.MicroReader;
@@ -405,6 +406,15 @@ final class Emitter
     return nPos;
   }
 
+  private static void _removeUnsafeAttributes (@NonNull final IMicroElement aElement)
+  {
+    final ICommonsList <? extends IMicroAttribute> aAttrs = aElement.getAllAttributeObjs ();
+    if (aAttrs != null)
+      for (final IMicroAttribute aAttr : aAttrs)
+        if (MarkdownHTML.isUnsafeHtmlAttribute (aAttr.getAttributeName (), aAttr.getAttributeValue ()))
+          aElement.removeAttribute (aAttr.getAttributeQName ());
+  }
+
   /**
    * Check if there is a valid HTML tag here. This method also transforms auto links and mailto auto
    * links.
@@ -501,37 +511,41 @@ final class Emitter
       if (nNewPos != -1)
       {
         final String sElement = aTmp.toString ();
-        if (sElement.endsWith ("/>"))
+        if (bSafeMode && sElement.startsWith ("&lt;"))
         {
-          // Self closed tag - can be parsed
-          final IMicroDocument aXML = MicroReader.readMicroXML (sElement);
-          if (aXML == null)
-            throw new MarkdownException ("Failed to parse XML '" + sElement + "'");
-          // And use the root element
-          out.append (new HCDOMWrapper (aXML.getDocumentElement ().detachFromParent ()));
+          // Unsafe element (opening, closing or self closed) - append as-is - no parsing
+          // Just get rid of "&lt;" to avoid it becomes "&amp;lt;"
+          out.append ("<" + sElement.substring (4));
         }
         else
-          if (sElement.startsWith ("</"))
+          if (sElement.endsWith ("/>"))
           {
-            // Closing tag
-            out.pop ();
+            // Self closed tag - can be parsed
+            final IMicroDocument aXML = MicroReader.readMicroXML (sElement);
+            if (aXML == null)
+              throw new MarkdownException ("Failed to parse XML '" + sElement + "'");
+            final IMicroElement eRoot = aXML.getDocumentElement ();
+            if (bSafeMode)
+              _removeUnsafeAttributes (eRoot);
+            // And use the root element
+            out.append (new HCDOMWrapper (eRoot.detachFromParent ()));
           }
           else
-          {
-            // Opening tag - parse as self-closed tag and push to stack
-            if (bSafeMode && sElement.startsWith ("&lt;"))
+            if (sElement.startsWith ("</"))
             {
-              // Append as-is - no parsing
-              // Just get rid of "&lt;" to avoid it becomes "&amp;lt;"
-              out.append ("<" + sElement.substring (4));
+              // Closing tag
+              out.pop ();
             }
             else
             {
+              // Opening tag - parse as self-closed tag and push to stack
               final String sParseCode = sElement.substring (0, sElement.length () - 1) + "/>";
               final IMicroDocument aXML = MicroReader.readMicroXML (sParseCode);
               if (aXML == null)
                 throw new MarkdownException ("Failed to parse XML '" + sParseCode + "'");
               final IMicroElement eRoot = aXML.getDocumentElement ();
+              if (bSafeMode)
+                _removeUnsafeAttributes (eRoot);
 
               // And use the root element
               final IHCElement <?> aHC = HCExtHelper.createHCElementFromName (eRoot.getTagName ());
@@ -553,7 +567,6 @@ final class Emitter
                 out.push (aHC);
               }
             }
-          }
 
         return nNewPos - 1;
       }

@@ -694,8 +694,9 @@ public abstract class AbstractWebPageSimpleForm <DATATYPE extends IHasID <String
             // Show the input form. Either for the first time or because of form
             // errors a n-th time
             eViewObject = EShowObject.DONT_SHOW_OBJECT;
-            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC)
-                                                             : getUIHandler ().createFormSelf (aWPEC);
+            final FORM_TYPE aForm = isFileUploadForm (aWPEC) ? getUIHandler ().createFormFileUploadSelf (aWPEC,
+                                                                                                         bIsFormSubmitted)
+                                                             : getUIHandler ().createFormSelf (aWPEC, bIsFormSubmitted);
             aNodeList.addChild (aForm);
 
             // Set unique ID

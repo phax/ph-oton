@@ -20,6 +20,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.html.js.IJSWriterSettings;
@@ -87,7 +88,7 @@ public class JSCatchBlock implements IJSGeneratable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final JSCatchBlock rhs = (JSCatchBlock) o;
-    return m_aVar.equals (rhs.m_aVar) && m_aBody.equals (rhs.m_aBody);
+    return EqualsHelper.equals (m_aVar, rhs.m_aVar) && m_aBody.equals (rhs.m_aBody);
   }
 
   @Override

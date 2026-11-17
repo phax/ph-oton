@@ -167,15 +167,19 @@ public final class InternalErrorHandler
     {
       // Check if an internal error was already sent for this stack trace
       // Init with -1 so that it gets send the first time
-      final MutableInt aMI = RW_LOCK.writeLockedGet (() -> INT_ERR_CACHE.computeIfAbsent (sThrowableStackTrace,
-                                                                                          k -> new MutableInt (-1)));
-      aMI.inc ();
+      nOccurranceCount = RW_LOCK.writeLockedInt (() -> {
+        final MutableInt aMI = INT_ERR_CACHE.computeIfAbsent (sThrowableStackTrace, k -> new MutableInt (-1));
+        aMI.inc ();
+        return aMI.intValue ();
+      });
 
       // Send only every Nth invocation!
-      nOccurranceCount = aMI.intValue ();
       if ((nOccurranceCount % nDuplicateEliminiationCount) != 0)
       {
-        LOGGER.warn ("Not sending internal error mail, because this error occurred " + nOccurranceCount + " times");
+        // The counter is 0-based
+        LOGGER.warn ("Not sending internal error mail, because this error occurred " +
+                     (nOccurranceCount + 1) +
+                     " times");
         InternalErrorTelemetry.onMailSuppressed (CCoreTelemetry.VALUE_SUPPRESS_OCCURRENCE_LIMIT);
         return;
       }

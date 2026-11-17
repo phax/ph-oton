@@ -80,7 +80,9 @@ public interface IMenuObjectFilter extends Predicate <IMenuObject>, IHasDisplayT
       @Override
       public String getDisplayText (@NonNull final Locale aContentLocale)
       {
-        return StringHelper.getNotNull (aThis.getDisplayText (aContentLocale), aOther.getDisplayText (aContentLocale));
+        return StringHelper.getConcatenatedOnDemand (aThis.getDisplayText (aContentLocale),
+                                                     " | ",
+                                                     aOther.getDisplayText (aContentLocale));
       }
     };
   }

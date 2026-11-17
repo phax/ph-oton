@@ -665,7 +665,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
           else
             LOGGER.error ("The init-parameter for the server URL" +
                           (bProductionMode ? " (production mode)" : " (non-production mode)") +
-                          "contains the non-URL value '" +
+                          " contains the non-URL value '" +
                           sInitParameter +
                           "'");
         }
