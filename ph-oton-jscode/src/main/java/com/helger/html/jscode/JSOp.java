@@ -49,6 +49,22 @@ public final class JSOp
     return aExpr instanceof JSOpUnary || aExpr instanceof JSOpBinary || aExpr instanceof JSOpTernary;
   }
 
+  /**
+   * Determine whether an expression emits its own surrounding parentheses.
+   *
+   * @param aExpr
+   *        Expression to check
+   * @return <code>true</code> if the generated expression is surrounded by parentheses
+   */
+  static boolean hasSurroundingParentheses (@Nullable final IJSExpression aExpr)
+  {
+    if (aExpr instanceof final JSOpBinary aBinary)
+      return aBinary.useBraces ();
+    return aExpr instanceof JSOpUnaryWithParanthesis ||
+           aExpr instanceof JSOpTernary ||
+           aExpr instanceof JSExprParanthesis;
+  }
+
   /* -- Unary operators -- */
 
   @NonNull

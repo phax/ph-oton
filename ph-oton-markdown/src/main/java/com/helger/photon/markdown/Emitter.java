@@ -1015,9 +1015,11 @@ final class Emitter
           final int nNewPos = MarkdownHelper.readXMLElement (aTmpSB, sIn, nPos, bSafeMode);
           if (nNewPos != -1)
           {
-            // XXX Is this correct???
-            aOut.append (aTmpSB.toString ());
-            nPos = nNewPos;
+            final String sElement = aTmpSB.toString ();
+            aOut.append (sElement);
+            // For a complete element the returned position is after the closing '>', so step back
+            // one char because of the loop increment. For "<!" the position of the '!' is returned.
+            nPos = sElement.endsWith (">") ? nNewPos - 1 : nNewPos;
           }
           else
           {

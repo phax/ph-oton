@@ -47,6 +47,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   public static final int LENGTH_HOUR = 2;
   public static final int LENGTH_MIN = 2;
   public static final int LENGTH_SEC = 2;
+  public static final int LENGTH_MILLISEC = 3;
 
   private String m_sDatetime;
 
@@ -139,7 +140,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
                   ":" +
                   StringHelper.getLeadingZero (nSecond, LENGTH_SEC) +
                   "." +
-                  nMilliSeconds;
+                  StringHelper.getLeadingZero (nMilliSeconds, LENGTH_MILLISEC);
     return this;
   }
 
@@ -159,14 +160,15 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   @NonNull
   public final HCTime setAsDateAndTime (@NonNull final LocalDateTime aDateTime)
   {
-    m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("uuuu-MM-dd'T'HH:mm:ss.SSSZZ").format (aDateTime);
+    m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("uuuu-MM-dd'T'HH:mm:ss.SSS").format (aDateTime);
     return this;
   }
 
   @NonNull
   public final HCTime setAsDateAndTime (@NonNull final ZonedDateTime aDateTime)
   {
-    return setAsDateAndTime (aDateTime.toLocalDateTime ());
+    m_sDatetime = DateTimeFormatterCache.getDateTimeFormatterStrict ("uuuu-MM-dd'T'HH:mm:ss.SSSXXX").format (aDateTime);
+    return this;
   }
 
   @NonNull
@@ -174,7 +176,7 @@ public class HCTime extends AbstractHCElementWithChildren <HCTime>
   {
     final int nHours = nMinutes / CGlobal.MINUTES_PER_HOUR;
     final int nRestMinutes = nMinutes % CGlobal.MINUTES_PER_HOUR;
-    m_sDatetime = (nHours < 0 ? "-" : "+") +
+    m_sDatetime = (nMinutes < 0 ? "-" : "+") +
                   StringHelper.getLeadingZero (MathHelper.abs (nHours), LENGTH_HOUR) +
                   ":" +
                   StringHelper.getLeadingZero (MathHelper.abs (nRestMinutes), LENGTH_MIN);

@@ -262,13 +262,13 @@ public class FineUploader5Chunking implements IFineUploader5Part
 
     final JSAssocArray aParamNames = new JSAssocArray ();
     if (!m_sChunkingParamNamesChunkSize.equals (DEFAULT_CHUNKING_PARAM_NAMES_CHUNK_SIZE))
-      aSub.add ("chunkSize", m_sChunkingParamNamesChunkSize);
+      aParamNames.add ("chunkSize", m_sChunkingParamNamesChunkSize);
     if (!m_sChunkingParamNamesPartByteOffset.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_BYTE_OFFSET))
-      aSub.add ("partByteOffset", m_sChunkingParamNamesPartByteOffset);
+      aParamNames.add ("partByteOffset", m_sChunkingParamNamesPartByteOffset);
     if (!m_sChunkingParamNamesPartIndex.equals (DEFAULT_CHUNKING_PARAM_NAMES_PART_INDEX))
-      aSub.add ("partIndex", m_sChunkingParamNamesPartIndex);
+      aParamNames.add ("partIndex", m_sChunkingParamNamesPartIndex);
     if (!m_sChunkingParamNamesTotalParts.equals (DEFAULT_CHUNKING_PARAM_NAMES_TOTAL_PARTS))
-      aSub.add ("totalParts", m_sChunkingParamNamesTotalParts);
+      aParamNames.add ("totalParts", m_sChunkingParamNamesTotalParts);
     if (!aParamNames.isEmpty ())
       aSub.add ("paramNames", aParamNames);
 

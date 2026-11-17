@@ -893,6 +893,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     final HCColGroup aColGroup = aTable.getColGroup ();
     if (aColGroup != null)
     {
+      DataTablesOrder aInitialOrder = null;
       int nColIndex = 0;
       for (final IHCCol <?> aCol : aColGroup.getAllColumns ())
       {
@@ -902,7 +903,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
           // Copy data from DTColumn
           aColumn = new DataTablesColumnDef (nColIndex, aDTCol);
           if (aDTCol.hasInitialSorting ())
-            setInitialOrder (new DataTablesOrder ().addColumn (nColIndex, aDTCol.getInitialSorting ()));
+          {
+            if (aInitialOrder == null)
+              aInitialOrder = new DataTablesOrder ();
+            aInitialOrder.addColumn (nColIndex, aDTCol.getInitialSorting ());
+          }
         }
         else
         {
@@ -914,6 +919,8 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
         addColumn (aColumn);
         ++nColIndex;
       }
+      if (aInitialOrder != null)
+        setInitialOrder (aInitialOrder);
     }
     return this;
   }
@@ -976,9 +983,20 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
   }
 
   @Nullable
-  public String getextLoadingURLLocaleParameterName ()
+  public String getTextLoadingURLLocaleParameterName ()
   {
     return m_sTextLoadingURLLocaleParameterName;
+  }
+
+  /**
+   * @return The text loading URL locale parameter name. May be <code>null</code>.
+   * @deprecated Use {@link #getTextLoadingURLLocaleParameterName()} instead
+   */
+  @Deprecated (forRemoval = true, since = "10.8.2")
+  @Nullable
+  public String getextLoadingURLLocaleParameterName ()
+  {
+    return getTextLoadingURLLocaleParameterName ();
   }
 
   @NonNull
@@ -1121,7 +1139,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     aLanguage.add ("infoPostFix", EDataTablesText.INFO_POSTFIX.getDisplayText (aDisplayLocale));
     aLanguage.add ("decimal", DecimalFormatSymbols.getInstance (aDisplayLocale).getDecimalSeparator ());
     aLanguage.add ("thousands", EDataTablesText.THOUSANDS.getDisplayText (aDisplayLocale));
-    aLanguage.add ("lLengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
+    aLanguage.add ("lengthMenu", EDataTablesText.LENGTH_MENU.getDisplayText (aDisplayLocale));
     aLanguage.add ("loadingRecords", EDataTablesText.LOADING_RECORDS.getDisplayText (aDisplayLocale));
     aLanguage.add ("processing", EDataTablesText.PROCESSING.getDisplayText (aDisplayLocale));
     aLanguage.add ("search", EDataTablesText.SEARCH.getDisplayText (aDisplayLocale));
@@ -1280,7 +1298,11 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     if (m_aDom != null)
       aJSParams.add ("dom", m_aDom.getAsString ());
     if (m_aLayout != null)
-      aJSParams.add ("layout", m_aLayout.getAsJSAssocArray ());
+    {
+      final JSAssocArray aLayout = m_aLayout.getAsJSAssocArray ();
+      if (aLayout != null)
+        aJSParams.add ("layout", aLayout);
+    }
     if (m_aLengthMenu != null && !m_aLengthMenu.isEmpty ())
     {
       final Locale aRealLocale = m_aDisplayLocale != null ? m_aDisplayLocale : Locale.US;

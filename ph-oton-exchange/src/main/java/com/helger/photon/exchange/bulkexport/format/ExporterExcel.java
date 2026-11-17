@@ -17,6 +17,7 @@
 package com.helger.photon.exchange.bulkexport.format;
 
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -272,12 +273,15 @@ public class ExporterExcel implements IExporterFile
               aWBCH.addCellStyle (m_aStyleDouble);
             break;
           case INT:
-            aCell = aWBCH.addCell (((Number) aFieldValue).intValue ());
+            if (aFieldValue instanceof final BigInteger aBigInt)
+              aCell = aWBCH.addCell (aBigInt);
+            else
+              aCell = aWBCH.addCell (((Number) aFieldValue).longValue ());
             if (m_aStyleInt != null)
               aWBCH.addCellStyle (m_aStyleInt);
             break;
           case TEXT:
-            aCell = aWBCH.addCell ((String) aFieldValue);
+            aCell = aWBCH.addCell (String.valueOf (aFieldValue));
             if (m_aStyleText != null)
               aWBCH.addCellStyle (m_aStyleText);
             break;

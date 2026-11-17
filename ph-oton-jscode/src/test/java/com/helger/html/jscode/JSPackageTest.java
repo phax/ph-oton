@@ -222,7 +222,7 @@ public final class JSPackageTest
                   "add(32,-4);" +
                   "let add2=new Function('x','y','return x+y');" +
                   "add2(1,2);" +
-                  "if(typeof m1==='String')" +
+                  "if(typeof m1==='string')" +
                   "{try{return 5;}catch (ex){throw new Error(ex);}finally{root.substring(0,1);}}" +
                   "/water(mark)?/gim.test('waterMark');" +
                   "/water(mark)?/i.test('Water');" +

@@ -562,9 +562,9 @@ public class HCRow extends AbstractHCElementWithInternalChildren <HCRow, IHCCell
     if (hasChildren ())
       for (final IHCCell <?> aCell : children ())
       {
-        if (i >= nIndex)
-          return aCell;
         i += aCell.getColspan ();
+        if (nIndex < i)
+          return aCell;
       }
     return null;
   }

@@ -402,7 +402,7 @@ public final class InternalErrorHandler
         catch (final Exception ex2)
         {
           // Happens if no scope is available (or what so ever)
-          LOGGER.warn ("Failed to get request scope: " + _getThrowableAsString (ex2));
+          LOGGER.warn ("Failed to get session scope: " + _getThrowableAsString (ex2));
         }
       if (aSessionScope != null)
       {

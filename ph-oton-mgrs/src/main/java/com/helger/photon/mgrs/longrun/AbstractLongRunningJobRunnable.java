@@ -90,27 +90,29 @@ public abstract class AbstractLongRunningJobRunnable implements Runnable, ILongR
                  "' with unique ID '" +
                  sLongRunningJobID +
                  "'");
+    ESuccess eSuccess;
+    LongRunningJobResult aJobResult;
     try
     {
       // Create the main result
-      final LongRunningJobResult aJobResult = createLongRunningJobResult ();
+      aJobResult = createLongRunningJobResult ();
+      eSuccess = ESuccess.SUCCESS;
+    }
+    catch (final Exception ex)
+    {
+      aJobResult = LongRunningJobResult.createExceptionText (ex);
+      eSuccess = ESuccess.FAILURE;
 
-      // Mark the long running job as finished
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.SUCCESS, aJobResult);
+      LOGGER.info ("Error executing long running job '" + sLongRunningJobID + "'", ex);
+    }
 
+    // Mark the long running job as finished - exactly once
+    getLongRunningJobManager ().onEndJob (sLongRunningJobID, eSuccess, aJobResult);
+
+    if (eSuccess.isSuccess ())
       LOGGER.info ("Finished long running job '" +
                    sLongRunningJobID +
                    "' with success and result of type " +
                    aJobResult.getType ());
-    }
-    catch (final Exception ex)
-    {
-      // Mark the long running job as finished
-      getLongRunningJobManager ().onEndJob (sLongRunningJobID,
-                                            ESuccess.FAILURE,
-                                            LongRunningJobResult.createExceptionText (ex));
-
-      LOGGER.info ("Error executing long running job '" + sLongRunningJobID + "'", ex);
-    }
   }
 }

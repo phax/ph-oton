@@ -33,6 +33,11 @@ public enum EHCPreload implements IHCHasHTMLAttributeValue
 {
   AUTO ("auto"),
   METADATA ("metadata"),
+  NONE ("none"),
+  /**
+   * @deprecated Misspelled. Use {@link #NONE} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.8.2")
   DONE ("none");
 
   private final String m_sAttrValue;

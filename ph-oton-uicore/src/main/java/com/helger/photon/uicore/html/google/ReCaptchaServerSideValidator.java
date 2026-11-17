@@ -64,7 +64,7 @@ public final class ReCaptchaServerSideValidator
     ValueEnforcer.notNull (aHCS, "HttpClientSettings");
 
     if (StringHelper.isEmpty (sReCaptchaResponse))
-      return ESuccess.SUCCESS;
+      return ESuccess.FAILURE;
 
     try (HttpClientManager aMgr = HttpClientManager.create (aHCS))
     {
@@ -83,7 +83,7 @@ public final class ReCaptchaServerSideValidator
         final boolean bSuccess = aJson.getAsObject ().getAsBoolean ("success", false);
 
         if (LOGGER.isDebugEnabled ())
-          LOGGER.debug ("ReCpatcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
+          LOGGER.debug ("ReCaptcha Response for '" + sReCaptchaResponse + "': " + aJson.getAsJsonString ());
 
         return ESuccess.valueOf (bSuccess);
       }

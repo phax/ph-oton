@@ -140,7 +140,7 @@ public class RoleManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                        " WHERE id IN (" +
                                                        aCond.toString () +
                                                        ")",
-                                                       new ConstantPreparedStatementDataProvider (aIDs));
+                                                       new ConstantPreparedStatementDataProvider (aUniqueIDs));
         return nCount == nIDCount;
       }
     }

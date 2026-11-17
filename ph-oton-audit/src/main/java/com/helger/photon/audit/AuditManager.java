@@ -284,7 +284,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
       return null;
 
     // Read-lock, so that the file is not read while it is written
-    final IMicroDocument aDoc = m_aRWLock.readLockedGet ( () -> MicroReader.readMicroXML (aFile));
+    final IMicroDocument aDoc = m_aRWLock.readLockedGet (() -> MicroReader.readMicroXML (aFile));
     if (aDoc == null)
     {
       LOGGER.warn ("Failed to read audit file '" + aFile.getAbsolutePath () + "'");
@@ -314,7 +314,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
     if (isInMemory ())
     {
       // Only the items kept in memory are available
-      m_aRWLock.readLocked ( () -> m_aItems.getAllItems ().findAll (aIsInRange, ret::add));
+      m_aRWLock.readLocked (() -> m_aItems.getAllItems ().findAll (aIsInRange, ret::add));
     }
     else
     {
@@ -367,9 +367,9 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
         // directory is present
         while (aEarliest.isBefore (aNow))
         {
-          aEarliest = aEarliest.plusDays (1);
           if (aDataIO.getFile (m_sBaseDir + getRelativeAuditFilename (aEarliest)).isFile ())
             break;
+          aEarliest = aEarliest.plusDays (1);
         }
       }
       // Cache result

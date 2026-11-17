@@ -37,7 +37,7 @@ mvn --batch-mode --update-snapshots install
 
 The modules form a layered dependency graph (lower layers depend on nothing above them):
 
-1. **Foundation**: `ph-oton-html` (HTML elements), `ph-oton-jscode` (JS code model), `ph-oton-atom` (ATOM feeds)
+1. **Foundation**: `ph-oton-html` (HTML elements), `ph-oton-jscode` (JS code model), `ph-oton-atom` (ATOM feeds), `ph-oton-markdown` (Markdown to HTML)
 2. **Extensions**: `ph-oton-jquery` (extends jscode), `ph-oton-io` (basic IO)
 3. **Application**: `ph-oton-app` (app basics, CSRF, resource bundling), `ph-oton-audit`, `ph-oton-ajax`, `ph-oton-api`
 4. **Security & Data**: `ph-oton-security` (users, roles, groups), `ph-oton-exchange` (import/export)

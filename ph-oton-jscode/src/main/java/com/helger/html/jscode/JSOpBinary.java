@@ -33,26 +33,7 @@ public class JSOpBinary extends AbstractJSExpression
   private final IJSExpression m_aLeft;
   private final String m_sOp;
   private final IJSGeneratable m_aRight;
-  private boolean m_bUseBraces;
-
-  private static boolean _useBraces (@NonNull final IJSExpression aLeft,
-                                     @NonNull final String sOp,
-                                     @NonNull final IJSGeneratable aRight)
-  {
-    if (aLeft instanceof JSOpBinary)
-    {
-      final JSOpBinary r = (JSOpBinary) aLeft;
-      if (sOp.equals (r.m_sOp))
-        r.m_bUseBraces = false;
-    }
-    if (aRight instanceof JSOpBinary)
-    {
-      final JSOpBinary r = (JSOpBinary) aRight;
-      if (sOp.equals (r.m_sOp))
-        r.m_bUseBraces = false;
-    }
-    return true;
-  }
+  private final boolean m_bUseBraces;
 
   /**
    * Constructor
@@ -69,7 +50,7 @@ public class JSOpBinary extends AbstractJSExpression
                      @NonNull final String sOp,
                      @NonNull final IJSGeneratable aRight)
   {
-    this (aLeft, sOp, aRight, _useBraces (aLeft, sOp, aRight));
+    this (aLeft, sOp, aRight, true);
   }
 
   /**
@@ -120,15 +101,45 @@ public class JSOpBinary extends AbstractJSExpression
     return m_bUseBraces;
   }
 
-  public void generate (@NonNull final JSFormatter aFormatter)
+  private static boolean _needsSpaceBeforeRight (@NonNull final String sOp, @NonNull final IJSGeneratable aRight)
   {
-    final boolean bUseBraces = m_bUseBraces;
+    if (!sOp.equals ("-") && !sOp.equals ("+"))
+      return false;
 
+    // Avoid e.g. "x--1" for "x - (-1)"
+    if (sOp.equals ("-") && aRight instanceof final AbstractJSAtomNumeric aNumeric && aNumeric.doubleValue () < 0)
+      return true;
+
+    // Avoid e.g. "x---y" for "x - (--y)" or "x+++y" for "x + (++y)"
+    return aRight instanceof final JSOpUnary aUnary &&
+           !(aRight instanceof JSOpUnaryWithParanthesis) &&
+           aUnary.isOperatorFirst () &&
+           aUnary.operator ().startsWith (sOp);
+  }
+
+  private void _generate (@NonNull final JSFormatter aFormatter, final boolean bUseBraces)
+  {
     if (bUseBraces)
       aFormatter.plain ('(');
-    aFormatter.generatable (m_aLeft).plain (m_sOp).generatable (m_aRight);
+    if (m_aLeft instanceof final JSOpBinary aLeftOp && aLeftOp.m_sOp.equals (m_sOp))
+    {
+      // Binary operators are left-associative, so the braces of a left operand with the same
+      // operator are not needed
+      aLeftOp._generate (aFormatter, false);
+    }
+    else
+      aFormatter.generatable (m_aLeft);
+    aFormatter.plain (m_sOp);
+    if (_needsSpaceBeforeRight (m_sOp, m_aRight))
+      aFormatter.plain (' ');
+    aFormatter.generatable (m_aRight);
     if (bUseBraces)
       aFormatter.plain (')');
+  }
+
+  public void generate (@NonNull final JSFormatter aFormatter)
+  {
+    _generate (aFormatter, m_bUseBraces);
   }
 
   @Override

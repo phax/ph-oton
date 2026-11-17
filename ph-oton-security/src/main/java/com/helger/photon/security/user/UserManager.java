@@ -324,6 +324,13 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
       AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
+    final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
+    if (aOtherUser != null && !aOtherUser.getID ().equals (aUser.getID ()))
+    {
+      // Another user with this login name already exists
+      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
+      return EChange.UNCHANGED;
+    }
     m_aRWLock.writeLock ().lock ();
     try
     {

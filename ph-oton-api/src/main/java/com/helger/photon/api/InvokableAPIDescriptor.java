@@ -154,8 +154,9 @@ public class InvokableAPIDescriptor implements Serializable
       // If parsing fails, use the provided String
       final String sMimeTypeToCheck = aMT == null ? sContentType : aMT.getAsStringWithoutParameters ();
 
-      if (!m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck) &&
-          !m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck.toLowerCase (Locale.US)))
+      if (sMimeTypeToCheck == null ||
+          (!m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck) &&
+           !m_aDescriptor.allowedMimeTypes ().contains (sMimeTypeToCheck.toLowerCase (Locale.US))))
       {
         LOGGER.warn ("Request '" +
                      m_sPath +

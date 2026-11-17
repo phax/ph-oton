@@ -74,6 +74,15 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   @Override
   protected void onRecoveryUpdate (@NonNull final Favorite aElement)
   {
+    final ICommonsList <Favorite> aList = m_aMap.get (aElement.getUserID ());
+    if (aList != null)
+      for (int i = 0; i < aList.size (); ++i)
+        if (aList.get (i).getID ().equals (aElement.getID ()))
+        {
+          // Replace the existing entry
+          aList.set (i, aElement);
+          return;
+        }
     _addItem (aElement);
   }
 
@@ -82,7 +91,7 @@ public class FavoriteManager extends AbstractPhotonWALDAO <Favorite>
   {
     final ICommonsList <Favorite> aList = m_aMap.get (aElement.getUserID ());
     if (aList != null)
-      aList.remove (aElement);
+      aList.removeIf (x -> x.getID ().equals (aElement.getID ()));
   }
 
   @Override

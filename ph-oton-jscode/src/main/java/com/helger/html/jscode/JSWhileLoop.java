@@ -69,7 +69,7 @@ public class JSWhileLoop extends AbstractJSStatement
 
   public void state (@NonNull final JSFormatter aFormatter)
   {
-    if (JSOp.hasOperator (m_aTest))
+    if (JSOp.hasSurroundingParentheses (m_aTest))
       aFormatter.plain ("while").generatable (m_aTest);
     else
       aFormatter.plain ("while(").generatable (m_aTest).plain (')');

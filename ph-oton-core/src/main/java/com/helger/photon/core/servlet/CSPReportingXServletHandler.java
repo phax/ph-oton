@@ -265,7 +265,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
   @NonNull
   public final EChange clearAllBlockedURIs ()
   {
-    return m_aRWLock.readLockedGet (m_aBlockedURIs::removeAll);
+    return m_aRWLock.writeLockedGet (m_aBlockedURIs::removeAll);
   }
 
   /**

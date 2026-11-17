@@ -75,7 +75,7 @@ public class JSDoLoop extends AbstractJSStatement
     else
       aFormatter.plain ("{}");
 
-    if (JSOp.hasOperator (m_aTest))
+    if (JSOp.hasSurroundingParentheses (m_aTest))
       aFormatter.plain ("while").generatable (m_aTest);
     else
       aFormatter.plain ("while(").generatable (m_aTest).plain (')');

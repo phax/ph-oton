@@ -133,7 +133,7 @@ public final class PathDescriptorVariableConstraint implements Serializable
     }
 
     // Split in type and value
-    final List <String> aParts = StringHelper.getExploded ('=', sConstraint, 2);
+    final List <String> aParts = StringHelper.getExploded ('=', sRealValue, 2);
 
     // Mandatory type
     final String sConstraintType = aParts.get (0);

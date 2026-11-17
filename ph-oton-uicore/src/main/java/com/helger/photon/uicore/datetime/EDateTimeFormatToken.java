@@ -18,8 +18,8 @@ package com.helger.photon.uicore.datetime;
 
 import static java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR;
 import static java.time.temporal.ChronoField.AMPM_OF_DAY;
+import static java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM;
 import static java.time.temporal.ChronoField.DAY_OF_YEAR;
-import static java.time.temporal.ChronoField.HOUR_OF_AMPM;
 import static java.time.temporal.ChronoField.HOUR_OF_DAY;
 import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
 import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
@@ -45,18 +45,18 @@ public enum EDateTimeFormatToken
   DAY_OF_MONTH_LZ ("%d", "dd", b -> b.appendValue (ChronoField.DAY_OF_MONTH, 2)),
   DAY_OF_MONTH ("%e", "d", b -> b.appendValue (ChronoField.DAY_OF_MONTH, 1)),
   HOUR23_LZ ("%H", "HH", b -> b.appendValue (HOUR_OF_DAY, 2)),
-  HOUR12_LZ ("%I", "hh", b -> b.appendValue (HOUR_OF_AMPM, 2)),
+  HOUR12_LZ ("%I", "hh", b -> b.appendValue (CLOCK_HOUR_OF_AMPM, 2)),
   DAY_OF_YEAR_LZ ("%j", "DDD", b -> b.appendValue (DAY_OF_YEAR, 3)),
   HOUR23 ("%k", "H", b -> b.appendValue (HOUR_OF_DAY, 1)),
-  HOUR12 ("%l", "h", b -> b.appendValue (HOUR_OF_AMPM, 1)),
+  HOUR12 ("%l", "h", b -> b.appendValue (CLOCK_HOUR_OF_AMPM, 1)),
   MONTH ("%m", "M", b -> b.appendValue (MONTH_OF_YEAR, 1)),
   // HACK alert: mapping not present in JS but in some Java
   // standard date time pattern
   MONTH_LZ ("%m", "MM", b -> b.appendValue (MONTH_OF_YEAR, 2)),
   MINUTE_LZ ("%M", "mm", b -> b.appendValue (MINUTE_OF_HOUR, 2)),
   CHAR_NEWLINE ("%n", "\n", b -> b.appendLiteral ('\n')),
-  AMPM_UPPER ("%p", "a", b -> b.appendValue (AMPM_OF_DAY)),
-  AMPM_LOWER ("%P", "a", b -> b.appendValue (AMPM_OF_DAY)),
+  AMPM_UPPER ("%p", "a", b -> b.appendText (AMPM_OF_DAY)),
+  AMPM_LOWER ("%P", "a", b -> b.appendText (AMPM_OF_DAY)),
   // _SECONDS_SINCE_01011970 ("%s", null), // Java: none
   SECONDS_LZ ("%S", "ss", b -> b.appendValue (SECOND_OF_MINUTE, 2)),
   CHAR_TAB ("%t", "\t", b -> b.appendLiteral ('\t')),
@@ -64,7 +64,7 @@ public enum EDateTimeFormatToken
   // synonyms: %V %W
   // _DAY_OF_WEEK_FROM_MONDAY ("%u", null), // Java: only text version
   // _DAY_OF_WEEK_FROM_SUNDAY ("%w", null), // Java: only text version
-  YEAR_WITHOUT_CENTURY ("%y", "yy", b -> b.appendValue (YEAR, 2)),
+  YEAR_WITHOUT_CENTURY ("%y", "yy", b -> b.appendValueReduced (YEAR, 2, 2, 2000)),
   YEAR_WITH_CENTURY ("%Y", "uuuu", b -> b.appendValue (YEAR, 4, 10, SignStyle.EXCEEDS_PAD)),
   CHAR_PERC ("%%", "%", b -> b.appendLiteral ('%'));
 

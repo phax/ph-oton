@@ -205,7 +205,7 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     // Tell them to use the server VM if possible:
     final EJVMVendor eJVMVendor = EJVMVendor.getCurrentVendor ();
     if (eJVMVendor.isSun () && eJVMVendor != EJVMVendor.SUN_SERVER)
-      LOGGER.warn ("Consider using the Sun Server Runtime by specifiying '-server' on the commandline!");
+      LOGGER.warn ("Consider using the Sun Server Runtime by specifying '-server' on the commandline!");
 
     if (getClass ().desiredAssertionStatus ())
       LOGGER.warn ("Java assertions are enabled - this should be disabled in production!");
@@ -895,9 +895,9 @@ public class WebAppListener implements ServletContextListener, HttpSessionListen
     {
       if (isLogExceptions ())
       {
-        // Ensure it is logged on startup - otherwise (especially for Docker
+        // Ensure it is logged on shutdown - otherwise (especially for Docker
         // images) it is hard to trace
-        LOGGER.error ("Context Initialization Error", ex);
+        LOGGER.error ("Context Destruction Error", ex);
       }
       throw ex;
     }

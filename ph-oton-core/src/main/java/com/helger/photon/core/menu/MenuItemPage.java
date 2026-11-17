@@ -100,7 +100,7 @@ public class MenuItemPage extends AbstractMenuObject <MenuItemPage> implements I
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aPage).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aPage.getID ()).getHashCode ();
   }
 
   @Override

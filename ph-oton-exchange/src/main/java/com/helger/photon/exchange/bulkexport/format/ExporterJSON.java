@@ -77,7 +77,7 @@ public class ExporterJSON implements IExporterFile
   @NonNull
   public final EExchangeFileType getFileType ()
   {
-    return EExchangeFileType.XML;
+    return m_bEmitType ? EExchangeFileType.JSON : EExchangeFileType.JSON_SIMPLE;
   }
 
   @NonNull

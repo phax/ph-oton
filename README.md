@@ -72,8 +72,43 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 v10.8.2 - work in progress
 * Requires at least ph-db 8.5.3, which returns `null` instead of an empty string for a SQL `NULL` CLOB value
-* `AuditorJDBC` now treat a `NULL` audit action or system message as an empty string.
-  This avoids a `NullPointerException` when reading audit items and a false "changed" detection for empty system messages on Oracle and DB2
+* `AuditorJDBC` now treats a `NULL` audit action as an empty string.
+  This avoids a `NullPointerException` when reading audit items on Oracle and DB2
+* `ReCaptchaServerSideValidator` now returns failure for an empty or missing captcha response
+* The JDBC managers' `containsAllIDs` no longer fails for ID lists with duplicates
+* `UserGroupManagerJDBC.createDefaultsForTest` now persists the default user and role assignments
+* `UserManager` and `UserManagerJDBC` now reject changing a login name to one already used by another user
+* `SystemMessageManagerJDBC.setSystemMessage` now returns `UNCHANGED` if the DB transaction failed
+* Reading business objects now correctly falls back to the legacy `lastmoddt` attribute
+* `GoMappingManager` now persists the `editable` flag
+* `LocaleManager.setDefaultLocale` now returns `CHANGED` on a change
+* Long running jobs now report their actual execution result instead of always reporting success
+* Fixed thread-safety issues in `PhotonGlobalState`, `PhotonSessionState`, `CSPReportingXServletHandler` and `DefaultLockManager`
+* Fixed `hashCode` of menu objects to be consistent with `equals`
+* Fixed crash recovery of favourites in `FavoriteManager`
+* Fixed the formatting of `yy`, `h`, `hh` and the AM/PM tokens in `EDateTimeFormatToken`
+* Fixed `HCTime.setAsDateAndTime` that always threw an exception, the sign of negative timezone offsets and the millisecond padding
+* `HCStyle` with `PLAIN_TEXT_NO_ESCAPE` now rejects content containing `</style>` instead of `</script>`
+* Fixed `NullPointerException` in `removeAllStyles` if no style was present
+* Fixed `HCRow.getCellAtEffectiveIndex` with colspans
+* `JSToString` now supports primitive arrays
+* `XHTMLParser.setSAXReaderSettings` now always sets the HTML entity resolver, as documented
+* Added `EJSEvent.SEEKED` and deprecated the non-existing `EJSEvent.SEEKEND`
+* Added `EHCPreload.NONE` and deprecated the misspelled `EHCPreload.DONE`
+* Added `IJSInvocation.argsOrNull` and deprecated the misspelled `argssOrNull`
+* Fixed JS code generation: missing parentheses around unary operators in `if`/`while`/`do`/`switch`, wrongly removed parentheses for non-associative binary operators, `x - -1`, `typeof` comparisons and the missing `;` after a class prototype
+* Fixed `AbstractJSBlock.removeByName` corrupting the insert position
+* Fixed the Markdown safe mode dropping the character after each HTML tag
+* `LinkHelper` no longer treats e.g. `/apple.png` as already containing the context path `/app`
+* Fixed a `NullPointerException` in API invocation for requests without a Content-Type
+* Fixed parsing of path variable constraints with whitespace
+* `ExporterJSON.getFileType` now returns the correct JSON type
+* Fixed `ExporterExcel` for non-String text values and large integer values
+* Fixed a resource leak in `FileConnector` and a `NullPointerException` in `JschSessionProvider` for key pairs without a passphrase
+* Fixed FineUploader 5 options `element`, `listElement`, `itemLimit`, `chunking.paramNames` and the merging of the `text` options
+* Fixed DataTables `ctrlKey` button key, the `lengthMenu` translation, multiple initial sort columns, an empty `layout`, the Buttons plugin without explicit DOM and server-side column searches
+* Added `DataTables.getTextLoadingURLLocaleParameterName` and deprecated the misspelled `getextLoadingURLLocaleParameterName`
+* Fixed the TinyMCE 4 toolbar control `INSERTTIME` to use `insertdatetime`
 
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.

@@ -295,7 +295,7 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
       aPrototypefields.add (aMethod.name (), aMethod.getAsAnonymousFunction ());
 
     // Start with the prototype methods
-    JSExpr.assign (prototype (), aPrototypefields).generate (aFormatter);
+    aFormatter.stmt (JSExpr.assign (prototype (), aPrototypefields));
   }
 
   @Nullable

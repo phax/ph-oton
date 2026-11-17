@@ -75,6 +75,11 @@ public class JschSessionProvider implements IJSchSessionProvider
     if (aPublicKey == null)
       throw new JSchException ("Failed to read public key from '" + sKeyPairPublicKeyFile + "'");
 
+    // An empty passphrase is used for unencrypted private keys
+    final String sKeyPairPassphrase = m_aSFTPSettings.getKeyPairPassphrase ();
+    final byte [] aKeyPairPassphrase = sKeyPairPassphrase == null ? new byte [0]
+                                                                  : sKeyPairPassphrase.getBytes (StandardCharsets.ISO_8859_1);
+
     return JSchSessionFactory.createSession (m_aSFTPSettings.getKnownHostsPath (),
                                              new ServerConnectionSettingsKeyPair (m_aSFTPSettings.getServerHost (),
                                                                                   m_aSFTPSettings.getServerPort (),
@@ -82,7 +87,6 @@ public class JschSessionProvider implements IJSchSessionProvider
                                                                                   m_aSFTPSettings.getServerUserName (),
                                                                                   aPrivateKey,
                                                                                   aPublicKey,
-                                                                                  m_aSFTPSettings.getKeyPairPassphrase ()
-                                                                                                 .getBytes (StandardCharsets.ISO_8859_1)));
+                                                                                  aKeyPairPassphrase));
   }
 }

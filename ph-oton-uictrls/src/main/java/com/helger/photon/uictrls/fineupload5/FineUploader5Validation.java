@@ -351,7 +351,7 @@ public class FineUploader5Validation implements IFineUploader5Part
     if (m_aValidationAllowedExtensions.isNotEmpty ())
       aSub.add ("allowedExtensions", new JSArray ().addAll (m_aValidationAllowedExtensions));
     if (m_nValidationItemLimit != DEFAULT_VALIDATION_ITEM_LIMIT)
-      aSub.add ("itemLimit", m_nValidationSizeLimit);
+      aSub.add ("itemLimit", m_nValidationItemLimit);
     if (m_nValidationMinSizeLimit != DEFAULT_VALIDATION_MIN_SIZE_LIMIT)
       aSub.add ("minSizeLimit", m_nValidationMinSizeLimit);
     if (m_nValidationSizeLimit != DEFAULT_VALIDATION_SIZE_LIMIT)

@@ -95,7 +95,7 @@ public abstract class AbstractLongRunningJob extends AbstractJob implements ILon
         final LongRunningJobResult aJobResult = createLongRunningJobResult ();
 
         // Mark the long running job as finished
-        getLongRunningJobManager ().onEndJob (sLongRunningJobID, ESuccess.SUCCESS, aJobResult);
+        getLongRunningJobManager ().onEndJob (sLongRunningJobID, eExecSuccess, aJobResult);
       }
       else
         LOGGER.error ("Failed to retrieve long running job ID from JobDataMap " + aJobDataMap);

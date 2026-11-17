@@ -52,7 +52,7 @@ public final class ConstantCSSPathProvider implements ICSSPathProvider
     ValueEnforcer.isTrue (CSSFilenameHelper.isCSSFilename (sPath), () -> "'" + sPath + "' is not a valid CSS filename");
     ValueEnforcer.notEmpty (sMinifiedPath, "MinifiedPath");
     ValueEnforcer.isTrue (CSSFilenameHelper.isCSSFilename (sMinifiedPath),
-                          () -> "'" + sMinifiedPath + "' is not a valid minified JS filename");
+                          () -> "'" + sMinifiedPath + "' is not a valid minified CSS filename");
     m_sPath = sPath;
     m_sMinifiedPath = sMinifiedPath;
     m_sConditionalComment = sConditionalComment;

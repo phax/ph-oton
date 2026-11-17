@@ -68,7 +68,7 @@ public class MenuItemRedirectToPage extends AbstractMenuObject <MenuItemRedirect
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aMenuItemPage).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aMenuItemPage.getID ()).getHashCode ();
   }
 
   @Override

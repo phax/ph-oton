@@ -114,7 +114,7 @@ public class FileConnector implements IConnectorFileBased <File, File>
       if (m_aChannel != null)
       {
         final File aFile = new File (m_aChannel, sFilename);
-        return StreamHelper.copyInputStreamToOutputStream (aIS, FileHelper.getOutputStream (aFile));
+        return StreamHelper.copyInputStreamToOutputStreamAndCloseOS (aIS, FileHelper.getOutputStream (aFile));
       }
       return ESuccess.FAILURE;
     }

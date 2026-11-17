@@ -191,7 +191,7 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                        " WHERE id IN (" +
                                                        aCond.toString () +
                                                        ")",
-                                                       new ConstantPreparedStatementDataProvider (aIDs));
+                                                       new ConstantPreparedStatementDataProvider (aUniqueIDs));
         return nCount == nIDCount;
       }
     }
@@ -207,10 +207,10 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       aUG = UserGroupManager.createDefaultUserGroupAdministrators ();
       _internalCreateItem (aUG);
     }
-    if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID))
-      aUG.assignUser (CSecurity.USER_ADMINISTRATOR_ID);
-    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID))
-      aUG.assignRole (CSecurity.ROLE_ADMINISTRATOR_ID);
+    if (m_aUserMgr.containsWithID (CSecurity.USER_ADMINISTRATOR_ID) && !aUG.containsUserID (CSecurity.USER_ADMINISTRATOR_ID))
+      assignUserToUserGroup (aUG.getID (), CSecurity.USER_ADMINISTRATOR_ID);
+    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_ADMINISTRATOR_ID) && !aUG.containsRoleID (CSecurity.ROLE_ADMINISTRATOR_ID))
+      assignRoleToUserGroup (aUG.getID (), CSecurity.ROLE_ADMINISTRATOR_ID);
 
     // Users user group
     aUG = getUserGroupOfID (CSecurity.USERGROUP_USERS_ID);
@@ -219,10 +219,10 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       aUG = UserGroupManager.createDefaultUserGroupUsers ();
       _internalCreateItem (aUG);
     }
-    if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID))
-      aUG.assignUser (CSecurity.USER_USER_ID);
-    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID))
-      aUG.assignRole (CSecurity.ROLE_USER_ID);
+    if (m_aUserMgr.containsWithID (CSecurity.USER_USER_ID) && !aUG.containsUserID (CSecurity.USER_USER_ID))
+      assignUserToUserGroup (aUG.getID (), CSecurity.USER_USER_ID);
+    if (m_aRoleMgr.containsWithID (CSecurity.ROLE_USER_ID) && !aUG.containsRoleID (CSecurity.ROLE_USER_ID))
+      assignRoleToUserGroup (aUG.getID (), CSecurity.ROLE_USER_ID);
 
     // Guests user group
     aUG = getUserGroupOfID (CSecurity.USERGROUP_GUESTS_ID);
@@ -231,8 +231,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       aUG = UserGroupManager.createDefaultUserGroupGuests ();
       _internalCreateItem (aUG);
     }
-    if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID))
-      aUG.assignUser (CSecurity.USER_GUEST_ID);
+    if (m_aUserMgr.containsWithID (CSecurity.USER_GUEST_ID) && !aUG.containsUserID (CSecurity.USER_GUEST_ID))
+      assignUserToUserGroup (aUG.getID (), CSecurity.USER_GUEST_ID);
     // no role for this user group
   }
 

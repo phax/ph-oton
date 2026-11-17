@@ -72,7 +72,7 @@ public enum ETinyMCE4ToolbarControl
   VISUALCHARS ("visualchars", ETinyMCE4Plugin.VISUALCHARS),
   CODE ("code", ETinyMCE4Plugin.CODE),
   FULLSCREEN ("fullscreen", ETinyMCE4Plugin.FULLSCREEN),
-  INSERTTIME ("inserttime", ETinyMCE4Plugin.INSERTDATETIME),
+  INSERTTIME ("insertdatetime", ETinyMCE4Plugin.INSERTDATETIME),
   MEDIA ("media", ETinyMCE4Plugin.MEDIA),
   NONBREAKING ("nonbreaking", ETinyMCE4Plugin.NONBREAKING),
   SAVE ("save", ETinyMCE4Plugin.SAVE),

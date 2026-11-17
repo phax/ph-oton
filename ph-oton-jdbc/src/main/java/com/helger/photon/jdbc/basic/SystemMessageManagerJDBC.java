@@ -24,6 +24,7 @@ import org.jspecify.annotations.Nullable;
 
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EChange;
+import com.helger.base.state.ESuccess;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.db.api.helper.DBValueHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
@@ -100,7 +101,7 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
       return EChange.UNCHANGED;
 
     final DBExecutor aExecutor = newExecutor ();
-    aExecutor.performInTransaction (() -> {
+    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
       final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
                                                               m_sTableName +
                                                               " SET messagetype=?, lastupdate=?, message=?",
@@ -117,6 +118,13 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
                                                                                      sMessage));
       }
     });
+
+    if (eSuccess.isFailure ())
+    {
+      // DB error
+      AuditHelper.onAuditExecuteFailure ("update-system-message", eMessageType, sMessage, "database-error");
+      return EChange.UNCHANGED;
+    }
 
     AuditHelper.onAuditExecuteSuccess ("update-system-message", eMessageType, sMessage);
     return EChange.CHANGED;

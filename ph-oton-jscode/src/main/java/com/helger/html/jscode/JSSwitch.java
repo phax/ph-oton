@@ -116,7 +116,7 @@ public class JSSwitch extends AbstractJSStatement
 
   public void state (@NonNull final JSFormatter aFormatter)
   {
-    if (JSOp.hasOperator (m_aTest))
+    if (JSOp.hasSurroundingParentheses (m_aTest))
       aFormatter.plain ("switch ").generatable (m_aTest).plain ('{').nl ();
     else
       aFormatter.plain ("switch (").generatable (m_aTest).plain ("){").nl ();

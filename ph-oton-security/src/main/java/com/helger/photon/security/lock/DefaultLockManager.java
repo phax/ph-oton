@@ -227,8 +227,16 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
     ValueEnforcer.notNull (sUserID, "UserID");
     ValueEnforcer.notNull (aObjID, "ObjectID");
 
-    // Get the locking information of the objects
-    final ILockInfo aCurrentLock = getLockInfo (aObjID);
+    // Get the locking information of the object and unlock it in one write lock
+    final ILockInfo aCurrentLock = m_aRWLock.writeLockedGet (() -> {
+      final ILockInfo ret = m_aLockedObjs.get (aObjID);
+      if (ret != null && ret.getLockUserID ().equals (sUserID))
+      {
+        // this user locked the object -> unlock it
+        m_aLockedObjs.remove (aObjID);
+      }
+      return ret;
+    });
     if (aCurrentLock == null)
     {
       // Object is not locked at all
@@ -250,11 +258,6 @@ public class DefaultLockManager <IDTYPE> implements ILockManager <IDTYPE>
                      "'");
       return EChange.UNCHANGED;
     }
-    m_aRWLock.writeLocked (() -> {
-      // this user locked the object -> unlock it
-      if (m_aLockedObjs.remove (aObjID) == null)
-        throw new IllegalStateException ("Internal inconsistency: removing '" + aObjID + "' from lock list failed!");
-    });
 
     if (!isSilentMode ())
       LOGGER.info ("User '" + sUserID + "' unlocked object '" + aObjID + "'");

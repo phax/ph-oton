@@ -479,12 +479,27 @@ public interface IJSInvocation <IMPLTYPE extends IJSInvocation <IMPLTYPE>> exten
    * @return this
    */
   @NonNull
-  default IMPLTYPE argssOrNull (@Nullable final IJSExpression... aExprs)
+  default IMPLTYPE argsOrNull (@Nullable final IJSExpression... aExprs)
   {
     if (aExprs != null)
       for (final IJSExpression aExpr : aExprs)
         argOrNull (aExpr);
     return thisAsT ();
+  }
+
+  /**
+   * Add 0-n expressions to this invocation's argument list
+   *
+   * @param aExprs
+   *        Argument to add to argument list
+   * @return this
+   * @deprecated Misspelled. Use {@link #argsOrNull(IJSExpression...)} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.8.2")
+  @NonNull
+  default IMPLTYPE argssOrNull (@Nullable final IJSExpression... aExprs)
+  {
+    return argsOrNull (aExprs);
   }
 
   /**

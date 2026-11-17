@@ -237,7 +237,7 @@ public class SftpSettingsHost implements ISftpSettingsHost
   {
     ValueEnforcer.notNull (aConfig, "Config");
     ValueEnforcer.notEmpty (sConfigPrefix, "ConfigPrefix");
-    ValueEnforcer.isFalse (sConfigPrefix.endsWith ("."), "ConfigPrefix must end with a dot");
+    ValueEnforcer.isFalse (sConfigPrefix.endsWith ("."), "ConfigPrefix must not end with a dot");
 
     final String sHost = aConfig.getAsString (sConfigPrefix + CONFIG_SUFFIX_HOST);
     if (StringHelper.isEmpty (sHost))

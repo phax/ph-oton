@@ -348,7 +348,8 @@ public abstract class AbstractHCElement <IMPLTYPE extends AbstractHCElement <IMP
   @NonNull
   public final IMPLTYPE removeAllStyles ()
   {
-    m_aStyles.clear ();
+    if (m_aStyles != null)
+      m_aStyles.clear ();
     return thisAsT ();
   }
 

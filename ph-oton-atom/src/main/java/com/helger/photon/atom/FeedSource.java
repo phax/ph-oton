@@ -272,7 +272,7 @@ public class FeedSource extends AbstractFeedElement
     for (final FeedPerson aValue : m_aContributors)
       if (!aValue.isValid ())
       {
-        LOGGER.warn ("At least one constributor is invalid");
+        LOGGER.warn ("At least one contributor is invalid");
         return false;
       }
     if (m_aGenerator != null && !m_aGenerator.isValid ())

@@ -108,7 +108,12 @@ public enum EJSEvent
   PLAYING ("playing", EJSEventType.MEDIA),
   PROGRESS ("progress", EJSEventType.MEDIA),
   RATECHANGE ("ratechange", EJSEventType.MEDIA),
+  /**
+   * @deprecated "seekend" is not a valid event name. Use {@link #SEEKED} instead.
+   */
+  @Deprecated (forRemoval = true, since = "10.8.2")
   SEEKEND ("seekend", EJSEventType.MEDIA),
+  SEEKED ("seeked", EJSEventType.MEDIA),
   SEEKING ("seeking", EJSEventType.MEDIA),
   STALLED ("stalled", EJSEventType.MEDIA),
   SUSPEND ("suspend", EJSEventType.MEDIA),

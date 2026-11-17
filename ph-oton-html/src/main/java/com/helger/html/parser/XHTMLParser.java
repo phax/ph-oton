@@ -111,7 +111,8 @@ public class XHTMLParser
   @NonNull
   public XHTMLParser setSAXReaderSettings (@Nullable final ISAXReaderSettings aAdditionalSaxReaderSettings)
   {
-    m_aSAXReaderSettings = SAXReaderSettings.createCloneOnDemand (aAdditionalSaxReaderSettings);
+    m_aSAXReaderSettings = SAXReaderSettings.createCloneOnDemand (aAdditionalSaxReaderSettings)
+                                            .setEntityResolver (HTMLEntityResolver.getInstance ());
     return this;
   }
 

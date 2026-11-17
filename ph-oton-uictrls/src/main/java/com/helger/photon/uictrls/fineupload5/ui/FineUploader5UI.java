@@ -194,14 +194,30 @@ public class FineUploader5UI extends FineUploader5Core
                          EFineUploader5UIText.DELETE_FILE_DELETING_STATUS_TEXT.getDisplayText (aDisplayLocale));
       }
     }
+    else
+      if (sKey.equals (KEY_TEXT))
+      {
+        if (aDisplayLocale != null)
+        {
+          aAssocArray.add ("uploadButton", EFineUploader5UIText.UPLOAD_BUTTON.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("cancelButton", EFineUploader5UIText.CANCEL_BUTTON.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("retryButton", EFineUploader5UIText.RETRY_BUTTON.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("failUpload", EFineUploader5UIText.FAIL_UPLOAD.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("dragZone", EFineUploader5UIText.DRAG_ZONE.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("dropProcessing", EFineUploader5UIText.DROP_PROCESSING.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("formatProgress", EFineUploader5UIText.FORMAT_PROGRESS.getDisplayText (aDisplayLocale));
+          aAssocArray.add ("waitingForResponse",
+                           EFineUploader5UIText.WAITING_FOR_RESPONSE.getDisplayText (aDisplayLocale));
+        }
+      }
   }
 
   @Override
   protected void extendJSON (@NonNull final JSAssocArray aRoot, @Nullable final Locale aDisplayLocale)
   {
-    if (StringHelper.isEmpty (m_sElementID))
+    if (StringHelper.isNotEmpty (m_sElementID))
       aRoot.add ("element", JSHtml.documentGetElementById (m_sElementID));
-    if (StringHelper.isEmpty (m_sListElementID))
+    if (StringHelper.isNotEmpty (m_sListElementID))
       aRoot.add ("listElement", JSHtml.documentGetElementById (m_sListElementID));
     if (m_aShowMessage != null)
       aRoot.add ("showMessage", m_aShowMessage);
@@ -211,19 +227,5 @@ public class FineUploader5UI extends FineUploader5Core
       aRoot.add ("showPrompt", m_aShowPrompt);
     if (!m_sTemplateID.equals (DEFAULT_TEMPLATE))
       aRoot.add ("template", JSHtml.documentGetElementById (m_sTemplateID));
-
-    if (aDisplayLocale != null)
-    {
-      final JSAssocArray aSub = new JSAssocArray ();
-      aSub.add ("uploadButton", EFineUploader5UIText.UPLOAD_BUTTON.getDisplayText (aDisplayLocale));
-      aSub.add ("cancelButton", EFineUploader5UIText.CANCEL_BUTTON.getDisplayText (aDisplayLocale));
-      aSub.add ("retryButton", EFineUploader5UIText.RETRY_BUTTON.getDisplayText (aDisplayLocale));
-      aSub.add ("failUpload", EFineUploader5UIText.FAIL_UPLOAD.getDisplayText (aDisplayLocale));
-      aSub.add ("dragZone", EFineUploader5UIText.DRAG_ZONE.getDisplayText (aDisplayLocale));
-      aSub.add ("dropProcessing", EFineUploader5UIText.DROP_PROCESSING.getDisplayText (aDisplayLocale));
-      aSub.add ("formatProgress", EFineUploader5UIText.FORMAT_PROGRESS.getDisplayText (aDisplayLocale));
-      aSub.add ("waitingForResponse", EFineUploader5UIText.WAITING_FOR_RESPONSE.getDisplayText (aDisplayLocale));
-      aRoot.add ("text", aSub);
-    }
   }
 }

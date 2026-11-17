@@ -54,6 +54,8 @@ public class DataTablesDom implements ICloneable <DataTablesDom>
   {
     ValueEnforcer.notNull (aOther, "Other");
     m_aElements = new CommonsArrayList <> (aOther.m_aElements);
+    m_nOpenDivs = aOther.m_nOpenDivs;
+    m_nPos = aOther.m_nPos;
   }
 
   @CheckForSigned

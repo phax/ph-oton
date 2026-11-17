@@ -155,7 +155,7 @@ public abstract class AbstractErrorCallback implements
                aRequestScope,
                "Long running request.",
                new StringMap ().add ("request-id", sUniqueRequestID)
-                               .add ("millisecconds", nRunningMilliseconds)
+                               .add ("milliseconds", nRunningMilliseconds)
                                .add ("URL", aRequestScope.getURLEncoded ()));
     }
   }

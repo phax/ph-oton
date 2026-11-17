@@ -80,7 +80,7 @@ public class SftpSettings extends SftpSettingsHost implements ISftpSettings
   {
     ValueEnforcer.notNull (aConfig, "Config");
     ValueEnforcer.notEmpty (sConfigPrefix, "ConfigPrefix");
-    ValueEnforcer.isFalse (sConfigPrefix.endsWith ("."), "ConfigPrefix must end with a dot");
+    ValueEnforcer.isFalse (sConfigPrefix.endsWith ("."), "ConfigPrefix must not end with a dot");
 
     final ISftpSettingsHost aHost = SftpSettingsHost.createFromConfig (aConfig, sConfigPrefix);
     if (aHost == null)

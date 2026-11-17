@@ -151,12 +151,14 @@ public class GoMappingManager extends AbstractPhotonSimpleDAO
         eItem.setAttribute (ATTR_KEY, aItem.getKey ());
         // Remove the context path, when deserializing stuff
         eItem.setAttribute (ATTR_HREF, StringHelper.trimStart (aItem.getTargetURLAsString (), sContextPath));
+        eItem.setAttribute (ATTR_EDITABLE, aItem.isEditable ());
       }
       else
       {
         final IMicroElement eItem = eRoot.addElement (ELEMENT_EXTERNAL);
         eItem.setAttribute (ATTR_KEY, aItem.getKey ());
         eItem.setAttribute (ATTR_HREF, aItem.getTargetURLAsString ());
+        eItem.setAttribute (ATTR_EDITABLE, aItem.isEditable ());
       }
     }
     return ret;

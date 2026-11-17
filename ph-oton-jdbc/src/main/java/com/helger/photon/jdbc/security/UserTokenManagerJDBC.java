@@ -248,7 +248,7 @@ public class UserTokenManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
                                                        " WHERE id IN (" +
                                                        aCond.toString () +
                                                        ")",
-                                                       new ConstantPreparedStatementDataProvider (aIDs));
+                                                       new ConstantPreparedStatementDataProvider (aUniqueIDs));
         return nCount == nIDCount;
       }
     }

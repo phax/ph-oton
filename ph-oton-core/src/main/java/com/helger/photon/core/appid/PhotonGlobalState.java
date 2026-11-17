@@ -98,34 +98,43 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
     final PhotonGlobalState aGlobalState = getInstance ();
-    return aGlobalState.m_aStateMap.computeIfAbsent (sAppID, k -> {
+    final PhotonGlobalStatePerApp ret = aGlobalState.m_aRWLock.readLockedGet ( () -> aGlobalState.m_aStateMap.get (sAppID));
+    if (ret != null)
+      return ret;
+
+    return aGlobalState.m_aRWLock.writeLockedGet ( () -> aGlobalState.m_aStateMap.computeIfAbsent (sAppID, k -> {
       // By default set first app ID as default
       if (!aGlobalState.hasDefaultApplicationID ())
         aGlobalState.setDefaultApplicationID (sAppID);
       return new PhotonGlobalStatePerApp ();
-    });
+    }));
   }
 
   public static void clear ()
   {
     final PhotonGlobalState aGlobalState = getInstance ();
-    aGlobalState.m_aStateMap.clear ();
-    aGlobalState.setDefaultApplicationID (null);
+    aGlobalState.m_aRWLock.writeLocked ( () -> {
+      aGlobalState.m_aStateMap.clear ();
+      aGlobalState.setDefaultApplicationID (null);
+    });
   }
 
   public static void removeAllApplicationServletPathMappings ()
   {
-    getInstance ().m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath);
+    final PhotonGlobalState aGlobalState = getInstance ();
+    aGlobalState.m_aRWLock.readLocked ( () -> aGlobalState.m_aStateMap.forEachValue (PhotonGlobalStatePerApp::removeServletPath));
   }
 
   public static boolean containsNoState ()
   {
-    return getInstance ().m_aStateMap.isEmpty ();
+    final PhotonGlobalState aGlobalState = getInstance ();
+    return aGlobalState.m_aRWLock.readLockedBoolean (aGlobalState.m_aStateMap::isEmpty);
   }
 
   public static boolean containsAnyApplicationServletPathMapping ()
   {
-    return getInstance ().m_aStateMap.containsAnyValue (x -> x.internalGetServletPath () != null);
+    final PhotonGlobalState aGlobalState = getInstance ();
+    return aGlobalState.m_aRWLock.readLockedBoolean ( () -> aGlobalState.m_aStateMap.containsAnyValue (x -> x.internalGetServletPath () != null));
   }
 
   @NonNull
@@ -133,7 +142,10 @@ public final class PhotonGlobalState extends AbstractGlobalWebSingleton
   public static ICommonsMap <String, String> getAppIDToServletPathMap ()
   {
     final ICommonsMap <String, String> ret = new CommonsHashMap <> ();
-    getInstance ().m_aStateMap.forEach ((sAppID, aState) -> ret.put (sAppID, aState.getServletPath ()));
+    final PhotonGlobalState aGlobalState = getInstance ();
+    aGlobalState.m_aRWLock.readLocked ( () -> aGlobalState.m_aStateMap.forEach ( (sAppID,
+                                                                                  aState) -> ret.put (sAppID,
+                                                                                                      aState.getServletPath ())));
     return ret;
   }
 }

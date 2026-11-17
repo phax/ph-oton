@@ -70,7 +70,7 @@ public final class PhotonGlobalStatePerApp implements Serializable
     ValueEnforcer.notEmpty (sServletPath, "ApplicationServletPath");
     ValueEnforcer.isTrue (StringHelper.startsWith (sServletPath, '/'),
                           "ApplicationServletPath must start with a slash");
-    ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must end with a slash");
+    ValueEnforcer.isFalse (StringHelper.endsWith (sServletPath, '/'), "ApplicationServletPath must not end with a slash");
     m_aRWLock.writeLocked (() -> m_sServletPath = sServletPath);
     return this;
   }

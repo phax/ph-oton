@@ -226,7 +226,7 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
           final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
           if (aColumn == null)
           {
-            LOGGER.warn ("Invalid columnn index " +
+            LOGGER.warn ("Invalid column index " +
                          nSearchableCellIndex +
                          " for columns " +
                          Arrays.toString (aColumns));
@@ -265,8 +265,8 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
                   break;
                 }
               }
-              nSearchableCellIndex++;
             }
+          nSearchableCellIndex++;
         }
       });
     }
@@ -283,43 +283,51 @@ public class AjaxExecutorDataTables implements IAjaxExecutor
         int nSearchableCellIndex = 0;
         per_row: for (final DataTablesServerDataCell aCell : aRow.directGetAllCells ())
         {
-          final DTSSRequestDataColumn aColumn = aColumns[nSearchableCellIndex];
-          if (aColumn.isSearchable ())
+          final DTSSRequestDataColumn aColumn = ArrayHelper.getSafeElement (aColumns, nSearchableCellIndex);
+          if (aColumn == null)
           {
-            // Main matching
-            if (bGlobalSearchRegEx)
-              aCell.matchRegEx (aGlobalSearchTexts, aMatchingWords);
-            else
-              aCell.matchPlainTextIgnoreCase (aGlobalSearchTexts, aDisplayLocale, aMatchingWords);
-
-            switch (eFilterType)
-            {
-              case ALL_TERMS_PER_ROW:
-                if (aMatchingWords.cardinality () == aGlobalSearchTexts.length)
-                {
-                  // Row matched all search terms
-                  aFilteredRows.add (aRow);
-
-                  // Goto next row
-                  break per_row;
-                }
-                break;
-              case ANY_TERM_PER_ROW:
-                if (!aMatchingWords.isEmpty ())
-                {
-                  // Row matched any search term
-                  aFilteredRows.add (aRow);
-
-                  // Goto next row
-                  break per_row;
-                }
-                // Clear again for next cell
-                aMatchingWords.clear ();
-                break;
-              default:
-                throw new IllegalStateException ("Unhandled filter type: " + eFilterType);
-            }
+            LOGGER.warn ("Invalid column index " +
+                         nSearchableCellIndex +
+                         " for columns " +
+                         Arrays.toString (aColumns));
           }
+          else
+            if (aColumn.isSearchable ())
+            {
+              // Main matching
+              if (bGlobalSearchRegEx)
+                aCell.matchRegEx (aGlobalSearchTexts, aMatchingWords);
+              else
+                aCell.matchPlainTextIgnoreCase (aGlobalSearchTexts, aDisplayLocale, aMatchingWords);
+
+              switch (eFilterType)
+              {
+                case ALL_TERMS_PER_ROW:
+                  if (aMatchingWords.cardinality () == aGlobalSearchTexts.length)
+                  {
+                    // Row matched all search terms
+                    aFilteredRows.add (aRow);
+
+                    // Goto next row
+                    break per_row;
+                  }
+                  break;
+                case ANY_TERM_PER_ROW:
+                  if (!aMatchingWords.isEmpty ())
+                  {
+                    // Row matched any search term
+                    aFilteredRows.add (aRow);
+
+                    // Goto next row
+                    break per_row;
+                  }
+                  // Clear again for next cell
+                  aMatchingWords.clear ();
+                  break;
+                default:
+                  throw new IllegalStateException ("Unhandled filter type: " + eFilterType);
+              }
+            }
           nSearchableCellIndex++;
         }
       });

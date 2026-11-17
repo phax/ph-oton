@@ -111,7 +111,7 @@ public abstract class AbstractBusinessObjectMicroTypeConverter <T extends IBusin
     final String sCreationUserID = aElement.getAttributeValue (ATTR_CREATIONUSERID);
 
     // Last modification
-    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmodldt");
+    final LocalDateTime aLastModificationLDT = readAsLocalDateTime (aElement, ATTR_LASTMODLDT, "lastmoddt");
     final String sLastModificationUserID = aElement.getAttributeValue (ATTR_LASTMODUSERID);
 
     // Deletion

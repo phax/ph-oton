@@ -96,7 +96,7 @@ public abstract class AbstractMenuObject <IMPLTYPE extends AbstractMenuObject <I
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_sID).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID).getHashCode ();
   }
 
   @Override

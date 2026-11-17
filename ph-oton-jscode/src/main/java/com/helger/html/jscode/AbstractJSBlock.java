@@ -95,7 +95,14 @@ public abstract class AbstractJSBlock <IMPLTYPE extends AbstractJSBlock <IMPLTYP
     final IJSDeclaration aDecl = m_aDecls.remove (sName);
     if (aDecl == null)
       return EChange.UNCHANGED;
-    m_aObjs.remove (aDecl);
+    final int nIndex = m_aObjs.indexOf (aDecl);
+    if (nIndex >= 0)
+    {
+      m_aObjs.remove (nIndex);
+      // Keep the insertion position consistent
+      if (nIndex < m_nPos)
+        m_nPos--;
+    }
     return EChange.CHANGED;
   }
 

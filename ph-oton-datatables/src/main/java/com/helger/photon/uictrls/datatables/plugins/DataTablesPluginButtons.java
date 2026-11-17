@@ -73,13 +73,15 @@ public class DataTablesPluginButtons extends AbstractDataTablesPlugin
   @Override
   public void finalizeDataTablesSettings (@NonNull final DataTables aDT)
   {
-    DataTablesDom aDom = aDT.directGetDom ();
+    final DataTablesDom aDom = aDT.directGetDom ();
     if (aDom == null)
     {
-      aDom = createDom ();
-      aDT.setDom (aDom);
+      final DataTablesDom aNewDom = createDom ();
+      weaveIntoDom (aNewDom);
+      aDT.setDom (aNewDom);
     }
-    weaveIntoDom (aDom);
+    else
+      weaveIntoDom (aDom);
   }
 
   @NonNull

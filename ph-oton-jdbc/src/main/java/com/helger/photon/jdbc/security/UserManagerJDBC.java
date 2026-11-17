@@ -190,7 +190,7 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                                        " WHERE id IN (" +
                                                        aCond.toString () +
                                                        ")",
-                                                       new ConstantPreparedStatementDataProvider (aIDs));
+                                                       new ConstantPreparedStatementDataProvider (aUniqueIDs));
         return nCount == nIDCount;
       }
     }
@@ -585,6 +585,14 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
+
+    final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
+    if (aOtherUser != null && !aOtherUser.getID ().equals (sUserID))
+    {
+      // Another user with this login name already exists
+      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
+      return EChange.UNCHANGED;
+    }
 
     final MutableLong aUpdated = new MutableLong (-1);
     final DBExecutor aExecutor = newExecutor ();

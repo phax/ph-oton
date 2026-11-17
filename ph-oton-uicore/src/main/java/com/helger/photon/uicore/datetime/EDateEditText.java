@@ -74,7 +74,7 @@ public enum EDateEditText implements IHasDisplayText
   CALENDAR_MONTH_SHORT_OCTOBER ("Okt", "Oct"),
   CALENDAR_MONTH_SHORT_NOVEMBER ("Nov", "Nov"),
   CALENDAR_MONTH_SHORT_DECEMBER ("Dez", "Dec"),
-  CALENDAR_INFO ("Über dieses Kalendarmodul", "About the calendar"),
+  CALENDAR_INFO ("Über dieses Kalendermodul", "About the calendar"),
   CALENDAR_ABOUT ("Datum auswählen:\n" +
                   "- Benutzen Sie die \u00ab, \u00bb Buttons um das Jahr zu wählen\n" +
                   "- Benutzen Sie die \u2039, \u203a Buttons um den Monat zu wählen\n" +

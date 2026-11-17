@@ -39,7 +39,7 @@ public final class ThirdPartyModuleProvider_ph_oton_connect implements IThirdPar
                                                                       .copyrightOwner ("Apache")
                                                                       .license (ELicense.APACHE2)
                                                                       .version (new Version (3, 8, 0))
-                                                                      .copyrightOwner ("http://commons.apache.org/proper/commons-net/")
+                                                                      .webSiteUrl ("http://commons.apache.org/proper/commons-net/")
                                                                       .build ();
 
   @Nullable

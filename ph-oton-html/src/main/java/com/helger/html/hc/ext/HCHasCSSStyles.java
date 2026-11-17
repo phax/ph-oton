@@ -105,7 +105,8 @@ public class HCHasCSSStyles implements IHCHasCSSStyles <HCHasCSSStyles>
   @NonNull
   public final HCHasCSSStyles removeAllStyles ()
   {
-    m_aStyles.clear ();
+    if (m_aStyles != null)
+      m_aStyles.clear ();
     return this;
   }
 

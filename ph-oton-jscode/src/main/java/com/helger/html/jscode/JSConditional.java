@@ -152,7 +152,7 @@ public class JSConditional extends AbstractJSStatement
       return;
     }
 
-    if (JSOp.hasOperator (m_aTest))
+    if (JSOp.hasSurroundingParentheses (m_aTest))
       aFormatter.plain ("if").generatable (m_aTest);
     else
       aFormatter.plain ("if(").generatable (m_aTest).plain (')');

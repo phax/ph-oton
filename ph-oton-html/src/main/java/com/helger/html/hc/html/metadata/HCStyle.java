@@ -249,8 +249,8 @@ public class HCStyle extends AbstractHCElement <HCStyle>
           aElement.addText (sContent);
           break;
         case PLAIN_TEXT_NO_ESCAPE:
-          if (StringHelper.containsIgnoreCase (sContent, "</script>", Locale.US))
-            throw new IllegalArgumentException ("The script text contains a closing script tag!");
+          if (StringHelper.containsIgnoreCase (sContent, "</style>", Locale.US))
+            throw new IllegalArgumentException ("The style text contains a closing style tag!");
           aElement.addChild (new MicroText (sContent).setEscape (false));
           break;
         default:

@@ -124,7 +124,7 @@ public class DTPButtonsButtonKey
       ret.add ("shiftKey", m_eShiftKey.getAsBooleanValue (false));
     if (m_eAltKey.isDefined ())
       ret.add ("altKey", m_eAltKey.getAsBooleanValue (false));
-    if (m_eShiftKey.isDefined ())
+    if (m_eCtrlKey.isDefined ())
       ret.add ("ctrlKey", m_eCtrlKey.getAsBooleanValue (false));
     if (m_eMetaKey.isDefined ())
       ret.add ("metaKey", m_eMetaKey.getAsBooleanValue (false));

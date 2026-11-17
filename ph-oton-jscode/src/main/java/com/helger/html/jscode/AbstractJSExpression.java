@@ -18,6 +18,7 @@ package com.helger.html.jscode;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Locale;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -892,13 +893,15 @@ public abstract class AbstractJSExpression implements IJSExpression
   @NonNull
   public final AbstractJSExpression isTypeof (@NonNull final AbstractJSType aType)
   {
-    return typeof ().eeq (aType.typeName ());
+    // JS "typeof" returns lowercase names (e.g. "string" for String)
+    return typeof ().eeq (aType.name ().toLowerCase (Locale.ROOT));
   }
 
   @NonNull
   public final AbstractJSExpression isNotTypeof (@NonNull final AbstractJSType aType)
   {
-    return typeof ().ene (aType.typeName ());
+    // JS "typeof" returns lowercase names (e.g. "string" for String)
+    return typeof ().ene (aType.name ().toLowerCase (Locale.ROOT));
   }
 
   @NonNull

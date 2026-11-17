@@ -72,7 +72,7 @@ public class LocaleManager implements ILocaleManager
     if (aDefaultLocale.equals (m_aDefaultLocale))
       return EChange.UNCHANGED;
     m_aDefaultLocale = aDefaultLocale;
-    return EChange.UNCHANGED;
+    return EChange.CHANGED;
   }
 
   @Nullable

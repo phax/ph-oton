@@ -40,6 +40,7 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
 {
   @GuardedBy ("RW_LOCK")
   private String m_sLastApplicationID;
+  @GuardedBy ("m_aRWLock")
   private final ICommonsMap <String, PhotonSessionStatePerApp> m_aStateMap = new CommonsHashMap <> ();
 
   @Deprecated (forRemoval = false)
@@ -99,7 +100,10 @@ public final class PhotonSessionState extends AbstractSessionWebSingleton
   public PhotonSessionStatePerApp state (@NonNull @Nonempty final String sAppID)
   {
     ValueEnforcer.notEmpty (sAppID, "AppID");
-    return m_aStateMap.computeIfAbsent (sAppID, k -> new PhotonSessionStatePerApp ());
+    final PhotonSessionStatePerApp ret = m_aRWLock.readLockedGet ( () -> m_aStateMap.get (sAppID));
+    if (ret != null)
+      return ret;
+    return m_aRWLock.writeLockedGet ( () -> m_aStateMap.computeIfAbsent (sAppID, k -> new PhotonSessionStatePerApp ()));
   }
 
   @NonNull

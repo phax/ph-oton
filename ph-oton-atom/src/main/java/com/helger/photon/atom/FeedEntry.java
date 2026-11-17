@@ -273,7 +273,7 @@ public class FeedEntry extends AbstractFeedElement
     for (final FeedPerson aValue : m_aContributors)
       if (!aValue.isValid ())
       {
-        LOGGER.warn ("At least one constributor is invalid");
+        LOGGER.warn ("At least one contributor is invalid");
         return false;
       }
     for (final FeedLink aValue : m_aLinks)

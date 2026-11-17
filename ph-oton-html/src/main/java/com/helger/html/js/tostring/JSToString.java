@@ -16,6 +16,7 @@
  */
 package com.helger.html.js.tostring;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 
@@ -145,10 +146,11 @@ public final class JSToString
           int i = 0;
           if (aType.getType () == EJSType.ARRAY)
           {
-            // Handle arrays
-            final Object [] aArray = (Object []) aObject;
-            for (final Object aMember : aArray)
+            // Handle arrays (incl. primitive arrays)
+            final int nLength = Array.getLength (aObject);
+            for (int nIdx = 0; nIdx < nLength; ++nIdx)
             {
+              final Object aMember = Array.get (aObject, nIdx);
               if (i++ > 0)
                 aSB.append (',');
               _toJSString (aMember, _getRealJSType (aMember, aListType), aSB, nLevel + 1, bWithSurroundingVar);

@@ -92,7 +92,7 @@ public class AjaxRegistry implements IAjaxRegistry
       if (m_aFuncDecls.containsKey (sFunctionName))
         throw new IllegalArgumentException ("An Ajax function with the name '" +
                                             sFunctionName +
-                                            "' is already registered. Replacing the old declaration.");
+                                            "' is already registered.");
       m_aFuncDecls.put (sFunctionName, aFunctionDeclaration);
     });
 

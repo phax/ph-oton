@@ -108,10 +108,21 @@ public final class LinkHelper
     return URLProtocolRegistry.getInstance ().hasKnownProtocol (sURI) || sURI.startsWith ("//");
   }
 
+  private static boolean _startsWithContextPath (@NonNull final String sContextPath, @NonNull final String sHRef)
+  {
+    if (StringHelper.isEmpty (sContextPath) || !sHRef.startsWith (sContextPath))
+      return false;
+    if (sHRef.length () == sContextPath.length () || StringHelper.endsWith (sContextPath, '/'))
+      return true;
+    // Avoid that e.g. "/apple.png" is considered to start with the context path "/app"
+    final char cNext = sHRef.charAt (sContextPath.length ());
+    return cNext == '/' || cNext == '?' || cNext == '#';
+  }
+
   @NonNull
   private static String _getURIWithContext (@NonNull final String sContextPath, @NonNull final String sHRef)
   {
-    if (StringHelper.isNotEmpty (sContextPath) && sHRef.startsWith (sContextPath))
+    if (_startsWithContextPath (sContextPath, sHRef))
     {
       LOGGER.warn ("The passed href '" + sHRef + "' already contains the context path '" + sContextPath + "'!");
       return sHRef;
