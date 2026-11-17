@@ -70,6 +70,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.8.2 - work in progress
+* Requires at least ph-db 8.5.3, which returns `null` instead of an empty string for a SQL `NULL` CLOB value
+* `AuditorJDBC` and `SystemMessageManagerJDBC` now treat a `NULL` audit action or system message as an empty string.
+  This avoids a `NullPointerException` when reading audit items and a false "changed" detection for empty system messages on Oracle and DB2
+
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.
   It should be used instead of `ph-oton-parent-pom` for importing.

@@ -32,6 +32,7 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
@@ -153,7 +154,8 @@ public class AuditorJDBC extends AbstractAuditor
                                 aRow.getAsString (1),
                                 EAuditActionType.getFromIDOrNull (aRow.getAsString (2)),
                                 ESuccess.valueOf (aRow.getAsBoolean (3)),
-                                aRow.getAsString (4)));
+                                // An empty action may be stored as NULL (e.g. on Oracle)
+                                StringHelper.getNotNull (aRow.getAsString (4))));
       }
     return ret;
   }

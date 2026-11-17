@@ -76,6 +76,7 @@ public class SystemMessageManagerJDBC extends AbstractJDBCEnabledManager impleme
     if (aRow == null)
       return new SystemMessageData ();
 
+    // An empty message may be stored as NULL (e.g. on Oracle), so NULL and "" are the same
     final SystemMessageData ret = new SystemMessageData (ESystemMessageType.getFromIDOrDefault (aRow.getAsString (0)),
                                                          aRow.getAsString (2));
     ret.setLastUpdate (aRow.getAsLocalDateTime (1));
