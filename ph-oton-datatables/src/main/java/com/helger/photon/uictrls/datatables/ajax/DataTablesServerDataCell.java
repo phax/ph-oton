@@ -24,6 +24,8 @@ import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.cache.regex.RegExHelper;
@@ -49,10 +51,16 @@ public final class DataTablesServerDataCell
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DataTablesServerDataCell.class);
 
+  // Cells are read concurrently under the shared read lock of DataTablesServerData, while the lazy
+  // values are created on first access
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  @GuardedBy ("m_aRWLock")
   private IHCNodeList <?> m_aContent;
   // Lazy stuff
   private HCSpecialNodes m_aLazySpecialNodes;
+  @GuardedBy ("m_aRWLock")
   private String m_sLazyHTML;
+  @GuardedBy ("m_aRWLock")
   private String m_sLazyTextContent;
 
   public DataTablesServerDataCell (@NonNull final IHCCell <?> aCell)
@@ -120,6 +128,41 @@ public final class DataTablesServerDataCell
       m_aContent = null;
   }
 
+  @NonNull
+  private String _createHTMLString ()
+  {
+    String ret = null;
+    final IMicroNode aMicroNode = _createMicroNode ();
+    if (aMicroNode != null)
+      ret = MicroWriter.getNodeAsString (aMicroNode,
+                                         DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+
+    // Avoid multiple calls for non-cached version
+    return ret == null ? "" : ret;
+  }
+
+  @NonNull
+  private String _createTextContent ()
+  {
+    String ret = null;
+    final IMicroNode aMicroNode = _createMicroNode ();
+    if (aMicroNode instanceof final IMicroNodeWithChildren aNodeWithChildren)
+      ret = aNodeWithChildren.getTextContent ();
+    else
+      if (aMicroNode != null && aMicroNode.isText ())
+      {
+        // ignore whitespace-only content
+        if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
+          ret = aMicroNode.getNodeValue ();
+      }
+      else
+        if (aMicroNode != null && aMicroNode.isCDATA ())
+          ret = aMicroNode.getNodeValue ();
+
+    // Avoid multiple calls for non-cached version
+    return ret == null ? "" : ret;
+  }
+
   /**
    * @return The cell content as an HTML string. Never <code>null</code> but maybe empty. The value
    *         is created on first access and cached afterwards.
@@ -127,21 +170,19 @@ public final class DataTablesServerDataCell
   @NonNull
   public String getHTMLString ()
   {
-    String ret = m_sLazyHTML;
-    if (ret == null)
-    {
-      final IMicroNode aMicroNode = _createMicroNode ();
-      if (aMicroNode != null)
-        ret = MicroWriter.getNodeAsString (aMicroNode,
-                                           DataTablesServerData.DEFAULT_CONVERSION_SETTINGS.getXMLWriterSettings ());
+    final String ret = m_aRWLock.readLockedGet (() -> m_sLazyHTML);
+    if (ret != null)
+      return ret;
 
-      // Avoid multiple calls for non-cached version
-      if (ret == null)
-        ret = "";
-      m_sLazyHTML = ret;
-      _releaseContentIfPossible ();
-    }
-    return ret;
+    return m_aRWLock.writeLockedGet (() -> {
+      // Check again, because another thread may have created it in the meantime
+      if (m_sLazyHTML == null)
+      {
+        m_sLazyHTML = _createHTMLString ();
+        _releaseContentIfPossible ();
+      }
+      return m_sLazyHTML;
+    });
   }
 
   /**
@@ -152,30 +193,19 @@ public final class DataTablesServerDataCell
   @NonNull
   public String getTextContent ()
   {
-    String ret = m_sLazyTextContent;
-    if (ret == null)
-    {
-      final IMicroNode aMicroNode = _createMicroNode ();
-      if (aMicroNode instanceof final IMicroNodeWithChildren aNodeWithChildren)
-        ret = aNodeWithChildren.getTextContent ();
-      else
-        if (aMicroNode != null && aMicroNode.isText ())
-        {
-          // ignore whitespace-only content
-          if (!((IMicroText) aMicroNode).isElementContentWhitespace ())
-            ret = aMicroNode.getNodeValue ();
-        }
-        else
-          if (aMicroNode != null && aMicroNode.isCDATA ())
-            ret = aMicroNode.getNodeValue ();
+    final String ret = m_aRWLock.readLockedGet (() -> m_sLazyTextContent);
+    if (ret != null)
+      return ret;
 
-      // Avoid multiple calls for non-cached version
-      if (ret == null)
-        ret = "";
-      m_sLazyTextContent = ret;
-      _releaseContentIfPossible ();
-    }
-    return ret;
+    return m_aRWLock.writeLockedGet (() -> {
+      // Check again, because another thread may have created it in the meantime
+      if (m_sLazyTextContent == null)
+      {
+        m_sLazyTextContent = _createTextContent ();
+        _releaseContentIfPossible ();
+      }
+      return m_sLazyTextContent;
+    });
   }
 
   @Nullable
@@ -226,6 +256,6 @@ public final class DataTablesServerDataCell
   @NonNull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Content", m_aContent).getToString ();
+    return new ToStringGenerator (this).append ("Content", m_aRWLock.readLockedGet (() -> m_aContent)).getToString ();
   }
 }

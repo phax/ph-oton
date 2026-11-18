@@ -67,6 +67,14 @@ final class InternalJettyStopMonitorThread extends Thread
     m_aAction = aAction;
   }
 
+  /**
+   * Stop monitoring and release the stop port. The running thread terminates afterwards.
+   */
+  public void stopMonitoring ()
+  {
+    StreamHelper.close (m_aServerSocket);
+  }
+
   @Override
   public void run ()
   {
@@ -100,7 +108,9 @@ final class InternalJettyStopMonitorThread extends Thread
         }
         catch (final Exception e)
         {
-          LOGGER.error ("Error reading from socket", e);
+          // A closed server socket means the monitor was stopped on purpose
+          if (!m_aServerSocket.isClosed ())
+            LOGGER.error ("Error reading from socket", e);
           break;
         }
       }

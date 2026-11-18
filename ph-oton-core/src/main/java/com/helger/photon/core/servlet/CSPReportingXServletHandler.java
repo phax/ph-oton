@@ -37,11 +37,11 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
-import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.collection.commons.ICommonsSet;
+import com.helger.collection.map.LRUSet;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.http.CHttpHeader;
 import com.helger.http.EHttpMethod;
@@ -68,6 +68,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CSPReportingXServletHandler implements IXServletHandler
 {
   public static final boolean DEFAULT_FILTER_DUPLICATES = true;
+  /**
+   * The maximum number of blocked URIs remembered for duplicate filtering. The least recently
+   * reported ones are dropped first, so that reports from unauthenticated clients cannot grow the
+   * memory without limit.
+   */
+  public static final int MAX_REMEMBERED_BLOCKED_URIS = 1_000;
   private static final Logger LOGGER = LoggerFactory.getLogger (CSPReportingXServletHandler.class);
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
@@ -77,7 +83,7 @@ public class CSPReportingXServletHandler implements IXServletHandler
   @GuardedBy ("m_aRWLock")
   private ICSPReportClassifier m_aClassifier = ICSPReportClassifier.DEFAULT;
   @GuardedBy ("m_aRWLock")
-  private final ICommonsSet <String> m_aBlockedURIs = new CommonsHashSet <> ();
+  private final ICommonsSet <String> m_aBlockedURIs = new LRUSet <> (MAX_REMEMBERED_BLOCKED_URIS);
 
   public CSPReportingXServletHandler ()
   {

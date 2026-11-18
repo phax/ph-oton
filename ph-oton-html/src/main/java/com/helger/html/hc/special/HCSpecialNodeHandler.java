@@ -33,7 +33,7 @@ import com.helger.base.reflection.GenericReflection;
 import com.helger.base.string.StringHelper;
 import com.helger.cache.clazz.AnnotationUsageCache;
 import com.helger.collection.commons.CommonsArrayList;
-import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsConcurrentHashMap;
 import com.helger.collection.commons.CommonsLinkedHashSet;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsMap;
@@ -68,7 +68,7 @@ public final class HCSpecialNodeHandler
   private static final Logger LOGGER = LoggerFactory.getLogger (HCSpecialNodeHandler.class);
   private static final AnnotationUsageCache CACHE_OOBN = new AnnotationUsageCache (OutOfBandNode.class);
   private static final AnnotationUsageCache CACHE_SPECIAL_NODE_LIST_MODIFIER = new AnnotationUsageCache (SpecialNodeListModifier.class);
-  private static final ICommonsMap <String, IHCSpecialNodeListModifier> MODIFIERS = new CommonsHashMap <> ();
+  private static final ICommonsMap <String, IHCSpecialNodeListModifier> MODIFIERS = new CommonsConcurrentHashMap <> ();
 
   @PresentForCodeCoverage
   private static final HCSpecialNodeHandler INSTANCE = new HCSpecialNodeHandler ();
@@ -180,14 +180,13 @@ public final class HCSpecialNodeHandler
     for (final Class <? extends IHCSpecialNodeListModifier> aModifierClass : aModifiersToApply)
     {
       final String sClassName = aModifierClass.getName ();
-      if (!MODIFIERS.containsKey (sClassName))
-      {
+      // computeIfAbsent of the concurrent map is atomic and does not store null values
+      MODIFIERS.computeIfAbsent (sClassName, k -> {
         final IHCSpecialNodeListModifier aModifier = GenericReflection.newInstance (aModifierClass);
         if (aModifier == null)
           LOGGER.error ("Failed to instantiate IHCSpecialNodeListModifier implementation " + aModifierClass);
-        else
-          MODIFIERS.put (sClassName, aModifier);
-      }
+        return aModifier;
+      });
     }
 
     // Apply all modifiers

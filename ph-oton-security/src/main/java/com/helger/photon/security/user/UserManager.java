@@ -143,12 +143,6 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-    if (getUserOfLoginName (sLoginName) != null)
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "login-name-already-in-use");
-      return null;
-    }
     // Create user
     final User aUser = new User (sLoginName,
                                  sEmailAddress,
@@ -161,8 +155,20 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                  aCustomAttrs,
                                  bDisabled);
 
-    // Store
-    m_aRWLock.writeLocked (() -> internalCreateItem (aUser));
+    // Check and store in one write lock, so that concurrent calls cannot create the same login name
+    // twice
+    final boolean bCreated = m_aRWLock.writeLockedBoolean (() -> {
+      if (getUserOfLoginName (sLoginName) != null)
+        return false;
+      internalCreateItem (aUser);
+      return true;
+    });
+    if (!bCreated)
+    {
+      // Another user with this login name already exists
+      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "login-name-already-in-use");
+      return null;
+    }
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
                                       sLoginName,
@@ -194,12 +200,6 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-    if (getUserOfLoginName (sLoginName) != null)
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "predefined-user", "login-name-already-in-use");
-      return null;
-    }
     // Create user
     final User aUser = User.createdPredefinedUser (sID,
                                                    sLoginName,
@@ -213,8 +213,20 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
                                                    aCustomAttrs,
                                                    bDisabled);
 
-    // Store
-    m_aRWLock.writeLocked (() -> internalCreateItem (aUser));
+    // Check and store in one write lock, so that concurrent calls cannot create the same login name
+    // twice
+    final boolean bCreated = m_aRWLock.writeLockedBoolean (() -> {
+      if (getUserOfLoginName (sLoginName) != null)
+        return false;
+      internalCreateItem (aUser);
+      return true;
+    });
+    if (!bCreated)
+    {
+      // Another user with this login name already exists
+      AuditHelper.onAuditCreateFailure (User.OT, sLoginName, "predefined-user", "login-name-already-in-use");
+      return null;
+    }
 
     AuditHelper.onAuditCreateSuccess (User.OT,
                                       aUser.getID (),
@@ -324,16 +336,18 @@ public class UserManager extends AbstractPhotonMapBasedWALDAO <IUser, User> impl
       AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
       return EChange.UNCHANGED;
     }
-    final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
-    if (aOtherUser != null && !aOtherUser.getID ().equals (aUser.getID ()))
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
-      return EChange.UNCHANGED;
-    }
     m_aRWLock.writeLock ().lock ();
     try
     {
+      // Check inside the write lock, so that a concurrent change cannot take the same login name
+      final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
+      if (aOtherUser != null && !aOtherUser.getID ().equals (aUser.getID ()))
+      {
+        // Another user with this login name already exists
+        AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
+        return EChange.UNCHANGED;
+      }
+
       EChange eChange = aUser.setLoginName (sNewLoginName);
       eChange = eChange.or (aUser.setEmailAddress (sNewEmailAddress));
       eChange = eChange.or (aUser.setFirstName (sNewFirstName));

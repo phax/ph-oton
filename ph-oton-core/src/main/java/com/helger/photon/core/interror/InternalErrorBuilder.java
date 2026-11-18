@@ -95,12 +95,17 @@ public class InternalErrorBuilder
     addCustomData ("GlobalDebug.debug", GlobalDebug.isDebugMode ());
     addCustomData ("GlobalDebug.production", GlobalDebug.isProductionMode ());
 
-    // Disk space info
-    final File aBasePath = WebFileIO.getDataIO ().getBasePathFile ();
-    addCustomData ("Data Directory", aBasePath.getAbsolutePath ());
-    addCustomData ("Usable bytes", Long.toString (aBasePath.getUsableSpace ()));
-    addCustomData ("Free bytes", Long.toString (aBasePath.getFreeSpace ()));
-    addCustomData ("ServletContext Base path", WebFileIO.getServletContextIO ().getBasePath ());
+    // Disk space info - the paths are not available if the error occurs before they are initialised
+    if (WebFileIO.isInited ())
+    {
+      final File aBasePath = WebFileIO.getDataIO ().getBasePathFile ();
+      addCustomData ("Data Directory", aBasePath.getAbsolutePath ());
+      addCustomData ("Usable bytes", Long.toString (aBasePath.getUsableSpace ()));
+      addCustomData ("Free bytes", Long.toString (aBasePath.getFreeSpace ()));
+      addCustomData ("ServletContext Base path", WebFileIO.getServletContextIO ().getBasePath ());
+    }
+    else
+      addCustomData ("Data Directory", "not initialised");
 
     // User ID
     try

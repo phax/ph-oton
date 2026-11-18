@@ -157,7 +157,8 @@ public final class JQuery
 
   /**
    * @param aURL
-   *        The AJAX target URL. May not be <code>null</code>.
+   *        The AJAX target URL. May be <code>null</code> in which case the URL is expected in the
+   *        arguments.
    * @param aArgs
    *        The array with the AJAX arguments
    * @return <code>$.ajax</code>
@@ -166,7 +167,11 @@ public final class JQuery
   @NonNull
   public static JQueryInvocation ajax (@Nullable final IJSExpression aURL, @Nullable final JSAssocArray aArgs)
   {
-    final JQueryInvocation ret = ajax ().arg (aURL != null ? aURL : JSExpr.NULL);
+    final JQueryInvocation ret = ajax ();
+    // jQuery treats a first argument of type "object" (which includes null) as the settings, so a
+    // null URL must not be emitted - otherwise the settings would be ignored
+    if (aURL != null)
+      ret.arg (aURL);
     if (aArgs != null)
       ret.arg (aArgs);
     return ret;

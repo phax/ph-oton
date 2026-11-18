@@ -42,7 +42,10 @@ public abstract class AbstractFeedElement implements IFeedElement
 
   public final void setLanguage (@Nullable final Locale aContentLocale)
   {
-    setLanguage (aContentLocale == null ? null : aContentLocale.getLanguage ());
+    // Use the full BCP 47 tag (e.g. "en-US") as required for xml:lang. A locale without a language
+    // (e.g. Locale.ROOT) would result in "und", so it is treated as no language
+    setLanguage (aContentLocale == null || StringHelper.isEmpty (aContentLocale.getLanguage ()) ? null
+                                                                                                : aContentLocale.toLanguageTag ());
   }
 
   public final void setLanguage (@Nullable final String sContentLanguage)

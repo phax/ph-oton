@@ -716,6 +716,7 @@ public class JettyStarter
       aServer.setDumpBeforeStop (true);
     }
 
+    InternalJettyStopMonitorThread aStopMonitor = null;
     try
     {
       // Starting shutdown listener thread
@@ -723,7 +724,10 @@ public class JettyStarter
 
       // May fail if port is in use
       if (m_bRunStopMonitor)
-        new InternalJettyStopMonitorThread (nStopPort, m_sStopKey, aServer::stop).start ();
+      {
+        aStopMonitor = new InternalJettyStopMonitorThread (nStopPort, m_sStopKey, aServer::stop);
+        aStopMonitor.start ();
+      }
 
       // Starting the engines:
       aServer.start ();
@@ -780,6 +784,10 @@ public class JettyStarter
           // Running the server!
           aServer.join ();
         }
+
+      // Release the stop port, also if the server failed to start
+      if (aStopMonitor != null)
+        aStopMonitor.stopMonitoring ();
 
       // close all loaded FileSystems
       m_aFSCache.close ();

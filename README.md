@@ -114,7 +114,7 @@ v10.8.2 - work in progress
 * `JSchSessionFactory` now uses `StrictHostKeyChecking=yes` if a known hosts file is configured
 * The Markdown safe mode now also blocks `style`, `link`, `meta`, `base`, `embed`, `form`, `svg` and `math` elements, event handler attributes and `javascript:`, `vbscript:` and `data:` URLs
 * `JettyRunner.startServer` no longer blocks forever on startup errors, and `shutDownServer` now works without the stop monitor
-* `InternalJettyStopMonitorThread` now closes its server socket
+* `InternalJettyStopMonitorThread` now closes its server socket, and `JettyStarter` releases the stop port if the server fails to start
 * `FftpConnectionDestination` now always disconnects, even if the logout fails
 * `SftpMaxParallelRunner` now restores the interrupt flag
 * Fixed thread-safety issues in `FavoriteManager` and `InternalErrorHandler`
@@ -126,6 +126,12 @@ v10.8.2 - work in progress
 * The English default time format in `EDateEditText` now uses a 12-hour clock with AM/PM
 * `AbstractWebPageSimpleForm` now passes the form submission state when creating the form
 * Fixed the texts of the tree expand/collapse entries in `EPhotonCoreText`
+* `CSPReportingXServletHandler` now remembers at most `MAX_REMEMBERED_BLOCKED_URIS` blocked URIs for duplicate filtering
+* `UserManager` now checks the login name uniqueness and stores the user in one write lock
+* Fixed thread-safety issues in `HCSpecialNodeHandler` and `DataTablesServerDataCell`
+* `InternalErrorBuilder` no longer fails if the web file paths are not yet initialised
+* `JQuery.ajax (IJSExpression, JSAssocArray)` no longer emits a `null` URL, which made jQuery ignore the settings
+* `IFeedElement.setLanguage (Locale)` now uses the full BCP 47 language tag (e.g. `en-US`) instead of only the language
 
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.
