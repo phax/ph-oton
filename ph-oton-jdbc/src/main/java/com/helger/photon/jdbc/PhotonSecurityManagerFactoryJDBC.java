@@ -23,6 +23,7 @@ import org.jspecify.annotations.NonNull;
 
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.dao.DAOException;
+import com.helger.db.api.EDatabaseSystemType;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.photon.audit.IAuditManager;
 import com.helger.photon.jdbc.audit.AuditManagerJDBC;
@@ -45,21 +46,25 @@ import com.helger.photon.security.usergroup.IUserGroupManager;
 public class PhotonSecurityManagerFactoryJDBC implements PhotonSecurityManager.IFactory
 {
   private final Supplier <? extends DBExecutor> m_aDBExecSupplier;
+  private final EDatabaseSystemType m_eDBType;
   private final Function <String, String> m_aTableNameCustomizer;
 
   public PhotonSecurityManagerFactoryJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                                           @NonNull final EDatabaseSystemType eDBType,
                                            @NonNull final Function <String, String> aTableNameCustomizer)
   {
     ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
+    ValueEnforcer.notNull (eDBType, "DBType");
     ValueEnforcer.notNull (aTableNameCustomizer, "TableNameCustomizer");
     m_aDBExecSupplier = aDBExecSupplier;
+    m_eDBType = eDBType;
     m_aTableNameCustomizer = aTableNameCustomizer;
   }
 
   @NonNull
   public IAuditManager createAuditMgr () throws Exception
   {
-    return new AuditManagerJDBC (m_aDBExecSupplier, m_aTableNameCustomizer);
+    return new AuditManagerJDBC (m_aDBExecSupplier, m_eDBType, m_aTableNameCustomizer);
   }
 
   @NonNull
@@ -91,13 +96,18 @@ public class PhotonSecurityManagerFactoryJDBC implements PhotonSecurityManager.I
    * @param aDBExecSupplier
    *        The main supplier for {@link DBExecutor} objects. This will be passed to all the main
    *        managers. May not be <code>null</code>.
+   * @param eDBType
+   *        The database system in use. It is needed to create database specific SQL statements.
+   *        May not be <code>null</code>.
    * @param aTableNameCustomizer
    *        A customizer for database table names used by this class. May not be <code>null</code>.
    */
   public static void install (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                              @NonNull final EDatabaseSystemType eDBType,
                               @NonNull final Function <String, String> aTableNameCustomizer)
   {
     ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
+    ValueEnforcer.notNull (eDBType, "DBType");
     ValueEnforcer.notNull (aTableNameCustomizer, "TableNameCustomizer");
 
     // Required for unit tests, to set it again and again and again
@@ -106,7 +116,7 @@ public class PhotonSecurityManagerFactoryJDBC implements PhotonSecurityManager.I
         throw new IllegalStateException ("PhotonSecurityManager is already initialized - call this method earlier");
 
     // First set the factory
-    PhotonSecurityManager.setFactory (new PhotonSecurityManagerFactoryJDBC (aDBExecSupplier, aTableNameCustomizer));
+    PhotonSecurityManager.setFactory (new PhotonSecurityManagerFactoryJDBC (aDBExecSupplier, eDBType, aTableNameCustomizer));
     // then get it installed
     PhotonSecurityManager.getInstance ();
   }

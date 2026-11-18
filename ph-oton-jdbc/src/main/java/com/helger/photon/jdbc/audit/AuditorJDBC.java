@@ -36,7 +36,10 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.wrapper.Wrapper;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.paging.PagingSpec;
+import com.helger.db.api.EDatabaseSystemType;
 import com.helger.db.api.helper.DBValueHelper;
+import com.helger.db.api.paging.DBPagingHelper;
 import com.helger.db.jdbc.callback.ConstantPreparedStatementDataProvider;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.db.jdbc.executor.DBResultRow;
@@ -57,6 +60,7 @@ public class AuditorJDBC extends AbstractAuditor
   private static final Logger LOGGER = LoggerFactory.getLogger (AuditorJDBC.class);
 
   private final Supplier <? extends DBExecutor> m_aDBExecSupplier;
+  private final EDatabaseSystemType m_eDBType;
   private final String m_sTableName;
 
   /**
@@ -64,18 +68,24 @@ public class AuditorJDBC extends AbstractAuditor
    *
    * @param aDBExecSupplier
    *        The supplier for {@link DBExecutor} objects. May not be <code>null</code>.
+   * @param eDBType
+   *        The database system in use. It is needed to create database specific SQL statements.
+   *        May not be <code>null</code>.
    * @param aTableNameCustomizer
    *        A customizer for database table names used by this class. May not be <code>null</code>.
    * @param aCurrentUserIDProvider
    *        The current user ID provider. May not be <code>null</code>.
    */
   public AuditorJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                      @NonNull final EDatabaseSystemType eDBType,
                       @NonNull final Function <String, String> aTableNameCustomizer,
                       @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
     super (aCurrentUserIDProvider);
     ValueEnforcer.notNull (aDBExecSupplier, "DBExecSupplier");
+    ValueEnforcer.notNull (eDBType, "DBType");
     m_aDBExecSupplier = aDBExecSupplier;
+    m_eDBType = eDBType;
     m_sTableName = aTableNameCustomizer.apply ("audit");
   }
 
@@ -93,6 +103,16 @@ public class AuditorJDBC extends AbstractAuditor
     if (ret == null)
       throw new IllegalStateException ("The contained DBExecutor Supplier returned null!");
     return ret;
+  }
+
+  /**
+   * @return The database system in use, as provided in the constructor. Never <code>null</code>.
+   * @since 10.8.3
+   */
+  @NonNull
+  public final EDatabaseSystemType getDatabaseType ()
+  {
+    return m_eDBType;
   }
 
   @NonNull
@@ -169,8 +189,9 @@ public class AuditorJDBC extends AbstractAuditor
     final ICommonsList <DBResultRow> aDBResult = newExecutor ().queryAll ("SELECT dt, userid, actiontype, success, action FROM " +
                                                                           m_sTableName +
                                                                           " ORDER BY dt DESC" +
-                                                                          " LIMIT ?",
-                                                                          new ConstantPreparedStatementDataProvider (Integer.valueOf (nMaxItems)));
+                                                                          DBPagingHelper.getPagingClause (m_eDBType,
+                                                                                                          new PagingSpec (0,
+                                                                                                                          nMaxItems)));
     return _toAuditItems (aDBResult);
   }
 
@@ -209,7 +230,8 @@ public class AuditorJDBC extends AbstractAuditor
   public LocalDate getEarliestAuditDate ()
   {
     final Wrapper <DBResultRow> aDBResult = new Wrapper <> ();
-    newExecutor ().querySingle ("SELECT dt FROM " + m_sTableName + " ORDER BY dt ASC" + " LIMIT 1", aDBResult::set);
+    // MIN works on all databases, unlike a row limit
+    newExecutor ().querySingle ("SELECT MIN(dt) FROM " + m_sTableName, aDBResult::set);
     if (aDBResult.isSet ())
     {
       // getAsLocalDate does not work

@@ -70,6 +70,11 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
+v10.8.3 - work in progress
+* `AuditorJDBC`, `AuditManagerJDBC` and `PhotonSecurityManagerFactoryJDBC` (including `install`) now require the database system type as a constructor parameter.
+  This is an incompatible API change.
+* `AuditorJDBC.getLastAuditItems` and `getEarliestAuditDate` no longer use the MySQL specific `LIMIT` syntax, which failed on Oracle and SQL Server
+
 v10.8.2 - 2026-11-18
 * Requires at least ph-db 8.5.3, which returns `null` instead of an empty string for a SQL `NULL` CLOB value
 * `AuditorJDBC` now treats a `NULL` audit action as an empty string.

@@ -129,12 +129,11 @@ written without an explicit `NULL` keyword.
 * **`loginname` is not unique in the database.** Uniqueness is checked in
   `UserManagerJDBC` and only applies to non-deleted users, so a `UNIQUE`
   constraint would reject legitimate data.
-* **`LIMIT` is used by the audit reader.** `AuditorJDBC.getLastAuditItems` and
-  `getEarliestAuditDate` emit `... LIMIT ?` respectively `... LIMIT 1`. That
-  syntax works on MySQL and PostgreSQL, but not on DB2, SQL Server or Oracle,
-  which need `FETCH FIRST n ROWS ONLY` respectively `TOP n`. The DDL in this
-  folder is fine on all five, but those two read methods are currently not
-  portable.
+* **The audit reader is database specific.** `AuditorJDBC` gets the database
+  system type in its constructor, because `getLastAuditItems` needs a row
+  limit: `LIMIT n` on MySQL, `FETCH NEXT n ROWS ONLY` on all others (DB2 11.1+
+  and Oracle 12c+). `getEarliestAuditDate` uses `MIN(dt)`, which needs no row
+  limit at all.
 * **`audit.id` is not written by ph-oton.** `AuditorJDBC` neither inserts
   nor selects it, so it is purely a database side surrogate key. It exists
   because `dt` plus `userid` is not unique - the same user can be audited more

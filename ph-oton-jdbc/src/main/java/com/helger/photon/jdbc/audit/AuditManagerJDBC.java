@@ -26,6 +26,7 @@ import org.jspecify.annotations.Nullable;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.ICommonsList;
+import com.helger.db.api.EDatabaseSystemType;
 import com.helger.db.jdbc.executor.DBExecutor;
 import com.helger.photon.audit.IAuditItem;
 import com.helger.photon.audit.IAuditManager;
@@ -43,18 +44,20 @@ public class AuditManagerJDBC implements IAuditManager
   private final AuditorJDBC m_aAuditor;
 
   public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                           @NonNull final EDatabaseSystemType eDBType,
                            @NonNull final Function <String, String> aTableNameCustomizer)
   {
     // Use the GlobalUserIDProvider, so that alternative ways of authentication
     // (e.g. request scoped ones) are correctly audited
-    this (aDBExecSupplier, aTableNameCustomizer, GlobalUserIDProvider::getCurrentUserID);
+    this (aDBExecSupplier, eDBType, aTableNameCustomizer, GlobalUserIDProvider::getCurrentUserID);
   }
 
   public AuditManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
+                           @NonNull final EDatabaseSystemType eDBType,
                            @NonNull final Function <String, String> aTableNameCustomizer,
                            @NonNull final ICurrentUserIDProvider aCurrentUserIDProvider)
   {
-    m_aAuditor = new AuditorJDBC (aDBExecSupplier, aTableNameCustomizer, aCurrentUserIDProvider);
+    m_aAuditor = new AuditorJDBC (aDBExecSupplier, eDBType, aTableNameCustomizer, aCurrentUserIDProvider);
   }
 
   public boolean isInMemory ()
