@@ -31,6 +31,7 @@ import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.callback.CallbackList;
+import com.helger.base.concurrent.SimpleLock;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.factory.GlobalIDFactory;
 import com.helger.base.numeric.mutable.MutableLong;
@@ -72,6 +73,10 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   private static final boolean DEFAULT_DISABLED = false;
 
   private final String m_sTableName;
+  // Ensures that the check for an existing login name and the modification are atomic within this
+  // instance. Across multiple instances on the same database only a unique constraint on the login
+  // name column can ensure this
+  private final SimpleLock m_aLoginNameLock = new SimpleLock ();
   private final CallbackList <IUserModificationCallback> m_aCallbacks = new CallbackList <> ();
 
   public UserManagerJDBC (@NonNull final Supplier <? extends DBExecutor> aDBExecSupplier,
@@ -321,24 +326,28 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-    if (getUserOfLoginName (sLoginName) != null)
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName);
-      return null;
-    }
-    // Create user
-    final User aUser = new User (sLoginName,
-                                 sEmailAddress,
-                                 GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
-                                                                                       sPlainTextPassword),
-                                 sFirstName,
-                                 sLastName,
-                                 sDescription,
-                                 aDesiredLocale,
-                                 aCustomAttrs,
-                                 bDisabled);
-    return internalCreateNewUser (aUser, false, true);
+    // Create the password hash outside of the lock, because it is expensive
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                             sPlainTextPassword);
+    return m_aLoginNameLock.lockedGet (() -> {
+      if (getUserOfLoginName (sLoginName) != null)
+      {
+        // Another user with this login name already exists
+        AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName);
+        return null;
+      }
+      // Create user
+      final User aUser = new User (sLoginName,
+                                   sEmailAddress,
+                                   aPasswordHash,
+                                   sFirstName,
+                                   sLastName,
+                                   sDescription,
+                                   aDesiredLocale,
+                                   aCustomAttrs,
+                                   bDisabled);
+      return internalCreateNewUser (aUser, false, true);
+    });
   }
 
   @Nullable
@@ -355,25 +364,29 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
   {
     ValueEnforcer.notEmpty (sLoginName, "LoginName");
     ValueEnforcer.notNull (sPlainTextPassword, "PlainTextPassword");
-    if (getUserOfLoginName (sLoginName) != null)
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName, "predefined-user");
-      return null;
-    }
-    // Create user
-    final User aUser = User.createdPredefinedUser (sID,
-                                                   sLoginName,
-                                                   sEmailAddress,
-                                                   GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
-                                                                                                         sPlainTextPassword),
-                                                   sFirstName,
-                                                   sLastName,
-                                                   sDescription,
-                                                   aDesiredLocale,
-                                                   aCustomAttrs,
-                                                   bDisabled);
-    return internalCreateNewUser (aUser, true, true);
+    // Create the password hash outside of the lock, because it is expensive
+    final PasswordHash aPasswordHash = GlobalPasswordSettings.createUserDefaultPasswordHash (PasswordSalt.createRandom (),
+                                                                                             sPlainTextPassword);
+    return m_aLoginNameLock.lockedGet (() -> {
+      if (getUserOfLoginName (sLoginName) != null)
+      {
+        // Another user with this login name already exists
+        AuditHelper.onAuditCreateFailure (User.OT, "login-name-already-in-use", sLoginName, "predefined-user");
+        return null;
+      }
+      // Create user
+      final User aUser = User.createdPredefinedUser (sID,
+                                                     sLoginName,
+                                                     sEmailAddress,
+                                                     aPasswordHash,
+                                                     sFirstName,
+                                                     sLastName,
+                                                     sDescription,
+                                                     aDesiredLocale,
+                                                     aCustomAttrs,
+                                                     bDisabled);
+      return internalCreateNewUser (aUser, true, true);
+    });
   }
 
   @Nullable
@@ -586,44 +599,65 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
     if (StringHelper.isEmpty (sUserID))
       return EChange.UNCHANGED;
 
-    final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
-    if (aOtherUser != null && !aOtherUser.getID ().equals (sUserID))
-    {
-      // Another user with this login name already exists
-      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
-      return EChange.UNCHANGED;
-    }
+    return m_aLoginNameLock.lockedGet (() -> {
+      final IUser aOtherUser = getUserOfLoginName (sNewLoginName);
+      if (aOtherUser != null && !aOtherUser.getID ().equals (sUserID))
+      {
+        // Another user with this login name already exists
+        AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, sNewLoginName, "login-name-already-in-use");
+        return EChange.UNCHANGED;
+      }
 
-    final MutableLong aUpdated = new MutableLong (-1);
-    final DBExecutor aExecutor = newExecutor ();
-    final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
-      // Update existing
-      final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
-                                                              m_sTableName +
-                                                              " SET loginname=?, email=?, firstname=?, lastname=?, description=?, locale=?, attrs=?, disabled=?, lastmoddt=?, lastmoduserid=?" +
-                                                              " WHERE id=?",
-                                                              new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sNewLoginName,
-                                                                                                                                           IUser.LOGIN_NAME_MAX_LENGTH),
-                                                                                                         DBValueHelper.getTrimmedToLength (sNewEmailAddress,
-                                                                                                                                           IUser.EMAIL_ADDRESS_MAX_LENGTH),
-                                                                                                         sNewFirstName,
-                                                                                                         sNewLastName,
-                                                                                                         sNewDescription,
-                                                                                                         aNewDesiredLocale == null ? null
-                                                                                                                                   : aNewDesiredLocale.toString (),
-                                                                                                         attrsToString (aNewCustomAttrs),
-                                                                                                         Boolean.valueOf (bNewDisabled),
-                                                                                                         DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
-                                                                                                         DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
-                                                                                                                                           GlobalIDFactory.STRING_ID_MAX_LENGTH),
-                                                                                                         DBValueHelper.getTrimmedToLength (sUserID,
-                                                                                                                                           IUser.USER_ID_MAX_LENGTH)));
-      aUpdated.set (nUpdated);
-    });
-    if (eSuccess.isFailure ())
-    {
-      // DB error
-      AuditHelper.onAuditModifyFailure (User.OT,
+      final MutableLong aUpdated = new MutableLong (-1);
+      final DBExecutor aExecutor = newExecutor ();
+      final ESuccess eSuccess = aExecutor.performInTransaction (() -> {
+        // Update existing
+        final long nUpdated = aExecutor.insertOrUpdateOrDelete ("UPDATE " +
+                                                                m_sTableName +
+                                                                " SET loginname=?, email=?, firstname=?, lastname=?, description=?, locale=?, attrs=?, disabled=?, lastmoddt=?, lastmoduserid=?" +
+                                                                " WHERE id=?",
+                                                                new ConstantPreparedStatementDataProvider (DBValueHelper.getTrimmedToLength (sNewLoginName,
+                                                                                                                                             IUser.LOGIN_NAME_MAX_LENGTH),
+                                                                                                           DBValueHelper.getTrimmedToLength (sNewEmailAddress,
+                                                                                                                                             IUser.EMAIL_ADDRESS_MAX_LENGTH),
+                                                                                                           sNewFirstName,
+                                                                                                           sNewLastName,
+                                                                                                           sNewDescription,
+                                                                                                           aNewDesiredLocale == null ? null
+                                                                                                                                     : aNewDesiredLocale.toString (),
+                                                                                                           attrsToString (aNewCustomAttrs),
+                                                                                                           Boolean.valueOf (bNewDisabled),
+                                                                                                           DBValueHelper.toTimestamp (PDTFactory.getCurrentLocalDateTime ()),
+                                                                                                           DBValueHelper.getTrimmedToLength (BusinessObjectHelper.getUserIDOrFallback (),
+                                                                                                                                             GlobalIDFactory.STRING_ID_MAX_LENGTH),
+                                                                                                           DBValueHelper.getTrimmedToLength (sUserID,
+                                                                                                                                             IUser.USER_ID_MAX_LENGTH)));
+        aUpdated.set (nUpdated);
+      });
+      if (eSuccess.isFailure ())
+      {
+        // DB error
+        AuditHelper.onAuditModifyFailure (User.OT,
+                                          "set-all",
+                                          sUserID,
+                                          sNewLoginName,
+                                          sNewEmailAddress,
+                                          sNewFirstName,
+                                          sNewLastName,
+                                          sNewDescription,
+                                          aNewDesiredLocale,
+                                          aNewCustomAttrs,
+                                          Boolean.valueOf (bNewDisabled),
+                                          "database-error");
+        return EChange.UNCHANGED;
+      }
+      if (aUpdated.is0 ())
+      {
+        // No such user ID
+        AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
+        return EChange.UNCHANGED;
+      }
+      AuditHelper.onAuditModifySuccess (User.OT,
                                         "set-all",
                                         sUserID,
                                         sNewLoginName,
@@ -633,32 +667,13 @@ public class UserManagerJDBC extends AbstractJDBCEnabledSecurityManager implemen
                                         sNewDescription,
                                         aNewDesiredLocale,
                                         aNewCustomAttrs,
-                                        Boolean.valueOf (bNewDisabled),
-                                        "database-error");
-      return EChange.UNCHANGED;
-    }
-    if (aUpdated.is0 ())
-    {
-      // No such user ID
-      AuditHelper.onAuditModifyFailure (User.OT, "set-all", sUserID, "no-such-id");
-      return EChange.UNCHANGED;
-    }
-    AuditHelper.onAuditModifySuccess (User.OT,
-                                      "set-all",
-                                      sUserID,
-                                      sNewLoginName,
-                                      sNewEmailAddress,
-                                      sNewFirstName,
-                                      sNewLastName,
-                                      sNewDescription,
-                                      aNewDesiredLocale,
-                                      aNewCustomAttrs,
-                                      Boolean.valueOf (bNewDisabled));
+                                        Boolean.valueOf (bNewDisabled));
 
-    // Execute callback as the very last action
-    m_aCallbacks.forEach (aCB -> aCB.onUserUpdated (sUserID));
+      // Execute callback as the very last action
+      m_aCallbacks.forEach (aCB -> aCB.onUserUpdated (sUserID));
 
-    return EChange.CHANGED;
+      return EChange.CHANGED;
+    });
   }
 
   @NonNull

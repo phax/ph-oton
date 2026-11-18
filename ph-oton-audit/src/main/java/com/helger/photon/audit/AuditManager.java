@@ -278,6 +278,16 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
   {
     ValueEnforcer.notNull (aDate, "Date");
 
+    if (isInMemory ())
+    {
+      // Only the items kept in memory are available
+      final ICommonsList <IAuditItem> ret = new CommonsArrayList <> ();
+      m_aRWLock.readLocked (() -> m_aItems.getAllItems ()
+                                          .findAll (aItem -> aItem.getDateTime ().toLocalDate ().equals (aDate),
+                                                    ret::add));
+      return ret;
+    }
+
     final String sFilename = m_sBaseDir + getRelativeAuditFilename (aDate);
     final File aFile = getIO ().getFile (sFilename);
     if (!aFile.exists ())

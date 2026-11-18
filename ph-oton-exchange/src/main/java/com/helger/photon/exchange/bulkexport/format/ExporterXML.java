@@ -165,8 +165,7 @@ public class ExporterXML implements IExporterFile
       if (aDoc == null)
         return ESuccess.FAILURE;
 
-      MicroWriter.writeToStream (aDoc, aOS, m_aXWS);
-      return ESuccess.SUCCESS;
+      return MicroWriter.writeToStream (aDoc, aOS, m_aXWS);
     }
     finally
     {

@@ -399,6 +399,12 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return ret.toString ();
   }
 
+  /**
+   * {@inheritDoc}<br>
+   * Note: this method deliberately iterates the rows of the table head, body and foot and not the
+   * direct children (column group, head, body and foot) as returned by {@link #getAllChildren()}.
+   * The column group is not visited.
+   */
   @Override
   public final void forAllChildren (@NonNull final Consumer <? super IHCNode> aConsumer)
   {
@@ -407,6 +413,12 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     m_aFoot.forAllChildren (aConsumer);
   }
 
+  /**
+   * {@inheritDoc}<br>
+   * Note: this method deliberately iterates the rows of the table head, body and foot and not the
+   * direct children (column group, head, body and foot) as returned by {@link #getAllChildren()}.
+   * The column group is not visited.
+   */
   @Override
   @NonNull
   public final EContinue forAllChildrenBreakable (@NonNull final Function <? super IHCNode, EContinue> aConsumer)
@@ -420,6 +432,12 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     return EContinue.CONTINUE;
   }
 
+  /**
+   * {@inheritDoc}<br>
+   * Note: this method deliberately iterates the rows of the table head, body and foot and not the
+   * direct children (column group, head, body and foot) as returned by {@link #getAllChildren()}.
+   * The column group is not visited.
+   */
   @Override
   public final void forAllChildren (@NonNull final Predicate <? super IHCNode> aFilter,
                                     @NonNull final Consumer <? super IHCNode> aConsumer)
@@ -429,6 +447,12 @@ public abstract class AbstractHCBaseTable <IMPLTYPE extends AbstractHCBaseTable 
     m_aFoot.forAllChildren (aFilter, aConsumer);
   }
 
+  /**
+   * {@inheritDoc}<br>
+   * Note: this method deliberately iterates the rows of the table head, body and foot and not the
+   * direct children (column group, head, body and foot) as returned by {@link #getAllChildren()}.
+   * The column group is not visited.
+   */
   @Override
   public <DSTTYPE> void forAllChildrenMapped (@NonNull final Predicate <? super IHCNode> aFilter,
                                               @NonNull final Function <? super IHCNode, ? extends DSTTYPE> aMapper,

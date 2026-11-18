@@ -16,8 +16,11 @@
  */
 package com.helger.html.jscode;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
+import com.helger.html.js.JSWriterSettings;
 import com.helger.html.jscode.html.JSHtml;
 
 /**
@@ -50,5 +53,25 @@ public final class JSDefinedClassTest
 
     if (false)
       System.out.println (aPkg.getJSCode ());
+  }
+
+  @Test
+  public void testExtends ()
+  {
+    final JSPackage aPkg = new JSPackage ();
+    final JSDefinedClass aBase = aPkg._class ("Base");
+    aBase.method ("foo").body ()._return (1);
+
+    final JSDefinedClass aClass = aPkg._class ("Derived");
+    aClass._extends (aBase);
+    aClass.field ("m_nValue", JSExpr.lit (2));
+    aClass.method ("bar").body ()._return (3);
+
+    assertEquals ("function Derived(){}" +
+                  "Derived.prototype=Object.create(Base.prototype);" +
+                  "Derived.prototype.constructor=Derived;" +
+                  "Derived.prototype.m_nValue=2;" +
+                  "Derived.prototype.bar=function(){return 3;};",
+                  aClass.getJSCode (new JSWriterSettings ().setIndentAndAlign (false)));
   }
 }

@@ -16,7 +16,6 @@
  */
 package com.helger.photon.uicore.datetime;
 
-import static java.time.temporal.ChronoField.ALIGNED_WEEK_OF_YEAR;
 import static java.time.temporal.ChronoField.AMPM_OF_DAY;
 import static java.time.temporal.ChronoField.CLOCK_HOUR_OF_AMPM;
 import static java.time.temporal.ChronoField.DAY_OF_YEAR;
@@ -60,12 +59,15 @@ public enum EDateTimeFormatToken
   // _SECONDS_SINCE_01011970 ("%s", null), // Java: none
   SECONDS_LZ ("%S", "ss", b -> b.appendValue (SECOND_OF_MINUTE, 2)),
   CHAR_TAB ("%t", "\t", b -> b.appendLiteral ('\t')),
-  WEEKNUM_LZ ("%U", "ww", b -> b.appendValue (ALIGNED_WEEK_OF_YEAR, 2)),
+  WEEKNUM_LZ ("%U", "ww", b -> b.appendPattern ("ww")),
   // synonyms: %V %W
   // _DAY_OF_WEEK_FROM_MONDAY ("%u", null), // Java: only text version
   // _DAY_OF_WEEK_FROM_SUNDAY ("%w", null), // Java: only text version
   YEAR_WITHOUT_CENTURY ("%y", "yy", b -> b.appendValueReduced (YEAR, 2, 2, 2000)),
   YEAR_WITH_CENTURY ("%Y", "uuuu", b -> b.appendValue (YEAR, 4, 10, SignStyle.EXCEEDS_PAD)),
+  // HACK alert: Java "yyyy" (year of era) is used in many standard date time patterns. It is
+  // handled like "uuuu" (year)
+  YEAR_OF_ERA_WITH_CENTURY ("%Y", "yyyy", b -> b.appendValue (YEAR, 4, 10, SignStyle.EXCEEDS_PAD)),
   CHAR_PERC ("%%", "%", b -> b.appendLiteral ('%'));
 
   private final String m_sJSCalendarToken;

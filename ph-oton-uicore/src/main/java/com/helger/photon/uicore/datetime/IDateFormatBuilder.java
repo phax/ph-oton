@@ -45,12 +45,12 @@ public interface IDateFormatBuilder
   @NonNull
   String getJavaFormatString ();
 
-  @NonNull
+  @Nullable
   LocalDate getDateFormatted (@Nullable String sDate);
 
-  @NonNull
+  @Nullable
   LocalTime getTimeFormatted (@Nullable String sTime);
 
-  @NonNull
+  @Nullable
   LocalDateTime getLocalDateTimeFormatted (@Nullable String sDateTime);
 }

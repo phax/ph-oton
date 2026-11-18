@@ -38,6 +38,7 @@ import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsMap;
 import com.helger.datetime.format.PDTFromString;
+import com.helger.datetime.zone.PDTConfig;
 import com.helger.text.compare.ComparatorHelper;
 
 public final class DateFormatBuilder implements IDateFormatBuilder
@@ -120,7 +121,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
 
   private static final boolean USE_FORMATTER = true;
 
-  @NonNull
+  @Nullable
   public LocalDate getDateFormatted (@Nullable final String sDate)
   {
     if (USE_FORMATTER)
@@ -129,7 +130,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalDateFromString (sDate, getJavaFormatString ());
   }
 
-  @NonNull
+  @Nullable
   public LocalTime getTimeFormatted (@Nullable final String sTime)
   {
     if (USE_FORMATTER)
@@ -138,7 +139,7 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalTimeFromString (sTime, getJavaFormatString ());
   }
 
-  @NonNull
+  @Nullable
   public LocalDateTime getLocalDateTimeFormatted (@Nullable final String sDateTime)
   {
     if (USE_FORMATTER)
@@ -147,13 +148,19 @@ public final class DateFormatBuilder implements IDateFormatBuilder
     return PDTFromString.getLocalDateTimeFromString (sDateTime, getJavaFormatString ());
   }
 
-  @NonNull
+  /**
+   * Parse the provided string as a date time. The format tokens contain no time zone, so the parsed
+   * value is put into the default time zone (see {@link PDTConfig#getDefaultZoneId()}).
+   *
+   * @param sDateTime
+   *        The string to parse. May be <code>null</code>.
+   * @return <code>null</code> if parsing failed.
+   */
+  @Nullable
   public ZonedDateTime getDateTimeFormatted (@Nullable final String sDateTime)
   {
-    if (USE_FORMATTER)
-      return PDTFromString.getZonedDateTimeFromString (sDateTime, getJavaFormatter ());
-
-    return PDTFromString.getZonedDateTimeFromString (sDateTime, getJavaFormatString ());
+    final LocalDateTime aLDT = getLocalDateTimeFormatted (sDateTime);
+    return aLDT == null ? null : aLDT.atZone (PDTConfig.getDefaultZoneId ());
   }
 
   @Override
@@ -185,8 +192,10 @@ public final class DateFormatBuilder implements IDateFormatBuilder
       for (final EDateTimeFormatToken eToken : EDateTimeFormatToken.values ())
       {
         final String sJavaToken = eToken.getJavaToken ();
+        // If multiple tokens share the same Java token, the first one wins (e.g. "a" maps to
+        // AMPM_UPPER and not to AMPM_LOWER)
         if (m_sRest.startsWith (sJavaToken))
-          m_aAllMatching.put (sJavaToken, eToken);
+          m_aAllMatching.putIfAbsent (sJavaToken, eToken);
       }
       if (m_aAllMatching.isEmpty ())
         return null;

@@ -18,16 +18,19 @@ package com.helger.photon.uicore.datetime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 import org.junit.Test;
 
 import com.helger.datetime.format.PDTFormatPatterns;
+import com.helger.datetime.zone.PDTConfig;
 import com.helger.text.locale.LocaleCache;
 
 /**
@@ -109,5 +112,38 @@ public final class DateFormatBuilderTest
     assertNotNull (aDFB);
     assertEquals (sPattern, aDFB.getJavaFormatString ());
     assertNotNull (aDFB.getJSCalendarFormatString ());
+  }
+
+  @Test
+  public void testFromJavaPatternTokens ()
+  {
+    IDateFormatBuilder aDFB = DateFormatBuilder.fromJavaPattern ("dd.MM.yyyy");
+    assertEquals ("%d.%m.%Y", aDFB.getJSCalendarFormatString ());
+    assertEquals ("dd.MM.yyyy", aDFB.getJavaFormatString ());
+    assertEquals (LocalDate.of (2010, Month.AUGUST, 8), aDFB.getDateFormatted ("08.08.2010"));
+
+    aDFB = DateFormatBuilder.fromJavaPattern ("hh:mm a");
+    assertEquals ("%I:%M %p", aDFB.getJSCalendarFormatString ());
+    assertEquals ("hh:mm a", aDFB.getJavaFormatString ());
+  }
+
+  @Test
+  public void testDateTimeFormatted ()
+  {
+    final DateFormatBuilder aDFB = new DateFormatBuilder ();
+    aDFB.append (EDateTimeFormatToken.YEAR_WITH_CENTURY)
+        .append ("-")
+        .append (EDateTimeFormatToken.MONTH_LZ)
+        .append ("-")
+        .append (EDateTimeFormatToken.DAY_OF_MONTH_LZ)
+        .append (" ")
+        .append (EDateTimeFormatToken.HOUR23_LZ)
+        .append (":")
+        .append (EDateTimeFormatToken.MINUTE_LZ);
+    final ZonedDateTime aZDT = aDFB.getDateTimeFormatted ("2010-08-08 12:45");
+    assertNotNull (aZDT);
+    assertEquals (LocalDateTime.of (2010, Month.AUGUST, 8, 12, 45), aZDT.toLocalDateTime ());
+    assertEquals (PDTConfig.getDefaultZoneId (), aZDT.getZone ());
+    assertNull (aDFB.getDateTimeFormatted ("not a date"));
   }
 }

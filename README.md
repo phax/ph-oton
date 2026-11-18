@@ -70,7 +70,7 @@ Note: prior to v8.2.5 the Maven groupId was `com.helger`.
 
 ## News and noteworthy
 
-v10.8.2 - work in progress
+v10.8.2 - 2026-11-18
 * Requires at least ph-db 8.5.3, which returns `null` instead of an empty string for a SQL `NULL` CLOB value
 * `AuditorJDBC` now treats a `NULL` audit action as an empty string.
   This avoids a `NullPointerException` when reading audit items on Oracle and DB2
@@ -143,6 +143,16 @@ v10.8.2 - work in progress
 * `JSCommentSingleLine` now escapes `*/` in compact mode
 * `AuditManager.isInMemory ()` now also returns `true` for an empty base directory
 * Improved the error handling of missing or invalid values in `AuditItemMicroTypeConverter` and `LongRunningJobDataMicroTypeConverter`
+* `JSDefinedClass` now emits the super class set via `_extends`
+* `DateFormatBuilder.getDateTimeFormatted` now uses the default time zone instead of always returning `null`
+* `DateFormatBuilder.fromJavaPattern` now maps `a` to `%p` and `yyyy` to `%Y`
+* `EDateTimeFormatToken.WEEKNUM_LZ` now parses the Java week of year (`ww`) instead of the aligned week of year
+* Added `EDateTimeFormatToken.YEAR_OF_ERA_WITH_CENTURY` for the Java pattern `yyyy`
+* The parse methods of `IDateFormatBuilder` are now annotated `@Nullable`
+* `DataTables` now emits `pageLength` also if `lengthChange` is disabled
+* `AuditManager.getAllAuditItemsOfDate` now works for in-memory audit managers
+* `UserManagerJDBC` now checks for duplicate login names and modifies the user atomically within one instance
+* `ExporterXML.exportRecords` now returns `FAILURE` if writing failed
 
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.
@@ -328,12 +338,16 @@ v10.4.0 - 2026-08-30
   The latter are the only way to add server side context to a report, because the report body itself is created by the browser from a fixed set of fields.
   Added `ICSPReportClassifier` to separate actionable reports from the browser internal and browser extension noise that reaches every public reporting endpoint.
   The default implementation classifies a report as noise if its "source-file" has a scheme other than `http` or `https`; an absent "source-file" is deliberately not treated as a noise signal.
-  The classification is part of `CSPReport` and can be replaced per application via `CSPReportingXServletHandler.setClassifier (...)`. Noise is logged on the info level instead of the warning level.
+  The classification is part of `CSPReport` and can be replaced per application via `CSPReportingXServletHandler.setClassifier (...)`.
+  Noise is logged on the info level instead of the warning level.
   Added `CSPReportingEndpoint` that ties the name of the CSP `report-to` directive to the URI of the `Reporting-Endpoints` HTTP response header and of the legacy `report-uri` directive, so that the three cannot drift apart, and `ICSPReportingParameterProvider` for an application to contribute the query parameters of the report URI (default: none).
-  **Incompatible change**: the `CSPReportingXServletHandler` constructor now takes a `Consumer <? super CSPReport>` instead of a `Consumer <? super IJsonObject>`. Use `CSPReportingXServletHandler.asJsonConsumer (...)` to keep an existing JSON based consumer.
+  **Incompatible change**: the `CSPReportingXServletHandler` constructor now takes a `Consumer <? super CSPReport>` instead of a `Consumer <? super IJsonObject>`.
+  Use `CSPReportingXServletHandler.asJsonConsumer (...)` to keep an existing JSON based consumer.
   **Incompatible change**: a request with a content type other than `application/csp-report` or `application/reports+json` is now answered with HTTP 415 instead of being parsed as JSON.
-  **Behaviour change**: the legacy `csp-report` envelope is now unwrapped, so a consumer receives the violation fields themselves. As a side effect the duplicate filtering by "blocked-uri" works for the first time - it read the field off the envelope before and therefore never matched.
-* Added the new class `SingleRunLock` in package `com.helger.photon.security.lock`. It is a process wide "only one at a time" lock for expensive activities like long running jobs, that additionally remembers since when and by whom the running activity was started, so that a rejected caller can be told what is going on.
+  **Behaviour change**: the legacy `csp-report` envelope is now unwrapped, so a consumer receives the violation fields themselves.
+  As a side effect the duplicate filtering by "blocked-uri" works for the first time - it read the field off the envelope before and therefore never matched.
+* Added the new class `SingleRunLock` in package `com.helger.photon.security.lock`.
+  It is a process wide "only one at a time" lock for expensive activities like long running jobs, that additionally remembers since when and by whom the running activity was started, so that a rejected caller can be told what is going on.
 * Added the new method `ILongRunningJobResultManager.deleteResult (String)` incl. the implementations in `LongRunningJobResultManager` (XML backend) and `LongRunningJobResultManagerJDBC` (SQL backend).
   Previously long running job results could only be added and read, but never be removed - for results of type `FILE` that meant, that the referenced files piled up without any way to clean them up from the application.
   Note: deleting a job result does not delete a possibly referenced result file on disk.
@@ -342,36 +356,55 @@ v10.4.0 - 2026-08-30
   Every long running job execution is now covered by the span `photon.longrunningjob.execute` (started in `onStartJob`, closed in `onEndJob`), and the instruments `photon.longrunningjob.started`, `photon.longrunningjob.ended`, `photon.longrunningjob.running` and `photon.longrunningjob.duration` are emitted.
   Emission goes through the vendor neutral ph-telemetry facades only - without a registered `ITelemetryTracerSPI` / `ITelemetryMeterSPI` everything degrades to cheap no-ops, so no observability backend is required.
 * Added the new classes `CLongRunningJobTelemetry` (the constant span, metric and attribute names) and `LongRunningJobMetrics` (the metric instruments), so that applications can reference the literally same names in dashboards, alerting rules and tests
-* **Breaking API change**: removed the method `ILongRunningJob.getJobID ()`. A single job execution is identified by the globally unique ID that `LongRunningJobManager.onStartJob` creates and that is available as `LongRunningJobData.getID ()`, so a separately provided job ID was redundant.
+* **Breaking API change**: removed the method `ILongRunningJob.getJobID ()`.
+  A single job execution is identified by the globally unique ID that `LongRunningJobManager.onStartJob` creates and that is available as `LongRunningJobData.getID ()`, so a separately provided job ID was redundant.
   `LongRunningJobManager.onStartJob` now uses `GlobalIDFactory.getNewPersistentStringID ()` instead of `getNewStringID ()` - applications therefore need a registered persistent ID factory.
-* Added the new method `ILongRunningJob.getJobType ()` together with the constant `ILongRunningJob.JOB_TYPE_MAX_LENGTH` (100). The job type is a coarse grained category that groups multiple jobs together - like `import` or `export` - and it can be used to filter the persisted job results.
-  It is persisted and available via the new method `LongRunningJobData.getJobType ()`. For job results that were written before v10.4.0 it is `null`, so they never match a job type filter.
+* Added the new method `ILongRunningJob.getJobType ()` together with the constant `ILongRunningJob.JOB_TYPE_MAX_LENGTH` (100).
+  The job type is a coarse grained category that groups multiple jobs together - like `import` or `export` - and it can be used to filter the persisted job results.
+  It is persisted and available via the new method `LongRunningJobData.getJobType ()`.
+  For job results that were written before v10.4.0 it is `null`, so they never match a job type filter.
   All implementations of `ILongRunningJob` need to implement the new method.
-* Added the new methods `ILongRunningJobResultManager.forEachJobResult (String, Consumer)` and `ILongRunningJobResultManager.getAllJobResults (String)` to iterate respectively retrieve the job results of a single job type only. Passing `null` as the job type means "no filtering".
+* Added the new methods `ILongRunningJobResultManager.forEachJobResult (String, Consumer)` and `ILongRunningJobResultManager.getAllJobResults (String)` to iterate respectively retrieve the job results of a single job type only.
+  Passing `null` as the job type means "no filtering".
   `forEachJobResult` invokes the consumer per job result instead of building the full list first - the SQL backend deserializes row by row and therefore no longer needs to keep the whole table in memory.
   `getAllJobResults ()` and `getAllJobResults (String)` are now `default` methods based on `forEachJobResult`, so custom implementations of `ILongRunningJobResultManager` only need to implement the new `forEachJobResult` method.
-* **Breaking SQL schema change**: the table `long_running_job` used by `LongRunningJobResultManagerJDBC` needs the new nullable column `job_type VARCHAR(100)`; an index on it is recommended. Existing rows keep an empty job type and therefore never match a job type filter.
-* Added the DDL of all tables used by `ph-oton-jdbc` as Flyway migrations in the new folder `docs/flyway`, for MySQL, PostgreSQL, DB2, SQL Server and Oracle. See `docs/README.md` for the usage, the origin of all column lengths and the known caveats.
+* **Breaking SQL schema change**: the table `long_running_job` used by `LongRunningJobResultManagerJDBC` needs the new nullable column `job_type VARCHAR(100)`; an index on it is recommended.
+  Existing rows keep an empty job type and therefore never match a job type filter.
+* Added the DDL of all tables used by `ph-oton-jdbc` as Flyway migrations in the new folder `docs/flyway`, for MySQL, PostgreSQL, DB2, SQL Server and Oracle.
+  See `docs/README.md` for the usage, the origin of all column lengths and the known caveats.
   The scripts were cross checked against the production schema of [phoss-SMP](https://github.com/phax/phoss-SMP), which runs these managers on all five databases - hence the surrogate key `audit.id`, `SMALLINT` instead of `BOOLEAN` on DB2 and the unbounded text types for `secuser.pwsalt` / `pwhash` / `firstname` / `lastname`
 * **Breaking API change**: the public constructor `LongRunningJobData (String, IMultilingualText, String)` was changed to `LongRunningJobData (String, String, IMultilingualText, String)` - the new second parameter is the job type
 * Added the new server side mode `EDataTablesServerSideMode.ON_DEMAND` for DataTables, that keeps nothing in the session, next to the existing (and still default) mode `PRERENDERED`.
-  In the mode `PRERENDERED` the whole table is rendered up-front and stored in the session as a `DataTablesServerData`, so that paging, sorting and filtering can be applied on that snapshot. The memory consumption of that snapshot is proportional to the number of rows times the number of sessions, which does not scale to large tables.
-  In the mode `ON_DEMAND` every AJAX request is instead answered by the application via the new interface `IDataTablesOnDemandDataProvider`, so only the rows of the currently requested page are ever rendered. Select the mode via `DataTables.setServerSideMode (...)` and point the AJAX URL to the new `AjaxExecutorDataTablesOnDemand` instead of `AjaxExecutorDataTables`.
-  The request is provided as `DataTablesOnDemandRequest`, which converts the DataTables parameters into a data store agnostic `IPagingSpec` (see ph-commons 12.4.0). The sort field name of a column is taken from the `name` property of the column - see `DataTablesColumnDef.setName (String)` - and falls back to the 0-based column index. Note that the field names and the search text come from the client and must be treated as untrusted input.
+  In the mode `PRERENDERED` the whole table is rendered up-front and stored in the session as a `DataTablesServerData`, so that paging, sorting and filtering can be applied on that snapshot.
+  The memory consumption of that snapshot is proportional to the number of rows times the number of sessions, which does not scale to large tables.
+  In the mode `ON_DEMAND` every AJAX request is instead answered by the application via the new interface `IDataTablesOnDemandDataProvider`, so only the rows of the currently requested page are ever rendered.
+  Select the mode via `DataTables.setServerSideMode (...)` and point the AJAX URL to the new `AjaxExecutorDataTablesOnDemand` instead of `AjaxExecutorDataTables`.
+  The request is provided as `DataTablesOnDemandRequest`, which converts the DataTables parameters into a data store agnostic `IPagingSpec` (see ph-commons 12.4.0).
+  The sort field name of a column is taken from the `name` property of the column - see `DataTablesColumnDef.setName (String)` - and falls back to the 0-based column index.
+  Note that the field names and the search text come from the client and must be treated as untrusted input.
   The answer is provided as `DataTablesOnDemandResult`, consisting of the rows of the page plus the total and the filtered row count.
-* Added the new method `DataTablesServerDataRow.getAsJson (HCSpecialNodes)` incl. the constants `DT_ROW_ID`, `DT_ROW_CLASS`, `DT_ROW_DATA` and `DT_ROW_ATTR`. `AjaxExecutorDataTables` uses it as well now, so that both server side modes create the identical JSON.
+* Added the new method `DataTablesServerDataRow.getAsJson (HCSpecialNodes)` incl. the constants `DT_ROW_ID`, `DT_ROW_CLASS`, `DT_ROW_DATA` and `DT_ROW_ATTR`.
+  `AjaxExecutorDataTables` uses it as well now, so that both server side modes create the identical JSON.
 * **Incompatible change**: `DTSSResponseData` uses `long` instead of `int` for the total and the filtered record count - this affects the constructor as well as `getTotalRecords ()` and `getTotalDisplayRecords ()`.
-* Fixed the DataTables server side search to no longer create an empty first search term, if the entered search text starts with whitespace. An empty search term matches every row and therefore silently weakened the filter.
+* Fixed the DataTables server side search to no longer create an empty first search term, if the entered search text starts with whitespace.
+  An empty search term matches every row and therefore silently weakened the filter.
 * Reduced the memory consumption of the DataTables server side mode `PRERENDERED` (`DataTablesServerData`) by roughly half, without any behaviour change.
-  `DataTablesServerDataCell` cached up to four representations of every single cell at the same time and never released any of them: the HC node tree, a full micro DOM copy of it, the HTML string and the plain text string. The micro DOM copy is now only an intermediate that is created on demand and discarded again, and the HC node tree is released as soon as both derived strings are present.
-  Measured with 4.000 rows x 6 columns = 24.000 cells: the retained size of a snapshot dropped from 15.913 KiB to 9.588 KiB (-40%) when a single page of 25 rows is rendered, and from 19.123 KiB to 7.055 KiB (-63%) when all rows are rendered. The emitted HTML and the extracted text content are unchanged.
+  `DataTablesServerDataCell` cached up to four representations of every single cell at the same time and never released any of them: the HC node tree, a full micro DOM copy of it, the HTML string and the plain text string.
+  The micro DOM copy is now only an intermediate that is created on demand and discarded again, and the HC node tree is released as soon as both derived strings are present.
+  Measured with 4.000 rows x 6 columns = 24.000 cells: the retained size of a snapshot dropped from 15.913 KiB to 9.588 KiB (-40%) when a single page of 25 rows is rendered, and from 19.123 KiB to 7.055 KiB (-63%) when all rows are rendered.
+  The emitted HTML and the extracted text content are unchanged.
   The price is that the micro DOM is created twice for the cells of the currently displayed page - once for the text content and once for the HTML - which only affects the rows actually sent to the client.
-* **Breaking API change**: removed the methods `DataTablesServerDataCell.getContent ()` and `setContent (IHCNodeList)`. The cell content is now released after rendering, so it can no longer be handed out. Both methods had no caller.
-  Also removed the `writeObject`/`readObject` methods of `DataTablesServerDataCell` - the class does not implement `Serializable`, so they were never called. Note that `DataTablesServerData` implements `IHasUIState` (and therefore `Serializable`), but neither `DataTablesServerDataRow` nor `DataTablesServerDataCell` do, so a session containing a DataTables snapshot cannot be serialized anyway.
+* **Breaking API change**: removed the methods `DataTablesServerDataCell.getContent ()` and `setContent (IHCNodeList)`.
+  The cell content is now released after rendering, so it can no longer be handed out.
+  Both methods had no caller.
+  Also removed the `writeObject`/`readObject` methods of `DataTablesServerDataCell` - the class does not implement `Serializable`, so they were never called.
+  Note that `DataTablesServerData` implements `IHasUIState` (and therefore `Serializable`), but neither `DataTablesServerDataRow` nor `DataTablesServerDataCell` do, so a session containing a DataTables snapshot cannot be serialized anyway.
 * `DataTablesServerDataCell.getHTMLString ()` is now annotated `@NonNull` instead of `@Nullable` - it never returned `null` before either.
 * **Breaking API change**: the constructor of `AbstractLongRunningJobRunnable` takes the job type instead of the job ID as its first parameter, and the method `getJobID ()` was removed from it
-* **Breaking API change**: the telemetry attribute constant `CLongRunningJobTelemetry.ATTR_JOB_ID` (`photon.job.id`) was replaced by `ATTR_JOB_TYPE` (`photon.job.type`), because the job type is now the low cardinality dimension the metrics are grouped by. `ATTR_JOB_EXECUTION_ID` (`photon.job.execution.id`) is unchanged.
-* All `CompletableFuture` instances created by `PhotonWorkerPool` (`run`, `runThrowing`, `supply` and `supplyThrowing`) now have an `exceptionally` handler that logs otherwise unnoticed asynchronous failures (e.g. `Error`s or rejected executions). Previously such exceptions were only contained in the returned future and were silently lost if the caller never evaluated it.
+* **Breaking API change**: the telemetry attribute constant `CLongRunningJobTelemetry.ATTR_JOB_ID` (`photon.job.id`) was replaced by `ATTR_JOB_TYPE` (`photon.job.type`), because the job type is now the low cardinality dimension the metrics are grouped by.
+  `ATTR_JOB_EXECUTION_ID` (`photon.job.execution.id`) is unchanged.
+* All `CompletableFuture` instances created by `PhotonWorkerPool` (`run`, `runThrowing`, `supply` and `supplyThrowing`) now have an `exceptionally` handler that logs otherwise unnoticed asynchronous failures (e.g. `Error`s or rejected executions).
+  Previously such exceptions were only contained in the returned future and were silently lost if the caller never evaluated it.
 
 v10.3.1 - 2026-08-12
 * Requires at least ph-web 11.4.3
@@ -388,11 +421,14 @@ v10.2.3 - 2026-05-16
 * Updated to Jetty 12.1.9
 * Updated the default password hash algorithm to `PBKDF2_SHA256_100000_48`
 * Removed OSGI bundling
-* Added class `GlobalUserIDProvider` to provide an application wide current user ID. See [#31](https://github.com/phax/ph-oton/issues/31)
+* Added class `GlobalUserIDProvider` to provide an application wide current user ID.
+  See [#31](https://github.com/phax/ph-oton/issues/31)
 * Storing the new session scope in `LoginInfo` after session ID renewal on login
 * Added method `EHTMLEntity.htmlUnescape (String)`
 * Added an additional constructor to `SftpSettings`
-* SFTP connection settings now expose the connection timeout as `java.time.Duration getConnectionTimeout ()`. The new configuration key `*.connectiontimeout` accepts duration strings (e.g. `10s`, `1m 30s`) parsed via `IConfig.getAsConfigDuration`. The previous `int getConnectionTimeoutMillis ()` API and `*.connectiontimeoutms` configuration key remain available and are marked `@Deprecated (forRemoval = true)`
+* SFTP connection settings now expose the connection timeout as `java.time.Duration getConnectionTimeout ()`.
+  The new configuration key `*.connectiontimeout` accepts duration strings (e.g. `10s`, `1m 30s`) parsed via `IConfig.getAsConfigDuration`.
+  The previous `int getConnectionTimeoutMillis ()` API and `*.connectiontimeoutms` configuration key remain available and are marked `@Deprecated (forRemoval = true)`
 * Deprecated old entries in `EStandardMetaElement`
 
 v10.2.2 - 2026-03-02
@@ -400,7 +436,8 @@ v10.2.2 - 2026-03-02
 
 v10.2.1 - 2026-03-02
 * Extracted class `AbstractHCExtSelect`
-* Change HTTP session ID after successful login. See [#28](https://github.com/phax/ph-oton/issues/28) - thx @andreasa-winenet
+* Change HTTP session ID after successful login.
+  See [#28](https://github.com/phax/ph-oton/issues/28) - thx @andreasa-winenet
 * Added `ISftpSettingsHost.getKnownHostsPath ()`
 * Added class `SftpMaxParallelRunner`
 
@@ -454,7 +491,8 @@ v10.0.0 - 2025-08-25
 
 v9.3.2 - 2025-05-31
 * Updated to Jetty 11.0.25
-* Ensuring that BigDecimals with a negative scale are correctly formatted in JS. See [#23](https://github.com/phax/ph-oton/issues/23) - thx @domids
+* Ensuring that BigDecimals with a negative scale are correctly formatted in JS.
+  See [#23](https://github.com/phax/ph-oton/issues/23) - thx @domids
 * Cache tab on Administration page "Statistics" now shows the cache hit and miss percentage
 * Read-only `AbstractHCControl` no longer set the tabindex to `-1`
 
@@ -468,8 +506,10 @@ v9.3.0 - 2025-02-26
 * Removed support for chart.js v1.x
 * Updated list of global attributes in `IHCElement`
 * `PhotonWorkerPool` now has a silent mode option
-* The `InternalErrorBuilder` can now deal with custom email settings. See [#21](https://github.com/phax/ph-oton/issues/21)
-* The default administration page `Statistics` got a "Download" buttons. See [#22](https://github.com/phax/ph-oton/issues/22)
+* The `InternalErrorBuilder` can now deal with custom email settings.
+  See [#21](https://github.com/phax/ph-oton/issues/21)
+* The default administration page `Statistics` got a "Download" buttons.
+  See [#22](https://github.com/phax/ph-oton/issues/22)
 * Moved classes `CSRFManager` and `CSRFSessionManager`  to submodule `ph-oton-app`
 * Class `CSRFManager` now creates nonces with 32 instead of 64 bytes and uses Base64 instead of Base16 encoding.
 * Added builders for `ConstantJSPathProvider` and `ConstantCSSPathProvider`

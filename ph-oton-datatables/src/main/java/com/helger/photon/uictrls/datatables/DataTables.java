@@ -1311,7 +1311,7 @@ public class DataTables extends AbstractHCScriptInline <DataTables>
     // Provide any empty array if no sorting is defined, because otherwise an
     // implicit sorting of the first column, ascending is done
     aJSParams.add ("order", m_aInitialOrder != null ? m_aInitialOrder.getAsJS () : new JSArray ());
-    if (m_nPageLength != DEFAULT_PAGE_LENGTH && m_bLengthChange)
+    if (m_nPageLength != DEFAULT_PAGE_LENGTH)
       aJSParams.add ("pageLength", m_nPageLength);
     if (m_ePagingType != null && m_bPaging)
       aJSParams.add ("pagingType", m_ePagingType.getName ());

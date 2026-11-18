@@ -34,6 +34,7 @@ import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsOrderedMap;
 import com.helger.html.js.IJSWriterSettings;
 import com.helger.html.js.JSMarshaller;
+import com.helger.html.jscode.type.JSPrimitiveTypes;
 
 /**
  * A generated JS class.
@@ -284,18 +285,38 @@ public class JSDefinedClass extends AbstractJSClass implements IJSDeclaration, I
     // Emit the constructor first (a function)
     aFormatter.decl (constructor ());
 
-    final JSAssocArray aPrototypefields = new JSAssocArray ();
+    if (m_aSuperClass != null)
+    {
+      // Inherit from the prototype of the super class and restore the constructor. The prototype
+      // must not be replaced afterwards, so all members are assigned one by one
+      aFormatter.stmt (JSExpr.assign (prototype (),
+                                      JSPrimitiveTypes.OBJECT.create ().arg (m_aSuperClass.staticRef ("prototype"))));
+      aFormatter.stmt (JSExpr.assign (prototype ().ref ("constructor"), JSExpr.ref (m_sName)));
 
-    // Add all fields
-    for (final JSFieldVar aField : m_aFields.values ())
-      aPrototypefields.add (aField.name (), aField.hasInit () ? aField.init () : JSExpr.NULL);
+      // Add all fields
+      for (final JSFieldVar aField : m_aFields.values ())
+        aFormatter.stmt (JSExpr.assign (prototype ().ref (aField.name ()),
+                                        aField.hasInit () ? aField.init () : JSExpr.NULL));
 
-    // Add all methods
-    for (final JSMethod aMethod : m_aMethods)
-      aPrototypefields.add (aMethod.name (), aMethod.getAsAnonymousFunction ());
+      // Add all methods
+      for (final JSMethod aMethod : m_aMethods)
+        aFormatter.stmt (JSExpr.assign (prototype ().ref (aMethod.name ()), aMethod.getAsAnonymousFunction ()));
+    }
+    else
+    {
+      final JSAssocArray aPrototypefields = new JSAssocArray ();
 
-    // Start with the prototype methods
-    aFormatter.stmt (JSExpr.assign (prototype (), aPrototypefields));
+      // Add all fields
+      for (final JSFieldVar aField : m_aFields.values ())
+        aPrototypefields.add (aField.name (), aField.hasInit () ? aField.init () : JSExpr.NULL);
+
+      // Add all methods
+      for (final JSMethod aMethod : m_aMethods)
+        aPrototypefields.add (aMethod.name (), aMethod.getAsAnonymousFunction ());
+
+      // Start with the prototype methods
+      aFormatter.stmt (JSExpr.assign (prototype (), aPrototypefields));
+    }
   }
 
   @Nullable
