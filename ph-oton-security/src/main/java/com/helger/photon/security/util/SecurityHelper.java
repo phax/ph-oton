@@ -93,7 +93,7 @@ public final class SecurityHelper
       {
         boolean bFoundRole = false;
         for (final IUserGroup aUserGroup : aUserGroups)
-          if (aUserGroup.containsRoleID (sRoleID))
+          if (!aUserGroup.isDeleted () && aUserGroup.containsRoleID (sRoleID))
           {
             bFoundRole = true;
             break;
@@ -113,7 +113,8 @@ public final class SecurityHelper
     final ICommonsList <IUserGroup> aUserGroups = PhotonSecurityManager.getUserGroupMgr ()
                                                                        .getAllUserGroupsWithAssignedUser (sUserID);
     for (final IUserGroup aUserGroup : aUserGroups)
-      ret.addAll (aUserGroup.getAllContainedRoleIDs ());
+      if (!aUserGroup.isDeleted ())
+        ret.addAll (aUserGroup.getAllContainedRoleIDs ());
     return ret;
   }
 

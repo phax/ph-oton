@@ -42,6 +42,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
   private final int m_nConnectTimeoutMilliSeconds;
   private final String m_sHostname;
   private final int m_nPort;
+  private final String m_sKnownHostsPath;
 
   public SftpConnectionDestination (@NonNull final String sHostname)
   {
@@ -57,6 +58,14 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
                                     @Nonnegative final int nPort,
                                     @Nonnegative final int nConnectTimeoutMilliSeconds)
   {
+    this (sHostname, nPort, nConnectTimeoutMilliSeconds, null);
+  }
+
+  public SftpConnectionDestination (@NonNull final String sHostname,
+                                    @Nonnegative final int nPort,
+                                    @Nonnegative final int nConnectTimeoutMilliSeconds,
+                                    @Nullable final String sKnownHostsPath)
+  {
     if (StringHelper.isEmpty (sHostname))
       throw new IllegalArgumentException ("hostname");
     if (nPort <= CNetworkPort.MINIMUM_PORT_NUMBER || nPort > CNetworkPort.MAXIMUM_PORT_NUMBER)
@@ -66,6 +75,7 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     m_sHostname = sHostname;
     m_nPort = nPort;
     m_nConnectTimeoutMilliSeconds = nConnectTimeoutMilliSeconds;
+    m_sKnownHostsPath = sKnownHostsPath;
   }
 
   @NonNull
@@ -81,6 +91,12 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
   }
 
   @Nullable
+  public String getKnownHostsPath ()
+  {
+    return m_sKnownHostsPath;
+  }
+
+  @Nullable
   public ChannelSftp openConnection (@NonNull final IAuthCredentials aCredentials)
   {
     if (!(aCredentials instanceof final IUserNamePasswordCredentials aUPC))
@@ -92,15 +108,20 @@ public final class SftpConnectionDestination implements ISftpConnectionDestinati
     {
       final JSch jsch = new JSch ();
 
+      final boolean bHasKnownHosts = StringHelper.isNotEmpty (m_sKnownHostsPath);
+      if (bHasKnownHosts)
+        jsch.setKnownHosts (m_sKnownHostsPath);
+
       aSession = jsch.getSession (aUPC.getUserName (), m_sHostname, m_nPort);
       if (aUPC.getPassword () != null)
         aSession.setPassword (aUPC.getPassword ().getBytes (StandardCharsets.UTF_8));
 
       /*
-       * Setup Strict HostKeyChecking to no so we don't get the unknown host key exception
+       * Use strict host key checking if a known hosts file is configured. Otherwise set it to no so
+       * we don't get the unknown host key exception
        */
       final Properties aConfig = new Properties ();
-      aConfig.put ("StrictHostKeyChecking", "no");
+      aConfig.put ("StrictHostKeyChecking", bHasKnownHosts ? "yes" : "no");
       aSession.setConfig (aConfig);
 
       // do connect

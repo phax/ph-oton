@@ -191,7 +191,7 @@ public class AuditManager extends AbstractPhotonSimpleDAO implements IAuditManag
 
   public boolean isInMemory ()
   {
-    return m_sBaseDir == null;
+    return StringHelper.isEmpty (m_sBaseDir);
   }
 
   @Nullable

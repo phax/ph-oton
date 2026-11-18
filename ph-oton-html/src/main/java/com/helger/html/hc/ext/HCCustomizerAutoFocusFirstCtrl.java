@@ -50,7 +50,8 @@ public class HCCustomizerAutoFocusFirstCtrl extends AbstractHCCustomizer
         if (aCurCtrl.isAutoFocus ())
         {
           // No need to continue because an existing control already has the
-          // focus
+          // focus - so no other control must get the focus
+          aFirstCtrl.set (null);
           return EContinue.BREAK;
         }
 

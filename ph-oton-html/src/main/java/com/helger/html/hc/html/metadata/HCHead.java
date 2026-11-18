@@ -27,6 +27,7 @@ import com.helger.annotation.style.ReturnsImmutableObject;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
 import com.helger.base.state.EChange;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
@@ -163,7 +164,8 @@ public class HCHead extends AbstractHCElement <HCHead>
     if (aShortcutIconHref == null)
     {
       // Remove the 2 link types again
-      m_aLinks.removeIf (x -> x.getRel ().equals (EHCLinkType.SHORTCUT_ICON) || x.getRel ().equals (EHCLinkType.ICON));
+      m_aLinks.removeIf (x -> EqualsHelper.equals (x.getRel (), EHCLinkType.SHORTCUT_ICON) ||
+                           EqualsHelper.equals (x.getRel (), EHCLinkType.ICON));
     }
     else
     {

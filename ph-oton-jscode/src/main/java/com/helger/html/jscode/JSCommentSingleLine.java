@@ -55,7 +55,7 @@ public class JSCommentSingleLine extends AbstractJSStatement
         if (bIndentAndAlign)
           aFormatter.plain ("// ").plain (sLine).nl ();
         else
-          aFormatter.plain ("/*").plain (sLine).plain ("*/");
+          aFormatter.plain ("/*").plain (sLine.replace ("*/", "*<!-- -->/")).plain ("*/");
     }
   }
 

@@ -16,12 +16,16 @@
  */
 package com.helger.photon.app.resource;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -37,6 +41,7 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.html.hc.IHCNode;
+import com.helger.io.file.FileOperations;
 import com.helger.io.resource.FileSystemResource;
 import com.helger.mime.IMimeType;
 import com.helger.photon.app.PhotonAppSettings;
@@ -165,28 +170,43 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
     final FileSystemResource aTargetRes = getResource (m_sBundleID);
     if (!aTargetRes.exists ())
     {
-      // persist file by merging all items
-      try (final Writer aWriter = StreamHelper.getBuffered (aTargetRes.getWriter (StandardCharsets.UTF_8,
-                                                                                  EAppend.TRUNCATE)))
+      // Write to a temporary file in the same directory first and move it to the target only on
+      // success, so that a failure part-way does not leave a half-written bundle behind
+      final File aTargetFile = aTargetRes.getAsFile ();
+      final File aTempFile = new File (aTargetFile.getParentFile (),
+                                       aTargetFile.getName () + "." + UUID.randomUUID ().toString () + ".tmp");
+      try
       {
-        if (aWriter == null)
+        boolean bWritten = false;
+        try (final Writer aWriter = StreamHelper.getBuffered (new FileSystemResource (aTempFile).getWriter (StandardCharsets.UTF_8,
+                                                                                                          EAppend.TRUNCATE)))
         {
-          // May happen if write access is denied for the file
-          LOGGER.error ("Failed to serialize " +
-                        m_aBundle.getResourceType ().getID () +
-                        " bundle '" +
-                        m_sBundleID +
-                        "' with " +
-                        m_aBundle.getAllResourcePaths () +
-                        (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
-                                                              m_aBundle.getConditionalComment () +
-                                                              "'" : "") +
-                        " to path " +
-                        aTargetRes.getAsFile ().getAbsolutePath ());
+          if (aWriter == null)
+          {
+            // May happen if write access is denied for the file
+            LOGGER.error ("Failed to serialize " +
+                          m_aBundle.getResourceType ().getID () +
+                          " bundle '" +
+                          m_sBundleID +
+                          "' with " +
+                          m_aBundle.getAllResourcePaths () +
+                          (m_aBundle.hasConditionalComment () ? " and conditional comment '" +
+                                                                m_aBundle.getConditionalComment () +
+                                                                "'" : "") +
+                          " to path " +
+                          aTempFile.getAbsolutePath ());
+          }
+          else
+          {
+            writeMergedContent (aWriter, bRegular);
+            bWritten = true;
+          }
         }
-        else
+
+        if (bWritten)
         {
-          writeMergedContent (aWriter, bRegular);
+          // Writer is closed - now make the complete file visible at once
+          Files.move (aTempFile.toPath (), aTargetFile.toPath (), StandardCopyOption.ATOMIC_MOVE);
           LOGGER.info ("Serialized " +
                        m_aBundle.getResourceType ().getID () +
                        " bundle '" +
@@ -202,6 +222,11 @@ public class WebSiteResourceBundleSerialized implements IHasInputStream
       {
         LOGGER.error ("Error serializing bundle '" + m_sBundleID + "' with " + m_aBundle.getAllResourcePaths (), ex);
         throw new IllegalStateException (ex);
+      }
+      finally
+      {
+        // Only still present if writing or moving failed
+        FileOperations.deleteFileIfExisting (aTempFile);
       }
     }
   }

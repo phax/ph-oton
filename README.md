@@ -132,6 +132,17 @@ v10.8.2 - work in progress
 * `InternalErrorBuilder` no longer fails if the web file paths are not yet initialised
 * `JQuery.ajax (IJSExpression, JSAssocArray)` no longer emits a `null` URL, which made jQuery ignore the settings
 * `IFeedElement.setLanguage (Locale)` now uses the full BCP 47 language tag (e.g. `en-US`) instead of only the language
+* Role checks (`containsAnyUserGroupWithAssignedUserAndRole`, `SecurityHelper.hasUserAllRoles` and `SecurityHelper.getAllUserRoleIDs`) now ignore deleted user groups
+* `WebSiteResourceBundleSerialized` now writes the merged bundle to a temporary file and moves it atomically, so that a failed write no longer leaves a broken bundle
+* `PhotonUnifiedResponse.xml` now creates an empty response for a `null` node instead of failing
+* Added an optional known hosts file to `SftpConnectionDestination`; if set, `StrictHostKeyChecking=yes` is used
+* `HCCustomizerAutoFocusFirstCtrl` no longer sets autofocus if a control already has it
+* Fixed a `NullPointerException` in `HCHead.setShortcutIconHref` for links without `rel`
+* `AbstractHCScriptInline.setJSCodeProvider` now resets the cached JS code
+* JS constant folding no longer throws for non-terminating decimal divisions and no longer folds division or modulo by zero
+* `JSCommentSingleLine` now escapes `*/` in compact mode
+* `AuditManager.isInMemory ()` now also returns `true` for an empty base directory
+* Improved the error handling of missing or invalid values in `AuditItemMicroTypeConverter` and `LongRunningJobDataMicroTypeConverter`
 
 v10.8.1 - 2026-11-14
 * Added the new BOM artifact `ph-oton-bom` that contains only the ph-oton artifacts.

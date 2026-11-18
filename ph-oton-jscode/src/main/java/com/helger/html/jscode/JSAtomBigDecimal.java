@@ -17,6 +17,7 @@
 package com.helger.html.jscode;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import org.jspecify.annotations.NonNull;
 
@@ -110,7 +111,17 @@ public class JSAtomBigDecimal extends AbstractJSAtomNumeric
   public AbstractJSAtomNumeric numericDiv (@NonNull final AbstractJSAtomNumeric aRhs)
   {
     final BigDecimal aParam = _getParam (aRhs);
-    return new JSAtomBigDecimal (m_aValue.divide (aParam));
+    BigDecimal aResult;
+    try
+    {
+      aResult = m_aValue.divide (aParam);
+    }
+    catch (final ArithmeticException ex)
+    {
+      // Non-terminating decimal expansion - round with the precision of JS numbers
+      aResult = m_aValue.divide (aParam, MathContext.DECIMAL64);
+    }
+    return new JSAtomBigDecimal (aResult);
   }
 
   @Override

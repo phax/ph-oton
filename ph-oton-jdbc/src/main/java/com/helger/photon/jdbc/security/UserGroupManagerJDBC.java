@@ -1008,7 +1008,8 @@ public class UserGroupManagerJDBC extends AbstractJDBCEnabledSecurityManager imp
       return false;
 
     // Limit from the SQL point as much as possible and filter the results here
-    return _getAllWhere ("userids LIKE ? AND roleids LIKE ?",
+    // Deleted user groups don't grant any roles
+    return _getAllWhere ("deletedt IS NULL AND userids LIKE ? AND roleids LIKE ?",
                          new ConstantPreparedStatementDataProvider ("%" + sUserID + "%", "%" + sRoleID + "%"))
                                                                                                               .containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) &&
                                                                                                                                           aUserGroup.containsRoleID (sRoleID));

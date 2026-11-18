@@ -92,7 +92,10 @@ public final class LongRunningJobDataMicroTypeConverter implements IMicroTypeCon
     final ETriState eExecSuccess = ETriState.getFromIDOrUndefined (aElement.getAttributeValue (ATTR_EXECSUCCESS));
 
     final IMicroElement eResult = aElement.getFirstChildElement (ELEMENT_RESULT);
-    final ELongRunningJobResultType eResultType = ELongRunningJobResultType.getFromIDOrNull (eResult.getAttributeValue (ATTR_TYPE));
+    final String sResultType = eResult.getAttributeValue (ATTR_TYPE);
+    final ELongRunningJobResultType eResultType = ELongRunningJobResultType.getFromIDOrNull (sResultType);
+    if (eResultType == null)
+      throw new IllegalStateException ("Unknown type: " + sResultType);
     final String sResultText = eResult.getTextContent ();
     final LongRunningJobResult aResult = switch (eResultType)
     {

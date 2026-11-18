@@ -193,8 +193,11 @@ public final class JSOp
   public static AbstractJSExpression div (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
-    if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
-      return ((AbstractJSAtomNumeric) aLeft).numericDiv ((AbstractJSAtomNumeric) aRight);
+    // Division by zero is not folded, because JS returns Infinity or NaN
+    if (aLeft instanceof final AbstractJSAtomNumeric aNumLeft &&
+        aRight instanceof final AbstractJSAtomNumeric aNumRight &&
+        aNumRight.doubleValue () != 0)
+      return aNumLeft.numericDiv (aNumRight);
 
     return new JSOpBinary (aLeft, "/", aRight);
   }
@@ -203,8 +206,11 @@ public final class JSOp
   public static AbstractJSExpression mod (@NonNull final IJSExpression aLeft, @NonNull final IJSExpression aRight)
   {
     // Some optimizations
-    if (aLeft instanceof AbstractJSAtomNumeric && aRight instanceof AbstractJSAtomNumeric)
-      return ((AbstractJSAtomNumeric) aLeft).numericMod ((AbstractJSAtomNumeric) aRight);
+    // Division by zero is not folded, because JS returns Infinity or NaN
+    if (aLeft instanceof final AbstractJSAtomNumeric aNumLeft &&
+        aRight instanceof final AbstractJSAtomNumeric aNumRight &&
+        aNumRight.doubleValue () != 0)
+      return aNumLeft.numericMod (aNumRight);
 
     return new JSOpBinary (aLeft, "%", aRight);
   }

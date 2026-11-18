@@ -76,6 +76,8 @@ public abstract class AbstractHCScriptInline <IMPLTYPE extends AbstractHCScriptI
   public final IMPLTYPE setJSCodeProvider (@NonNull final IHasJSCode aProvider)
   {
     m_aJSProvider = ValueEnforcer.notNull (aProvider, "Provider");
+    // Invalidate the cached JS code
+    m_sCachedJSCode = null;
     return thisAsT ();
   }
 

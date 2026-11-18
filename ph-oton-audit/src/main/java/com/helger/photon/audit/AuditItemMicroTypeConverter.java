@@ -17,6 +17,7 @@
 package com.helger.photon.audit;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -69,9 +70,16 @@ public class AuditItemMicroTypeConverter implements IMicroTypeConverter <AuditIt
     {
       // Legacy code - don't remove as old items stay persistent!
       final String sDT = eItem.getAttributeValue ("dts");
-      aDT = LocalDateTime.parse (sDT);
-      if (aDT == null)
-        throw new IllegalStateException ("Failed to parse date time '" + sDT + "'");
+      if (sDT == null)
+        throw new IllegalStateException ("Failed to find date time");
+      try
+      {
+        aDT = LocalDateTime.parse (sDT);
+      }
+      catch (final DateTimeParseException ex)
+      {
+        throw new IllegalStateException ("Failed to parse date time '" + sDT + "'", ex);
+      }
     }
 
     final String sUserID = eItem.getAttributeValue (ATTR_USER);

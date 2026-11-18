@@ -174,7 +174,11 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @NonNull
   public PhotonUnifiedResponse xml (@Nullable final IMicroNode aNode, @NonNull final IXMLWriterSettings aSettings)
   {
-    return xml (aNode == null ? null : MicroWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
+    // Serialisation may fail as well
+    final byte [] aXML = aNode == null ? null : MicroWriter.getNodeAsBytes (aNode, aSettings);
+    if (aXML == null)
+      return xml ("", aSettings.getCharset ());
+    return xml (aXML, aSettings.getCharset ());
   }
 
   @NonNull
@@ -186,7 +190,11 @@ public class PhotonUnifiedResponse extends UnifiedResponse
   @NonNull
   public PhotonUnifiedResponse xml (@Nullable final Node aNode, @NonNull final IXMLWriterSettings aSettings)
   {
-    return xml (aNode == null ? null : XMLWriter.getNodeAsBytes (aNode, aSettings), aSettings.getCharset ());
+    // Serialisation may fail as well
+    final byte [] aXML = aNode == null ? null : XMLWriter.getNodeAsBytes (aNode, aSettings);
+    if (aXML == null)
+      return xml ("", aSettings.getCharset ());
+    return xml (aXML, aSettings.getCharset ());
   }
 
   @NonNull

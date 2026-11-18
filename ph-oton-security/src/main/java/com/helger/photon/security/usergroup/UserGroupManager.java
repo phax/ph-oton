@@ -652,6 +652,9 @@ public class UserGroupManager extends AbstractPhotonMapBasedWALDAO <IUserGroup, 
     if (StringHelper.isEmpty (sRoleID))
       return false;
 
-    return containsAny (aUserGroup -> aUserGroup.containsUserID (sUserID) && aUserGroup.containsRoleID (sRoleID));
+    // Deleted user groups don't grant any roles
+    return containsAny (aUserGroup -> !aUserGroup.isDeleted () &&
+                                      aUserGroup.containsUserID (sUserID) &&
+                                      aUserGroup.containsRoleID (sRoleID));
   }
 }
